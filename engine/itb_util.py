@@ -117,6 +117,11 @@ M17N_ENGINE_NAME_PATTERN = re.compile(
 
 AVAILABLE_IBUS_KEYMAPS = ('in', 'jp', 'kr', 'us')
 
+ANTHY_HENKAN_WIDE = [
+    'Left', 'Left',  'Left', 'Left', 'Left',
+    'S-Right', 'S-Right',  'S-Right', 'S-Right', 'S-Right',
+]
+
 # When matching keybindings, only the bits in the following mask are
 # considered for key.state:
 KEYBINDING_STATE_MASK = (

@@ -457,279 +457,250 @@ class M17nTranslitTestCase(unittest.TestCase):
 
     def test_hi_itrans_parts(self) -> None:
         trans = self.get_transliterator_or_skip('hi-itrans')
-        self.assertEqual(
-            trans.transliterate_parts(list('n')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='न्',
-                cursor_pos=2,
-                status='क',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(['n', 'S-C-Return']),
-            m17n_translit.TransliterationParts(
-                committed='न्',
-                committed_index=2,
-                preedit='',
-                cursor_pos=0,
-                status='क',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(['n', 'S-C-Return', ' ']),
-            m17n_translit.TransliterationParts(
-                committed='न् ',
-                committed_index=3,
-                preedit='',
-                cursor_pos=0,
-                status='क',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('n ')),
-            m17n_translit.TransliterationParts(
-                committed='न ',
-                committed_index=2,
-                preedit='',
-                cursor_pos=0,
-                status='क',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('na')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='न',
-                cursor_pos=1,
-                status='क',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('nam')),
-            m17n_translit.TransliterationParts(
-                committed='न',
-                committed_index=2,
-                preedit='म्',
-                cursor_pos=2,
-                status='क',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('nama')),
-            m17n_translit.TransliterationParts(
-                committed='न',
-                committed_index=2,
-                preedit='म',
-                cursor_pos=1,
-                status='क',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('namas')),
-            m17n_translit.TransliterationParts(
-                committed='नम',
-                committed_index=4,
-                preedit='स्',
-                cursor_pos=2,
-                status='क',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('namast')),
-            m17n_translit.TransliterationParts(
-                committed='नम',
-                committed_index=4,
-                preedit='स्त्',
-                cursor_pos=4,
-                status='क',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('namaste')),
-            m17n_translit.TransliterationParts(
-                committed='नम',
-                committed_index=4,
-                preedit='स्ते',
-                cursor_pos=4,
-                status='क',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('namaste ')),
-            m17n_translit.TransliterationParts(
-                committed='नमस्ते ',
-                committed_index=8,
-                preedit='',
-                cursor_pos=0,
-                status='क',
-                candidates=[]))
+        transliterated_parts = trans.transliterate_parts(list('n'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, 'न्')
+        self.assertEqual(transliterated_parts.cursor_pos, 2)
+        self.assertEqual(transliterated_parts.status, 'क')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(['n', 'S-C-Return'])
+        self.assertEqual(transliterated_parts.committed, 'न्')
+        self.assertEqual(transliterated_parts.committed_index, 2)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'क')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(['n', 'S-C-Return', ' '])
+        self.assertEqual(transliterated_parts.committed, 'न् ')
+        self.assertEqual(transliterated_parts.committed_index, 3)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'क')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('n '))
+        self.assertEqual(transliterated_parts.committed, 'न ')
+        self.assertEqual(transliterated_parts.committed_index, 2)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'क')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('na'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, 'न')
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, 'क')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('nam'))
+        self.assertEqual(transliterated_parts.committed, 'न')
+        self.assertEqual(transliterated_parts.committed_index, 2)
+        self.assertEqual(transliterated_parts.preedit, 'म्')
+        self.assertEqual(transliterated_parts.cursor_pos, 2)
+        self.assertEqual(transliterated_parts.status, 'क')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('nama'))
+        self.assertEqual(transliterated_parts.committed, 'न')
+        self.assertEqual(transliterated_parts.committed_index, 2)
+        self.assertEqual(transliterated_parts.preedit, 'म')
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, 'क')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('namas'))
+        self.assertEqual(transliterated_parts.committed, 'नम')
+        self.assertEqual(transliterated_parts.committed_index, 4)
+        self.assertEqual(transliterated_parts.preedit, 'स्')
+        self.assertEqual(transliterated_parts.cursor_pos, 2)
+        self.assertEqual(transliterated_parts.status, 'क')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('namast'))
+        self.assertEqual(transliterated_parts.committed, 'नम')
+        self.assertEqual(transliterated_parts.committed_index, 4)
+        self.assertEqual(transliterated_parts.preedit, 'स्त्')
+        self.assertEqual(transliterated_parts.cursor_pos, 4)
+        self.assertEqual(transliterated_parts.status, 'क')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('namaste'))
+        self.assertEqual(transliterated_parts.committed, 'नम')
+        self.assertEqual(transliterated_parts.committed_index, 4)
+        self.assertEqual(transliterated_parts.preedit, 'स्ते')
+        self.assertEqual(transliterated_parts.cursor_pos, 4)
+        self.assertEqual(transliterated_parts.status, 'क')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('namaste '))
+        self.assertEqual(transliterated_parts.committed, 'नमस्ते ')
+        self.assertEqual(transliterated_parts.committed_index, 8)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'क')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
 
     def test_t_latn_post_parts(self) -> None:
         trans = self.get_transliterator_or_skip('t-latn-post')
-        self.assertEqual(
-            trans.transliterate_parts(list('u')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='u',
-                cursor_pos=1,
-                status='Latin-post',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('u"')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='ü',
-                cursor_pos=1,
-                status='Latin-post',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('u""')),
-            m17n_translit.TransliterationParts(
-                committed='u"',
-                committed_index=3,
-                preedit='',
-                cursor_pos=0,
-                status='Latin-post',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('u"u')),
-            m17n_translit.TransliterationParts(
-                committed='ü',
-                committed_index=2,
-                preedit='u',
-                cursor_pos=1,
-                status='Latin-post',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('üu"u')),
-            m17n_translit.TransliterationParts(
-                committed='üü',
-                committed_index=3,
-                preedit='u',
-                cursor_pos=1,
-                status='Latin-post',
-                candidates=[]))
+        transliterated_parts = trans.transliterate_parts(list('u'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, 'u')
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, 'Latin-post')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts =     trans.transliterate_parts(list('u"'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, 'ü')
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, 'Latin-post')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts =     trans.transliterate_parts(list('u""'))
+        self.assertEqual(transliterated_parts.committed, 'u"')
+        self.assertEqual(transliterated_parts.committed_index, 3)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'Latin-post')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts =     trans.transliterate_parts(list('u"u'))
+        self.assertEqual(transliterated_parts.committed, 'ü')
+        self.assertEqual(transliterated_parts.committed_index, 2)
+        self.assertEqual(transliterated_parts.preedit, 'u')
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, 'Latin-post')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts =     trans.transliterate_parts(list('üu"u'))
+        self.assertEqual(transliterated_parts.committed, 'üü')
+        self.assertEqual(transliterated_parts.committed_index, 3)
+        self.assertEqual(transliterated_parts.preedit, 'u')
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, 'Latin-post')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
 
     def test_t_rfc1345_parts(self) -> None:
         trans = self.get_transliterator_or_skip('t-rfc1345')
-        self.assertEqual(
-            trans.transliterate_parts(list('&')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='&',
-                cursor_pos=1,
-                status='RFC1345',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('&C')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='&C',
-                cursor_pos=2,
-                status='RFC1345',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('&Co')),
-            m17n_translit.TransliterationParts(
-                committed='©',
-                committed_index=3,
-                preedit='',
-                cursor_pos=0,
-                status='RFC1345',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('&f')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='&f',
-                cursor_pos=2,
-                status='RFC1345',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('&ff')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='ﬀ',
-                cursor_pos=1,
-                status='RFC1345',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('&ffi')),
-            m17n_translit.TransliterationParts(
-                committed='ﬃ',
-                committed_index=4,
-                preedit='',
-                cursor_pos=0,
-                status='RFC1345',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('☺&ffi中')),
-            m17n_translit.TransliterationParts(
-                committed='☺ﬃ中',
-                committed_index=6,
-                preedit='',
-                cursor_pos=0,
-                status='RFC1345',
-                candidates=[]))
+        transliterated_parts = trans.transliterate_parts(list('&'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, '&')
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, 'RFC1345')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('&C'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, '&C')
+        self.assertEqual(transliterated_parts.cursor_pos, 2)
+        self.assertEqual(transliterated_parts.status, 'RFC1345')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('&Co'))
+        self.assertEqual(transliterated_parts.committed, '©')
+        self.assertEqual(transliterated_parts.committed_index, 3)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'RFC1345')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('&f'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, '&f')
+        self.assertEqual(transliterated_parts.cursor_pos, 2)
+        self.assertEqual(transliterated_parts.status, 'RFC1345')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('&ff'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, 'ﬀ')
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, 'RFC1345')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('&ffi'))
+        self.assertEqual(transliterated_parts.committed, 'ﬃ')
+        self.assertEqual(transliterated_parts.committed_index, 4)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'RFC1345')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('☺&ffi中'))
+        self.assertEqual(transliterated_parts.committed, '☺ﬃ中')
+        self.assertEqual(transliterated_parts.committed_index, 6)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'RFC1345')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
 
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 8),
         'Skipping because m17n-db is too old')
     def test_t_lsymbol_parts(self) -> None:
         trans = self.get_transliterator_or_skip('t-lsymbol')
-        self.assertEqual(
-            trans.transliterate_parts(list('/:)')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='☺️',
-                cursor_pos=2,
-                status='lsymbol',
-                candidates=['☺️', '😃', '😅', '😆', '😉', '😇', '😂', '😏', '😛', '😜', '😝', '😋', '😉', '💏', '💋', '😍', '😘', '😚', '😽', '😻']))
-        self.assertEqual(
-            trans.transliterate_parts(list('a')),
-            m17n_translit.TransliterationParts(
-                committed='a',
-                committed_index=1,
-                preedit='',
-                cursor_pos=0,
-                status='lsymbol',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('a/')),
-            m17n_translit.TransliterationParts(
-                committed='a',
-                committed_index=1,
-                preedit='/',
-                cursor_pos=1,
-                status='lsymbol',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('a/:')),
-            m17n_translit.TransliterationParts(
-                committed='a',
-                committed_index=1,
-                preedit='/:',
-                cursor_pos=2,
-                status='lsymbol',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('a/:(')),
-            m17n_translit.TransliterationParts(
-                committed='a',
-                committed_index=1,
-                preedit='😢',
-                cursor_pos=1,
-                status='lsymbol',
-                candidates=['😢', '😩', '😡', '😭', '😪', '🙈', '🙊', '🙉']))
-        self.assertEqual(
-            trans.transliterate_parts(list('a/:(b')),
-            m17n_translit.TransliterationParts(
-                committed='a😢b',
-                committed_index=5,
-                preedit='',
-                cursor_pos=0,
-                status='lsymbol',
-                candidates=[]))
+        transliterated_parts = trans.transliterate_parts(list('/:)'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, '☺️')
+        self.assertEqual(transliterated_parts.cursor_pos, 2)
+        self.assertEqual(transliterated_parts.status, 'lsymbol')
+        self.assertEqual(transliterated_parts.candidates, ['☺️', '😃', '😅', '😆', '😉', '😇', '😂', '😏', '😛', '😜', '😝', '😋', '😉', '💏', '💋', '😍', '😘', '😚', '😽', '😻'])
+        self.assertEqual(transliterated_parts.candidate_show, 1)
+        transliterated_parts = trans.transliterate_parts(list('a'))
+        self.assertEqual(transliterated_parts.committed, 'a')
+        self.assertEqual(transliterated_parts.committed_index, 1)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'lsymbol')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('a/'))
+        self.assertEqual(transliterated_parts.committed, 'a')
+        self.assertEqual(transliterated_parts.committed_index, 1)
+        self.assertEqual(transliterated_parts.preedit, '/')
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, 'lsymbol')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 1)
+        transliterated_parts = trans.transliterate_parts(list('a/:'))
+        self.assertEqual(transliterated_parts.committed, 'a')
+        self.assertEqual(transliterated_parts.committed_index, 1)
+        self.assertEqual(transliterated_parts.preedit, '/:')
+        self.assertEqual(transliterated_parts.cursor_pos, 2)
+        self.assertEqual(transliterated_parts.status, 'lsymbol')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 1)
+        transliterated_parts = trans.transliterate_parts(list('a/:('))
+        self.assertEqual(transliterated_parts.committed, 'a')
+        self.assertEqual(transliterated_parts.committed_index, 1)
+        self.assertEqual(transliterated_parts.preedit, '😢')
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, 'lsymbol')
+        self.assertEqual(transliterated_parts.candidates, ['😢', '😩', '😡', '😭', '😪', '🙈', '🙊', '🙉'])
+        self.assertEqual(transliterated_parts.candidate_show, 1)
+        transliterated_parts = trans.transliterate_parts(list('a/:(b'))
+        self.assertEqual(transliterated_parts.committed, 'a😢b')
+        self.assertEqual(transliterated_parts.committed_index, 5)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'lsymbol')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
 
     def test_ja_anthy_parts(self) -> None:
         trans = self.get_transliterator_or_skip('ja-anthy')
@@ -738,42 +709,38 @@ class M17nTranslitTestCase(unittest.TestCase):
                 'Henkan doesn’t work. '
                 'Apparently some libraries necessary for '
                 'ja-anthy to work correctly are not installed.')
-        self.assertEqual(
-            trans.transliterate_parts(list('あ')),
-            m17n_translit.TransliterationParts(
-                committed='あ',
-                committed_index=1,
-                preedit='',
-                cursor_pos=0,
-                status='aあ',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('亜')),
-            m17n_translit.TransliterationParts(
-                committed='亜',
-                committed_index=1,
-                preedit='',
-                cursor_pos=0,
-                status='aあ',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('😇')),
-            m17n_translit.TransliterationParts(
-                committed='😇',
-                committed_index=1,
-                preedit='',
-                cursor_pos=0,
-                status='aあ',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('a')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='あ',
-                cursor_pos=1,
-                status='aあ',
-                candidates=[]))
+        transliterated_parts = trans.transliterate_parts(list('あ'))
+        self.assertEqual(transliterated_parts.committed, 'あ')
+        self.assertEqual(transliterated_parts.committed_index, 1)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'aあ')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('亜'))
+        self.assertEqual(transliterated_parts.committed, '亜')
+        self.assertEqual(transliterated_parts.committed_index, 1)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'aあ')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('😇'))
+        self.assertEqual(transliterated_parts.committed, '😇')
+        self.assertEqual(transliterated_parts.committed_index, 1)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'aあ')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('a'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, 'あ')
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, 'aあ')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
         transliterated_parts = trans.transliterate_parts(list('a '))
         self.assertEqual(transliterated_parts.committed, '')
         self.assertEqual(transliterated_parts.committed_index, 0)
@@ -781,21 +748,35 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(transliterated_parts.cursor_pos, 1)
         self.assertEqual(transliterated_parts.status, '漢')
         self.assertTrue(len(transliterated_parts.candidates) > 5)
+        self.assertEqual(transliterated_parts.candidate_show, 0) # first space does not show
         self.assertTrue(transliterated_parts.preedit in transliterated_parts.candidates)
         self.assertTrue('娃' in transliterated_parts.candidates)
         self.assertTrue('亜' in transliterated_parts.candidates)
         self.assertTrue('阿' in transliterated_parts.candidates)
         self.assertTrue('あ' in transliterated_parts.candidates)
         self.assertTrue('ア' in transliterated_parts.candidates)
-        self.assertEqual(
-            trans.transliterate_parts(list('kisha')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='きしゃ',
-                cursor_pos=3,
-                status='aあ',
-                candidates=[]))
+        transliterated_parts = trans.transliterate_parts(list('a  '))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(len(transliterated_parts.preedit), 1)
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, '漢')
+        self.assertTrue(len(transliterated_parts.candidates) > 5)
+        self.assertEqual(transliterated_parts.candidate_show, 1) # second space shows
+        self.assertTrue(transliterated_parts.preedit in transliterated_parts.candidates)
+        self.assertTrue('娃' in transliterated_parts.candidates)
+        self.assertTrue('亜' in transliterated_parts.candidates)
+        self.assertTrue('阿' in transliterated_parts.candidates)
+        self.assertTrue('あ' in transliterated_parts.candidates)
+        self.assertTrue('ア' in transliterated_parts.candidates)
+        transliterated_parts = trans.transliterate_parts(list('kisha'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, 'きしゃ')
+        self.assertEqual(transliterated_parts.cursor_pos, 3)
+        self.assertEqual(transliterated_parts.status, 'aあ')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
         transliterated_parts = trans.transliterate_parts(list('kisha '))
         self.assertEqual(transliterated_parts.committed, '')
         self.assertEqual(transliterated_parts.committed_index, 0)
@@ -803,6 +784,22 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(transliterated_parts.cursor_pos, 2)
         self.assertEqual(transliterated_parts.status, '漢')
         self.assertTrue(len(transliterated_parts.candidates) > 5)
+        self.assertEqual(transliterated_parts.candidate_show, 0) # first space does not show
+        self.assertTrue(transliterated_parts.preedit in transliterated_parts.candidates)
+        self.assertTrue('記者' in transliterated_parts.candidates)
+        self.assertTrue('帰社' in transliterated_parts.candidates)
+        self.assertTrue('汽車' in transliterated_parts.candidates)
+        self.assertTrue('貴社' in transliterated_parts.candidates)
+        self.assertTrue('きしゃ' in transliterated_parts.candidates)
+        self.assertTrue('キシャ' in transliterated_parts.candidates)
+        transliterated_parts = trans.transliterate_parts(list('kisha  '))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(len(transliterated_parts.preedit), 2)
+        self.assertEqual(transliterated_parts.cursor_pos, 2)
+        self.assertEqual(transliterated_parts.status, '漢')
+        self.assertTrue(len(transliterated_parts.candidates) > 5)
+        self.assertEqual(transliterated_parts.candidate_show, 1) # second space shows
         self.assertTrue(transliterated_parts.preedit in transliterated_parts.candidates)
         self.assertTrue('記者' in transliterated_parts.candidates)
         self.assertTrue('帰社' in transliterated_parts.candidates)
@@ -820,6 +817,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertTrue(transliterated_parts.cursor_pos in (1, 2, 3, 4))
         self.assertEqual(transliterated_parts.status, '漢')
         self.assertTrue(len(transliterated_parts.candidates) > 5)
+        self.assertEqual(transliterated_parts.candidate_show, 0) # first space does not show
         self.assertTrue(
             transliterated_parts.preedit[:transliterated_parts.cursor_pos]
             in transliterated_parts.candidates)
@@ -835,6 +833,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertTrue(len(transliterated_parts.preedit) in (3, 4))
         self.assertTrue(transliterated_parts.cursor_pos in (3, 4))
         self.assertEqual(transliterated_parts.status, '漢')
+        self.assertEqual(transliterated_parts.candidate_show, 0) # first space does not show
         self.assertTrue('あきしゃ' in transliterated_parts.candidates)
         self.assertTrue('アキシャ' in transliterated_parts.candidates)
 
@@ -843,87 +842,78 @@ class M17nTranslitTestCase(unittest.TestCase):
         'Skipping because m17n-db is too old')
     def test_t_math_latex_parts(self) -> None:
         trans = self.get_transliterator_or_skip('t-math-latex')
-        self.assertEqual(
-            trans.transliterate_parts(list('\\')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='\\',
-                cursor_pos=1,
-                status='Math: latex',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('\\i')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='\\i',
-                cursor_pos=2,
-                status='Math: latex',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('\\in')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='\\∈',
-                cursor_pos=2,
-                status='Math: latex',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('\\int')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='\\∫',
-                cursor_pos=2,
-                status='Math: latex',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('\\inter')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='\\inter',
-                cursor_pos=6,
-                status='Math: latex',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('\\inters')),
-            m17n_translit.TransliterationParts(
-                committed='',
-                committed_index=0,
-                preedit='∩',
-                cursor_pos=1,
-                status='Math: latex',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('\\inters ')),
-            m17n_translit.TransliterationParts(
-                committed='∩ ',
-                committed_index=8,
-                preedit='',
-                cursor_pos=0,
-                status='Math: latex',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('\\inters☺')),
-            m17n_translit.TransliterationParts(
-                committed='∩☺',
-                committed_index=8,
-                preedit='',
-                cursor_pos=0,
-                status='Math: latex',
-                candidates=[]))
-        self.assertEqual(
-            trans.transliterate_parts(list('☺\\int')),
-            m17n_translit.TransliterationParts(
-                committed='☺',
-                committed_index=1,
-                preedit='\\∫',
-                cursor_pos=2,
-                status='Math: latex',
-                candidates=[]))
+        transliterated_parts = trans.transliterate_parts(list('\\'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, '\\')
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, 'Math: latex')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('\\i'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, '\\i')
+        self.assertEqual(transliterated_parts.cursor_pos, 2)
+        self.assertEqual(transliterated_parts.status, 'Math: latex')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('\\in'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, '\\∈')
+        self.assertEqual(transliterated_parts.cursor_pos, 2)
+        self.assertEqual(transliterated_parts.status, 'Math: latex')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('\\int'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, '\\∫')
+        self.assertEqual(transliterated_parts.cursor_pos, 2)
+        self.assertEqual(transliterated_parts.status, 'Math: latex')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('\\inter'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, '\\inter')
+        self.assertEqual(transliterated_parts.cursor_pos, 6)
+        self.assertEqual(transliterated_parts.status, 'Math: latex')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('\\inters'))
+        self.assertEqual(transliterated_parts.committed, '')
+        self.assertEqual(transliterated_parts.committed_index, 0)
+        self.assertEqual(transliterated_parts.preedit, '∩')
+        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        self.assertEqual(transliterated_parts.status, 'Math: latex')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('\\inters '))
+        self.assertEqual(transliterated_parts.committed, '∩ ')
+        self.assertEqual(transliterated_parts.committed_index, 8)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'Math: latex')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('\\inters☺'))
+        self.assertEqual(transliterated_parts.committed, '∩☺')
+        self.assertEqual(transliterated_parts.committed_index, 8)
+        self.assertEqual(transliterated_parts.preedit, '')
+        self.assertEqual(transliterated_parts.cursor_pos, 0)
+        self.assertEqual(transliterated_parts.status, 'Math: latex')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
+        transliterated_parts = trans.transliterate_parts(list('☺\\int'))
+        self.assertEqual(transliterated_parts.committed, '☺')
+        self.assertEqual(transliterated_parts.committed_index, 1)
+        self.assertEqual(transliterated_parts.preedit, '\\∫')
+        self.assertEqual(transliterated_parts.cursor_pos, 2)
+        self.assertEqual(transliterated_parts.status, 'Math: latex')
+        self.assertEqual(transliterated_parts.candidates, [])
+        self.assertEqual(transliterated_parts.candidate_show, 0)
 
     def test_unicode(self) -> None:
         trans = self.get_transliterator_or_skip('t-unicode')

@@ -171,6 +171,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._lookup_table_hidden = False
         self._lookup_table_shows_related_candidates = False
         self._lookup_table_shows_compose_completions = False
+        self._lookup_table_shows_m17n_candidates = False
         self._current_auxiliary_text = ''
         self._current_preedit_text = ''
         self._bus = bus
@@ -456,6 +457,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         self._prev_key: Optional[itb_util.KeyEvent] = None
         self._translated_key_state = 0
+        self._m17n_trans_parts: m17n_translit.TransliterationParts = (
+            m17n_translit.TransliterationParts())
         self._typed_compose_sequence: List[int] = [] # A list of key values
         self._typed_string: List[str] = [] # A list of msymbols
         self._typed_string_cursor = 0
@@ -983,6 +986,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._candidates = []
         self._current_case_mode = 'orig'
         self._typed_compose_sequence = []
+        self._m17n_trans_parts = m17n_translit.TransliterationParts()
         self._prev_key = None
         self._translated_key_state = 0
         self._typed_string = []
@@ -995,6 +999,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._lookup_table_hidden = False
         self._lookup_table_shows_related_candidates = False
         self._lookup_table_shows_compose_completions = False
+        self._lookup_table_shows_m17n_candidates = False
 
     def _insert_string_at_cursor(self, string_to_insert: List[str]) -> None:
         '''Insert typed string at cursor position'''
@@ -2437,6 +2442,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                      may need color added
         '''
         if (self._typed_compose_sequence
+            or self._m17n_trans_parts.candidates
             or not self._color_preedit_spellcheck):
             return
         stripped_text = itb_util.strip_token(text)
@@ -2466,6 +2472,23 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._color_compose_preview_argb,
             length_before_compose,
             length_before_compose + length_compose))
+
+    def _add_color_to_attrs_for_m17n_candidates(self, attrs: IBus.AttrList) -> None:
+        '''May color the m17n candidate part of the preedit
+
+        :param attrs: The attribute list of the preedit
+
+        Uses the same color as for compose preedits.
+        '''
+        if (not self._m17n_trans_parts.candidates
+            or not self._color_compose_preview):
+            return
+        length_committed = len(self._m17n_trans_parts.committed)
+        length_preedit = len(self._m17n_trans_parts.preedit)
+        attrs.append(IBus.attr_foreground_new(
+            self._color_compose_preview_argb,
+            length_committed,
+            length_committed + length_preedit))
 
     def _update_preedit(self) -> None:
         '''Update Preedit String in UI'''
@@ -2498,6 +2521,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             attrs.append(IBus.attr_underline_new(
                 self._preedit_underline, 0, len(_str)))
             self._add_color_to_attrs_for_compose(attrs)
+            self._add_color_to_attrs_for_m17n_candidates(attrs)
             self._add_color_to_attrs_for_spellcheck(attrs, _str)
         else:
             # Preedit style “only when lookup is enabled” is
@@ -2521,8 +2545,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
     def _update_aux(self) -> None:
         '''Update auxiliary text'''
         aux_string = ''
+        if self._lookup_table_shows_m17n_candidates:
+            aux_string += ''.join(
+                self._typed_string[
+                    self._m17n_trans_parts.committed_index
+                    :self._typed_string_cursor]).replace(
+                                   ''.join(itb_util.ANTHY_HENKAN_WIDE), '')
+            aux_string += ' '
         if self._show_number_of_candidates:
-            aux_string = (
+            aux_string += (
                 f'({self.get_lookup_table().get_cursor_pos() + 1} / '
                 f'{self.get_lookup_table().get_number_of_candidates()}) ')
         if self._show_status_info_in_auxiliary_text:
@@ -2530,6 +2561,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 aux_string += '⎄ '
             elif self._lookup_table_shows_related_candidates:
                 aux_string += '🔗 '
+            elif self._lookup_table_shows_m17n_candidates:
+                aux_string += f'🦜 {self._m17n_trans_parts.status} '
             else:
                 # “Normal” lookup table
                 if self._emoji_predictions:
@@ -2620,6 +2653,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if (not self._inline_completion
             or (self.client_capabilities & itb_util.Capabilite.OSK)
             or self._typed_compose_sequence
+            or self._lookup_table_shows_m17n_candidates
             or self._lookup_table_shows_related_candidates
             or self.get_lookup_table().get_cursor_pos() != 0):
             # Show standard lookup table:
@@ -3121,8 +3155,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             < self._lookup_table.get_number_of_candidates()
             and 0 <= index < self._page_size):
             return False
-        phrase = self.get_string_from_lookup_table_current_page(index)
-        if not phrase:
+        selected_candidate = (
+            self.get_string_from_lookup_table_current_page(index))
+        if not selected_candidate:
             return False
         if self._lookup_table_shows_compose_completions:
             self._lookup_table_shows_compose_completions = False
@@ -3134,18 +3169,64 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._update_transliterated_strings()
             self._update_preedit()
             if self.get_input_mode():
-                self._insert_string_at_cursor(list(phrase))
+                self._insert_string_at_cursor(list(selected_candidate))
                 self._update_ui()
                 return True
             super().commit_text(
-                IBus.Text.new_from_string(phrase))
+                IBus.Text.new_from_string(selected_candidate))
             self._commit_happened_after_focus_in = True
             return True
+        if self._lookup_table_shows_m17n_candidates:
+            if self._debug_level > 1:
+                LOGGER.debug('Commit m17n candidate “%s”', selected_candidate)
+            self._lookup_table_shows_m17n_candidates = False
+            self._candidates = []
+            self.get_lookup_table().clear()
+            self.get_lookup_table().set_cursor_visible(False)
+            self._update_lookup_table_and_aux()
+            selected_candidate_length = len(selected_candidate)
+            m17n_preedit_replacement = selected_candidate
+            if (all(len(candidate) == selected_candidate_length
+                   for candidate in self._m17n_trans_parts.candidates)):
+                # If all candidates have the same length, replacing
+                # only part of the m17n preedit is possible and
+                # better. Otherwise replacing the whole m17n preedit
+                # is probably best.
+                m17n_preedit_replacement = (
+                    self._m17n_trans_parts.preedit[
+                        :self._m17n_trans_parts.cursor_pos][
+                            :-len(selected_candidate)]
+                    + selected_candidate
+                    + self._m17n_trans_parts.preedit[
+                        self._m17n_trans_parts.cursor_pos:])
+            if self._debug_level > 1:
+                LOGGER.debug(
+                    'm17n_preedit_replacement=“%s” trans_parts=%s',
+                    m17n_preedit_replacement, repr(self._m17n_trans_parts))
+                LOGGER.debug(
+                    'OLD: self._typed_string=%s, self._typed_string_cursor=%s',
+                    self._typed_string, self._typed_string_cursor)
+            self._typed_string = (
+                self._typed_string[:self._m17n_trans_parts.committed_index]
+                + list(m17n_preedit_replacement)
+                + self._typed_string[self._typed_string_cursor:])
+            self._typed_string_cursor = (
+                self._m17n_trans_parts.committed_index
+                + len(list(m17n_preedit_replacement)))
+            if self._debug_level > 1:
+                LOGGER.debug(
+                    'NEW: self._typed_string=%s, self._typed_string_cursor=%s',
+                    self._typed_string, self._typed_string_cursor)
+            self._update_transliterated_strings()
+            self._m17n_trans_parts = m17n_translit.TransliterationParts()
+            self._update_ui()
+            return True
         if self.is_empty():
-            self._commit_string(phrase + extra_text, input_phrase=phrase)
+            self._commit_string(selected_candidate + extra_text,
+                                input_phrase=selected_candidate)
         else:
             # _commit_string() will calculate input_phrase:
-            self._commit_string(phrase + extra_text)
+            self._commit_string(selected_candidate + extra_text)
         self._clear_input()
         if extra_text == ' ':
             self._update_ui_empty_input_try_completion()
@@ -6097,6 +6178,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :return: True if the key was completely handled, False if not.
         '''
+        if (self._lookup_table_shows_m17n_candidates
+            or self._lookup_table_shows_compose_completions
+            or self._lookup_table_shows_related_candidates):
+            return False
         self._case_mode_change(mode='next')
         self._update_lookup_table_and_aux()
         return True
@@ -6106,6 +6191,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :return: True if the key was completely handled, False if not.
         '''
+        if (self._lookup_table_shows_m17n_candidates
+            or self._lookup_table_shows_compose_completions
+            or self._lookup_table_shows_related_candidates):
+            return False
         self._case_mode_change(mode='previous')
         self._update_lookup_table_and_aux()
         return True
@@ -6154,6 +6243,54 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             else:
                 self._update_preedit()
             return True
+        if self._m17n_trans_parts.candidates:
+            if self._lookup_table_shows_m17n_candidates:
+                if self.get_lookup_table().cursor_visible:
+                    # A candidate is selected in the lookup table.
+                    # Deselect it and show the first page of the candidate
+                    # list:
+                    self.get_lookup_table().set_cursor_visible(False)
+                    self.get_lookup_table().set_cursor_pos(0)
+                    self._update_lookup_table_and_aux()
+                    return True
+                if self._debug_level > 1:
+                    LOGGER.debug('Cancel m17n candidates lookup table')
+                self._lookup_table_shows_m17n_candidates = False
+                if ((self._tab_enable or self._min_char_complete > 1)
+                    and self.is_lookup_table_enabled_by_tab):
+                    self.is_lookup_table_enabled_by_tab = False
+                if self._current_imes[0] == 'ja-anthy':
+                    # This should close the m17n lookup table and go
+                    # back to kana in the preedit:
+                    typed_string_up_to_cursor = (
+                        self._typed_string[:self._typed_string_cursor])
+                    if (typed_string_up_to_cursor[
+                            -len(itb_util.ANTHY_HENKAN_WIDE):]
+                        == itb_util.ANTHY_HENKAN_WIDE):
+                        if self._debug_level > 1:
+                            LOGGER.debug(
+                                'ja-anthy: removing itb_util.ANTHY_HENKAN_WIDE')
+                        typed_string_up_to_cursor = typed_string_up_to_cursor[
+                            :-len(itb_util.ANTHY_HENKAN_WIDE)]
+                        self._typed_string = (
+                            typed_string_up_to_cursor
+                            + self._typed_string[self._typed_string_cursor:])
+                        self._typed_string_cursor = len(typed_string_up_to_cursor)
+                    self._remove_character_before_cursor()
+                else:
+                    # For all other input methods, cancel the whole
+                    # part of the preedit which produces the  current
+                    # m17n candidates:
+                    self._typed_string = (
+                        self._typed_string[
+                            :self._m17n_trans_parts.committed_index]
+                        + self._typed_string[self._typed_string_cursor:])
+                    self._typed_string_cursor = (
+                        self._m17n_trans_parts.committed_index)
+                    self._update_transliterated_strings()
+                self._m17n_trans_parts = m17n_translit.TransliterationParts()
+                self._update_ui()
+                return True
         if self.get_lookup_table().cursor_visible:
             # A candidate is selected in the lookup table.
             # Deselect it and show the first page of the candidate
@@ -6228,6 +6365,30 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self.is_lookup_table_enabled_by_tab = True
             self._lookup_table_shows_compose_completions = True
             self._update_lookup_table_and_aux()
+            return True
+
+        if self._m17n_trans_parts.candidates:
+            if self._lookup_table_shows_m17n_candidates:
+                return False
+            if self._timeout_source_id:
+                # If a timeout has been added for an update of
+                # non-m17n candidates remove it, otherwise it might
+                # destroy the m17n candidates lookup table when the
+                # timeout occurs.
+                GLib.source_remove(self._timeout_source_id)
+                self._timeout_source_id = 0
+            self.is_lookup_table_enabled_by_tab = True
+            self._lookup_table_shows_m17n_candidates = True
+            self._update_lookup_table_and_aux()
+            # Select the first candidate automatically because most
+            # Japanese and Chinese input methods behave like this and because
+            # it saves one “next candidate” keystroke to get to the second
+            # candidate which is the first one which makes a difference
+            # to just continuing with the preedit:
+            self._lookup_table.set_cursor_visible(True)
+            self._is_candidate_auto_selected = True
+            self.update_lookup_table(self.get_lookup_table(), True)
+            self._lookup_table_hidden = False
             return True
 
         if ((self._tab_enable
@@ -7139,6 +7300,446 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.exception('Playing error sound failed: %s: %s',
                                  error.__class__.__name__, error)
 
+    def _handle_m17n_candidates(self, key: itb_util.KeyEvent) -> bool:
+        if self._debug_level > 1:
+            LOGGER.debug('KeyEvent object: %s', key)
+        if self._typed_compose_sequence:
+            if self._debug_level > 1:
+                LOGGER.debug('Do not interfere with compose sequence')
+            return False
+        if key.state & IBus.ModifierType.RELEASE_MASK:
+            if self._debug_level > 1:
+                LOGGER.debug('Ignoring release event.')
+            return False
+        if (not self._m17n_trans_parts.candidates
+            and not self._is_candidate_auto_selected
+            and self.get_lookup_table().get_number_of_candidates()
+            and self.get_lookup_table().cursor_visible):
+            if self._debug_level > 1:
+                LOGGER.debug('Manual selection in lookup table. '
+                             'Do not interfere with that.')
+            return False
+        if (not self._m17n_trans_parts.candidates
+            and not key.msymbol):
+            if self._debug_level > 1:
+                LOGGER.debug('Empty key.msymbol cannot start '
+                             'a m17n candidate sequence.')
+            return False
+        if (not self._m17n_trans_parts.candidates
+            and key.val in self._commit_trigger_keys
+            and not ((self._current_imes[0] == 'ja-anthy'
+                      or self._current_imes[0] == 't-lsymbol')
+                     and key.val == IBus.KEY_space
+                     and key.msymbol == ' ')):
+            # I could make BackSpace, Delete, Left, and Right reopen
+            # m17n candidates. But it seems a bit complicated and I
+            # guess it is not very useful. Therefore, I don’t allow
+            # these keys to reopen m17n candidates at the moment.
+            if self._debug_level > 1:
+                LOGGER.debug('Commit trigger keys usually cannot start '
+                             'a m17n candidate sequence except the space '
+                             'key for ja-anthy and t-lsymbol')
+            return False
+        if (self._m17n_trans_parts.candidates
+            and key.val in
+            (IBus.KEY_Shift_R,
+             IBus.KEY_Shift_L,
+             IBus.KEY_ISO_Level3_Shift,
+             IBus.KEY_Control_L,
+             IBus.KEY_Control_R,
+             IBus.KEY_Alt_L,
+             IBus.KEY_Alt_R,
+             IBus.KEY_Meta_L,
+             IBus.KEY_Meta_R,
+             IBus.KEY_Super_L,
+             IBus.KEY_Super_R)):
+            # Ignoring Shift_R, Shift_L, and ISO_Level3_Shift is
+            # necessary, they should not be added to the m17n candidates
+            # sequence because they usually modify the next key and
+            # only the result of that modified next key press should
+            # be added to the m17n candidates sequence.
+            #
+            # Ignoring the other modifiers seems optional ...
+            if self._debug_level > 1:
+                LOGGER.debug('Inside m17n candidates sequence, ignoring key %s',
+                             IBus.keyval_name(key.val))
+            return True
+        # These input methods produce multiple candidates sometimes
+        # But they do not have a '(show)' command in their .mim
+        # files. Therefore, they **never** show a lookup table and
+        # thus they should be skipped here:
+        if (self._current_imes[0] in ('vi-tcvn',
+                                      'vi-telex',
+                                      'vi-viqr',
+                                      'vi-vni',
+                                      'zh-pinyin-vi',
+                                      'zh-pinyin')):
+            if self._debug_level > 1:
+                LOGGER.debug('%s should never show lookup tables', self._current_imes[0])
+            return False
+        if self._m17n_trans_parts.candidates:
+            (match, return_value) = self._handle_hotkeys(
+                    key, commands=['cancel',
+                                   'commit',
+                                   'commit_and_forward_key',
+                                   'toggle_input_mode_on_off',
+                                   'enable_lookup',
+                                   'select_next_candidate',
+                                   'select_previous_candidate',
+                                   'lookup_table_page_down',
+                                   'lookup_table_page_up',
+                                   'commit_candidate_1',
+                                   'commit_candidate_1_plus_space',
+                                   'commit_candidate_2',
+                                   'commit_candidate_2_plus_space',
+                                   'commit_candidate_3',
+                                   'commit_candidate_3_plus_space',
+                                   'commit_candidate_4',
+                                   'commit_candidate_4_plus_space',
+                                   'commit_candidate_5',
+                                   'commit_candidate_5_plus_space',
+                                   'commit_candidate_6',
+                                   'commit_candidate_6_plus_space',
+                                   'commit_candidate_7',
+                                   'commit_candidate_7_plus_space',
+                                   'commit_candidate_8',
+                                   'commit_candidate_8_plus_space',
+                                   'commit_candidate_9',
+                                   'commit_candidate_9_plus_space'])
+            if match:
+                if self._debug_level > 1:
+                    LOGGER.debug('hotkey matched %s %s', match, return_value)
+                return return_value
+        if (self._lookup_table_shows_m17n_candidates
+            and self.get_lookup_table().cursor_visible
+            and not self._is_candidate_auto_selected
+            and not key.val in (IBus.KEY_BackSpace,)):
+            if self._debug_level > 1:
+                LOGGER.debug('m17n candidate manually selected')
+            if (self._current_imes[0] == 'ja-anthy'
+                and key.val == IBus.KEY_space and key.msymbol == ' '):
+                if self._debug_level > 1:
+                    LOGGER.debug('ja-anthy: select next candidate')
+                self._command_select_next_candidate()
+                return True
+            if self._debug_level > 1:
+                LOGGER.debug('Candidate selected -> typed string')
+            selected_candidate = self.get_string_from_lookup_table_cursor_pos()
+            self._candidates = []
+            self.get_lookup_table().clear()
+            self.get_lookup_table().set_cursor_visible(False)
+            self._update_lookup_table_and_aux()
+            self._lookup_table_shows_m17n_candidates = False
+            selected_candidate_length = len(selected_candidate)
+            m17n_preedit_replacement = selected_candidate
+            if (all(len(candidate) == selected_candidate_length
+                   for candidate in self._m17n_trans_parts.candidates)):
+                # If all candidates have the same length, replacing
+                # only part of the m17n preedit is possible and
+                # better. Otherwise replacing the whole m17n preedit
+                # is probably best.
+                m17n_preedit_replacement = (
+                    self._m17n_trans_parts.preedit[
+                        :self._m17n_trans_parts.cursor_pos][
+                            :-len(selected_candidate)]
+                    + selected_candidate
+                    + self._m17n_trans_parts.preedit[
+                        self._m17n_trans_parts.cursor_pos:])
+            if self._debug_level > 1:
+                LOGGER.debug(
+                    'm17n_preedit_replacement=“%s” trans_parts=%s',
+                    m17n_preedit_replacement,repr(self._m17n_trans_parts))
+                LOGGER.debug(
+                    'OLD: self._typed_string=%s, self._typed_string_cursor=%s',
+                    self._typed_string, self._typed_string_cursor)
+            self._typed_string = (
+                self._typed_string[:self._m17n_trans_parts.committed_index]
+                + list(m17n_preedit_replacement)
+                + self._typed_string[self._typed_string_cursor:])
+            self._typed_string_cursor = (
+                self._m17n_trans_parts.committed_index
+                + len(list(m17n_preedit_replacement)))
+            if self._debug_level > 1:
+                LOGGER.debug(
+                    'NEW:self._typed_string=%s, self._typed_string_cursor=%s',
+                    self._typed_string, self._typed_string_cursor)
+            self._update_transliterated_strings()
+            self._m17n_trans_parts = m17n_translit.TransliterationParts()
+            if (self._current_imes[0].startswith('zh')
+                and key.val == IBus.KEY_space and key.msymbol == ' '):
+                if self._debug_level > 1:
+                    LOGGER.debug(
+                        'zh: manually selected m17n commit, avoid space')
+                self._update_ui()
+                return True
+            if (self._current_imes[0] == 'ja-anthy'
+                and key.val in
+                (IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter)):
+                if self._debug_level > 1:
+                    LOGGER.debug(
+                        'ja-anthy: manually selected m17n commit, avoid Return')
+                self._update_ui()
+                return True
+            # The key which caused the selected candidate to be pasted
+            # into self._typed_string could produce m17n candidates
+            # again (Example: Type `a` with zh-py, select a candidate
+            # with Tab, type `a` again).  Therefore,
+            # self._handle_m17n_candidates(key) needs to be called
+            # again:
+            if self._debug_level > 1:
+                LOGGER.debug('Manually selected m17n commit, try recursion')
+            return self._handle_m17n_candidates(key)
+        if (self._m17n_trans_parts.candidates
+            and key.val in self._commit_trigger_keys
+            and not key.val in (IBus.KEY_BackSpace,)):
+            # There are m17n candidates but nothing is selected in
+            # the lookup table or the lookup table is not shown at all
+            # (because no key was pressed to enable a lookup table).
+            #
+            # The key might usually trigger a commit outside of m17n
+            # candidate sequences.  For all these commit trigger keys
+            # it seems a good idea to me to accept the current m17n
+            # candidates preedit as the final result and continue,
+            # passing the key through.
+            #
+            # BackSpace is an exception, it should **not** accept the
+            # current m17n candidates preedit but continue to the
+            # block where BackSpace removes the last msymbol from the
+            # input.  For example when using zh-py.mim, the input
+            # ['a'] produces啊 in the preedit and shows m17n
+            # candidates for the pinyin 'a'.  The input ['a', 'i']
+            # produces 爱 in the preedit and shows m17n candidates for
+            # the pinyin 'ai'.  A BackSpace should go back to ['a']
+            # and show pinyin candidates for 'a'.
+            if self._debug_level > 1:
+                LOGGER.debug('m17n candidates commit trigger key')
+            if (self._current_imes[0] == 'ja-anthy'
+                and key.val == IBus.KEY_space and key.msymbol == ' '):
+                if self._debug_level > 1:
+                    LOGGER.debug('ja-anthy: select next candidate')
+                self._command_select_next_candidate()
+                return True
+            phrase = self._m17n_trans_parts.preedit
+            self._candidates = []
+            self.get_lookup_table().clear()
+            self.get_lookup_table().set_cursor_visible(False)
+            self._update_lookup_table_and_aux()
+            self._lookup_table_shows_m17n_candidates = False
+            if self._debug_level > 1:
+                LOGGER.debug('phrase=%s, trans_parts=%s',
+                             phrase, repr(self._m17n_trans_parts))
+                LOGGER.debug(
+                    'OLD: self._typed_string=%s, self._typed_string_cursor=%s',
+                    self._typed_string, self._typed_string_cursor)
+            self._typed_string = (
+                self._typed_string[:self._m17n_trans_parts.committed_index]
+                + list(phrase)
+                + self._typed_string[self._typed_string_cursor:])
+            self._typed_string_cursor = (
+                self._m17n_trans_parts.committed_index
+                + len(list(phrase)))
+            if self._debug_level > 1:
+                LOGGER.debug(
+                    'NEW:self._typed_string=%s, self._typed_string_cursor=%s',
+                    self._typed_string, self._typed_string_cursor)
+            self._update_transliterated_strings()
+            self._m17n_trans_parts = m17n_translit.TransliterationParts()
+            if (self._current_imes[0].startswith('zh')
+                and key.val == IBus.KEY_space and key.msymbol == ' '):
+                # When using Chinese input methods with ibus-m17n, the
+                # space key commits without appending a space. Mimic
+                # that behaviour by using `return True`.
+                if self._debug_level > 1:
+                    LOGGER.debug(
+                        'zh: commit key triggered m17n commit, avoid space')
+                self._update_ui()
+                return True
+            if (self._current_imes[0] == 'ja-anthy'
+                and key.val in
+                (IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter)):
+                if self._debug_level > 1:
+                    LOGGER.debug(
+                        'ja-anthy: commit key triggered m17n commit, avoid Return')
+                self._update_ui()
+                return True
+            return False
+        # Check now whether the first input method would show candidates
+        # if key was processed at the cursor position:
+        typed_string_up_to_cursor = (
+            self._typed_string[:self._typed_string_cursor])
+        if self._debug_level > 1:
+            LOGGER.debug('typed_string_up_to_cursor=%s',
+                         repr(typed_string_up_to_cursor))
+        if not typed_string_up_to_cursor:
+            typed_string_up_to_cursor.append(key.msymbol)
+        elif self._current_imes[0] == 'ja-anthy':
+            if (typed_string_up_to_cursor[-len(itb_util.ANTHY_HENKAN_WIDE):]
+                == itb_util.ANTHY_HENKAN_WIDE):
+                if self._debug_level > 1:
+                    LOGGER.debug(
+                        'ja-anthy: removing itb_util.ANTHY_HENKAN_WIDE')
+                typed_string_up_to_cursor = typed_string_up_to_cursor[
+                    :-len(itb_util.ANTHY_HENKAN_WIDE)]
+                self._typed_string = (
+                    typed_string_up_to_cursor
+                    + self._typed_string[self._typed_string_cursor:])
+                self._typed_string_cursor = len(typed_string_up_to_cursor)
+                if key.val == IBus.KEY_space and key.msymbol == ' ':
+                    # This should never happen because when ja-anthy
+                    # already is in henkan mode, space selects the
+                    # next candidate, see code further above.
+                    if self._debug_level > 1:
+                        LOGGER.debug('ja-anthy: continue henkan mode')
+                    typed_string_up_to_cursor += itb_util.ANTHY_HENKAN_WIDE
+                elif key.val in (IBus.KEY_BackSpace,):
+                    if self._debug_level > 1:
+                        LOGGER.debug('ja-anthy: BackSpace in henkan mode')
+                    typed_string_up_to_cursor.pop()
+                else:
+                    if self._debug_level > 1:
+                        LOGGER.debug('ja-anthy: other key in henkan mode')
+                    typed_string_up_to_cursor.append(key.msymbol)
+            elif key.val == IBus.KEY_space and key.msymbol == ' ':
+                if self._debug_level > 1:
+                    LOGGER.debug('ja-anthy: start henkan mode')
+                    # Adding itb_util.ANTHY_HENKAN_WIDE is a crazy
+                    # hack to force the henkan region to be as wide as
+                    # possible.  When using ibus-m17n, it is possible
+                    # to move the henkan region with `Left` or `Right`
+                    # and to resize it with `S-Left` and `S-Right`. At
+                    # the moment, I cannot see a way how to make that
+                    # work in Typing Booster. By default the position
+                    # and size of the henkan region seems to depend on
+                    # previous history. Having inconsistent positions
+                    # and sizes of the henkan region depending on what
+                    # anthy did before is a show stopper if the henkan
+                    # region cannot be changed. To get consistent
+                    # results I try to make the henkan region
+                    # encompass all of the current m17n candidate
+                    # input.
+                    #
+                    # Actually it is no big problem that the henkan region
+                    # cannot be changed in Typing Booster, as Typing Booster
+                    # does not really commit m17n candidate results, it
+                    # only commits them to the preedit where they one can
+                    # then continue to edit the results. It feels a bit different
+                    # but not necessarily bad. It seems have some advantages
+                    # as well, overall it seems reasonably OK.
+                typed_string_up_to_cursor += [' '] + itb_util.ANTHY_HENKAN_WIDE
+            elif key.val in (IBus.KEY_BackSpace,):
+                if self._debug_level > 1:
+                    LOGGER.debug('ja-anthy: BackSpace in kana mode')
+                typed_string_up_to_cursor.pop()
+            else:
+                if self._debug_level > 1:
+                    LOGGER.debug('ja-anthy: other key in kana mode')
+                typed_string_up_to_cursor.append(key.msymbol)
+        elif key.val in (IBus.KEY_BackSpace,):
+            typed_string_up_to_cursor.pop()
+        else:
+            typed_string_up_to_cursor.append(key.msymbol)
+        transliterated_parts = self._transliterators[
+             self._current_imes[0]].transliterate_parts(
+                 typed_string_up_to_cursor, ascii_digits=self._ascii_digits)
+        if self._debug_level > 1:
+            LOGGER.debug('After processing key: '
+                         'typed_string_up_to_cursor=%s '
+                         '-> transliterated_parts=%s',
+                         repr(typed_string_up_to_cursor),
+                         repr(transliterated_parts))
+        if not transliterated_parts.candidates:
+            if self._m17n_trans_parts.candidates:
+                if self._debug_level > 1:
+                    LOGGER.debug('Clear and hide m17n candidates lookup table')
+                # Clearing the lookup table is necessary here!  If it
+                # is not cleared, and a candidate happens to be
+                # manually selected, a BackSpace key here trigger a
+                # replacement of the whole preedit with that candidate
+                # and then delete it by passing the Backspace.
+                #
+                # Example with t-lsymbol: Type `a/:)` + Tab to select
+                # the second candidate 😃.  BackSpace would then cause
+                # the whole predit including the leading `a` to be
+                # replaced with 😃 which then gets deleted by the
+                # BackSpace, leaving nothing.
+                self.get_lookup_table().clear()
+                self.get_lookup_table().set_cursor_visible(False)
+                self.hide_lookup_table()
+                self._lookup_table_hidden = True
+                self._current_auxiliary_text = IBus.Text.new_from_string('')
+                super().update_auxiliary_text(
+                    self._current_auxiliary_text, False)
+                self.is_lookup_table_enabled_by_tab = False
+                self._lookup_table_shows_m17n_candidates = False
+            self._m17n_trans_parts = m17n_translit.TransliterationParts()
+            if self._debug_level > 1:
+                LOGGER.debug('No m17n candidates.')
+            return False
+        self._typed_string = (typed_string_up_to_cursor
+                              + self._typed_string[self._typed_string_cursor:])
+        self._typed_string_cursor = len(typed_string_up_to_cursor)
+        self._update_transliterated_strings()
+        self._m17n_trans_parts = transliterated_parts
+        if self._debug_level > 1:
+            LOGGER.debug('Filling m17n candidate lookup table.')
+        self._lookup_table_shows_m17n_candidates = False
+        self._candidates = []
+        self.get_lookup_table().clear()
+        self.get_lookup_table().set_cursor_visible(False)
+        self.hide_lookup_table()
+        self._lookup_table_hidden = True
+        self._current_auxiliary_text = IBus.Text.new_from_string('')
+        super().update_auxiliary_text(
+            self._current_auxiliary_text, False)
+        for candidate in self._m17n_trans_parts.candidates:
+            if candidate:
+                self._candidates.append((candidate, 0, '', False, False))
+                self._append_candidate_to_lookup_table(phrase=candidate)
+        if not self.get_lookup_table().get_number_of_candidates():
+            # ja-anthy sometimes produces empty candidates.  Which is
+            # *very* weird! Also reproducible with ibus-m17n!  I added
+            # a workaround for ja-anthy in m17n_translit.py, it n ow
+            # tries to filter and fix such broken anthy output. So
+            # this should never happen now. But who knows, maybe there
+            # are more such problems. At least better catch the
+            # problem of an unexpected empty candidate list here:
+            LOGGER.debug(
+                'All m17n candidates were empty. Should never happen.')
+            self.get_lookup_table().clear()
+            self.get_lookup_table().set_cursor_visible(False)
+            self.hide_lookup_table()
+            self._lookup_table_hidden = True
+            self._current_auxiliary_text = IBus.Text.new_from_string('')
+            super().update_auxiliary_text(
+                    self._current_auxiliary_text, False)
+            self.is_lookup_table_enabled_by_tab = False
+            self._lookup_table_shows_m17n_candidates = False
+            self._m17n_trans_parts = m17n_translit.TransliterationParts()
+            return False
+        if self._timeout_source_id:
+            # If a timeout has been added for an update of
+            # non-m17n candidates remove it, otherwise it might
+            # destroy the m17n candidates lookup table when the
+            # timeout occurs.
+            GLib.source_remove(self._timeout_source_id)
+            self._timeout_source_id = 0
+        self.is_lookup_table_enabled_by_tab = False
+        if not self._tab_enable:
+            self._lookup_table_shows_m17n_candidates = True
+            self._update_lookup_table_and_aux()
+            # Select the first candidate automatically because most
+            # Japanese and Chinese input methods behave like this and because
+            # it saves one “next candidate” keystroke to get to the second
+            # candidate which is the first one which makes a difference
+            # to just continuing with the preedit:
+            self._lookup_table.set_cursor_visible(True)
+            self._is_candidate_auto_selected = True
+            self.update_lookup_table(self.get_lookup_table(), True)
+            self._lookup_table_hidden = False
+        else:
+            self._update_preedit()
+        return True
+
     def _handle_compose(self, key: itb_util.KeyEvent, add_to_preedit: bool = True) -> bool:
         '''Internal method to handle possible compose keys
 
@@ -7146,6 +7747,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         if self._debug_level > 1:
             LOGGER.debug('KeyEvent object: %s', key)
+        if self._m17n_trans_parts.candidates:
+            if self._debug_level > 1:
+                LOGGER.debug('Do not interfere with m17n candidates.')
+            return False
         if key.state & IBus.ModifierType.RELEASE_MASK:
             if self._debug_level > 1:
                 LOGGER.debug('Ignoring release event.')
@@ -7159,6 +7764,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     'Key Event object: %s', key)
             return False
         if (not self._typed_compose_sequence
+            and not self._m17n_trans_parts.candidates
             and not self._is_candidate_auto_selected
             and self.get_lookup_table().get_number_of_candidates()
             and self.get_lookup_table().cursor_visible):
@@ -7483,6 +8089,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if disabled:
             return self._return_false(key)
 
+        if self._handle_m17n_candidates(key):
+            return self._return_true(key)
+
         (match, return_value) = self._handle_hotkeys(key)
         if match:
             if return_value:
@@ -7786,15 +8395,22 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # it really triggers a commit.
             if self._debug_level > 1:
                 LOGGER.debug('_process_key_event() commit triggered.\n')
+            input_phrase = self._transliterated_strings[preedit_ime]
+            input_phrase = self._case_modes[
+                self._current_case_mode]['function'](input_phrase)
             # We need to transliterate
             # the preëdit again here, because adding the commit key to
             # the input might influence the transliteration. For example
             # When using hi-itrans, “. ” translates to “। ”
             # (See: https://bugzilla.redhat.com/show_bug.cgi?id=1353672)
-            input_phrase = self._transliterated_strings[preedit_ime]
-            input_phrase = self._case_modes[
-                self._current_case_mode]['function'](input_phrase)
-            if self._typed_string_cursor == len(self._typed_string):
+            #
+            # But not for `ja-anthy`. In case of `ja-anthy`, a Return
+            # will be absorbed in the transliteration because it does
+            # a commit in m17n. Other commit trigger keys cannot do
+            # anything to change the `ja-anthy` transliteration
+            # either.
+            if (self._typed_string_cursor == len(self._typed_string)
+                and not self._current_imes[0] == 'ja-anthy'):
                 input_phrase = self._transliterators[
                     preedit_ime].transliterate(
                         self._typed_string + [key.msymbol],
@@ -7891,6 +8507,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 time.sleep(self._ibus_event_sleep_seconds)
                 for dummy_char in input_phrase_right:
                     self._forward_generated_key_event(IBus.KEY_Left)
+                # In Japanese input methods, a Return commits, in Chinese
+                # input methods a space commits. The commit key is not
+                # passed through.
+                if (self._current_imes[0] == 'ja-anthy'
+                    and key.val in (IBus.KEY_Return,
+                                    IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter)):
+                    return True
+                if (self._current_imes[0].startswith('zh')
+                    and key.val == IBus.KEY_space and key.msymbol == ' '):
+                    return True
                 # self._return_false(key) might use a commit again instead
                 # of forward_key_event() and if a commit is used, another
                 # sleep is necessary.
@@ -7928,6 +8554,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._update_ui_empty_input_try_completion()
             else:
                 self._clear_input_and_update_ui()
+            # In Japanese input methods, a Return commits, in Chinese
+            # input methods a space commits. The commit key is not
+            # passed through and a cursor correction does not seem to
+            # make sense either.
+            if (self._current_imes[0] == 'ja-anthy'
+                and key.val in (IBus.KEY_Return,
+                                IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter)):
+                return True
+            if (self._current_imes[0].startswith('zh')
+                and key.val == IBus.KEY_space and key.msymbol == ' '):
+                return True
             # These sleeps between commit() and
             # forward_key_event() are unfortunately needed because
             # this is racy, without the sleeps it works
@@ -8001,6 +8638,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._clear_input()
             if (not self.is_empty()
                 and not self._typed_compose_sequence
+                and not self._m17n_trans_parts.candidates
                 and self._is_restricted_engine()):
                 transliterated_parts = self._transliterators[
                     self.get_current_imes()[0]].transliterate_parts(

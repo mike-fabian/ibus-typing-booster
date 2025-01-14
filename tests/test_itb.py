@@ -3383,6 +3383,581 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'ॲa ')
 
+    def test_lsymbol(self) -> None:
+        dummy_trans = self.get_transliterator_or_skip('t-lsymbol')
+        self.engine.set_current_imes(
+            ['t-lsymbol', 'NoIME'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_slash, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_colon, 0, 0)
+        self.assertEqual(self.engine._typed_string, ['a', '/', ':'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a/:')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_parenright, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 20)
+        self.assertEqual(self.engine._typed_string, ['a', '/', ':', ')'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a☺\uFE0F')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine._typed_string, ['a', '/', ':'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a/:')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_parenright, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 20)
+        self.assertEqual(self.engine._typed_string, ['a', '/', ':', ')'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a☺\uFE0F')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_b, 0, 0)
+        # `b` key just adds a 'b' to the typed string as nothing was
+        # **manually** selected in the lookup table (the first
+        # candidate was *automatically* selected). This is
+        # intentional, just typing along without manually choosing
+        # candidates should preserve the typed string until a commit
+        # happens!
+        #
+        #There should be no candidates now:
+        self.assertEqual(len(self.engine._candidates), 0)
+        # And the preedit and typed string have just the 'b' added:
+        self.assertEqual(self.engine._typed_string, ['a', '/', ':', ')', 'b'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a☺\uFE0Fb')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
+        # BackSpace does **not** reopen the candidates:
+        self.assertEqual(len(self.engine._candidates), 0)
+        # But the preedit and typed string behave as expected:
+        self.assertEqual(self.engine._typed_string, ['a', '/', ':', ')'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a☺\uFE0F')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
+        # Now we have an incomplete m17n sequence, no candidates:
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine._typed_string, ['a', '/', ':'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a/:')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_parenright, 0, 0)
+        # But adding the ')' makes the m17n sequence complete again
+        # and produces candidates again:
+        self.assertEqual(len(self.engine._candidates), 20)
+        self.engine.do_process_key_event(IBus.KEY_b, 0, 0)
+        # The 'b' is added to the preedit again and the candidates
+        # disappear again:
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine._typed_string, ['a', '/', ':', ')', 'b'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a☺\uFE0Fb')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        # The space has committed:
+        self.assertEqual(self.engine._typed_string, [])
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb ')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_slash, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_colon, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_parenright, 0, 0)
+        # Candidates back:
+        self.assertEqual(len(self.engine._candidates), 20)
+        self.assertEqual(self.engine._typed_string, ['a', '/', ':', ')'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a☺\uFE0F')
+        self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb ')
+        self.assertEqual(self.engine._candidates[0][0], '☺\uFE0F')
+        self.assertEqual(self.engine._candidates[1][0], '😃')
+        self.assertEqual(self.engine._candidates[5][0], '😇')
+        self.engine.do_process_key_event(IBus.KEY_F6, 0, 0)
+        # F6 commits the 6th candidate to preedit and typed string:
+        self.assertEqual(self.engine._typed_string, ['a', '😇'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a😇')
+        self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb ')
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_slash, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_colon, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_parenright, 0, 0)
+        # Candidates back:
+        self.assertEqual(len(self.engine._candidates), 20)
+        self.assertEqual(self.engine._typed_string, ['a', '😇', 'a', '/', ':', ')'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a😇a☺\uFE0F')
+        self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb ')
+        self.assertEqual(self.engine._candidates[0][0], '☺\uFE0F')
+        self.assertEqual(self.engine._candidates[1][0], '😃')
+        self.assertEqual(self.engine._candidates[5][0], '😇')
+        # Escape to cancel the **automatic** selection of the first candidate
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        # Candidates should still be there:
+        self.assertEqual(len(self.engine._candidates), 20)
+        # Tab to select the first candidate **manually**:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        # Candidates should still be there:
+        self.assertEqual(len(self.engine._candidates), 20)
+        self.engine.do_process_key_event(IBus.KEY_b, 0, 0)
+        # Because the candidate is now **manually** selected, the 'b'
+        # does **not** just add to the the typed string but first
+        # copies the selected candidate into the typed string.
+        # I.e. this does **not** preserve the typed string, which is
+        # intentional!  There should be no candidates now:
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine._typed_string, ['a', '😇', 'a', '☺', '\uFE0F', 'b'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a😇a☺\uFE0Fb')
+        self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb ')
+        # commit with space
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine._typed_string, [])
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb a😇a☺\uFE0Fb ')
+        # `/ space` produces a single candidate with t-lsymbol,
+        # U+200C ZERO WIDTH NON-JOINER:
+        self.engine.do_process_key_event(IBus.KEY_slash, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 1)
+        self.assertEqual(self.engine._candidates[0][0], '\u200C')
+        self.assertEqual(self.engine._typed_string, ['/', ' '])
+        self.assertEqual(self.engine.mock_preedit_text, '\u200C')
+        self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb a😇a☺\uFE0Fb ')
+        # commit with space
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine._typed_string, [])
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb a😇a☺\uFE0Fb \u200C ')
+
+
+    def test_zh_py(self) -> None:
+        dummy_trans = self.get_transliterator_or_skip('zh-py')
+        self.engine.set_current_imes(
+            ['zh-py', 'NoIME'], update_gsettings=False)
+        # There are sequences starting with `a` and `x` in zh-py. But
+        # there is no sequence starting with `xa`. zh-py does not
+        # commit the `x` when the `a` is typed but keeps it in
+        # preedit.
+        #
+        # In that case the m17n preedit has a different length then
+        # the candidates which makes it a particularly interesting
+        # test case. Typing Booster should do the same as ibus-m17n in
+        # this case as well.
+        self.engine.do_process_key_event(IBus.KEY_x, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 8)
+        self.assertEqual(self.engine._candidates[0][0], '啊')
+        self.assertEqual(self.engine._candidates[1][0], '呵')
+        self.assertEqual(self.engine._typed_string, ['x', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, 'x啊')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 97)
+        self.assertEqual(self.engine._candidates[0][0], '爱')
+        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._typed_string, ['x', 'a', 'i'])
+        self.assertEqual(self.engine.mock_preedit_text, 'x爱')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 8)
+        self.assertEqual(self.engine._candidates[0][0], '啊')
+        self.assertEqual(self.engine._candidates[1][0], '呵')
+        self.assertEqual(self.engine._typed_string, ['x', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, 'x啊')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 97)
+        self.assertEqual(self.engine._candidates[0][0], '爱')
+        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._typed_string, ['x', 'a', 'i'])
+        self.assertEqual(self.engine.mock_preedit_text, 'x爱')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 97)
+        self.assertEqual(self.engine._candidates[0][0], '爱')
+        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._typed_string, ['x', 'a', 'i', 'a', 'i'])
+        self.assertEqual(self.engine.mock_preedit_text, 'x爱爱')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 97)
+        self.assertEqual(self.engine._candidates[0][0], '爱')
+        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._typed_string, ['x', 'a', 'i'])
+        self.assertEqual(self.engine.mock_preedit_text, 'x爱')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # Escape to cancel the **automatic** selection of the first candidate
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        # Candidates should still be there:
+        self.assertEqual(len(self.engine._candidates), 97)
+        # Tab to select the first candidate **manually**:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        # Candidates should still be there:
+        self.assertEqual(len(self.engine._candidates), 97)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        # Because the candidate is now **manually** selected, the 'a'
+        # does **not** just add to the the typed string but first
+        # copies the selected candidate into the typed string.
+        # I.e. this does **not** preserve the typed string, which is
+        # intentional!
+        self.assertEqual(len(self.engine._candidates), 8)
+        self.assertEqual(self.engine._candidates[0][0], '啊')
+        self.assertEqual(self.engine._candidates[1][0], '呵')
+        self.assertEqual(self.engine._typed_string, ['x', '爱', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, 'x爱啊')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # commit “to preedit” with space:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine._typed_string, ['x', '爱', '啊'])
+        self.assertEqual(self.engine.mock_preedit_text, 'x爱啊')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # “really” commit with a second space:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine._typed_string, [])
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'x爱啊')
+
+    def test_zh_tonepy(self) -> None:
+        dummy_trans = self.get_transliterator_or_skip('zh-tonepy')
+        self.engine.set_current_imes(
+            ['zh-tonepy', 'NoIME'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 1)
+        self.assertEqual(self.engine._candidates[0][0], 'a')
+        self.assertEqual(self.engine._typed_string, ['a'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 1)
+        self.assertEqual(self.engine._candidates[0][0], '嗄')
+        self.assertEqual(self.engine._typed_string, ['a', '2'])
+        self.assertEqual(self.engine.mock_preedit_text, '嗄')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 1)
+        self.assertEqual(self.engine._candidates[0][0], 'a')
+        self.assertEqual(self.engine._typed_string, ['a'])
+        self.assertEqual(self.engine.mock_preedit_text, 'a')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 1)
+        self.assertEqual(self.engine._candidates[0][0], 'ai')
+        self.assertEqual(self.engine._typed_string, ['a', 'i'])
+        self.assertEqual(self.engine.mock_preedit_text, 'ai')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_4, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 53)
+        self.assertEqual(self.engine._candidates[0][0], '爱')
+        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._typed_string, ['a', 'i', '4'])
+        self.assertEqual(self.engine.mock_preedit_text, '爱')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # Select second candiate with Tab
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 53)
+        self.assertEqual(self.engine._candidates[0][0], '爱')
+        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._typed_string, ['a', 'i', '4'])
+        self.assertEqual(self.engine.mock_preedit_text, '爱') # Unchanged!
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 1)
+        self.assertEqual(self.engine._candidates[0][0], 'a')
+        self.assertEqual(self.engine._typed_string, ['愛', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, '愛a')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_4, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 53)
+        self.assertEqual(self.engine._candidates[0][0], '爱')
+        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._typed_string, ['愛', 'a', 'i', '4'])
+        self.assertEqual(self.engine.mock_preedit_text, '愛爱')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # commit “to preedit” with space:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine._typed_string, ['愛', '爱'])
+        self.assertEqual(self.engine.mock_preedit_text, '愛爱')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # “really” commit with a second space:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine._typed_string, [])
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '愛爱')
+
+    def test_zh_cangjie(self) -> None:
+        dummy_trans = self.get_transliterator_or_skip('zh-cangjie')
+        self.engine.set_current_imes(
+            ['zh-cangjie', 'NoIME'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 2)
+        self.assertEqual(self.engine._candidates[0][0], '日')
+        self.assertEqual(self.engine._candidates[1][0], '曰')
+        self.assertEqual(self.engine._typed_string, ['a'])
+        self.assertEqual(self.engine.mock_preedit_text, '日')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 2)
+        self.assertEqual(self.engine._candidates[0][0], '昌')
+        self.assertEqual(self.engine._candidates[1][0], '昍')
+        self.assertEqual(self.engine._typed_string, ['a', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, '昌')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 2)
+        self.assertEqual(self.engine._candidates[0][0], '昌')
+        self.assertEqual(self.engine._candidates[1][0], '昍')
+        self.assertEqual(self.engine._typed_string, ['a', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, '昌')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 2)
+        self.assertEqual(self.engine._candidates[0][0], '日')
+        self.assertEqual(self.engine._candidates[1][0], '曰')
+        self.assertEqual(self.engine._typed_string, ['昍', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, '昍日')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 2)
+        self.assertEqual(self.engine._candidates[0][0], '昌')
+        self.assertEqual(self.engine._candidates[1][0], '昍')
+        self.assertEqual(self.engine._typed_string, ['昍', 'a', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, '昍昌')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 1)
+        self.assertEqual(self.engine._candidates[0][0], '晶')
+        self.assertEqual(self.engine._typed_string, ['昍', 'a', 'a', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, '昍晶')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 2)
+        self.assertEqual(self.engine._candidates[0][0], '𣊫')
+        self.assertEqual(self.engine._candidates[1][0], '𣊭')
+        self.assertEqual(self.engine._typed_string, ['昍', 'a', 'a', 'a', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, '昍𣊫')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 1)
+        self.assertEqual(self.engine._candidates[0][0], '晶')
+        self.assertEqual(self.engine._typed_string, ['昍', 'a', 'a', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, '昍晶')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 2)
+        self.assertEqual(self.engine._candidates[0][0], '𣊫')
+        self.assertEqual(self.engine._candidates[1][0], '𣊭')
+        self.assertEqual(self.engine._typed_string, ['昍', 'a', 'a', 'a', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, '昍𣊫')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 2)
+        self.assertEqual(self.engine._candidates[0][0], '𣊫')
+        self.assertEqual(self.engine._candidates[1][0], '𣊭')
+        self.assertEqual(self.engine._typed_string, ['昍', 'a', 'a', 'a', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, '昍𣊫')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 2)
+        self.assertEqual(self.engine._candidates[0][0], '日')
+        self.assertEqual(self.engine._candidates[1][0], '曰')
+        self.assertEqual(self.engine._typed_string, ['昍', '𣊭', 'a'])
+        self.assertEqual(self.engine.mock_preedit_text, '昍𣊭日')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_F2, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine._typed_string, ['昍', '𣊭', '曰'])
+        self.assertEqual(self.engine.mock_preedit_text, '昍𣊭曰')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine._typed_string, [])
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '昍𣊭曰')
+
+    def test_ja_anthy_aki_aki_aki_aki_simple(self) -> None:
+        dummy_trans = self.get_transliterator_or_skip('ja-anthy')
+        self.engine.set_current_imes(
+            ['ja-anthy', 'NoIME'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.assertEqual(
+            self.engine._typed_string,
+            ['a', 'k', 'i'])
+        self.assertEqual(self.engine.mock_preedit_text, 'あき')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(
+            self.engine._typed_string,
+            ['a', 'k', 'i', ' ']
+            + itb_util.ANTHY_HENKAN_WIDE)
+        self.assertEqual(self.engine.mock_preedit_text, '秋')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertTrue(len(self.engine._candidates) > 5)
+        self.assertEqual(self.engine._candidates[0][0], '秋')
+        self.assertEqual(self.engine._candidates[1][0], '空き')
+        # Commit to preedit with Return
+        self.engine.do_process_key_event(IBus.KEY_Return, 0, 0)
+        self.assertEqual(self.engine._typed_string, ['秋'])
+        self.assertEqual(self.engine.mock_preedit_text, '秋')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.assertEqual(self.engine._typed_string,
+                         ['秋', 'a', 'k', 'i'])
+        self.assertEqual(self.engine.mock_preedit_text, '秋あき')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(
+            self.engine._typed_string,
+            ['秋', 'a', 'k', 'i', ' ']
+            + itb_util.ANTHY_HENKAN_WIDE)
+        self.assertEqual(self.engine.mock_preedit_text, '秋秋')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertTrue(len(self.engine._candidates) > 5)
+        self.assertEqual(self.engine._candidates[0][0], '秋')
+        self.assertEqual(self.engine._candidates[1][0], '空き')
+        # No commit, continue typing
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.assertEqual(self.engine._typed_string,
+                         ['秋', 'a', 'k', 'i', ' ',  'a', 'k', 'i'])
+        self.assertEqual(self.engine.mock_preedit_text, '秋秋あき')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(
+            self.engine._typed_string,
+            ['秋', 'a', 'k', 'i', ' ',  'a', 'k', 'i', ' ']
+            + itb_util.ANTHY_HENKAN_WIDE)
+        self.assertEqual(self.engine.mock_preedit_text, '秋秋秋')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertTrue(len(self.engine._candidates) > 5)
+        self.assertEqual(self.engine._candidates[0][0], '秋')
+        self.assertEqual(self.engine._candidates[1][0], '空き')
+        # Select second candidate manually:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '秋秋秋') # unchanged!
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertTrue(len(self.engine._candidates) > 5)
+        self.assertEqual(self.engine._candidates[0][0], '秋')
+        self.assertEqual(self.engine._candidates[1][0], '空き')
+        # Continue typing
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.assertEqual(
+            self.engine._typed_string,
+            ['秋', 'a', 'k', 'i', ' ',  '空',  'き', 'a', 'k', 'i'])
+        self.assertEqual(self.engine.mock_preedit_text, '秋秋空きあき')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(
+            self.engine._typed_string,
+            ['秋', 'a', 'k', 'i', ' ',  '空',  'き', 'a', 'k', 'i', ' ']
+            + itb_util.ANTHY_HENKAN_WIDE)
+        self.assertEqual(self.engine.mock_preedit_text, '秋秋空き秋')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertTrue(len(self.engine._candidates) > 5)
+        self.assertEqual(self.engine._candidates[0][0], '秋')
+        self.assertEqual(self.engine._candidates[1][0], '空き')
+        # Commit to Preedit with Return:
+        self.engine.do_process_key_event(IBus.KEY_Return, 0, 0)
+        self.assertEqual(
+            self.engine._typed_string,
+            ['秋', 'a', 'k', 'i', ' ',  '空',  'き', '秋'])
+        self.assertEqual(self.engine.mock_preedit_text, '秋秋空き秋')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # Really commit with a second Return:
+        self.engine.do_process_key_event(IBus.KEY_Return, 0, 0)
+        self.assertEqual(self.engine._typed_string, [])
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '秋秋空き秋')
+        # Third Return adds a new line:
+        self.engine.do_process_key_event(IBus.KEY_Return, 0, 0)
+        self.assertEqual(self.engine._typed_string, [])
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '秋秋空き秋\r')
+
+    def test_ja_anthy_wide_henkan_region(self) -> None:
+        '''When typing すいみんぶそく and then space for henkan,
+        in ibus-anthy, ibus-kkc, ibus-m17n with the henkan region is
+        shorter than the whole input, usually one gets
+        睡眠不足 in the preedit with the henkan region only
+        covering 睡眠.
+
+        With these input methods, it is no problem that the henkan
+        region does not cover everything as the henkan region can be
+        moved, widened, and narrowed.
+
+        But in Typing Booster, I was not yet able to widen, and narrow
+        the henkan region reliably.
+
+        Maybe I’ll try again later, maybe it’s possible to do better.
+
+        But for the moment, I make the henkan region always maximal
+        immediately at henkan. I.e. if typing すいみんぶそく and then
+        henkan, the henkan region is maximally widened to cover all of
+        睡眠不足.
+
+        This is not optimal but better than having a henkan region
+        with an unpredictable width and position (unpredictable
+        because it seems to depend on previous usage of the anthy
+        library). If the henkan region is not where one wants it
+        and cannot be changed, that is really bad. So it is better
+        to make the henkan region cover everything, that gives
+        predictable results at least.
+
+        If one wants a shorter henkan region, the only way in Typing
+        Booster is to do henkan on shorter kana input.
+
+        '''
+        dummy_trans = self.get_transliterator_or_skip('ja-anthy')
+        self.engine.set_current_imes(
+            ['ja-anthy', 'NoIME'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_b, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.assertEqual(
+            self.engine._typed_string,
+            ['s', 'u', 'i', 'm', 'i', 'n', 'b', 'u', 's', 'o', 'k', 'u'])
+        self.assertEqual(self.engine.mock_preedit_text, 'すいみんぶそく')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(
+            self.engine._typed_string,
+            ['s', 'u', 'i', 'm', 'i', 'n', 'b', 'u', 's', 'o', 'k', 'u', ' ']
+            + itb_util.ANTHY_HENKAN_WIDE)
+        # When doing henkan on such a wide input, there are not many
+        # choices:
+        self.assertEqual(len(self.engine._candidates), 3)
+        self.assertEqual(self.engine._candidates[0][0], '睡眠不足')
+        self.assertEqual(self.engine._candidates[1][0], 'すいみんぶそく')
+        self.assertEqual(self.engine._candidates[2][0], 'スイミンブソク')
+        self.engine.do_process_key_event(IBus.KEY_Return, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine.mock_preedit_text, '睡眠不足')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(
+            self.engine._typed_string,
+            ['睡', '眠', '不', '足'])
+        self.engine.do_process_key_event(IBus.KEY_Return, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '睡眠不足')
+        self.assertEqual(
+            self.engine._typed_string,
+            [])
+
 if __name__ == '__main__':
     LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
     LOGGER.setLevel(logging.DEBUG)

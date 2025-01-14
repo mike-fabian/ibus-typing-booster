@@ -941,6 +941,8 @@ class TransliterationParts(NamedTuple):
                           to '漢' in Henkan mode.
     candidates: List[str] May contain a list of candidates if the
                           input method can produce multiple candidates.
+    candidate_show: int   0: candidates should be hidden
+                          1: candidates should be shown
     '''
     committed: str = ''
     committed_index: int = 0
@@ -948,6 +950,7 @@ class TransliterationParts(NamedTuple):
     cursor_pos: int = 0
     status: str = ''
     candidates: List[str] = []
+    candidate_show: int = 0
 
 class Transliterator:
     # pylint: disable=line-too-long
@@ -1008,64 +1011,402 @@ class Transliterator:
         Examples:
 
         >>> trans = Transliterator('hi-itrans')
-        >>> trans.transliterate_parts(list('n'))
-        TransliterationParts(committed='', committed_index=0, preedit='न्', cursor_pos=2, status='क', candidates=[])
-        >>> trans.transliterate_parts(list('n '))
-        TransliterationParts(committed='न ', committed_index=2, preedit='', cursor_pos=0, status='क', candidates=[])
-        >>> trans.transliterate_parts(list('na'))
-        TransliterationParts(committed='', committed_index=0, preedit='न', cursor_pos=1, status='क', candidates=[])
-        >>> trans.transliterate_parts(list('nam'))
-        TransliterationParts(committed='न', committed_index=2, preedit='म्', cursor_pos=2, status='क', candidates=[])
-        >>> trans.transliterate_parts(list('nama'))
-        TransliterationParts(committed='न', committed_index=2, preedit='म', cursor_pos=1, status='क', candidates=[])
-        >>> trans.transliterate_parts(list('namas'))
-        TransliterationParts(committed='नम', committed_index=4, preedit='स्', cursor_pos=2, status='क', candidates=[])
-        >>> trans.transliterate_parts(list('namast'))
-        TransliterationParts(committed='नम', committed_index=4, preedit='स्त्', cursor_pos=4, status='क', candidates=[])
-        >>> trans.transliterate_parts(list('namaste'))
-        TransliterationParts(committed='नम', committed_index=4, preedit='स्ते', cursor_pos=4, status='क', candidates=[])
-        >>> trans.transliterate_parts(list('namaste '))
-        TransliterationParts(committed='नमस्ते ', committed_index=8, preedit='', cursor_pos=0, status='क', candidates=[])
+        >>> parts = trans.transliterate_parts(list('n'))
+        >>> parts.committed
+        ''
+        >>> parts.committed_index
+        0
+        >>> parts.preedit
+        'न्'
+        >>> parts.cursor_pos
+        2
+        >>> parts.status
+        'क'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('n '))
+        >>> parts.committed
+        'न '
+        >>> parts.committed_index
+        2
+        >>> parts.preedit
+        ''
+        >>> parts.cursor_pos
+        0
+        >>> parts.status
+        'क'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts =trans.transliterate_parts(list('na'))
+        >>> parts.committed
+        ''
+        >>> parts.committed_index
+        0
+        >>> parts.preedit
+        'न'
+        >>> parts.cursor_pos
+        1
+        >>> parts.status
+        'क'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('nam'))
+        >>> parts.committed
+        'न'
+        >>> parts.committed_index
+        2
+        >>> parts.preedit
+        'म्'
+        >>> parts.cursor_pos
+        2
+        >>> parts.status
+        'क'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('nama'))
+        >>> parts.committed
+        'न'
+        >>> parts.committed_index
+        2
+        >>> parts.preedit
+        'म'
+        >>> parts.cursor_pos
+        1
+        >>> parts.status
+        'क'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('namas'))
+        >>> parts.committed
+        'नम'
+        >>> parts.committed_index
+        4
+        >>> parts.preedit
+        'स्'
+        >>> parts.cursor_pos
+        2
+        >>> parts.status
+        'क'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('namast'))
+        >>> parts.committed
+        'नम'
+        >>> parts.committed_index
+        4
+        >>> parts.preedit
+        'स्त्'
+        >>> parts.cursor_pos
+        4
+        >>> parts.status
+        'क'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('namaste'))
+        >>> parts.committed
+        'नम'
+        >>> parts.committed_index
+        4
+        >>> parts.preedit
+        'स्ते'
+        >>> parts.cursor_pos
+        4
+        >>> parts.status
+        'क'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('namaste '))
+        >>> parts.committed
+        'नमस्ते '
+        >>> parts.committed_index
+        8
+        >>> parts.preedit
+        ''
+        >>> parts.cursor_pos
+        0
+        >>> parts.status
+        'क'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
 
         >>> trans = Transliterator('t-latn-post')
-        >>> trans.transliterate_parts(list('u'))
-        TransliterationParts(committed='', committed_index=0, preedit='u', cursor_pos=1, status='Latin-post', candidates=[])
-        >>> trans.transliterate_parts(list('u"'))
-        TransliterationParts(committed='', committed_index=0, preedit='ü', cursor_pos=1, status='Latin-post', candidates=[])
-        >>> trans.transliterate_parts(list('u""'))
-        TransliterationParts(committed='u"', committed_index=3, preedit='', cursor_pos=0, status='Latin-post', candidates=[])
-        >>> trans.transliterate_parts(list('u"u'))
-        TransliterationParts(committed='ü', committed_index=2, preedit='u', cursor_pos=1, status='Latin-post', candidates=[])
-        >>> trans.transliterate_parts(list('üu"u'))
-        TransliterationParts(committed='üü', committed_index=3, preedit='u', cursor_pos=1, status='Latin-post', candidates=[])
+        >>> parts = trans.transliterate_parts(list('u'))
+        >>> parts.committed
+        ''
+        >>> parts.committed_index
+        0
+        >>> parts.preedit
+        'u'
+        >>> parts.cursor_pos
+        1
+        >>> parts.status
+        'Latin-post'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('u"'))
+        >>> parts.committed
+        ''
+        >>> parts.committed_index
+        0
+        >>> parts.preedit
+        'ü'
+        >>> parts.cursor_pos
+        1
+        >>> parts.status
+        'Latin-post'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('u""'))
+        >>> parts.committed
+        'u"'
+        >>> parts.committed_index
+        3
+        >>> parts.preedit
+        ''
+        >>> parts.cursor_pos
+        0
+        >>> parts.status
+        'Latin-post'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('u"u'))
+        >>> parts.committed
+        'ü'
+        >>> parts.committed_index
+        2
+        >>> parts.preedit
+        'u'
+        >>> parts.cursor_pos
+        1
+        >>> parts.status
+        'Latin-post'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('üu"u'))
+        >>> parts.committed
+        'üü'
+        >>> parts.committed_index
+        3
+        >>> parts.preedit
+        'u'
+        >>> parts.cursor_pos
+        1
+        >>> parts.status
+        'Latin-post'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
 
         >>> trans = Transliterator('t-rfc1345')
-        >>> trans.transliterate_parts(list('&'))
-        TransliterationParts(committed='', committed_index=0, preedit='&', cursor_pos=1, status='RFC1345', candidates=[])
-        >>> trans.transliterate_parts(list('&C'))
-        TransliterationParts(committed='', committed_index=0, preedit='&C', cursor_pos=2, status='RFC1345', candidates=[])
-        >>> trans.transliterate_parts(list('&Co'))
-        TransliterationParts(committed='©', committed_index=3, preedit='', cursor_pos=0, status='RFC1345', candidates=[])
-        >>> trans.transliterate_parts(list('&f'))
-        TransliterationParts(committed='', committed_index=0, preedit='&f', cursor_pos=2, status='RFC1345', candidates=[])
-        >>> trans.transliterate_parts(list('&ff'))
-        TransliterationParts(committed='', committed_index=0, preedit='ﬀ', cursor_pos=1, status='RFC1345', candidates=[])
-        >>> trans.transliterate_parts(list('&ffi'))
-        TransliterationParts(committed='ﬃ', committed_index=4, preedit='', cursor_pos=0, status='RFC1345', candidates=[])
+        >>> parts = trans.transliterate_parts(list('&'))
+        >>> parts.committed
+        ''
+        >>> parts.committed_index
+        0
+        >>> parts.preedit
+        '&'
+        >>> parts.cursor_pos
+        1
+        >>> parts.status
+        'RFC1345'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('&C'))
+        >>> parts.committed
+        ''
+        >>> parts.committed_index
+        0
+        >>> parts.preedit
+        '&C'
+        >>> parts.cursor_pos
+        2
+        >>> parts.status
+        'RFC1345'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('&Co'))
+        >>> parts.committed
+        '©'
+        >>> parts.committed_index
+        3
+        >>> parts.preedit
+        ''
+        >>> parts.cursor_pos
+        0
+        >>> parts.status
+        'RFC1345'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('&f'))
+        >>> parts.committed
+        ''
+        >>> parts.committed_index
+        0
+        >>> parts.preedit
+        '&f'
+        >>> parts.cursor_pos
+        2
+        >>> parts.status
+        'RFC1345'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('&ff'))
+        >>> parts.committed
+        ''
+        >>> parts.committed_index
+        0
+        >>> parts.preedit
+        'ﬀ'
+        >>> parts.cursor_pos
+        1
+        >>> parts.status
+        'RFC1345'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('&ffi'))
+        >>> parts.committed
+        'ﬃ'
+        >>> parts.committed_index
+        4
+        >>> parts.preedit
+        ''
+        >>> parts.cursor_pos
+        0
+        >>> parts.status
+        'RFC1345'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
 
         >>> trans = Transliterator('t-lsymbol')
-        >>> trans.transliterate_parts(list('/:)'))
-        TransliterationParts(committed='', committed_index=0, preedit='☺️', cursor_pos=2, status='lsymbol', candidates=['☺️', '😃', '😅', '😆', '😉', '😇', '😂', '😏', '😛', '😜', '😝', '😋', '😉', '💏', '💋', '😍', '😘', '😚', '😽', '😻'])
-        >>> trans.transliterate_parts(list('a'))
-        TransliterationParts(committed='a', committed_index=1, preedit='', cursor_pos=0, status='lsymbol', candidates=[])
-        >>> trans.transliterate_parts(list('a/'))
-        TransliterationParts(committed='a', committed_index=1, preedit='/', cursor_pos=1, status='lsymbol', candidates=[])
-        >>> trans.transliterate_parts(list('a/:'))
-        TransliterationParts(committed='a', committed_index=1, preedit='/:', cursor_pos=2, status='lsymbol', candidates=[])
-        >>> trans.transliterate_parts(list('a/:('))
-        TransliterationParts(committed='a', committed_index=1, preedit='😢', cursor_pos=1, status='lsymbol', candidates=['😢', '😩', '😡', '😭', '😪', '🙈', '🙊', '🙉'])
-        >>> trans.transliterate_parts(list('a/:(b'))
-        TransliterationParts(committed='a😢b', committed_index=5, preedit='', cursor_pos=0, status='lsymbol', candidates=[])
+        >>> parts = trans.transliterate_parts(list('/:)'))
+        >>> parts.committed
+        ''
+        >>> parts.committed_index
+        0
+        >>> parts.preedit
+        '☺️'
+        >>> parts.cursor_pos
+        2
+        >>> parts.status
+        'lsymbol'
+        >>> parts.candidates
+        ['☺️', '😃', '😅', '😆', '😉', '😇', '😂', '😏', '😛', '😜', '😝', '😋', '😉', '💏', '💋', '😍', '😘', '😚', '😽', '😻']
+        >>> parts.candidate_show
+        1
+        >>> parts = trans.transliterate_parts(list('a'))
+        >>> parts.committed
+        'a'
+        >>> parts.committed_index
+        1
+        >>> parts.preedit
+        ''
+        >>> parts.cursor_pos
+        0
+        >>> parts.status
+        'lsymbol'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
+        >>> parts = trans.transliterate_parts(list('a/'))
+        >>> parts.committed
+        'a'
+        >>> parts.committed_index
+        1
+        >>> parts.preedit
+        '/'
+        >>> parts.cursor_pos
+        1
+        >>> parts.status
+        'lsymbol'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        1
+        >>> parts = trans.transliterate_parts(list('a/:'))
+        >>> parts.committed
+        'a'
+        >>> parts.committed_index
+        1
+        >>> parts.preedit
+        '/:'
+        >>> parts.cursor_pos
+        2
+        >>> parts.status
+        'lsymbol'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        1
+        >>> parts = trans.transliterate_parts(list('a/:('))
+        >>> parts.committed
+        'a'
+        >>> parts.committed_index
+        1
+        >>> parts.preedit
+        '😢'
+        >>> parts.cursor_pos
+        1
+        >>> parts.status
+        'lsymbol'
+        >>> parts.candidates
+        ['😢', '😩', '😡', '😭', '😪', '🙈', '🙊', '🙉']
+        >>> parts.candidate_show
+        1
+        >>> parts = trans.transliterate_parts(list('a/:(b'))
+        >>> parts.committed
+        'a😢b'
+        >>> parts.committed_index
+        5
+        >>> parts.preedit
+        ''
+        >>> parts.cursor_pos
+        0
+        >>> parts.status
+        'lsymbol'
+        >>> parts.candidates
+        []
+        >>> parts.candidate_show
+        0
 
         For a test transliterating parts using 'ja-anthy' see 'tests/test_m17n_translit.py'.
         '''
@@ -1145,6 +1486,7 @@ class Transliterator:
             plist = libm17n__mplist_next(plist) # type: ignore
         cursor_pos = self._ic.contents.cursor_pos
         status = mtext_to_string(self._ic.contents.status)
+        candidate_show = self._ic.contents.candidate_show
         # From the m17n-lib documentation:
         #
         # The minput_reset_ic () function resets input context $IC by
@@ -1171,20 +1513,57 @@ class Transliterator:
             self._ic, _symbol, ctypes.c_void_p(None))
         if committed and not preedit:
             committed_index = len(msymbol_list)
+        if self._language == 'zh':
+            # For Chinese, if there are no candidates but a preedit,
+            # copy the preedit to make sure that there is at least
+            # one candidate.
+            #
+            # For example zh-cangjie.mim contains:
+            #
+            #  (map
+            #   ("a" ("日曰"))
+            #   ("aa" ("昌昍"))
+            #   ("aaa" ?晶)
+            #   ("aaaa" ("𣊫𣊭"))
+            #   [...]
+            #
+            # In that case typing `a` and `aa` produces candidates but
+            # `aaa` does not and `aaaa` produces candidates again.
+            # That is bad because Typing Booster behaves differently
+            # when there are candidates and when there are not.
+            # So it would behave inconsistently while typing `aaaa` if
+            # `aaa` suddenly has no candidates.
+            if preedit and not candidates:
+                candidates = [preedit]
+        if self._language == 'ja' and self._name == 'anthy':
+            # ja-anthy seems to produce a lot of useless geta marks '
+            # 〓'.  It also produces sometimes useless empty
+            # candidates and sometimes (when transliterating `1 ` even
+            # preedit='', cursor_pos=1. Try to fix this here:
+            if preedit != '下駄':
+                candidates = [
+                    candidate
+                    for candidate in candidates
+                    if candidate and '〓' not in candidate]
+            if not preedit and candidates:
+                preedit = candidates[0]
+                cursor_pos = len(preedit)
         if not ascii_digits:
             return TransliterationParts(committed=committed,
                                        committed_index=committed_index,
                                        preedit=preedit,
                                        cursor_pos=cursor_pos,
                                        status=status,
-                                       candidates=candidates)
+                                       candidates=candidates,
+                                       candidate_show=candidate_show)
         return TransliterationParts(
             committed=convert_digits_to_ascii(committed),
             committed_index=committed_index,
             preedit=convert_digits_to_ascii(preedit),
             cursor_pos=cursor_pos,
             status=status,
-            candidates=candidates)
+            candidates=candidates,
+            candidate_show=candidate_show)
 
     def transliterate(self, msymbol_list: Iterable[str], ascii_digits: bool = False) -> str:
         '''Transliterate a list of Msymbol names
