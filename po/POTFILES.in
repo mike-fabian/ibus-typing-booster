@@ -10,4 +10,5 @@ engine/main.py
 engine/tabsqlitedb.py
 setup/main.py
 setup/pkginstall.py
+emoji-picker.appdata.xml
 typing-booster.appdata.xml
