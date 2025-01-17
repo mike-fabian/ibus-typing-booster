@@ -2,23 +2,23 @@
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019.
 # Pavel Borecki <pavel.borecki@gmail.com>, 2019. #zanata, 2021.
 # Josef Hruska <hrusjos@gmail.com>, 2019, 2021.
-# Daniel Rusek <mail@asciiwolf.com>, 2024.
+# Daniel Rusek <mail@asciiwolf.com>, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-01-08 11:53+0100\n"
-"PO-Revision-Date: 2024-06-08 21:36+0000\n"
+"PO-Revision-Date: 2025-01-17 09:38+0000\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
-"Language-Team: Czech <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/cs/>\n"
+"Language-Team: Czech <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.9.2\n"
 
 #: engine/emoji_picker.py:210
 msgid "Emoji Picker"
@@ -95,36 +95,28 @@ msgid "Unicode Version:"
 msgstr "Verze unicode:"
 
 #: engine/emoji_picker.py:723
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji Version:"
-msgstr "Verze unicode:"
+msgstr "Verze emodži:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:730
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji properties:"
-msgstr "Verze unicode:"
+msgstr "Vlastnosti emodži:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
 #: engine/emoji_picker.py:736
-#, fuzzy
-#| msgid "Unicode categories"
 msgid "Unicode category:"
-msgstr "Unicode kategorie"
+msgstr "Kategorie unicode:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
 #: engine/emoji_picker.py:743
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Unicode block:"
-msgstr "Verze unicode:"
+msgstr "Blok unicode:"
 
 #: engine/emoji_picker.py:762 engine/emoji_picker.py:1903
 msgid "Left click to copy"
@@ -821,7 +813,7 @@ msgstr ""
 #. forced while Typing Booster is active
 #: setup/main.py:795
 msgid "Use IBus keymap"
-msgstr ""
+msgstr "Použít mapu kláves IBus"
 
 #: setup/main.py:797
 msgid ""
@@ -829,6 +821,10 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"Zda je vynuceno použití mapy kláves IBus, když je aktivní Urychlovač psaní. "
+"Pro většinu uživatelů je doporučeno nepoužívat mapu kláves IBus. V takovém "
+"případě se použije rozložení klávesnice, které bylo aktivní před přepnutím "
+"na podporu psaní."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -839,7 +835,7 @@ msgstr ""
 #. “English” keymap used.
 #: setup/main.py:818
 msgid "English"
-msgstr ""
+msgstr "angličtina"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
@@ -912,14 +908,8 @@ msgid "Play sound file on error"
 msgstr "Přehrát zvukový soubor při chybě"
 
 #: setup/main.py:932
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for a suggestion shown "
-#| "inline."
 msgid "Here you can choose whether a sound file is played if an error occurs."
-msgstr ""
-"Zde je možné zvolit zda je pro návrhy v textu používána uživatelsky určená "
-"barva."
+msgstr "Zde je možné zvolit, zda se v případě chyby přehraje zvukový soubor."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -1142,8 +1132,8 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
-"Zobrazit v pomocném textu zda režim  „predikce emodži“ a režim  „mimo "
-"záznam“ jsou zapnuté nebo vypnuté a zobrazuje, která metoda vstupu je v tuto "
+"Zobrazit v pomocném textu, zda režim  „predikce emodži“ a režim  „mimo "
+"záznam“ jsou zapnuté nebo vypnuté a zobrazit, která metoda vstupu je v tuto "
 "chvíli použita pro předúpravu. Pomocný text je volitelný řádek textu "
 "zobrazovaný nad seznamem kandidátů."
 
@@ -1184,10 +1174,8 @@ msgstr "Svisle"
 #. the system needs to be idle after pressing a key before
 #. candidates are displayed
 #: setup/main.py:1629
-#, fuzzy
-#| msgid "Candidate window page size:"
 msgid "Candidate window delay in milliseconds:"
-msgstr "Velikost stránky okna s kandidáty:"
+msgstr "Zpoždění okna s kandidáty v milisekundách:"
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
@@ -1195,6 +1183,7 @@ msgstr "Velikost stránky okna s kandidáty:"
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
 msgstr ""
+"Jak dlouho čekat po posledním stisknutí tlačítka, než se zobrazí kandidáti."
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
@@ -1267,7 +1256,7 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
-"Zde můžete zvolit, zda se má provádět kontrola pravopisu u obsahu před "
+"Zde je možné zvolit, zda se má provádět kontrola pravopisu u obsahu před "
 "editací a zda se má použít uživatelsky určená barva k označení, kdy obsah "
 "před editací může obsahovat pravopisnou chybu."
 
@@ -1299,7 +1288,7 @@ msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
 msgstr ""
-"Zde je možné zvolit zda je pro návrhy v textu používána uživatelsky určená "
+"Zde je možné zvolit, zda je pro návrhy v textu používána uživatelsky určená "
 "barva."
 
 #. Translators: Used in the title bar of the colour chooser
