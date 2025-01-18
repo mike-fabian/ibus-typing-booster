@@ -34,12 +34,12 @@ ACLOCAL_AMFLAGS = -I m4
 
 # To register as an AppStream component to be visible in the software center
 # (See http://www.freedesktop.org/software/appstream/docs/ for more details):
-appdata_DATA = \
-	typing-booster.appdata.xml \
-	emoji-picker.appdata.xml \
+metainfo_DATA = \
+	org.freedesktop.ibus.engine.typing_booster.metainfo.xml \
+	org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml \
 	$(NULL)
 
-appdatadir = $(datadir)/metainfo
+metainfodir = $(datadir)/metainfo
 
 schemas_DATA = \
 	org.freedesktop.ibus.engine.typing-booster.gschema.xml
@@ -77,8 +77,8 @@ MAINTAINERCLEANFILES = \
 
 EXTRA_DIST = \
 	config.rpath \
-	typing-booster.appdata.xml \
-	emoji-picker.appdata.xml \
+	org.freedesktop.ibus.engine.typing_booster.metainfo.xml \
+	org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml \
 	$(schemas_DATA) \
 	@PACKAGE_NAME@.spec.fedora \
 	@PACKAGE_NAME@.spec.suse \
