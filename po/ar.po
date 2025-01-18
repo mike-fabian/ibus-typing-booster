@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-01-08 11:53+0100\n"
+"POT-Creation-Date: 2025-01-18 17:44+0100\n"
 "PO-Revision-Date: 2023-07-30 09:19+0000\n"
 "Last-Translator: Avid Seeker <avidseeker7@protonmail.com>\n"
 "Language-Team: Arabic <https://translate.fedoraproject.org/projects/ibus-"
@@ -23,6 +23,7 @@ msgstr ""
 "X-Generator: Weblate 4.18.2\n"
 
 #: engine/emoji_picker.py:210
+#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:6
 msgid "Emoji Picker"
 msgstr "منتقي الإيموجي"
 
@@ -337,31 +338,31 @@ msgstr "مناطق"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2822
+#: engine/itb_util.py:2831
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "أخرى، مُتنوّعة، مختلفة، متعددة"
 
-#: engine/itb_util.py:4502 engine/itb_util.py:5229
+#: engine/itb_util.py:4511 engine/itb_util.py:5238
 msgid "File not found"
 msgstr "الملف غير موجود"
 
-#: engine/itb_util.py:4506 engine/itb_util.py:5233
+#: engine/itb_util.py:4515 engine/itb_util.py:5242
 msgid "Permission error"
 msgstr "خطأ في الأذونات"
 
-#: engine/itb_util.py:4510 engine/itb_util.py:5237
+#: engine/itb_util.py:4519 engine/itb_util.py:5246
 msgid "Unicode decoding error"
 msgstr "خطأ في فك ترميز يونيكود"
 
-#: engine/itb_util.py:4514 engine/itb_util.py:5241
+#: engine/itb_util.py:4523 engine/itb_util.py:5250
 msgid "Unknown error"
 msgstr "خطأ غير معروف"
 
-#: engine/itb_util.py:5207
+#: engine/itb_util.py:5216
 msgid "Native Keyboard"
 msgstr "لوحة المفاتيح الأساسية"
 
-#: engine/itb_util.py:5209
+#: engine/itb_util.py:5218
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -374,11 +375,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5888
+#: engine/itb_util.py:5897
 msgid "Key input"
 msgstr "اضغط المفتاح"
 
-#: engine/itb_util.py:5894
+#: engine/itb_util.py:5903
 msgid "Cancel"
 msgstr "إلغاء"
 
@@ -386,29 +387,29 @@ msgstr "إلغاء"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5901
+#: engine/itb_util.py:5910
 msgid "Please press a key (or a key combination)"
 msgstr "رجاءً، اضغط على مفتاح (أو مجموعة مفاتيح)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5906
+#: engine/itb_util.py:5915
 msgid "The dialog will be closed when the key is released"
 msgstr "سيُغلق صندوق الحوار بعد إفلات المفتاح"
 
-#: engine/itb_util.py:5945
+#: engine/itb_util.py:5954
 msgid "A completion input method to speedup typing."
 msgstr "طريقة إدخال مُكمِل لتسريع الكتابة."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5954
+#: engine/itb_util.py:5963
 msgid "translator-credits"
 msgstr ""
 "أحمد فراج <afarrag@fedoraproject.org>، 2019\n"
 "AvidSeeker <avidseeker7@protonmail.com>"
 
-#: engine/itb_util.py:5962
+#: engine/itb_util.py:5971
 msgid "Online documentation:"
 msgstr "دليل الاستخدام على الإنترنت:"
 
@@ -1657,15 +1658,27 @@ msgstr "هل تريد حقا حذف كل بيانات اللغة المُتعل�
 msgid "ibus is not running."
 msgstr "ibus لم يُشغّل."
 
-#: typing-booster.appdata.xml:6
+#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:7
+#, fuzzy
+#| msgid "Unicode Version:"
+msgid "Emoji browsing tool"
+msgstr "نسخة يونيكود:"
+
+#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:9
+msgid ""
+"Emoji Picker is an emoji browsing tool which uses the emoji matching code "
+"from Ibus-typing-booster."
+msgstr ""
+
+#: org.freedesktop.ibus.engine.typing_booster.metainfo.xml:6
 msgid "Typing Booster"
 msgstr "مسرّع الكتابة"
 
-#: typing-booster.appdata.xml:7
+#: org.freedesktop.ibus.engine.typing_booster.metainfo.xml:7
 msgid "Predictive input method"
 msgstr "طريقة الإدخال التنبؤية"
 
-#: typing-booster.appdata.xml:9
+#: org.freedesktop.ibus.engine.typing_booster.metainfo.xml:9
 msgid ""
 "Ibus-typing-booster is a predictive input method and predicts complete words "
 "based on context and partial input. One can then simply select the desired "
