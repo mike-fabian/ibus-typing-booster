@@ -17,7 +17,7 @@
 
 
 Name:           ibus-typing-booster
-Version:        2.26.19
+Version:        2.27.9
 Release:        0
 Summary:        An input completion utility
 License:        GPL-3.0-or-later
@@ -128,7 +128,7 @@ cp -p inscript2/icons/* %{buildroot}%{_datadir}/m17n/icons
 export LC_ALL=en_US.UTF-8
 export M17NDIR=%{buildroot}%{_datadir}/m17n/
 %if 0%{?suse_version} > 1520
-#AS_VALIDATE_NONET=1 appstreamcli validate --pedantic --no-net %{buildroot}/%{_datadir}/metainfo/*.appdata.xml
+#AS_VALIDATE_NONET=1 appstreamcli validate --pedantic --no-net %{buildroot}/%{_datadir}/metainfo/*.metainfo.xml
 %endif
 desktop-file-validate \
     %{buildroot}%{_datadir}/applications/ibus-setup-typing-booster.desktop
@@ -191,7 +191,7 @@ fi
 %{_bindir}/emoji-picker
 %{_datadir}/%{name}
 %dir %{_datadir}/metainfo
-%{_datadir}/metainfo/*.appdata.xml
+%{_datadir}/metainfo/*.metainfo.xml
 %{_datadir}/ibus/component/typing-booster.xml
 %{_datadir}/icons/hicolor/16x16/apps/ibus-typing-booster.png
 %{_datadir}/icons/hicolor/22x22/apps/ibus-typing-booster.png
