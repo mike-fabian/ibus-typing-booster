@@ -1,5 +1,5 @@
 Name:       ibus-typing-booster
-Version:    2.26.19
+Version:    2.27.9
 Release:    %autorelease
 Summary:    A completion input method
 License:    GPL-3.0-or-later AND Apache-2.0
@@ -152,12 +152,12 @@ export PYTHON=%{__python3}
 
 %check
 export LC_ALL=C.UTF-8
-appstreamcli validate --pedantic --no-net %{buildroot}/%{_datadir}/metainfo/*.appdata.xml
+appstreamcli validate --pedantic --no-net %{buildroot}/%{_datadir}/metainfo/*.metainfo.xml
 # According to the appstream developers, appstream-util is unmaintained:
 # https://github.com/ximion/appstream/issues/494#issuecomment-1521419742
 # But I keep it here for the time being because the Fedora packaging guidelines ask for it:
 # https://docs.fedoraproject.org/en-US/packaging-guidelines/AppData/#_app_data_validate_usage
-appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.appdata.xml
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/*.metainfo.xml
 desktop-file-validate \
     $RPM_BUILD_ROOT%{_datadir}/applications/ibus-setup-typing-booster.desktop
 desktop-file-validate \
@@ -207,7 +207,7 @@ fi
 %files -f %{name}.lang
 %doc AUTHORS COPYING README README.html README.md
 %{_datadir}/%{name}
-%{_datadir}/metainfo/typing-booster.appdata.xml
+%{_datadir}/metainfo/org.freedesktop.ibus.engine.typing_booster.metainfo.xml
 %{_datadir}/ibus/component/typing-booster.xml
 %{_datadir}/icons/hicolor/16x16/apps/ibus-typing-booster.png
 %{_datadir}/icons/hicolor/22x22/apps/ibus-typing-booster.png
@@ -230,7 +230,7 @@ fi
 
 %files -n emoji-picker
 %{_bindir}/emoji-picker
-%{_datadir}/metainfo/emoji-picker.appdata.xml
+%{_datadir}/metainfo/org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml
 %{_datadir}/applications/emoji-picker.desktop
 
 %changelog
