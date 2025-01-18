@@ -111,7 +111,7 @@
     </key>
     <key name="labeluserdb" type="b">
       <default>false</default>
-      <summary>Use a label for user database suggestions</summary>
+      <summary>Use label for user database suggestions</summary>
       <description>
         Here you can choose whether a label is used for candidates in
         the lookup table which come from the user database.
@@ -122,14 +122,14 @@
       <summary>Choose label for userdatabase suggestions</summary>
       <description>
         Here you can specify which label to use for candidates in the
-        lookup table which come from the user database. This setting only
-        has an effect if the use of a label for candidates from
+        lookup table which come from the user database. This setting
+        only has an effect if the use of a label for candidates from
         the user database is enabled.
       </description>
     </key>
     <key name="labelspellcheck" type="b">
       <default>false</default>
-      <summary>Use a label for spellchecking suggestions</summary>
+      <summary>Use label for spellchecking suggestions</summary>
       <description>
         Here you can choose whether a label is used for candidates in
         the lookup table which come from spellchecking.
@@ -147,7 +147,7 @@
     </key>
     <key name="labeldictionary" type="b">
       <default>false</default>
-      <summary>Use a label for dictionary suggestions</summary>
+      <summary>Use label for dictionary suggestions</summary>
       <description>
         Here you can choose whether a label is used for candidates in
         the lookup table which come from a dictionary.
@@ -173,7 +173,7 @@
     </key>
     <key name="labelbusy" type="b">
       <default>true</default>
-      <summary>Use a label to indicate busy state</summary>
+      <summary>Use label to indicate busy state</summary>
       <description>
         Here you can choose whether a label is used to indicate when
         ibus-typing-booster is busy.
@@ -412,12 +412,12 @@
     </key>
     <key name="useibuskeymap" type="b">
       <default>false</default>
-      <summary>Use an IBus keymap</summary>
+      <summary>Use IBus keymap</summary>
       <description>
         Whether the use of an IBus keymap is forced while Typing
-        Booster is active. If this option is not used, the keyboard
-        layout which was active before switching to typing booster is
-        used.
+        Booster is active. For most users not using an IBus keymap is
+        recommended. In that case, the keyboard layout which was
+        active before switching to typing booster is used.
       </description>
     </key>
     <key name="ibuskeymap" type="s">
@@ -447,11 +447,10 @@
     </key>
     <key name="candidatesdelaymilliseconds" type="u">
       <default>200</default>
-      <summary>Candidates delay</summary>
+      <summary>Candidate window delay in milliseconds</summary>
       <description>
-        Delay updating the candidates and showing a lookup table by
-        the specified time in milliseconds after the idle state is
-        reached.
+        How long to wait after the last key press before
+        candidates are displayed.
       </description>
     </key>
     <key name="ibuseventsleepseconds" type="d">
@@ -593,7 +592,7 @@
     </key>
     <key name="autosettings" type="aas">
       <default>[]</default>
-      <summary>List auf automatic settings</summary>
+      <summary>List of automatic settings</summary>
       <description>The list of settings automatically applied when regular expressions match windows</description>
     </key>
   </schema>
