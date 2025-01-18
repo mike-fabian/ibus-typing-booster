@@ -1,5 +1,6 @@
 # Files with translatable strings.
 # Please keep this file in alphabetical order.
+engine/emoji-picker.desktop.in.in
 engine/emoji_picker.py
 engine/factory.py
 engine/hunspell_suggest.py
@@ -8,6 +9,7 @@ engine/itb_emoji.py
 engine/itb_util.py
 engine/main.py
 engine/tabsqlitedb.py
+setup/ibus-setup-typing-booster.desktop.in.in
 setup/main.py
 setup/pkginstall.py
 org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml
