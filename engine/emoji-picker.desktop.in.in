@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Emoji Picker
-Comment=An emoji selection tool
+Comment=Emoji browsing tool
 Exec=${PREFIX}/bin/emoji-picker
 Icon=ibus-typing-booster
 Terminal=false
