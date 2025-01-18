@@ -2693,10 +2693,10 @@ def expand_languages(languages: Iterable[str]) -> List[str]:
     Examples:
 
     >>> expand_languages(['es_MX', 'es_ES', 'ja_JP'])
-    ['es_MX', 'es_419', 'es', 'es_ES', 'es', 'ja_JP', 'ja', 'en']
+    ['es_MX', 'es_419', 'es', 'es_ES', 'ja_JP', 'ja', 'en']
 
     >>> expand_languages(['zh_Hant', 'zh_CN', 'zh_TW', 'zh_SG', 'zh_HK', 'zh_MO'])
-    ['zh_Hant', 'zh_CN', 'zh', 'zh_TW', 'zh_Hant', 'zh_SG', 'zh', 'zh_HK', 'zh_Hant', 'zh_MO', 'zh_Hant', 'en']
+    ['zh_Hant', 'zh_CN', 'zh', 'zh_TW', 'zh_SG', 'zh_HK', 'zh_MO', 'en']
 
     >>> expand_languages(['ks_Deva_IN'])
     ['ks_Deva_IN', 'ks_Deva', 'ks', 'en']
@@ -2717,7 +2717,7 @@ def expand_languages(languages: Iterable[str]) -> List[str]:
     ['no_NO', 'nb', 'no', 'en']
 
     >>> expand_languages(['en_GB', 'en'])
-    ['en_GB', 'en_001', 'en', 'en', 'en_001']
+    ['en_GB', 'en_001', 'en']
 
     >>> expand_languages(['sr_Latn_RS'])
     ['sr_Latn_RS', 'sr_Latn', 'sr', 'en']
@@ -2734,22 +2734,31 @@ def expand_languages(languages: Iterable[str]) -> List[str]:
     # pylint: enable=line-too-long
     expanded_languages = []
     for language in languages:
+        if language in expanded_languages:
+            continue
         expanded_languages.append(language)
-        if language in SPANISH_419_LOCALES:
+        if (language in SPANISH_419_LOCALES
+            and 'es_419' not in expanded_languages):
             expanded_languages.append('es_419')
-        if language in ('zh_TW', 'zh_HK', 'zh_MO'):
+        if (language in ('zh_TW', 'zh_HK', 'zh_MO')
+            and 'zh_Hant' not in expanded_languages):
             expanded_languages.append('zh_Hant')
-        if language[:2] == 'en':
+        if (language[:2] == 'en'
+            and 'en_001' not in expanded_languages):
             expanded_languages.append('en_001')
-        if language[:2] == 'nb':
+        if (language[:2] == 'nb'
+            and 'no' not in expanded_languages):
             expanded_languages.append('no')
-        if language[:2] == 'no':
+        if (language[:2] == 'no'
+            and 'no' not in expanded_languages):
             expanded_languages.append('nb')
         language_parts = language.split('_')
         if (language not in ('zh_TW', 'zh_HK', 'zh_MO', 'zh_Hant')
                 and language_parts[:1] != [language]):
             while len(language_parts) > 1:
-                expanded_languages += ['_'.join(language_parts[:-1])]
+                expanded_language = '_'.join(language_parts[:-1])
+                if expanded_language not in expanded_languages:
+                    expanded_languages.append(expanded_language)
                 language_parts.pop()
     if 'en' not in expanded_languages:
         expanded_languages.append('en')
