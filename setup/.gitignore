@@ -1,5 +1,6 @@
 *.pyc
 ibus-setup-typing-booster
 ibus-setup-typing-booster.desktop
+ibus-setup-typing-booster.desktop.in
 itb_version.py
 .mypy_cache/

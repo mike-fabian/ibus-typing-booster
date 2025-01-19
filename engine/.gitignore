@@ -1,6 +1,7 @@
 *.pyc
 emoji-picker
 emoji-picker.desktop
+emoji-picker.desktop.in
 ibus-engine-typing-booster
 typing-booster.xml
 typing-booster.xml.in

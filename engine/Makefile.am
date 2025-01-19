@@ -19,10 +19,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 desktop_in_in_files = emoji-picker.desktop.in.in
-
 desktop_in_files = $(desktop_in_in_files:.in.in=.in)
 
-emoji-picker.desktop: emoji-picker.desktop.in.in
+$(desktop_in_files): %.desktop.in: %.desktop.in.in Makefile
 	( \
 		PREFIX=$(prefix); \
 		PKGDATADIR=$(pkgdatadir); \
@@ -33,6 +32,8 @@ emoji-picker.desktop: emoji-picker.desktop.in.in
 
 desktopdir=$(datadir)/applications
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+$(desktop_DATA): $(desktop_in_files) Makefile
+	$(AM_V_GEN)$(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 engine_table_PYTHON = \
 	factory.py \

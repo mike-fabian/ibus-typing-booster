@@ -19,10 +19,9 @@
 libexec_SCRIPTS = ibus-setup-typing-booster
 
 desktop_in_in_files = ibus-setup-typing-booster.desktop.in.in
-
 desktop_in_files = $(desktop_in_in_files:.in.in=.in)
 
-ibus-setup-typing-booster.desktop: ibus-setup-typing-booster.desktop.in.in
+$(desktop_in_files): %.desktop.in: %.desktop.in.in Makefile
 	( \
 		PKGDATADIR=$(pkgdatadir); \
 		LIBEXECDIR=$(libexecdir); \
@@ -32,7 +31,8 @@ ibus-setup-typing-booster.desktop: ibus-setup-typing-booster.desktop.in.in
 
 desktopdir=$(datadir)/applications
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
-
+$(desktop_DATA): $(desktop_in_files) Makefile
+	$(AM_V_GEN)$(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 setup_typing_booster_PYTHON = \
 	i18n.py \
