@@ -39,7 +39,7 @@
   <url type="bugtracker">https://github.com/mike-fabian/ibus-typing-booster/issues</url>
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/docs/user/</url>
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
-  <content_rating type="oars-1.1" />
+  <content_rating type="oars-1.1"/>
   <releases>
     <release version="2.27.9" date="2025-01-18" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.9</url>
@@ -748,7 +748,7 @@
           </li>
         </ul>
       </description>
-      <issues> 
+      <issues>
         <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/497">
           github-issues#497
         </issue>
@@ -1173,7 +1173,7 @@
         </issue>
       </issues>
     </release>
-    <release version="2.22.4" date="2023-04-17" urgency="medium">
+    <release version="2.22.4" date="2023-04-24" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.22.4</url>
       <description>
         <p>Bug fixes and enhancements</p>
@@ -1201,7 +1201,7 @@
         <ul>
           <li>
             Apply workaround for committing multiline strings only for
-            '^gtk3-im:(firefox|thunderbird)', i.e. not on Wayland (Resolves:
+            '^gtk3-im:(firefox|thunderbird)' (Resolves:
             github-issues#438)
           </li>
         </ul>
@@ -1689,7 +1689,7 @@
           Translation update from Weblate (de (100%), es (93.7%), pl
           (100%), tr (100%), uk (100%))
         </issue>
-     </issues>
+      </issues>
     </release>
     <release version="2.17.1" date="2022-07-13" urgency="medium">
       <description>
@@ -1702,7 +1702,7 @@
         </issue>
       </issues>
     </release>
-    <release version="2.17.0" date="2022-07-05" urgency="medium">
+    <release version="2.17.0" date="2022-07-07" urgency="medium">
       <description>
         <p>Bug fixes and enhancements</p>
       </description>
@@ -1784,7 +1784,7 @@
         <issue>
           Avoid using forward_key_event() in Gtk4 immodule
           automatically by checking for IBUS_CAP_SYNC_PROCESS_KEY
-          (new, will start working for ibus >= 1.5.27)
+          (new, will start working for ibus &gt;= 1.5.27)
         </issue>
         <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/313">
           github-issues#313: Update the “Use inline completion”
@@ -1792,7 +1792,7 @@
         </issue>
         <issue>
           Add client detection code by Takao Fujiwara (will start
-          working for ibus >= 1.5.27)
+          working for ibus &gt;= 1.5.27)
         </issue>
         <issue>
           If libvoikko.Voikko('fi') fails when initializing a Finnish
@@ -2448,7 +2448,7 @@
       <description>
         <p>Bug fixes and enhancements</p>
       </description>
-      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.11.3</url>
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.11.4</url>
       <issues>
         <issue url="https://bugzilla.redhat.com/show_bug.cgi?id=1711646">
           In main.py “import factory” only when the --xml option is not used
@@ -2538,7 +2538,7 @@
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.10.5</url>
       <issues>
         <issue>
-          Run the voikko tests only for libvoikko version >= 4.3
+          Run the voikko tests only for libvoikko version &gt;= 4.3
         </issue>
         <issue>
           Adapt voikko test cases to the newest voikko version
@@ -3834,7 +3834,7 @@
           Update emoji annotations from CLDR
         </issue>
         <issue url="https://bugzilla.redhat.com/show_bug.cgi?id=1630349">
-          rhbz#1630349: Do not try to commit if index is >= the
+          rhbz#1630349: Do not try to commit if index is &gt;= the
           current number of candidates
         </issue>
       </issues>

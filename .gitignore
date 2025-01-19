@@ -15,6 +15,7 @@ Makefile.in
 /autom4te.cache/
 compile
 ibus-typing-booster-*.tar.gz
+*.metainfo.xml
 test-driver
 \#*\#
 .\#*

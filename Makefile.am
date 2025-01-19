@@ -34,12 +34,14 @@ ACLOCAL_AMFLAGS = -I m4
 
 # To register as an AppStream component to be visible in the software center
 # (See http://www.freedesktop.org/software/appstream/docs/ for more details):
-metainfo_DATA = \
-	org.freedesktop.ibus.engine.typing_booster.metainfo.xml \
-	org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml \
-	$(NULL)
-
 metainfodir = $(datadir)/metainfo
+metainfo_in_files = \
+	org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in \
+	org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in \
+	$(NULL)
+metainfo_DATA = $(metainfo_in_files:.in=)
+%.metainfo.xml: %.metainfo.xml.in $(wildcard po/*.mo) Makefile
+	$(AM_V_GEN)$(MSGFMT) --xml --template $< -d $(top_srcdir)/po --output-file $@
 
 schemas_DATA = \
 	org.freedesktop.ibus.engine.typing-booster.gschema.xml
@@ -71,14 +73,14 @@ MAINTAINERCLEANFILES = \
 	Makefile.in \
 	aclocal.m4 \
 	configure \
+	$(metainfo_DATA) \
 	$(AUX_DIST) \
 	$(NULL)
 
 
 EXTRA_DIST = \
 	config.rpath \
-	org.freedesktop.ibus.engine.typing_booster.metainfo.xml \
-	org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml \
+	$(metainfo_in_files) \
 	$(schemas_DATA) \
 	@PACKAGE_NAME@.spec.fedora \
 	@PACKAGE_NAME@.spec.suse \
