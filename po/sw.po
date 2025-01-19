@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-01-18 17:44+0100\n"
+"POT-Creation-Date: 2025-01-19 01:45+0100\n"
 "PO-Revision-Date: 2023-03-08 08:20+0000\n"
 "Last-Translator: Timothy Abwao <abwaomusungu@gmail.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/ibus-"
@@ -20,10 +20,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.15.2\n"
 
-#: engine/emoji_picker.py:210
+#: engine/emoji-picker.desktop.in.in:3 engine/emoji_picker.py:210
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:6
 msgid "Emoji Picker"
 msgstr "Kichaguzi Cha Emoji"
+
+#: engine/emoji-picker.desktop.in.in:4
+#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:7
+#, fuzzy
+#| msgid "Unicode Version:"
+msgid "Emoji browsing tool"
+msgstr "Toleo La Unikodi:"
 
 #: engine/emoji_picker.py:323
 msgid "Clear recently used"
@@ -410,6 +417,18 @@ msgstr "watafsiri"
 #: engine/itb_util.py:5971
 msgid "Online documentation:"
 msgstr "Maelezo ya mtandaoni:"
+
+#: setup/ibus-setup-typing-booster.desktop.in.in:3
+#, fuzzy
+#| msgid "Typing Booster"
+msgid "Typing Booster Preferences"
+msgstr "Kiongezi Kasi cha Uandishi"
+
+#: setup/ibus-setup-typing-booster.desktop.in.in:4
+#, fuzzy
+#| msgid "Typing Booster"
+msgid "Set Typing Booster Options"
+msgstr "Kiongezi Kasi cha Uandishi"
 
 #: setup/main.py:148
 msgid "Preferences"
@@ -1676,12 +1695,6 @@ msgstr ""
 #: setup/main.py:6738
 msgid "ibus is not running."
 msgstr "ibus haifanyi kazi."
-
-#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:7
-#, fuzzy
-#| msgid "Unicode Version:"
-msgid "Emoji browsing tool"
-msgstr "Toleo La Unikodi:"
 
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:9
 msgid ""

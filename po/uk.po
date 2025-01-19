@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-01-18 17:44+0100\n"
+"POT-Creation-Date: 2025-01-19 01:45+0100\n"
 "PO-Revision-Date: 2024-12-31 08:15+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
@@ -24,10 +24,17 @@ msgstr ""
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 5.9.1\n"
 
-#: engine/emoji_picker.py:210
+#: engine/emoji-picker.desktop.in.in:3 engine/emoji_picker.py:210
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:6
 msgid "Emoji Picker"
 msgstr "Вибір емодзі"
+
+#: engine/emoji-picker.desktop.in.in:4
+#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:7
+#, fuzzy
+#| msgid "Emoji Version:"
+msgid "Emoji browsing tool"
+msgstr "Версія емодзі:"
 
 #: engine/emoji_picker.py:323
 msgid "Clear recently used"
@@ -409,6 +416,18 @@ msgstr "Юрій Чорноіван <yurchor@ukr.net>"
 #: engine/itb_util.py:5971
 msgid "Online documentation:"
 msgstr "Документація у інтернеті:"
+
+#: setup/ibus-setup-typing-booster.desktop.in.in:3
+#, fuzzy
+#| msgid "Typing Booster"
+msgid "Typing Booster Preferences"
+msgstr "Пришвидшувач введення"
+
+#: setup/ibus-setup-typing-booster.desktop.in.in:4
+#, fuzzy
+#| msgid "Typing Booster"
+msgid "Set Typing Booster Options"
+msgstr "Пришвидшувач введення"
 
 #: setup/main.py:148
 msgid "Preferences"
@@ -1712,12 +1731,6 @@ msgstr ""
 #: setup/main.py:6738
 msgid "ibus is not running."
 msgstr "ibus не запущено."
-
-#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:7
-#, fuzzy
-#| msgid "Emoji Version:"
-msgid "Emoji browsing tool"
-msgstr "Версія емодзі:"
 
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:9
 msgid ""

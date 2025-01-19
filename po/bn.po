@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-01-18 17:44+0100\n"
+"POT-Creation-Date: 2025-01-19 01:45+0100\n"
 "PO-Revision-Date: 2024-02-02 13:43+0000\n"
 "Last-Translator: Sudip Shil <sshil@redhat.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/ibus-"
@@ -21,10 +21,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 5.3.1\n"
 
-#: engine/emoji_picker.py:210
+#: engine/emoji-picker.desktop.in.in:3 engine/emoji_picker.py:210
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:6
 msgid "Emoji Picker"
 msgstr "ইমোজি বাছাইকারী"
+
+#: engine/emoji-picker.desktop.in.in:4
+#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:7
+#, fuzzy
+#| msgid "Unicode Version:"
+msgid "Emoji browsing tool"
+msgstr "ইউনিকোড সংস্করণ:"
 
 #: engine/emoji_picker.py:323
 msgid "Clear recently used"
@@ -409,6 +416,18 @@ msgstr "মাহমুদুল হাসান"
 #: engine/itb_util.py:5971
 msgid "Online documentation:"
 msgstr "অনলাইন ব্যবহার নির্দেশিকা:"
+
+#: setup/ibus-setup-typing-booster.desktop.in.in:3
+#, fuzzy
+#| msgid "Typing Booster"
+msgid "Typing Booster Preferences"
+msgstr "টাইপিং বুস্টার"
+
+#: setup/ibus-setup-typing-booster.desktop.in.in:4
+#, fuzzy
+#| msgid "Typing Booster"
+msgid "Set Typing Booster Options"
+msgstr "টাইপিং বুস্টার"
 
 #: setup/main.py:148
 msgid "Preferences"
@@ -1688,12 +1707,6 @@ msgstr "আপনি কি সত্যিই টাইপিং অথবা �
 #: setup/main.py:6738
 msgid "ibus is not running."
 msgstr "আইবাস চলছে না।"
-
-#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:7
-#, fuzzy
-#| msgid "Unicode Version:"
-msgid "Emoji browsing tool"
-msgstr "ইউনিকোড সংস্করণ:"
 
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:9
 msgid ""

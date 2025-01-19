@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-01-18 17:44+0100\n"
+"POT-Creation-Date: 2025-01-19 01:45+0100\n"
 "PO-Revision-Date: 2025-01-01 08:42+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: French <https://translate.fedoraproject.org/projects/ibus-"
@@ -26,10 +26,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 5.9.1\n"
 
-#: engine/emoji_picker.py:210
+#: engine/emoji-picker.desktop.in.in:3 engine/emoji_picker.py:210
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:6
 msgid "Emoji Picker"
 msgstr "Présentoir à émoticônes"
+
+#: engine/emoji-picker.desktop.in.in:4
+#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:7
+#, fuzzy
+#| msgid "Emoji Version:"
+msgid "Emoji browsing tool"
+msgstr "Version d’emoji :"
 
 #: engine/emoji_picker.py:323
 msgid "Clear recently used"
@@ -415,6 +422,18 @@ msgstr ""
 #: engine/itb_util.py:5971
 msgid "Online documentation:"
 msgstr "Documentation en ligne :"
+
+#: setup/ibus-setup-typing-booster.desktop.in.in:3
+#, fuzzy
+#| msgid "Typing Booster"
+msgid "Typing Booster Preferences"
+msgstr "L’accélérateur de saisie"
+
+#: setup/ibus-setup-typing-booster.desktop.in.in:4
+#, fuzzy
+#| msgid "Typing Booster"
+msgid "Set Typing Booster Options"
+msgstr "L’accélérateur de saisie"
 
 #: setup/main.py:148
 msgid "Preferences"
@@ -1728,12 +1747,6 @@ msgstr ""
 #: setup/main.py:6738
 msgid "ibus is not running."
 msgstr "Ibus n’est pas lancé."
-
-#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:7
-#, fuzzy
-#| msgid "Emoji Version:"
-msgid "Emoji browsing tool"
-msgstr "Version d’emoji :"
 
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:9
 msgid ""
