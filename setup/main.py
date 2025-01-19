@@ -805,6 +805,9 @@ class SetupUI(Gtk.Window): # type: ignore
         self._use_ibus_keymap_checkbutton.set_active(
             self._settings_dict['useibuskeymap']['user'])
         self._ibus_keymap_combobox = Gtk.ComboBox()
+        #self._ibus_keymap_combobox.set_tooltip_text(
+        #    _('The ibus keymap to use when forcing an IBus keymap while '
+        #      'Typing Booster is active is enabled.'))
         self._ibus_keymap_store = Gtk.ListStore(str, str)
         for keymap in itb_util.AVAILABLE_IBUS_KEYMAPS:
             self._ibus_keymap_store.append(
@@ -2037,6 +2040,11 @@ class SetupUI(Gtk.Window): # type: ignore
         self._label_userdb_checkbutton.connect(
             'clicked', self._on_label_userdb_checkbutton)
         self._label_userdb_entry = Gtk.Entry()
+        #self._label_userdb_entry.set_tooltip_text(
+        #    _('Here you can specify which label to use for candidates in the '
+        #      'lookup table which come from the user database. This setting '
+        #      'only has an effect if the use of a label for candidates from '
+        #      'the user database is enabled.'))
         self._label_userdb_entry.set_visible(True)
         self._label_userdb_entry.set_can_focus(True)
         self._label_userdb_entry.set_hexpand(False)
@@ -2067,6 +2075,11 @@ class SetupUI(Gtk.Window): # type: ignore
         self._label_spellcheck_checkbutton.connect(
             'clicked', self._on_label_spellcheck_checkbutton)
         self._label_spellcheck_entry = Gtk.Entry()
+        #self._label_spellcheck_entry.set_tooltip_text(
+        #    _('Here you can specify which label to use for candidates in the '
+        #      'lookup table which come from spellchecking. This setting only '
+        #      'has an effect if the use of a label for candidates from '
+        #      'spellchecking is enabled.'))
         self._label_spellcheck_entry.set_visible(True)
         self._label_spellcheck_entry.set_can_focus(True)
         self._label_spellcheck_entry.set_hexpand(False)
@@ -2097,6 +2110,11 @@ class SetupUI(Gtk.Window): # type: ignore
         self._label_dictionary_checkbutton.connect(
             'clicked', self._on_label_dictionary_checkbutton)
         self._label_dictionary_entry = Gtk.Entry()
+        #self._label_dictionary_entry.set_tooltip_text(
+        #    _('Here you can specify which label to use for candidates in the '
+        #      'lookup table which come from a dictionary. This setting only '
+        #      'has an effect if the use of a label for candidates from '
+        #      'a dictionary is enabled.'))
         self._label_dictionary_entry.set_visible(True)
         self._label_dictionary_entry.set_can_focus(True)
         self._label_dictionary_entry.set_hexpand(False)
@@ -2143,6 +2161,11 @@ class SetupUI(Gtk.Window): # type: ignore
         self._label_busy_checkbutton.connect(
             'clicked', self._on_label_busy_checkbutton)
         self._label_busy_entry = Gtk.Entry()
+        #self._label_busy_entry.set_tooltip_text(
+        #    _('Here you can specify which label is used to indicate when '
+        #      'ibus-typing-booster is busy. This setting only has an effect '
+        #      'if the use of a label for candidates from a dictionary is '
+        #      'enabled.'))
         self._label_busy_entry.set_visible(True)
         self._label_busy_entry.set_can_focus(True)
         self._label_busy_entry.set_hexpand(False)
