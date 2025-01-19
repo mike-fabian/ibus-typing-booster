@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-01-18 17:44+0100\n"
+"POT-Creation-Date: 2025-01-19 01:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,9 +18,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: engine/emoji_picker.py:210
+#: engine/emoji-picker.desktop.in.in:3 engine/emoji_picker.py:210
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:6
 msgid "Emoji Picker"
+msgstr ""
+
+#: engine/emoji-picker.desktop.in.in:4
+#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:7
+msgid "Emoji browsing tool"
 msgstr ""
 
 #: engine/emoji_picker.py:323
@@ -392,6 +397,14 @@ msgstr ""
 
 #: engine/itb_util.py:5971
 msgid "Online documentation:"
+msgstr ""
+
+#: setup/ibus-setup-typing-booster.desktop.in.in:3
+msgid "Typing Booster Preferences"
+msgstr ""
+
+#: setup/ibus-setup-typing-booster.desktop.in.in:4
+msgid "Set Typing Booster Options"
 msgstr ""
 
 #: setup/main.py:148
@@ -1544,10 +1557,6 @@ msgstr ""
 
 #: setup/main.py:6738
 msgid "ibus is not running."
-msgstr ""
-
-#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:7
-msgid "Emoji browsing tool"
 msgstr ""
 
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:9
