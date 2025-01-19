@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-01-19 01:45+0100\n"
-"PO-Revision-Date: 2025-01-19 01:08+0000\n"
+"PO-Revision-Date: 2025-01-19 11:16+0000\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: Czech <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/cs/>\n"
@@ -418,7 +418,7 @@ msgstr "Předvolby Urychlovače psaní"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:4
 msgid "Set Typing Booster Options"
-msgstr "Nastavit možnosti Urychlovače psaní"
+msgstr "Nastavte možnosti Urychlovače psaní"
 
 #: setup/main.py:148
 msgid "Preferences"
