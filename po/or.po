@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-01-19 01:45+0100\n"
+"POT-Creation-Date: 2025-01-20 18:19+0100\n"
 "PO-Revision-Date: 2019-12-20 00:16+0000\n"
 "Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/ibus-"
@@ -22,12 +22,12 @@ msgstr ""
 "X-Generator: Weblate 3.9.1\n"
 
 #: engine/emoji-picker.desktop.in.in:3 engine/emoji_picker.py:210
-#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:6
+#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
 msgstr "ଇମୋଜି ବଛାରି"
 
 #: engine/emoji-picker.desktop.in.in:4
-#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:7
+#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:7
 #, fuzzy
 #| msgid "Unicode Version:"
 msgid "Emoji browsing tool"
@@ -1603,21 +1603,21 @@ msgstr ""
 msgid "ibus is not running."
 msgstr ""
 
-#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml:9
+#: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:9
 msgid ""
 "Emoji Picker is an emoji browsing tool which uses the emoji matching code "
 "from Ibus-typing-booster."
 msgstr ""
 
-#: org.freedesktop.ibus.engine.typing_booster.metainfo.xml:6
+#: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
 msgstr ""
 
-#: org.freedesktop.ibus.engine.typing_booster.metainfo.xml:7
+#: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:7
 msgid "Predictive input method"
 msgstr ""
 
-#: org.freedesktop.ibus.engine.typing_booster.metainfo.xml:9
+#: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:9
 msgid ""
 "Ibus-typing-booster is a predictive input method and predicts complete words "
 "based on context and partial input. One can then simply select the desired "
