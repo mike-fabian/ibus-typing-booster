@@ -81,6 +81,7 @@ MAINTAINERCLEANFILES = \
 EXTRA_DIST = \
 	config.rpath \
 	$(metainfo_in_files) \
+	$(metainfo_DATA) \
 	$(schemas_DATA) \
 	@PACKAGE_NAME@.spec.fedora \
 	@PACKAGE_NAME@.spec.suse \

@@ -69,6 +69,8 @@ EXTRA_DIST = \
 	typing-booster.xml.in \
 	emoji-picker.in \
 	$(desktop_in_in_files) \
+	$(desktop_in_files) \
+	$(desktop_DATA) \
 	$(NULL)
 
 CLEANFILES = \

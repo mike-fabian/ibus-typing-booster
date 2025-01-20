@@ -66,6 +66,8 @@ EXTRA_DIST = \
 	itb_version.py.in \
 	$(setup_typing_booster_built_in_files) \
 	$(desktop_in_in_files) \
+	$(desktop_in_files) \
+	$(desktop_DATA) \
 	$(NULL)
 
 # Need a time lag between .py and .py.in files to build .py files
