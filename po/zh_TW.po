@@ -1588,3 +1588,13 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "繪文字"
+
+#, fuzzy
+#~| msgid "Input mode"
+#~ msgid "input-method"
+#~ msgstr "輸入模式"

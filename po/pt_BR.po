@@ -1750,6 +1750,31 @@ msgstr ""
 "selecionar a palavra desejada em uma lista de sugestões e melhorar a "
 "velocidade e a ortografia da digitação."
 
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "Emoji"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "Seletor de emoji"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "Adicionar método de entrada"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "Impulsionador de Digitação"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "Impulsionador de Digitação"
+
 #~ msgid ""
 #~ "Here you can choose whether a sound file is played if an error occurs. If "
 #~ "the simpleaudio module for Python3 is not installed, this option does "

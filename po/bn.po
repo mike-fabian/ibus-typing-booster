@@ -1733,6 +1733,38 @@ msgstr ""
 "থেকে পছন্দসই শব্দটি নির্বাচন করতে পারে এবং ব্যবহারকারীর টাইপিং গতি এবং বানান "
 "উন্নত করতে পারে।"
 
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "ইমোজি"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "ইমোজি বাছাইকারী"
+
+#, fuzzy
+#~| msgid "Convert language specific digits to ASCII digits"
+#~ msgid ""
+#~ "Add an option to convert language specific digits to ASCII (Resolves: "
+#~ "github-issues#445)"
+#~ msgstr "ভাষার নির্দিষ্ট অঙ্কগুলিকে অ্যাস্‌কি সংখ্যায় রূপান্তর করুন"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "একটি ইনপুট পদ্ধতি যোগ করুন"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "টাইপিং বুস্টার"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "টাইপিং বুস্টার"
+
 #~ msgid ""
 #~ "Here you can choose whether a sound file is played if an error occurs. If "
 #~ "the simpleaudio module for Python3 is not installed, this option does "

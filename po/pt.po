@@ -1770,6 +1770,38 @@ msgstr ""
 "simplesmente selecionar a palavra desejada numa lista de sugestões e "
 "melhorar a velocidade de digitação e a ortografia."
 
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "Emoji"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "Emoji Seletor"
+
+#, fuzzy
+#~| msgid "Convert language specific digits to ASCII digits"
+#~ msgid ""
+#~ "Add an option to convert language specific digits to ASCII (Resolves: "
+#~ "github-issues#445)"
+#~ msgstr "Converter dígitos específicos do idioma em dígitos ASCII"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "Adicionar um método de entrada"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "Acelerador de digitação"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "Acelerador de digitação"
+
 #~ msgid ""
 #~ "Here you can choose whether a sound file is played if an error occurs. If "
 #~ "the simpleaudio module for Python3 is not installed, this option does "

@@ -1735,6 +1735,38 @@ msgstr ""
 "selezionare la parola scelta da una lista di suggerimenti e migliorare la "
 "propria velocità e correttezza di digitazione."
 
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "Emoji"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "Selettore Emoji"
+
+#, fuzzy
+#~| msgid "Convert language specific digits to ASCII digits"
+#~ msgid ""
+#~ "Add an option to convert language specific digits to ASCII (Resolves: "
+#~ "github-issues#445)"
+#~ msgstr "Converti cifre specifiche della lingua in cifre ASCII"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "Aggiungi metodo inserimento"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "Typing Booster"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "Typing Booster"
+
 #~ msgid "Arrow keys can reopen a preedit"
 #~ msgstr "I tasti freccia riaprono i suggerimenti"
 

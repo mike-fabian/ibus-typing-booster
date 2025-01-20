@@ -13,8 +13,8 @@ msgstr ""
 "POT-Creation-Date: 2025-01-19 01:45+0100\n"
 "PO-Revision-Date: 2025-01-19 11:16+0000\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
-"Language-Team: Polish <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/pl/>\n"
+"Language-Team: Polish <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1721,8 +1721,8 @@ msgid ""
 "Emoji Picker is an emoji browsing tool which uses the emoji matching code "
 "from Ibus-typing-booster."
 msgstr ""
-"Narzędzie do przeglądania emoji korzystające z kodu dopasowywania emoji z "
-"ibus-typing-booster."
+"Narzędzie do przeglądania emoji korzystające z kodu dopasowywania emoji "
+"z ibus-typing-booster."
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml:6
 msgid "Typing Booster"
@@ -1742,6 +1742,38 @@ msgstr ""
 "słowa na podstawie kontekstu i częściowo wprowadzonego słowa. Można po "
 "prostu wybierać żądane słowa z listy sugestii i dzięki temu zwiększyć swoją "
 "prędkość i dokładność pisania."
+
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "Emoji"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "Wybieranie emoji"
+
+#, fuzzy
+#~| msgid "Convert language specific digits to ASCII digits"
+#~ msgid ""
+#~ "Add an option to convert language specific digits to ASCII (Resolves: "
+#~ "github-issues#445)"
+#~ msgstr "Konwertowanie cyfr danego języka na cyfry ASCII"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "Dodaj metodę wprowadzania"
+
+#, fuzzy
+#~| msgid "Typing Booster Preferences"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "Preferencje wspierania pisania"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "Wspieranie pisania"
 
 #~ msgid ""
 #~ "Here you can choose whether a sound file is played if an error occurs. If "

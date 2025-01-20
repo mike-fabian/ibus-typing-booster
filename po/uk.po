@@ -14,8 +14,8 @@ msgstr ""
 "POT-Creation-Date: 2025-01-19 01:45+0100\n"
 "PO-Revision-Date: 2025-01-19 08:16+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/uk/>\n"
+"Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1752,6 +1752,38 @@ msgstr ""
 "визначає повну форму частково введених слів за контекстом. Ви можете просто "
 "вибрати бажане слово зі списку пропозицій, отже пришвидшити введення тексту "
 "та поліпшити його якість."
+
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "Емодзі"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "Вибір емодзі"
+
+#, fuzzy
+#~| msgid "Convert language specific digits to ASCII digits"
+#~ msgid ""
+#~ "Add an option to convert language specific digits to ASCII (Resolves: "
+#~ "github-issues#445)"
+#~ msgstr "Перетворювати специфічні для мови цифри на цифри ASCII"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "Додати спосіб введення"
+
+#, fuzzy
+#~| msgid "Typing Booster Preferences"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "Налаштування «Пришвидшувач введення»"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "Пришвидшувач введення"
 
 #~ msgid ""
 #~ "Here you can choose whether a sound file is played if an error occurs. If "

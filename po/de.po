@@ -16,8 +16,8 @@ msgstr ""
 "POT-Creation-Date: 2025-01-19 01:45+0100\n"
 "PO-Revision-Date: 2025-01-19 00:52+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1764,6 +1764,38 @@ msgstr ""
 "vorschlägt. Man kann einfach das gewünschte Wort aus einer Liste von "
 "Vorschlägen auswählen und so seine Tippgeschwindigkeit und Rechtschreibung "
 "verbessern."
+
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "Emoji"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "Emoji Auswahl"
+
+#, fuzzy
+#~| msgid "Convert language specific digits to ASCII digits"
+#~ msgid ""
+#~ "Add an option to convert language specific digits to ASCII (Resolves: "
+#~ "github-issues#445)"
+#~ msgstr "Konvertiere sprachspezifische Ziffern in ASCII-Ziffern"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "Eingabemethode hinzufügen"
+
+#, fuzzy
+#~| msgid "Typing Booster Preferences"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "Einstellungen für Typing Booster"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "Tippbeschleuniger"
 
 #~ msgid ""
 #~ "Here you can choose whether a sound file is played if an error occurs. If "

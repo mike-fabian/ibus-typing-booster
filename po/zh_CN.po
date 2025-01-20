@@ -1690,6 +1690,31 @@ msgstr ""
 "Ibus-typing-booster 是个预测型输入法，从上下文和部分输入中预测完整的单词。用"
 "户可以从候选词列表中选择所要的单词，从而提升打字速度和拼写能力。"
 
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "Emoji 表情"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "Emoji 选择器"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "添加输入法"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "打字加速器"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "打字加速器"
+
 #~ msgid "Arrow keys can reopen a preedit"
 #~ msgstr "方向键可以重新打开预编辑"
 

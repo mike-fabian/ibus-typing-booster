@@ -1701,6 +1701,38 @@ msgstr ""
 "الجزئي. يمكن للمستخدم عندئذ ببساطة أن يختار الكلمة المرغوبة من قائمة من "
 "الاقتراحات مما يحسن من سرعة وإملاء المكتوب."
 
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "الإيموجي"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "منتقي الإيموجي"
+
+#, fuzzy
+#~| msgid "Convert language specific digits to ASCII digits"
+#~ msgid ""
+#~ "Add an option to convert language specific digits to ASCII (Resolves: "
+#~ "github-issues#445)"
+#~ msgstr "بدِّل الأرقام المختصة باللغة إلى أرقام ASCII"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "إضافة طريقة إدخال"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "مسرّع الكتابة"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "مسرّع الكتابة"
+
 #~ msgid ""
 #~ "Here you can choose whether a sound file is played if an error occurs. If "
 #~ "the simpleaudio module for Python3 is not installed, this option does "

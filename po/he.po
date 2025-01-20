@@ -1696,6 +1696,38 @@ msgstr ""
 "על בסיס ההקשר וקלט חלקי. ניתן לבחור את המילה המבוקשת מרשימת הצעות ולשפר את "
 "מהירות ההקלדה וגם את האיות."
 
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "אמוג׳י"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "בוחר אמוג׳י"
+
+#, fuzzy
+#~| msgid "Convert language specific digits to ASCII digits"
+#~ msgid ""
+#~ "Add an option to convert language specific digits to ASCII (Resolves: "
+#~ "github-issues#445)"
+#~ msgstr "המרת ספרות מסוימות לשפה לספרות ASCII"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "הוספת שיטת קלט"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "מאיץ הקלדה"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "מאיץ הקלדה"
+
 #~ msgid "Arrow keys can reopen a preedit"
 #~ msgstr "מקשי החצים יכולים לפתוח את עריכת הקדם מחדש"
 

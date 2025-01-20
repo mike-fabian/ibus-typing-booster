@@ -1617,3 +1617,28 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "Emoji"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "Selector d’emojis"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "Afegeix un mètode d’entrada"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "Accelerador mecanogràfic"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "Accelerador mecanogràfic"

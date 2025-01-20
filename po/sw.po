@@ -1721,6 +1721,31 @@ msgstr ""
 "uandikalo kutoka kwa orodha ya mapendekezo, na hivyo kuongeza kasi ya "
 "kuandika."
 
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "Emoji"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "Kichaguzi Cha Emoji"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "Ongeza mbinu ya kuingiza"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "Kiongezi Kasi cha Uandishi"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "Kiongezi Kasi cha Uandishi"
+
 #~ msgid ""
 #~ "Here you can choose whether a sound file is played if an error occurs. If "
 #~ "the simpleaudio module for Python3 is not installed, this option does "

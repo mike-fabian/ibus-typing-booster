@@ -1624,6 +1624,15 @@ msgid ""
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
 
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "ଇମୋଜି ବଛାରି"
+
+#, fuzzy
+#~ msgid "input-method"
+#~ msgstr "ନିବେଶ ବିଧି ଯୋଗ କରନ୍ତୁ"
+
 #~ msgid "Arrow keys can reopen a preedit"
 #~ msgstr "ତୀର କୀମାନେ ଏକ ପୂର୍ବସମ୍ପାଦନକୁ ଖୋଲି ପାରିବେ"
 

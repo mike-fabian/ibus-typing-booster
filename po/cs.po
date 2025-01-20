@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2025-01-19 01:45+0100\n"
 "PO-Revision-Date: 2025-01-19 11:16+0000\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
-"Language-Team: Czech <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/cs/>\n"
+"Language-Team: Czech <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1722,6 +1722,38 @@ msgstr ""
 "Ibus-typing-booster je prediktivní metoda vstupu a předvídá celá slova v "
 "závislosti na kontextu a části vstupu. Uživatel může jednoduše vybrat "
 "požadované slovo ze seznamu návrhů a zlepšit svou rychlost psaní a pravopis."
+
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "Emodži"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "Výběr emodži"
+
+#, fuzzy
+#~| msgid "Convert language specific digits to ASCII digits"
+#~ msgid ""
+#~ "Add an option to convert language specific digits to ASCII (Resolves: "
+#~ "github-issues#445)"
+#~ msgstr "Převést číslice specifické pro daný jazyk na číslice ASCII"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "Přidat vstupní metodu"
+
+#, fuzzy
+#~| msgid "Typing Booster Preferences"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "Předvolby Urychlovače psaní"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "Urychlovač psaní"
 
 #~ msgid ""
 #~ "Here you can choose whether a sound file is played if an error occurs. If "

@@ -12,8 +12,8 @@ msgstr ""
 "POT-Creation-Date: 2025-01-19 01:45+0100\n"
 "PO-Revision-Date: 2025-01-19 00:52+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/ja/>\n"
+"Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1691,6 +1691,38 @@ msgstr ""
 "Ibus-typing-boosterは予測入力方式であり、文脈や部分的な入力に基づいて完全な単"
 "語を予測します。ユーザーは提案のリストから目的の単語を選択し、タイピングの速"
 "度とスペルを向上させることができます。"
+
+#, fuzzy
+#~| msgid "Emoji"
+#~ msgid "emoji"
+#~ msgstr "絵文字"
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "絵文字の選択"
+
+#, fuzzy
+#~| msgid "Convert language specific digits to ASCII digits"
+#~ msgid ""
+#~ "Add an option to convert language specific digits to ASCII (Resolves: "
+#~ "github-issues#445)"
+#~ msgstr "言語固有の数字をASCII数字に変換する"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "入力メソッドを追加する"
+
+#, fuzzy
+#~| msgid "Typing Booster Preferences"
+#~ msgid "Typing Booster screenshot"
+#~ msgstr "タイピングブースターの設定"
+
+#, fuzzy
+#~| msgid "Typing Booster"
+#~ msgid "Typing booster demo video"
+#~ msgstr "タイピングブースター"
 
 #~ msgid ""
 #~ "Here you can choose whether a sound file is played if an error occurs. If "

@@ -1624,3 +1624,13 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+
+#, fuzzy
+#~| msgid "Emoji Picker"
+#~ msgid "Emoji Picker screenshot"
+#~ msgstr "Emodzsiválasztó"
+
+#, fuzzy
+#~| msgid "Add input method"
+#~ msgid "input-method"
+#~ msgstr "Bemeneti mód hozzáadása"
