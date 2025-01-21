@@ -3213,7 +3213,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._commit_string_fix_sentence_end(commit_phrase)
                 + commit_phrase)
         if (not self._avoid_forward_key_event
-            and re.compile('^gtk3-im:(firefox|thunderbird)').search(self._im_client)):
+            and re.search(r'^gtk3-im:(firefox|thunderbird)', self._im_client)):
             # Workaround for Gmail editor in firefox and for thunderbird, see
             # https://github.com/mike-fabian/ibus-typing-booster/commit/35a22dab25be8cb9d09d048ca111f661d6b73909
             #
