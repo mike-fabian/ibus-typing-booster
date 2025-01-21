@@ -7850,7 +7850,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                        client is also shown after the “:”, for example
                        like 'gtk3-im:firefox', 'gtk4-im:gnome-text-editor', …
         '''
-        LOGGER.debug('FIXME self._translated_key_state=%s', self._translated_key_state)
         if self._debug_level > 1:
             LOGGER.debug(
                 'object_path=%s client=%s self.client_capabilities=%s\n',
