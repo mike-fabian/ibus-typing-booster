@@ -3203,7 +3203,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         commit_phrase = itb_util.normalize_nfc_and_composition_exclusions(
             commit_phrase)
         if not commit_phrase.isspace():
-            # If the commit space contains only white space
+            # If commit_phrase contains only white space
             # leave self._new_sentence as it is!
             self._new_sentence = False
             if itb_util.text_ends_a_sentence(commit_phrase):
