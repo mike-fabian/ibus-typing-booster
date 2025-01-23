@@ -3183,7 +3183,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         if self._debug_level > 1:
             LOGGER.debug('commit_phrase=“%s” input_phrase=“%s”',
-                         commit_phrase, input_phrase)
+                         repr(commit_phrase), repr(input_phrase))
         # If the suggestions are only enabled by Tab key, i.e. the
         # lookup table is not shown until Tab has been typed, hide
         # the lookup table again after each commit. That means
