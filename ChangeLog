@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 24 Jan 2025 Release 2.27.13
+* If an early commit is possible in a restriced engine, use `return False` if self._prefer_commit is False, only a single key is in the input and that key was not transliterated (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/616)
+* Improve committing strings with multiple lines (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/615)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 20 Jan 2025 Release 2.27.10
 * Generate translations into metainfo.xml files with autotools (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/597)
 * Generate translations into desktop files (Related: https://github.com/mike-fabian/ibus-typing-booster/pull/604)
