@@ -3212,28 +3212,182 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             commit_phrase = (
                 self._commit_string_fix_sentence_end(commit_phrase)
                 + commit_phrase)
-        if (not self._avoid_forward_key_event
-            and re.search(r'^gtk3-im:(firefox|thunderbird)', self._im_client)):
-            # Workaround for Gmail editor in firefox and for thunderbird, see
-            # https://github.com/mike-fabian/ibus-typing-booster/commit/35a22dab25be8cb9d09d048ca111f661d6b73909
-            #
-            # This workaround helps only for '^gtk3-im:', *not* for '^gnome-shell:'.
-            for commit_line in commit_phrase.splitlines(keepends=True):
-                if not commit_line.endswith('\n'):
+        # Trying to make multiline commits work in different environments.
+        #
+        # See also
+        # https://github.com/mike-fabian/ibus-typing-booster/commit/35a22dab25be8cb9d09d048ca111f661d6b73909
+        #
+        # commit_mode == 'single':
+        #     Commit everything in a single commit
+        #
+        #     I think committing everything here in a single commit
+        #     **should** always work, unfortunately it does not ☹.
+        #
+        #     Works (+) or doesn’t work (-) for:
+        #     + gnome-shell: + gnome-text-editor
+        #                    + browsers “complicated stuff”
+        #                        + firefox, google-chrome
+        #                            + google-docs
+        #                            + gmail compose editor
+        #                            + facebook comment editor
+        #                    + gnome-text-editor
+        #                    + *everywhere* else, I think
+        #     + xim: + xterm
+        #     + QIBusInputContext: + kwrite
+        #                          + kate
+        #                          + ...
+        #     + Qt: probably but not tested
+        #     + gtk4-im: + gtk4-demo
+        #                + gnome-text-editor
+        #                + ptyxis
+        #                + ...
+        #     +/- gtk3-im: + gedit
+        #                  + gnome-terminal
+        #                  + xfce4-terminal
+        #                  + browsers “simple stuff”
+        #                      + firefox, google-chrome
+        #                          + google-translate
+        #                          + ...
+        #                  - browsers “complicated stuff”
+        #                      - firefox, google-chrome
+        #                          - google-docs
+        #                          - gmail mail compose editor
+        #                          - facebook comment editor
+        #                          - ...
+        #                 - thunderbird
+        #
+        # commit_mode == 'multi-forward-shift-return':
+        #     Commit each line separately and forward a “Shift+Return” key
+        #     event between each line. “Shift+Return” instead of just “Return”
+        #     because “Return” sends messages in most chat programs
+        #     (WhatsApp, Telegram, ...) and chat like things like
+        #     Facebook comments. “Shift+Return” avoids sending the message
+        #     and inserts a new line. In non-chat places it seems to have
+        #     no disadvantages sending a “Shift+Return“ seems to behave
+        #     the same as just “Return”.
+        #
+        #     Works (+) or doesn’t work (-) for:
+        #     + xim: + xterm
+        #            + ...
+        #     + gtk3-im: + *everywhere*, including
+        #                + browsers “complicated stuff”
+        #                    + firefox, google-chrome
+        #                        + google-docs
+        #                        + gmail compose editor
+        #                        + facebook comment editor
+        #                + thunderbird
+        #     - gtk4-im: - gtk4-demo
+        #                - gnome-text-editor, ...
+        #     - SDL2_Application
+        #
+        # commit_mode == 'multi-commit-return':
+        #     Commit each line separately and commit a '\r'
+        #     (not '\n'!) between each line.
+        #
+        #     Works (+) or doesn’t work (-) for:
+        #     + gtk4-im:  + gnome-text-editor
+        #                 + ptyxis
+        #                 + ...
+        #     +/- gtk3-im: + gedit
+        #                  + xfce4-terminal
+        #                  + gnome-terminal
+        #                  + browsers “simple stuff”
+        #                      + firefox, google-chrome
+        #                          + google-translate
+        #                          + ...
+        #                  - browsers “complicated stuff”
+        #                      - firefox, google-chrome
+        #                          - google-docs
+        #                          - gmail mail compose editor
+        #                          - facebook comment editor
+        #                          - ...
+        #                 - thunderbird
+        #     - xim: - xterm
+        #            - ...
+        #
+        #     This surprisingly worked for me in firefox in the
+        #     facebook comment editor on F41 on **real** hardware. I
+        #     had hoped already I had found a solution which works
+        #     everywhere. But then I was disappointed to find that
+        #     this didn’t work on F41 in a qemu VM. I didn’t
+        #     understand the difference, both F41 were fully updated,
+        #     both running an Xorg desktop.  And it does not work with
+        #     xim either.
+        #
+        #     This mode rarely helps, but it seems to help in some
+        #     corner cases. So let’s try this mode as a last resort
+        #     when we know already that a single commit will not work
+        #     and forwarding key events is not allowed because
+        #     self._avoid_forward_key_event is True.
+        commit_lines = commit_phrase.split('\n')
+        if self._debug_level > 0:
+            LOGGER.debug('commit_phrase=%s commit_lines=%s',
+                         repr(commit_phrase), repr(commit_lines))
+        # The first matching regexp in commit_mode_patterns wins:
+        commit_mode_patterns = (
+            (r'^gnome-shell:', 'single'),
+            (r'^gtk4-im:', 'single'),
+            (r'^(Qt|QIBusInputContext):', 'single'),
+            (r'^xim:', 'single'),
+            (r'^gtk3-im:', 'multi-forward-shift-return'),
+            # When ibus has just started, in the first window which
+            # gets focus the im module is unknown, i.e. the pattern
+            # r'^:' would match (I think that must be a bug
+            # somewhere). If nothing else is known using a single
+            # commit is probably the best bet.  But if we can detect
+            # firefox, thunderbird, or google-chrome, we know that it
+            # must be 'gtk3-im' so we can use 'multi-forward-shift-return'.
+            # Try to match these case insensitively (regexp starts
+            # with (?i)):
+            (r'(?i)^:.*firefox.*:', 'multi-forward-shift-return'),
+            (r'(?i)^:.*google-chrome.*:', 'multi-forward-shift-return'),
+            (r'(?i)^:.*thunderbird.*:', 'multi-forward-shift-return'),
+            (r'^:', 'single'),
+        )
+        commit_mode = 'single'
+        if len(commit_lines) >= 2:
+            if self._debug_level > 0:
+                LOGGER.debug('self._im_client=“%s”', self._im_client)
+            for pattern, mode in commit_mode_patterns:
+                if re.search(pattern, self._im_client):
+                    if self._debug_level > 0:
+                        LOGGER.debug(
+                            'commit_mode_pattern match: pattern=%s mode=%s',
+                            pattern, mode)
+                    commit_mode = mode
+                    break # first matching pattern wins!
+        if (commit_mode == 'multi-forward-shift-return'
+            and self._avoid_forward_key_event):
+            commit_mode = 'multi-commit-return'
+        if self._debug_level > 0:
+            LOGGER.debug('commit_mode=%s', commit_mode)
+        if commit_mode.startswith('multi'):
+            for index, commit_line in enumerate(commit_lines):
+                if index < len(commit_lines) - 1:
+                    if commit_line:
+                        super().commit_text(
+                            IBus.Text.new_from_string(commit_line))
+                        # The sleep is needed because this is racy,
+                        # without the sleep it is likely that all the
+                        # commits come first followed by all the
+                        # forwarded Return keys:
+                        time.sleep(self._ibus_event_sleep_seconds)
+                    if commit_mode == 'multi-forward-shift-return':
+                        self.forward_key_event(
+                            IBus.KEY_Return,
+                            self._keyvals_to_keycodes.ibus_keycode(
+                                IBus.KEY_Return),
+                            IBus.ModifierType.SHIFT_MASK)
+                    else: # commit_mode == 'multi-commit-return':
+                        super().commit_text(
+                            IBus.Text.new_from_string('\r'))
+                else:
+                    if self._debug_level > 0:
+                        LOGGER.debug('commit %s', repr(commit_line))
                     super().commit_text(
                         IBus.Text.new_from_string(commit_line))
-                    continue
-                super().commit_text(
-                    IBus.Text.new_from_string(commit_line[:-1]))
-                self.forward_key_event(
-                    IBus.KEY_Return,
-                    self._keyvals_to_keycodes.ibus_keycode(IBus.KEY_Return),
-                    0)
-                # The sleep is needed because this is racy, without the
-                # sleep it is likely that all the commits come first
-                # followed by all the forwarded Return keys:
                 time.sleep(self._ibus_event_sleep_seconds)
-        else:
+        else: # commit_mode == 'single':
             super().commit_text(
                 IBus.Text.new_from_string(commit_phrase))
         self._commit_happened_after_focus_in = True
@@ -7854,9 +8008,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.debug(
                 'object_path=%s client=%s self.client_capabilities=%s\n',
                 object_path, client, f'{self.client_capabilities:010b}')
-        self._im_client = client
         (program_name,
          window_title) = itb_active_window.get_active_window()
+        if self._debug_level > 1:
+            LOGGER.debug(
+                'program_name=“%s” window_title=“%s”',
+                program_name, window_title)
+        self._im_client = client
         if ':' not in self._im_client:
             self._im_client += ':' + program_name + ':' + window_title
         else:
