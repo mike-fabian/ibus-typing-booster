@@ -7940,13 +7940,21 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         self._typed_string, self._typed_string_cursor)
                 if (transliterated_parts.committed
                     and transliterated_parts.committed_index):
-                    super().commit_text(
-                        IBus.Text.new_from_string(
-                            transliterated_parts.committed))
                     self._typed_string = self._typed_string[
                         transliterated_parts.committed_index:]
                     self._typed_string_cursor = len(self._typed_string)
                     self._update_transliterated_strings()
+                    if (not self._prefer_commit
+                        and transliterated_parts.committed_index == 1
+                        and transliterated_parts.committed == key.unicode
+                        and not transliterated_parts.preedit
+                        and not transliterated_parts.cursor_pos):
+                        self._update_ui()
+                        return False
+                    else:
+                        super().commit_text(
+                            IBus.Text.new_from_string(
+                                transliterated_parts.committed))
             self._update_ui()
             return True
 
