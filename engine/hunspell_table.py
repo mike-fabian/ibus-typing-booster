@@ -3332,13 +3332,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             (r'^gtk3-im:', 'multi-forward-shift-return'),
             # When ibus has just started, in the first window which
             # gets focus the im module is unknown, i.e. the pattern
-            # r'^:' would match (I think that must be a bug
-            # somewhere). If nothing else is known using a single
-            # commit is probably the best bet.  But if we can detect
-            # firefox, thunderbird, or google-chrome, we know that it
-            # must be 'gtk3-im' so we can use 'multi-forward-shift-return'.
-            # Try to match these case insensitively (regexp starts
-            # with (?i)):
+            # r'^:' would match (I think that must be a bug somewhere,
+            # I reported it here:
+            # https://github.com/ibus/ibus/issues/2717). If nothing
+            # else is known using a single commit is probably the best
+            # bet.  But if we can detect firefox, thunderbird, or
+            # google-chrome, we know that it must be 'gtk3-im' so we
+            # can use 'multi-forward-shift-return'.  Try to match
+            # these case insensitively (regexp starts with (?i)):
             (r'(?i)^:.*firefox.*:', 'multi-forward-shift-return'),
             (r'(?i)^:.*google-chrome.*:', 'multi-forward-shift-return'),
             (r'(?i)^:.*thunderbird.*:', 'multi-forward-shift-return'),
