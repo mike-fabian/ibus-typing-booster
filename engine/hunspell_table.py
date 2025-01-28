@@ -7028,7 +7028,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.info('Returning False')
         return False
 
-    def _forward_generated_key_event(self, keyval: int) -> None:
+    def _forward_generated_key_event(self, keyval: int, keystate: int = 0) -> None:
         '''Forward a generated key event for keyval to the application.'''
         # Without using a correct ibus key code, this does not work
         # correctly, i.e. something like
@@ -7048,7 +7048,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return
         keycode = self._keyvals_to_keycodes.keycode(keyval)
         ibus_keycode = self._keyvals_to_keycodes.ibus_keycode(keyval)
-        keystate = 0
         if self._debug_level > 0:
             LOGGER.debug('keyval=%s keycode=%s ibus_keycode=%s keystate=%s',
                          keyval, keycode, ibus_keycode, keystate)
