@@ -3757,7 +3757,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     return False
             if key.val in (IBus.KEY_Delete, IBus.KEY_KP_Delete):
                 if cursor_pos != cursor_pos_old:
-                    LOGGER.debug('Unexpected cursor movemend on Delete key, '
+                    LOGGER.debug('Unexpected cursor movement on Delete key, '
                                  'cannot reopen preedit.')
             pattern = re.compile(r'(^|.*[\s]+)$')
             match = pattern.match(text[:cursor_pos])
