@@ -3736,6 +3736,41 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 IBus.Text.new_from_string(''), 0, True,
                 IBus.PreeditFocusMode.COMMIT)
             self._current_preedit_text = ''
+            if (re.search(r'^[^:]*:[^:]*:WhatsApp', self._im_client)
+                and len(token) == cursor_pos):
+                # Workaround for WhatsApp in firefox (google-chrome
+                # does not support surrounding text so we don't get
+                # here anyway):
+                #
+                # If reaching a word in WhatsApp from the right
+                # **and** the length of the token deleted via
+                # surrounding text is equal to the cursor_pos then we
+                # know that after deleting the surrounding text the
+                # cursor is at the beginning of a line. If surrounding
+                # text is deleted at the beginning of a line, WhatsApp
+                # seems to sometimes enable a selection. When the
+                # preedit is then reopened, it may appear like
+                # selected text and behave strange or even vanish
+                # immediately.  See:
+                # https://github.com/mike-fabian/ibus-typing-booster/issues/617
+                # We try to cancel that selection here by sending
+                # Control+c (copies the selection) followed by
+                # Control+v (replaces the selection with its copy):
+                LOGGER.debug(
+                    'Apply WhatsApp workaround for reopening preedit '
+                    'at the beginning of a line.')
+                time.sleep(self._ibus_event_sleep_seconds)
+                self._forward_generated_key_event(
+                    IBus.KEY_c, keystate=IBus.ModifierType.CONTROL_MASK)
+                self._forward_generated_key_event(
+                    IBus.KEY_c, keystate=
+                    IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.RELEASE_MASK)
+                self._forward_generated_key_event(
+                    IBus.KEY_v, keystate=IBus.ModifierType.CONTROL_MASK)
+                self._forward_generated_key_event(
+                    IBus.KEY_v, keystate=
+                    IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.RELEASE_MASK)
+                time.sleep(self._ibus_event_sleep_seconds)
             self.get_context()
             self._insert_string_at_cursor(list(token))
             self._update_ui()
@@ -3784,6 +3819,41 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             super().update_preedit_text_with_mode(
                 IBus.Text.new_from_string(''), 0, True,
                 IBus.PreeditFocusMode.COMMIT)
+            self._current_preedit_text = ''
+            if (re.search(r'^[^:]*:[^:]*:WhatsApp', self._im_client)
+                and not text[:cursor_pos].strip()):
+                # Workaround for WhatsApp in firefox (google-chrome
+                # does not support surrounding text so we don't get
+                # here anyway):
+                #
+                # If reaching a word in WhatsApp from the left **and**
+                # there is only whitespace in the surrounding text up
+                # to the cursor_pos then it is possible that after
+                # deleting the surrounding text the cursor is at the
+                # beginning of a line. If surrounding text is deleted
+                # at the beginning of a line, WhatsApp seems to
+                # sometimes enable a selection. When the preedit is
+                # then reopened, it may appear like selected text and
+                # behave strange or even vanish immediately.  See:
+                # https://github.com/mike-fabian/ibus-typing-booster/issues/617
+                # We try to cancel that selection here by sending
+                # Control+c (copies the selection) followed by
+                # Control+v (replaces the selection with its copy):
+                LOGGER.debug(
+                    'Apply WhatsApp workaround for reopening preedit '
+                    'at the beginning of a line.')
+                time.sleep(self._ibus_event_sleep_seconds)
+                self._forward_generated_key_event(
+                    IBus.KEY_c, keystate=IBus.ModifierType.CONTROL_MASK)
+                self._forward_generated_key_event(
+                    IBus.KEY_c, keystate=
+                    IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.RELEASE_MASK)
+                self._forward_generated_key_event(
+                    IBus.KEY_v, keystate=IBus.ModifierType.CONTROL_MASK)
+                self._forward_generated_key_event(
+                    IBus.KEY_v, keystate=
+                    IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.RELEASE_MASK)
+                time.sleep(self._ibus_event_sleep_seconds)
             self.get_context()
             self._insert_string_at_cursor(list(token))
             self._typed_string_cursor = 0
