@@ -1,0 +1,105 @@
+name: 🐞 Bug report
+description: Create a report to help us improve
+title: "[BUG] <title>"
+labels: ["Bug", "Needs Triage"]
+assignees:
+  - mike-fabian
+body:
+- type: markdown
+  attributes:
+    value: "Please choose a useful title to identify your issue."
+- type: checkboxes
+  attributes:
+    label: Is there an existing issue for this?
+    description: Please search to see if an issue already exists for the bug you encountered.
+    options:
+    - label: I have searched the existing issues
+      required: true
+- type: input
+  id: version
+  attributes:
+    label: ibus-typing-booster version
+    description: Open the ibus-typing-booster setup tool and click on the `About` button (Or check the version of the installed package, for example using `rpm -q ibus-typing-booster` on rpm based distribtions).
+    placeholder: 2.27.15
+  validations:
+    required: false
+- type: input
+  id: distro
+  attributes:
+    label: Distribution and Version
+    description: Which distribusion and version? Check for example /etc/fedora-release
+    placeholder: Fedora 41
+  validations:
+    required: false
+- type: input
+  id: desktop
+  attributes:
+    label: Desktop Environment and Version
+    description: |
+      Which desktop environment and version?
+      Check $XDG_CURRENT_DESKTOP for example
+    placeholder: GNOME 3.24
+  validations:
+    required: false
+- type: dropdown
+  id: session
+  attributes:
+    label: Session Type
+    description: Which session type? You can check this with `echo $XDG_SESSION_TYPE`.
+    options:
+      - Wayland
+      - X11
+    default: 0
+  validations:
+    required: true
+- type: input
+  id: application
+  attributes:
+    label: Application and Version
+    description: Which application are you typing in?
+    placeholder: gedit 3.24, kate, xterm, WhatsApp in firefox, WhatsApp in google-chrome, …
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Summary of the bug
+    description: A clear and concise description of what the bug is.
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: How to reproduce the bug?
+    description: Detailed steps how the bug can be reproduced. Please add screenshots and/or videos if you think it helps to explain the problem!
+    placeholder: |
+      1. Do this '...'
+      1. Then type this '....'
+      1. Then click on this '....'
+      1. And then this problem occurs ...
+  validations:
+    required: false
+- type: dropdown
+  id: inevitability
+  attributes:
+    label: Always reproducible?
+    description: Can you reproduce your problem always?
+    options:
+      - Yes
+      - No
+    default: 0
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Which Typing Booster options/settings do you use?
+    description: Here you may attach the output of `dconf dump /org/freedesktop/ibus/engine/typing-booster/` and or the output of `dconf dump /org/freedesktop/ibus/engine/tb/`
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Anything else?
+    description: |
+      Links? References? Anything that will give us more context about the issue you are encountering!
+
+      Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+  validations:
+    required: false
