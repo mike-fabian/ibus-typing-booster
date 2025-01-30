@@ -8,13 +8,13 @@ body:
 - type: markdown
   attributes:
     value: "Please choose a useful title to identify your issue."
-- type: checkboxes
-  attributes:
-    label: Is there an existing issue for this?
-    description: Please search to see if an issue already exists for the bug you encountered.
-    options:
-    - label: I have searched the existing issues
-      required: true
+#- type: checkboxes
+#  attributes:
+#    label: Is there an existing issue for this?
+#    description: Please search to see if an issue already exists for the bug you encountered.
+#    options:
+#    - label: I have searched the existing issues
+#      required: true
 - type: input
   id: version
   attributes:
@@ -41,15 +41,14 @@ body:
     placeholder: GNOME 3.24
   validations:
     required: false
-- type: dropdown
+- type: checkboxes
   id: session
   attributes:
     label: Session Type
     description: Which session type? You can check this with `echo $XDG_SESSION_TYPE`.
     options:
-      - Wayland
-      - X11
-    default: 0
+      - label: Wayland
+      - label: X11
   validations:
     required: true
 - type: input
@@ -77,14 +76,14 @@ body:
       1. And then this problem occurs ...
   validations:
     required: false
-- type: dropdown
+- type: checkboxes
   id: inevitability
   attributes:
     label: Always reproducible?
     description: Can you reproduce your problem always?
     options:
-      - "Yes"
-      - "No"
+      - label: "Yes"
+      - label: "No"
   validations:
     required: true
 - type: textarea
