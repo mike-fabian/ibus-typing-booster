@@ -1,7 +1,7 @@
 name: 🐞 Bug report
 description: Create a report to help us improve
 title: "[BUG] <title>"
-labels: ["Bug", "Needs Triage"]
+labels: ["bug", "triage"]
 assignees:
   - mike-fabian
 body:
