@@ -91,7 +91,7 @@ body:
 - type: textarea
   attributes:
     label: Which Typing Booster options/settings do you use?
-    description: Here you may attach the output of `dconf dump /org/freedesktop/ibus/engine/typing-booster/` and or the output of `dconf dump /org/freedesktop/ibus/engine/tb/`
+    description: Here you may attach the output of `dconf dump /org/freedesktop/ibus/engine/typing-booster/` and/or the output of `dconf dump /org/freedesktop/ibus/engine/tb/`
   validations:
     required: false
 - type: textarea
