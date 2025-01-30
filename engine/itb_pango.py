@@ -40,6 +40,11 @@ from gi.repository import Pango
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
+@functools.lru_cache(maxsize=1)
+def _get_global_gtk_label() -> Gtk.Label:
+    '''Create a reusable Gtk.Label, first call initializes'''
+    return Gtk.Label()
+
 # @functools.cache is available only in Python >= 3.9.
 #
 # Python >= 3.9 is not available on RHEL8, not yet on openSUSE
@@ -233,7 +238,7 @@ def get_available_font_names() -> List[str]:
     True
     '''
     # pylint: enable=line-too-long
-    label = Gtk.Label()
+    label =  _get_global_gtk_label()
     pango_context = label.get_pango_context()
     families = pango_context.list_families()
     return sorted([family.get_name() for family in families])
@@ -273,7 +278,7 @@ def get_fonts_used_for_text(
     # pylint: enable=line-too-long
     fonts_used = []
     text_utf8 = text.encode('UTF-8', errors='replace')
-    label = Gtk.Label()
+    label = _get_global_gtk_label()
     pango_context = label.get_pango_context()
     pango_layout = Pango.Layout(pango_context)
     pango_font_description = Pango.font_description_from_string(font)
