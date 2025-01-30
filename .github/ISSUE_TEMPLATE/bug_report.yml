@@ -83,8 +83,8 @@ body:
     label: Always reproducible?
     description: Can you reproduce your problem always?
     options:
-      - Yes
-      - No
+      - "Yes"
+      - "No"
     default: 0
   validations:
     required: true
