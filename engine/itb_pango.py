@@ -45,6 +45,16 @@ def _get_global_gtk_label() -> Gtk.Label:
     '''Create a reusable Gtk.Label, first call initializes'''
     return Gtk.Label()
 
+@functools.lru_cache(maxsize=1)
+def _get_global_pango_context() -> Pango.Context:
+    '''Create a reusable Pango.Context, first call initializes'''
+    return _get_global_gtk_label().get_pango_context()
+
+@functools.lru_cache(maxsize=1)
+def _get_global_pango_layout() -> Pango.Layout:
+    '''Create a reusable Pango.Layout, first call initializes'''
+    return Pango.Layout(_get_global_pango_context())
+
 # @functools.cache is available only in Python >= 3.9.
 #
 # Python >= 3.9 is not available on RHEL8, not yet on openSUSE
@@ -238,9 +248,7 @@ def get_available_font_names() -> List[str]:
     True
     '''
     # pylint: enable=line-too-long
-    label =  _get_global_gtk_label()
-    pango_context = label.get_pango_context()
-    families = pango_context.list_families()
+    families =  _get_global_pango_context().list_families()
     return sorted([family.get_name() for family in families])
 
 def get_fonts_used_for_text(
@@ -278,9 +286,7 @@ def get_fonts_used_for_text(
     # pylint: enable=line-too-long
     fonts_used = []
     text_utf8 = text.encode('UTF-8', errors='replace')
-    label = _get_global_gtk_label()
-    pango_context = label.get_pango_context()
-    pango_layout = Pango.Layout(pango_context)
+    pango_layout = _get_global_pango_layout()
     pango_font_description = Pango.font_description_from_string(font)
     pango_layout.set_font_description(pango_font_description)
     pango_attr_list = Pango.AttrList()
@@ -303,7 +309,7 @@ def get_fonts_used_for_text(
         run_text = text_utf8[offset:offset + length].decode(
             'UTF-8', errors='replace')
         run_family = font_description_used.get_family()
-        pango_layout_run = Pango.Layout(pango_context)
+        pango_layout_run = _get_global_pango_layout()
         pango_layout_run.set_font_description(pango_font_description)
         pango_layout_run.set_attributes(pango_attr_list)
         pango_layout_run.set_text(run_text)
