@@ -813,31 +813,30 @@ class M17nTranslitTestCase(unittest.TestCase):
         transliterated_parts = trans.transliterate_parts(list('akisha '))
         self.assertEqual(transliterated_parts.committed, '')
         self.assertEqual(transliterated_parts.committed_index, 0)
-        self.assertEqual(len(transliterated_parts.preedit), 3)
-        self.assertEqual(transliterated_parts.cursor_pos, 1)
+        # ja-anthy has some memory. Depending on how it was used before,
+        # the preedit may have different lengths here, 2, 3, and 4 is possible:
+        # 亞記者, 秋者, あきしゃ
+        self.assertTrue(len(transliterated_parts.preedit) in (2, 3, 4))
+        self.assertTrue(transliterated_parts.cursor_pos in (1, 2, 3, 4))
         self.assertEqual(transliterated_parts.status, '漢')
         self.assertTrue(len(transliterated_parts.candidates) > 5)
         self.assertTrue(
             transliterated_parts.preedit[:transliterated_parts.cursor_pos]
             in transliterated_parts.candidates)
-        self.assertTrue('娃' in transliterated_parts.candidates)
-        self.assertTrue('亜' in transliterated_parts.candidates)
-        self.assertTrue('阿' in transliterated_parts.candidates)
-        self.assertTrue('あ' in transliterated_parts.candidates)
-        self.assertTrue('ア' in transliterated_parts.candidates)
+        # Depending on how ja-anthy was used before, candidates
+        # after typing 'akisha ' may differ a lot. Hard to test for anything here.
+        #
+        # 'S-Right' widens the Henkan region, using it three times
+        # should ensure that the henkan region encompasses the whole preedit
         transliterated_parts = trans.transliterate_parts(
-            list('akisha ') + ['Right']) # 'Right' moves the Henkan segment right
+            list('akisha ') + ['S-Right', 'S-Right', 'S-Right'])
         self.assertEqual(transliterated_parts.committed, '')
         self.assertEqual(transliterated_parts.committed_index, 0)
-        self.assertEqual(len(transliterated_parts.preedit), 3)
-        self.assertEqual(transliterated_parts.cursor_pos, 3)
+        self.assertTrue(len(transliterated_parts.preedit) in (3, 4))
+        self.assertTrue(transliterated_parts.cursor_pos in (3, 4))
         self.assertEqual(transliterated_parts.status, '漢')
-        self.assertTrue('記者' in transliterated_parts.candidates)
-        self.assertTrue('帰社' in transliterated_parts.candidates)
-        self.assertTrue('汽車' in transliterated_parts.candidates)
-        self.assertTrue('貴社' in transliterated_parts.candidates)
-        self.assertTrue('きしゃ' in transliterated_parts.candidates)
-        self.assertTrue('キシャ' in transliterated_parts.candidates)
+        self.assertTrue('あきしゃ' in transliterated_parts.candidates)
+        self.assertTrue('アキシャ' in transliterated_parts.candidates)
 
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 8),
