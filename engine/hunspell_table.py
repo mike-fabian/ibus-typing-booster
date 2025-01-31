@@ -2526,24 +2526,30 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 f'({self.get_lookup_table().get_cursor_pos() + 1} / '
                 f'{self.get_lookup_table().get_number_of_candidates()}) ')
         if self._show_status_info_in_auxiliary_text:
-            if self._emoji_predictions:
-                aux_string += (
-                    f'{MODE_ON_SYMBOL}{EMOJI_PREDICTION_MODE_SYMBOL} ')
+            if self._lookup_table_shows_compose_completions:
+                aux_string += '⎄ '
+            elif self._lookup_table_shows_related_candidates:
+                aux_string += '🔗 '
             else:
-                aux_string += (
-                    f'{MODE_OFF_SYMBOL}{EMOJI_PREDICTION_MODE_SYMBOL} ')
-            if self._off_the_record:
-                aux_string += (
-                    f'{MODE_ON_SYMBOL}{OFF_THE_RECORD_MODE_SYMBOL} ')
-            else:
-                aux_string += (
-                    f'{MODE_OFF_SYMBOL}{OFF_THE_RECORD_MODE_SYMBOL} ')
-            names = self.get_dictionary_names()
-            if names:
-                aux_string += f'{names[0]} {itb_util.get_flag(names[0])}'
-            preedit_ime = self.get_current_imes()[0]
-            if preedit_ime != 'NoIME':
-                aux_string += f' {preedit_ime} '
+                # “Normal” lookup table
+                if self._emoji_predictions:
+                    aux_string += (
+                        f'{MODE_ON_SYMBOL}{EMOJI_PREDICTION_MODE_SYMBOL} ')
+                else:
+                    aux_string += (
+                        f'{MODE_OFF_SYMBOL}{EMOJI_PREDICTION_MODE_SYMBOL} ')
+                if self._off_the_record:
+                    aux_string += (
+                        f'{MODE_ON_SYMBOL}{OFF_THE_RECORD_MODE_SYMBOL} ')
+                else:
+                    aux_string += (
+                        f'{MODE_OFF_SYMBOL}{OFF_THE_RECORD_MODE_SYMBOL} ')
+                names = self.get_dictionary_names()
+                if names:
+                    aux_string += f'{names[0]} {itb_util.get_flag(names[0])}'
+                preedit_ime = self.get_current_imes()[0]
+                if preedit_ime != 'NoIME':
+                    aux_string += f' {preedit_ime} '
         # Colours do not work at the moment in the auxiliary text!
         # Needs fix in ibus.
         attrs = IBus.AttrList()
