@@ -6219,8 +6219,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                 compose_result).lower()
                     self._append_candidate_to_lookup_table(
                         phrase=text_for_lookup_table)
-            self._update_lookup_table_and_aux()
+            self.is_lookup_table_enabled_by_tab = True
             self._lookup_table_shows_compose_completions = True
+            self._update_lookup_table_and_aux()
             return True
 
         if ((self._tab_enable
