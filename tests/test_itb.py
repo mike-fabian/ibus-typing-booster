@@ -518,7 +518,7 @@ class ItbTestCase(unittest.TestCase):
             ['NoIME', 't-latn-post'], update_gsettings=False)
         self.engine.set_dictionary_names(
             ['en_US'], update_gsettings=False)
-        self.engine.set_record_mode(0)
+        self.engine.set_record_mode(0, update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
@@ -577,7 +577,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(
             2,
             self.database.phrase_exists('citsiligarfilacrepus'))
-        self.engine.set_record_mode(1)
+        self.engine.set_record_mode(1, update_gsettings=False)
         # Previously recorded phrase failing spellcheck should still be recorded:
         self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
@@ -639,7 +639,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(
             1,
             self.database.phrase_exists('hello'))
-        self.engine.set_record_mode(2)
+        self.engine.set_record_mode(2, update_gsettings=False)
         #  Previously recorded phrase failing spellcheck cannot be recorded
         self.assertEqual(
             3,
