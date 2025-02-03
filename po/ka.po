@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-01-29 11:27+0100\n"
+"POT-Creation-Date: 2025-02-03 14:46+0100\n"
 "PO-Revision-Date: 2025-01-19 08:16+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://translate.fedoraproject.org/projects/ibus-"
@@ -223,32 +223,32 @@ msgstr "მორგება"
 msgid "Preferences for ibus-typing-booster"
 msgstr "\"ibus-typing-booster\"-ის მორგება"
 
-#: engine/hunspell_table.py:5903
+#: engine/hunspell_table.py:5909
 msgid "Failed to import Google speech-to-text."
 msgstr "Google speech-to-text-ის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:5906
+#: engine/hunspell_table.py:5912
 msgid "Failed to import pyaudio."
 msgstr "Pyaudio-ის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:5909
+#: engine/hunspell_table.py:5915
 msgid "Failed to import queue."
 msgstr "რიგის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:5914
+#: engine/hunspell_table.py:5920
 msgid "No supported language for speech recognition."
 msgstr "საუბრის ამოსაცნობად ენა მხარდაუჭერელია."
 
-#: engine/hunspell_table.py:5918
+#: engine/hunspell_table.py:5924
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google -ის აპლიკაციაში შესვლის დეტალების” ფაილი “%s” არ არსებობს."
 
-#: engine/hunspell_table.py:5931
+#: engine/hunspell_table.py:5937
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Google speech-to-text -ის ინიციალიზაციის შეცდომა. იხილეთ debug.log."
 
-#: engine/hunspell_table.py:6039
+#: engine/hunspell_table.py:6045
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google speech-to-text -ის შეცდომა. ხილეთ debug.log."
 
