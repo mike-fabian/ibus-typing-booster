@@ -41,6 +41,36 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.16" date="2025-02-03" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.16</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Improve status info in auxiliary text for compose
+            completions and related candidates: When compose
+            completions or related candidates are shown, use different
+            auxiliary text to make it more obvious that a “special”
+            lookup table is shown.
+          </li>
+          <li>
+            Make compose completions work when the option “☑️ Enable
+            suggestions by key (Default is the Tab key)” is used
+            (Resolves: github-issues#619)
+          </li>
+          <li>
+            Speedup for itb_pango: Create a Gtk.label and Pango.Layout
+            only once and reuse it, Seems to make
+            get_fonts_used_for_text() about 33% faster.
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/619">
+          github-issues#619
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.15" date="2025-01-29" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.15</url>
       <description>

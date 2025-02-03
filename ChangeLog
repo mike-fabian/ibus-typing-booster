@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 03 Feb 2025 Release 2.27.16
+* Improve status info in auxiliary text for compose completions and related candidates: When compose completions or related candidates are shown, use different auxiliary text to make it more obvious that a “special” lookup table is shown.
+* Make compose completions work when the option “☑️ Enable suggestions by key (Default is the Tab key)” is used (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/619)
+* Speedup for itb_pango: Create a Gtk.label and Pango.Layout only once and reuse it, Seems to make get_fonts_used_for_text() about 33% faster.
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 29 Jan 2025 Release 2.27.15
 * Workaround for reopening preedits in WhatsApp at the beginning of a line (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/617)
 * Update UnicodeData.txt, Blocks.txt, DerivedAge.txt to the Unicode 17.0.0 draft as of 2025-01-28
