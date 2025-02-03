@@ -258,20 +258,19 @@ def write_xml() -> None:
     ])
     # Input methods offering multiple candidates are not yet supported
     # by typing-booster:
-    m17n_input_methods_multiple_candidates = set([
+    #
+    # Note: 'vi-tcvn', 'vi-telex', 'vi-viqr', 'vi-vni', 'zh-pinyin-vi', 'zh-pinyin'
+    # also produce multiple candidates sometimes but **never** show a  lookup table
+    # as they do not have a '(show)' command in their .mim files. These
+    # work just fine as restricted typing booster engines.
+    m17n_input_methods_with_lookup_tables = set([
         'ja-anthy',
         't-lsymbol',
         'ml-swanalekha',
         'vi-han',
         'vi-nomtelex',
         'vi-nomvni',
-        'vi-tcvn',
-        'vi-telex',
-        'vi-viqr',
-        'vi-vni',
         'zh-cangjie',
-        'zh-pinyin-vi',
-        'zh-pinyin',
         'zh-py',
         'zh-py-b5',
         'zh-py-gb',
@@ -283,7 +282,7 @@ def write_xml() -> None:
     ])
     supported_input_methods = sorted(
         (m17n_input_methods - m17n_input_methods_skip)
-        - m17n_input_methods_multiple_candidates
+        - m17n_input_methods_with_lookup_tables
     ) + ['typing-booster']
 
     indic_languages = (
