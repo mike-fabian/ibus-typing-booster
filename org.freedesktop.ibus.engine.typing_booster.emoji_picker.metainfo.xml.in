@@ -41,6 +41,35 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.23" date="2025-02-06" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.23</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Key combinations like A-C-l should also commit and pass
+            the key to the application (unless they have a
+            transliteration) (Resolves: github-issues#622)
+          </li>
+          <li>
+            Support m17n input methods which produce multiple
+            candidates (Resolves: github-issues#523)
+          </li>
+          <li>
+            Enable vi-tcvn, vi-telex, vi-viqr, vi-vni, zh-pinyin-vi,
+            zh-pinyin as restricted tb engines
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/622">
+          github-issues#622
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/523">
+          github-issues#523
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.16" date="2025-02-03" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.16</url>
       <description>

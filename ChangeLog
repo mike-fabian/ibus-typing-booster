@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 Feb 2025 Release 2.27.23
+* Key combinations like A-C-l should also commit and pass the key to the application (unless they have a transliteration) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/622)
+* Support m17n input methods which produce multiple candidates (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/523)
+* Enable vi-tcvn, vi-telex, vi-viqr, vi-vni, zh-pinyin-vi, zh-pinyin as restricted tb engines
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 03 Feb 2025 Release 2.27.16
 * Improve status info in auxiliary text for compose completions and related candidates: When compose completions or related candidates are shown, use different auxiliary text to make it more obvious that a “special” lookup table is shown.
 * Make compose completions work when the option “☑️ Enable suggestions by key (Default is the Tab key)” is used (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/619)
