@@ -270,17 +270,123 @@ def get_fonts_used_for_text(
     on the fonts installed on the system used to do the test. The results
     are also locale dependent, the results below are with LC_ALL=en_US.UTF-8:
 
-    >>> get_fonts_used_for_text('DejaVu Sans Mono', '😀 ')
-    [('😀', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'glyph-available': True, 'file': '/home/mfabian/.fonts/Noto-COLRv1.ttf', 'lang': 'und-zsye', 'version': 'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced', 'opentype-tables': ['COLR']}), (' ', {'font': 'DejaVu Sans Mono', 'glyph-count': 1, 'visible': False, 'glyph-available': True, 'file': '/usr/share/fonts/dejavu-sans-mono-fonts/DejaVuSansMono.ttf', 'lang': 'aa|af|ar|ast|av|ay|az-az|az-ir|bm|be|bg|bi|bin|br|bs|bua|ca|ce|ch|chm|co|cs|cv|cy|da|de|el|en|eo|es|et|eu|fa|fi|fj|fo|fr|ff|fur|fy|ga|gd|gl|gn|gv|ha|haw|ho|hr|hu|hy|ia|ig|id|ie|ik|io|is|it|ka|kaa|ki|kk|kl|ku-am|kum|kv|kw|ky|la|lb|lez|ln|lt|lv|mg|mh|mi|mk|mo|mt|nb|nds|nl|nn|no|nr|nso|ny|oc|om|os|pl|pt|rm|ro|ru|sah|sco|se|sel|shs|sk|sl|sm|sma|smj|smn|so|sq|sr|ss|st|sv|sw|tk|tl|tn|to|tr|ts|tt|tw|tyv|uk|uz|ve|vo|vot|wa|wen|wo|xh|yap|yo|zu|ak|an|ber-dz|crh|csb|ee|fat|fil|hsb|ht|hz|jv|kab|kj|kr|ku-tr|kwm|lg|li|mn-mn|ms|na|ng|nv|pap-an|pap-aw|qu|quz|rn|rw|sc|sg|sn|su|ty|za|agr|ayc|bem|dsb|lij|mfe|mhr|miq|mjw|nhn|niu|rif|sgs|szl|tpi|unm|wae|yuw', 'version': 'Version 2.37'})]
+    >>> fonts_used = get_fonts_used_for_text('DejaVu Sans Mono', '😀 ')
+    >>> len(fonts_used)
+    2
+    >>> fonts_used[0][0]
+    '😀'
+    >>> fonts_used[0][1]['font']
+    'Noto Color Emoji'
+    >>> fonts_used[0][1]['glyph-count']
+    1
+    >>> fonts_used[0][1]['visible']
+    True
+    >>> fonts_used[0][1]['glyph-available']
+    True
+    >>> fonts_used[0][1]['file']
+    '/home/mfabian/.fonts/Noto-COLRv1.ttf'
+    >>> fonts_used[0][1]['lang']
+    'und-zsye'
+    >>> fonts_used[0][1]['version']
+    'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced'
+    >>> fonts_used[0][1]['opentype-tables']
+    ['COLR']
+    >>> fonts_used[1][0]
+    ' '
+    >>> fonts_used[1][1]['font']
+    'DejaVu Sans Mono'
+    >>> fonts_used[1][1]['glyph-count']
+    1
+    >>> fonts_used[1][1]['visible']
+    False
+    >>> fonts_used[1][1]['glyph-available']
+    True
+    >>> fonts_used[1][1]['file']
+    '/usr/share/fonts/dejavu-sans-mono-fonts/DejaVuSansMono.ttf'
+    >>> fonts_used[1][1]['lang']
+    'aa|af|ar|ast|av|ay|az-az|az-ir|bm|be|bg|bi|bin|br|bs|bua|ca|ce|ch|chm|co|cs|cv|cy|da|de|el|en|eo|es|et|eu|fa|fi|fj|fo|fr|ff|fur|fy|ga|gd|gl|gn|gv|ha|haw|ho|hr|hu|hy|ia|ig|id|ie|ik|io|is|it|ka|kaa|ki|kk|kl|ku-am|kum|kv|kw|ky|la|lb|lez|ln|lt|lv|mg|mh|mi|mk|mo|mt|nb|nds|nl|nn|no|nr|nso|ny|oc|om|os|pl|pt|rm|ro|ru|sah|sco|se|sel|shs|sk|sl|sm|sma|smj|smn|so|sq|sr|ss|st|sv|sw|tk|tl|tn|to|tr|ts|tt|tw|tyv|uk|uz|ve|vo|vot|wa|wen|wo|xh|yap|yo|zu|ak|an|ber-dz|crh|csb|ee|fat|fil|hsb|ht|hz|jv|kab|kj|kr|ku-tr|kwm|lg|li|mn-mn|ms|na|ng|nv|pap-an|pap-aw|qu|quz|rn|rw|sc|sg|sn|su|ty|za|agr|ayc|bem|dsb|lij|mfe|mhr|miq|mjw|nhn|niu|rif|sgs|szl|tpi|unm|wae|yuw'
+    >>> fonts_used[1][1]['version']
+    'Version 2.37'
 
-    >>> get_fonts_used_for_text('DejaVu Sans', '日本語 नमस्ते')
-    [('日本語 ', {'font': 'Droid Sans', 'glyph-count': 4, 'visible': True, 'file': '/usr/share/fonts/google-droid-sans-fonts/DroidSans.ttf', 'lang': 'aa|ab|af|av|ay|ba|be|bg|bi|bin|br|bs|bua|ca|ce|ch|chm|co|cs|cu|cv|cy|da|de|el|en|eo|es|et|eu|fi|fj|fo|fr|fur|fy|gd|gl|gn|gv|ho|hr|hu|ia|ig|id|ie|ik|io|is|it|kaa|ki|kk|kl|kum|kv|ky|la|lb|lez|lt|lv|mg|mh|mk|mo|mt|nb|nds|nl|nn|no|nr|nso|ny|oc|om|os|pl|pt|rm|ro|ru|sah|se|sel|sh|sk|sl|sma|smj|smn|so|sq|sr|ss|st|sv|sw|tg|tk|tl|tn|tr|ts|tt|tyv|uk|uz|vo|vot|wa|wen|wo|xh|yap|zu|an|crh|csb|fil|hsb|ht|jv|kj|ku-tr|kwm|lg|li|mn-mn|ms|na|ng|pap-an|pap-aw|rn|rw|sc|sg|sn|su|ty|za|agr|ayc|bem|dsb|lij|mfe|mhr|miq|mjw|nhn|niu|szl|tpi|unm|wae|yuw', 'version': 'Version 1.00 build 114'}), ('नमस्ते', {'font': 'Noto Sans Devanagari', 'glyph-count': 5, 'visible': True, 'file': '/usr/share/fonts/google-noto/NotoSansDevanagari-Regular.ttf', 'lang': 'bh|bho|hi|kok|mr|ne|sa|hne|mai|brx|sat|doi|anp|bhb|hif|mag|raj|the', 'version': 'Version 2.006; ttfautohint (v1.8.4.7-5d5b)'})]
+    >>> fonts_used = get_fonts_used_for_text('DejaVu Sans', '日本語 नमस्ते')
+    >>> fonts_used[0][0]
+    '日本語 '
+    >>> fonts_used[0][1]['font']
+    'Droid Sans'
+    >>> fonts_used[0][1]['glyph-count']
+    4
+    >>> fonts_used[0][1]['visible']
+    True
+    >>> fonts_used[0][1]['file']
+    '/usr/share/fonts/google-droid-sans-fonts/DroidSans.ttf'
+    >>> fonts_used[0][1]['lang']
+    'aa|ab|af|av|ay|ba|be|bg|bi|bin|br|bs|bua|ca|ce|ch|chm|co|cs|cu|cv|cy|da|de|el|en|eo|es|et|eu|fi|fj|fo|fr|fur|fy|gd|gl|gn|gv|ho|hr|hu|ia|ig|id|ie|ik|io|is|it|kaa|ki|kk|kl|kum|kv|ky|la|lb|lez|lt|lv|mg|mh|mk|mo|mt|nb|nds|nl|nn|no|nr|nso|ny|oc|om|os|pl|pt|rm|ro|ru|sah|se|sel|sh|sk|sl|sma|smj|smn|so|sq|sr|ss|st|sv|sw|tg|tk|tl|tn|tr|ts|tt|tyv|uk|uz|vo|vot|wa|wen|wo|xh|yap|zu|an|crh|csb|fil|hsb|ht|jv|kj|ku-tr|kwm|lg|li|mn-mn|ms|na|ng|pap-an|pap-aw|rn|rw|sc|sg|sn|su|ty|za|agr|ayc|bem|dsb|lij|mfe|mhr|miq|mjw|nhn|niu|szl|tpi|unm|wae|yuw'
+    >>> fonts_used[0][1]['version']
+    'Version 1.00 build 114'
+    >>> fonts_used[1][0]
+    'नमस्ते'
+    >>> fonts_used[1][1]['font']
+    'Noto Sans Devanagari'
+    >>> fonts_used[1][1]['glyph-count']
+    5
+    >>> fonts_used[1][1]['visible']
+    True
+    >>> fonts_used[1][1]['file']
+    '/usr/share/fonts/google-noto/NotoSansDevanagari-Regular.ttf'
+    >>> fonts_used[1][1]['lang']
+    'bh|bho|hi|kok|mr|ne|sa|hne|mai|brx|sat|doi|anp|bhb|hif|mag|raj|the'
+    >>> fonts_used[1][1]['version']
+    'Version 2.006; ttfautohint (v1.8.4.7-5d5b)'
 
-    >>> get_fonts_used_for_text('DejaVu Sans', '日本語 🕉️')
-    [('日本語 ', {'font': 'Droid Sans', 'glyph-count': 4, 'visible': True, 'file': '/usr/share/fonts/google-droid-sans-fonts/DroidSans.ttf', 'lang': 'aa|ab|af|av|ay|ba|be|bg|bi|bin|br|bs|bua|ca|ce|ch|chm|co|cs|cu|cv|cy|da|de|el|en|eo|es|et|eu|fi|fj|fo|fr|fur|fy|gd|gl|gn|gv|ho|hr|hu|ia|ig|id|ie|ik|io|is|it|kaa|ki|kk|kl|kum|kv|ky|la|lb|lez|lt|lv|mg|mh|mk|mo|mt|nb|nds|nl|nn|no|nr|nso|ny|oc|om|os|pl|pt|rm|ro|ru|sah|se|sel|sh|sk|sl|sma|smj|smn|so|sq|sr|ss|st|sv|sw|tg|tk|tl|tn|tr|ts|tt|tyv|uk|uz|vo|vot|wa|wen|wo|xh|yap|zu|an|crh|csb|fil|hsb|ht|jv|kj|ku-tr|kwm|lg|li|mn-mn|ms|na|ng|pap-an|pap-aw|rn|rw|sc|sg|sn|su|ty|za|agr|ayc|bem|dsb|lij|mfe|mhr|miq|mjw|nhn|niu|szl|tpi|unm|wae|yuw', 'version': 'Version 1.00 build 114'}), ('🕉️', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'file': '/home/mfabian/.fonts/Noto-COLRv1.ttf', 'lang': 'und-zsye', 'version': 'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced', 'opentype-tables': ['COLR']})]
+    >>> fonts_used = get_fonts_used_for_text('DejaVu Sans', '日本語 🕉️')
+    >>> fonts_used[0][0]
+    '日本語 '
+    >>> fonts_used[0][1]['font']
+    'Droid Sans'
+    >>> fonts_used[0][1]['glyph-count']
+    4
+    >>> fonts_used[0][1]['visible']
+    True
+    >>> fonts_used[0][1]['file']
+    '/usr/share/fonts/google-droid-sans-fonts/DroidSans.ttf'
+    >>> fonts_used[0][1]['lang']
+    'aa|ab|af|av|ay|ba|be|bg|bi|bin|br|bs|bua|ca|ce|ch|chm|co|cs|cu|cv|cy|da|de|el|en|eo|es|et|eu|fi|fj|fo|fr|fur|fy|gd|gl|gn|gv|ho|hr|hu|ia|ig|id|ie|ik|io|is|it|kaa|ki|kk|kl|kum|kv|ky|la|lb|lez|lt|lv|mg|mh|mk|mo|mt|nb|nds|nl|nn|no|nr|nso|ny|oc|om|os|pl|pt|rm|ro|ru|sah|se|sel|sh|sk|sl|sma|smj|smn|so|sq|sr|ss|st|sv|sw|tg|tk|tl|tn|tr|ts|tt|tyv|uk|uz|vo|vot|wa|wen|wo|xh|yap|zu|an|crh|csb|fil|hsb|ht|jv|kj|ku-tr|kwm|lg|li|mn-mn|ms|na|ng|pap-an|pap-aw|rn|rw|sc|sg|sn|su|ty|za|agr|ayc|bem|dsb|lij|mfe|mhr|miq|mjw|nhn|niu|szl|tpi|unm|wae|yuw'
+    >>> fonts_used[0][1]['version']
+    'Version 1.00 build 114'
+    >>> fonts_used[1][0]
+    '🕉️'
+    >>> fonts_used[1][1]['font']
+    'Noto Color Emoji'
+    >>> fonts_used[1][1]['glyph-count']
+    1
+    >>> fonts_used[1][1]['visible']
+    True
+    >>> fonts_used[1][1]['file']
+    '/home/mfabian/.fonts/Noto-COLRv1.ttf'
+    >>> fonts_used[1][1]['lang']
+    'und-zsye'
+    >>> fonts_used[1][1]['version']
+    'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced'
+    >>> fonts_used[1][1]['opentype-tables']
+    ['COLR']
 
-    >>> get_fonts_used_for_text('DejaVu Sans', '🕉\uFE0F')
-    [('🕉️', {'font': 'Noto Color Emoji', 'glyph-count': 1, 'visible': True, 'file': '/home/mfabian/.fonts/Noto-COLRv1.ttf', 'lang': 'und-zsye', 'version': 'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced', 'opentype-tables': ['COLR']})]
+    >>> fonts_used = get_fonts_used_for_text('DejaVu Sans', '🕉\uFE0F')
+    >>> fonts_used[0][0]
+    '🕉️'
+    >>> fonts_used[0][1]['font']
+    'Noto Color Emoji'
+    >>> fonts_used[0][1]['glyph-count']
+    1
+    >>> fonts_used[0][1]['visible']
+    True
+    >>> fonts_used[0][1]['file']
+    '/home/mfabian/.fonts/Noto-COLRv1.ttf'
+    >>> fonts_used[0][1]['lang']
+    'und-zsye'
+    >>> fonts_used[0][1]['version']
+    'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced'
+    >>> fonts_used[0][1]['opentype-tables']
+    ['COLR']
 
     '''
     # pylint: enable=line-too-long
