@@ -2933,10 +2933,19 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._candidates_delay_milliseconds,
             self._update_candidates_and_lookup_table_and_aux)
 
-    def _lookup_related_candidates(self) -> None:
+    def _lookup_related_candidates(self) -> bool:
         '''Lookup related (similar) emoji or related words (synonyms,
         hyponyms, hypernyms).
+
+        :return: True if related candidates could be found, False if not.
         '''
+        if (self._lookup_table_shows_compose_completions
+            or self._lookup_table_shows_m17n_candidates):
+            if self._debug_level > 1:
+                LOGGER.debug(
+                    'Compose completions or m17n candidates are shown, '
+                    'not looking up related candidates')
+            return False
         # We might end up here by typing a shortcut key like
         # AltGr+F12.  This should also work when suggestions are only
         # enabled by Tab and are currently disabled.  Typing such a
@@ -2953,7 +2962,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             phrase = self._transliterated_strings[
                 self.get_current_imes()[0]]
         if not phrase:
-            return
+            return False
         # Hide lookup table and show an hourglass with moving sand in
         # the auxiliary text to indicate that the lookup table is
         # being updated. Don’t clear the lookup table here because we
@@ -3026,7 +3035,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if self.get_lookup_table().get_number_of_candidates():
                 self.update_lookup_table(self.get_lookup_table(), True)
                 self._lookup_table_hidden = False
-            return
+            return False
         self._candidates = []
         self.get_lookup_table().clear()
         self.get_lookup_table().set_cursor_visible(False)
@@ -3036,6 +3045,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 phrase=cand[0], user_freq=cand[2], comment=cand[1])
         self._lookup_table_shows_related_candidates = True
         self._update_lookup_table_and_aux()
+        return True
 
     def _case_mode_change(
             self,
@@ -6547,8 +6557,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :return: True if the key was completely handled, False if not.
         '''
         if not self.is_empty():
-            self._lookup_related_candidates()
-            return True
+            return self._lookup_related_candidates()
         return False
 
     def _command_toggle_hide_input(self) -> bool:
