@@ -6377,9 +6377,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._update_lookup_table_and_aux()
             return True
 
-        if self._m17n_trans_parts.candidates:
-            if self._lookup_table_shows_m17n_candidates:
+        if (self._m17n_trans_parts.candidates
+            and (self._m17n_trans_parts.candidate_show
+                 or self._current_imes[0] == 'ja-anthy')):
+            if (self._lookup_table_shows_m17n_candidates
+                and self._current_imes[0] != 'ja-anthy'):
+                # ja-anthy is an exeption here because when after
+                # cancel, nothing is selected in the lookup table,
+                # space should reselect the second candidate.
                 return False
+            if self._debug_level > 1:
+                LOGGER.debug('Enabling m17n lookup table')
             if self._timeout_source_id:
                 # If a timeout has been added for an update of
                 # non-m17n candidates remove it, otherwise it might
@@ -6397,6 +6405,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # to just continuing with the preedit:
             self._lookup_table.set_cursor_visible(True)
             self._is_candidate_auto_selected = True
+            if self._current_imes[0] == 'ja-anthy':
+                self._command_select_next_candidate()
+                self._is_candidate_auto_selected = False
             self.update_lookup_table(self.get_lookup_table(), True)
             self._lookup_table_hidden = False
             return True
@@ -6488,44 +6499,48 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :return: True if the key was completely handled, False if not.
         '''
-        if self.get_lookup_table().get_number_of_candidates():
-            dummy = self._arrow_down()
-            self._update_lookup_table_and_aux()
-            return True
-        return False
+        if (self._lookup_table_hidden
+            or not self.get_lookup_table().get_number_of_candidates()):
+            return False
+        dummy = self._arrow_down()
+        self._update_lookup_table_and_aux()
+        return True
 
     def _command_select_previous_candidate(self) -> bool:
         '''Handle hotkey for the command “select_previous_candidate”
 
         :return: True if the key was completely handled, False if not.
         '''
-        if self.get_lookup_table().get_number_of_candidates():
-            dummy = self._arrow_up()
-            self._update_lookup_table_and_aux()
-            return True
-        return False
+        if (self._lookup_table_hidden
+            or not self.get_lookup_table().get_number_of_candidates()):
+            return False
+        dummy = self._arrow_up()
+        self._update_lookup_table_and_aux()
+        return True
 
     def _command_lookup_table_page_down(self) -> bool:
         '''Handle hotkey for the command “lookup_table_page_down”
 
         :return: True if the key was completely handled, False if not.
         '''
-        if self.get_lookup_table().get_number_of_candidates():
-            dummy = self._page_down()
-            self._update_lookup_table_and_aux()
-            return True
-        return False
+        if (self._lookup_table_hidden
+            or not self.get_lookup_table().get_number_of_candidates()):
+            return False
+        dummy = self._page_down()
+        self._update_lookup_table_and_aux()
+        return True
 
     def _command_lookup_table_page_up(self) -> bool:
         '''Handle hotkey for the command “lookup_table_page_up”
 
         :return: True if the key was completely handled, False if not.
         '''
-        if self.get_lookup_table().get_number_of_candidates():
-            dummy = self._page_up()
-            self._update_lookup_table_and_aux()
-            return True
-        return False
+        if (self._lookup_table_hidden
+            or not self.get_lookup_table().get_number_of_candidates()):
+            return False
+        dummy = self._page_up()
+        self._update_lookup_table_and_aux()
+        return True
 
     def _command_toggle_emoji_prediction(self) -> bool:
         '''Handle hotkey for the command “toggle_emoji_prediction”
@@ -7336,10 +7351,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return False
         if (not self._m17n_trans_parts.candidates
             and key.val in self._commit_trigger_keys
-            and not ((self._current_imes[0] == 'ja-anthy'
-                      or self._current_imes[0] == 't-lsymbol')
-                     and key.val == IBus.KEY_space
-                     and key.msymbol == ' ')):
+            and not self._current_imes[0] in ('ja-anthy',)
+            and key.val == IBus.KEY_space
+            and key.msymbol == ' '):
             # I could make BackSpace, Delete, Left, and Right reopen
             # m17n candidates. But it seems a bit complicated and I
             # guess it is not very useful. Therefore, I don’t allow
@@ -7347,7 +7361,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if self._debug_level > 1:
                 LOGGER.debug('Commit trigger keys usually cannot start '
                              'a m17n candidate sequence except the space '
-                             'key for ja-anthy and t-lsymbol')
+                             'key for ja-anthy')
             return False
         if (self._m17n_trans_parts.candidates
             and key.val in
@@ -7373,19 +7387,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.debug('Inside m17n candidates sequence, ignoring key %s',
                              IBus.keyval_name(key.val))
             return True
-        # These input methods produce multiple candidates sometimes
-        # But they do not have a '(show)' command in their .mim
-        # files. Therefore, they **never** show a lookup table and
-        # thus they should be skipped here:
-        if (self._current_imes[0] in ('vi-tcvn',
-                                      'vi-telex',
-                                      'vi-viqr',
-                                      'vi-vni',
-                                      'zh-pinyin-vi',
-                                      'zh-pinyin')):
-            if self._debug_level > 1:
-                LOGGER.debug('%s should never show lookup tables', self._current_imes[0])
-            return False
         if self._m17n_trans_parts.candidates:
             (match, return_value) = self._handle_hotkeys(
                     key, commands=['cancel',
@@ -7525,8 +7526,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if (self._current_imes[0] == 'ja-anthy'
                 and key.val == IBus.KEY_space and key.msymbol == ' '):
                 if self._debug_level > 1:
-                    LOGGER.debug('ja-anthy: select next candidate')
-                self._command_select_next_candidate()
+                    LOGGER.debug('ja-anthy: enable lookup')
+                self._command_enable_lookup()
                 return True
             phrase = self._m17n_trans_parts.preedit
             self._candidates = []
@@ -7733,7 +7734,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             GLib.source_remove(self._timeout_source_id)
             self._timeout_source_id = 0
         self.is_lookup_table_enabled_by_tab = False
-        if not self._tab_enable:
+        if self._tab_enable:
+            if self._debug_level > 1:
+                LOGGER.debug('Tab enable set, just update preedit')
+            self._update_preedit()
+            return True
+        if self._m17n_trans_parts.candidate_show:
+            if self._debug_level > 1:
+                LOGGER.debug('Show m17n candidate lookup table')
             self._lookup_table_shows_m17n_candidates = True
             self._update_lookup_table_and_aux()
             # Select the first candidate automatically because most
@@ -7745,8 +7753,24 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._is_candidate_auto_selected = True
             self.update_lookup_table(self.get_lookup_table(), True)
             self._lookup_table_hidden = False
-        else:
+            return True
+        if self._debug_level > 1:
+            LOGGER.debug('m17n candidate lookup table exists but is hidden')
+        if self._current_imes[0] in ('ja-anthy',):
+            if self._debug_level > 1:
+                LOGGER.debug(
+                    'Just update preedit for %s', self._current_imes[0])
             self._update_preedit()
+            return True
+        # Standard lookup table works fine here for vi-tcvn, vi-telex,
+        # vi-viqr, vi-vni, ... It does probably work well for **all**
+        # input methods which sometimes or always use “candidate_show
+        # == 0” **except** for ja-anthy.  Maybe it is posssible to
+        # make this work for ja-anthy, but it might not even make any
+        # sense for ja-anthy.
+        if self._debug_level > 1:
+            LOGGER.debug('Show standard lookup table instead')
+        self._update_ui()
         return True
 
     def _handle_compose(self, key: itb_util.KeyEvent, add_to_preedit: bool = True) -> bool:

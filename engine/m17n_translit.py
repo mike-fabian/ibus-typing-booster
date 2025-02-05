@@ -1359,7 +1359,7 @@ class Transliterator:
         >>> parts.status
         'lsymbol'
         >>> parts.candidates
-        []
+        ['/']
         >>> parts.candidate_show
         1
         >>> parts = trans.transliterate_parts(list('a/:'))
@@ -1374,7 +1374,7 @@ class Transliterator:
         >>> parts.status
         'lsymbol'
         >>> parts.candidates
-        []
+        ['/:']
         >>> parts.candidate_show
         1
         >>> parts = trans.transliterate_parts(list('a/:('))
@@ -1513,28 +1513,38 @@ class Transliterator:
             self._ic, _symbol, ctypes.c_void_p(None))
         if committed and not preedit:
             committed_index = len(msymbol_list)
-        if self._language == 'zh':
-            # For Chinese, if there are no candidates but a preedit,
-            # copy the preedit to make sure that there is at least
-            # one candidate.
-            #
-            # For example zh-cangjie.mim contains:
-            #
-            #  (map
-            #   ("a" ("日曰"))
-            #   ("aa" ("昌昍"))
-            #   ("aaa" ?晶)
-            #   ("aaaa" ("𣊫𣊭"))
-            #   [...]
-            #
-            # In that case typing `a` and `aa` produces candidates but
-            # `aaa` does not and `aaaa` produces candidates again.
-            # That is bad because Typing Booster behaves differently
-            # when there are candidates and when there are not.
-            # So it would behave inconsistently while typing `aaaa` if
-            # `aaa` suddenly has no candidates.
-            if preedit and not candidates:
-                candidates = [preedit]
+        # Some Chinese input methods and some Vietnamese input methods
+        # for Chinese characters sometimes have “candidates == []” but
+        # at the same time “candidate_show == 1”:
+        #
+        # For example zh-cangjie.mim contains:
+        #
+        #  (map
+        #   ("a" ("日曰"))
+        #   ("aa" ("昌昍"))
+        #   ("aaa" ?晶)
+        #   ("aaaa" ("𣊫𣊭"))
+        #   [...]
+        #
+        # The ?晶 produces “candidates == []”, ("晶") would
+        # produce “candidates == ['晶']”
+        #
+        # In that case typing `a` and `aa` produces candidates but
+        # `aaa` does not and `aaaa` produces candidates again.  That
+        # is bad because Typing Booster behaves differently when there
+        # are candidates and when there are not.  So it would behave
+        # inconsistently while typing `aaaa` if `aaa` suddenly has no
+        # candidates and suddenly shows a “normal” typing booster
+        # completion lookup table.
+        #
+        # Other input methods which have the same problem are
+        # zh-tonepy, vi-nomtelex, vi-nomvni, ...
+        #
+        # So copy the preedit into candidates if they are empty and
+        # candidate_show is one for more consistent behaviour (in my
+        # opinion):
+        if preedit and not candidates and candidate_show:
+            candidates = [preedit]
         if self._language == 'ja' and self._name == 'anthy':
             # ja-anthy seems to produce a lot of useless geta marks '
             # 〓'.  It also produces sometimes useless empty
