@@ -6243,54 +6243,54 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             else:
                 self._update_preedit()
             return True
-        if self._m17n_trans_parts.candidates:
-            if self._lookup_table_shows_m17n_candidates:
-                if self.get_lookup_table().cursor_visible:
-                    # A candidate is selected in the lookup table.
-                    # Deselect it and show the first page of the candidate
-                    # list:
-                    self.get_lookup_table().set_cursor_visible(False)
-                    self.get_lookup_table().set_cursor_pos(0)
-                    self._update_lookup_table_and_aux()
-                    return True
-                if self._debug_level > 1:
-                    LOGGER.debug('Cancel m17n candidates lookup table')
-                self._lookup_table_shows_m17n_candidates = False
-                if ((self._tab_enable or self._min_char_complete > 1)
-                    and self.is_lookup_table_enabled_by_tab):
-                    self.is_lookup_table_enabled_by_tab = False
-                if self._current_imes[0] == 'ja-anthy':
-                    # This should close the m17n lookup table and go
-                    # back to kana in the preedit:
-                    typed_string_up_to_cursor = (
-                        self._typed_string[:self._typed_string_cursor])
-                    if (typed_string_up_to_cursor[
-                            -len(itb_util.ANTHY_HENKAN_WIDE):]
-                        == itb_util.ANTHY_HENKAN_WIDE):
-                        if self._debug_level > 1:
-                            LOGGER.debug(
-                                'ja-anthy: removing itb_util.ANTHY_HENKAN_WIDE')
-                        typed_string_up_to_cursor = typed_string_up_to_cursor[
-                            :-len(itb_util.ANTHY_HENKAN_WIDE)]
-                        self._typed_string = (
-                            typed_string_up_to_cursor
-                            + self._typed_string[self._typed_string_cursor:])
-                        self._typed_string_cursor = len(typed_string_up_to_cursor)
-                    self._remove_character_before_cursor()
-                else:
-                    # For all other input methods, cancel the whole
-                    # part of the preedit which produces the  current
-                    # m17n candidates:
-                    self._typed_string = (
-                        self._typed_string[
-                            :self._m17n_trans_parts.committed_index]
-                        + self._typed_string[self._typed_string_cursor:])
-                    self._typed_string_cursor = (
-                        self._m17n_trans_parts.committed_index)
-                    self._update_transliterated_strings()
-                self._m17n_trans_parts = m17n_translit.TransliterationParts()
-                self._update_ui()
+        if (self._m17n_trans_parts.candidates
+            and self._lookup_table_shows_m17n_candidates):
+            if self.get_lookup_table().cursor_visible:
+                # A candidate is selected in the lookup table.
+                # Deselect it and show the first page of the candidate
+                # list:
+                self.get_lookup_table().set_cursor_visible(False)
+                self.get_lookup_table().set_cursor_pos(0)
+                self._update_lookup_table_and_aux()
                 return True
+            if self._debug_level > 1:
+                LOGGER.debug('Cancel m17n candidates lookup table')
+            self._lookup_table_shows_m17n_candidates = False
+            if ((self._tab_enable or self._min_char_complete > 1)
+                and self.is_lookup_table_enabled_by_tab):
+                self.is_lookup_table_enabled_by_tab = False
+            if self._current_imes[0] == 'ja-anthy':
+                # This should close the m17n lookup table and go
+                # back to kana in the preedit:
+                typed_string_up_to_cursor = (
+                    self._typed_string[:self._typed_string_cursor])
+                if (typed_string_up_to_cursor[
+                        -len(itb_util.ANTHY_HENKAN_WIDE):]
+                    == itb_util.ANTHY_HENKAN_WIDE):
+                    if self._debug_level > 1:
+                        LOGGER.debug(
+                            'ja-anthy: removing itb_util.ANTHY_HENKAN_WIDE')
+                    typed_string_up_to_cursor = typed_string_up_to_cursor[
+                        :-len(itb_util.ANTHY_HENKAN_WIDE)]
+                    self._typed_string = (
+                        typed_string_up_to_cursor
+                        + self._typed_string[self._typed_string_cursor:])
+                    self._typed_string_cursor = len(typed_string_up_to_cursor)
+                self._remove_character_before_cursor()
+            else:
+                # For all other input methods, cancel the whole
+                # part of the preedit which produces the  current
+                # m17n candidates:
+                self._typed_string = (
+                    self._typed_string[
+                        :self._m17n_trans_parts.committed_index]
+                    + self._typed_string[self._typed_string_cursor:])
+                self._typed_string_cursor = (
+                    self._m17n_trans_parts.committed_index)
+                self._update_transliterated_strings()
+            self._m17n_trans_parts = m17n_translit.TransliterationParts()
+            self._update_ui()
+            return True
         if self.get_lookup_table().cursor_visible:
             # A candidate is selected in the lookup table.
             # Deselect it and show the first page of the candidate
