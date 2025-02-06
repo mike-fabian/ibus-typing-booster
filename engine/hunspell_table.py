@@ -7708,9 +7708,18 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         super().update_auxiliary_text(
             self._current_auxiliary_text, False)
         for candidate in self._m17n_trans_parts.candidates:
+            # Add a comment to the lookup table if the candidate
+            # is a single, invisible character:
+            comment = ''
+            if (len(candidate) == 1
+                and unicodedata.category(candidate)
+                in ('Cc', 'Cf', 'Zl', 'Zp', 'Zs')):
+                comment = (
+                    f'U+{ord(candidate):04X} ' + unicodedata.name(candidate))
             if candidate:
                 self._candidates.append((candidate, 0, '', False, False))
-                self._append_candidate_to_lookup_table(phrase=candidate)
+                self._append_candidate_to_lookup_table(phrase=candidate,
+                                                       comment=comment)
         if not self.get_lookup_table().get_number_of_candidates():
             # ja-anthy sometimes produces empty candidates.  Which is
             # *very* weird! Also reproducible with ibus-m17n!  I added
