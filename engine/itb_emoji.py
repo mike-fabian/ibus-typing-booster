@@ -244,12 +244,8 @@ def is_invisible(text: str) -> bool:
     >>> is_invisible('')
     True
     '''
-    invisible = True
-    for character in text:
-        if (unicodedata.category(character)
-                not in ('Cc', 'Cf', 'Zl', 'Zp', 'Zs')):
-            invisible = False
-    return invisible
+    return all(unicodedata.category(character)
+               in ('Cc', 'Cf', 'Zl', 'Zp', 'Zs') for character in text)
 
 if IMPORT_PYKAKASI_SUCCESSFUL:
     def kakasi_convert(text: str, target: str='orig') -> str:
