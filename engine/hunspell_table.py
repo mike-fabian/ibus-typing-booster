@@ -8261,8 +8261,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                  or (len(key.msymbol) == 1
                      and (key.control
                           or key.mod1 # mod1: Usually Alt
+                          or key.mod4 # mod4: Usually Super, Hyper
                           or key.super or key.hyper or key.meta))
-                 or (len(key.msymbol) == 3
+                 or (len(key.msymbol) in (3, 5, 7)
                      and key.msymbol[:2] in ('A-', 'C-', 'G-')
                      and not self._has_transliteration([key.msymbol])))):
                 # See:
@@ -8287,6 +8288,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # preëdit would be quite confusing, C-a usually goes
                 # to the beginning of the current line, leaving the
                 # preëdit open while moving would be strange).
+                #
+                # The modifier key combinations which should be passed
+                # through include those with multiple modifiers like
+                # 'A-C-l' for example. See:
+                # https://github.com/mike-fabian/ibus-typing-booster/issues/622
                 #
                 # Up, Down, Page_Up, and Page_Down may trigger a
                 # commit if no lookup table is shown because the
