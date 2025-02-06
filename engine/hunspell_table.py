@@ -2816,7 +2816,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         is tried even when the input is empty.
 
         '''
-        LOGGER.debug('entering function')
+        if self._debug_level > 1:
+            LOGGER.debug('entering function')
         self._update_preedit()
         self.get_lookup_table().clear()
         self.get_lookup_table().set_cursor_visible(False)
@@ -2832,7 +2833,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         Update the UI when the input is empty and try a completion.
         '''
-        LOGGER.debug('entering function')
+        if self._debug_level > 1:
+            LOGGER.debug('entering function')
         if not self.is_empty():
             self._update_preedit()
             return
