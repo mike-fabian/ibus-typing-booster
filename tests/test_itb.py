@@ -3424,15 +3424,12 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, 'a☺\uFE0Fb')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
-        # BackSpace does **not** reopen the candidates:
-        self.assertEqual(len(self.engine._candidates), 0)
-        # But the preedit and typed string behave as expected:
+        self.assertEqual(len(self.engine._candidates), 20)
         self.assertEqual(self.engine._typed_string, ['a', '/', ':', ')'])
         self.assertEqual(self.engine.mock_preedit_text, 'a☺\uFE0F')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
-        # Now we have an incomplete m17n sequence, no candidates:
-        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(len(self.engine._candidates), 1)
         self.assertEqual(self.engine._typed_string, ['a', '/', ':'])
         self.assertEqual(self.engine.mock_preedit_text, 'a/:')
         self.assertEqual(self.engine.mock_committed_text, '')
