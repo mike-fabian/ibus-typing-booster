@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-02-03 14:46+0100\n"
+"POT-Creation-Date: 2025-02-06 19:31+0100\n"
 "PO-Revision-Date: 2022-09-01 09:38+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Traditional) <https://translate.fedoraproject.org/"
@@ -158,21 +158,21 @@ msgstr "系統預設"
 msgid "Set Font"
 msgstr ""
 
-#: engine/hunspell_table.py:551 engine/hunspell_table.py:585
-#: engine/hunspell_table.py:606
+#: engine/hunspell_table.py:555 engine/hunspell_table.py:589
+#: engine/hunspell_table.py:610
 msgid "Off"
 msgstr "關閉"
 
-#: engine/hunspell_table.py:556 engine/hunspell_table.py:590
-#: engine/hunspell_table.py:611
+#: engine/hunspell_table.py:560 engine/hunspell_table.py:594
+#: engine/hunspell_table.py:615
 msgid "On"
 msgstr ""
 
-#: engine/hunspell_table.py:575
+#: engine/hunspell_table.py:579
 msgid "Input mode"
 msgstr "輸入模式"
 
-#: engine/hunspell_table.py:576
+#: engine/hunspell_table.py:580
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr ""
 
@@ -183,7 +183,7 @@ msgstr ""
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:595 engine/hunspell_table.py:597 setup/main.py:602
+#: engine/hunspell_table.py:599 engine/hunspell_table.py:601 setup/main.py:602
 msgid "Unicode symbols and emoji predictions"
 msgstr ""
 
@@ -194,115 +194,115 @@ msgstr ""
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:616 engine/hunspell_table.py:617 setup/main.py:627
+#: engine/hunspell_table.py:620 engine/hunspell_table.py:621 setup/main.py:627
 msgid "Off the record mode"
 msgstr ""
 
-#: engine/hunspell_table.py:1951
+#: engine/hunspell_table.py:1957
 msgid "Highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1952
+#: engine/hunspell_table.py:1958
 msgid "Choose highest priority dictionary"
 msgstr ""
 
-#: engine/hunspell_table.py:1981
+#: engine/hunspell_table.py:1987
 msgid "Preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:1982
+#: engine/hunspell_table.py:1988
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:2327
+#: engine/hunspell_table.py:2333
 msgid "Setup"
 msgstr "設置"
 
-#: engine/hunspell_table.py:2330 setup/main.py:142
+#: engine/hunspell_table.py:2336 setup/main.py:142
 msgid "Preferences for ibus-typing-booster"
 msgstr ""
 
-#: engine/hunspell_table.py:5909
+#: engine/hunspell_table.py:6005
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 
-#: engine/hunspell_table.py:5912
+#: engine/hunspell_table.py:6008
 msgid "Failed to import pyaudio."
 msgstr ""
 
-#: engine/hunspell_table.py:5915
+#: engine/hunspell_table.py:6011
 msgid "Failed to import queue."
 msgstr ""
 
-#: engine/hunspell_table.py:5920
+#: engine/hunspell_table.py:6016
 msgid "No supported language for speech recognition."
 msgstr ""
 
-#: engine/hunspell_table.py:5924
+#: engine/hunspell_table.py:6020
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 
-#: engine/hunspell_table.py:5937
+#: engine/hunspell_table.py:6033
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 
-#: engine/hunspell_table.py:6045
+#: engine/hunspell_table.py:6141
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:963 engine/itb_emoji.py:964 engine/itb_emoji.py:965
-#: engine/itb_emoji.py:1168
+#: engine/itb_emoji.py:959 engine/itb_emoji.py:960 engine/itb_emoji.py:961
+#: engine/itb_emoji.py:1164
 msgid "people"
 msgstr ""
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:966 engine/itb_emoji.py:1164
+#: engine/itb_emoji.py:962 engine/itb_emoji.py:1160
 msgid "nature"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:967 engine/itb_emoji.py:1160
+#: engine/itb_emoji.py:963 engine/itb_emoji.py:1156
 msgid "food"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:968 engine/itb_emoji.py:1174
+#: engine/itb_emoji.py:964 engine/itb_emoji.py:1170
 msgid "travel"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:969 engine/itb_emoji.py:978 engine/itb_emoji.py:1156
+#: engine/itb_emoji.py:965 engine/itb_emoji.py:974 engine/itb_emoji.py:1152
 msgid "activity"
 msgstr ""
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:970 engine/itb_emoji.py:1166
+#: engine/itb_emoji.py:966 engine/itb_emoji.py:1162
 msgid "objects"
 msgstr "物體"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:971 engine/itb_emoji.py:1172
+#: engine/itb_emoji.py:967 engine/itb_emoji.py:1168
 msgid "symbols"
 msgstr "符號"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:972 engine/itb_emoji.py:1158
+#: engine/itb_emoji.py:968 engine/itb_emoji.py:1154
 msgid "flags"
 msgstr "旗幟"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:973 engine/itb_emoji.py:974 engine/itb_emoji.py:1162
+#: engine/itb_emoji.py:969 engine/itb_emoji.py:970 engine/itb_emoji.py:1158
 msgid "modifier"
 msgstr ""
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:975 engine/itb_emoji.py:1170
+#: engine/itb_emoji.py:971 engine/itb_emoji.py:1166
 msgid "regional"
 msgstr ""
 
@@ -332,31 +332,31 @@ msgstr ""
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2831
+#: engine/itb_util.py:2836
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:4511 engine/itb_util.py:5238
+#: engine/itb_util.py:4516 engine/itb_util.py:5243
 msgid "File not found"
 msgstr ""
 
-#: engine/itb_util.py:4515 engine/itb_util.py:5242
+#: engine/itb_util.py:4520 engine/itb_util.py:5247
 msgid "Permission error"
 msgstr ""
 
-#: engine/itb_util.py:4519 engine/itb_util.py:5246
+#: engine/itb_util.py:4524 engine/itb_util.py:5251
 msgid "Unicode decoding error"
 msgstr ""
 
-#: engine/itb_util.py:4523 engine/itb_util.py:5250
+#: engine/itb_util.py:4528 engine/itb_util.py:5255
 msgid "Unknown error"
 msgstr "不明的錯誤"
 
-#: engine/itb_util.py:5216
+#: engine/itb_util.py:5221
 msgid "Native Keyboard"
 msgstr ""
 
-#: engine/itb_util.py:5218
+#: engine/itb_util.py:5223
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -366,11 +366,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5897
+#: engine/itb_util.py:5902
 msgid "Key input"
 msgstr ""
 
-#: engine/itb_util.py:5903
+#: engine/itb_util.py:5908
 msgid "Cancel"
 msgstr "取消"
 
@@ -378,27 +378,27 @@ msgstr "取消"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5910
+#: engine/itb_util.py:5915
 msgid "Please press a key (or a key combination)"
 msgstr "請按鍵盤按鍵 (或是按鍵組合)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5915
+#: engine/itb_util.py:5920
 msgid "The dialog will be closed when the key is released"
 msgstr ""
 
-#: engine/itb_util.py:5954
+#: engine/itb_util.py:5959
 msgid "A completion input method to speedup typing."
 msgstr ""
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5963
+#: engine/itb_util.py:5968
 msgid "translator-credits"
 msgstr ""
 
-#: engine/itb_util.py:5971
+#: engine/itb_util.py:5976
 msgid "Online documentation:"
 msgstr ""
 

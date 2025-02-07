@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-02-03 14:46+0100\n"
+"POT-Creation-Date: 2025-02-06 19:31+0100\n"
 "PO-Revision-Date: 2025-01-19 00:52+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
@@ -164,21 +164,21 @@ msgstr "Systemvorgabe"
 msgid "Set Font"
 msgstr "Font einstellen"
 
-#: engine/hunspell_table.py:551 engine/hunspell_table.py:585
-#: engine/hunspell_table.py:606
+#: engine/hunspell_table.py:555 engine/hunspell_table.py:589
+#: engine/hunspell_table.py:610
 msgid "Off"
 msgstr "Aus"
 
-#: engine/hunspell_table.py:556 engine/hunspell_table.py:590
-#: engine/hunspell_table.py:611
+#: engine/hunspell_table.py:560 engine/hunspell_table.py:594
+#: engine/hunspell_table.py:615
 msgid "On"
 msgstr "An"
 
-#: engine/hunspell_table.py:575
+#: engine/hunspell_table.py:579
 msgid "Input mode"
 msgstr "Eingabemodus"
 
-#: engine/hunspell_table.py:576
+#: engine/hunspell_table.py:580
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Hier kann man ibus-typing-booster ein- oder ausschalten."
 
@@ -189,7 +189,7 @@ msgstr "Hier kann man ibus-typing-booster ein- oder ausschalten."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:595 engine/hunspell_table.py:597 setup/main.py:602
+#: engine/hunspell_table.py:599 engine/hunspell_table.py:601 setup/main.py:602
 msgid "Unicode symbols and emoji predictions"
 msgstr "Vorschläge auch für Unicode Symbole und Emoji"
 
@@ -200,115 +200,115 @@ msgstr "Vorschläge auch für Unicode Symbole und Emoji"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:616 engine/hunspell_table.py:617 setup/main.py:627
+#: engine/hunspell_table.py:620 engine/hunspell_table.py:621 setup/main.py:627
 msgid "Off the record mode"
 msgstr "Vertraulicher Modus"
 
-#: engine/hunspell_table.py:1951
+#: engine/hunspell_table.py:1957
 msgid "Highest priority dictionary"
 msgstr "Wörterbuch höchster Priorität"
 
-#: engine/hunspell_table.py:1952
+#: engine/hunspell_table.py:1958
 msgid "Choose highest priority dictionary"
 msgstr "Wähle das Wörterbuch mit höchster Priorität"
 
-#: engine/hunspell_table.py:1981
+#: engine/hunspell_table.py:1987
 msgid "Preedit input method"
 msgstr "Preedit-Eingabemethode"
 
-#: engine/hunspell_table.py:1982
+#: engine/hunspell_table.py:1988
 msgid "Switch preedit input method"
 msgstr "Umschalten der Preedit-Eingabemethode"
 
-#: engine/hunspell_table.py:2327
+#: engine/hunspell_table.py:2333
 msgid "Setup"
 msgstr "Einstellungen"
 
-#: engine/hunspell_table.py:2330 setup/main.py:142
+#: engine/hunspell_table.py:2336 setup/main.py:142
 msgid "Preferences for ibus-typing-booster"
 msgstr "Ibus Typing Booster Einstellungen"
 
-#: engine/hunspell_table.py:5909
+#: engine/hunspell_table.py:6005
 msgid "Failed to import Google speech-to-text."
 msgstr "Fehler beim Importieren von Google speech-to-text."
 
-#: engine/hunspell_table.py:5912
+#: engine/hunspell_table.py:6008
 msgid "Failed to import pyaudio."
 msgstr "Fehler beim importieren von pyaudio."
 
-#: engine/hunspell_table.py:5915
+#: engine/hunspell_table.py:6011
 msgid "Failed to import queue."
 msgstr "Fehler beim Importieren von queue."
 
-#: engine/hunspell_table.py:5920
+#: engine/hunspell_table.py:6016
 msgid "No supported language for speech recognition."
 msgstr "Keine unterstützte Sprache für Spracherkennung."
 
-#: engine/hunspell_table.py:5924
+#: engine/hunspell_table.py:6020
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "„Google application credentials“ Datei “%s” nicht gefunden."
 
-#: engine/hunspell_table.py:5937
+#: engine/hunspell_table.py:6033
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Fehler bei initialisieren von Google speech-to-text. Siehe debug.log."
 
-#: engine/hunspell_table.py:6045
+#: engine/hunspell_table.py:6141
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google speech-to-text Fehler. Siehe debug.log."
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:963 engine/itb_emoji.py:964 engine/itb_emoji.py:965
-#: engine/itb_emoji.py:1168
+#: engine/itb_emoji.py:959 engine/itb_emoji.py:960 engine/itb_emoji.py:961
+#: engine/itb_emoji.py:1164
 msgid "people"
 msgstr "Menschen"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:966 engine/itb_emoji.py:1164
+#: engine/itb_emoji.py:962 engine/itb_emoji.py:1160
 msgid "nature"
 msgstr "Natur"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:967 engine/itb_emoji.py:1160
+#: engine/itb_emoji.py:963 engine/itb_emoji.py:1156
 msgid "food"
 msgstr "Lebensmittel"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:968 engine/itb_emoji.py:1174
+#: engine/itb_emoji.py:964 engine/itb_emoji.py:1170
 msgid "travel"
 msgstr "Reise"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:969 engine/itb_emoji.py:978 engine/itb_emoji.py:1156
+#: engine/itb_emoji.py:965 engine/itb_emoji.py:974 engine/itb_emoji.py:1152
 msgid "activity"
 msgstr "Aktivität"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:970 engine/itb_emoji.py:1166
+#: engine/itb_emoji.py:966 engine/itb_emoji.py:1162
 msgid "objects"
 msgstr "Objekte"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:971 engine/itb_emoji.py:1172
+#: engine/itb_emoji.py:967 engine/itb_emoji.py:1168
 msgid "symbols"
 msgstr "Symbole"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:972 engine/itb_emoji.py:1158
+#: engine/itb_emoji.py:968 engine/itb_emoji.py:1154
 msgid "flags"
 msgstr "Flaggen"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:973 engine/itb_emoji.py:974 engine/itb_emoji.py:1162
+#: engine/itb_emoji.py:969 engine/itb_emoji.py:970 engine/itb_emoji.py:1158
 msgid "modifier"
 msgstr "Modifikator"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:975 engine/itb_emoji.py:1170
+#: engine/itb_emoji.py:971 engine/itb_emoji.py:1166
 msgid "regional"
 msgstr "Regional"
 
@@ -338,31 +338,31 @@ msgstr "Regional"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2831
+#: engine/itb_util.py:2836
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Weiteres, Sonstiges, Verschiedenes, Anderes, Übriges"
 
-#: engine/itb_util.py:4511 engine/itb_util.py:5238
+#: engine/itb_util.py:4516 engine/itb_util.py:5243
 msgid "File not found"
 msgstr "Datei nicht gefunden"
 
-#: engine/itb_util.py:4515 engine/itb_util.py:5242
+#: engine/itb_util.py:4520 engine/itb_util.py:5247
 msgid "Permission error"
 msgstr "Fehler bei den Zugriffsrechten"
 
-#: engine/itb_util.py:4519 engine/itb_util.py:5246
+#: engine/itb_util.py:4524 engine/itb_util.py:5251
 msgid "Unicode decoding error"
 msgstr "Unicode-Dekodierfehler"
 
-#: engine/itb_util.py:4523 engine/itb_util.py:5250
+#: engine/itb_util.py:4528 engine/itb_util.py:5255
 msgid "Unknown error"
 msgstr "Unbekannter Fehler"
 
-#: engine/itb_util.py:5216
+#: engine/itb_util.py:5221
 msgid "Native Keyboard"
 msgstr "Direkte Tastatureingabe"
 
-#: engine/itb_util.py:5218
+#: engine/itb_util.py:5223
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -376,11 +376,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5897
+#: engine/itb_util.py:5902
 msgid "Key input"
 msgstr "Tasteneingabe"
 
-#: engine/itb_util.py:5903
+#: engine/itb_util.py:5908
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -388,27 +388,27 @@ msgstr "Abbrechen"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5910
+#: engine/itb_util.py:5915
 msgid "Please press a key (or a key combination)"
 msgstr "Bitte drücken Sie eine Taste (oder eine Tastenkombination)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5915
+#: engine/itb_util.py:5920
 msgid "The dialog will be closed when the key is released"
 msgstr "Dieser Dialog wird geschlossen sobald die Taste losgelassen wird"
 
-#: engine/itb_util.py:5954
+#: engine/itb_util.py:5959
 msgid "A completion input method to speedup typing."
 msgstr "Eine vervollständigende Inputmethode zum schnelleren Tippen."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5963
+#: engine/itb_util.py:5968
 msgid "translator-credits"
 msgstr "Mike FABIAN <mfabian@redhat.com>, 2018"
 
-#: engine/itb_util.py:5971
+#: engine/itb_util.py:5976
 msgid "Online documentation:"
 msgstr "Online Dokumentation:"
 
