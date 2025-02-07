@@ -2444,6 +2444,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         if (self._typed_compose_sequence
             or self._m17n_trans_parts.candidates
+            or self.get_current_imes()[0][:2] in ('zh', 'ja')
             or not self._color_preedit_spellcheck):
             return
         stripped_text = itb_util.strip_token(text)
