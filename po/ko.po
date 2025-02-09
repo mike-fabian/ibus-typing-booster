@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Hyeonho Kang <hyeonho2010@naver.com>, 2025.
 # 김인수 <simmon@nplob.com>, 2025.
+# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -10,7 +11,8 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2025-02-06 19:31+0100\n"
 "PO-Revision-Date: 2025-02-09 08:39+0000\n"
-"Last-Translator: 김인수 <simmon@nplob.com>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ko/>\n"
 "Language: ko\n"
@@ -36,11 +38,11 @@ msgstr "최근 사용된 항목 지우기"
 
 #: engine/emoji_picker.py:329 setup/main.py:230
 msgid "About"
-msgstr ""
+msgstr "정보"
 
 #: engine/emoji_picker.py:333
 msgid "Quit"
-msgstr ""
+msgstr "종료"
 
 #: engine/emoji_picker.py:342
 msgid "Search for emoji"
