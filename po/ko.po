@@ -2,33 +2,37 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Hyeonho Kang <hyeonho2010@naver.com>, 2025.
+# 김인수 <simmon@nplob.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-02-06 19:31+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-02-09 08:39+0000\n"
+"Last-Translator: 김인수 <simmon@nplob.com>\n"
+"Language-Team: Korean <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.9.2\n"
 
 #: engine/emoji-picker.desktop.in.in:3 engine/emoji_picker.py:210
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
-msgstr ""
+msgstr "이모지 선택기"
 
 #: engine/emoji-picker.desktop.in.in:4
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:7
 msgid "Emoji browsing tool"
-msgstr ""
+msgstr "이모지 검색 도구"
 
 #: engine/emoji_picker.py:323
 msgid "Clear recently used"
-msgstr ""
+msgstr "최근 사용된 항목 지우기"
 
 #: engine/emoji_picker.py:329 setup/main.py:230
 msgid "About"
@@ -40,15 +44,15 @@ msgstr ""
 
 #: engine/emoji_picker.py:342
 msgid "Search for emoji"
-msgstr ""
+msgstr "이모지 검색"
 
 #: engine/emoji_picker.py:354
 msgid "Set the font to display emoji"
-msgstr ""
+msgstr "이모지 표시 끌꼴 설정"
 
 #: engine/emoji_picker.py:362
 msgid "Set font size"
-msgstr ""
+msgstr "글꼴 크기 설정"
 
 #. Translators: This is a checkbox which enables or disables
 #. the pango font fallback. If font fallback is off, only the
@@ -60,7 +64,7 @@ msgstr ""
 #. selected font.
 #: engine/emoji_picker.py:383
 msgid "Fallback"
-msgstr ""
+msgstr "되돌리기"
 
 #: engine/emoji_picker.py:385
 msgid ""
