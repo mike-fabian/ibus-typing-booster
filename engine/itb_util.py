@@ -5591,6 +5591,8 @@ class KeyEvent:
             self.name = f'0x{0x1000000  + int(self.name[2:], 16):x}'
         self.unicode = IBus.keyval_to_unicode(self.val)
         self.msymbol = self.unicode
+        if not self.msymbol:
+            self.msymbol = self.name
         if self.msymbol == '\r':
             # https://github.com/mike-fabian/ibus-typing-booster/issues/457
             self.msymbol = self.name # “Return”
@@ -5626,7 +5628,9 @@ class KeyEvent:
             if self.mod5:
                 self.msymbol = 'G-' + self.msymbol
             if (self.shift
-                and (self.unicode.isspace() or not self.unicode.isprintable())):
+                and (self.unicode.isspace()
+                     or not self.unicode.isprintable()
+                     or not self.unicode)):
                 # (Python has no “isgraph()”, but “isspace() or not isprintable()”
                 # does the same as “not isgraph()”.
                 #
