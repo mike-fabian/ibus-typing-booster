@@ -10,11 +10,11 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-02-06 19:31+0100\n"
-"PO-Revision-Date: 2025-02-09 08:39+0000\n"
+"PO-Revision-Date: 2025-02-10 05:40+0000\n"
 "Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
 "memory@weblate.org>\n"
-"Language-Team: Korean <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/ko/>\n"
+"Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -153,25 +153,25 @@ msgstr ""
 #: engine/emoji_picker.py:2164 engine/emoji_picker.py:2165
 #: engine/emoji_picker.py:2166 setup/main.py:1605
 msgid "System default"
-msgstr ""
+msgstr "시스템 기본값"
 
 #: engine/emoji_picker.py:2301
 msgid "Set Font"
-msgstr ""
+msgstr "글꼴 설정"
 
 #: engine/hunspell_table.py:555 engine/hunspell_table.py:589
 #: engine/hunspell_table.py:610
 msgid "Off"
-msgstr ""
+msgstr "끄기"
 
 #: engine/hunspell_table.py:560 engine/hunspell_table.py:594
 #: engine/hunspell_table.py:615
 msgid "On"
-msgstr ""
+msgstr "켜기"
 
 #: engine/hunspell_table.py:579
 msgid "Input mode"
-msgstr ""
+msgstr "입력 모드"
 
 #: engine/hunspell_table.py:580
 msgid "Here you can switch ibus-typing-booster on or off."
@@ -283,17 +283,17 @@ msgstr ""
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:966 engine/itb_emoji.py:1162
 msgid "objects"
-msgstr ""
+msgstr "물건"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:967 engine/itb_emoji.py:1168
 msgid "symbols"
-msgstr ""
+msgstr "기호"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:968 engine/itb_emoji.py:1154
 msgid "flags"
-msgstr ""
+msgstr "플래그"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
@@ -351,7 +351,7 @@ msgstr ""
 
 #: engine/itb_util.py:4528 engine/itb_util.py:5255
 msgid "Unknown error"
-msgstr ""
+msgstr "알 수 없는 오류"
 
 #: engine/itb_util.py:5221
 msgid "Native Keyboard"
@@ -373,7 +373,7 @@ msgstr ""
 
 #: engine/itb_util.py:5908
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #. pylint: disable=consider-using-f-string
 #. Translators: This is from the dialog to enter a key or a
@@ -381,14 +381,14 @@ msgstr ""
 #. command.
 #: engine/itb_util.py:5915
 msgid "Please press a key (or a key combination)"
-msgstr ""
+msgstr "키 (또는 키 조합)를 누르세요"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
 #: engine/itb_util.py:5920
 msgid "The dialog will be closed when the key is released"
-msgstr ""
+msgstr "대화상자는 키를 놓으면 닫힐 것입니다"
 
 #: engine/itb_util.py:5959
 msgid "A completion input method to speedup typing."
@@ -397,11 +397,11 @@ msgstr ""
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:5968
 msgid "translator-credits"
-msgstr ""
+msgstr "김인수 <simmon@nplob.com>"
 
 #: engine/itb_util.py:5976
 msgid "Online documentation:"
-msgstr ""
+msgstr "온라인 문서"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:3
 msgid "Typing Booster Preferences"
@@ -413,7 +413,7 @@ msgstr ""
 
 #: setup/main.py:148
 msgid "Preferences"
-msgstr ""
+msgstr "환경설정"
 
 #: setup/main.py:239
 msgid "Restore all defaults"
@@ -421,7 +421,7 @@ msgstr ""
 
 #: setup/main.py:250 setup/main.py:6699
 msgid "_Close"
-msgstr ""
+msgstr "_닫기"
 
 #. Translators: This is the label of a tab in the setup
 #. tool. Here the user can setup the dictionaries for the
@@ -437,7 +437,7 @@ msgstr ""
 #. behaviour of ibus-typing-booster.
 #: setup/main.py:291
 msgid "Options"
-msgstr ""
+msgstr "옵션"
 
 #. Translators: This is a label of a tab in the setup tool.
 #. Here the user can create custom shortcuts. For example if
@@ -470,7 +470,7 @@ msgstr ""
 #. diffent types of candidates should be marked with labels.
 #: setup/main.py:345
 msgid "Appearance"
-msgstr ""
+msgstr "표시형식"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
@@ -666,7 +666,7 @@ msgstr ""
 
 #: setup/main.py:666
 msgid "Everything"
-msgstr ""
+msgstr "전체"
 
 #: setup/main.py:668
 msgid "Correctly spelled or previously recorded"
@@ -678,7 +678,7 @@ msgstr ""
 
 #: setup/main.py:672
 msgid "Nothing"
-msgstr ""
+msgstr "없음"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -783,7 +783,7 @@ msgstr ""
 #. “English” keymap used.
 #: setup/main.py:821
 msgid "English"
-msgstr ""
+msgstr "한국어"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
@@ -997,7 +997,7 @@ msgstr ""
 #. existing shortcuts
 #: setup/main.py:1404
 msgid "Shortcut"
-msgstr ""
+msgstr "손쉬운 방법"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -1013,11 +1013,11 @@ msgstr ""
 #. existing key bindings
 #: setup/main.py:1450
 msgid "Command"
-msgstr ""
+msgstr "명령"
 
 #: setup/main.py:1481
 msgid "Edit"
-msgstr ""
+msgstr "편집"
 
 #: setup/main.py:1485
 msgid "Edit the key bindings for the selected command"
@@ -1070,7 +1070,7 @@ msgstr ""
 #. candidates to show in one page of the candidate list.
 #: setup/main.py:1569
 msgid "Candidate window page size:"
-msgstr ""
+msgstr "후보 창 화면 부분 크기:"
 
 #: setup/main.py:1571
 msgid ""
@@ -1090,11 +1090,11 @@ msgstr ""
 
 #: setup/main.py:1601
 msgid "Horizontal"
-msgstr ""
+msgstr "가로"
 
 #: setup/main.py:1603
 msgid "Vertical"
-msgstr ""
+msgstr "세로"
 
 #. Translators: Here one can choose how many milliseconds
 #. the system needs to be idle after pressing a key before
@@ -1124,13 +1124,13 @@ msgstr ""
 #. at all for the preedit.
 #: setup/main.py:1672
 msgid "None"
-msgstr ""
+msgstr "없음"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
 #: setup/main.py:1676
 msgid "Single"
-msgstr ""
+msgstr "단일"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
@@ -1442,13 +1442,13 @@ msgstr ""
 
 #: setup/main.py:2493
 msgid "Emoji"
-msgstr ""
+msgstr "이모지"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
 #: setup/main.py:2671
 msgid "Setting"
-msgstr ""
+msgstr "설정"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1456,13 +1456,13 @@ msgstr ""
 #. for the currently selected input method
 #: setup/main.py:2680 setup/main.py:4073
 msgid "Value"
-msgstr ""
+msgstr "값"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
 #: setup/main.py:2704
 msgid "Regular expression"
-msgstr ""
+msgstr "정규 표현"
 
 #: setup/main.py:2750
 msgid "Are you sure?"
@@ -1470,11 +1470,11 @@ msgstr ""
 
 #: setup/main.py:2752 setup/main.py:3308 setup/main.py:3395 setup/main.py:5046
 msgid "_Cancel"
-msgstr ""
+msgstr "취소(_C)"
 
 #: setup/main.py:2753 setup/main.py:3309 setup/main.py:3396 setup/main.py:5047
 msgid "_OK"
-msgstr ""
+msgstr "좋음(_O)"
 
 #: setup/main.py:2785
 msgid "Another instance of this app is already running."
