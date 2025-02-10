@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 10 Feb 2025 Release 2.27.23
+* Fix inline completion when option “Yes, without fallback to popup” is chosen (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/626)
+* Don’t spellcheck the preedit if the top priority input method is Japanese or Chinese (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/624)
+* Update UnicodeData.txt, DerivedAge.txt to the Unicode 17.0.0 draft as of 2025-02-10
+* Translation update from Weblate (ko, new 17.1%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 06 Feb 2025 Release 2.27.23
 * Key combinations like A-C-l should also commit and pass the key to the application (unless they have a transliteration) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/622)
 * Support m17n input methods which produce multiple candidates (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/523)
