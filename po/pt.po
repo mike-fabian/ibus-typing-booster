@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-02-06 19:31+0100\n"
+"POT-Creation-Date: 2025-02-10 16:38+0100\n"
 "PO-Revision-Date: 2025-01-09 15:49+0000\n"
 "Last-Translator: Aquila Luiz <aquila.santos@ba.estudante.senai.br>\n"
 "Language-Team: Portuguese <https://translate.fedoraproject.org/projects/ibus-"
@@ -168,21 +168,21 @@ msgstr "Predefinição do sistema"
 msgid "Set Font"
 msgstr "Definir a fonte"
 
-#: engine/hunspell_table.py:555 engine/hunspell_table.py:589
-#: engine/hunspell_table.py:610
+#: engine/hunspell_table.py:554 engine/hunspell_table.py:588
+#: engine/hunspell_table.py:609
 msgid "Off"
 msgstr "Desligado"
 
-#: engine/hunspell_table.py:560 engine/hunspell_table.py:594
-#: engine/hunspell_table.py:615
+#: engine/hunspell_table.py:559 engine/hunspell_table.py:593
+#: engine/hunspell_table.py:614
 msgid "On"
 msgstr "Ligado"
 
-#: engine/hunspell_table.py:579
+#: engine/hunspell_table.py:578
 msgid "Input mode"
 msgstr "Modo de entrada"
 
-#: engine/hunspell_table.py:580
+#: engine/hunspell_table.py:579
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Pode ligar or desligar o ibus-typing-booster aqui."
 
@@ -193,7 +193,7 @@ msgstr "Pode ligar or desligar o ibus-typing-booster aqui."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:599 engine/hunspell_table.py:601 setup/main.py:602
+#: engine/hunspell_table.py:598 engine/hunspell_table.py:600 setup/main.py:602
 msgid "Unicode symbols and emoji predictions"
 msgstr "Previsão de símbolos unicode e emoji"
 
@@ -204,61 +204,61 @@ msgstr "Previsão de símbolos unicode e emoji"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:620 engine/hunspell_table.py:621 setup/main.py:627
+#: engine/hunspell_table.py:619 engine/hunspell_table.py:620 setup/main.py:627
 msgid "Off the record mode"
 msgstr "Fora do modo de gravação"
 
-#: engine/hunspell_table.py:1957
+#: engine/hunspell_table.py:1956
 msgid "Highest priority dictionary"
 msgstr "Dicionário de alta prioridade"
 
-#: engine/hunspell_table.py:1958
+#: engine/hunspell_table.py:1957
 msgid "Choose highest priority dictionary"
 msgstr "Escolha o dicionário de prioridade alta"
 
-#: engine/hunspell_table.py:1987
+#: engine/hunspell_table.py:1986
 msgid "Preedit input method"
 msgstr "Método de entrada de pré-edição"
 
-#: engine/hunspell_table.py:1988
+#: engine/hunspell_table.py:1987
 msgid "Switch preedit input method"
 msgstr "Mudar o método de entrada de pré-edição"
 
-#: engine/hunspell_table.py:2333
+#: engine/hunspell_table.py:2332
 msgid "Setup"
 msgstr "Configurar"
 
-#: engine/hunspell_table.py:2336 setup/main.py:142
+#: engine/hunspell_table.py:2335 setup/main.py:142
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferências para o ibus-typing-booster"
 
-#: engine/hunspell_table.py:6005
+#: engine/hunspell_table.py:6003
 msgid "Failed to import Google speech-to-text."
 msgstr "Falha ao importar a conversão de fala para texto do Google."
 
-#: engine/hunspell_table.py:6008
+#: engine/hunspell_table.py:6006
 msgid "Failed to import pyaudio."
 msgstr "Falha a importar pyaudio."
 
-#: engine/hunspell_table.py:6011
+#: engine/hunspell_table.py:6009
 msgid "Failed to import queue."
 msgstr "Falha ao importar a fila."
 
-#: engine/hunspell_table.py:6016
+#: engine/hunspell_table.py:6014
 msgid "No supported language for speech recognition."
 msgstr "Nenhuma língua suportada para reconhecimento de fala."
 
-#: engine/hunspell_table.py:6020
+#: engine/hunspell_table.py:6018
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Ficheiro “Google application credentials” “%s” não encontrado."
 
-#: engine/hunspell_table.py:6033
+#: engine/hunspell_table.py:6031
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Falha ao iniciar a conversão de fala em texto do Google. Consulte debug.log."
 
-#: engine/hunspell_table.py:6141
+#: engine/hunspell_table.py:6139
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Erro de conversão de fala em texto do Google. Consulte debug.log."
 
@@ -380,11 +380,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5902
+#: engine/itb_util.py:5906
 msgid "Key input"
 msgstr "Input de teclado"
 
-#: engine/itb_util.py:5908
+#: engine/itb_util.py:5912
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -392,30 +392,30 @@ msgstr "Cancelar"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5915
+#: engine/itb_util.py:5919
 msgid "Please press a key (or a key combination)"
 msgstr "Por favor prima uma tecla (ou uma combinação de teclas)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5920
+#: engine/itb_util.py:5924
 msgid "The dialog will be closed when the key is released"
 msgstr "A caixa de diálogo será fechada quando a tecla for solta"
 
-#: engine/itb_util.py:5959
+#: engine/itb_util.py:5963
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Um método de introdução de dados de completamento para acelerar a digitação."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5968
+#: engine/itb_util.py:5972
 msgid "translator-credits"
 msgstr ""
 "Manuela Silva\n"
 "Paul S <psads.g@gmail.com>, 2022"
 
-#: engine/itb_util.py:5976
+#: engine/itb_util.py:5980
 msgid "Online documentation:"
 msgstr "Documentação on-line:"
 
