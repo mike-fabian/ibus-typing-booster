@@ -2383,8 +2383,20 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_K, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.assertEqual(self.engine._m17n_trans_parts.candidates, ['o', 'ó', 'ò', 'ỏ', 'õ', 'ọ'])
+        self.assertEqual(self.engine._m17n_trans_parts.candidate_show, 0)
+        self.assertFalse(self.engine._lookup_table_shows_m17n_candidates)
+        # self._lookup_table_hidden is probably False here
+        # because there will probably be candidates from the
+        # vi_VN dictionary.
         self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.assertEqual(self.engine._m17n_trans_parts.candidates, ['ô', 'ố', 'ồ', 'ổ', 'ỗ', 'ộ'])
+        self.assertEqual(self.engine._m17n_trans_parts.candidate_show, 0)
+        self.assertFalse(self.engine._lookup_table_shows_m17n_candidates)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.assertEqual(self.engine._m17n_trans_parts.candidates, [])
+        self.assertEqual(self.engine._m17n_trans_parts.candidate_show, 0)
+        self.assertFalse(self.engine._lookup_table_shows_m17n_candidates)
         self.engine.do_process_key_event(IBus.KEY_g, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'Không')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
