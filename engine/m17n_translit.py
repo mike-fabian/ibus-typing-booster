@@ -1546,10 +1546,46 @@ class Transliterator:
         if preedit and not candidates and candidate_show:
             candidates = [preedit]
         if self._language == 'ja' and self._name == 'anthy':
-            # ja-anthy seems to produce a lot of useless geta marks '
-            # 〓'.  It also produces sometimes useless empty
-            # candidates and sometimes (when transliterating `1 ` even
-            # preedit='', cursor_pos=1. Try to fix this here:
+            # ja-anthy produces a lot of useless geta marks '〓'.  It
+            # also produces sometimes useless empty candidates and
+            # sometimes (when transliterating `1 `) even preedit='',
+            # cursor_pos=1.
+            #
+            # All these problems seem to be encoding problems caused
+            # by mimx-anthy.c in m17n-lib using EUC-JP encoding
+            # instead of UTF-8.  They all go away go away after fixing
+            # mimx-anthy.c to use UTF-8 by patching it like this:
+            #
+            # --- a/example/mimx-anthy.c
+            # +++ b/example/mimx-anthy.c
+            # @@ -129,15 +129,16 @@ new_context (MInputContext *ic)
+            #  {
+            #    AnthyContext *context;
+            #    anthy_context_t ac;
+            # -  MSymbol euc_jp = msymbol ("euc-jp");
+            # +  MSymbol utf_8 = msymbol ("utf-8");
+            #    /* Rebound to an actual buffer just before being used.  */
+            # -  MConverter *converter = mconv_buffer_converter (euc_jp, NULL, 0);
+            # +  MConverter *converter = mconv_buffer_converter (utf_8, NULL, 0);
+            #
+            #    if (! converter)
+            #      return NULL;
+            #    ac = anthy_create_context ();
+            #    if (! ac)
+            #      return NULL;
+            # +  anthy_context_set_encoding(ac, ANTHY_UTF8_ENCODING);
+            #    context = calloc (1, sizeof (AnthyContext));
+            #    context->ic = ic;
+            #    context->ac = ac;
+            #
+            # It is not necessary to use anthy-unicode (although this is
+            # probably better), I tested that this encoding problem here
+            # can be fixed by just patching mimx-anthy.c. Tested with
+            # anthy-9100h-56.fc41.x86_64
+            # anthy-unicode-1.0.0.20240502-8.fc41.x86_64
+            #
+            # For systems where mimx-anthy.c has not been fixed yet
+            # in m17n-lib, apply a runtime fix here:
             if preedit != '下駄':
                 candidates = [
                     candidate
