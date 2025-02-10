@@ -1583,6 +1583,8 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(True, self.engine._lookup_table_hidden)
         self.assertEqual(self.engine._candidates[0][0], 'A')
         self.assertEqual(True, len(self.engine._candidates) >= 3)
+        # No commit by index should be possible now because the lookup
+        # table is hidden:
         self.engine.do_process_key_event(IBus.KEY_4, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertEqual(self.engine.mock_preedit_text, 'A4')
@@ -1596,12 +1598,48 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(True, self.engine._lookup_table_hidden)
         self.assertEqual(self.engine._candidates[0][0], 'winter')
         self.assertEqual(True, len(self.engine._candidates) >= 3)
+        # No commit by index should be possible now because the lookup
+        # table is hidden:
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'A4 ')
         self.assertEqual(self.engine.mock_preedit_text, 'wint1')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'A4 wint1 ')
         self.assertEqual(self.engine.mock_preedit_text, '')
+        self.engine.do_process_key_event(IBus.KEY_A, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.assertEqual(True, self.engine._lookup_table_hidden)
+        self.assertEqual(self.engine._candidates[0][0], 'Autumn')
+        self.assertEqual(True, len(self.engine._candidates) >= 3)
+        self.assertEqual(self.engine.mock_committed_text, 'A4 wint1 ')
+        # Preedit text shows inline completion:
+        self.assertEqual(self.engine.mock_preedit_text, 'Autumn')
+        # Accept the inline completion with Tab:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'A4 wint1 ')
+        # Preedit text contents unchanged, only colour may change:
+        self.assertEqual(self.engine.mock_preedit_text, 'Autumn')
+        # Lookup table is still hidden:
+        self.assertEqual(True, self.engine._lookup_table_hidden)
+        # Show lookup table by typing Tab again:
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(False, self.engine._lookup_table_hidden)
+        self.assertEqual(self.engine.mock_committed_text, 'A4 wint1 ')
+        # Preedit text is shortened to “Autum” again because the
+        # lookup table is shown now and the second candidate, which is
+        # probably “Autumnal”. But better don’t check the second
+        # candidate to avoid making the test too much dependent on
+        # dictionary contents.
+        self.assertEqual(self.engine.mock_preedit_text, 'Autum')
+        # Commit the first candidate “Autumn” by typing 1, this should
+        # be possible now as the lookup table is visible now:
+        self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'A4 wint1 Autumn ')
+        self.assertEqual(self.engine.mock_preedit_text, '')
+
 
     def test_add_space_on_commit(self) -> None:
         '''Test new option to avoid adding spaces when committing by label

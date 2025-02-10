@@ -169,7 +169,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._input_purpose: int = 0
         self._input_hints: int = 0
         self._lookup_table_hidden = False
-        self._lookup_table_shows_inline_completion = False
         self._lookup_table_shows_related_candidates = False
         self._lookup_table_shows_compose_completions = False
         self._lookup_table_shows_m17n_candidates = False
@@ -2637,7 +2636,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         Show it if it is not empty and not disabled, otherwise hide it.
         '''
         self._lookup_table_hidden = False
-        self._lookup_table_shows_inline_completion = False
         # Also make sure to hide lookup table if there are
         # no candidates to display. On f17, this makes no
         # difference but gnome-shell in f18 will display
@@ -2696,7 +2694,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         completion = first_candidate[len(typed_string):]
         self.hide_lookup_table()
         self._lookup_table_hidden = True
-        self._lookup_table_shows_inline_completion = True
         text = IBus.Text.new_from_string('')
         super().update_auxiliary_text(text, False)
         text = IBus.Text.new_from_string(typed_string + completion)
@@ -6505,9 +6502,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :return: True if the key was completely handled, False if not.
         '''
-        if ((self._lookup_table_hidden
-             or not self.get_lookup_table().get_number_of_candidates())
-            and not self._lookup_table_shows_inline_completion):
+        if ((self._m17n_trans_parts.candidates and
+             not self._m17n_trans_parts.candidate_show
+             and self._current_imes[0] != 'ja-anthy')
+             or not self.get_lookup_table().get_number_of_candidates()):
             return False
         dummy = self._arrow_down()
         self._update_lookup_table_and_aux()
@@ -6518,7 +6516,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :return: True if the key was completely handled, False if not.
         '''
-        if (self._lookup_table_hidden
+        if ((self._m17n_trans_parts.candidates and
+             not self._m17n_trans_parts.candidate_show
+             and self._current_imes[0] != 'ja-anthy')
             or not self.get_lookup_table().get_number_of_candidates()):
             return False
         dummy = self._arrow_up()
@@ -6530,7 +6530,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :return: True if the key was completely handled, False if not.
         '''
-        if (self._lookup_table_hidden
+        if ((self._m17n_trans_parts.candidates and
+             not self._m17n_trans_parts.candidate_show
+             and self._current_imes[0] != 'ja-anthy')
             or not self.get_lookup_table().get_number_of_candidates()):
             return False
         dummy = self._page_down()
@@ -6542,7 +6544,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :return: True if the key was completely handled, False if not.
         '''
-        if (self._lookup_table_hidden
+        if ((self._m17n_trans_parts.candidates and
+             not self._m17n_trans_parts.candidate_show
+             and self._current_imes[0] != 'ja-anthy')
             or not self.get_lookup_table().get_number_of_candidates()):
             return False
         dummy = self._page_up()
