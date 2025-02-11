@@ -7513,7 +7513,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if (self._m17n_trans_parts.candidates
             and key.val in self._commit_trigger_keys
             and not (self._current_imes[0] in ('t-lsymbol',)
-                     and self._typed_string == ['/'])
+                     and self._typed_string[
+                         :self._typed_string_cursor][-1:] == ['/'])
             and not key.val in (IBus.KEY_BackSpace,)):
             # There are m17n candidates but nothing is selected in
             # the lookup table or the lookup table is not shown at all

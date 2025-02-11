@@ -3568,7 +3568,23 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine._typed_string, [])
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb a😇a☺\uFE0Fb \u200C ')
-
+        # `a / space` should also produce a single candidate with
+        # t-lsymbol, U+200C ZERO WIDTH NON-JOINER:
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_slash, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 1)
+        self.assertEqual(self.engine._candidates[0][0], '\u200C')
+        self.assertEqual(self.engine._typed_string, ['a', '/', ' '])
+        self.assertEqual(self.engine.mock_preedit_text, 'a\u200C')
+        self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb a😇a☺\uFE0Fb \u200C ')
+        # commit with space
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine._typed_string, [])
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(
+            self.engine.mock_committed_text, 'a☺\uFE0Fb a😇a☺\uFE0Fb \u200C a\u200C ')
 
     def test_zh_py(self) -> None:
         dummy_trans = self.get_transliterator_or_skip('zh-py')
