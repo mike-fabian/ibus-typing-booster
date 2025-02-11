@@ -929,11 +929,15 @@ class TransliterationParts(NamedTuple):
     preedit:              The transliteration of the remaining input,
                           may still change by adding more input.
     cursor_pos: int       The cursor position in the preedit.
-                          Counted in codepoints, not glyphs.
-                          Usually this is at the end of the preedit
-                          but an input method may move the cursor
+                          Counted in codepoints, not glyphs (For example
+                          '☺\uFE0F' usually renders as one glyph (☺️) but
+                          has two codepoints).
+                          Usually this is at the end of the preedit but
+                          not always! An input method may move the cursor
                           within the preedit!
-                          (I think only ja-anthy.mim actually uses this)
+                          (I think only ja-anthy.mim actually moves the
+                          cursor within the preedit sometimes when moving
+                          or resizing the henkan region).
     status: str           May change for some input methods to
                           indicate a state.
                           For example in case of ja-anthy.mim,
@@ -941,6 +945,13 @@ class TransliterationParts(NamedTuple):
                           to '漢' in Henkan mode.
     candidates: List[str] May contain a list of candidates if the
                           input method can produce multiple candidates.
+    candidate_index: int  Index of the selected candidate.
+                          0 if no candidate is selected.
+    candidate_from: int   Start of the current candidate in the preedit.
+    candidate_to: int     End of the  current candidate in the preedit.
+                          If candidate_index == 0, i.e.
+                          no candidate is selected, the current candidate
+                          in the preedit is the first candidate.
     candidate_show: int   0: candidates should be hidden
                           1: candidates should be shown
     '''
@@ -950,6 +961,9 @@ class TransliterationParts(NamedTuple):
     cursor_pos: int = 0
     status: str = ''
     candidates: List[str] = []
+    candidate_index: int = 0
+    candidate_from: int = 0
+    candidate_to: int = 0
     candidate_show: int = 0
 
 class Transliterator:
@@ -1486,6 +1500,9 @@ class Transliterator:
             plist = libm17n__mplist_next(plist) # type: ignore
         cursor_pos = self._ic.contents.cursor_pos
         status = mtext_to_string(self._ic.contents.status)
+        candidate_index = self._ic.contents.candidate_index
+        candidate_from = self._ic.contents.candidate_from
+        candidate_to = self._ic.contents.candidate_to
         candidate_show = self._ic.contents.candidate_show
         # From the m17n-lib documentation:
         #
@@ -1601,6 +1618,9 @@ class Transliterator:
                                        cursor_pos=cursor_pos,
                                        status=status,
                                        candidates=candidates,
+                                       candidate_index=candidate_index,
+                                       candidate_from=candidate_from,
+                                       candidate_to=candidate_to,
                                        candidate_show=candidate_show)
         return TransliterationParts(
             committed=convert_digits_to_ascii(committed),
@@ -1609,6 +1629,9 @@ class Transliterator:
             cursor_pos=cursor_pos,
             status=status,
             candidates=candidates,
+            candidate_index=candidate_index,
+            candidate_from=candidate_from,
+            candidate_to=candidate_to,
             candidate_show=candidate_show)
 
     def transliterate(self, msymbol_list: Iterable[str], ascii_digits: bool = False) -> str:
