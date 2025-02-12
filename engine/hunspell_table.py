@@ -7594,9 +7594,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._debug_level > 1:
             LOGGER.debug('typed_string_up_to_cursor=%s',
                          repr(typed_string_up_to_cursor))
-        if not typed_string_up_to_cursor:
-            typed_string_up_to_cursor.append(key.msymbol)
-        elif self._current_imes[0] == 'ja-anthy':
+        if self._current_imes[0] == 'ja-anthy':
             if (typed_string_up_to_cursor[-len(itb_util.ANTHY_HENKAN_WIDE):]
                 == itb_util.ANTHY_HENKAN_WIDE):
                 if self._debug_level > 1:
@@ -7658,6 +7656,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 if self._debug_level > 1:
                     LOGGER.debug('ja-anthy: other key in kana mode')
                 typed_string_up_to_cursor.append(key.msymbol)
+        elif not typed_string_up_to_cursor:
+            typed_string_up_to_cursor.append(key.msymbol)
         elif key.val in (IBus.KEY_BackSpace,):
             typed_string_up_to_cursor.pop()
         else:
