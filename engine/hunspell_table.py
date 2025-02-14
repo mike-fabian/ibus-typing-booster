@@ -226,6 +226,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._use_ibus_keymap: bool = self._settings_dict[
             'useibuskeymap']['user']
 
+        self._word_predictions: bool = self._settings_dict[
+            'wordpredictions']['user']
         self._emoji_predictions: bool = self._settings_dict[
             'emojipredictions']['user']
 
@@ -710,6 +712,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'arrowkeysreopenpreedit': {
                 'set': self.set_arrow_keys_reopen_preedit,
                 'get': self.get_arrow_keys_reopen_preedit},
+            'wordpredictions': {
+                'set': self.set_word_prediction_mode,
+                'get': self.get_word_prediction_mode},
             'emojipredictions': {
                 'set': self.set_emoji_prediction_mode,
                 'get': self.get_emoji_prediction_mode},
@@ -868,7 +873,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         special_defaults = {
             'dictionary': 'None',  # special dummy dictionary
             'inputmethod': f'{self._m17n_ime_lang}-{self._m17n_ime_name}',
-            'tabenable': True,
+            'wordpredictions': False,
+            'emojipredictions': False,
+            'emojitriggercharacters': '',
             'offtherecord': True,
             'preeditunderline': 0,
         }
@@ -878,7 +885,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     self._gsettings.get_default_value('keybindings'))
                 if self._engine_name != 'typing-booster':
                     default_value['toggle_input_mode_on_off'] = []
-                    default_value['enable_lookup'] = []
                     default_value['commit_and_forward_key'] = ['Left']
                 # copy the updated default keybindings, i.e. the
                 # default keybindings for this specific engine, into
@@ -948,28 +954,32 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     'NoIME')
         self._update_transliterated_strings()
 
-    def _is_restricted_engine(self) -> bool:
-        '''Checks wether the engine is restricted
+    def _show_prediction_candidates(self) -> bool:
+        '''Checks whether prediction candidate lists are wanted
 
-        “Restricted” means the options for this engine are set
-        in a way that no lookups are possible and nothing is recorded
-        in the user database.
+        If neither emoji predictions are possible nor word predictions
+        are possible, calculations to produce the “normal” Typing Booster
+        lookup table can be skipped completely.
 
-        When an engine is restricted in this way, displaying some
-        menus like “Unicode symbols and emoji predictions” and “Off
-        the record mode” is useless and can be hidden in the panel
-        menus and in the floating toolbar.
-
-        Also, when no lookups in the user database or the dictionaries
-        are possible anyway, it is useless to keep input in the preedit
-        longer than absolutely necessary and it is better to commit as
-        early as possible, just like ibus-m17n does.
+        But m17n candidates lookup tables and Compose lookup tables
+        are still possible then.
         '''
-        return bool(self._tab_enable
-                    and self._off_the_record
+        return bool(self._emoji_predictions
+                    or self._emoji_trigger_characters != ''
+                    or self._word_predictions)
+
+    def _try_early_commit(self) -> bool:
+        '''
+        Whether it should be checked if parts of the
+        transliteration can be committed already
+        '''
+        return bool(not self.is_empty()
                     and len(self._current_imes) == 1
-                    and self._dictionary_names == ['None']
-                    and not self._keybindings['enable_lookup'])
+                    and not self._typed_compose_sequence
+                    and not self._m17n_trans_parts.candidates
+                    and not self._word_predictions
+                    and not self._emoji_predictions
+                    and not self._typed_string[0] in self._emoji_trigger_characters)
 
     def is_empty(self) -> bool:
         '''Checks whether the preëdit is empty
@@ -1286,52 +1296,54 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return
         self._candidates = []
         phrase_frequencies: Dict[str, int] = {}
+        phrase_candidates: List[Tuple[str, int, str, bool, bool]] = []
         self.is_lookup_table_enabled_by_min_char_complete = False
-        for ime in self._current_imes:
-            if self._transliterated_strings[ime]:
-                candidates = []
-                prefix_length = 0
-                prefix = ''
-                stripped_transliterated_string = (
-                    itb_util.lstrip_token(self._transliterated_strings[ime]))
-                if (stripped_transliterated_string
-                        and (len(stripped_transliterated_string)
-                              >= self._min_char_complete)):
-                    self.is_lookup_table_enabled_by_min_char_complete = True
-                if (self.is_lookup_table_enabled_by_min_char_complete
-                        or self.is_lookup_table_enabled_by_tab):
-                    prefix_length = (
-                        len(self._transliterated_strings[ime])
-                        - len(stripped_transliterated_string))
-                    if prefix_length:
-                        prefix = (
-                            self._transliterated_strings[ime][0:prefix_length])
+        if self._word_predictions:
+            for ime in self._current_imes:
+                if self._transliterated_strings[ime]:
+                    candidates = []
+                    prefix_length = 0
+                    prefix = ''
+                    stripped_transliterated_string = (
+                        itb_util.lstrip_token(self._transliterated_strings[ime]))
+                    if (stripped_transliterated_string
+                            and (len(stripped_transliterated_string)
+                                  >= self._min_char_complete)):
+                        self.is_lookup_table_enabled_by_min_char_complete = True
+                    if (self.is_lookup_table_enabled_by_min_char_complete
+                            or self.is_lookup_table_enabled_by_tab):
+                        prefix_length = (
+                            len(self._transliterated_strings[ime])
+                            - len(stripped_transliterated_string))
+                        if prefix_length:
+                            prefix = (
+                                self._transliterated_strings[ime][0:prefix_length])
+                        try:
+                            candidates = self.database.select_words(
+                                stripped_transliterated_string,
+                                p_phrase=self._p_phrase,
+                                pp_phrase=self._pp_phrase)
+                        except Exception as error: # pylint: disable=broad-except
+                            LOGGER.exception(
+                                'Exception when calling select_words: %s: %s',
+                                error.__class__.__name__, error)
+                    if candidates and prefix:
+                        candidates = [(prefix+x[0], x[1]) for x in candidates]
+                    shortcut_candidates: List[Tuple[str, float]] = []
                     try:
-                        candidates = self.database.select_words(
-                            stripped_transliterated_string,
-                            p_phrase=self._p_phrase,
-                            pp_phrase=self._pp_phrase)
+                        shortcut_candidates = self.database.select_shortcuts(
+                            self._transliterated_strings[ime])
                     except Exception as error: # pylint: disable=broad-except
                         LOGGER.exception(
-                            'Exception when calling select_words: %s: %s',
+                            'Exception when calling select_shortcuts: %s: %s',
                             error.__class__.__name__, error)
-                if candidates and prefix:
-                    candidates = [(prefix+x[0], x[1]) for x in candidates]
-                shortcut_candidates: List[Tuple[str, float]] = []
-                try:
-                    shortcut_candidates = self.database.select_shortcuts(
-                        self._transliterated_strings[ime])
-                except Exception as error: # pylint: disable=broad-except
-                    LOGGER.exception(
-                        'Exception when calling select_shortcuts: %s: %s',
-                        error.__class__.__name__, error)
-                for cand in candidates + shortcut_candidates:
-                    if cand[0] in phrase_frequencies:
-                        phrase_frequencies[cand[0]] = max(
-                            phrase_frequencies[cand[0]], cand[1])
-                    else:
-                        phrase_frequencies[cand[0]] = cand[1]
-        phrase_candidates = self.database.best_candidates(phrase_frequencies)
+                    for cand in candidates + shortcut_candidates:
+                        if cand[0] in phrase_frequencies:
+                            phrase_frequencies[cand[0]] = max(
+                                phrase_frequencies[cand[0]], cand[1])
+                        else:
+                            phrase_frequencies[cand[0]] = cand[1]
+            phrase_candidates = self.database.best_candidates(phrase_frequencies)
         # If the first candidate is exactly the same as the typed string
         # prefer longer candidates which start exactly with the typed
         # string. If the user wants the typed string, he can easily
@@ -2196,7 +2208,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if menu_key == 'InputMode':
             visible = bool(self._keybindings['toggle_input_mode_on_off'])
         if menu_key in ('EmojiPredictionMode', 'OffTheRecordMode'):
-            visible = not self._is_restricted_engine()
+            visible = self._show_prediction_candidates()
         self._init_or_update_sub_properties(
             menu_key, sub_properties_dict, current_mode=current_mode)
         if menu_key not in self._prop_dict: # initialize property
@@ -2240,7 +2252,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if menu_key == 'InputMode':
             visible = bool(self._keybindings['toggle_input_mode_on_off'])
         if menu_key in ('EmojiPredictionMode', 'OffTheRecordMode'):
-            visible = not self._is_restricted_engine()
+            visible = self._show_prediction_candidates()
         for mode in sorted(modes, key=lambda x: (int(modes[x]['number']))):
             if modes[mode]['number'] == int(current_mode):
                 state = IBus.PropState.CHECKED
@@ -2311,7 +2323,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self.input_mode_menu,
                 self._input_mode)
 
-        if not self._is_restricted_engine():
+        if self._show_prediction_candidates():
             # These two menus are not useful for the restricted
             # engines emulating ibus-m17n:
             self._init_or_update_property_menu(
@@ -2898,6 +2910,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self.is_lookup_table_enabled_by_tab = False
         if (self.is_empty()
             or self._hide_input
+            or not self._show_prediction_candidates()
             or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
             # If the lookup table would be hidden anyway, there is no
             # point in updating the candidates, save some time by making
@@ -4394,6 +4407,46 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
     def get_input_mode(self) -> bool:
         '''Returns the current value of the input mode'''
         return self._input_mode
+
+    def set_word_prediction_mode(
+            self, mode: bool, update_gsettings: bool = True) -> None:
+        '''Sets the word prediction mode
+
+        :param mode: Whether to switch word prediction on or off
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._word_predictions:
+            return
+        self._word_predictions = mode
+        self._update_ui()
+        if update_gsettings:
+            self._gsettings.set_value(
+                'wordpredictions',
+                GLib.Variant.new_boolean(mode))
+
+    def toggle_word_prediction_mode(
+            self, update_gsettings: bool = True) -> None:
+        '''Toggles whether word predictions are shown or not
+
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        self.set_word_prediction_mode(
+            not self._word_predictions, update_gsettings)
+
+    def get_word_prediction_mode(self) -> bool:
+        '''Returns the current value of the word prediction mode'''
+        return self._word_predictions
 
     def set_emoji_prediction_mode(
             self, mode: bool, update_gsettings: bool = True) -> None:
@@ -8698,10 +8751,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._commit_string(
                     input_phrase + ' ', input_phrase=input_phrase)
                 self._clear_input()
-            if (not self.is_empty()
-                and not self._typed_compose_sequence
-                and not self._m17n_trans_parts.candidates
-                and self._is_restricted_engine()):
+            if self._try_early_commit():
                 transliterated_parts = self._transliterators[
                     self.get_current_imes()[0]].transliterate_parts(
                         self._typed_string, ascii_digits=self._ascii_digits)
@@ -8728,10 +8778,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         and not transliterated_parts.cursor_pos):
                         self._update_ui()
                         return False
-                    else:
-                        super().commit_text(
-                            IBus.Text.new_from_string(
-                                transliterated_parts.committed))
+                    super().commit_text(
+                        IBus.Text.new_from_string(
+                            transliterated_parts.committed))
             self._update_ui()
             return True
 

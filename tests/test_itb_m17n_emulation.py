@@ -90,6 +90,7 @@ class ItbM17nEmuTestCase(unittest.TestCase):
 
     orig_disable_in_terminals = False
     orig_ascii_digits = False
+    orig_word_prediction_mode = True
     orig_emoji_prediction_mode = False
     orig_off_the_record_mode = False
     orig_record_mode = 0
@@ -164,6 +165,8 @@ class ItbM17nEmuTestCase(unittest.TestCase):
             self.engine.get_disable_in_terminals())
         self.orig_ascii_digits = (
             self.engine.get_ascii_digits())
+        self.orig_word_prediction_mode = (
+            self.engine.get_word_prediction_mode())
         self.orig_emoji_prediction_mode = (
             self.engine.get_emoji_prediction_mode())
         self.orig_off_the_record_mode = (
@@ -217,6 +220,9 @@ class ItbM17nEmuTestCase(unittest.TestCase):
             update_gsettings=False)
         self.engine.set_ascii_digits(
             self.orig_ascii_digits,
+            update_gsettings=False)
+        self.engine.set_word_prediction_mode(
+            self.orig_word_prediction_mode,
             update_gsettings=False)
         self.engine.set_emoji_prediction_mode(
             self.orig_emoji_prediction_mode,
@@ -363,11 +369,13 @@ class ItbM17nEmuTestCase(unittest.TestCase):
         self.assertEqual(self.engine._engine_name, 'tb:t:latn-post')
         self.assertEqual(self.engine._dictionary_names, ['None'])
         self.assertEqual(self.engine._current_imes, ['t-latn-post'])
-        self.assertEqual(self.engine._tab_enable, True)
+        self.assertEqual(self.engine._tab_enable, False) # normal default
+        self.assertEqual(self.engine._word_predictions, False)
+        self.assertEqual(self.engine._emoji_predictions, False)
         self.assertEqual(self.engine._off_the_record, True)
         self.assertEqual(self.engine._preedit_underline, 0)
         self.assertEqual(self.engine._keybindings['toggle_input_mode_on_off'], [])
-        self.assertEqual(self.engine._keybindings['enable_lookup'], [])
+        self.assertEqual(self.engine._keybindings['enable_lookup'], ['Tab', 'ISO_Left_Tab']) # normal default
         self.assertEqual(self.engine._keybindings['commit_and_forward_key'], ['Left'])
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'a')

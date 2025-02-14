@@ -256,33 +256,8 @@ def write_xml() -> None:
     m17n_input_methods_skip = set([
         'NoIME',
     ])
-    # Input methods offering multiple candidates are not yet supported
-    # by typing-booster:
-    #
-    # Note: 'vi-tcvn', 'vi-telex', 'vi-viqr', 'vi-vni', 'zh-pinyin-vi', 'zh-pinyin'
-    # also produce multiple candidates sometimes but **never** show a  lookup table
-    # as they do not have a '(show)' command in their .mim files. These
-    # work just fine as restricted typing booster engines.
-    m17n_input_methods_with_lookup_tables = set([
-        'ja-anthy',
-        't-lsymbol',
-        'ml-swanalekha',
-        'vi-han',
-        'vi-nomtelex',
-        'vi-nomvni',
-        'zh-cangjie',
-        'zh-py',
-        'zh-py-b5',
-        'zh-py-gb',
-        'zh-quick',
-        'zh-tonepy',
-        'zh-tonepy-gb',
-        'zh-tonepy-b5',
-        'zh-zhuyin',
-    ])
     supported_input_methods = sorted(
-        (m17n_input_methods - m17n_input_methods_skip)
-        - m17n_input_methods_with_lookup_tables
+        m17n_input_methods - m17n_input_methods_skip
     ) + ['typing-booster']
 
     indic_languages = (
@@ -351,6 +326,12 @@ def write_xml() -> None:
         # https://bugzilla.redhat.com/show_bug.cgi?id=1076945
         # ibus-m17n uses rank 1 for the ar-kbd engine.
         (r'tb:ar:kbd', 2),
+        (r'tb:ja:anthy', -1), # ja:anthy is superseded by ibus-anthy
+        (r'tb:zh:py', -1), # zh:py is superseded by ibus-pinyin etc
+        (r'tb:zh:py-gb', -1), # zh:py-gb is superseded by ibus-pinyin etc
+        (r'tb:zh:py-b5', -1), # zh:py-b5 is superseded by ibus-pinyin etc
+        (r'tb:ko:han2', -1), # ko:han2 is superseded by ibus-hangul
+        (r'tb:ko:romaja', -1), # ko:romaja is superseded by ibus-hangul
     ]
     # Some Indic engines expect AltGr is automatically mapped
     ralt_switch_patterns = [

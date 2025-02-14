@@ -168,6 +168,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_disable_in_terminals())
         self.orig_ascii_digits = (
             self.engine.get_ascii_digits())
+        self.orig_word_prediction_mode = (
+            self.engine.get_word_prediction_mode())
         self.orig_emoji_prediction_mode = (
             self.engine.get_emoji_prediction_mode())
         self.orig_off_the_record_mode = (
@@ -219,6 +221,9 @@ class ItbTestCase(unittest.TestCase):
             update_gsettings=False)
         self.engine.set_ascii_digits(
             self.orig_ascii_digits,
+            update_gsettings=False)
+        self.engine.set_word_prediction_mode(
+            self.orig_word_prediction_mode,
             update_gsettings=False)
         self.engine.set_emoji_prediction_mode(
             self.orig_emoji_prediction_mode,

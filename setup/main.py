@@ -591,6 +591,19 @@ class SetupUI(Gtk.Window): # type: ignore
             self._remember_input_mode_checkbutton,
             0, _options_grid_row, 2, 1)
 
+        self._word_predictions_checkbutton = Gtk.CheckButton(
+            # Translators: Whether ibus-typing-booster should show word predictions.
+            label=_('Word predictions'))
+        self._word_predictions_checkbutton.set_tooltip_text(
+            _('Whether ibus-typing-booster should show word predictions.'))
+        self._word_predictions_checkbutton.connect(
+            'clicked', self._on_word_predictions_checkbutton)
+        self._word_predictions_checkbutton.set_active(
+            self._settings_dict['wordpredictions']['user'])
+        _options_grid_row += 1
+        self._options_grid.attach(
+            self._word_predictions_checkbutton, 0, _options_grid_row, 2, 1)
+
         self._emoji_predictions_checkbutton = Gtk.CheckButton(
             # Translators: Whether Unicode symbols and emoji should be
             # included in the predictions. Emoji are pictographs like
@@ -2349,6 +2362,7 @@ class SetupUI(Gtk.Window): # type: ignore
             'avoidforwardkeyevent': self.set_avoid_forward_key_event,
             'addspaceoncommit': self.set_add_space_on_commit,
             'arrowkeysreopenpreedit': self.set_arrow_keys_reopen_preedit,
+            'wordpredictions': self.set_word_prediction_mode,
             'emojipredictions': self.set_emoji_prediction_mode,
             'offtherecord': self.set_off_the_record_mode,
             'recordmode': self.set_record_mode,
@@ -2417,7 +2431,9 @@ class SetupUI(Gtk.Window): # type: ignore
         special_defaults = {
             'dictionary': 'None',  # special dummy dictionary
             'inputmethod': f'{self._m17n_ime_lang}-{self._m17n_ime_name}',
-            'tabenable': True,
+            'wordpredictions': False,
+            'emojipredictions': False,
+            'emojitriggercharacters': '',
             'offtherecord': True,
             'preeditunderline': 0,
         }
@@ -2427,7 +2443,6 @@ class SetupUI(Gtk.Window): # type: ignore
                     self._gsettings.get_default_value('keybindings'))
                 if self._engine_name != 'typing-booster':
                     default_value['toggle_input_mode_on_off'] = []
-                    default_value['enable_lookup'] = []
                     default_value['commit_and_forward_key'] = ['Left']
                 # copy the updated default keybindings, i.e. the
                 # default keybindings for this specific engine, into
@@ -3200,6 +3215,12 @@ class SetupUI(Gtk.Window): # type: ignore
             self, widget: Gtk.CheckButton) -> None:
         '''The checkbutton whether to remember the last used input mode.'''
         self.set_remember_input_mode(
+            widget.get_active(), update_gsettings=True)
+
+    def _on_word_predictions_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
+        '''The checkbutton whether to predict words or not has been clicked.'''
+        self.set_word_prediction_mode(
             widget.get_active(), update_gsettings=True)
 
     def _on_emoji_predictions_checkbutton(
@@ -5193,6 +5214,30 @@ class SetupUI(Gtk.Window): # type: ignore
                 GLib.Variant.new_boolean(mode))
         else:
             self._ascii_digits_checkbutton.set_active(mode)
+
+    def set_word_prediction_mode(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the word prediction mode
+
+        :param mode: Whether to switch word prediction on or off
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
+        mode = bool(mode)
+        self._settings_dict['wordpredictions']['user'] = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'wordpredictions',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._word_predictions_checkbutton.set_active(mode)
 
     def set_emoji_prediction_mode(
             self,

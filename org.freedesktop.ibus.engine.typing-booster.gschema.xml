@@ -219,6 +219,13 @@
         committed words.
       </description>
     </key>
+    <key name="wordpredictions" type="b">
+      <default>true</default>
+      <summary>Word predictions</summary>
+      <description>
+        Whether ibus-typing-booster should show word predictions.
+      </description>
+    </key>
     <key name="emojipredictions" type="b">
       <default>false</default>
       <summary>Unicode symbols and emoji predictions</summary>
