@@ -47,6 +47,51 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.27" date="2025-02-17" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.27</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            IBus.Keymap("in") does not work on Alpine Linux but the
+            deprectated IBus.Keymap.new("in") works
+          </li>
+          <li>
+            Allow changing case mode even when no lookup table is
+            shown and it effects only the preedit (Resolves:
+            github-issues#640)
+          </li>
+          <li>
+            Use itb_util.normalize_nfc_and_composition_exclusions(x)
+            *everywhere* instead of unicodedata.normalize('NFC', x)
+            (Resolves: github-issues#633)
+          </li>
+          <li>
+             Add a new gsettings option 'wordpredictions' to simplify
+             and improve the behaviour of engines emulating ibus-m17n
+             (Resolves: github-issues#629)
+          </li>
+          <li>
+            Add candidate_index, candidate_from, and candidate_to to
+            the API of the m17n Transliterator class
+          </li>
+          <li>
+            Translation update from Weblate (de 100%, fr 100%, ja 99.6%, ka 100%, kab 74.2 %, ko 32.9%, pl 100%, uk 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/640">
+          github-issues#640
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/633">
+          github-issues#633
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/629">
+          github-issues#629
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.24" date="2025-02-10" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.24</url>
       <description>

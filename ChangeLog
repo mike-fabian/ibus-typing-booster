@@ -1,5 +1,14 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
-* 10 Feb 2025 Release 2.27.23
+* 17 Feb 2025 Release 2.27.27
+* IBus.Keymap("in") does not work on Alpine Linux but the deprectated IBus.Keymap.new("in") works
+* Allow changing case mode even when no lookup table is shown and it effects only the preedit (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/640)
+* Use itb_util.normalize_nfc_and_composition_exclusions(x) *everywhere* instead of unicodedata.normalize('NFC', x) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/633)
+* Add a new gsettings option 'wordpredictions' to simplify and improve the behaviour of engines emulating ibus-m17n (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/629)
+* Add candidate_index, candidate_from, and candidate_to to the API of the m17n Transliterator class
+* Translation update from Weblate (de 100%, fr 100%, ja 99.6%, ka 100%, kab 74.2 %, ko 32.9%, pl 100%, uk 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
+* 10 Feb 2025 Release 2.27.24
 * Fix inline completion when option “Yes, without fallback to popup” is chosen (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/626)
 * Don’t spellcheck the preedit if the top priority input method is Japanese or Chinese (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/624)
 * Update UnicodeData.txt, DerivedAge.txt to the Unicode 17.0.0 draft as of 2025-02-10
