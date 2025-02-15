@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-02-10 16:38+0100\n"
+"POT-Creation-Date: 2025-02-15 11:37+0100\n"
 "PO-Revision-Date: 2025-01-19 08:16+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://translate.fedoraproject.org/projects/ibus-"
@@ -151,7 +151,7 @@ msgid "Lookup on emojipedia"
 msgstr "Emojipedia-ზე მოძებნა"
 
 #: engine/emoji_picker.py:2164 engine/emoji_picker.py:2165
-#: engine/emoji_picker.py:2166 setup/main.py:1605
+#: engine/emoji_picker.py:2166 setup/main.py:1618
 msgid "System default"
 msgstr "სისტემის ნაგულისხმები"
 
@@ -159,21 +159,21 @@ msgstr "სისტემის ნაგულისხმები"
 msgid "Set Font"
 msgstr "ფონტის დაყენება"
 
-#: engine/hunspell_table.py:554 engine/hunspell_table.py:588
-#: engine/hunspell_table.py:609
+#: engine/hunspell_table.py:556 engine/hunspell_table.py:590
+#: engine/hunspell_table.py:611
 msgid "Off"
 msgstr "გამორთული"
 
-#: engine/hunspell_table.py:559 engine/hunspell_table.py:593
-#: engine/hunspell_table.py:614
+#: engine/hunspell_table.py:561 engine/hunspell_table.py:595
+#: engine/hunspell_table.py:616
 msgid "On"
 msgstr "ჩართული"
 
-#: engine/hunspell_table.py:578
+#: engine/hunspell_table.py:580
 msgid "Input mode"
 msgstr "შეყვანის რეჟიმი"
 
-#: engine/hunspell_table.py:579
+#: engine/hunspell_table.py:581
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "აქ შეგიძლიათ ibus-typing-booster ჩართოთ ან გამორთოთ."
 
@@ -184,7 +184,7 @@ msgstr "აქ შეგიძლიათ ibus-typing-booster ჩართო�
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:598 engine/hunspell_table.py:600 setup/main.py:602
+#: engine/hunspell_table.py:600 engine/hunspell_table.py:602 setup/main.py:615
 msgid "Unicode symbols and emoji predictions"
 msgstr "უნიკოდის სიმბოლოები და ემოჯიების წინასწარი ამოცნობა"
 
@@ -195,60 +195,60 @@ msgstr "უნიკოდის სიმბოლოები და ემო
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:619 engine/hunspell_table.py:620 setup/main.py:627
+#: engine/hunspell_table.py:621 engine/hunspell_table.py:622 setup/main.py:640
 msgid "Off the record mode"
 msgstr "ჩაწერის რეჟიმის გამორთვა"
 
-#: engine/hunspell_table.py:1956
+#: engine/hunspell_table.py:1968
 msgid "Highest priority dictionary"
 msgstr "უმაღლესი პრიორიტეტის მქონე ლექსიკონი"
 
-#: engine/hunspell_table.py:1957
+#: engine/hunspell_table.py:1969
 msgid "Choose highest priority dictionary"
 msgstr "აირჩეთ უმაღლესი პრიორიტეტის მქონე ლექსიკონი"
 
-#: engine/hunspell_table.py:1986
+#: engine/hunspell_table.py:1998
 msgid "Preedit input method"
 msgstr "წინასწარი ჩასწორების შეტანის მეთოდი"
 
-#: engine/hunspell_table.py:1987
+#: engine/hunspell_table.py:1999
 msgid "Switch preedit input method"
 msgstr "სინასწარი ჩასწორების შეტანის მეთოდის გადართვა"
 
-#: engine/hunspell_table.py:2332
+#: engine/hunspell_table.py:2344
 msgid "Setup"
 msgstr "მორგება"
 
-#: engine/hunspell_table.py:2335 setup/main.py:142
+#: engine/hunspell_table.py:2347 setup/main.py:142
 msgid "Preferences for ibus-typing-booster"
 msgstr "\"ibus-typing-booster\"-ის მორგება"
 
-#: engine/hunspell_table.py:6003
+#: engine/hunspell_table.py:6056
 msgid "Failed to import Google speech-to-text."
 msgstr "Google speech-to-text-ის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:6006
+#: engine/hunspell_table.py:6059
 msgid "Failed to import pyaudio."
 msgstr "Pyaudio-ის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:6009
+#: engine/hunspell_table.py:6062
 msgid "Failed to import queue."
 msgstr "რიგის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:6014
+#: engine/hunspell_table.py:6067
 msgid "No supported language for speech recognition."
 msgstr "საუბრის ამოსაცნობად ენა მხარდაუჭერელია."
 
-#: engine/hunspell_table.py:6018
+#: engine/hunspell_table.py:6071
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google -ის აპლიკაციაში შესვლის დეტალების” ფაილი “%s” არ არსებობს."
 
-#: engine/hunspell_table.py:6031
+#: engine/hunspell_table.py:6084
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Google speech-to-text -ის ინიციალიზაციის შეცდომა. იხილეთ debug.log."
 
-#: engine/hunspell_table.py:6139
+#: engine/hunspell_table.py:6192
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google speech-to-text -ის შეცდომა. ხილეთ debug.log."
 
@@ -422,7 +422,7 @@ msgstr "მორგება"
 msgid "Restore all defaults"
 msgstr "ყველა მნიშვნელობის ნაგულისხმებამდე აღდგენა"
 
-#: setup/main.py:250 setup/main.py:6699
+#: setup/main.py:250 setup/main.py:6744
 msgid "_Close"
 msgstr "და_კეტვა"
 
@@ -458,7 +458,7 @@ msgstr "საკუთარი მალსახმობები"
 #. use to move to the next completion candidate etc...
 #. Translators: Column heading of the table listing the
 #. existing key bindings
-#: setup/main.py:323 setup/main.py:1458
+#: setup/main.py:323 setup/main.py:1471
 msgid "Key bindings"
 msgstr "კლავიატურის ბმები"
 
@@ -478,7 +478,7 @@ msgstr "გარემოს იერსახე"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:361 setup/main.py:2500
+#: setup/main.py:361 setup/main.py:2515
 msgid "Speech recognition"
 msgstr "საუბრის ამოცნობა"
 
@@ -489,7 +489,7 @@ msgstr "საუბრის ამოცნობა"
 #. Translators: This is the header of the list of settings
 #. changed automatically depending on the which window has
 #. focus:
-#: setup/main.py:377 setup/main.py:2220
+#: setup/main.py:377 setup/main.py:2233
 msgid "Autosettings"
 msgstr "ავტომორგება"
 
@@ -655,7 +655,20 @@ msgstr ""
 "თუ ეს პარამეტრი ჩართულია, ბოლოს გამოყენებული შეტანის რეჟიმი (ჩართ/გამორთ) "
 "დამახსოვრებულია იმ შემთხვევაშიც კი, თუ სესიას გადატვირთავთ."
 
-#: setup/main.py:604
+#. Translators: Whether ibus-typing-booster should show word predictions.
+#: setup/main.py:596
+#, fuzzy
+#| msgid "Add dictionary"
+msgid "Word predictions"
+msgstr "ლექსიკონის დამატება"
+
+#: setup/main.py:598
+#, fuzzy
+#| msgid "Whether ibus-typing-booster should be disabled in terminals."
+msgid "Whether ibus-typing-booster should show word predictions."
+msgstr "უნდა გამოირთოს ibus-typing-booster ტერმინალში, თუ არა."
+
+#: setup/main.py:617
 msgid ""
 "Whether Unicode symbols and emoji should be included in the predictions. "
 "Emoji are pictographs like ☺♨⛵…. Unicode symbols are other symbols like "
@@ -669,7 +682,7 @@ msgstr ""
 "შაბლონები(⠥⠩…) და ბევრი სხვა სიმბოლო. ესენი ტექნიკურად ემოჯიები არაა, მაგრამ "
 "მაინც საჭირო სიმბოლოებია."
 
-#: setup/main.py:629
+#: setup/main.py:642
 msgid ""
 "While “Off the record” mode is on, learning from user input is disabled. If "
 "learned user input is available, predictions are usually much better than "
@@ -685,11 +698,11 @@ msgstr ""
 
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
-#: setup/main.py:649
+#: setup/main.py:662
 msgid "Record mode"
 msgstr "ჩაწერის რეჟიმი"
 
-#: setup/main.py:651
+#: setup/main.py:664
 msgid ""
 "Selects which kind of input should be recorded in the user database: "
 "“Everything”: Every typed word is added to the user database or its "
@@ -711,19 +724,19 @@ msgstr ""
 "მაშინ განახლდება, თუ მისი მართლწერა, როგორც ჩანს, სწორია.    \"არაფერი\": არ "
 "ჩაიწერო არაფერი მომხმარებლის ბაზაში."
 
-#: setup/main.py:666
+#: setup/main.py:679
 msgid "Everything"
 msgstr "ყველაფერი"
 
-#: setup/main.py:668
+#: setup/main.py:681
 msgid "Correctly spelled or previously recorded"
 msgstr "სწორი მართლწერით ან უკვე ჩაწერილი"
 
-#: setup/main.py:670
+#: setup/main.py:683
 msgid "Correctly spelled"
 msgstr "სწორი მართლწერით"
 
-#: setup/main.py:672
+#: setup/main.py:685
 msgid "Nothing"
 msgstr "არაფერი"
 
@@ -740,7 +753,7 @@ msgstr "არაფერი"
 #. “forward_key_event()” is the name of a function in the
 #. ibus API and should probably not be translated, therefore
 #. I didn’t put it into the translatable string but used %s.
-#: setup/main.py:706
+#: setup/main.py:719
 #, python-format
 msgid "Avoid using the %s function"
 msgstr "%s ფუნქციის გამოყენების თავიდან აცილება"
@@ -761,7 +774,7 @@ msgstr "%s ფუნქციის გამოყენების თავ�
 #.
 #. This is a tooltip shown when the mouse hovers over that
 #. option.
-#: setup/main.py:725
+#: setup/main.py:738
 #, python-format
 msgid ""
 "Use a workaround if the %s function is broken. Enable this option only if "
@@ -776,11 +789,11 @@ msgstr ""
 #. when the cursor reaches a word boundary after moving it.
 #. Enabling this option is useful to correct already
 #. committed words.
-#: setup/main.py:743
+#: setup/main.py:756
 msgid "Enable reopening preedits"
 msgstr "წინასწარი ჩასწორებების მეორედ გახსნის ჩართვა"
 
-#: setup/main.py:745
+#: setup/main.py:758
 msgid ""
 "Whether it is allowed to put a word back into a preedit when the cursor "
 "moves to the end or the beginning of a word. Enabling this option is useful "
@@ -792,21 +805,21 @@ msgstr ""
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
-#: setup/main.py:761
+#: setup/main.py:774
 msgid "Disable in terminals"
 msgstr "ტერმინალში გამორთვა"
 
-#: setup/main.py:763
+#: setup/main.py:776
 msgid "Whether ibus-typing-booster should be disabled in terminals."
 msgstr "უნდა გამოირთოს ibus-typing-booster ტერმინალში, თუ არა."
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
-#: setup/main.py:776
+#: setup/main.py:789
 msgid "Convert language specific digits to ASCII digits"
 msgstr "ენის საკუთარი ციფრების ASCII ციფრებში გადაყვანა"
 
-#: setup/main.py:778
+#: setup/main.py:791
 msgid ""
 "Some input methods produce language specific digits by default. If one never "
 "wants to use such language specific digits but prefers western (ASCII) "
@@ -820,11 +833,11 @@ msgstr ""
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
-#: setup/main.py:795
+#: setup/main.py:808
 msgid "Use IBus keymap"
 msgstr "IBus-ის ღილაკების რუკის გამოყენება"
 
-#: setup/main.py:797
+#: setup/main.py:810
 msgid ""
 "Whether the use of an IBus keymap is forced while Typing Booster is active. "
 "For most users not using an IBus keymap is recommended. In that case, the "
@@ -843,18 +856,18 @@ msgstr ""
 #. like “(IN)”, “(JP)”, “(KR)”, “(US)” (untranslated)
 #. which indicates the particular variant if the IBus
 #. “English” keymap used.
-#: setup/main.py:821
+#: setup/main.py:834
 msgid "English"
 msgstr "ინგლისური"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
 #. “Unicode symbols and emoji predictions” is off.
-#: setup/main.py:843
+#: setup/main.py:856
 msgid "Emoji trigger characters:"
 msgstr "Emoji -ის ტრიგერის სიმბოლოები:"
 
-#: setup/main.py:845
+#: setup/main.py:858
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
@@ -875,11 +888,11 @@ msgstr ""
 #. prevent you from typing “.s” to get “ṡ”. You can also
 #. disable this feature completely by making the list empty
 #. (which is the default).
-#: setup/main.py:874
+#: setup/main.py:887
 msgid "Auto commit characters:"
 msgstr "სიმბოლოების ავტომატური გადაცემა:"
 
-#: setup/main.py:876
+#: setup/main.py:889
 msgid ""
 "The characters in this list cause the preedit to be committed automatically, "
 "followed by a space.  For example, if “.” is an auto commit character, this "
@@ -903,11 +916,11 @@ msgstr ""
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
-#: setup/main.py:906
+#: setup/main.py:919
 msgid "Minimum number of chars for completion:"
 msgstr "სიმბოლოების მინიმალური რაოდენობა დასასრულებლად:"
 
-#: setup/main.py:908
+#: setup/main.py:921
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
 msgstr ""
@@ -915,11 +928,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. sound is played on error
-#: setup/main.py:933
+#: setup/main.py:946
 msgid "Play sound file on error"
 msgstr "შეცდომისას ხმოვანი ფაილის დაკვრა"
 
-#: setup/main.py:935
+#: setup/main.py:948
 msgid "Here you can choose whether a sound file is played if an error occurs."
 msgstr ""
 "აქ შეგიძლიათ აირჩიოთ, მოხდება თუ არა ხმოვანი ფაილის დაკვრა შეცდომის "
@@ -928,11 +941,11 @@ msgstr ""
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
 #. debug information may also be shown graphically.
-#: setup/main.py:970
+#: setup/main.py:983
 msgid "Debug level:"
 msgstr "გამართვის დონე:"
 
-#: setup/main.py:972
+#: setup/main.py:985
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
@@ -943,21 +956,21 @@ msgstr ""
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
 #. reading that text file.
-#: setup/main.py:996
+#: setup/main.py:1009
 msgid "Learn from text file"
 msgstr "სწავლა ტექსტური ფაილიდან"
 
-#: setup/main.py:998
+#: setup/main.py:1011
 msgid "Learn your style by reading a text file"
 msgstr "სწავლობს თქვენს სტილს ტექსტური ფაილის წაკითხვით"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
-#: setup/main.py:1010
+#: setup/main.py:1023
 msgid "Delete learned data"
 msgstr "ნასწავლი მონაცემების წაშლა"
 
-#: setup/main.py:1012
+#: setup/main.py:1025
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
@@ -966,78 +979,78 @@ msgstr ""
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
 #. ibus-typing-booster.
-#: setup/main.py:1026
+#: setup/main.py:1039
 msgid "Use dictionaries for the following languages:"
 msgstr "გამოიყენეთ ლექსიკონები შემდეგი ენებისთვის:"
 
-#: setup/main.py:1055
+#: setup/main.py:1068
 msgid "Add a dictionary"
 msgstr "ლექსიკონის დამატება"
 
-#: setup/main.py:1066
+#: setup/main.py:1079
 msgid "Remove a dictionary"
 msgstr "ლექსიკონის წაშლა"
 
-#: setup/main.py:1077
+#: setup/main.py:1090
 msgid "Move dictionary up"
 msgstr "ლექსიკონის მაღლა ატანა"
 
-#: setup/main.py:1089
+#: setup/main.py:1102
 msgid "Move dictionary down"
 msgstr "ლექსიკონის დაბლა ჩამოტანა"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
-#: setup/main.py:1096
+#: setup/main.py:1109
 msgid "Install missing dictionaries"
 msgstr "ნაკლული ლექსიკონის დაყენება"
 
-#: setup/main.py:1098
+#: setup/main.py:1111
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
 "იმ ლექსიკონების დაყენება, რომლებიც აქ მორგებულია, მაგრამ დაყენებული არაა"
 
-#: setup/main.py:1105 setup/main.py:1250 setup/main.py:1492 setup/main.py:4975
+#: setup/main.py:1118 setup/main.py:1263 setup/main.py:1505 setup/main.py:4996
 msgid "Set to default"
 msgstr "ნაგულისხმები მნიშვნელობების დაყენება"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
-#: setup/main.py:1111
+#: setup/main.py:1124
 msgid "Set dictionaries to the default for the current locale."
 msgstr "მიმდინარე ენისთვის ნაგულისხმები ლექსიკონების დაყენება."
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
-#: setup/main.py:1152
+#: setup/main.py:1165
 msgid "Use the following input methods:"
 msgstr "გამოიყენეთ შემდეგი შეტანის მეთოდები:"
 
-#: setup/main.py:1181
+#: setup/main.py:1194
 msgid "Add an input method"
 msgstr "შეტანის მეთოდის დამატება"
 
-#: setup/main.py:1193
+#: setup/main.py:1206
 msgid "Remove an input method"
 msgstr "შეტანის მეთოდის წაშლა"
 
-#: setup/main.py:1205
+#: setup/main.py:1218
 msgid "Move input method up"
 msgstr "შეტანის მეთოდის მაღლა აწევა"
 
-#: setup/main.py:1217
+#: setup/main.py:1230
 msgid "Move input method down"
 msgstr "შეტანის მეთოდის დაბლა ჩამოწევა"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
-#: setup/main.py:1225
+#: setup/main.py:1238
 msgid "Input Method Help"
 msgstr "დახმარება შეტანის მეთოდის შესახებ"
 
-#: setup/main.py:1227
+#: setup/main.py:1240
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
 "ზემოთ არჩეული შეტანის მეთოდების გამოყენების შესახებ მოკლე ინფორმაციის "
@@ -1046,75 +1059,75 @@ msgstr ""
 #. Translators: Tooltip for a button to set some advanced
 #. options for the input method currently selected in the
 #. list of input methods.
-#: setup/main.py:1243
+#: setup/main.py:1256
 msgid "Options for the input method selected above."
 msgstr "ზემოთ მონიშნული შეტანის მეთოდების მორგება."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
-#: setup/main.py:1256
+#: setup/main.py:1269
 msgid "Set input methods to the default for the current locale."
 msgstr "მიმდინარე ენისთვის შეტანის მეთოდების ნაგულისხმებზე დაყენება."
 
-#: setup/main.py:1296
+#: setup/main.py:1309
 msgid "Enter shortcut here:"
 msgstr "შეიყვანეთ მალსახმობი:"
 
-#: setup/main.py:1318
+#: setup/main.py:1331
 msgid "Enter shortcut expansion here:"
 msgstr "შეიყვანეთ მალსახმობის გაფართოება:"
 
-#: setup/main.py:1348
+#: setup/main.py:1361
 msgid "Clear input"
 msgstr "შეტანის გასუფთავება"
 
-#: setup/main.py:1359
+#: setup/main.py:1372
 msgid "Delete shortcut"
 msgstr "მალსახმობის წაშლა"
 
-#: setup/main.py:1370
+#: setup/main.py:1383
 msgid "Add shortcut"
 msgstr "მალსახმობის დამატება"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
-#: setup/main.py:1404
+#: setup/main.py:1417
 msgid "Shortcut"
 msgstr "მალსახმობი"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
-#: setup/main.py:1412
+#: setup/main.py:1425
 msgid "Shortcut expansion"
 msgstr "მალსახმობის გაფართოება"
 
-#: setup/main.py:1426
+#: setup/main.py:1439
 msgid "Current key bindings:"
 msgstr "მიმდინარე ღილაკის ბმები:"
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
-#: setup/main.py:1450
+#: setup/main.py:1463
 msgid "Command"
 msgstr "ბრძანება"
 
-#: setup/main.py:1481
+#: setup/main.py:1494
 msgid "Edit"
 msgstr "ჩასწორება"
 
-#: setup/main.py:1485
+#: setup/main.py:1498
 msgid "Edit the key bindings for the selected command"
 msgstr "მონიშნული ბრძანების ღილაკის ბმების ჩასწორება"
 
-#: setup/main.py:1496 setup/main.py:4980
+#: setup/main.py:1509 setup/main.py:5001
 msgid "Set default key bindings for the selected command"
 msgstr "მონიშნული ბრძანებისთვის ნაგულისხმები ღილაკების მიბმის დაყენება"
 
-#: setup/main.py:1503
+#: setup/main.py:1516
 msgid "Set all to default"
 msgstr "ყველას ნაგულისხმებ მნიშვნელობებზე დაყენება"
 
-#: setup/main.py:1507
+#: setup/main.py:1520
 msgid "Set default key bindings for all commands"
 msgstr ""
 "ყველა ბრძანების ყველა ღილაკის მიბმის ნაგულისხმებ მნიშვნელობებზე დაყენება"
@@ -1122,11 +1135,11 @@ msgstr ""
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
 #. top of the list of candidates.
-#: setup/main.py:1529
+#: setup/main.py:1542
 msgid "Display total number of candidates"
 msgstr "კანდიდატების სრული სიის ჩვენება"
 
-#: setup/main.py:1531
+#: setup/main.py:1544
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
@@ -1140,11 +1153,11 @@ msgstr ""
 #. method is currently used for the preedit. The auxiliary
 #. text is an optional line of text displayed above the
 #. candidate list.
-#: setup/main.py:1545
+#: setup/main.py:1558
 msgid "Show status info in auxiliary text"
 msgstr "სტატუსის ინფორმაციის დამატებით ტექსტში ჩვენება"
 
-#: setup/main.py:1547
+#: setup/main.py:1560
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
@@ -1158,11 +1171,11 @@ msgstr ""
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
-#: setup/main.py:1569
+#: setup/main.py:1582
 msgid "Candidate window page size:"
 msgstr "კანდიდატის ფანჯრის გვერდის ზომა:"
 
-#: setup/main.py:1571
+#: setup/main.py:1584
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr ""
@@ -1170,33 +1183,33 @@ msgstr ""
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
-#: setup/main.py:1593
+#: setup/main.py:1606
 msgid "Candidate window orientation"
 msgstr "კანდიდატი ფანჯრის ორიენტაცია"
 
-#: setup/main.py:1595
+#: setup/main.py:1608
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
 msgstr "კანდიდატი ფანჯარა ვერტიკალურად იქნება დახატული თუ ჰორიზონტალურად."
 
-#: setup/main.py:1601
+#: setup/main.py:1614
 msgid "Horizontal"
 msgstr "ჰორიზონტალური"
 
-#: setup/main.py:1603
+#: setup/main.py:1616
 msgid "Vertical"
 msgstr "ვერტიკალური"
 
 #. Translators: Here one can choose how many milliseconds
 #. the system needs to be idle after pressing a key before
 #. candidates are displayed
-#: setup/main.py:1632
+#: setup/main.py:1645
 msgid "Candidate window delay in milliseconds:"
 msgstr "კანდიდატის ფანჯრის დაყოვნება მილიწამებში:"
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
-#: setup/main.py:1636
+#: setup/main.py:1649
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
 msgstr ""
@@ -1204,35 +1217,35 @@ msgstr ""
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
-#: setup/main.py:1663
+#: setup/main.py:1676
 msgid "Preedit underline"
 msgstr "წინასწარი ჩასწორების ხაზის გასმა"
 
-#: setup/main.py:1665
+#: setup/main.py:1678
 msgid "Which style of underlining to use for the preedit."
 msgstr "წინასწარი ჩასწორებისთვის გამოყენებული ხაზგასმის სტილი."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
-#: setup/main.py:1672
+#: setup/main.py:1685
 msgid "None"
 msgstr "არც-ერთი"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
-#: setup/main.py:1676
+#: setup/main.py:1689
 msgid "Single"
 msgstr "ერთი"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
-#: setup/main.py:1680
+#: setup/main.py:1693
 msgid "Double"
 msgstr "ორმაგი"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
-#: setup/main.py:1684
+#: setup/main.py:1697
 msgid "Low"
 msgstr "დაბალი"
 
@@ -1242,12 +1255,12 @@ msgstr "დაბალი"
 #. option to enable lookup only when a key is pressed or
 #. because one uses the option to require a minimum number
 #. of characters before a lookup is done.
-#: setup/main.py:1711
+#: setup/main.py:1724
 msgid "Use preedit style only if lookup is enabled"
 msgstr ""
 "გამოიყენეთ წინასწარი ჩასწორების სტილი, მხოლოდ მაშინ, როცა ძებნა ჩართულია"
 
-#: setup/main.py:1713
+#: setup/main.py:1726
 msgid ""
 "If this option is on, a preedit style like underlining will only be used if "
 "lookup is enabled. The lookup can be disabled because one uses the option to "
@@ -1265,11 +1278,11 @@ msgstr ""
 #. spellchecking is done on the contents of the preedit and
 #. a custom color is used to indicate when the preedit
 #. might contain a spelling error.
-#: setup/main.py:1733
+#: setup/main.py:1746
 msgid "Preedit spellchecking"
 msgstr "წინასწარი ჩასწორების მართლწერა"
 
-#: setup/main.py:1735
+#: setup/main.py:1748
 msgid ""
 "Here you can choose whether spellchecking is done on the contents of the "
 "preedit and a custom color is used to indicate when the preedit might "
@@ -1282,11 +1295,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
-#: setup/main.py:1761
+#: setup/main.py:1774
 msgid "Choose color for preedit spellchecking"
 msgstr "აირჩიეთ ფერი წინასწარ ჩასწორების მართლწერისთვის"
 
-#: setup/main.py:1763
+#: setup/main.py:1776
 msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
@@ -1298,11 +1311,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
-#: setup/main.py:1786
+#: setup/main.py:1799
 msgid "Use color for inline completion"
 msgstr "შიდა დასრულებისთვის ფერის გამოყენება"
 
-#: setup/main.py:1788
+#: setup/main.py:1801
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
@@ -1313,11 +1326,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
-#: setup/main.py:1812
+#: setup/main.py:1825
 msgid "Choose color for inline completion"
 msgstr "აირჩიეთ ფერი შიდა დასრულებისთვის"
 
-#: setup/main.py:1814
+#: setup/main.py:1827
 msgid ""
 "Here you can specify which color to use for inline completion. This setting "
 "only has an effect if the use of color for inline completion is enabled and "
@@ -1329,11 +1342,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
-#: setup/main.py:1837
+#: setup/main.py:1850
 msgid "Use color for compose preview"
 msgstr "გაგზავნის გადახედვისთვის ფერის გამოყენება"
 
-#: setup/main.py:1839
+#: setup/main.py:1852
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
@@ -1343,11 +1356,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
-#: setup/main.py:1863
+#: setup/main.py:1876
 msgid "Choose color for compose preview"
 msgstr "აირჩიეთ ფერი გაგზავნის გადახედვისთვის"
 
-#: setup/main.py:1865
+#: setup/main.py:1878
 msgid "Here you can specify which color to use for the compose preview."
 msgstr ""
 "აქ შეგიძლიათ მიუთითოთ, რომელი ფერის გამოყენება გნებავთ გასაგზავნის "
@@ -1356,11 +1369,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
-#: setup/main.py:1887
+#: setup/main.py:1900
 msgid "Use color for user database suggestions"
 msgstr "მომხმარებლის ბაზის მინიშნებებისთვის ფერის გამოყენება"
 
-#: setup/main.py:1889
+#: setup/main.py:1902
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
@@ -1371,11 +1384,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
-#: setup/main.py:1910
+#: setup/main.py:1923
 msgid "Choose color for user database suggestions"
 msgstr "აირჩიეთ ფერი მომხმარებლის ბაზის მინიშნებებისთვის"
 
-#: setup/main.py:1912
+#: setup/main.py:1925
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
@@ -1388,11 +1401,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
-#: setup/main.py:1933
+#: setup/main.py:1946
 msgid "Use color for spellchecking suggestions"
 msgstr "მართლწერის მინიშნებებისთვის ფერის გამოყენება"
 
-#: setup/main.py:1935
+#: setup/main.py:1948
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
@@ -1403,11 +1416,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
-#: setup/main.py:1956
+#: setup/main.py:1969
 msgid "Choose color for spellchecking suggestions"
 msgstr "აირჩიეთ ფერი მართლწერის მინიშნებებისთვის"
 
-#: setup/main.py:1958
+#: setup/main.py:1971
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
@@ -1420,11 +1433,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
-#: setup/main.py:1982
+#: setup/main.py:1995
 msgid "Use color for dictionary suggestions"
 msgstr "ლექსიკონის მინიშნებებისთვის ფერის გამოყენება"
 
-#: setup/main.py:1984
+#: setup/main.py:1997
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
@@ -1435,11 +1448,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
-#: setup/main.py:2005
+#: setup/main.py:2018
 msgid "Choose color for dictionary suggestions"
 msgstr "აირჩიეთ ფერი ლექსიკონის მინიშნებებისთვის"
 
-#: setup/main.py:2007
+#: setup/main.py:2020
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
@@ -1452,11 +1465,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
-#: setup/main.py:2031
+#: setup/main.py:2044
 msgid "Use label for user database suggestions"
 msgstr "მომხმარებლის ბაზის მინიშნებებისთვის ჭდის გამოყენება"
 
-#: setup/main.py:2033
+#: setup/main.py:2046
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
@@ -1467,11 +1480,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
-#: setup/main.py:2066
+#: setup/main.py:2079
 msgid "Use label for spellchecking suggestions"
 msgstr "მართლწერის მინიშნებებისთვის ჭდის გამოყენება"
 
-#: setup/main.py:2068
+#: setup/main.py:2081
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
@@ -1482,11 +1495,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
-#: setup/main.py:2101
+#: setup/main.py:2114
 msgid "Use label for dictionary suggestions"
 msgstr "ლექსიკონის მინიშნებებისთვის ჭდის გამოყენება"
 
-#: setup/main.py:2103
+#: setup/main.py:2116
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
@@ -1497,11 +1510,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
-#: setup/main.py:2136
+#: setup/main.py:2149
 msgid "Use flags for dictionary suggestions"
 msgstr "ლექსიკონის მინიშნებებისთვის ალმების გამოყენება"
 
-#: setup/main.py:2138
+#: setup/main.py:2151
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
@@ -1511,11 +1524,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
-#: setup/main.py:2153
+#: setup/main.py:2166
 msgid "Use a label to indicate busy state"
 msgstr "გამოიყენეთ ჭდე დაკავებული მდგომარეობის აღსანიშნავად"
 
-#: setup/main.py:2155
+#: setup/main.py:2168
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
@@ -1524,16 +1537,16 @@ msgstr ""
 "ibus-typing-booster დაკავებულია."
 
 #. Translators:
-#: setup/main.py:2186 setup/main.py:3305
+#: setup/main.py:2199 setup/main.py:3326
 msgid "Set “Google application credentials” .json file:"
 msgstr "\"Google-ის აპლიკაციაში შესვლის დეტალების\" .json ფაილის დაყენება:"
 
-#: setup/main.py:2188
+#: setup/main.py:2201
 msgid "Full path of the “Google application credentials” .json file."
 msgstr ""
 "სრული ბილიკი \"Google-ის აპლიკაციაში შესვლის დეტალების\" .json ფაილამდე."
 
-#: setup/main.py:2194
+#: setup/main.py:2207
 msgid "File not yet set."
 msgstr "ფაილი ჯერ დაყენებული არაა."
 
@@ -1541,7 +1554,7 @@ msgstr "ფაილი ჯერ დაყენებული არაა."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2253 setup/main.py:4491
+#: setup/main.py:2266 setup/main.py:4512
 msgid "Add an autosetting"
 msgstr "ავტოპარამეტრის დამატება"
 
@@ -1549,7 +1562,7 @@ msgstr "ავტოპარამეტრის დამატება"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2267
+#: setup/main.py:2280
 msgid "Remove an autosetting"
 msgstr "ავტოპარამეტრის წაშლა"
 
@@ -1561,7 +1574,7 @@ msgstr "ავტოპარამეტრის წაშლა"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2285
+#: setup/main.py:2298
 msgid "Move an autosetting up"
 msgstr "ავტოპარამეტრის მაღლა აწევა"
 
@@ -1573,21 +1586,21 @@ msgstr "ავტოპარამეტრის მაღლა აწევ�
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2303
+#: setup/main.py:2316
 msgid "Move an autosetting down"
 msgstr "ავტოპარამეტრის დაბლა ჩამოწევა"
 
-#: setup/main.py:2477
+#: setup/main.py:2492
 msgid "Spell checking"
 msgstr "მართლწერის შემოწმება"
 
-#: setup/main.py:2493
+#: setup/main.py:2508
 msgid "Emoji"
 msgstr "ემოჯი"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2671
+#: setup/main.py:2686
 msgid "Setting"
 msgstr "პარამეტრი"
 
@@ -1595,67 +1608,67 @@ msgstr "პარამეტრი"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2680 setup/main.py:4073
+#: setup/main.py:2695 setup/main.py:4094
 msgid "Value"
 msgstr "მნიშვნელობა"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2704
+#: setup/main.py:2719
 msgid "Regular expression"
 msgstr "რეგულარული გამოსახულება"
 
-#: setup/main.py:2750
+#: setup/main.py:2765
 msgid "Are you sure?"
 msgstr "დარწმუნებული ბრძანდებით?"
 
-#: setup/main.py:2752 setup/main.py:3308 setup/main.py:3395 setup/main.py:5046
+#: setup/main.py:2767 setup/main.py:3329 setup/main.py:3416 setup/main.py:5067
 msgid "_Cancel"
 msgstr "_გაუქმება"
 
-#: setup/main.py:2753 setup/main.py:3309 setup/main.py:3396 setup/main.py:5047
+#: setup/main.py:2768 setup/main.py:3330 setup/main.py:3417 setup/main.py:5068
 msgid "_OK"
 msgstr "_დიახ"
 
-#: setup/main.py:2785
+#: setup/main.py:2800
 msgid "Another instance of this app is already running."
 msgstr "ამ აპის სხვა ასლი უკვე გაშვებულია."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:2882
+#: setup/main.py:2897
 msgid "Do you really want to restore all default settings?"
 msgstr "მართლა გნებავთ ყველა პარამეტრის ნაგულისხმებ მნიშვნელობაზე დაყენება?"
 
-#: setup/main.py:3392
+#: setup/main.py:3413
 msgid "Select .wav sound file:"
 msgstr "აირჩიეთ .wav ხმოვანი ფაილი:"
 
-#: setup/main.py:3572
+#: setup/main.py:3593
 msgid "Add dictionary"
 msgstr "ლექსიკონის დამატება"
 
-#: setup/main.py:3888
+#: setup/main.py:3909
 msgid "Add input method"
 msgstr "შეტანის მეთოდის დამატება"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4064
+#: setup/main.py:4085
 msgid "Variable"
 msgstr "ცვლადი"
 
-#: setup/main.py:4928
+#: setup/main.py:4949
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "ღილაკების მიბმის შეცვლა ბრძანებისთვის \"%s\""
 
-#: setup/main.py:4956
+#: setup/main.py:4977
 msgid "Add a key binding"
 msgstr "ღილაკების მიბმის დამატება"
 
-#: setup/main.py:4968
+#: setup/main.py:4989
 msgid "Remove selected key binding"
 msgstr "მონიშნული ღილაკის მიბმის წაშლა"
 
@@ -1664,7 +1677,7 @@ msgstr "მონიშნული ღილაკის მიბმის წ
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5028
+#: setup/main.py:5049
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1672,16 +1685,16 @@ msgstr ""
 "მართლა გნებავთ ყველა ბრძანების ღილაკებზე მიბმის ნაგულისხმებ მნიშვნელობებზე "
 "დაყენება?"
 
-#: setup/main.py:5043
+#: setup/main.py:5064
 msgid "Open File ..."
 msgstr "ფაილის გახსნა..."
 
-#: setup/main.py:5062
+#: setup/main.py:5083
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "სწავლა წარმატებით დასრულდა ფაილიდან %(filename)s."
 
-#: setup/main.py:5071
+#: setup/main.py:5092
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "სწავლის შეცდომა ფაილიდან %(filename)s."
@@ -1696,7 +1709,7 @@ msgstr "სწავლის შეცდომა ფაილიდან %(f
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5094
+#: setup/main.py:5115
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1704,7 +1717,7 @@ msgstr ""
 "მართლა გნებავთ ყველა ენის მონაცემების, რომელიც ფაილების კითხვით ვისწავლე, "
 "წაშლა?"
 
-#: setup/main.py:6761
+#: setup/main.py:6806
 msgid "ibus is not running."
 msgstr "ibus გაშვებული არაა."
 
