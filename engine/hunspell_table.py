@@ -536,7 +536,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # Therefore, make sure the case change is done after the string
                 # is converted to NFC.
                 'function': lambda x: getattr(
-                    str, 'title')(unicodedata.normalize('NFC', x))},
+                    str, 'title')(itb_util.normalize_nfc_and_composition_exclusions(x))},
             'upper': {
                 'next': 'lower',
                 'previous': 'capitalize',
@@ -1113,8 +1113,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if preedit_ime in ['ko-romaja', 'ko-han2']:
             transliterated_string_up_to_cursor = unicodedata.normalize(
                 'NFKD', transliterated_string_up_to_cursor)
-        transliterated_string_up_to_cursor = unicodedata.normalize(
-            'NFC', transliterated_string_up_to_cursor)
+        transliterated_string_up_to_cursor =  (
+            itb_util.normalize_nfc_and_composition_exclusions(
+                transliterated_string_up_to_cursor))
         if (extra_msymbol and not self._typed_compose_sequence
             and transliterated_string_up_to_cursor.endswith(extra_msymbol)):
             transliterated_string_up_to_cursor = (
@@ -1135,7 +1136,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''append candidate to lookup_table'''
         if not phrase:
             return
-        phrase = unicodedata.normalize('NFC', phrase)
+        phrase = itb_util.normalize_nfc_and_composition_exclusions(phrase)
         dictionary_matches: List[str] = (
             self.database.hunspell_obj.spellcheck_match_list(phrase))
         # U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR make
@@ -1351,18 +1352,19 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # that case. Offering longer completions instead may give
         # the opportunity to save some key strokes.
         if phrase_candidates:
-            typed_string = unicodedata.normalize(
-                'NFC', self._transliterated_strings[
+            typed_string = itb_util.normalize_nfc_and_composition_exclusions(
+                self._transliterated_strings[
                     self.get_current_imes()[0]])
-            first_candidate = unicodedata.normalize(
-                'NFC', phrase_candidates[0][0])
+            first_candidate = itb_util.normalize_nfc_and_composition_exclusions(
+                phrase_candidates[0][0])
             if typed_string == first_candidate:
                 phrase_frequencies = {}
                 first_candidate_user_freq = phrase_candidates[0][1]
                 first_candidate_length = len(first_candidate)
                 for cand in phrase_candidates:
-                    candidate_normalized = unicodedata.normalize(
-                        'NFC', cand[0])
+                    candidate_normalized = (
+                        itb_util.normalize_nfc_and_composition_exclusions(
+                            cand[0]))
                     if (len(candidate_normalized) > first_candidate_length
                         and candidate_normalized.startswith(first_candidate)):
                         phrase_frequencies[cand[0]] = (
@@ -1532,7 +1534,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if index >= len(self._candidates):
             # the index given is out of range
             return ''
-        return unicodedata.normalize('NFC', self._candidates[index][0])
+        return itb_util.normalize_nfc_and_composition_exclusions(
+            self._candidates[index][0])
 
     def get_string_from_lookup_table_current_page(self, index: int) -> str:
         '''
@@ -2508,9 +2511,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._debug_level > 1:
             LOGGER.debug('entering function')
         # get_caret() should also use NFC!
-        _str = unicodedata.normalize(
-            'NFC', self._transliterated_strings[
-                self.get_current_imes()[0]])
+        _str = itb_util.normalize_nfc_and_composition_exclusions(
+            self._transliterated_strings[self.get_current_imes()[0]])
         _str = self._case_modes[self._current_case_mode]['function'](_str)
         if self._debug_level > 2:
             LOGGER.debug('_str=“%s”', _str)
@@ -2677,11 +2679,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # There is at least one candidate the lookup table cursor
         # points to the first candidate, the lookup table is enabled
         # and inline completion is on.
-        typed_string = unicodedata.normalize(
-            'NFC', self._transliterated_strings[
+        typed_string = itb_util.normalize_nfc_and_composition_exclusions(
+            self._transliterated_strings[
                 self.get_current_imes()[0]])
-        first_candidate = unicodedata.normalize(
-            'NFC', self._candidates[0][0])
+        first_candidate = itb_util.normalize_nfc_and_composition_exclusions(
+            self._candidates[0][0])
         if (not first_candidate.startswith(typed_string)
             or first_candidate == typed_string):
             # The first candidate is not a direct completion of the
@@ -2768,8 +2770,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 if self._candidates:
                     first_candidate = self._candidates[0][0]
                     user_freq = self._candidates[0][1]
-                typed_string = unicodedata.normalize(
-                    'NFC',
+                typed_string = itb_util.normalize_nfc_and_composition_exclusions(
                     self._transliterated_strings[self.get_current_imes()[0]])
                 spellcheck_single_dictionary = (
                     self.database.hunspell_obj.spellcheck_single_dictionary(
@@ -8687,7 +8688,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             time.sleep(self._ibus_event_sleep_seconds)
             if not candidate_was_selected:
                 # cursor needs to be corrected leftwards:
-                commit_string = unicodedata.normalize('NFC', commit_string)
+                commit_string = itb_util.normalize_nfc_and_composition_exclusions(
+                    commit_string)
                 for dummy_char in commit_string[caret_was:]:
                     self._forward_generated_key_event(IBus.KEY_Left)
             return False
@@ -8949,7 +8951,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             input_phrase = self._transliterated_strings[
                 self.get_current_imes()[0]]
         if not commit_phrase:
-            typed_string = unicodedata.normalize('NFC', input_phrase)
+            typed_string = itb_util.normalize_nfc_and_composition_exclusions(
+                input_phrase)
             first_candidate = ''
             if self._candidates:
                 first_candidate = self._candidates[0][0]
@@ -8965,7 +8968,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             else:
                 commit_phrase = first_candidate
         # commit_phrase should always be in NFC:
-        commit_phrase = unicodedata.normalize('NFC', commit_phrase)
+        commit_phrase = itb_util.normalize_nfc_and_composition_exclusions(
+            commit_phrase)
         stripped_input_phrase = itb_util.strip_token(input_phrase)
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
         if (self._off_the_record

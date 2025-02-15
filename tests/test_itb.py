@@ -3201,12 +3201,18 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(0x0100093C, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '\u093C')
         self.engine.do_process_key_event(0x01000915, 0, 0)
-        self.assertEqual(self.engine.mock_preedit_text,
-                         unicodedata.normalize('NFC', '\u0958'))
-        self.assertEqual(self.engine.mock_preedit_text,
-                         unicodedata.normalize('NFC', 'क़'))
-        self.assertEqual(self.engine.mock_preedit_text, '\u0915\u093C')
-        self.assertEqual(self.engine.mock_preedit_text, 'क़')
+        self.assertEqual(
+            self.engine.mock_preedit_text,
+            itb_util.normalize_nfc_and_composition_exclusions('\u0958'))
+        self.assertEqual(
+            self.engine.mock_preedit_text,
+            itb_util.normalize_nfc_and_composition_exclusions('क़'))
+        self.assertEqual(
+            self.engine.mock_preedit_text,
+            itb_util.normalize_nfc_and_composition_exclusions('\u0915\u093C'))
+        self.assertEqual(
+            self.engine.mock_preedit_text,
+            itb_util.normalize_nfc_and_composition_exclusions('क़'))
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         # On commit the text is not only converted to NFC but also
