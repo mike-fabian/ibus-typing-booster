@@ -111,7 +111,7 @@ class ItbM17nEmuTestCase(unittest.TestCase):
     orig_avoid_forward_key_event = False
     orig_keybindings: Dict[str, List[str]] = {}
     orig_use_ibus_keymap = False
-    orig_ibus_keykmap = 'in'
+    orig_ibus_keymap = 'in'
 
     def setUp(self) -> None:
         # Patch the IBus stuff with the mock classes:
