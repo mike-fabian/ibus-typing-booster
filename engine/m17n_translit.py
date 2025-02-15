@@ -967,14 +967,12 @@ class TransliterationParts(NamedTuple):
     candidate_show: int = 0
 
 class Transliterator:
-    # pylint: disable=line-too-long
     '''A class for transliterators using libm17n
 
     If initializing the transliterator fails, for example because a
     non-existing input method was given as the argument, a ValueError
     is raised.
     '''
-    # pylint: enable=line-too-long
     def __init__(self, ime: str) -> None:
         '''Initialize the input method to use for the transliteration
 
@@ -1011,6 +1009,7 @@ class Transliterator:
             self,
             msymbol_list: Iterable[str],
             ascii_digits: bool = False) -> TransliterationParts:
+        # pylint: disable=line-too-long
         '''Transliterate a list of Msymbol names
 
         :param msymbol_list: A list of strings which are interpreted
@@ -1424,6 +1423,7 @@ class Transliterator:
 
         For a test transliterating parts using 'ja-anthy' see 'tests/test_m17n_translit.py'.
         '''
+        # pylint: enable=line-too-long
         if not isinstance(msymbol_list, list):
             raise ValueError('Argument of transliterate() must be a list.')
         if self._dummy:

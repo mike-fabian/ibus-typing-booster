@@ -304,7 +304,8 @@ M17N_IME_SYMBOLS = [
     # See also:
     # https://bugzilla.redhat.com/show_bug.cgi?id=1678386
     # https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/1026
-    # (Input method indicator should not limit to 2 characters, at least 3 characters should be allowed)
+    # (Input method indicator should not limit to 2 characters,
+    # at least 3 characters should be allowed)
     #
     # These symbols are chosen almost like those in ibus-m17n, except where
     # it exceeds the one character limit.

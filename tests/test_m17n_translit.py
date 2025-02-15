@@ -652,6 +652,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         M17N_DB_VERSION >= (1, 8, 8),
         'Skipping because m17n-db is too old')
     def test_t_lsymbol_parts(self) -> None:
+        # pylint: disable=line-too-long
         trans = self.get_transliterator_or_skip('t-lsymbol')
         transliterated_parts = trans.transliterate_parts(list('/:)'))
         self.assertEqual(transliterated_parts.committed, '')
@@ -659,7 +660,9 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(transliterated_parts.preedit, '☺️')
         self.assertEqual(transliterated_parts.cursor_pos, 2)
         self.assertEqual(transliterated_parts.status, 'lsymbol')
-        self.assertEqual(transliterated_parts.candidates, ['☺️', '😃', '😅', '😆', '😉', '😇', '😂', '😏', '😛', '😜', '😝', '😋', '😉', '💏', '💋', '😍', '😘', '😚', '😽', '😻'])
+        self.assertEqual(
+            transliterated_parts.candidates,
+            ['☺️', '😃', '😅', '😆', '😉', '😇', '😂', '😏', '😛', '😜', '😝', '😋', '😉', '💏', '💋', '😍', '😘', '😚', '😽', '😻'])
         self.assertEqual(transliterated_parts.candidate_show, 1)
         transliterated_parts = trans.transliterate_parts(list('a'))
         self.assertEqual(transliterated_parts.committed, 'a')
@@ -691,7 +694,9 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(transliterated_parts.preedit, '😢')
         self.assertEqual(transliterated_parts.cursor_pos, 1)
         self.assertEqual(transliterated_parts.status, 'lsymbol')
-        self.assertEqual(transliterated_parts.candidates, ['😢', '😩', '😡', '😭', '😪', '🙈', '🙊', '🙉'])
+        self.assertEqual(
+            transliterated_parts.candidates,
+            ['😢', '😩', '😡', '😭', '😪', '🙈', '🙊', '🙉'])
         self.assertEqual(transliterated_parts.candidate_show, 1)
         transliterated_parts = trans.transliterate_parts(list('a/:(b'))
         self.assertEqual(transliterated_parts.committed, 'a😢b')
@@ -701,6 +706,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(transliterated_parts.status, 'lsymbol')
         self.assertEqual(transliterated_parts.candidates, [])
         self.assertEqual(transliterated_parts.candidate_show, 0)
+        # pylint: enable=line-too-long
 
     def test_ja_anthy_parts(self) -> None:
         trans = self.get_transliterator_or_skip('ja-anthy')
