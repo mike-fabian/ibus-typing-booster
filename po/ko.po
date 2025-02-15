@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-02-10 16:38+0100\n"
-"PO-Revision-Date: 2025-02-14 10:47+0000\n"
+"PO-Revision-Date: 2025-02-15 10:39+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ko/>\n"
@@ -242,48 +242,48 @@ msgstr "음성 인식용 지원 언어가 없습니다."
 #: engine/hunspell_table.py:6018
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
-msgstr ""
+msgstr "\"구글 응용프로그램 자격증명\" 파일 \"%s\"를 찾을 수 없습니다."
 
 #: engine/hunspell_table.py:6031
 msgid "Failed to init Google speech-to-text. See debug.log."
-msgstr ""
+msgstr "구글 텍스트 음성 변환을 초기화 하는 데 실패함. 결점 기록을 참고하세요."
 
 #: engine/hunspell_table.py:6139
 msgid "Google speech-to-text error. See debug.log."
-msgstr ""
+msgstr "구글 텍스트 음성 변환 오류. 결점 기록을 참고하세요."
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:959 engine/itb_emoji.py:960 engine/itb_emoji.py:961
 #: engine/itb_emoji.py:1164
 msgid "people"
-msgstr ""
+msgstr "사람과 신체"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:962 engine/itb_emoji.py:1160
 msgid "nature"
-msgstr ""
+msgstr "동물과 자연"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:963 engine/itb_emoji.py:1156
 msgid "food"
-msgstr ""
+msgstr "식품과 음료"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:964 engine/itb_emoji.py:1170
 msgid "travel"
-msgstr ""
+msgstr "여행과 장소"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:965 engine/itb_emoji.py:974 engine/itb_emoji.py:1152
 msgid "activity"
-msgstr ""
+msgstr "활동"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:966 engine/itb_emoji.py:1162
 msgid "objects"
-msgstr "대상"
+msgstr "물체"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:967 engine/itb_emoji.py:1168
