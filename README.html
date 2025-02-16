@@ -5,25 +5,192 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>IBus-typing-booster README</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
-  </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+  <style>
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+font-size: 12pt;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+svg {
+height: auto;
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+background-color: #1a1a1a;
+border: none;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
 </head>
 <body>
 <h1 id="ibus-typing-booster">Ibus-typing-booster</h1>
-<p>Get faster typing experience by intelligent context sensitive completion.</p>
+<p>Get faster typing experience by intelligent context sensitive
+completion.</p>
 <h2 id="backdrop--introduction">Backdrop &amp; Introduction</h2>
-<p><em>Ibus-typing-booster</em> is a completion input method to speed-up typing.</p>
-<p>The project was started in 2010 for <a href="https://en.wikipedia.org/wiki/Fedora_version_history#Fedora_15">Fedora 15</a>. The original purpose was to make typing of Indic languages easier and faster by providing completion and spell checking suggestions.</p>
-<p>Originally it was forked from <a href="https://github.com/acevery/ibus-table">ibus-table</a> whose developer was Yu Yuwei <a href="mailto:acevery@gmail.com">acevery@gmail.com</a>, with contributions from Caius(&quot;kaio&quot;) <a href="mailto:chanceme@kaio.net">chanceme@kaio.net</a>.</p>
-<p>Since then <em>ibus-typing-booster</em> has been improved to support many other languages as well (i.e. most languages except Chinese and Japanese are supported).</p>
-<p>Recently the capability to type different languages at the same time without having to switch between languages has been added.</p>
+<p><em>Ibus-typing-booster</em> is a completion input method to speed-up
+typing.</p>
+<p>The project was started in 2010 for <a href="https://en.wikipedia.org/wiki/Fedora_version_history#Fedora_15">Fedora
+15</a>. The original purpose was to make typing of Indic languages
+easier and faster by providing completion and spell checking
+suggestions.</p>
+<p>Originally it was forked from <a href="https://github.com/acevery/ibus-table">ibus-table</a> whose
+developer was Yu Yuwei <a href="mailto:acevery@gmail.com">acevery@gmail.com</a>, with
+contributions from Caius(&quot;kaio&quot;) <a href="mailto:chanceme@kaio.net">chanceme@kaio.net</a>.</p>
+<p>Since then <em>ibus-typing-booster</em> has been improved to support
+many other languages as well by supporting input methods from the <a href="https://savannah.nongnu.org/projects/m17n/">m17n project</a>.</p>
+<p>Since version <a href="https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.23">2.27.23</a>
+it finally supports <strong>all</strong> input methods from the <a href="https://savannah.nongnu.org/projects/m17n/">m17n project</a>,
+including those offering multiple candidates. This means that since
+Version <a href="https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.23">2.27.23</a>
+it also supports Chinese and Japanese.</p>
+<p><em>ibus-typing-booster</em> also has the capability to type several
+different languages at the same time without having to switch between
+languages.</p>
 <h2 id="developers">Developers</h2>
 <ul>
 <li>Mike Fabian <a href="mailto:mfabian@redhat.com">mfabian@redhat.com</a></li>
@@ -33,34 +200,56 @@
 <ul>
 <li>Context sensitive completions.</li>
 <li>Learns from user input.</li>
-<li>Can be trained by supplying files containing typical user input.</li>
-<li>If available, <a href="https://github.com/hunspell/hunspell">hunspell dictionaries</a> will also be used to provide not only completion but also spellchecking suggestions (But <em>ibus-typing-booster</em> can also work without <em>hunspell</em> by learning from user input alone).</li>
+<li>Can be trained by supplying files containing typical user
+input.</li>
+<li>If available, <a href="https://github.com/hunspell/hunspell">hunspell dictionaries</a>
+will also be used to provide not only completion but also spellchecking
+suggestions (But <em>ibus-typing-booster</em> can also work without
+<em>hunspell</em> by learning from user input alone).</li>
 <li>Can be used with almost any keyboard layout.</li>
-<li>Almost all input methods supplied by <a href="https://pkgs.org/download/libm17n.so.0">libm17n</a> are supported (including the <a href="https://fedoraproject.org/wiki/QA:Inscript2_Keymaps">inscript2</a> input methods).</li>
-<li>Several input methods and languages can be used at the same time without switching.</li>
-<li>Predicts <a href="https://en.wikipedia.org/wiki/Unicode">Unicode</a> symbols and emojis as well.</li>
+<li>Almost all input methods supplied by <a href="https://pkgs.org/download/libm17n.so.0">libm17n</a> are supported
+(including the <a href="https://fedoraproject.org/wiki/QA:Inscript2_Keymaps">inscript2</a>
+input methods).</li>
+<li>Several input methods and languages can be used at the same time
+without switching.</li>
+<li>Predicts <a href="https://en.wikipedia.org/wiki/Unicode">Unicode</a>
+symbols and emojis as well.</li>
 </ul>
 <h2 id="online-documentation">Online documentation</h2>
 <p>You can find online documentation here:</p>
 <ul>
-<li><a href="http://mike-fabian.github.io/ibus-typing-booster/"><em>ibus-typing-booster</em> home page on github</a></li>
-<li><a href="http://mike-fabian.github.io/ibus-typing-booster/documentation.html"><em>ibus-typing-booster</em> documentation page</a></li>
+<li><a href="http://mike-fabian.github.io/ibus-typing-booster/"><em>ibus-typing-booster</em>
+home page on github</a></li>
+<li><a href="http://mike-fabian.github.io/ibus-typing-booster/documentation.html"><em>ibus-typing-booster</em>
+documentation page</a></li>
 </ul>
-<h2 id="feature-requests--bug-reports">Feature Requests &amp; Bug reports</h2>
+<h2 id="feature-requests--bug-reports">Feature Requests &amp; Bug
+reports</h2>
 <ul>
-<li>You can report bugs here: <a href="https://github.com/mike-fabian/ibus-typing-booster/issues"><em>ibus-typing-booster</em> issue tracker on github</a></li>
-<li>Request for new features here: <a href="https://github.com/mike-fabian/ibus-typing-booster/pulls"><em>ibus-typing-booster</em> pull request on github</a></li>
+<li>You can report bugs here: <a href="https://github.com/mike-fabian/ibus-typing-booster/issues"><em>ibus-typing-booster</em>
+issue tracker on github</a></li>
+<li>Request for new features here: <a href="https://github.com/mike-fabian/ibus-typing-booster/pulls"><em>ibus-typing-booster</em>
+pull request on github</a></li>
 </ul>
 <h2 id="contributing-translations">Contributing translations</h2>
-<p>The best (&amp; the easiest) way to contribute translations is using this <a href="https://translate.fedoraproject.org/projects/ibus-typing-booster/">online translation platform</a>.</p>
+<p>The best (&amp; the easiest) way to contribute translations is using
+this <a href="https://translate.fedoraproject.org/projects/ibus-typing-booster/">online
+translation platform</a>.</p>
 <h2 id="development">Development</h2>
-<p>If you want to build from source or contribute to the development, see the <a href="http://mike-fabian.github.io/ibus-typing-booster/development.html">ibus-typing-booster development page</a>. There you&#39;d also find the requirements for building from source for most systems.</p>
-<h2 id="table-of-default-key-bindings">Table of default key bindings</h2>
+<p>If you want to build from source or contribute to the development,
+see the <a href="http://mike-fabian.github.io/ibus-typing-booster/development.html">ibus-typing-booster
+development page</a>. There you&#39;d also find the requirements for
+building from source for most systems.</p>
+<h2 id="table-of-default-key-bindings">Table of default key
+bindings</h2>
 <ul>
-<li><a href="http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings">Default key bindings</a></li>
-<li><a href="http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings">Default mouse bindings</a></li>
+<li><a href="http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings">Default
+key bindings</a></li>
+<li><a href="http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings">Default
+mouse bindings</a></li>
 </ul>
-<p><em>Note: A copy of these bindings is also shown below for convenience. Some of these key bindings can be customized in the setup tool.</em></p>
+<p><em>Note: These bindings are also shown below for convenience. Some
+of these key bindings can be customized in the setup tool.</em></p>
 <p>The following table explains the defaults:</p>
 <table>
 <thead>
@@ -72,71 +261,109 @@
 <tbody>
 <tr class="odd">
 <td><kbd>Space</kbd></td>
-<td>Commit the preëdit (or the selected candidate, if any) and send a <kbd>Space</kbd> to the application, i.e. commit the typed string followed by a space.</td>
+<td>Commit the preëdit (or the selected candidate, if any) and send a
+<kbd>Space</kbd> to the application, i.e. commit the typed string
+followed by a space.</td>
 </tr>
 <tr class="even">
 <td><kbd>Return</kbd> or <kbd>KP_Enter</kbd></td>
-<td>Commit the preëdit (or the selected candidate, if any) and send a <kbd>Return</kbd> or <kbd>KP_Enter</kbd> to the application.</td>
+<td>Commit the preëdit (or the selected candidate, if any) and send a
+<kbd>Return</kbd> or <kbd>KP_Enter</kbd> to the application.</td>
 </tr>
 <tr class="odd">
 <td><kbd>Tab</kbd></td>
-<td>Bound by default to the commands &quot;select_next_candidate&quot; and &quot;enable_lookup&quot;.<ul><li> If the option &quot;Enable suggestions by <kbd>Tab</kbd>&quot; <em>is not set</em> (☐) then <kbd>Tab</kbd> always just executes &quot;select_next_candidate&quot; which selects the next candidate from the candidate list.</li><li>If the option &quot;Enable suggestions by <kbd>Tab</kbd>&quot; <em>is set</em> (☑), then no candidate list is shown by default: </li><ul><li>If no candidate list is shown: &quot;enable_lookup&quot; is executed which requests to show the candidate list (nothing might be shown if no candidates can be found).</li><li>If a candidate list is already shown: &quot;select_next_candidate&quot; is executed which selects the next candidate in the list. After each commit and after each change of the contents of the preëdit, the candidate list will be hidden again until the &quot;enable_lookup&quot; requests it again.</li></ul></ul></td>
+<td>Bound by default to the commands &quot;select_next_candidate&quot; and
+&quot;enable_lookup&quot;.<ul><li> If the option &quot;Enable suggestions by
+<kbd>Tab</kbd>&quot; <em>is not set</em> (☐) then <kbd>Tab</kbd> always just
+executes &quot;select_next_candidate&quot; which selects the next candidate from
+the candidate list.</li><li>If the option &quot;Enable suggestions by
+<kbd>Tab</kbd>&quot; <em>is set</em> (☑), then no candidate list is shown by
+default: </li><ul><li>If no candidate list is shown: &quot;enable_lookup&quot; is
+executed which requests to show the candidate list (nothing might be
+shown if no candidates can be found).</li><li>If a candidate list is
+already shown: &quot;select_next_candidate&quot; is executed which selects the
+next candidate in the list. After each commit and after each change of
+the contents of the preëdit, the candidate list will be hidden again
+until the &quot;enable_lookup&quot; requests it again.</li></ul></ul></td>
 </tr>
 <tr class="even">
 <td><kbd>Shift</kbd>+<kbd>Tab</kbd></td>
-<td>Bound by default to the command &quot;select_previous_candidate&quot;. Selects the previous candidate in the candidate list.</td>
+<td>Bound by default to the command &quot;select_previous_candidate&quot;. Selects
+the previous candidate in the candidate list.</td>
 </tr>
 <tr class="odd">
 <td><kbd>Esc</kbd></td>
-<td>Bound by default to the command &quot;cancel&quot;.<ul><li>When a candidate is selected (no matter whether this is a normal lookup table or a &quot;related&quot; lookup table): Show the first page of that lookup table again with no candidate selected.</li><li>When no candidate is selected:</li><ul><li>When a lookup table with related candidates is shown or a lookup table where upper/lower-case has been changed by typing the Shift key is shown: go back to the original lookup table.</li><li>When a normal lookup table is shown: close it and clear the preëdit.</li></ul></ul></td>
+<td>Bound by default to the command &quot;cancel&quot;.<ul><li>When a candidate is
+selected (no matter whether this is a normal lookup table or a &quot;related&quot;
+lookup table): Show the first page of that lookup table again with no
+candidate selected.</li><li>When no candidate is
+selected:</li><ul><li>When a lookup table with related candidates is
+shown or a lookup table where upper/lower-case has been changed by
+typing the Shift key is shown: go back to the original lookup
+table.</li><li>When a normal lookup table is shown: close it and clear
+the preëdit.</li></ul></ul></td>
 </tr>
 <tr class="even">
 <td><kbd>←</kbd></td>
-<td>Move cursor one typed key left in the preëdit text. May trigger a commit if the left end of the preëdit is reached.</td>
+<td>Move cursor one typed key left in the preëdit text. May trigger a
+commit if the left end of the preëdit is reached.</td>
 </tr>
 <tr class="odd">
 <td><kbd>Control</kbd>+<kbd>←</kbd></td>
-<td>Move cursor to the left end of the preëdit text. If the cursor is already at the left end of the preëdit text, trigger a commit and send a <kbd>Control</kbd>+<kbd>←</kbd> to the application.</td>
+<td>Move cursor to the left end of the preëdit text. If the cursor is
+already at the left end of the preëdit text, trigger a commit and send a
+<kbd>Control</kbd>+<kbd>←</kbd> to the application.</td>
 </tr>
 <tr class="even">
 <td><kbd>→</kbd></td>
-<td>Move cursor one typed key right in preëdit text. May trigger a commit if the right end of the preëdit is reached.</td>
+<td>Move cursor one typed key right in preëdit text. May trigger a
+commit if the right end of the preëdit is reached.</td>
 </tr>
 <tr class="odd">
 <td><kbd>Ctrl</kbd>+<kbd>→</kbd></td>
-<td>Move cursor to the right end of the preëdit text. If the cursor is already at the right end of the preëdit text, trigger a commit and send a <kbd>Ctrl</kbd>+<kbd>→</kbd> to the application.</td>
+<td>Move cursor to the right end of the preëdit text. If the cursor is
+already at the right end of the preëdit text, trigger a commit and send
+a <kbd>Ctrl</kbd>+<kbd>→</kbd> to the application.</td>
 </tr>
 <tr class="even">
 <td><kbd>Backspace</kbd></td>
-<td>Remove the typed key to the left of the cursor in the preëdit text.</td>
+<td>Remove the typed key to the left of the cursor in the preëdit
+text.</td>
 </tr>
 <tr class="odd">
 <td><kbd>Ctrl</kbd>+<kbd>Backspace</kbd></td>
-<td>Remove everything to the left of the cursor in the preëdit text.</td>
+<td>Remove everything to the left of the cursor in the preëdit
+text.</td>
 </tr>
 <tr class="even">
 <td><kbd>Delete</kbd></td>
-<td>Remove the typed key to the right of the cursor in the preëdit text.</td>
+<td>Remove the typed key to the right of the cursor in the preëdit
+text.</td>
 </tr>
 <tr class="odd">
 <td><kbd>Ctrl</kbd>+<kbd>Delete</kbd></td>
-<td>Remove everything to the right of the cursor in the preëdit text.</td>
+<td>Remove everything to the right of the cursor in the preëdit
+text.</td>
 </tr>
 <tr class="even">
 <td><kbd>↓</kbd></td>
-<td>Bound by default to the command &quot;select_next_candidate&quot;. Selects the next candidate.</td>
+<td>Bound by default to the command &quot;select_next_candidate&quot;. Selects the
+next candidate.</td>
 </tr>
 <tr class="odd">
 <td><kbd>↑</kbd></td>
-<td>Bound by default to the command &quot;select_previous_candidate&quot;. Selects the previous candidate.</td>
+<td>Bound by default to the command &quot;select_previous_candidate&quot;. Selects
+the previous candidate.</td>
 </tr>
 <tr class="even">
 <td><kbd>Pg Up</kbd></td>
-<td>Bound by default to the command &quot;lookup_table_page_up&quot;. Shows the previous page of candidates.</td>
+<td>Bound by default to the command &quot;lookup_table_page_up&quot;. Shows the
+previous page of candidates.</td>
 </tr>
 <tr class="odd">
 <td><kbd>Pg Down</kbd></td>
-<td>Bound by default to the command &quot;lookup_table_page_down&quot;. Shows the next page of candidates.</td>
+<td>Bound by default to the command &quot;lookup_table_page_down&quot;. Shows the
+next page of candidates.</td>
 </tr>
 <tr class="even">
 <td><kbd>F1</kbd></td>
@@ -156,11 +383,15 @@
 </tr>
 <tr class="even">
 <td><kbd>Ctrl</kbd>+<kbd>F1</kbd></td>
-<td>Remove the candidate with the label &quot;1&quot; from the database of learned user input (If possible, if this candidate is not learned from user input, nothing happens).</td>
+<td>Remove the candidate with the label &quot;1&quot; from the database of learned
+user input (If possible, if this candidate is not learned from user
+input, nothing happens).</td>
 </tr>
 <tr class="odd">
 <td><kbd>Ctrl</kbd>+<kbd>F2</kbd></td>
-<td>Remove the candidate with the label &quot;2&quot; from the database of learned user input (If possible, if this candidate is not learned from user input, nothing happens).</td>
+<td>Remove the candidate with the label &quot;2&quot; from the database of learned
+user input (If possible, if this candidate is not learned from user
+input, nothing happens).</td>
 </tr>
 <tr class="even">
 <td>...</td>
@@ -168,23 +399,45 @@
 </tr>
 <tr class="odd">
 <td><kbd>Ctrl</kbd>+<kbd>F9</kbd></td>
-<td>Remove the candidate with the label &quot;3&quot; from the database of learned user input (If possible, if this candidate is not learned from user input, nothing happens).</td>
+<td>Remove the candidate with the label &quot;3&quot; from the database of learned
+user input (If possible, if this candidate is not learned from user
+input, nothing happens).</td>
 </tr>
 <tr class="even">
 <td><kbd>1</kbd>...<kbd>9</kbd></td>
-<td>Same as <kbd>F1</kbd>...<kbd>F9</kbd> if the option &quot;Use digits as select keys&quot; is enabled. Enabling that option makes selecting candidates a bit easier because the number keys <kbd>1</kbd>...<kbd>9</kbd> are closer to the fingers than <kbd>F1</kbd>...<kbd>F9</kbd> on most keyboards. On the other hand, it makes completing when typing numbers impossible and it makes typing strings which are combinations of letters and numbers like &quot;A4&quot; more difficult. If digits are used as select keys, numbers can only be typed when no candidate list is shown. In most cases this means that numbers can only be typed when nothing else has been typed yet and the preëdit is empty.</td>
+<td>Same as <kbd>F1</kbd>...<kbd>F9</kbd> if the option &quot;Use digits as
+select keys&quot; is enabled. Enabling that option makes selecting candidates
+a bit easier because the number keys <kbd>1</kbd>...<kbd>9</kbd> are
+closer to the fingers than <kbd>F1</kbd>...<kbd>F9</kbd> on most
+keyboards. On the other hand, it makes completing when typing numbers
+impossible and it makes typing strings which are combinations of letters
+and numbers like &quot;A4&quot; more difficult. If digits are used as select keys,
+numbers can only be typed when no candidate list is shown. In most cases
+this means that numbers can only be typed when nothing else has been
+typed yet and the preëdit is empty.</td>
 </tr>
 <tr class="odd">
 <td><kbd>Ctrl</kbd>+<kbd>1</kbd>...<kbd>Ctrl</kbd>+<kbd>9</kbd></td>
-<td>Same as <kbd>Ctrl</kbd>+<kbd>F1</kbd>...<kbd>Ctrl</kbd>+<kbd>F9</kbd> if the option “Use digits as select keys” is enabled.</td>
+<td>Same as
+<kbd>Ctrl</kbd>+<kbd>F1</kbd>...<kbd>Ctrl</kbd>+<kbd>F9</kbd> if the
+option “Use digits as select keys” is enabled.</td>
 </tr>
 <tr class="even">
 <td><kbd>Alt</kbd>+<kbd>F6</kbd></td>
-<td>Bound by default to the command &quot;toggle_emoji_prediction&quot;. Toggle the emoji and Unicode symbol prediction on/off. This has the same result as using the setup tool to change this.</td>
+<td>Bound by default to the command &quot;toggle_emoji_prediction&quot;. Toggle
+the emoji and Unicode symbol prediction on/off. This has the same result
+as using the setup tool to change this.</td>
 </tr>
 <tr class="odd">
 <td><kbd>Alt</kbd>+<kbd>F9</kbd></td>
-<td>Bound by default to the command &quot;toggle_off_the_record&quot;. Toggle the &quot;Off the record&quot; mode. This has the same result as using the setup tool to change this. While &quot;Off the record&quot; mode is on, learning from user input is disabled. If learned user input is available, predictions are usually much better than predictions using only dictionaries. Therefore, one should use this option sparingly. Only if one wants to avoid saving secret user input to disk it might make sense to use this option temporarily.</td>
+<td>Bound by default to the command &quot;toggle_off_the_record&quot;. Toggle the
+&quot;Off the record&quot; mode. This has the same result as using the setup tool
+to change this. While &quot;Off the record&quot; mode is on, learning from user
+input is disabled. If learned user input is available, predictions are
+usually much better than predictions using only dictionaries. Therefore,
+one should use this option sparingly. Only if one wants to avoid saving
+secret user input to disk it might make sense to use this option
+temporarily.</td>
 </tr>
 <tr class="even">
 <td><kbd>Alt</kbd>+<kbd>F10</kbd></td>
@@ -192,7 +445,8 @@
 </tr>
 <tr class="odd">
 <td><kbd>Alt</kbd>+<kbd>F12</kbd></td>
-<td>Bound by default to the command &quot;lookup_related&quot;. Shows related emoji and Unicode symbols or related words.</td>
+<td>Bound by default to the command &quot;lookup_related&quot;. Shows related
+emoji and Unicode symbols or related words.</td>
 </tr>
 <tr class="even">
 <td><kbd>Alt</kbd>+<kbd>Space</kbd></td>
@@ -200,7 +454,8 @@
 </tr>
 </tbody>
 </table>
-<p>When more than one input method at the same time is used, the following additional key bindings are available:</p>
+<p>When more than one input method at the same time is used, the
+following additional key bindings are available:</p>
 <table>
 <thead>
 <tr class="header">
@@ -211,16 +466,19 @@
 <tbody>
 <tr class="odd">
 <td><kbd>Ctrl</kbd>+<kbd>↓</kbd></td>
-<td>Bound by default to the command &quot;next_input_method&quot;. Switches the input method used for the preëdit to the next input method.</td>
+<td>Bound by default to the command &quot;next_input_method&quot;. Switches the
+input method used for the preëdit to the next input method.</td>
 </tr>
 <tr class="even">
 <td><kbd>Ctrl</kbd>+<kbd>↑</kbd></td>
-<td>Bound by default to the command &quot;previous_input_method&quot;. Switches the input method used for the preëdit to the previous method.</td>
+<td>Bound by default to the command &quot;previous_input_method&quot;. Switches
+the input method used for the preëdit to the previous method.</td>
 </tr>
 </tbody>
 </table>
 <h2 id="mouse-bindings">Mouse bindings</h2>
-<p><em>These mouse bindings are currently hard-coded and cannot yet be customized.</em></p>
+<p><em>These mouse bindings are currently hard-coded and cannot yet be
+customized.</em></p>
 <table>
 <thead>
 <tr class="header">
@@ -231,23 +489,37 @@
 <tbody>
 <tr class="odd">
 <td>Button 1 click on a candidate</td>
-<td>Commit the candidate clicked on followed by a space (Same as <kbd>F1</kbd>...<kbd>F9</kbd>).</td>
+<td>Commit the candidate clicked on followed by a space (Same as
+<kbd>F1</kbd>...<kbd>F9</kbd>).</td>
 </tr>
 <tr class="even">
 <td><kbd>Ctrl</kbd> + Button 1 click on a candidate</td>
-<td>Remove clicked candidate from database of learned user input (If possible, if this candidate is not learned from user input, nothing happens).</td>
+<td>Remove clicked candidate from database of learned user input (If
+possible, if this candidate is not learned from user input, nothing
+happens).</td>
 </tr>
 <tr class="odd">
 <td>Button 3 clicks on a candidate</td>
-<td>Show related emoji and Unicode symbols or related words (Same as <kbd>Alt</kbd>+<kbd>F12</kbd>).</td>
+<td>Show related emoji and Unicode symbols or related words (Same as
+<kbd>Alt</kbd>+<kbd>F12</kbd>).</td>
 </tr>
 <tr class="even">
-<td><kbd>Ctrl</kbd> + Button 3 clicks anywhere in the candidate list</td>
-<td>Toggle the emoji and Unicode symbol prediction on/off (Same as <kbd>Alt</kbd>+<kbd>F6</kbd>). This has the same result as using the setup tool to change this.</td>
+<td><kbd>Ctrl</kbd> + Button 3 clicks anywhere in the candidate
+list</td>
+<td>Toggle the emoji and Unicode symbol prediction on/off (Same as
+<kbd>Alt</kbd>+<kbd>F6</kbd>). This has the same result as using the
+setup tool to change this.</td>
 </tr>
 <tr class="odd">
 <td><kbd>Alt</kbd> + Button 3 clicks anywhere in the candidate list</td>
-<td>Toggle the “Off the record” mode (Same as <kbd>Alt</kbd>+<kbd>F9</kbd>).<br>This has the same result as using the setup tool to change this.<br>While &quot;Off the record&quot; mode is on, learning from user input is disabled. If learned user input is available, predictions are usually much better than those which predictions use only dictionaries. Therefore, one should use this option sparingly. Only if one wants to avoid saving secret user input to disk it might make sense to use this option temporarily.</td>
+<td>Toggle the “Off the record” mode (Same as
+<kbd>Alt</kbd>+<kbd>F9</kbd>).<br>This has the same result as using the
+setup tool to change this.<br>While &quot;Off the record&quot; mode is on,
+learning from user input is disabled. If learned user input is
+available, predictions are usually much better than those which
+predictions use only dictionaries. Therefore, one should use this option
+sparingly. Only if one wants to avoid saving secret user input to disk
+it might make sense to use this option temporarily.</td>
 </tr>
 </tbody>
 </table>

@@ -102,7 +102,7 @@ README: README.html
 	w3m -cols 78 -o display_borders=1 -o display_link_number=1 $< > $@
 
 README.html: README.md
-	pandoc -f gfm -t html --standalone --self-contained --metadata pagetitle="IBus-typing-booster README" $< > $@
+	pandoc -f gfm -t html --embed-resources --standalone --metadata pagetitle="IBus-typing-booster README" $< > $@
 
 rpm: dist @PACKAGE_NAME@.spec
 	rpmbuild -bb \

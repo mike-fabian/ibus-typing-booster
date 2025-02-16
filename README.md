@@ -8,9 +8,11 @@ The project was started in 2010 for [Fedora 15](https://en.wikipedia.org/wiki/Fe
 
 Originally it was forked from [ibus-table](https://github.com/acevery/ibus-table) whose developer was Yu Yuwei acevery@gmail.com, with contributions from Caius("kaio") chanceme@kaio.net.
 
-Since then _ibus-typing-booster_ has been improved to support many other languages as well (i.e. most languages except Chinese and Japanese are supported).
+Since then _ibus-typing-booster_ has been improved to support many other languages as well by supporting input methods from the [m17n project](https://savannah.nongnu.org/projects/m17n/).
 
-Recently the capability to type different languages at the same time without having to switch between languages has been added.
+Since version [2.27.23](https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.23) it finally supports **all** input methods from the [m17n project](https://savannah.nongnu.org/projects/m17n/), including those offering multiple candidates. This means that since Version [2.27.23](https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.23) it also supports Chinese and Japanese.
+
+_ibus-typing-booster_ also has the capability to type several different languages at the same time without having to switch between languages.
 
 ## Developers
 - Mike Fabian mfabian@redhat.com

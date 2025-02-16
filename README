@@ -15,64 +15,67 @@ acevery@gmail.com, with contributions from Caius("kaio") [4]chanceme@kaio.net
 .
 
 Since then ibus-typing-booster has been improved to support many other
-languages as well (i.e. most languages except Chinese and Japanese are
-supported).
+languages as well by supporting input methods from the [5]m17n project.
 
-Recently the capability to type different languages at the same time without
-having to switch between languages has been added.
+Since version [6]2.27.23 it finally supports all input methods from the [7]
+m17n project, including those offering multiple candidates. This means that
+since Version [8]2.27.23 it also supports Chinese and Japanese.
+
+ibus-typing-booster also has the capability to type several different
+languages at the same time without having to switch between languages.
 
 Developers
 
-  • Mike Fabian [5]mfabian@redhat.com
-  • Anish Patil: [6]anish.developer@gmail.com
+  • Mike Fabian [9]mfabian@redhat.com
+  • Anish Patil: [10]anish.developer@gmail.com
 
 Features
 
   • Context sensitive completions.
   • Learns from user input.
   • Can be trained by supplying files containing typical user input.
-  • If available, [7]hunspell dictionaries will also be used to provide not
+  • If available, [11]hunspell dictionaries will also be used to provide not
     only completion but also spellchecking suggestions (But
     ibus-typing-booster can also work without hunspell by learning from user
     input alone).
   • Can be used with almost any keyboard layout.
-  • Almost all input methods supplied by [8]libm17n are supported (including
-    the [9]inscript2 input methods).
+  • Almost all input methods supplied by [12]libm17n are supported (including
+    the [13]inscript2 input methods).
   • Several input methods and languages can be used at the same time without
     switching.
-  • Predicts [10]Unicode symbols and emojis as well.
+  • Predicts [14]Unicode symbols and emojis as well.
 
 Online documentation
 
 You can find online documentation here:
 
-  • [11]ibus-typing-booster home page on github
-  • [12]ibus-typing-booster documentation page
+  • [15]ibus-typing-booster home page on github
+  • [16]ibus-typing-booster documentation page
 
 Feature Requests & Bug reports
 
-  • You can report bugs here: [13]ibus-typing-booster issue tracker on github
-  • Request for new features here: [14]ibus-typing-booster pull request on
+  • You can report bugs here: [17]ibus-typing-booster issue tracker on github
+  • Request for new features here: [18]ibus-typing-booster pull request on
     github
 
 Contributing translations
 
-The best (& the easiest) way to contribute translations is using this [15]
+The best (& the easiest) way to contribute translations is using this [19]
 online translation platform.
 
 Development
 
-If you want to build from source or contribute to the development, see the 
-[16]ibus-typing-booster development page. There you'd also find the
+If you want to build from source or contribute to the development, see the
+[20]ibus-typing-booster development page. There you'd also find the
 requirements for building from source for most systems.
 
 Table of default key bindings
 
-  • [17]Default key bindings
-  • [18]Default mouse bindings
+  • [21]Default key bindings
+  • [22]Default mouse bindings
 
-Note: A copy of these bindings is also shown below for convenience. Some of
-these key bindings can be customized in the setup tool.
+Note: These bindings are also shown below for convenience. Some of these key
+bindings can be customized in the setup tool.
 
 The following table explains the defaults:
 
@@ -282,17 +285,21 @@ References:
 [2] https://github.com/acevery/ibus-table
 [3] mailto:acevery@gmail.com
 [4] mailto:chanceme@kaio.net
-[5] mailto:mfabian@redhat.com
-[6] mailto:anish.developer@gmail.com
-[7] https://github.com/hunspell/hunspell
-[8] https://pkgs.org/download/libm17n.so.0
-[9] https://fedoraproject.org/wiki/QA:Inscript2_Keymaps
-[10] https://en.wikipedia.org/wiki/Unicode
-[11] http://mike-fabian.github.io/ibus-typing-booster/
-[12] http://mike-fabian.github.io/ibus-typing-booster/documentation.html
-[13] https://github.com/mike-fabian/ibus-typing-booster/issues
-[14] https://github.com/mike-fabian/ibus-typing-booster/pulls
-[15] https://translate.fedoraproject.org/projects/ibus-typing-booster/
-[16] http://mike-fabian.github.io/ibus-typing-booster/development.html
-[17] http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings
-[18] http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings
+[5] https://savannah.nongnu.org/projects/m17n/
+[6] https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.23
+[7] https://savannah.nongnu.org/projects/m17n/
+[8] https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.23
+[9] mailto:mfabian@redhat.com
+[10] mailto:anish.developer@gmail.com
+[11] https://github.com/hunspell/hunspell
+[12] https://pkgs.org/download/libm17n.so.0
+[13] https://fedoraproject.org/wiki/QA:Inscript2_Keymaps
+[14] https://en.wikipedia.org/wiki/Unicode
+[15] http://mike-fabian.github.io/ibus-typing-booster/
+[16] http://mike-fabian.github.io/ibus-typing-booster/documentation.html
+[17] https://github.com/mike-fabian/ibus-typing-booster/issues
+[18] https://github.com/mike-fabian/ibus-typing-booster/pulls
+[19] https://translate.fedoraproject.org/projects/ibus-typing-booster/
+[20] http://mike-fabian.github.io/ibus-typing-booster/development.html
+[21] http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings
+[22] http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings
