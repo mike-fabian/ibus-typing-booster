@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-02-15 11:37+0100\n"
-"PO-Revision-Date: 2025-02-17 16:56+0000\n"
+"PO-Revision-Date: 2025-02-17 17:23+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: French <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/fr/>\n"
@@ -422,10 +422,8 @@ msgid "Online documentation:"
 msgstr "Documentation en ligne :"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:3
-#, fuzzy
-#| msgid "Typing Booster"
 msgid "Typing Booster Preferences"
-msgstr "L’accélérateur de saisie"
+msgstr "Préférences de l’accélérateur de saisie"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:4
 msgid "Set Typing Booster Options"
