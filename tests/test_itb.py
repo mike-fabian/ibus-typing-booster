@@ -42,6 +42,13 @@ from gi.repository import Gdk
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
+IMPORT_DISTRO_SUCCESSFUL = False
+try:
+    import distro
+    IMPORT_DISTRO_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_DISTRO_SUCCESSFUL = False
+
 # Get more verbose output in the test log:
 os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
 
@@ -3887,6 +3894,15 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, '昍𣊭曰')
 
+    @unittest.skipUnless(
+        IMPORT_DISTRO_SUCCESSFUL
+        and distro.id() == 'fedora'
+        and distro.version() >= '34',
+        'Skipping, initializing ja-anthy sometimes segfaults on Alpine Linux. '
+        'Although using ja-anthy on Alpine Linux seems to work fine, only adding '
+        'ja-anthy and removing it again several times seems to cause crashes on '
+        'Alpine Linux. I have no time to investigate that now and '
+        'I think it is good enough to test ja-anthy an Fedora at the moment.')
     def test_ja_anthy_aki_aki_aki_aki_simple(self) -> None:
         dummy_trans = self.get_transliterator_or_skip('ja-anthy')
         self.engine.set_current_imes(
@@ -3993,6 +4009,15 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, '秋秋空き秋\r')
 
+    @unittest.skipUnless(
+        IMPORT_DISTRO_SUCCESSFUL
+        and distro.id() == 'fedora'
+        and distro.version() >= '34',
+        'Skipping, initializing ja-anthy sometimes segfaults on Alpine Linux. '
+        'Although using ja-anthy on Alpine Linux seems to work fine, only adding '
+        'ja-anthy and removing it again several times seems to cause crashes on '
+        'Alpine Linux. I have no time to investigate that now and '
+        'I think it is good enough to test ja-anthy an Fedora at the moment.')
     def test_ja_anthy_wide_henkan_region(self) -> None:
         '''When typing すいみんぶそく and then space for henkan,
         in ibus-anthy, ibus-kkc, ibus-m17n with the henkan region is
