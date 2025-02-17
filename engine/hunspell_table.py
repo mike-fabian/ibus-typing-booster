@@ -3092,15 +3092,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 'upper',
                 'lower'):
             return False
-        if (self.is_empty()
-            or not self._candidates
-            or not self.get_lookup_table().get_number_of_candidates()):
+        if self.is_empty():
             return False
         if mode in ('next', 'previous'):
             self._current_case_mode = self._case_modes[
                 self._current_case_mode][mode]
         else:
             self._current_case_mode = mode
+        if (not self._candidates
+            or not self.get_lookup_table().get_number_of_candidates()):
+            return True
         new_candidates = []
         for cand in self._candidates_case_mode_orig:
             new_candidates.append(

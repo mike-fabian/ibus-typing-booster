@@ -2291,15 +2291,13 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
         self.engine.do_process_key_event(
             IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
-        # If there are no candidates, the case mode change is not
-        # done, i.e. we still have the unchanged text in the preedit:
-        # (I guess I should change this? Maybe the case mode change
-        # is useful even if it changes only the preedit? Anyway, just
-        # testing the current implementation for the moment)
-        self.assertEqual(self.engine.mock_preedit_text, 'in Germany')
+        # Even though there are no candidates now, the case mode
+        # change should still be done, see:
+        # https://github.com/mike-fabian/ibus-typing-booster/issues/640
+        self.assertEqual(self.engine.mock_preedit_text, 'In Germany')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
-        self.assertEqual(self.engine.mock_committed_text, 'in Germany ')
+        self.assertEqual(self.engine.mock_committed_text, 'In Germany ')
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_space, 0, IBus.ModifierType.MOD5_MASK)
@@ -2312,7 +2310,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'in Germany')
         # there should be a candidate now:
-        self.assertEqual(self.engine._candidates[0][0], 'in Germany')
+        self.assertEqual(self.engine._candidates[0][0], 'In Germany')
         # Shift_L goes to 'capitalize':
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
         self.engine.do_process_key_event(
@@ -2323,7 +2321,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine._candidates[0][0], 'In Germany')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
-        self.assertEqual(self.engine.mock_committed_text, 'in Germany In Germany ')
+        self.assertEqual(self.engine.mock_committed_text, 'In Germany In Germany ')
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_space, 0, IBus.ModifierType.MOD5_MASK)
@@ -2334,9 +2332,8 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
-        # there should be candidates now:
+        # there should be at least one candidate now:
         self.assertEqual(self.engine._candidates[0][0], 'In Germany')
-        self.assertEqual(self.engine._candidates[1][0], 'in Germany')
         # Shift_L goes to 'capitalize':
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
         self.engine.do_process_key_event(
@@ -2348,7 +2345,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, 'IN GERMANY')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
-        self.assertEqual(self.engine.mock_committed_text, 'in Germany In Germany IN GERMANY ')
+        self.assertEqual(self.engine.mock_committed_text, 'In Germany In Germany IN GERMANY ')
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_space, 0, IBus.ModifierType.MOD5_MASK)
@@ -2359,10 +2356,9 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
-        # there should be a candidate now:
+        # there should be two candidates now:
         self.assertEqual(self.engine._candidates[0][0], 'IN GERMANY')
         self.assertEqual(self.engine._candidates[1][0], 'In Germany')
-        self.assertEqual(self.engine._candidates[2][0], 'in Germany')
         # Shift_L goes to 'capitalize':
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
         self.engine.do_process_key_event(
@@ -2378,7 +2374,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, 'In Germany')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
-        self.assertEqual(self.engine.mock_committed_text, 'in Germany In Germany IN GERMANY In Germany ')
+        self.assertEqual(self.engine.mock_committed_text, 'In Germany In Germany IN GERMANY In Germany ')
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_space, 0, IBus.ModifierType.MOD5_MASK)
@@ -2389,7 +2385,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
-        # there should be a candidate now:
+        # there should be two candidates now:
         self.assertEqual(self.engine._candidates[0][0], 'In Germany')
         self.assertEqual(self.engine._candidates[1][0], 'IN GERMANY')
         # Shift_R goes to 'previous' from 'orig', i.e. to 'lower':
@@ -2399,7 +2395,33 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, 'in germany')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
-        self.assertEqual(self.engine.mock_committed_text, 'in Germany In Germany IN GERMANY In Germany in germany ')
+        self.assertEqual(self.engine.mock_committed_text, 'In Germany In Germany IN GERMANY In Germany in germany ')
+
+    def test_toggle_case_without_candidates(self) -> None:
+        '''
+        For https://github.com/mike-fabian/ibus-typing-booster/issues/640
+        '''
+        self.engine.set_current_imes(
+            ['NoIME', 't-latn-post'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['None'], update_gsettings=False)
+        self.assertEqual(self.engine.get_dictionary_names(), ['None'])
+        self.engine.set_tab_enable(True, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'test')
+        # There is no dictionary **and** tab_enable is set to
+        # True. One of these settings should already be enough to
+        # produce no candidates here, both are set then certainly
+        # there should be no candidates now:
+        self.assertTrue(len(self.engine._candidates) == 0)
+        # Shift_L goes to 'capitalize':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'Test')
 
     def test_sinhala_wijesekara(self) -> None:
         dummy_trans = self.get_transliterator_or_skip('si-wijesekara')
