@@ -1207,17 +1207,18 @@ following setup options:
     * Remove all input methods except the one you want to use
     * Remove all dictionaries
 * Options tab:
-    * Check the option “Enable suggestions by key”
+    * Uncheck the option “☐ Word predictions”
+    * Uncheck the option “☐ Unicode symbols and emoji predictions”
+    * Make the entry for “Emoji trigger characters” empty
     * Check the option “Off the record mode”
 * Key bindings tab:
-    * Remove all keys bound to the command “enable_lookup”
     * Bind the command “commit_and_forward_key” to the key “Left”
 * Appearance tab:
     * Set “Preedit underline” to “None”
 
-With these settings, no candidate lists will appear, as all key
-bindings for the “enable_lookup” command have been removed. This
-behavior matches ibus-m17n, where candidate lists are never shown.
+With these settings, no candidate lists will appear because neither
+words can be predicted nor emoji. This behavior matches ibus-m17n,
+where candidate lists are never shown.
 
 Additionally, binding the “commit_and_forward_key” command to the
 “Left” key ensures that the behavior is consistent with ibus-m17n,
@@ -1233,12 +1234,31 @@ Since dictionaries are also irrelevant without candidate lists, they
 can be removed entirely or left as-is—it makes no difference.
 
 By default, Typing Booster retains text in the preedit until a word is
-completed to predict completions. However, with the restricted
-settings outlined above, predictions are disabled, so Typing Booster
-commits text as soon as possible, just like ibus-m17n.
+completed to predict completions. However, if the following conditions
+are true:
 
-To simplify this setup process, Typing Booster offers preconfigured
-engines that emulate ibus-m17n out of the box. For example:
+* Only one input method
+* No word predictions (“☐ Word predictions”)
+* No emoji predictions (“☐ Unicode symbols and emoji predictions”)
+* The input does not start with an emoji trigger character 
+
+then Typing Booster commits text as soon as possible, just like
+ibus-m17n.
+
+The emoji trigger characters do not have to be completely empty if one
+prefers early commits like ibus-m17n does.  It is possible to choose
+one or more characters which rarely appear in normal typing as emoji
+trigger characters. In that case, early commits can still happen
+except for words which start with an emoji trigger character, these
+words are kept in preedit then for the emoji search. For example if
+`_` is used as an emoji trigger character, then the input
+`_face_disappointed` will be kept in preedit and emojis will be
+searched which match the 2 search words `face` and `disappointed`.
+
+
+To simplify this setup process to emulate ibus-m17n, Typing Booster
+offers preconfigured engines that emulate ibus-m17n out of the
+box. For example:
 
 ```
 $ ibus list-engine  | grep latn-post 
@@ -1273,24 +1293,6 @@ option to [force the use of an English IBus keymap](#2_2_8) in the
 ibus-typing booster engine mimicking that ibus-m17n engine.
 
 ⚠️ **Current limitations**: 
-
-- **Input Method Compatibility**: While ibus-m17n supports all input
-  methods from m17n-lib and m17n-db, Typing Booster supports nearly
-  all, except those offering multiple candidates. The exceptions
-  are:
-
-  `ja-anthy`, `t-lsymbol`, `ml-swanalekha`, `vi-han`,
-  `vi-nomtelex`, `vi-nomvni`, `vi-tcvn`, `vi-telex`, `vi-viqr`,
-  `vi-vni`, `zh-cangjie`, `zh-pinyin-vi`, `zh-pinyin`, `zh-py`,
-  `zh-py-b5`, `zh-py-gb`, `zh-quick`, `zh-tonepy`,
-  `zh-tonepy-gb`, `zh-tonepy-b5`
-
-  These methods partially work but are not well supported. Typing
-  Booster does not currently offer restricted engines to emulate
-  ibus-m17n for these input methods.
-
-  See [this issue](https://github.com/mike-fabian/ibus-typing-booster/issues/523)
-  for updates.
 
 - **Preedit Colours**: Unlike ibus-m17n, Typing Booster does not
     support configuring preedit text foreground and background
