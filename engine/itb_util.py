@@ -5923,8 +5923,8 @@ class ItbKeyInputDialog(Gtk.MessageDialog): # type: ignore
             # key combination to be used as a key binding for a
             # command.
             _('The dialog will be closed when the key is released'))
-        self.connect('key_press_event', self.on_key_press_event)
-        self.connect('key_release_event', self.on_key_release_event)
+        self.connect('key_press_event', self.__class__.on_key_press_event)
+        self.connect('key_release_event', self.__class__.on_key_release_event)
         if parent:
             self.set_transient_for(parent.get_toplevel())
         self.show()

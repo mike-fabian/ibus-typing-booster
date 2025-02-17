@@ -898,13 +898,13 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 self.on_flowbox_event_box_long_press_pressed, event_box)
             id_begin = long_press_gesture.connect(
                 'begin',
-                self.on_flowbox_event_box_long_press_begin)
+                self.__class__.on_flowbox_event_box_long_press_begin)
             id_cancel = long_press_gesture.connect(
                 'cancel',
-                self.on_flowbox_event_box_long_press_cancel)
+                self.__class__.on_flowbox_event_box_long_press_cancel)
             id_cancelled = long_press_gesture.connect(
                 'cancelled',
-                self.on_flowbox_event_box_long_press_cancelled)
+                self.__class__.on_flowbox_event_box_long_press_cancelled)
             self._long_press_gestures.append(
                 (long_press_gesture,
                  (id_pressed,
@@ -1155,7 +1155,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         '''
         self._save_recently_used_emoji()
         if _ARGS.debug:
-            self._print_profiling_information()
+            self.__class__._print_profiling_information()
         Gtk.main_quit()
 
     def on_destroy_event(self, *_args: Any) -> None:
@@ -1324,13 +1324,13 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 self.on_flowbox_event_box_long_press_pressed, event_box)
             id_begin = long_press_gesture.connect(
                 'begin',
-                self.on_flowbox_event_box_long_press_begin)
+                self.__class__.on_flowbox_event_box_long_press_begin)
             id_cancel = long_press_gesture.connect(
                 'cancel',
-                self.on_flowbox_event_box_long_press_cancel)
+                self.__class__.on_flowbox_event_box_long_press_cancel)
             id_cancelled = long_press_gesture.connect(
                 'cancelled',
-                self.on_flowbox_event_box_long_press_cancelled)
+                self.__class__.on_flowbox_event_box_long_press_cancelled)
             self._long_press_gestures.append(
                 (long_press_gesture,
                  (id_pressed,

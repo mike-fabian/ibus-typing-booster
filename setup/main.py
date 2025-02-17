@@ -206,8 +206,8 @@ class SetupUI(Gtk.Window): # type: ignore
             self._allowed_autosettings[key] = {
                 'value_type': value_type, 'value_hint': value_hint}
 
-        self.connect('destroy-event', self._on_destroy_event)
-        self.connect('delete-event', self._on_delete_event)
+        self.connect('destroy-event', self.__class__._on_destroy_event)
+        self.connect('delete-event', self.__class__._on_delete_event)
 
         self._main_container = Gtk.Box()
         self._main_container.set_orientation(Gtk.Orientation.VERTICAL)
@@ -228,7 +228,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dialog_action_area.set_vexpand(False)
         self._main_container.add(self._dialog_action_area)
         self._about_button = Gtk.Button(label=_('About'))
-        self._about_button.connect('clicked', self._on_about_button_clicked)
+        self._about_button.connect('clicked', self.__class__._on_about_button_clicked)
         self._dialog_action_area.add(self._about_button)
         empty_hexpanding_label = Gtk.Label()
         empty_hexpanding_label.set_hexpand(True)
@@ -249,7 +249,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._close_button_label = Gtk.Label()
         self._close_button_label.set_text_with_mnemonic(_('_Close'))
         self._close_button.add(self._close_button_label)
-        self._close_button.connect('clicked', self._on_close_clicked)
+        self._close_button.connect('clicked', self.__class__._on_close_clicked)
         self._dialog_action_area.add(self._close_button)
 
         grid_border_width = 10
@@ -2419,8 +2419,8 @@ class SetupUI(Gtk.Window): # type: ignore
             'inputmethod': self.set_current_imes,
             'dictionary': self.set_dictionary_names,
             'keybindings': self.set_keybindings,
-            'dictionaryinstalltimestamp': self._reload_dictionaries,
-            'inputmethodchangetimestamp': self._reload_input_methods,
+            'dictionaryinstalltimestamp': self.__class__._reload_dictionaries,
+            'inputmethodchangetimestamp': self.__class__._reload_input_methods,
             'autosettings': self.set_autosettings,
         }
 
@@ -2616,7 +2616,7 @@ class SetupUI(Gtk.Window): # type: ignore
         for ime in self._current_imes:
             label = Gtk.Label()
             label.set_text(html.escape(
-                self._fill_input_methods_listbox_row(ime)))
+                self.__class__._fill_input_methods_listbox_row(ime)))
             label.set_use_markup(True)
             label.set_xalign(0)
             margin = 1
@@ -2796,7 +2796,7 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         if (dbus.SessionBus().request_name("org.ibus.typingbooster")
                 != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER):
-            self.__run_message_dialog(
+            self.__class__.__run_message_dialog(
                 _("Another instance of this app is already running."),
                 Gtk.MessageType.ERROR)
             sys.exit(1)
@@ -3566,7 +3566,7 @@ class SetupUI(Gtk.Window): # type: ignore
             # Probably it is better not to make this message translatable
             # in order not to create extra work for the translators to
             # translate a message which should never be displayed anyway.
-            self.__run_message_dialog(
+            self.__class__.__run_message_dialog(
                 'The maximum number of dictionaries '
                 f'is {itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES}.',
                 message_type=Gtk.MessageType.ERROR)
@@ -3831,7 +3831,7 @@ class SetupUI(Gtk.Window): # type: ignore
             if ime in self._current_imes:
                 continue
             filter_words = itb_util.remove_accents(filter_text.lower()).split()
-            row = self._fill_input_methods_listbox_row(ime)
+            row = self.__class__._fill_input_methods_listbox_row(ime)
             text_to_match = row.replace(' ', '').lower()
             ime_language = ime.split('-')[0]
             text_to_match += ' ' + itb_util.locale_text_to_match(ime_language)
@@ -3882,7 +3882,7 @@ class SetupUI(Gtk.Window): # type: ignore
             # Probably it is better not to make this message translatable
             # in order not to create extra work for the translators to
             # translate a message which should never be displayed anyway.
-            self.__run_message_dialog(
+            self.__class__.__run_message_dialog(
                 'The maximum number of input methods '
                 f'is {itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS}.',
                 message_type=Gtk.MessageType.ERROR)
@@ -4054,7 +4054,8 @@ class SetupUI(Gtk.Window): # type: ignore
         hbox.set_orientation(Gtk.Orientation.HORIZONTAL)
         hbox.set_spacing(10)
         label = Gtk.Label()
-        label.set_text(html.escape(self._fill_input_methods_listbox_row(ime)))
+        label.set_text(html.escape(
+            self.__class__._fill_input_methods_listbox_row(ime)))
         margin = 1
         label.set_margin_start(margin)
         label.set_margin_end(margin)
