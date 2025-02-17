@@ -54,6 +54,8 @@ from mock_engine import MockProperty
 from mock_engine import MockPropList
 # pylint: enable=import-error
 
+import testutils # pylint: disable=import-error
+
 # pylint: disable=wrong-import-order
 sys.path.insert(0, "../engine")
 # pylint: disable=import-error
@@ -347,6 +349,13 @@ class ItbM17nEmuTestCase(unittest.TestCase):
         self.init_engine()
         self.assertEqual(False, True)
 
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        'Skipping because no en_US hunspell dictionary could be found.')
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_typing_booster_normal(self) -> None:
         self.init_engine(engine_name='typing-booster')
         if self.engine is None:

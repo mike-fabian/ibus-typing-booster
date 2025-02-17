@@ -1277,6 +1277,9 @@ class ItbTestCase(unittest.TestCase):
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('de_DE')[0],
+        'Skipping because no de_DE hunspell dictionary could be found.')
     def test_accent_insensitive_matching_german_database(self) -> None:
         self.engine.set_current_imes(
             ['t-latn-post', 'NoIME'], update_gsettings=False)
@@ -1366,6 +1369,9 @@ class ItbTestCase(unittest.TestCase):
             self.engine.mock_committed_text,
             'Glühwürmchen Glühwürmchen Glühwürmchen ')
 
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
+        'Skipping because no fr_FR hunspell dictionary could be found.')
     def test_accent_insensitive_matching_french_dictionary(self) -> None:
         self.engine.set_current_imes(
             ['NoIME', 't-latn-post'], update_gsettings=False)
@@ -1477,6 +1483,9 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'Barcelona ')
         self.assertEqual(self.engine.mock_preedit_text, '')
 
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        'Skipping because no en_US hunspell dictionary could be found.')
     def test_auto_capitalize(self) -> None:
         '''Test auto capitalization after punctuation
         '''
@@ -1645,7 +1654,9 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'A4 wint1 Autumn ')
         self.assertEqual(self.engine.mock_preedit_text, '')
 
-
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        'Skipping because no en_US hunspell dictionary could be found.')
     def test_add_space_on_commit(self) -> None:
         '''Test new option to avoid adding spaces when committing by label
         (1-9 or F1-F9 key) or by mouse click.  See:
@@ -2181,6 +2192,9 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'cerulean cerulean')
 
     @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        'Skipping because no en_US hunspell dictionary could be found.')
+    @unittest.skipUnless(
         testutils.get_hunspell_dictionary_length('en_US') >= 10000,
         'Skipping because en_US dictionary is suspiciously small, '
         'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
@@ -2214,6 +2228,9 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Cerulean ')
 
+    @unittest.skipUnless(
+        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        'Skipping because no en_US hunspell dictionary could be found.')
     def test_toggle_case_then_return(self) -> None:
         '''
         For https://github.com/mike-fabian/ibus-typing-booster/issues/558
