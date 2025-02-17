@@ -5716,8 +5716,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 'useibuskeymap',
                 GLib.Variant.new_boolean(mode))
 
-    @classmethod
-    def _new_ibus_keymap(cls, keymap: str = 'in') -> Optional[IBus.Keymap]:
+    @staticmethod
+    def _new_ibus_keymap(keymap: str = 'in') -> Optional[IBus.Keymap]:
         '''Construct a new IBus.Keymap object and store it in
         self._ibus_keymap_object
         '''
@@ -5725,11 +5725,20 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.warning(
                 'keymap %s not in itb_util.AVAILABLE_IBUS_KEYMAPS=%s',
                 keymap, repr(itb_util.AVAILABLE_IBUS_KEYMAPS))
+        # Try the standard constructor (works on Fedora, fails on Alpine)
         try:
             return IBus.Keymap(keymap)
-        except TypeError as error:
+        except (TypeError, AttributeError) as error:
+            LOGGER.warning(
+                'IBus.Keymap("%s") failed: %s: %s. '
+                'Falling back to IBus.Keymap.new("%s").',
+                keymap, error.__class__.__name__, error, keymap)
+        # Always deprecated, but necessary for Alpine Linux
+        try:
+            return IBus.Keymap.new(keymap)
+        except (TypeError, AttributeError) as error:
             LOGGER.exception(
-                'Exception in IBus.Keymap("%s"): %s: %s',
+                'Exception in IBus.Keymap.new("%s"): %s: %s',
                 keymap, error.__class__.__name__, error)
             LOGGER.error('Returning None')
             return None
@@ -5753,7 +5762,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if keymap == self._ibus_keymap:
             return
         self._ibus_keymap = keymap
-        self._ibus_keymap_object = self._new_ibus_keymap(keymap)
+        self._ibus_keymap_object = self.__class__._new_ibus_keymap(keymap)
         if update_gsettings:
             self._gsettings.set_value(
                 'ibuskeymap',
