@@ -533,9 +533,9 @@ underline anyway, no matter how the options in the engines are set).</p><p>ibus-
 configuring its settings to disable all advanced features, restricting
 it to the simpler behavior of ibus-m17n.</p><p>Using ibus-typing-booster to simulate ibus-m17n has advantages,
 including more active maintenance and likely fewer bugs.</p><p>To emulate ibus-m17n with ibus-typing-booster, one could use the
-following setup options:</p><ul><li>Dictionaries and input methods tab:<ul><li>Remove all input methods except the one you want to use</li><li>Remove all dictionaries</li></ul></li><li>Options tab:<ul><li>Check the option “Enable suggestions by key”</li><li>Check the option “Off the record mode”</li></ul></li><li>Key bindings tab:<ul><li>Remove all keys bound to the command “enable_lookup”</li><li>Bind the command “commit_and_forward_key” to the key “Left”</li></ul></li><li>Appearance tab:<ul><li>Set “Preedit underline” to “None”</li></ul></li></ul><p>With these settings, no candidate lists will appear, as all key
-bindings for the “enable_lookup” command have been removed. This
-behavior matches ibus-m17n, where candidate lists are never shown.</p><p>Additionally, binding the “commit_and_forward_key” command to the
+following setup options:</p><ul><li>Dictionaries and input methods tab:<ul><li>Remove all input methods except the one you want to use</li><li>Remove all dictionaries</li></ul></li><li>Options tab:<ul><li>Uncheck the option “☐ Word predictions”</li><li>Uncheck the option “☐ Unicode symbols and emoji predictions”</li><li>Make the entry for “Emoji trigger characters” empty</li><li>Check the option “Off the record mode”</li></ul></li><li>Key bindings tab:<ul><li>Bind the command “commit_and_forward_key” to the key “Left”</li></ul></li><li>Appearance tab:<ul><li>Set “Preedit underline” to “None”</li></ul></li></ul><p>With these settings, no candidate lists will appear because neither
+words can be predicted nor emoji. This behavior matches ibus-m17n,
+where candidate lists are never shown.</p><p>Additionally, binding the “commit_and_forward_key” command to the
 “Left” key ensures that the behavior is consistent with ibus-m17n,
 where pressing &ldquo;Left&rdquo; does not move the cursor but commits the preedit
 text.</p><p>Enabling “Off the record mode” prevents user input from being
@@ -543,10 +543,19 @@ recorded. This is useful because recording input is typically meant to
 improve suggestions based on prior input—something unnecessary when
 suggestions are disabled.</p><p>Since dictionaries are also irrelevant without candidate lists, they
 can be removed entirely or left as-is—it makes no difference.</p><p>By default, Typing Booster retains text in the preedit until a word is
-completed to predict completions. However, with the restricted
-settings outlined above, predictions are disabled, so Typing Booster
-commits text as soon as possible, just like ibus-m17n.</p><p>To simplify this setup process, Typing Booster offers preconfigured
-engines that emulate ibus-m17n out of the box. For example:</p><pre><code>$ ibus list-engine  | grep latn-post 
+completed to predict completions. However, if the following conditions
+are true:</p><ul><li>Only one input method</li><li>No word predictions (“☐ Word predictions”)</li><li>No emoji predictions (“☐ Unicode symbols and emoji predictions”)</li><li>The input does not start with an emoji trigger character</li></ul><p>then Typing Booster commits text as soon as possible, just like
+ibus-m17n.</p><p>The emoji trigger characters do not have to be completely empty if one
+prefers early commits like ibus-m17n does. It is possible to choose
+one or more characters which rarely appear in normal typing as emoji
+trigger characters. In that case, early commits can still happen
+except for words which start with an emoji trigger character, these
+words are kept in preedit then for the emoji search. For example if
+<code>_</code> is used as an emoji trigger character, then the input
+<code>_face_disappointed</code> will be kept in preedit and emojis will be
+searched which match the 2 search words <code>face</code> and <code>disappointed</code>.</p><p>To simplify this setup process to emulate ibus-m17n, Typing Booster
+offers preconfigured engines that emulate ibus-m17n out of the
+box. For example:</p><pre><code>$ ibus list-engine  | grep latn-post 
   tb:t:latn-post - t-latn-post (tb)
   m17n:t:latn-post - t-latn-post (m17n)
 $ ibus list-engine  | grep hi-itrans
@@ -566,19 +575,9 @@ more fancy features like completion, spellchecking, predictions based
 on previous user input and multilingual input.</p><p>If you used the <code>☑️ Use US keyboard layout</code> option in an ibus-m17n
 engine, you want to use the <code>☑️ Use IBus keymap [ English (IN) ]</code>
 option to <a href=#2_2_8>force the use of an English IBus keymap</a> in the
-ibus-typing booster engine mimicking that ibus-m17n engine.</p><p>⚠️ <strong>Current limitations</strong>:</p><ul><li><p><strong>Input Method Compatibility</strong>: While ibus-m17n supports all input
-methods from m17n-lib and m17n-db, Typing Booster supports nearly
-all, except those offering multiple candidates. The exceptions
-are:</p><p><code>ja-anthy</code>, <code>t-lsymbol</code>, <code>ml-swanalekha</code>, <code>vi-han</code>,
-<code>vi-nomtelex</code>, <code>vi-nomvni</code>, <code>vi-tcvn</code>, <code>vi-telex</code>, <code>vi-viqr</code>,
-<code>vi-vni</code>, <code>zh-cangjie</code>, <code>zh-pinyin-vi</code>, <code>zh-pinyin</code>, <code>zh-py</code>,
-<code>zh-py-b5</code>, <code>zh-py-gb</code>, <code>zh-quick</code>, <code>zh-tonepy</code>,
-<code>zh-tonepy-gb</code>, <code>zh-tonepy-b5</code></p><p>These methods partially work but are not well supported. Typing
-Booster does not currently offer restricted engines to emulate
-ibus-m17n for these input methods.</p><p>See <a href=https://github.com/mike-fabian/ibus-typing-booster/issues/523>this issue</a>
-for updates.</p></li><li><p><strong>Preedit Colours</strong>: Unlike ibus-m17n, Typing Booster does not
+ibus-typing booster engine mimicking that ibus-m17n engine.</p><p>⚠️ <strong>Current limitations</strong>:</p><ul><li><strong>Preedit Colours</strong>: Unlike ibus-m17n, Typing Booster does not
 support configuring preedit text foreground and background
-colors. This feature is unlikely to be added.</p></li></ul><h6 id=3>3</h6><h2 id=key-and-mouse-bindings>Key and Mouse bindings</h2><h6 id=3_1>3_1</h6><h3 id=the-altgr-key>The “AltGr” key</h3><p>Ibus-typing-booster does not change your keyboard layout, it just uses the keyboard layout which was selected last.</p><p>As some of the default key bindings in the table below use key combinations starting with “AltGr”, it is recommended to use a keyboard layout where the right “Alt” key is really an “AltGr” key and not just a duplicate of the left “Alt” key. If you do not have a real “AltGr” key, you can still use most of the key bindings in the table below but of course not those which start with “AltGr”. In that case, you might want to use the setup tool to <a href=#3_4>customize your key bindings</a>.</p><p>The standard “English (US)” keyboard layout makes the “AltGr” key on the right side of the space bar basically behave as a duplicate of the left “Alt” key. So if you like the US English layout, better use the keyboard layout “English (US, with euro on 5)” instead of the standard one. “English (US, with euro on 5)” is very similar to the standard “English (US)” layout but has a real “AltGr” key.</p><p>Many (but not all) keyboard layouts for other languages different from US English already have a real “AltGr” key.</p><p>You can check whether your keyboard layout has a real “AltGr” key with “xev”, “xev” should show you the keysym “ISO_Level3_Shift” when pressing the “AltGr” (right “Alt”) key and not the keysym “Alt_R”.</p><h6 id=3_2>3_2</h6><h3 id=table-of-default-key-bindings>Table of default key bindings</h3><p>Some of these key bindings can be customized in the setup tool, see <a href=#3_4>Customizing key bindings</a>. The following table explains the defaults.</p><table border=2 cellspacing=10 cellpadding=10><thead><tr><th>Key combination</th><th>Effect</th></tr></thead><tbody><tr><td><code>Space</code></td><td>Commit the preëdit (or the selected candidate, if any) and send a
+colors. This feature is unlikely to be added.</li></ul><h6 id=3>3</h6><h2 id=key-and-mouse-bindings>Key and Mouse bindings</h2><h6 id=3_1>3_1</h6><h3 id=the-altgr-key>The “AltGr” key</h3><p>Ibus-typing-booster does not change your keyboard layout, it just uses the keyboard layout which was selected last.</p><p>As some of the default key bindings in the table below use key combinations starting with “AltGr”, it is recommended to use a keyboard layout where the right “Alt” key is really an “AltGr” key and not just a duplicate of the left “Alt” key. If you do not have a real “AltGr” key, you can still use most of the key bindings in the table below but of course not those which start with “AltGr”. In that case, you might want to use the setup tool to <a href=#3_4>customize your key bindings</a>.</p><p>The standard “English (US)” keyboard layout makes the “AltGr” key on the right side of the space bar basically behave as a duplicate of the left “Alt” key. So if you like the US English layout, better use the keyboard layout “English (US, with euro on 5)” instead of the standard one. “English (US, with euro on 5)” is very similar to the standard “English (US)” layout but has a real “AltGr” key.</p><p>Many (but not all) keyboard layouts for other languages different from US English already have a real “AltGr” key.</p><p>You can check whether your keyboard layout has a real “AltGr” key with “xev”, “xev” should show you the keysym “ISO_Level3_Shift” when pressing the “AltGr” (right “Alt”) key and not the keysym “Alt_R”.</p><h6 id=3_2>3_2</h6><h3 id=table-of-default-key-bindings>Table of default key bindings</h3><p>Some of these key bindings can be customized in the setup tool, see <a href=#3_4>Customizing key bindings</a>. The following table explains the defaults.</p><table border=2 cellspacing=10 cellpadding=10><thead><tr><th>Key combination</th><th>Effect</th></tr></thead><tbody><tr><td><code>Space</code></td><td>Commit the preëdit (or the selected candidate, if any) and send a
 space to the application, i.e. commit the typed string followed by a
 space.</td></tr><tr><td><code>Return</code></td><td>Commit the preëdit (or the selected candidate, if any) and send a
 <code>Return</code> to the application.</td></tr><tr><td><code>KP_Enter</code></td><td>Commit the preëdit (or the selected candidate, if any) and send a
