@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-02-15 11:37+0100\n"
+"POT-Creation-Date: 2025-02-17 20:21+0100\n"
 "PO-Revision-Date: 2022-02-25 18:38+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Catalan <https://translate.fedoraproject.org/projects/ibus-"
@@ -205,58 +205,58 @@ msgstr "Prediccions d’emojis i símbols del Unicode"
 msgid "Off the record mode"
 msgstr "Mode confidencial"
 
-#: engine/hunspell_table.py:1968
+#: engine/hunspell_table.py:1971
 msgid "Highest priority dictionary"
 msgstr "Diccionari prioritari"
 
-#: engine/hunspell_table.py:1969
+#: engine/hunspell_table.py:1972
 msgid "Choose highest priority dictionary"
 msgstr "Trieu el diccionari prioritari"
 
-#: engine/hunspell_table.py:1998
+#: engine/hunspell_table.py:2001
 msgid "Preedit input method"
 msgstr "Mètode d’entrada de preedició"
 
-#: engine/hunspell_table.py:1999
+#: engine/hunspell_table.py:2002
 msgid "Switch preedit input method"
 msgstr ""
 
-#: engine/hunspell_table.py:2344
+#: engine/hunspell_table.py:2347
 msgid "Setup"
 msgstr "Configuració"
 
-#: engine/hunspell_table.py:2347 setup/main.py:142
+#: engine/hunspell_table.py:2350 setup/main.py:142
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferències de l’ibus-typing-booster"
 
-#: engine/hunspell_table.py:6056
+#: engine/hunspell_table.py:6067
 msgid "Failed to import Google speech-to-text."
 msgstr "Ha fallat la importació de la conversió de veu a text de Google."
 
-#: engine/hunspell_table.py:6059
+#: engine/hunspell_table.py:6070
 msgid "Failed to import pyaudio."
 msgstr "Ha fallat la importació del pyaudio."
 
-#: engine/hunspell_table.py:6062
+#: engine/hunspell_table.py:6073
 msgid "Failed to import queue."
 msgstr "Ha fallat la importació de la cua."
 
-#: engine/hunspell_table.py:6067
+#: engine/hunspell_table.py:6078
 msgid "No supported language for speech recognition."
 msgstr "Cap llengua no és compatible amb el reconeixement de veu."
 
-#: engine/hunspell_table.py:6071
+#: engine/hunspell_table.py:6082
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "No s’ha trobat el fitxer de «credencials d’aplicació de Google» «%s»."
 
-#: engine/hunspell_table.py:6084
+#: engine/hunspell_table.py:6095
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Ha fallat la inicialització de la conversió de veu a text de Google. Vegeu "
 "debug.log."
 
-#: engine/hunspell_table.py:6192
+#: engine/hunspell_table.py:6203
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 "S’ha produït un error amb la conversió de veu a text de Google. Vegeu debug."
@@ -343,31 +343,31 @@ msgstr "regions"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2836
+#: engine/itb_util.py:2837
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:4516 engine/itb_util.py:5243
+#: engine/itb_util.py:4517 engine/itb_util.py:5244
 msgid "File not found"
 msgstr "No s’ha trobat el fitxer"
 
-#: engine/itb_util.py:4520 engine/itb_util.py:5247
+#: engine/itb_util.py:4521 engine/itb_util.py:5248
 msgid "Permission error"
 msgstr ""
 
-#: engine/itb_util.py:4524 engine/itb_util.py:5251
+#: engine/itb_util.py:4525 engine/itb_util.py:5252
 msgid "Unicode decoding error"
 msgstr ""
 
-#: engine/itb_util.py:4528 engine/itb_util.py:5255
+#: engine/itb_util.py:4529 engine/itb_util.py:5256
 msgid "Unknown error"
 msgstr "Error desconegut"
 
-#: engine/itb_util.py:5221
+#: engine/itb_util.py:5222
 msgid "Native Keyboard"
 msgstr "Teclat natiu"
 
-#: engine/itb_util.py:5223
+#: engine/itb_util.py:5224
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -377,11 +377,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5906
+#: engine/itb_util.py:5907
 msgid "Key input"
 msgstr "Entrada de tecles"
 
-#: engine/itb_util.py:5912
+#: engine/itb_util.py:5913
 msgid "Cancel"
 msgstr "Cancel·la"
 
@@ -389,27 +389,27 @@ msgstr "Cancel·la"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5919
+#: engine/itb_util.py:5920
 msgid "Please press a key (or a key combination)"
 msgstr "Premeu una tecla (o una combinació de tecles)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5924
+#: engine/itb_util.py:5925
 msgid "The dialog will be closed when the key is released"
 msgstr "El diàleg es tancarà quan es deixi anar la tecla"
 
-#: engine/itb_util.py:5963
+#: engine/itb_util.py:5964
 msgid "A completion input method to speedup typing."
 msgstr "Un mètode d’entrada de compleció per a accelerar l’escriptura."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5972
+#: engine/itb_util.py:5973
 msgid "translator-credits"
 msgstr "Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2019-2021"
 
-#: engine/itb_util.py:5980
+#: engine/itb_util.py:5981
 msgid "Online documentation:"
 msgstr "Documentació en línia:"
 
@@ -433,7 +433,7 @@ msgstr "Preferències"
 msgid "Restore all defaults"
 msgstr "Restableix-ho tot al predeterminat"
 
-#: setup/main.py:250 setup/main.py:6744
+#: setup/main.py:250 setup/main.py:6745
 msgid "_Close"
 msgstr "_Tanca"
 
@@ -949,7 +949,7 @@ msgstr "Instal·la els diccionaris mancants"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Instal·la els diccionaris ací configurats però que no s'han instal·lat"
 
-#: setup/main.py:1118 setup/main.py:1263 setup/main.py:1505 setup/main.py:4996
+#: setup/main.py:1118 setup/main.py:1263 setup/main.py:1505 setup/main.py:4997
 msgid "Set to default"
 msgstr "Defineix com a per defecte"
 
@@ -1056,7 +1056,7 @@ msgstr "Edita"
 msgid "Edit the key bindings for the selected command"
 msgstr "Edita la drecera de teclat de l’ordre seleccionada"
 
-#: setup/main.py:1509 setup/main.py:5001
+#: setup/main.py:1509 setup/main.py:5002
 msgid "Set default key bindings for the selected command"
 msgstr "Estableix les dreceres per defecte de l’ordre seleccionada"
 
@@ -1437,7 +1437,7 @@ msgstr "Encara no s’ha definit el fitxer."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2266 setup/main.py:4512
+#: setup/main.py:2266 setup/main.py:4513
 msgid "Add an autosetting"
 msgstr ""
 
@@ -1497,7 +1497,7 @@ msgstr ""
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2695 setup/main.py:4094
+#: setup/main.py:2695 setup/main.py:4095
 msgid "Value"
 msgstr ""
 
@@ -1511,11 +1511,11 @@ msgstr ""
 msgid "Are you sure?"
 msgstr "N’esteu segur?"
 
-#: setup/main.py:2767 setup/main.py:3329 setup/main.py:3416 setup/main.py:5067
+#: setup/main.py:2767 setup/main.py:3329 setup/main.py:3416 setup/main.py:5068
 msgid "_Cancel"
 msgstr "_Cancel·la"
 
-#: setup/main.py:2768 setup/main.py:3330 setup/main.py:3417 setup/main.py:5068
+#: setup/main.py:2768 setup/main.py:3330 setup/main.py:3417 setup/main.py:5069
 msgid "_OK"
 msgstr "_D'acord"
 
@@ -1544,20 +1544,20 @@ msgstr "Afegeix un mètode d’entrada"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4085
+#: setup/main.py:4086
 msgid "Variable"
 msgstr ""
 
-#: setup/main.py:4949
+#: setup/main.py:4950
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr ""
 
-#: setup/main.py:4977
+#: setup/main.py:4978
 msgid "Add a key binding"
 msgstr ""
 
-#: setup/main.py:4989
+#: setup/main.py:4990
 msgid "Remove selected key binding"
 msgstr ""
 
@@ -1566,22 +1566,22 @@ msgstr ""
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5049
+#: setup/main.py:5050
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
 
-#: setup/main.py:5064
+#: setup/main.py:5065
 msgid "Open File ..."
 msgstr "Obre el fitxer..."
 
-#: setup/main.py:5083
+#: setup/main.py:5084
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "S'ha après correctament del fitxer %(filename)s."
 
-#: setup/main.py:5092
+#: setup/main.py:5093
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Ha fallat l'aprenentatge del fitxer %(filename)s."
@@ -1596,7 +1596,7 @@ msgstr "Ha fallat l'aprenentatge del fitxer %(filename)s."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5115
+#: setup/main.py:5116
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1604,7 +1604,7 @@ msgstr ""
 "Realment voleu suprimir totes les dades lingüístiques apreses a partir de "
 "l'escriptura amb el teclat i de la lectura de fitxers?"
 
-#: setup/main.py:6806
+#: setup/main.py:6807
 msgid "ibus is not running."
 msgstr "L’ibus no s’està executant."
 

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-02-15 11:37+0100\n"
+"POT-Creation-Date: 2025-02-17 20:21+0100\n"
 "PO-Revision-Date: 2025-02-14 14:45+0000\n"
 "Last-Translator: ButterflyOfFire <butterflyoffire@users.noreply.translate."
 "fedoraproject.org>\n"
@@ -198,56 +198,56 @@ msgstr "Izamulen n Unicode akked wayen d-yemmalen imujiten"
 msgid "Off the record mode"
 msgstr "Yensa uskar n usekles"
 
-#: engine/hunspell_table.py:1968
+#: engine/hunspell_table.py:1971
 msgid "Highest priority dictionary"
 msgstr "Amawal yesεan azal d amezwaru"
 
-#: engine/hunspell_table.py:1969
+#: engine/hunspell_table.py:1972
 msgid "Choose highest priority dictionary"
 msgstr "Fren amawal yesεan azal d amezwaru"
 
-#: engine/hunspell_table.py:1998
+#: engine/hunspell_table.py:2001
 msgid "Preedit input method"
 msgstr "Tarrayt n unekcum n uẓrag uzwir"
 
-#: engine/hunspell_table.py:1999
+#: engine/hunspell_table.py:2002
 msgid "Switch preedit input method"
 msgstr "Senfel tarrayt n unekcum n uẓrag uzwir"
 
-#: engine/hunspell_table.py:2344
+#: engine/hunspell_table.py:2347
 msgid "Setup"
 msgstr "Iɣewwaṛen"
 
-#: engine/hunspell_table.py:2347 setup/main.py:142
+#: engine/hunspell_table.py:2350 setup/main.py:142
 msgid "Preferences for ibus-typing-booster"
 msgstr "Ismenyafen i ibus-typing-booster"
 
-#: engine/hunspell_table.py:6056
+#: engine/hunspell_table.py:6067
 msgid "Failed to import Google speech-to-text."
 msgstr "Aktar Google n tririt n yinaw ɣer yeḍrisen yecceḍ."
 
-#: engine/hunspell_table.py:6059
+#: engine/hunspell_table.py:6070
 msgid "Failed to import pyaudio."
 msgstr "Yecceḍ uktar n pyaudio."
 
-#: engine/hunspell_table.py:6062
+#: engine/hunspell_table.py:6073
 msgid "Failed to import queue."
 msgstr "Yecceḍ uktar n queue."
 
-#: engine/hunspell_table.py:6067
+#: engine/hunspell_table.py:6078
 msgid "No supported language for speech recognition."
 msgstr "Ulac tutlayt yettusefraken i uεqal n taɣuct."
 
-#: engine/hunspell_table.py:6071
+#: engine/hunspell_table.py:6082
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Afaylu n \"yinekcam n usnas Google\" “%s” ur yettwaf ara."
 
-#: engine/hunspell_table.py:6084
+#: engine/hunspell_table.py:6095
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 
-#: engine/hunspell_table.py:6192
+#: engine/hunspell_table.py:6203
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 "Tella-d tuccḍa deg usenfel n taɣuct ɣer uḍris deg usnas Google. Wali debug."
@@ -334,31 +334,31 @@ msgstr "timnaḍin"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2836
+#: engine/itb_util.py:2837
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:4516 engine/itb_util.py:5243
+#: engine/itb_util.py:4517 engine/itb_util.py:5244
 msgid "File not found"
 msgstr "Afaylu ur yettwaf ara"
 
-#: engine/itb_util.py:4520 engine/itb_util.py:5247
+#: engine/itb_util.py:4521 engine/itb_util.py:5248
 msgid "Permission error"
 msgstr "Tuccḍa deg tsirag"
 
-#: engine/itb_util.py:4524 engine/itb_util.py:5251
+#: engine/itb_util.py:4525 engine/itb_util.py:5252
 msgid "Unicode decoding error"
 msgstr "Tuccḍa deg usettenggel n Unicode"
 
-#: engine/itb_util.py:4528 engine/itb_util.py:5255
+#: engine/itb_util.py:4529 engine/itb_util.py:5256
 msgid "Unknown error"
 msgstr "Tuccḍa tarussint"
 
-#: engine/itb_util.py:5221
+#: engine/itb_util.py:5222
 msgid "Native Keyboard"
 msgstr "Anasiw anaṣli"
 
-#: engine/itb_util.py:5223
+#: engine/itb_util.py:5224
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -368,11 +368,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5906
+#: engine/itb_util.py:5907
 msgid "Key input"
 msgstr "Taqeffalt n usekcem"
 
-#: engine/itb_util.py:5912
+#: engine/itb_util.py:5913
 msgid "Cancel"
 msgstr "Sefsex"
 
@@ -380,27 +380,27 @@ msgstr "Sefsex"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5919
+#: engine/itb_util.py:5920
 msgid "Please press a key (or a key combination)"
 msgstr "Ttxil-k sit ɣef tqeffalt (neɣ taggayt n tqeffalin)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5924
+#: engine/itb_util.py:5925
 msgid "The dialog will be closed when the key is released"
 msgstr "Adiwenni ad yemdel mi ara d-teffeɣ tqeffalt"
 
-#: engine/itb_util.py:5963
+#: engine/itb_util.py:5964
 msgid "A completion input method to speedup typing."
 msgstr ""
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5972
+#: engine/itb_util.py:5973
 msgid "translator-credits"
 msgstr "Athmane Mokraoui <butterflyoffire@protonmail.com>"
 
-#: engine/itb_util.py:5980
+#: engine/itb_util.py:5981
 msgid "Online documentation:"
 msgstr "Tasemlit srid:"
 
@@ -424,7 +424,7 @@ msgstr "Ismenyafen"
 msgid "Restore all defaults"
 msgstr "Err-d akk imezwer"
 
-#: setup/main.py:250 setup/main.py:6744
+#: setup/main.py:250 setup/main.py:6745
 msgid "_Close"
 msgstr "Mdel (_C)"
 
@@ -938,7 +938,7 @@ msgstr "Sbedd imawalen i ixuṣṣen"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Sbedd imawalen i yettusbadun dagi maca ur ttusbedden ara"
 
-#: setup/main.py:1118 setup/main.py:1263 setup/main.py:1505 setup/main.py:4996
+#: setup/main.py:1118 setup/main.py:1263 setup/main.py:1505 setup/main.py:4997
 msgid "Set to default"
 msgstr "Sbadu ɣer umezwer"
 
@@ -1045,7 +1045,7 @@ msgstr "Ẓreg"
 msgid "Edit the key bindings for the selected command"
 msgstr ""
 
-#: setup/main.py:1509 setup/main.py:5001
+#: setup/main.py:1509 setup/main.py:5002
 msgid "Set default key bindings for the selected command"
 msgstr ""
 
@@ -1430,7 +1430,7 @@ msgstr "Afaylu-a mazal ur yettusbadu ara."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2266 setup/main.py:4512
+#: setup/main.py:2266 setup/main.py:4513
 msgid "Add an autosetting"
 msgstr "Rnu aɣewwar awurman"
 
@@ -1484,7 +1484,7 @@ msgstr "Aɣewwar"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2695 setup/main.py:4094
+#: setup/main.py:2695 setup/main.py:4095
 msgid "Value"
 msgstr "Azal"
 
@@ -1498,11 +1498,11 @@ msgstr "Tanfalit talugant"
 msgid "Are you sure?"
 msgstr "D tidet?"
 
-#: setup/main.py:2767 setup/main.py:3329 setup/main.py:3416 setup/main.py:5067
+#: setup/main.py:2767 setup/main.py:3329 setup/main.py:3416 setup/main.py:5068
 msgid "_Cancel"
 msgstr "Sefsex (C)"
 
-#: setup/main.py:2768 setup/main.py:3330 setup/main.py:3417 setup/main.py:5068
+#: setup/main.py:2768 setup/main.py:3330 setup/main.py:3417 setup/main.py:5069
 msgid "_OK"
 msgstr "IH (_O)"
 
@@ -1531,20 +1531,20 @@ msgstr "Rnu tarrayt n unekcum"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4085
+#: setup/main.py:4086
 msgid "Variable"
 msgstr "Ameskil"
 
-#: setup/main.py:4949
+#: setup/main.py:4950
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Ẓreg tuqqna n tsura i tladna “%s”"
 
-#: setup/main.py:4977
+#: setup/main.py:4978
 msgid "Add a key binding"
 msgstr "Rnu tuqqna n tsura"
 
-#: setup/main.py:4989
+#: setup/main.py:4990
 msgid "Remove selected key binding"
 msgstr "Kkes tuqqna n tsura i yettwafernen"
 
@@ -1553,7 +1553,7 @@ msgstr "Kkes tuqqna n tsura i yettwafernen"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5049
+#: setup/main.py:5050
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1561,16 +1561,16 @@ msgstr ""
 "D tidet tebɣiḍ ad tesbaduḍ tuqqniwin n tsura i meṛṛa tiludna ɣer yimezwer-"
 "nsent?"
 
-#: setup/main.py:5064
+#: setup/main.py:5065
 msgid "Open File ..."
 msgstr "Ldi afaylu ..."
 
-#: setup/main.py:5083
+#: setup/main.py:5084
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Almud yedda akken iwata seg ufaylu %(filename)s."
 
-#: setup/main.py:5092
+#: setup/main.py:5093
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Almud seg ufaylu %(filename)s yecceḍ."
@@ -1585,7 +1585,7 @@ msgstr "Almud seg ufaylu %(filename)s yecceḍ."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5115
+#: setup/main.py:5116
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1593,7 +1593,7 @@ msgstr ""
 "D tidet tebɣiḍ ad tekkseḍ akk isefka n tutlayt yettwalemden seg yifuyla n "
 "tira akked tɣuri?"
 
-#: setup/main.py:6806
+#: setup/main.py:6807
 msgid "ibus is not running."
 msgstr "ibus ur iteddu ara."
 
