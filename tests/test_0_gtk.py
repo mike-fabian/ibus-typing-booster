@@ -52,6 +52,12 @@ from gi.repository import IBus
 os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
 
 sys.path.insert(0, "../engine")
+IMPORT_ITB_UTIL_SUCCESSFUL = False
+try:
+    import itb_util
+    IMPORT_ITB_UTIL_SUCCESSFUL = True
+except (ImportError,):
+    pass
 IMPORT_HUNSPELL_SUCCESSFUL = False
 try:
     import hunspell_table
@@ -88,6 +94,12 @@ def printerr(sentence: str) -> None:
     and os.environ['XDG_SESSION_TYPE'] in ('x11', 'wayland'),
     'XDG_SESSION_TYPE is neither "x11" nor "wayland".')
 @unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
+@unittest.skipUnless(
+    itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
+    'Skipping because no fr_FR dictionary could be found. ')
+@unittest.skipUnless(
+    itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+    'Skipping because no en_US dictionary could be found. ')
 class SimpleGtkTestCase(unittest.TestCase):
     ENGINE_PATH = '/com/redhat/IBus/engines/typing_booster/Test/Engine'
     _flag: bool = False
@@ -223,6 +235,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         if engine_name != 'testTyping-booster':
             return None
         if (not IMPORT_HUNSPELL_SUCCESSFUL
+            or not IMPORT_ITB_UTIL_SUCCESSFUL
             or not IMPORT_TABSQLITEDB_SUCCESSFUL):
             with self.subTest(i='create-engine'):
                 self.fail('NG: ibus-typing-booster not installed?')
