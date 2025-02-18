@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-02-17 20:21+0100\n"
-"PO-Revision-Date: 2025-02-18 08:32+0000\n"
+"PO-Revision-Date: 2025-02-18 14:35+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ko/>\n"
@@ -808,7 +808,7 @@ msgstr "영어"
 #. “Unicode symbols and emoji predictions” is off.
 #: setup/main.py:856
 msgid "Emoji trigger characters:"
-msgstr ""
+msgstr "이모지 트리거 문자:"
 
 #: setup/main.py:858
 msgid ""
@@ -871,50 +871,51 @@ msgstr ""
 #. debug information may also be shown graphically.
 #: setup/main.py:983
 msgid "Debug level:"
-msgstr ""
+msgstr "디버그 단계:"
 
 #: setup/main.py:985
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
-msgstr ""
+msgstr "0 보다 클 때, 디버그 정보는 기록 파일에 출력 될 수 있고 디버그 정보가 "
+"그래픽으로도 출력 될 수 있습니다."
 
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
 #. reading that text file.
 #: setup/main.py:1009
 msgid "Learn from text file"
-msgstr ""
+msgstr "텍스트 파일에서 학습"
 
 #: setup/main.py:1011
 msgid "Learn your style by reading a text file"
-msgstr ""
+msgstr "텍스트 파일 읽기에서 자신의 유형을 학습합니다"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
 #: setup/main.py:1023
 msgid "Delete learned data"
-msgstr ""
+msgstr "학습된 자료를 삭제"
 
 #: setup/main.py:1025
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
-msgstr ""
+msgstr "입력하거나 읽어온 파일에서 학습된 모든 개인 언어 자료를 삭제합니다"
 
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:1039
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "다음 언어를 위해 사전을 사용합니다:"
 
 #: setup/main.py:1068
 msgid "Add a dictionary"
-msgstr ""
+msgstr "사전 추가"
 
 #: setup/main.py:1079
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "사전 제거"
 
 #: setup/main.py:1090
 msgid "Move dictionary up"
@@ -1021,11 +1022,11 @@ msgstr "손쉬운 방법"
 #. existing shortcuts
 #: setup/main.py:1425
 msgid "Shortcut expansion"
-msgstr ""
+msgstr "바로가기 확장"
 
 #: setup/main.py:1439
 msgid "Current key bindings:"
-msgstr ""
+msgstr "현재 키 조합:"
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
@@ -1579,7 +1580,7 @@ msgstr ""
 
 #: setup/main.py:6807
 msgid "ibus is not running."
-msgstr ""
+msgstr "ibus가 동작하지 않습니다."
 
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:9
 msgid ""
@@ -1589,11 +1590,11 @@ msgstr ""
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
-msgstr ""
+msgstr "입력 가속기"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:7
 msgid "Predictive input method"
-msgstr ""
+msgstr "예측 입력 방식"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:9
 msgid ""
