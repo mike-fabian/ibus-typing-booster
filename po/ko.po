@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-02-17 20:21+0100\n"
-"PO-Revision-Date: 2025-02-19 07:36+0000\n"
+"PO-Revision-Date: 2025-02-19 11:24+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ko/>\n"
@@ -535,6 +535,10 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
+"가장 좋은 완성는 전체 후보 목록에서 보여주는 대신 사전편집에서 행안에 우선 "
+"표시되는 것입니다. 행안 추천은 탭을 입력하여 선택 할 수 있고, 그런 후에 "
+"space 또는 control+space 입력에 의한 예로 일반적으로 수행됩니다. 탭을 다시 "
+"입력하여 다음 후보로 이동하고 전체 후보 목록을 엽니다."
 
 #: setup/main.py:449 setup/main.py:510
 msgid "No"
@@ -556,7 +560,7 @@ msgstr "자동 대문자"
 
 #: setup/main.py:477
 msgid "Automatically capitalize after punctuation."
-msgstr ""
+msgstr "구두점 뒤에는 자동으로 대문자를 입력합니다."
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
@@ -568,7 +572,7 @@ msgstr ""
 #. command which will deselect all candidates.
 #: setup/main.py:496
 msgid "Automatically select the best candidate"
-msgstr ""
+msgstr "최상의 후보를 자동으로 선택합니다"
 
 #: setup/main.py:498
 msgid ""
@@ -758,7 +762,7 @@ msgstr ""
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:774
 msgid "Disable in terminals"
-msgstr ""
+msgstr "터미널에서 비활성"
 
 #: setup/main.py:776
 msgid "Whether ibus-typing-booster should be disabled in terminals."
@@ -975,50 +979,50 @@ msgstr "입력 방식을 아래로 이동합니다"
 #. methods.
 #: setup/main.py:1238
 msgid "Input Method Help"
-msgstr ""
+msgstr "입력 방식 도움말"
 
 #: setup/main.py:1240
 msgid "Display some help showing how to use the input method selected above."
-msgstr ""
+msgstr "위에 선택한 입력 방식을 사용하는 방법을 표시하는 약간의 도움말을 표시합니다."
 
 #. Translators: Tooltip for a button to set some advanced
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1256
 msgid "Options for the input method selected above."
-msgstr ""
+msgstr "위에 선택한 입력 방식을 위한 옵션."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
 #: setup/main.py:1269
 msgid "Set input methods to the default for the current locale."
-msgstr ""
+msgstr "현재 지역을 위한 기본 값으로 입력 방식을 설정합니다."
 
 #: setup/main.py:1309
 msgid "Enter shortcut here:"
-msgstr ""
+msgstr "여기에 바로가기를 입력합니다:"
 
 #: setup/main.py:1331
 msgid "Enter shortcut expansion here:"
-msgstr ""
+msgstr "여기에 바로가기 확장을 입력합니다:"
 
 #: setup/main.py:1361
 msgid "Clear input"
-msgstr ""
+msgstr "입력 정리"
 
 #: setup/main.py:1372
 msgid "Delete shortcut"
-msgstr ""
+msgstr "바로가기 삭제"
 
 #: setup/main.py:1383
 msgid "Add shortcut"
-msgstr ""
+msgstr "바로가기 추가"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
 #: setup/main.py:1417
 msgid "Shortcut"
-msgstr "손쉬운 방법"
+msgstr "바로가기"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -1042,11 +1046,11 @@ msgstr "편집"
 
 #: setup/main.py:1498
 msgid "Edit the key bindings for the selected command"
-msgstr ""
+msgstr "선택한 명령을 위해 키 할당을 편집합니다"
 
 #: setup/main.py:1509 setup/main.py:5002
 msgid "Set default key bindings for the selected command"
-msgstr ""
+msgstr "선택한 명령을 위해 기본 값 키 할당을 설정합니다"
 
 #: setup/main.py:1516
 msgid "Set all to default"
@@ -1061,7 +1065,7 @@ msgstr "모든 명령을 위한 기본 키 할당을 설정합니다"
 #. top of the list of candidates.
 #: setup/main.py:1542
 msgid "Display total number of candidates"
-msgstr ""
+msgstr "총 후보의 수를 표시합니다"
 
 #: setup/main.py:1544
 msgid ""
@@ -1157,13 +1161,13 @@ msgstr "단일"
 #. underline for the preedit.
 #: setup/main.py:1693
 msgid "Double"
-msgstr ""
+msgstr "이중"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
 #: setup/main.py:1697
 msgid "Low"
-msgstr ""
+msgstr "아래"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is
