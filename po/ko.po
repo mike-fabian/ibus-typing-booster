@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-02-17 20:21+0100\n"
-"PO-Revision-Date: 2025-02-19 11:24+0000\n"
+"PO-Revision-Date: 2025-02-20 11:43+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ko/>\n"
@@ -583,27 +583,33 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
+"입력한 내용이 무엇이든 자동으로 가장 적합한 후보를 선택하여 가장 적합한 "
+"후보로 자동으로 수정됩니다. 만약 이와 같은 옵션이 꺼져 있으면, 당신은 다음 "
+"후보를 선택하는 데 할당된 키를 사용하여 수동으로 후보를 선택해야 합니다. "
+"만약 이와 같은 옵션이 켜져 있고 선택한 후보를 자동으로 사용하지 않으려면, "
+"모든 후보를 해제하는 “취소” 명령을 위해 할당된 키를 사용 할 수 있습니다."
 
 #: setup/main.py:512
 msgid "Yes, but only when extremely likely"
-msgstr ""
+msgstr "네, 하지만 아주 가능성이 높을 때에만 해당됩니다"
 
 #: setup/main.py:514
 msgid "Yes, always"
-msgstr ""
+msgstr "네, 언제나"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
 #. with the mouse.
 #: setup/main.py:537
 msgid "Add a space when committing by mouse click"
-msgstr ""
+msgstr "마우스를 눌러 수행 할 때에 공백을 추가합니다"
 
 #: setup/main.py:539
 msgid ""
 "Add a space if a candidate from the candidate list is committed by clicking "
 "it with the mouse."
-msgstr ""
+msgstr "만약 후보 목록에서 후보를 마우스로 이를 눌렀을 때에 수행되도록 공백을 "
+"추가합니다."
 
 #. Translators: If more then one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -613,7 +619,7 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:557
 msgid "Remember last used preedit input method"
-msgstr ""
+msgstr "최근에 사용된 사전편집 입력 방식을 기억합니다"
 
 #: setup/main.py:559
 msgid ""
@@ -622,6 +628,10 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
+"만약 동시에 하나 이상의 입력 방식이 동시에 사용된다면, 이들 중에 하나는 "
+"사전편집을 위해 사용됩니다. 입력 방식이 사전편집용에 사용되는 것은 메뉴나 "
+"바로가기 키를 통해 변경 될 수 있습니다. 만약 해당 옵션이 활성화 되어 있으면, "
+"이들 변경은 만약 세션이 재시작 되더라도 기억됩니다."
 
 #. Translators: If more then one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -631,22 +641,23 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:581
 msgid "Remember input mode"
-msgstr ""
+msgstr "입력 방식을 기억합니다"
 
 #: setup/main.py:583
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
-msgstr ""
+msgstr "만약 해당 옵션이 활성화 되어 있으면, 최근 사용된 입력 방식(켜기/끄기)은 만약 "
+"세션이 재시작 되더라도 기억됩니다."
 
 #. Translators: Whether ibus-typing-booster should show word predictions.
 #: setup/main.py:596
 msgid "Word predictions"
-msgstr ""
+msgstr "단어 예측"
 
 #: setup/main.py:598
 msgid "Whether ibus-typing-booster should show word predictions."
-msgstr ""
+msgstr "ibus-typing-booster가 단어 예측을 표시 할지 여부."
 
 #: setup/main.py:617
 msgid ""
@@ -656,6 +667,10 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
+"유니코드 기호 및 이모지가 예측에 포함되는지 여부. 이모지는 ☺♨⛵와 같은 "
+"상형문자입니다... 유니코드 기호는 수학기호 (∀∑∯…), 화살표 (←↑↔…), 통화 기호 "
+"(€₹₺…), 점자 유형 (⠥⠩…) 및 수 많은 다른 기호와 같은 다른 기호입니다. 이 "
+"것들은 기술적으로 이모지는 아니지만 그런데도 유용한 기호입니다."
 
 #: setup/main.py:642
 msgid ""
@@ -670,7 +685,7 @@ msgstr ""
 #. should be recorded in the user database.
 #: setup/main.py:662
 msgid "Record mode"
-msgstr ""
+msgstr "기록 방식"
 
 #: setup/main.py:664
 msgid ""
@@ -717,7 +732,7 @@ msgstr "없음"
 #: setup/main.py:719
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "%s 함수 사용을 회피합니다"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -742,6 +757,8 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
+"만약 %s 함수가 깨지면 해결 방법을 사용하세요. 반드시 필요한 경우에만 이 "
+"옵션을 활성화하고, 특히 XIM이 사용 될 때에는 문제가 발생 할 수도 있습니다."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -749,7 +766,7 @@ msgstr ""
 #. committed words.
 #: setup/main.py:756
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "재개장 사전편집 활성화"
 
 #: setup/main.py:758
 msgid ""
@@ -766,13 +783,13 @@ msgstr "터미널에서 비활성"
 
 #: setup/main.py:776
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "ibus-typing-booster가 터미널에서 비활성화 되는지 여부."
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
 #: setup/main.py:789
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "언어 지정 숫자를 ASCII 숫자로 변환"
 
 #: setup/main.py:791
 msgid ""
@@ -817,7 +834,8 @@ msgstr "이모지 트리거 문자:"
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
-msgstr ""
+msgstr "이 목록에서 문자는 만약 옵션 \"유니코드 및 이모지 예측\"이 꺼져 있더래도 "
+"이모지 및 유니콘 기호 조회를 일으킵니다."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -833,7 +851,7 @@ msgstr ""
 #. (which is the default).
 #: setup/main.py:887
 msgid "Auto commit characters:"
-msgstr ""
+msgstr "자동 수행 문자:"
 
 #: setup/main.py:889
 msgid ""
@@ -1081,7 +1099,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1558
 msgid "Show status info in auxiliary text"
-msgstr ""
+msgstr "보조 텍스트에서 상태 정보를 표시"
 
 #: setup/main.py:1560
 msgid ""
@@ -1090,6 +1108,9 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
+"\"이모지 예측\"  방식 및 \"기록 끄기\"  방식은 켜고 끄는 것인지 보조 "
+"텍스트에서 표시하고 입력 방식이 현재 사전편집을 위해 사용되는지를 "
+"표시합니다. 보조 텍스트는 후보 목록 위에서 표시되는 선택적인 텍스트입니다."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
@@ -1106,12 +1127,12 @@ msgstr ""
 #. window should be drawn horizontally or vertically.
 #: setup/main.py:1606
 msgid "Candidate window orientation"
-msgstr ""
+msgstr "후보 창 방향"
 
 #: setup/main.py:1608
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
-msgstr ""
+msgstr "후보 창이 수평이거나 수직으로 그려지는지 여부."
 
 #: setup/main.py:1614
 msgid "Horizontal"
@@ -1126,24 +1147,24 @@ msgstr "세로"
 #. candidates are displayed
 #: setup/main.py:1645
 msgid "Candidate window delay in milliseconds:"
-msgstr ""
+msgstr "후보 창 지연 (ms):"
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
 #: setup/main.py:1649
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
-msgstr ""
+msgstr "마지막 키를 누른 후에 후보가 표시되기 전에 얼마나 기다려야 하는지."
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
 #: setup/main.py:1676
 msgid "Preedit underline"
-msgstr ""
+msgstr "사전편집 밑줄"
 
 #: setup/main.py:1678
 msgid "Which style of underlining to use for the preedit."
-msgstr ""
+msgstr "사전편집용으로 어떤 유형의 밑줄을 사용하는가."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
@@ -1177,7 +1198,7 @@ msgstr "아래"
 #. of characters before a lookup is done.
 #: setup/main.py:1724
 msgid "Use preedit style only if lookup is enabled"
-msgstr ""
+msgstr "조회가 활성화 되었을 때만 사전편집 유형을 사용합니다"
 
 #: setup/main.py:1726
 msgid ""
@@ -1193,7 +1214,7 @@ msgstr ""
 #. might contain a spelling error.
 #: setup/main.py:1746
 msgid "Preedit spellchecking"
-msgstr ""
+msgstr "사전편집 오타점검"
 
 #: setup/main.py:1748
 msgid ""
@@ -1207,7 +1228,7 @@ msgstr ""
 #. the spellchecking in the preedit.
 #: setup/main.py:1774
 msgid "Choose color for preedit spellchecking"
-msgstr ""
+msgstr "사전편집 오타점검을 위해 색상을 선택합니다"
 
 #: setup/main.py:1776
 msgid ""
@@ -1220,7 +1241,7 @@ msgstr ""
 #. custom color is used for suggestions shown inline.
 #: setup/main.py:1799
 msgid "Use color for inline completion"
-msgstr ""
+msgstr "행안 완성을 위해 색상을 사용합니다"
 
 #: setup/main.py:1801
 msgid ""
@@ -1233,7 +1254,7 @@ msgstr ""
 #. inline completion.
 #: setup/main.py:1825
 msgid "Choose color for inline completion"
-msgstr ""
+msgstr "행안 완성을 위해 색상을 선택합니다"
 
 #: setup/main.py:1827
 msgid ""
@@ -1246,7 +1267,7 @@ msgstr ""
 #. custom color is used for the compose preview.
 #: setup/main.py:1850
 msgid "Use color for compose preview"
-msgstr ""
+msgstr "작성 미리보기를 위해 색상을 사용합니다"
 
 #: setup/main.py:1852
 msgid ""
@@ -1258,7 +1279,7 @@ msgstr ""
 #. the compose preview.
 #: setup/main.py:1876
 msgid "Choose color for compose preview"
-msgstr ""
+msgstr "작성 미리보기를 위해 색상을 선택합니다"
 
 #: setup/main.py:1878
 msgid "Here you can specify which color to use for the compose preview."
@@ -1269,7 +1290,7 @@ msgstr ""
 #. user database.
 #: setup/main.py:1900
 msgid "Use color for user database suggestions"
-msgstr ""
+msgstr "사용자 데이타베이스 제안을 위해 색상을 사용합니다"
 
 #: setup/main.py:1902
 msgid ""
@@ -1282,7 +1303,7 @@ msgstr ""
 #. suggestions from the user database.
 #: setup/main.py:1923
 msgid "Choose color for user database suggestions"
-msgstr ""
+msgstr "사용자 데이타베이스 제안을 위해 색상을 사용합니다"
 
 #: setup/main.py:1925
 msgid ""
@@ -1295,7 +1316,7 @@ msgstr ""
 #. custom color is used for spellchecking suggestions.
 #: setup/main.py:1946
 msgid "Use color for spellchecking suggestions"
-msgstr ""
+msgstr "오타점검 제안을 위해 색상을 사용합니다"
 
 #: setup/main.py:1948
 msgid ""
@@ -1308,7 +1329,7 @@ msgstr ""
 #. spellchecking suggestions.
 #: setup/main.py:1969
 msgid "Choose color for spellchecking suggestions"
-msgstr ""
+msgstr "오타점검 제안을 위해 색상을 선택합니다"
 
 #: setup/main.py:1971
 msgid ""
@@ -1322,7 +1343,7 @@ msgstr ""
 #. dictionary.
 #: setup/main.py:1995
 msgid "Use color for dictionary suggestions"
-msgstr ""
+msgstr "사전 제안을 위해 색상을 사용합니다"
 
 #: setup/main.py:1997
 msgid ""
@@ -1335,7 +1356,7 @@ msgstr ""
 #. suggestions from a dictionary.
 #: setup/main.py:2018
 msgid "Choose color for dictionary suggestions"
-msgstr ""
+msgstr "사전 제안을 위해 색상을 선택합니다"
 
 #: setup/main.py:2020
 msgid ""
@@ -1349,7 +1370,7 @@ msgstr ""
 #. database in the candidate list.
 #: setup/main.py:2044
 msgid "Use label for user database suggestions"
-msgstr ""
+msgstr "사용자 데이타베이스 제안을 위해 이름표를 사용합니다"
 
 #: setup/main.py:2046
 msgid ""
@@ -1362,7 +1383,7 @@ msgstr ""
 #. in the candidate list.
 #: setup/main.py:2079
 msgid "Use label for spellchecking suggestions"
-msgstr ""
+msgstr "오타점검 제안을 위해 이름표를 사용합니다"
 
 #: setup/main.py:2081
 msgid ""
@@ -1375,7 +1396,7 @@ msgstr ""
 #. dictionary in the candidate list.
 #: setup/main.py:2114
 msgid "Use label for dictionary suggestions"
-msgstr ""
+msgstr "사전 제안을 위해 이름표를 사용합니다"
 
 #: setup/main.py:2116
 msgid ""
@@ -1388,34 +1409,36 @@ msgstr ""
 #. dictionary in the candidate list.
 #: setup/main.py:2149
 msgid "Use flags for dictionary suggestions"
-msgstr ""
+msgstr "사전 제안을 위해 깃발을 사용합니다"
 
 #: setup/main.py:2151
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
-msgstr ""
+msgstr "여기에서 당신은 깃발이 사전에서 가져오는 조회 테이블의 후보를 위해 "
+"사용되는지 여부를 선택 할 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
 #: setup/main.py:2166
 msgid "Use a label to indicate busy state"
-msgstr ""
+msgstr "동작 상태를 표시하는 데 이름표를 사용합니다"
 
 #: setup/main.py:2168
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
-msgstr ""
+msgstr "여기에서 당신은 이름표가 ibus-typing-booster가 동작 중일 때에도 사용되는지 "
+"여부를 선택 할 수 있습니다."
 
 #. Translators:
 #: setup/main.py:2199 setup/main.py:3326
 msgid "Set “Google application credentials” .json file:"
-msgstr ""
+msgstr "“구글 응용프로그램 인증서” .json 파일 설정:"
 
 #: setup/main.py:2201
 msgid "Full path of the “Google application credentials” .json file."
-msgstr ""
+msgstr "\"구글 응용프로그램 인증서\" .json 파일의 전체 경로."
 
 #: setup/main.py:2207
 msgid "File not yet set."
@@ -1592,7 +1615,8 @@ msgstr "ibus가 동작하지 않습니다."
 msgid ""
 "Emoji Picker is an emoji browsing tool which uses the emoji matching code "
 "from Ibus-typing-booster."
-msgstr ""
+msgstr "이모지 선택기는 Ibus-typing-booster에서 이모지 대응 코드를 사용하는 이모지 "
+"검색하는 도구입니다."
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
@@ -1608,3 +1632,6 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+"Ibus-typing-booster는 예측 입력 방식이고 문맥 및 부분 입력에 토대를 완전한 "
+"단어를 예측합니다. 그 다음에 간단히 제안 목록에서 원하는 단어를 선택하고 "
+"입력 속도와 철자를 개선 시킬 수 있습니다."
