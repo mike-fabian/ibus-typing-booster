@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-02-17 20:21+0100\n"
-"PO-Revision-Date: 2025-02-20 11:43+0000\n"
+"PO-Revision-Date: 2025-02-21 08:12+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ko/>\n"
@@ -680,6 +680,11 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
+"“기록 끄기” 방식이 켜져 있을 때에, 사용자 입력에서 학습은 비활성화 됩니다. "
+"만약 학습된 사용자 입력이 사용 가능하다면, 예측은 항상 사전으로만 사용된 "
+"예측보다 더 좋습니다. 그러므로, 이와 같은 옵션을 아껴서사용합니다. 만약 비밀 "
+"사용자 입력을 디스크에 저장하는 것을 피하고 싶은 경우에만, 임시로 이와 같은 "
+"옵션을 사용하는 것이 좋습니다."
 
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
@@ -699,6 +704,14 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"입력의 종류는 사용자 데이타베이스에서 기록된 것을 선택합니다: “모든”: 모든 "
+"입력된 단어는 사용자 데이타베이스에 추가되거나 만약 이미 그 곳에 있다면 "
+"횟수가 최신화됩니다. “올바른 철자 또는 이전에 기록됨”: 입력된 단어는 만약 "
+"올바르게 철자되는 경우에만 사용자 데이타베이로만 추가됩니다. 만약 단어가 "
+"이미 사용자 데이타베이스에 있으면 횟수가 철자된 방식과 상관없이 "
+"최신화됩니다.  “올바른 철자”: 입력된 단어는 올바로 철자되는 경우에만 "
+"데이타베이스로만 추가되거나 해당 횟수가 데이타베이스에 최신화됩니다.  “없음”:"
+" 사용자데이타베이스에 어떤 입력도 기록하지 않습니다."
 
 #: setup/main.py:679
 msgid "Everything"
@@ -774,6 +787,9 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
+"커서는 단어의 끝 또는 시작으로 움직일 때에 단어를 사전편집에 다시 넣도록 "
+"허용하는지 여부. 이와 같은 옵션을 활성화하면 이미 수행된 단어를 정정하는 데 "
+"유용합니다."
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
@@ -798,6 +814,10 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"일부 입력 방법은 기본적으로 언어에 지정된 자릿수가 나타납니다. 만약 이런 "
+"언어에 지정된 자릿수를 사용하지 원하지 않지만 항상 서양식 (ASCII) 자릿수를 "
+"선호하는 경우, 이와 같은 옵션을 입력 방식에서 생산된 언어에 지정된 자릿수를 "
+"항상 ASCII 자릿수로 변환하도록 설정 할 수 있습니다."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
@@ -811,6 +831,9 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"IBus 키맵의 사용이 입력 가속기가 활성화 중일 때에 강제되는지 여부. IBus "
+"키맵을 사용하지 않은 대부분의 사용자를 위해 추천됩니다. 그와 같은 경우에, "
+"입력 가속기로 전환하기 전에 활성화된 키배드 배열이 사용됩니다."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -1089,7 +1112,8 @@ msgstr "총 후보의 수를 표시합니다"
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
-msgstr ""
+msgstr "얼마나 많은 후보가 있는지 표시하고 이 중에 하나는 후보 목록의 최상위에서 "
+"선택됩니다."
 
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
@@ -1121,7 +1145,7 @@ msgstr "후보 창 화면 부분 크기:"
 #: setup/main.py:1584
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
-msgstr ""
+msgstr "후보 목록의 한 부분에서 얼마나 많은 제안 후보를 표시해야 하는가."
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
@@ -1207,6 +1231,10 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
+"만약 옵션이 켜져 있으면, 밑줄과 같은 사전편집 유형은 만약 조회가 활성화 "
+"되었을 때에만 사용됩니다. 조회는 키가 눌려 졌을 때에만 조회가 활성화 되도록 "
+"옵션을 사용하거나 조회를 수행하기 전에 최소한의 문자 수를 요구하는 옵션을 "
+"사용하기 때문에 비활성화 될 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -1222,6 +1250,9 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"여기에서 당신은 오타점검이 사전편집의 내용에서 실행되었는지 여부를 선택 할 "
+"수 있고 사용자 정의 색상은 사전편집이 철자 오류가 포함되었을 때에 표시하도록 "
+"사용됩니다."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1236,6 +1267,9 @@ msgid ""
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
+"여기에서 당신은 사전편집이 철자 오류가 포함될 때 사전편집을 위해 사용되는 "
+"색상을 지정 할 수 있습니다. 이와 같은 설정은 만약 사전편집 철자점검이 활성화 "
+"된 경우에서만 효과를 갖습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
@@ -1247,7 +1281,8 @@ msgstr "행안 완성을 위해 색상을 사용합니다"
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
-msgstr ""
+msgstr "여기에서 당신은 사용자 정의 색상이 제안이 표시된 인행을 위해 사용되었는지 "
+"여부를 선택 할 수 있습니다."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1262,6 +1297,9 @@ msgid ""
 "only has an effect if the use of color for inline completion is enabled and "
 "inline completion is enabled."
 msgstr ""
+"여기에서 당신은 인행 완성을 위해 사용되는 색상을 지정 할 수 있습니다. 이와 "
+"같은 설정은 만약 인행 완성을 위한 색상의 사용이 활성화 되고 인행 완성이 "
+"활성화 되었을 때에만 효과를 갖습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
@@ -1272,7 +1310,8 @@ msgstr "작성 미리보기를 위해 색상을 사용합니다"
 #: setup/main.py:1852
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
-msgstr ""
+msgstr "여기에서 당신은 사용자 정의 색상이 작성 미리보기를 위해 사용되었는지 여부를 "
+"선택 할 수 있습니다."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1283,7 +1322,7 @@ msgstr "작성 미리보기를 위해 색상을 선택합니다"
 
 #: setup/main.py:1878
 msgid "Here you can specify which color to use for the compose preview."
-msgstr ""
+msgstr "여기에서 당신은 작성 미리보기를 위해 사용하려는 색상을 지정 할 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
@@ -1297,6 +1336,8 @@ msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
 msgstr ""
+"여기에서 당신은 사용자 정의 색상은 사용자 데이타베이스에서 나온 조회 "
+"테이블의 후보자를 위해 사용되었는지 여부를 선택 할 수 있습니다."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1311,6 +1352,10 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
 msgstr ""
+"여기에서 당신은 사용자 데이타베이스에서 나온 조회 테이블의 후보를 위해 "
+"사용되도록 지정 할 수 있습니다. 이와 같은 설정은 만약 사용자 "
+"데이타베이스에서 후보를 위한 색상의 사용이 활성화 되었을 때만 효과를 "
+"갖습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
@@ -1322,7 +1367,8 @@ msgstr "오타점검 제안을 위해 색상을 사용합니다"
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
-msgstr ""
+msgstr "여기에서 당신은 사용자 정의 색상이 철자확인에서 나온 조회 테이블의 후보를 "
+"위해 사용되었는지 여부를 선택 할 수 있습니다."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1337,6 +1383,9 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
 msgstr ""
+"여기에서 당신은 철자점검에서 나온 조회 테이블의 후보를 위해 사용되는 색상을 "
+"지정 할 수 있습니다. 이와 같은 설정은 만약 철저점검에서 후보를 위한 색상의 "
+"사용이 활성화 되었을 때에만 효과를 갖습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
@@ -1349,7 +1398,8 @@ msgstr "사전 제안을 위해 색상을 사용합니다"
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
-msgstr ""
+msgstr "여기에서 당신은 사용자 색상이 사전에서 나온 조회 테이블의 후보를 위해 "
+"사용되었는지 여부를 확인 할 수 있습니다."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1364,6 +1414,9 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
 msgstr ""
+"여기에서 당신은 사전에서 나온 조회 테이블의 후보를 위해 사용하려는 색상을 "
+"지정 할 수 있습니다. 이와 같은 설정은 만약 사전에서 후보를 위한 색상의 "
+"사용이 활성화 되었을 때에만 효과가 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
@@ -1376,7 +1429,8 @@ msgstr "사용자 데이타베이스 제안을 위해 이름표를 사용합니�
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
-msgstr ""
+msgstr "여기에서 당신은 이름표가 사용자 데이타베이스에서 나온 조회 테이블의 후보를 "
+"위해 사용되었는지 여부를 선택 할 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1389,7 +1443,8 @@ msgstr "오타점검 제안을 위해 이름표를 사용합니다"
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
-msgstr ""
+msgstr "여기에서 당신은 이름표가 철자점검에서 나온 조회 테이블의 후보를 위해 "
+"사용되었는지 여부를 선택 할 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
@@ -1402,7 +1457,8 @@ msgstr "사전 제안을 위해 이름표를 사용합니다"
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
-msgstr ""
+msgstr "여기에서 당신은 이름표가 사전에서 가져온 조회 테이블의 후보를 위해 "
+"사용되는지 여부를 선택 할 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
