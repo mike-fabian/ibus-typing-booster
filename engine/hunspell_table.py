@@ -1137,8 +1137,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if not phrase:
             return
         phrase = itb_util.normalize_nfc_and_composition_exclusions(phrase)
-        dictionary_matches: List[str] = (
-            self.database.hunspell_obj.spellcheck_match_list(phrase))
+        dictionary_matches: List[str] = []
+        if not comment:
+            dictionary_matches = (
+                self.database.hunspell_obj.spellcheck_match_list(phrase))
         # U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR make
         # the line spacing in the lookup table huge, which looks ugly.
         # Remove them to make the lookup table look better.
@@ -1208,8 +1210,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 color_used = True
         if dictionary_matches:
             # This is a (possibly accent insensitive) match in a
-            # hunspell dictionary or an emoji matched by
-            # EmojiMatcher.
+            # hunspell dictionary
             if self._label_dictionary:
                 if not (phrase.endswith(' ')
                         or
