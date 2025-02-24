@@ -296,10 +296,10 @@ References:
 [13] https://fedoraproject.org/wiki/QA:Inscript2_Keymaps
 [14] https://en.wikipedia.org/wiki/Unicode
 [15] http://mike-fabian.github.io/ibus-typing-booster/
-[16] http://mike-fabian.github.io/ibus-typing-booster/documentation.html
+[16] https://mike-fabian.github.io/ibus-typing-booster/docs/user/
 [17] https://github.com/mike-fabian/ibus-typing-booster/issues
 [18] https://github.com/mike-fabian/ibus-typing-booster/pulls
 [19] https://translate.fedoraproject.org/projects/ibus-typing-booster/
-[20] http://mike-fabian.github.io/ibus-typing-booster/development.html
-[21] http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings
-[22] http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings
+[20] https://mike-fabian.github.io/ibus-typing-booster/docs/dev/
+[21] https://mike-fabian.github.io/ibus-typing-booster/docs/user/#table-of-default-key-bindings
+[22] https://mike-fabian.github.io/ibus-typing-booster/docs/user/#mouse-bindings

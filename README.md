@@ -31,7 +31,7 @@ _ibus-typing-booster_ also has the capability to type several different language
 ## Online documentation
 You can find online documentation here: 
 - [_ibus-typing-booster_ home page on github](http://mike-fabian.github.io/ibus-typing-booster/)
-- [_ibus-typing-booster_ documentation page](http://mike-fabian.github.io/ibus-typing-booster/documentation.html)
+- [_ibus-typing-booster_ documentation page](https://mike-fabian.github.io/ibus-typing-booster/docs/user/)
 
 ## Feature Requests & Bug reports
 - You can report bugs here:
@@ -44,13 +44,13 @@ The best (& the easiest) way to contribute translations is using this [online tr
 
 ## Development
 If  you want to build from  source or contribute to the development, see the
-[ibus-typing-booster development page](http://mike-fabian.github.io/ibus-typing-booster/development.html).
+[ibus-typing-booster development page](https://mike-fabian.github.io/ibus-typing-booster/docs/dev/).
 There you'd also find the requirements for building from source
 for most systems.
 
 ## Table of default key bindings
-- [Default key bindings](http://mike-fabian.github.io/ibus-typing-booster/documentation.html#key-bindings)
-- [Default mouse bindings](http://mike-fabian.github.io/ibus-typing-booster/documentation.html#mouse-bindings)
+- [Default key bindings](https://mike-fabian.github.io/ibus-typing-booster/docs/user/#table-of-default-key-bindings)
+- [Default mouse bindings](https://mike-fabian.github.io/ibus-typing-booster/docs/user/#mouse-bindings)
 
 *Note: These bindings are also shown below for convenience. Some of these key bindings can be customized in the setup tool.*
 
