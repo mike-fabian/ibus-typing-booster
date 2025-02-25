@@ -2564,6 +2564,29 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text,
                          'Không có gì quí hơn độc lập tự do ')
 
+    def test_compose_transliterated_hi_inscript2(self) -> None:
+        '''
+        Test case for compose sequence using transliteration,
+        see: https://github.com/mike-fabian/ibus-typing-booster/issues/654
+        /usr/share/X11/locale/en_US.UTF-8/Compose contains:
+
+        <Multi_key> <U093C> <U0930> : "ऱ" U0931 # DEVANAGARI LETTER RRA
+
+        So typing <Multi_key> + ']' + 'j' should produce
+        ऱ U+0931 DEVANAGARI LETTER RRA because 'hi-inscript2' transliterates
+        ']' to ़ U+093C DEVANAGARI SIGN NUKTA
+        'j' to र U+0930 DEVANAGARI LETTER RA
+        '''
+        dummy_trans = self.get_transliterator_or_skip('hi-inscript2')
+        self.engine.set_current_imes(
+            ['hi-inscript2'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '·')
+        self.engine.do_process_key_event(IBus.KEY_bracketright, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '\u093c')
+        self.engine.do_process_key_event(IBus.KEY_j, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '\u0931')
+
     def test_compose_and_latn_post(self) -> None:
         self.engine.set_current_imes(
             ['t-latn-post', 'NoIME'], update_gsettings=False)

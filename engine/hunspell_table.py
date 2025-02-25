@@ -7921,8 +7921,25 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return True
         if key.val in (IBus.KEY_BackSpace,):
             self._typed_compose_sequence.pop()
-        else:
+        elif not self._input_mode:
             self._typed_compose_sequence.append(key.val)
+        else:
+            transliterated_msymbol = self._transliterators[
+                        self.get_current_imes()[0]
+            ].transliterate([key.msymbol],
+                              ascii_digits=self._ascii_digits)
+            if (transliterated_msymbol != key.msymbol
+                and len(transliterated_msymbol) == 1):
+                new_keyval = IBus.unicode_to_keyval(transliterated_msymbol)
+                if self._debug_level > 1:
+                    LOGGER.debug(
+                        'Using transliterated key for compose %s %s %s',
+                        repr(transliterated_msymbol),
+                        f'Unicode 0x{ord(transliterated_msymbol):x}',
+                        f'new_keyval=0x{new_keyval:x}')
+                self._typed_compose_sequence.append(new_keyval)
+            else:
+                self._typed_compose_sequence.append(key.val)
         if not self._typed_compose_sequence:
             if self._debug_level > 1:
                 LOGGER.debug('Editing made the compose sequence empty.')
