@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 25 Feb 2025 Release 2.27.29
+* If an input method transliterates a single character into another single character use the transliterated result for Compose (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/654)
+* Ignore dictionary matches in the lookup table for candidates which have comments (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/655)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 21 Feb 2025 Release 2.27.28
 * Translation update from Weblate (ko 100%)
 
