@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-02-17 20:21+0100\n"
+"POT-Creation-Date: 2025-02-25 21:08+0100\n"
 "PO-Revision-Date: 2025-02-15 10:53+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
@@ -204,56 +204,56 @@ msgstr "Vorschläge auch für Unicode Symbole und Emoji"
 msgid "Off the record mode"
 msgstr "Vertraulicher Modus"
 
-#: engine/hunspell_table.py:1971
+#: engine/hunspell_table.py:1972
 msgid "Highest priority dictionary"
 msgstr "Wörterbuch höchster Priorität"
 
-#: engine/hunspell_table.py:1972
+#: engine/hunspell_table.py:1973
 msgid "Choose highest priority dictionary"
 msgstr "Wähle das Wörterbuch mit höchster Priorität"
 
-#: engine/hunspell_table.py:2001
+#: engine/hunspell_table.py:2002
 msgid "Preedit input method"
 msgstr "Preedit-Eingabemethode"
 
-#: engine/hunspell_table.py:2002
+#: engine/hunspell_table.py:2003
 msgid "Switch preedit input method"
 msgstr "Umschalten der Preedit-Eingabemethode"
 
-#: engine/hunspell_table.py:2347
+#: engine/hunspell_table.py:2348
 msgid "Setup"
 msgstr "Einstellungen"
 
-#: engine/hunspell_table.py:2350 setup/main.py:142
+#: engine/hunspell_table.py:2351 setup/main.py:142
 msgid "Preferences for ibus-typing-booster"
 msgstr "Ibus Typing Booster Einstellungen"
 
-#: engine/hunspell_table.py:6067
+#: engine/hunspell_table.py:6068
 msgid "Failed to import Google speech-to-text."
 msgstr "Fehler beim Importieren von Google speech-to-text."
 
-#: engine/hunspell_table.py:6070
+#: engine/hunspell_table.py:6071
 msgid "Failed to import pyaudio."
 msgstr "Fehler beim importieren von pyaudio."
 
-#: engine/hunspell_table.py:6073
+#: engine/hunspell_table.py:6074
 msgid "Failed to import queue."
 msgstr "Fehler beim Importieren von queue."
 
-#: engine/hunspell_table.py:6078
+#: engine/hunspell_table.py:6079
 msgid "No supported language for speech recognition."
 msgstr "Keine unterstützte Sprache für Spracherkennung."
 
-#: engine/hunspell_table.py:6082
+#: engine/hunspell_table.py:6083
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "„Google application credentials“ Datei “%s” nicht gefunden."
 
-#: engine/hunspell_table.py:6095
+#: engine/hunspell_table.py:6096
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Fehler bei initialisieren von Google speech-to-text. Siehe debug.log."
 
-#: engine/hunspell_table.py:6203
+#: engine/hunspell_table.py:6204
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google speech-to-text Fehler. Siehe debug.log."
 

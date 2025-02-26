@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-02-17 20:21+0100\n"
+"POT-Creation-Date: 2025-02-25 21:08+0100\n"
 "PO-Revision-Date: 2025-01-19 11:16+0000\n"
 "Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: Czech <https://translate.fedoraproject.org/projects/ibus-"
@@ -202,58 +202,58 @@ msgstr "Predikce symbolů Unicode a emodži"
 msgid "Off the record mode"
 msgstr "Režim mimo záznam"
 
-#: engine/hunspell_table.py:1971
+#: engine/hunspell_table.py:1972
 msgid "Highest priority dictionary"
 msgstr "Nejprioritnější slovník"
 
-#: engine/hunspell_table.py:1972
+#: engine/hunspell_table.py:1973
 msgid "Choose highest priority dictionary"
 msgstr "Zvolte nejprioritnější slovník"
 
-#: engine/hunspell_table.py:2001
+#: engine/hunspell_table.py:2002
 msgid "Preedit input method"
 msgstr "Metoda vstupu před editací"
 
-#: engine/hunspell_table.py:2002
+#: engine/hunspell_table.py:2003
 msgid "Switch preedit input method"
 msgstr "Přepnout metodu vstupu před editací"
 
 # auto translated by TM merge from project: ibus-table, version: master, DocId: ibus-table
-#: engine/hunspell_table.py:2347
+#: engine/hunspell_table.py:2348
 msgid "Setup"
 msgstr "Nastavení"
 
-#: engine/hunspell_table.py:2350 setup/main.py:142
+#: engine/hunspell_table.py:2351 setup/main.py:142
 msgid "Preferences for ibus-typing-booster"
 msgstr "Předvolby pro ibus-typing-booster"
 
-#: engine/hunspell_table.py:6067
+#: engine/hunspell_table.py:6068
 msgid "Failed to import Google speech-to-text."
 msgstr "Nepodařilo se importovat Google speech-to-text."
 
-#: engine/hunspell_table.py:6070
+#: engine/hunspell_table.py:6071
 msgid "Failed to import pyaudio."
 msgstr "Nepodařilo se importovat pyaudio."
 
-#: engine/hunspell_table.py:6073
+#: engine/hunspell_table.py:6074
 msgid "Failed to import queue."
 msgstr "Nepodařilo se importovat frontu."
 
-#: engine/hunspell_table.py:6078
+#: engine/hunspell_table.py:6079
 msgid "No supported language for speech recognition."
 msgstr "Žádný jazyk podporovaný pro rozpoznávání řeči."
 
-#: engine/hunspell_table.py:6082
+#: engine/hunspell_table.py:6083
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Nenalezen soubor „%s“ s „přihlašovacími údaji do Google“."
 
-#: engine/hunspell_table.py:6095
+#: engine/hunspell_table.py:6096
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Nepodařilo se inicializovat Google řeč na text. Viz záznam ladících událostí."
 
-#: engine/hunspell_table.py:6203
+#: engine/hunspell_table.py:6204
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Chyba Google řeč na text. Viz záznam ladících událostí."
 

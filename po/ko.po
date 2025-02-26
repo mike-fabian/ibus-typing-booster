@@ -9,11 +9,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-02-17 20:21+0100\n"
+"POT-Creation-Date: 2025-02-25 21:08+0100\n"
 "PO-Revision-Date: 2025-02-21 08:33+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
-"Language-Team: Korean <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/ko/>\n"
+"Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -200,56 +200,56 @@ msgstr "유니코드 기호 및 이모지 예측"
 msgid "Off the record mode"
 msgstr "기록 방식 끄기"
 
-#: engine/hunspell_table.py:1971
+#: engine/hunspell_table.py:1972
 msgid "Highest priority dictionary"
 msgstr "최우선 순위 사전"
 
-#: engine/hunspell_table.py:1972
+#: engine/hunspell_table.py:1973
 msgid "Choose highest priority dictionary"
 msgstr "최우순 순위 사전을 선택합니다"
 
-#: engine/hunspell_table.py:2001
+#: engine/hunspell_table.py:2002
 msgid "Preedit input method"
 msgstr "사전편집 입력 방식"
 
-#: engine/hunspell_table.py:2002
+#: engine/hunspell_table.py:2003
 msgid "Switch preedit input method"
 msgstr "사전편집 입력방식으로 전환합니다"
 
-#: engine/hunspell_table.py:2347
+#: engine/hunspell_table.py:2348
 msgid "Setup"
 msgstr "설정"
 
-#: engine/hunspell_table.py:2350 setup/main.py:142
+#: engine/hunspell_table.py:2351 setup/main.py:142
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster 환경설정"
 
-#: engine/hunspell_table.py:6067
+#: engine/hunspell_table.py:6068
 msgid "Failed to import Google speech-to-text."
 msgstr "구글 텍스트 음성 변환을 가져오는 데 실패함."
 
-#: engine/hunspell_table.py:6070
+#: engine/hunspell_table.py:6071
 msgid "Failed to import pyaudio."
 msgstr "pyaudio를 가져오는 데 실패함."
 
-#: engine/hunspell_table.py:6073
+#: engine/hunspell_table.py:6074
 msgid "Failed to import queue."
 msgstr "대기열을 가져오는 데 실패함."
 
-#: engine/hunspell_table.py:6078
+#: engine/hunspell_table.py:6079
 msgid "No supported language for speech recognition."
 msgstr "음성 인식용 지원 언어가 없습니다."
 
-#: engine/hunspell_table.py:6082
+#: engine/hunspell_table.py:6083
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "\"구글 응용프로그램 자격증명\" 파일 \"%s\"를 찾을 수 없습니다."
 
-#: engine/hunspell_table.py:6095
+#: engine/hunspell_table.py:6096
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "구글 텍스트 음성 변환을 초기화 하는 데 실패함. 결점 기록을 참고하세요."
 
-#: engine/hunspell_table.py:6203
+#: engine/hunspell_table.py:6204
 msgid "Google speech-to-text error. See debug.log."
 msgstr "구글 텍스트 음성 변환 오류. 결점 기록을 참고하세요."
 
@@ -535,10 +535,10 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
-"가장 좋은 완성는 전체 후보 목록에서 보여주는 대신 사전편집에서 행안에 우선 "
-"표시되는 것입니다. 행안 추천은 탭을 입력하여 선택 할 수 있고, 그런 후에 "
-"space 또는 control+space 입력에 의한 예로 일반적으로 수행됩니다. 탭을 다시 "
-"입력하여 다음 후보로 이동하고 전체 후보 목록을 엽니다."
+"가장 좋은 완성는 전체 후보 목록에서 보여주는 대신 사전편집에서 행안에 우선 표"
+"시되는 것입니다. 행안 추천은 탭을 입력하여 선택 할 수 있고, 그런 후에 space "
+"또는 control+space 입력에 의한 예로 일반적으로 수행됩니다. 탭을 다시 입력하"
+"여 다음 후보로 이동하고 전체 후보 목록을 엽니다."
 
 #: setup/main.py:449 setup/main.py:510
 msgid "No"
@@ -583,11 +583,11 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
-"입력한 내용이 무엇이든 자동으로 가장 적합한 후보를 선택하여 가장 적합한 "
-"후보로 자동으로 수정됩니다. 만약 이와 같은 옵션이 꺼져 있으면, 당신은 다음 "
-"후보를 선택하는 데 할당된 키를 사용하여 수동으로 후보를 선택해야 합니다. "
-"만약 이와 같은 옵션이 켜져 있고 선택한 후보를 자동으로 사용하지 않으려면, "
-"모든 후보를 해제하는 “취소” 명령을 위해 할당된 키를 사용 할 수 있습니다."
+"입력한 내용이 무엇이든 자동으로 가장 적합한 후보를 선택하여 가장 적합한 후보"
+"로 자동으로 수정됩니다. 만약 이와 같은 옵션이 꺼져 있으면, 당신은 다음 후보"
+"를 선택하는 데 할당된 키를 사용하여 수동으로 후보를 선택해야 합니다. 만약 이"
+"와 같은 옵션이 켜져 있고 선택한 후보를 자동으로 사용하지 않으려면, 모든 후보"
+"를 해제하는 “취소” 명령을 위해 할당된 키를 사용 할 수 있습니다."
 
 #: setup/main.py:512
 msgid "Yes, but only when extremely likely"
@@ -608,8 +608,9 @@ msgstr "마우스를 눌러 수행 할 때에 공백을 추가합니다"
 msgid ""
 "Add a space if a candidate from the candidate list is committed by clicking "
 "it with the mouse."
-msgstr "만약 후보 목록에서 후보를 마우스로 이를 눌렀을 때에 수행되도록 공백을 "
-"추가합니다."
+msgstr ""
+"만약 후보 목록에서 후보를 마우스로 이를 눌렀을 때에 수행되도록 공백을 추가합"
+"니다."
 
 #. Translators: If more then one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -628,10 +629,10 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
-"만약 동시에 하나 이상의 입력 방식이 동시에 사용된다면, 이들 중에 하나는 "
-"사전편집을 위해 사용됩니다. 입력 방식이 사전편집용에 사용되는 것은 메뉴나 "
-"바로가기 키를 통해 변경 될 수 있습니다. 만약 해당 옵션이 활성화 되어 있으면, "
-"이들 변경은 만약 세션이 재시작 되더라도 기억됩니다."
+"만약 동시에 하나 이상의 입력 방식이 동시에 사용된다면, 이들 중에 하나는 사전"
+"편집을 위해 사용됩니다. 입력 방식이 사전편집용에 사용되는 것은 메뉴나 바로가"
+"기 키를 통해 변경 될 수 있습니다. 만약 해당 옵션이 활성화 되어 있으면, 이들 "
+"변경은 만약 세션이 재시작 되더라도 기억됩니다."
 
 #. Translators: If more then one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -647,7 +648,8 @@ msgstr "입력 방식을 기억합니다"
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
-msgstr "만약 해당 옵션이 활성화 되어 있으면, 최근 사용된 입력 방식(켜기/끄기)은 만약 "
+msgstr ""
+"만약 해당 옵션이 활성화 되어 있으면, 최근 사용된 입력 방식(켜기/끄기)은 만약 "
 "세션이 재시작 되더라도 기억됩니다."
 
 #. Translators: Whether ibus-typing-booster should show word predictions.
@@ -667,10 +669,10 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
-"유니코드 기호 및 이모지가 예측에 포함되는지 여부. 이모지는 ☺♨⛵와 같은 "
-"상형문자입니다... 유니코드 기호는 수학기호 (∀∑∯…), 화살표 (←↑↔…), 통화 기호 "
-"(€₹₺…), 점자 유형 (⠥⠩…) 및 수 많은 다른 기호와 같은 다른 기호입니다. 이 "
-"것들은 기술적으로 이모지는 아니지만 그런데도 유용한 기호입니다."
+"유니코드 기호 및 이모지가 예측에 포함되는지 여부. 이모지는 ☺♨⛵와 같은 상형문"
+"자입니다... 유니코드 기호는 수학기호 (∀∑∯…), 화살표 (←↑↔…), 통화 기호 (€₹"
+"₺…), 점자 유형 (⠥⠩…) 및 수 많은 다른 기호와 같은 다른 기호입니다. 이 것들은 "
+"기술적으로 이모지는 아니지만 그런데도 유용한 기호입니다."
 
 #: setup/main.py:642
 msgid ""
@@ -680,11 +682,11 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
-"“기록 끄기” 방식이 켜져 있을 때에, 사용자 입력에서 학습은 비활성화 됩니다. "
-"만약 학습된 사용자 입력이 사용 가능하다면, 예측은 항상 사전으로만 사용된 "
-"예측보다 더 좋습니다. 그러므로, 이와 같은 옵션을 아껴서사용합니다. 만약 비밀 "
-"사용자 입력을 디스크에 저장하는 것을 피하고 싶은 경우에만, 임시로 이와 같은 "
-"옵션을 사용하는 것이 좋습니다."
+"“기록 끄기” 방식이 켜져 있을 때에, 사용자 입력에서 학습은 비활성화 됩니다. 만"
+"약 학습된 사용자 입력이 사용 가능하다면, 예측은 항상 사전으로만 사용된 예측보"
+"다 더 좋습니다. 그러므로, 이와 같은 옵션을 아껴서사용합니다. 만약 비밀 사용"
+"자 입력을 디스크에 저장하는 것을 피하고 싶은 경우에만, 임시로 이와 같은 옵션"
+"을 사용하는 것이 좋습니다."
 
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
@@ -704,14 +706,14 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
-"입력의 종류는 사용자 데이타베이스에서 기록된 것을 선택합니다: “모든”: 모든 "
-"입력된 단어는 사용자 데이타베이스에 추가되거나 만약 이미 그 곳에 있다면 "
-"횟수가 최신화됩니다. “올바른 철자 또는 이전에 기록됨”: 입력된 단어는 만약 "
-"올바르게 철자되는 경우에만 사용자 데이타베이로만 추가됩니다. 만약 단어가 "
-"이미 사용자 데이타베이스에 있으면 횟수가 철자된 방식과 상관없이 "
-"최신화됩니다.  “올바른 철자”: 입력된 단어는 올바로 철자되는 경우에만 "
-"데이타베이스로만 추가되거나 해당 횟수가 데이타베이스에 최신화됩니다.  “없음”:"
-" 사용자데이타베이스에 어떤 입력도 기록하지 않습니다."
+"입력의 종류는 사용자 데이타베이스에서 기록된 것을 선택합니다: “모든”: 모든 입"
+"력된 단어는 사용자 데이타베이스에 추가되거나 만약 이미 그 곳에 있다면 횟수가 "
+"최신화됩니다. “올바른 철자 또는 이전에 기록됨”: 입력된 단어는 만약 올바르게 "
+"철자되는 경우에만 사용자 데이타베이로만 추가됩니다. 만약 단어가 이미 사용자 "
+"데이타베이스에 있으면 횟수가 철자된 방식과 상관없이 최신화됩니다.  “올바른 철"
+"자”: 입력된 단어는 올바로 철자되는 경우에만 데이타베이스로만 추가되거나 해당 "
+"횟수가 데이타베이스에 최신화됩니다.  “없음”: 사용자데이타베이스에 어떤 입력"
+"도 기록하지 않습니다."
 
 #: setup/main.py:679
 msgid "Everything"
@@ -770,8 +772,8 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
-"만약 %s 함수가 깨지면 해결 방법을 사용하세요. 반드시 필요한 경우에만 이 "
-"옵션을 활성화하고, 특히 XIM이 사용 될 때에는 문제가 발생 할 수도 있습니다."
+"만약 %s 함수가 깨지면 해결 방법을 사용하세요. 반드시 필요한 경우에만 이 옵션"
+"을 활성화하고, 특히 XIM이 사용 될 때에는 문제가 발생 할 수도 있습니다."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -787,9 +789,9 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
-"커서는 단어의 끝 또는 시작으로 움직일 때에 단어를 사전편집에 다시 넣도록 "
-"허용하는지 여부. 이와 같은 옵션을 활성화하면 이미 수행된 단어를 정정하는 데 "
-"유용합니다."
+"커서는 단어의 끝 또는 시작으로 움직일 때에 단어를 사전편집에 다시 넣도록 허용"
+"하는지 여부. 이와 같은 옵션을 활성화하면 이미 수행된 단어를 정정하는 데 유용"
+"합니다."
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
@@ -814,10 +816,10 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
-"일부 입력 방법은 기본적으로 언어에 지정된 자릿수가 나타납니다. 만약 이런 "
-"언어에 지정된 자릿수를 사용하지 원하지 않지만 항상 서양식 (ASCII) 자릿수를 "
-"선호하는 경우, 이와 같은 옵션을 입력 방식에서 생산된 언어에 지정된 자릿수를 "
-"항상 ASCII 자릿수로 변환하도록 설정 할 수 있습니다."
+"일부 입력 방법은 기본적으로 언어에 지정된 자릿수가 나타납니다. 만약 이런 언어"
+"에 지정된 자릿수를 사용하지 원하지 않지만 항상 서양식 (ASCII) 자릿수를 선호하"
+"는 경우, 이와 같은 옵션을 입력 방식에서 생산된 언어에 지정된 자릿수를 항상 "
+"ASCII 자릿수로 변환하도록 설정 할 수 있습니다."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
@@ -831,9 +833,9 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
-"IBus 키맵의 사용이 입력 가속기가 활성화 중일 때에 강제되는지 여부. IBus "
-"키맵을 사용하지 않은 대부분의 사용자를 위해 추천됩니다. 그와 같은 경우에, "
-"입력 가속기로 전환하기 전에 활성화된 키배드 배열이 사용됩니다."
+"IBus 키맵의 사용이 입력 가속기가 활성화 중일 때에 강제되는지 여부. IBus 키맵"
+"을 사용하지 않은 대부분의 사용자를 위해 추천됩니다. 그와 같은 경우에, 입력 가"
+"속기로 전환하기 전에 활성화된 키배드 배열이 사용됩니다."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -857,8 +859,9 @@ msgstr "이모지 트리거 문자:"
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
-msgstr "이 목록에서 문자는 만약 옵션 \"유니코드 및 이모지 예측\"이 꺼져 있더래도 "
-"이모지 및 유니콘 기호 조회를 일으킵니다."
+msgstr ""
+"이 목록에서 문자는 만약 옵션 \"유니코드 및 이모지 예측\"이 꺼져 있더래도 이모"
+"지 및 유니콘 기호 조회를 일으킵니다."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -888,14 +891,14 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
-"이 목록에서 문자는 사전편집을 자동으로 수행되도록 하며, 뒤에 공백이 "
-"들어갑니다.  예로, 만약 “.”이 자동 수행 문자라면, 이는 문장의 끝 뒤에 "
-"수동으로 공백을 입력하지 않아도 됩니다. 당신은 이와 같은 목록을 자유롭게 "
-"편집 할 수 있고, 적절한 값 “.,;:?!)”일 수 있습니다. 당신은 자신의 입력 "
-"방식에 의해 필요로 하는 해당 목록에 문자를 추가하지 않도록 하고, 예로 만약 "
-"당신이 Latin-Pre (t-latn-pre)를 사용하면 “.s” 입력에서 “s”를 갖는 것을 "
-"방지하기 때문에 해당 목록에 “.” 추가하는 것은 좋은 생각이 아닙니다. 당신은 "
-"또한 목록을 비워(기본값) 기능을 완전히 비활성화 할 수 있습니다."
+"이 목록에서 문자는 사전편집을 자동으로 수행되도록 하며, 뒤에 공백이 들어갑니"
+"다.  예로, 만약 “.”이 자동 수행 문자라면, 이는 문장의 끝 뒤에 수동으로 공백"
+"을 입력하지 않아도 됩니다. 당신은 이와 같은 목록을 자유롭게 편집 할 수 있고, "
+"적절한 값 “.,;:?!)”일 수 있습니다. 당신은 자신의 입력 방식에 의해 필요로 하"
+"는 해당 목록에 문자를 추가하지 않도록 하고, 예로 만약 당신이 Latin-Pre (t-"
+"latn-pre)를 사용하면 “.s” 입력에서 “s”를 갖는 것을 방지하기 때문에 해당 목록"
+"에 “.” 추가하는 것은 좋은 생각이 아닙니다. 당신은 또한 목록을 비워(기본값) 기"
+"능을 완전히 비활성화 할 수 있습니다."
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
@@ -1032,7 +1035,8 @@ msgstr "입력 방식 도움말"
 
 #: setup/main.py:1240
 msgid "Display some help showing how to use the input method selected above."
-msgstr "위에 선택한 입력 방식을 사용하는 방법을 표시하는 약간의 도움말을 표시합니다."
+msgstr ""
+"위에 선택한 입력 방식을 사용하는 방법을 표시하는 약간의 도움말을 표시합니다."
 
 #. Translators: Tooltip for a button to set some advanced
 #. options for the input method currently selected in the
@@ -1120,8 +1124,9 @@ msgstr "총 후보의 수를 표시합니다"
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
-msgstr "얼마나 많은 후보가 있는지 표시하고 이 중에 하나는 후보 목록의 최상위에서 "
-"선택됩니다."
+msgstr ""
+"얼마나 많은 후보가 있는지 표시하고 이 중에 하나는 후보 목록의 최상위에서 선택"
+"됩니다."
 
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
@@ -1140,9 +1145,9 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
-"\"이모지 예측\"  방식 및 \"기록 끄기\"  방식은 켜고 끄는 것인지 보조 "
-"텍스트에서 표시하고 입력 방식이 현재 사전편집을 위해 사용되는지를 "
-"표시합니다. 보조 텍스트는 후보 목록 위에서 표시되는 선택적인 텍스트입니다."
+"\"이모지 예측\"  방식 및 \"기록 끄기\"  방식은 켜고 끄는 것인지 보조 텍스트에"
+"서 표시하고 입력 방식이 현재 사전편집을 위해 사용되는지를 표시합니다. 보조 텍"
+"스트는 후보 목록 위에서 표시되는 선택적인 텍스트입니다."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
@@ -1239,10 +1244,10 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
-"만약 옵션이 켜져 있으면, 밑줄과 같은 사전편집 유형은 만약 조회가 활성화 "
-"되었을 때에만 사용됩니다. 조회는 키가 눌려 졌을 때에만 조회가 활성화 되도록 "
-"옵션을 사용하거나 조회를 수행하기 전에 최소한의 문자 수를 요구하는 옵션을 "
-"사용하기 때문에 비활성화 될 수 있습니다."
+"만약 옵션이 켜져 있으면, 밑줄과 같은 사전편집 유형은 만약 조회가 활성화 되었"
+"을 때에만 사용됩니다. 조회는 키가 눌려 졌을 때에만 조회가 활성화 되도록 옵션"
+"을 사용하거나 조회를 수행하기 전에 최소한의 문자 수를 요구하는 옵션을 사용하"
+"기 때문에 비활성화 될 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -1275,8 +1280,8 @@ msgid ""
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
-"여기에서 당신은 사전편집이 철자 오류가 포함될 때 사전편집을 위해 사용되는 "
-"색상을 지정 할 수 있습니다. 이와 같은 설정은 만약 사전편집 철자점검이 활성화 "
+"여기에서 당신은 사전편집이 철자 오류가 포함될 때 사전편집을 위해 사용되는 색"
+"상을 지정 할 수 있습니다. 이와 같은 설정은 만약 사전편집 철자점검이 활성화 "
 "된 경우에서만 효과를 갖습니다."
 
 #. Translators: A checkbox where one can choose whether a
@@ -1289,8 +1294,9 @@ msgstr "행안 완성을 위해 색상을 사용합니다"
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
-msgstr "여기에서 당신은 사용자 정의 색상이 제안이 표시된 인행을 위해 사용되었는지 "
-"여부를 선택 할 수 있습니다."
+msgstr ""
+"여기에서 당신은 사용자 정의 색상이 제안이 표시된 인행을 위해 사용되었는지 여"
+"부를 선택 할 수 있습니다."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1305,9 +1311,9 @@ msgid ""
 "only has an effect if the use of color for inline completion is enabled and "
 "inline completion is enabled."
 msgstr ""
-"여기에서 당신은 인행 완성을 위해 사용되는 색상을 지정 할 수 있습니다. 이와 "
-"같은 설정은 만약 인행 완성을 위한 색상의 사용이 활성화 되고 인행 완성이 "
-"활성화 되었을 때에만 효과를 갖습니다."
+"여기에서 당신은 인행 완성을 위해 사용되는 색상을 지정 할 수 있습니다. 이와 같"
+"은 설정은 만약 인행 완성을 위한 색상의 사용이 활성화 되고 인행 완성이 활성화 "
+"되었을 때에만 효과를 갖습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
@@ -1318,7 +1324,8 @@ msgstr "작성 미리보기를 위해 색상을 사용합니다"
 #: setup/main.py:1852
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
-msgstr "여기에서 당신은 사용자 정의 색상이 작성 미리보기를 위해 사용되었는지 여부를 "
+msgstr ""
+"여기에서 당신은 사용자 정의 색상이 작성 미리보기를 위해 사용되었는지 여부를 "
 "선택 할 수 있습니다."
 
 #. Translators: Used in the title bar of the colour chooser
@@ -1330,7 +1337,8 @@ msgstr "작성 미리보기를 위해 색상을 선택합니다"
 
 #: setup/main.py:1878
 msgid "Here you can specify which color to use for the compose preview."
-msgstr "여기에서 당신은 작성 미리보기를 위해 사용하려는 색상을 지정 할 수 있습니다."
+msgstr ""
+"여기에서 당신은 작성 미리보기를 위해 사용하려는 색상을 지정 할 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
@@ -1344,8 +1352,8 @@ msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
 msgstr ""
-"여기에서 당신은 사용자 정의 색상은 사용자 데이타베이스에서 나온 조회 "
-"테이블의 후보자를 위해 사용되었는지 여부를 선택 할 수 있습니다."
+"여기에서 당신은 사용자 정의 색상은 사용자 데이타베이스에서 나온 조회 테이블"
+"의 후보자를 위해 사용되었는지 여부를 선택 할 수 있습니다."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1360,10 +1368,9 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
 msgstr ""
-"여기에서 당신은 사용자 데이타베이스에서 나온 조회 테이블의 후보를 위해 "
-"사용되도록 지정 할 수 있습니다. 이와 같은 설정은 만약 사용자 "
-"데이타베이스에서 후보를 위한 색상의 사용이 활성화 되었을 때만 효과를 "
-"갖습니다."
+"여기에서 당신은 사용자 데이타베이스에서 나온 조회 테이블의 후보를 위해 사용되"
+"도록 지정 할 수 있습니다. 이와 같은 설정은 만약 사용자 데이타베이스에서 후보"
+"를 위한 색상의 사용이 활성화 되었을 때만 효과를 갖습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
@@ -1375,8 +1382,9 @@ msgstr "오타점검 제안을 위해 색상을 사용합니다"
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
-msgstr "여기에서 당신은 사용자 정의 색상이 철자확인에서 나온 조회 테이블의 후보를 "
-"위해 사용되었는지 여부를 선택 할 수 있습니다."
+msgstr ""
+"여기에서 당신은 사용자 정의 색상이 철자확인에서 나온 조회 테이블의 후보를 위"
+"해 사용되었는지 여부를 선택 할 수 있습니다."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1392,8 +1400,8 @@ msgid ""
 "color for candidates from spellchecking is enabled."
 msgstr ""
 "여기에서 당신은 철자점검에서 나온 조회 테이블의 후보를 위해 사용되는 색상을 "
-"지정 할 수 있습니다. 이와 같은 설정은 만약 철저점검에서 후보를 위한 색상의 "
-"사용이 활성화 되었을 때에만 효과를 갖습니다."
+"지정 할 수 있습니다. 이와 같은 설정은 만약 철저점검에서 후보를 위한 색상의 사"
+"용이 활성화 되었을 때에만 효과를 갖습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
@@ -1406,8 +1414,9 @@ msgstr "사전 제안을 위해 색상을 사용합니다"
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
-msgstr "여기에서 당신은 사용자 색상이 사전에서 나온 조회 테이블의 후보를 위해 "
-"사용되었는지 여부를 확인 할 수 있습니다."
+msgstr ""
+"여기에서 당신은 사용자 색상이 사전에서 나온 조회 테이블의 후보를 위해 사용되"
+"었는지 여부를 확인 할 수 있습니다."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1422,9 +1431,9 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
 msgstr ""
-"여기에서 당신은 사전에서 나온 조회 테이블의 후보를 위해 사용하려는 색상을 "
-"지정 할 수 있습니다. 이와 같은 설정은 만약 사전에서 후보를 위한 색상의 "
-"사용이 활성화 되었을 때에만 효과가 있습니다."
+"여기에서 당신은 사전에서 나온 조회 테이블의 후보를 위해 사용하려는 색상을 지"
+"정 할 수 있습니다. 이와 같은 설정은 만약 사전에서 후보를 위한 색상의 사용이 "
+"활성화 되었을 때에만 효과가 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
@@ -1437,8 +1446,9 @@ msgstr "사용자 데이타베이스 제안을 위해 이름표를 사용합니�
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
-msgstr "여기에서 당신은 이름표가 사용자 데이타베이스에서 나온 조회 테이블의 후보를 "
-"위해 사용되었는지 여부를 선택 할 수 있습니다."
+msgstr ""
+"여기에서 당신은 이름표가 사용자 데이타베이스에서 나온 조회 테이블의 후보를 위"
+"해 사용되었는지 여부를 선택 할 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1451,8 +1461,9 @@ msgstr "오타점검 제안을 위해 이름표를 사용합니다"
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
-msgstr "여기에서 당신은 이름표가 철자점검에서 나온 조회 테이블의 후보를 위해 "
-"사용되었는지 여부를 선택 할 수 있습니다."
+msgstr ""
+"여기에서 당신은 이름표가 철자점검에서 나온 조회 테이블의 후보를 위해 사용되었"
+"는지 여부를 선택 할 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
@@ -1465,8 +1476,9 @@ msgstr "사전 제안을 위해 이름표를 사용합니다"
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
-msgstr "여기에서 당신은 이름표가 사전에서 가져온 조회 테이블의 후보를 위해 "
-"사용되는지 여부를 선택 할 수 있습니다."
+msgstr ""
+"여기에서 당신은 이름표가 사전에서 가져온 조회 테이블의 후보를 위해 사용되는"
+"지 여부를 선택 할 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
@@ -1479,8 +1491,9 @@ msgstr "사전 제안을 위해 깃발을 사용합니다"
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
-msgstr "여기에서 당신은 깃발이 사전에서 가져오는 조회 테이블의 후보를 위해 "
-"사용되는지 여부를 선택 할 수 있습니다."
+msgstr ""
+"여기에서 당신은 깃발이 사전에서 가져오는 조회 테이블의 후보를 위해 사용되는"
+"지 여부를 선택 할 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
@@ -1492,8 +1505,9 @@ msgstr "동작 상태를 표시하는 데 이름표를 사용합니다"
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
-msgstr "여기에서 당신은 이름표가 ibus-typing-booster가 동작 중일 때에도 사용되는지 "
-"여부를 선택 할 수 있습니다."
+msgstr ""
+"여기에서 당신은 이름표가 ibus-typing-booster가 동작 중일 때에도 사용되는지 여"
+"부를 선택 할 수 있습니다."
 
 #. Translators:
 #: setup/main.py:2199 setup/main.py:3326
@@ -1679,8 +1693,9 @@ msgstr "ibus가 동작하지 않습니다."
 msgid ""
 "Emoji Picker is an emoji browsing tool which uses the emoji matching code "
 "from Ibus-typing-booster."
-msgstr "이모지 선택기는 Ibus-typing-booster에서 이모지 대응 코드를 사용하는 이모지 "
-"검색하는 도구입니다."
+msgstr ""
+"이모지 선택기는 Ibus-typing-booster에서 이모지 대응 코드를 사용하는 이모지 검"
+"색하는 도구입니다."
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
@@ -1696,6 +1711,6 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
-"Ibus-typing-booster는 예측 입력 방식이고 문맥 및 부분 입력에 토대를 완전한 "
-"단어를 예측합니다. 그 다음에 간단히 제안 목록에서 원하는 단어를 선택하고 "
-"입력 속도와 철자를 개선 시킬 수 있습니다."
+"Ibus-typing-booster는 예측 입력 방식이고 문맥 및 부분 입력에 토대를 완전한 단"
+"어를 예측합니다. 그 다음에 간단히 제안 목록에서 원하는 단어를 선택하고 입력 "
+"속도와 철자를 개선 시킬 수 있습니다."
