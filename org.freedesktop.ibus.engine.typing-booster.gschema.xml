@@ -337,7 +337,7 @@
     </key>
     <key name="asciidigits" type="b">
       <default>false</default>
-      <summary>Disable in terminals</summary>
+      <summary>Convert language specific digits to ASCII digits</summary>
       <description>
         Some input methods produce language specific digits by
         default. If one never wants to use such language specific
