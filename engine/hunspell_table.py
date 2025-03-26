@@ -228,8 +228,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         self._word_predictions: bool = self._settings_dict[
             'wordpredictions']['user']
+        self._temporary_word_predictions = False
         self._emoji_predictions: bool = self._settings_dict[
             'emojipredictions']['user']
+        self._temporary_emoji_predictions = False
 
         self.is_lookup_table_enabled_by_min_char_complete = False
         self._min_char_complete: int = self._settings_dict[
@@ -966,6 +968,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         return bool(self._emoji_predictions
                     or self._emoji_trigger_characters != ''
+                    or self._keybindings['trigger_emoji_predictions']
+                    or self._keybindings['trigger_word_predictions']
                     or self._word_predictions)
 
     def _try_early_commit(self) -> bool:
@@ -978,7 +982,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     and not self._typed_compose_sequence
                     and not self._m17n_trans_parts.candidates
                     and not self._word_predictions
+                    and not self._temporary_word_predictions
                     and not self._emoji_predictions
+                    and not self._temporary_emoji_predictions
                     and not self._typed_string[0] in self._emoji_trigger_characters)
 
     def is_empty(self) -> bool:
@@ -1010,6 +1016,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._lookup_table_shows_related_candidates = False
         self._lookup_table_shows_compose_completions = False
         self._lookup_table_shows_m17n_candidates = False
+        self._temporary_word_predictions = False
+        self._temporary_emoji_predictions = False
 
     def _insert_string_at_cursor(self, string_to_insert: List[str]) -> None:
         '''Insert typed string at cursor position'''
@@ -1300,7 +1308,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         phrase_frequencies: Dict[str, int] = {}
         phrase_candidates: List[Tuple[str, int, str, bool, bool]] = []
         self.is_lookup_table_enabled_by_min_char_complete = False
-        if self._word_predictions:
+        if self._word_predictions or self._temporary_word_predictions:
             for ime in self._current_imes:
                 if self._transliterated_strings[ime]:
                     candidates = []
@@ -1376,6 +1384,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     phrase_frequencies)
         if ((self._emoji_predictions
              and not self.client_capabilities & itb_util.Capabilite.OSK)
+            or self._temporary_emoji_predictions
             or self._typed_string[0] in self._emoji_trigger_characters
             or self._typed_string[-1] in self._emoji_trigger_characters):
             # If emoji mode is off and the emoji predictions are
@@ -6284,15 +6293,18 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         if (self.is_empty()
             and not self._typed_compose_sequence):
-            if self.get_lookup_table().get_number_of_candidates():
+            if (self.get_lookup_table().get_number_of_candidates()
+                or self._temporary_word_predictions
+                or self._temporary_emoji_predictions):
                 # There might be candidates even if the input
                 # is empty if self._min_char_complete == 0.
-                # If that is the case, cancel these candidates
-                # and return True. If not, return False
+                # If that is the case, cancel these candidates.
+                # If temporary predictions are enabled, disable them.
+                # If anything was done, return True. If not, return False
                 # because then there is nothing to cancel and the
                 # key which triggered the cancel command should be
                 # passed through.
-                self._update_ui_empty_input()
+                self._clear_input_and_update_ui()
                 return True
             return False
         if self._typed_compose_sequence:
@@ -6624,6 +6636,22 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :return: True if the key was completely handled, False if not.
         '''
         self.toggle_emoji_prediction_mode()
+        return True
+
+    def _command_trigger_emoji_predictions(self) -> bool:
+        '''Handle hotkey for the command “trigger_emoji_predictions”
+
+        :return: True if the key was completely handled, False if not.
+        '''
+        self._temporary_emoji_predictions = True
+        return True
+
+    def _command_trigger_word_predictions(self) -> bool:
+        '''Handle hotkey for the command “trigger_word_predictions”
+
+        :return: True if the key was completely handled, False if not.
+        '''
+        self._temporary_word_predictions = True
         return True
 
     def _command_toggle_off_the_record(self) -> bool:
