@@ -9,8 +9,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-04-02 09:23+0200\n"
-"PO-Revision-Date: 2025-04-02 07:48+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"PO-Revision-Date: 2025-04-02 14:36+0000\n"
+"Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
 "Language-Team: Finnish <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/fi/>\n"
 "Language: fi\n"
@@ -400,7 +400,7 @@ msgstr "Täydennyksen syöttötapa kirjoittamisen nopeuttamiseksi."
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:5973
 msgid "translator-credits"
-msgstr ""
+msgstr "Ricky Tigg"
 
 #: engine/itb_util.py:5981
 msgid "Online documentation:"
@@ -645,22 +645,24 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:581
 msgid "Remember input mode"
-msgstr ""
+msgstr "Muista syöttötila"
 
 #: setup/main.py:583
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"Jos tämä vaihtoehto on käytössä, viimeksi käytetty syöttötila (päällä/pois "
+"päältä) muistetaan, vaikka istunto käynnistetään uudelleen."
 
 #. Translators: Whether ibus-typing-booster should show word predictions.
 #: setup/main.py:596
 msgid "Word predictions"
-msgstr ""
+msgstr "Sanaennusteet"
 
 #: setup/main.py:598
 msgid "Whether ibus-typing-booster should show word predictions."
-msgstr ""
+msgstr "Näyttääkö ibus-typing-boosterin sanaennusteet."
 
 #: setup/main.py:617
 msgid ""
@@ -670,6 +672,11 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
+"Pitäisikö Unicode-symbolit ja emojit sisällyttää ennusteisiin. Emojit ovat "
+"kuvamerkkejä kuten ☺, ♨, ⛵…. Unicode-symbolit ovat muita symboleja, kuten "
+"matemaattisia symboleja (∀, ∑, ∯…), nuolia (←, ↑, ↔…), valuuttasymboleja (€, "
+"₹, ₺…), pistekirjoituskuvioita (⠥, ⠩…) ja monia muita symboleja. Nämä eivät "
+"ole teknisesti hymiöitä, mutta silti hyödyllisiä symboleja."
 
 #: setup/main.py:642
 msgid ""
@@ -679,12 +686,18 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
+"Kun \"Epävirallinen\"-tila on päällä, käyttäjän syötteestä oppiminen ei ole "
+"käytössä. Jos oppitun käyttäjän syöte on käytettävissä, ennusteet ovat "
+"yleensä paljon parempia kuin pelkän sanakirjan avulla tehdyt ennusteet. "
+"Siksi tätä vaihtoehtoa tulisi käyttää säästeliäästi. Vain jos halutaan "
+"välttää salaisen käyttäjän syötteen tallentamista levylle, voi olla järkevää "
+"käyttää tätä vaihtoehtoa väliaikaisesti."
 
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
 #: setup/main.py:662
 msgid "Record mode"
-msgstr ""
+msgstr "Nauhoitustila"
 
 #: setup/main.py:664
 msgid ""
@@ -698,6 +711,16 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"Valitsee, minkä tyyppinen syöte tallennetaan käyttäjätietokantaan. \"Kaikki\""
+": Jokainen kirjoitettu sana lisätään käyttäjätietokantaan tai sen tiheys "
+"päivitetään, jos se on jo siellä. "
+"\"Oikein kirjoitettu tai aiemmin nauhoitettu\": kirjoitettu sana lisätään "
+"käyttäjätietokantaan vain, jos se on todennäköisesti oikein kirjoitettu. Jos "
+"sana on jo käyttäjätietokannassa, sen tiheys päivitetään riippumatta siitä, "
+"miten se kirjoitetaan. \"Oikein kirjoitettu\": Kirjoitettu sana lisätään "
+"tietokantaan tai sen tiheys päivitetään tietokantaan vain, jos se on "
+"todennäköisesti oikein kirjoitettu. \"Ei mitään\": Älä nauhoita mitään "
+"syötettä käyttäjätietokantaan."
 
 #: setup/main.py:679
 msgid "Everything"
@@ -705,11 +728,11 @@ msgstr "Kaikki"
 
 #: setup/main.py:681
 msgid "Correctly spelled or previously recorded"
-msgstr ""
+msgstr "Oikein kirjoitettu tai aiemmin nauhoitettu"
 
 #: setup/main.py:683
 msgid "Correctly spelled"
-msgstr ""
+msgstr "Oikein kirjoitettu"
 
 #: setup/main.py:685
 msgid "Nothing"
@@ -731,7 +754,7 @@ msgstr "Ei mitään"
 #: setup/main.py:719
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "Vältä %s-toiminnon käyttöä"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -756,6 +779,9 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
+"Käytä kiertotapaa, jos %s-toiminto on rikki. Ota tämä vaihtoehto käyttöön "
+"vain, jos se on ehdottoman välttämätöntä. Se voi myös aiheuttaa ongelmia, "
+"varsinkin kun XIM on käytössä."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -763,7 +789,7 @@ msgstr ""
 #. committed words.
 #: setup/main.py:756
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "Ota käyttöön esimuokkausten avaaminen uudelleen"
 
 #: setup/main.py:758
 msgid ""
@@ -771,22 +797,25 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
+"Onko sallittua laittaa sana takaisin esimuokkaukseen, kun kohdistin siirtyy "
+"sanan loppuun tai alkuun. Tämän vaihtoehdon käyttöönotto on hyödyllistä jo "
+"sitoutuneiden sanojen korjaamiseksi."
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:774
 msgid "Disable in terminals"
-msgstr ""
+msgstr "Poista käytöstä päätteissä"
 
 #: setup/main.py:776
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "Pitäisikö ibus-typing-booster poistaa käytöstä päätteissä."
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
 #: setup/main.py:789
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "Muunna kielikohtaiset numerot ASCII-numeroiksi"
 
 #: setup/main.py:791
 msgid ""
@@ -795,12 +824,16 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"Jotkut syöttötavat tuottavat oletuksena kielikohtaisia numeroita. Jos ei "
+"koskaan halua käyttää tällaisia kielikohtaisia numeroita, mutta suosii aina "
+"länsimaisia (ASCII) numeroita, voidaan asettaa tämä vaihtoehto muuttamaan "
+"syöttömenetelmillä tuotetut kielikohtaiset numerot aina ASCII-numeroiksi."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
 #: setup/main.py:808
 msgid "Use IBus keymap"
-msgstr ""
+msgstr "Käytä IBusin näppäinkarttaa"
 
 #: setup/main.py:810
 msgid ""
@@ -808,6 +841,10 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"Onko IBusin näppäinkartan käyttö pakotettu, kun Typing Booster on "
+"aktiivinen. Useimmille käyttäjille ei suositella IBusin näppäinkartan "
+"käyttöä. Siinä tapauksessa käytetään näppäimistön asettelua, joka oli "
+"aktiivinen ennen vaihtamista kirjoitustehostimeen."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -825,13 +862,15 @@ msgstr "Englanti"
 #. “Unicode symbols and emoji predictions” is off.
 #: setup/main.py:856
 msgid "Emoji trigger characters:"
-msgstr ""
+msgstr "Emoji-laukaisumerkit:"
 
 #: setup/main.py:858
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
 msgstr ""
+"Tämän luettelon merkit laukaisevat emoji- ja Unicode-symbolien haun, vaikka "
+"Unicode-symbolit ja emoji-ennusteet olisi pois päältä."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -847,7 +886,7 @@ msgstr ""
 #. (which is the default).
 #: setup/main.py:887
 msgid "Auto commit characters:"
-msgstr ""
+msgstr "Automaattisesti sitoudu merkit:"
 
 #: setup/main.py:889
 msgid ""
@@ -861,172 +900,188 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
+"Tämän luettelon merkit aiheuttavat esimuokkauksen sitoutumisen "
+"automaattisesti, minkä jälkeen lisätään välilyönti. Esimerkiksi jos \".\" on "
+"automaattinen sitoutumismerkki, joten sinun ei tarvitse kirjoittaa "
+"välilyöntiä manuaalisesti lauseen lopun jälkeen. Voit vapaasti muokata tätä "
+"luetteloa. Järkevä arvo voi olla \"., ,, ;, :, ?, !, )\". Sinun ei pitäisi "
+"lisätä luetteloon merkkejä, joita syöttötapasi tarvitsee, esimerkiksi jos "
+"käytät Latin-Pre (t-latn-pre), olisi huono idea lisätä \".\" tähän "
+"luetteloon, koska se estäisi sinua kirjoittamasta \".s\" saadaksesi \"ṡ\". "
+"Voit myös poistaa tämän ominaisuuden kokonaan käytöstä tekemällä luettelon "
+"tyhjäksi (mikä on oletus)."
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
 #: setup/main.py:919
 msgid "Minimum number of chars for completion:"
-msgstr ""
+msgstr "Merkkien vähimmäismäärä täydennykselle:"
 
 #: setup/main.py:921
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
 msgstr ""
+"Älä näytä ehdotuksia, kun on kirjoitettu vähemmän kuin tämä määrä merkkejä."
 
 #. Translators: A checkbox where one can choose whether a
 #. sound is played on error
 #: setup/main.py:946
 msgid "Play sound file on error"
-msgstr ""
+msgstr "Toista äänitiedosto virheen sattuessa"
 
 #: setup/main.py:948
 msgid "Here you can choose whether a sound file is played if an error occurs."
-msgstr ""
+msgstr "Täällä voit valita, toistetaanko äänitiedosto virheen sattuessa."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
 #. debug information may also be shown graphically.
 #: setup/main.py:983
 msgid "Debug level:"
-msgstr ""
+msgstr "Viankorjaustaso:"
 
 #: setup/main.py:985
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
 msgstr ""
+"Kun on suurempi kuin 0, viankorjaustiedot voidaan tulostaa lokitiedostoon ja "
+"viankorjaustiedot voidaan näyttää myös graafisesti."
 
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
 #. reading that text file.
 #: setup/main.py:1009
 msgid "Learn from text file"
-msgstr ""
+msgstr "Opi tekstitiedostosta"
 
 #: setup/main.py:1011
 msgid "Learn your style by reading a text file"
-msgstr ""
+msgstr "Opi tyylisi lukemalla tekstitiedosto"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
 #: setup/main.py:1023
 msgid "Delete learned data"
-msgstr ""
+msgstr "Poista opitut tiedot"
 
 #: setup/main.py:1025
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
+"Poista kaikki kirjoittamisesta tai tiedostojen lukemisesta opitut "
+"henkilökohtaiset kielitiedot"
 
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:1039
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "Käytä sanakirjoja seuraaville kielille:"
 
 #: setup/main.py:1068
 msgid "Add a dictionary"
-msgstr ""
+msgstr "Lisää sanakirja"
 
 #: setup/main.py:1079
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "Poista sanakirja"
 
 #: setup/main.py:1090
 msgid "Move dictionary up"
-msgstr ""
+msgstr "Siirrä sanakirjaa ylöspäin"
 
 #: setup/main.py:1102
 msgid "Move dictionary down"
-msgstr ""
+msgstr "Siirrä sanakirja alaspäin"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
 #: setup/main.py:1109
 msgid "Install missing dictionaries"
-msgstr ""
+msgstr "Asenna puuttuvat sanakirjat"
 
 #: setup/main.py:1111
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
+"Asenna sanakirjat, jotka on asetettu täällä, mutta joita ei ole asennettu"
 
 #: setup/main.py:1118 setup/main.py:1263 setup/main.py:1505 setup/main.py:4997
 msgid "Set to default"
-msgstr ""
+msgstr "Aseta oletukseksi"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
 #: setup/main.py:1124
 msgid "Set dictionaries to the default for the current locale."
-msgstr ""
+msgstr "Aseta sanakirjat oletuksiksi nykyiselle maa-asetukselle."
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:1165
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "Käytä seuraavia syöttömenetelmiä:"
 
 #: setup/main.py:1194
 msgid "Add an input method"
-msgstr ""
+msgstr "Lisää syöttömenetelmä"
 
 #: setup/main.py:1206
 msgid "Remove an input method"
-msgstr ""
+msgstr "Poista syöttömenetelmä"
 
 #: setup/main.py:1218
 msgid "Move input method up"
-msgstr ""
+msgstr "Siirrä syöttömenetelmää ylöspäin"
 
 #: setup/main.py:1230
 msgid "Move input method down"
-msgstr ""
+msgstr "Siirrä syöttömenetelmää alaspäin"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
 #: setup/main.py:1238
 msgid "Input Method Help"
-msgstr ""
+msgstr "Syöttömenetelmäapu"
 
 #: setup/main.py:1240
 msgid "Display some help showing how to use the input method selected above."
-msgstr ""
+msgstr "Näytä ohjeita yllä valitun syöttömenetelmän käyttämisestä."
 
 #. Translators: Tooltip for a button to set some advanced
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1256
 msgid "Options for the input method selected above."
-msgstr ""
+msgstr "Yllä valitun syöttömenetelmän vaihtoehdot."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
 #: setup/main.py:1269
 msgid "Set input methods to the default for the current locale."
-msgstr ""
+msgstr "Aseta nykyisen maa-asetuksen syöttömenetelmät oletuksiksi."
 
 #: setup/main.py:1309
 msgid "Enter shortcut here:"
-msgstr ""
+msgstr "Syötä pikanäppäin tähän:"
 
 #: setup/main.py:1331
 msgid "Enter shortcut expansion here:"
-msgstr ""
+msgstr "Syötä laajenemispikanäppäin tähän:"
 
 #: setup/main.py:1361
 msgid "Clear input"
-msgstr ""
+msgstr "Tyhjennä syöttö"
 
 #: setup/main.py:1372
 msgid "Delete shortcut"
-msgstr ""
+msgstr "Poista pikanäppäin"
 
 #: setup/main.py:1383
 msgid "Add shortcut"
-msgstr ""
+msgstr "Lisää pikanäppäin"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -1038,11 +1093,11 @@ msgstr "Pikanäppäin"
 #. existing shortcuts
 #: setup/main.py:1425
 msgid "Shortcut expansion"
-msgstr ""
+msgstr "Laajenemispikanäppäin"
 
 #: setup/main.py:1439
 msgid "Current key bindings:"
-msgstr ""
+msgstr "Nykyiset näppäinsidokset:"
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
@@ -1056,32 +1111,33 @@ msgstr "Muokkaa"
 
 #: setup/main.py:1498
 msgid "Edit the key bindings for the selected command"
-msgstr ""
+msgstr "Muokkaa valitun komennon näppäinsidoksia"
 
 #: setup/main.py:1509 setup/main.py:5002
 msgid "Set default key bindings for the selected command"
-msgstr ""
+msgstr "Aseta valitun komennon oletusnäppäinsidokset"
 
 #: setup/main.py:1516
 msgid "Set all to default"
-msgstr ""
+msgstr "Aseta kaikki oletuksiksi"
 
 #: setup/main.py:1520
 msgid "Set default key bindings for all commands"
-msgstr ""
+msgstr "Aseta oletusnäppäinsidokset kaikille komennoille"
 
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
 #. top of the list of candidates.
 #: setup/main.py:1542
 msgid "Display total number of candidates"
-msgstr ""
+msgstr "Näytä ehdokkaiden kokonaismäärä"
 
 #: setup/main.py:1544
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
 msgstr ""
+"Näytä, kuinka monta ehdokasta on ja mikä on valittu ehdokasluettelon päälle."
 
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
@@ -1091,7 +1147,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1558
 msgid "Show status info in auxiliary text"
-msgstr ""
+msgstr "Näytä tilatiedot aputekstissä"
 
 #: setup/main.py:1560
 msgid ""
@@ -1100,6 +1156,10 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
+"Näytä aputekstissä, ovatko \"Emoji-ennustus\"-tila ja \"Epävirallinen”-tila "
+"päällä vai pois päältä ja näytä, mitä syöttömenetelmää käytetään tällä "
+"hetkellä esieditointiin. Aputeksti on valinnainen tekstirivi, joka näkyy "
+"ehdokasluettelon yläpuolella."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
