@@ -1,5 +1,5 @@
 # lexuge <LEXUGEyky@outlook.com>, 2017. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2022.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2022, 2025.
 # Qiyu Yan <yanqiyu01@gmail.com>, 2019.
 # Anonymous <noreply@weblate.org>, 2019, 2020.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-04-02 09:23+0200\n"
-"PO-Revision-Date: 2022-02-25 18:38+0000\n"
+"PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_CN/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #: engine/emoji-picker.desktop.in.in:3 engine/emoji_picker.py:210
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -640,12 +640,6 @@ msgid "Remember last used preedit input method"
 msgstr "记住上次使用的预编辑输入法"
 
 #: setup/main.py:559
-#, fuzzy
-#| msgid ""
-#| "If more then one input method is used at the same time, one of them is "
-#| "used for the preedit. Which input method is used for the preedit can be "
-#| "changed via the menu or via shortcut keys. If this option is enabled, "
-#| "such a change is remembered even if the session is restarted."
 msgid ""
 "If more than one input method is used at the same time, one of them is used "
 "for the preedit. Which input method is used for the preedit can be changed "
