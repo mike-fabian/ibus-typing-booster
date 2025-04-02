@@ -306,7 +306,7 @@
       <default>false</default>
       <summary>Remember last used preedit input method</summary>
       <description>
-        If more then one input method is used at the same time, one of
+        If more than one input method is used at the same time, one of
         them is used for the preedit.  Which input method is used for
         the preedit can be changed via the menu or via shortcut
         keys. If this option is enabled, such a change is remembered

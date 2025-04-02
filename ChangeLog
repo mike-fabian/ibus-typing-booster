@@ -559,7 +559,7 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
 * 03 Jan 2022 Released 2.15.14
 * Update emojione.json file to new version emoji.json (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/262)
-* Spellchecking during emoji search only for words with more then 5 letters
+* Spellchecking during emoji search only for words with more than 5 letters
 * Update emoji annotations from CLDR
 * When emoji search via codepoint matches, increase the score of the code point match (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/263)
 * Translation update from Weblate (cs updated)

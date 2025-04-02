@@ -2237,7 +2237,7 @@
           emoji.json
         </issue>
         <issue>
-          Spellchecking during emoji search only for words with more then 5 letters
+          Spellchecking during emoji search only for words with more than 5 letters
         </issue>
         <issue>
           Update emoji annotations from CLDR

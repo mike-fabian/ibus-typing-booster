@@ -548,7 +548,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._add_space_on_commit_checkbutton, 0, _options_grid_row, 2, 1)
 
         self._remember_last_used_preedit_ime_checkbutton = Gtk.CheckButton(
-            # Translators: If more then one input method is used at
+            # Translators: If more than one input method is used at
             # the same time, one of them is used for the preedit.
             # Which input method is used for the preedit can be
             # changed via the menu or via shortcut keys. If this
@@ -556,7 +556,7 @@ class SetupUI(Gtk.Window): # type: ignore
             # the session is restarted.
             label=_('Remember last used preedit input method'))
         self._remember_last_used_preedit_ime_checkbutton.set_tooltip_text(
-            _('If more then one input method is used at the same '
+            _('If more than one input method is used at the same '
               'time, one of them is used for the preedit. '
               'Which input method is used for the preedit can '
               'be changed via the menu or via shortcut keys. '
@@ -572,7 +572,7 @@ class SetupUI(Gtk.Window): # type: ignore
             0, _options_grid_row, 2, 1)
 
         self._remember_input_mode_checkbutton = Gtk.CheckButton(
-            # Translators: If more then one input method is used at
+            # Translators: If more than one input method is used at
             # the same time, one of them is used for the preedit.
             # Which input method is used for the preedit can be
             # changed via the menu or via shortcut keys. If this
