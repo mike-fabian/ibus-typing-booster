@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-02-25 21:08+0100\n"
+"POT-Creation-Date: 2025-04-02 09:23+0200\n"
 "PO-Revision-Date: 2024-12-14 16:41+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
@@ -631,7 +631,7 @@ msgid ""
 msgstr ""
 "Voeg een spatie toe als je een suggestie uit de lijst kiest met de muis."
 
-#. Translators: If more then one input method is used at
+#. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
 #. Which input method is used for the preedit can be
 #. changed via the menu or via shortcut keys. If this
@@ -642,8 +642,14 @@ msgid "Remember last used preedit input method"
 msgstr "Laatstgebruikte automatische invoermethode onthouden"
 
 #: setup/main.py:559
+#, fuzzy
+#| msgid ""
+#| "If more then one input method is used at the same time, one of them is "
+#| "used for the preedit. Which input method is used for the preedit can be "
+#| "changed via the menu or via shortcut keys. If this option is enabled, "
+#| "such a change is remembered even if the session is restarted."
 msgid ""
-"If more then one input method is used at the same time, one of them is used "
+"If more than one input method is used at the same time, one of them is used "
 "for the preedit. Which input method is used for the preedit can be changed "
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
@@ -653,7 +659,7 @@ msgstr ""
 "het menu of de sneltoetsen. Als je dit inschakelt, dan wordt je keuze "
 "onthouden, óók als je de sessie herstart."
 
-#. Translators: If more then one input method is used at
+#. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
 #. Which input method is used for the preedit can be
 #. changed via the menu or via shortcut keys. If this

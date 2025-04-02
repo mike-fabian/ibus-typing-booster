@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-02-25 21:08+0100\n"
+"POT-Creation-Date: 2025-04-02 09:23+0200\n"
 "PO-Revision-Date: 2024-02-02 13:43+0000\n"
 "Last-Translator: Sudip Shil <sshil@redhat.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/ibus-"
@@ -631,7 +631,7 @@ msgstr ""
 "একটি স্পেস যোগ করুন যদি শব্দ পরামর্শ তালিকা থেকে মাউসের মাধ্যমে ক্লিক করে কোনো শব্দ "
 "নির্বাচন করা হয়।"
 
-#. Translators: If more then one input method is used at
+#. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
 #. Which input method is used for the preedit can be
 #. changed via the menu or via shortcut keys. If this
@@ -642,8 +642,14 @@ msgid "Remember last used preedit input method"
 msgstr "সর্বশেষ ব্যবহৃত প্রিডিট (প্রাক সম্পাদনা) ইনপুট পদ্ধতি মনে রাখবেন"
 
 #: setup/main.py:559
+#, fuzzy
+#| msgid ""
+#| "If more then one input method is used at the same time, one of them is "
+#| "used for the preedit. Which input method is used for the preedit can be "
+#| "changed via the menu or via shortcut keys. If this option is enabled, "
+#| "such a change is remembered even if the session is restarted."
 msgid ""
-"If more then one input method is used at the same time, one of them is used "
+"If more than one input method is used at the same time, one of them is used "
 "for the preedit. Which input method is used for the preedit can be changed "
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
@@ -654,7 +660,7 @@ msgstr ""
 "কীগুলির মাধ্যমে পরিবর্তন করা যেতে পারে। এই বিকল্পটি সক্রিয় থাকলে, সেশন পুনরায় আরম্ভ "
 "করা হলেও এই ধরনের পরিবর্তন মনে রাখা হয়।"
 
-#. Translators: If more then one input method is used at
+#. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
 #. Which input method is used for the preedit can be
 #. changed via the menu or via shortcut keys. If this

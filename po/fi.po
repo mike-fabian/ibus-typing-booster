@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-02-25 21:08+0100\n"
+"POT-Creation-Date: 2025-04-02 09:23+0200\n"
 "PO-Revision-Date: 2025-03-28 02:17+0000\n"
 "Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
-"Language-Team: Finnish <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/fi/>\n"
+"Language-Team: Finnish <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -613,7 +613,7 @@ msgstr ""
 "Lisää välilyönti, jos ehdokas ehdokaslistalta on sitoutunut napsauttamalla "
 "sitä hiirellä."
 
-#. Translators: If more then one input method is used at
+#. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
 #. Which input method is used for the preedit can be
 #. changed via the menu or via shortcut keys. If this
@@ -624,8 +624,14 @@ msgid "Remember last used preedit input method"
 msgstr "Muista viimeksi käytetty esimuokkauksen syöttötapa"
 
 #: setup/main.py:559
+#, fuzzy
+#| msgid ""
+#| "If more then one input method is used at the same time, one of them is "
+#| "used for the preedit. Which input method is used for the preedit can be "
+#| "changed via the menu or via shortcut keys. If this option is enabled, "
+#| "such a change is remembered even if the session is restarted."
 msgid ""
-"If more then one input method is used at the same time, one of them is used "
+"If more than one input method is used at the same time, one of them is used "
 "for the preedit. Which input method is used for the preedit can be changed "
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
@@ -636,7 +642,7 @@ msgstr ""
 "käytössä, tällainen muutos muistetaan, vaikka istunto käynnistetään "
 "uudelleen."
 
-#. Translators: If more then one input method is used at
+#. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
 #. Which input method is used for the preedit can be
 #. changed via the menu or via shortcut keys. If this

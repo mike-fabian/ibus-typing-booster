@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-02-25 21:08+0100\n"
+"POT-Creation-Date: 2025-04-02 09:23+0200\n"
 "PO-Revision-Date: 2019-12-20 00:16+0000\n"
 "Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/ibus-"
@@ -615,7 +615,7 @@ msgid ""
 "it with the mouse."
 msgstr "ଗୋଟିଏ ସ୍ପେସ ଯୋଗ କରନ୍ତୁ ମାଉସ କ୍ଲିକ ଦ୍ୱାରା ଜାରି କଲାବେଳେ"
 
-#. Translators: If more then one input method is used at
+#. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
 #. Which input method is used for the preedit can be
 #. changed via the menu or via shortcut keys. If this
@@ -628,13 +628,13 @@ msgstr "ପୂର୍ବ ପୂର୍ବସମ୍ପାଦନ ନିବେଶ ବ
 
 #: setup/main.py:559
 msgid ""
-"If more then one input method is used at the same time, one of them is used "
+"If more than one input method is used at the same time, one of them is used "
 "for the preedit. Which input method is used for the preedit can be changed "
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
 
-#. Translators: If more then one input method is used at
+#. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
 #. Which input method is used for the preedit can be
 #. changed via the menu or via shortcut keys. If this
