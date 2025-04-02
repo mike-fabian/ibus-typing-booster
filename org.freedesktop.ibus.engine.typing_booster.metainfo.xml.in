@@ -47,6 +47,32 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.30" date="2025-04-02" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.30</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Commit finished compose sequences immediately if no
+            completions are possible (Resolves: github-issues#662)
+          </li>
+          <li>
+            Fix summary for asciidigits in the gschema file
+          </li>
+          <li>
+            Fix typo in English message “more then one” -> “more than one”
+          </li>
+          <li>
+            Translation update from Weblate (new: fi 73.6%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/662">
+          github-issues#662
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.29" date="2025-02-25" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.29</url>
       <description>

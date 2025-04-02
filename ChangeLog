@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 02 Apr 2025 Release 2.27.30
+* Commit finished compose sequences immediately if no completions are possible (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/662)
+* Fix summary for asciidigits in the gschema file
+* Fix typo in English message “more then one” -> “more than one”
+* Translation update from Weblate (new: fi 73.6%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 25 Feb 2025 Release 2.27.29
 * If an input method transliterates a single character into another single character use the transliterated result for Compose (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/654)
 * Ignore dictionary matches in the lookup table for candidates which have comments (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/655)
