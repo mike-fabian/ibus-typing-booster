@@ -2564,6 +2564,50 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text,
                          'Không có gì quí hơn độc lập tự do ')
 
+    def test_compose_early_commit(self) -> None:
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/662 '''
+        dummy_trans = self.get_transliterator_or_skip('t-rfc1345')
+        self.engine.set_current_imes(['t-rfc1345'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_x, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'x')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'x·')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'xa')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_quotedbl, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'xä')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_b, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'xäb')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'xäb ')
+        # Now make predictions impossible:
+        self.engine.set_word_prediction_mode(False, update_gsettings=False)
+        self.engine.set_emoji_prediction_mode(False, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_x, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'xäb x')
+        self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '·')
+        self.assertEqual(self.engine.mock_committed_text, 'xäb x')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'a')
+        self.assertEqual(self.engine.mock_committed_text, 'xäb x')
+        self.engine.do_process_key_event(IBus.KEY_quotedbl, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'xäb xä')
+        self.engine.do_process_key_event(IBus.KEY_b, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'xäb xäb')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'xäb xäb ')
+
     def test_compose_transliterated_hi_inscript2(self) -> None:
         '''
         Test case for compose sequence using transliteration,

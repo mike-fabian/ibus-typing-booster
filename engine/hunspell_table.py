@@ -7884,6 +7884,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     'start a compose sequence either. '
                     'Key Event object: %s', key)
             return False
+        if (self.is_empty()
+            and not self._word_predictions
+            and not self._emoji_predictions):
+            # No predictions are possible and the compose result can
+            # be immediately committed when the compose sequences
+            # finishes.
+            add_to_preedit = False
         if (not self._typed_compose_sequence
             and not self._m17n_trans_parts.candidates
             and not self._is_candidate_auto_selected
