@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-04-02 09:23+0200\n"
-"PO-Revision-Date: 2025-04-02 14:36+0000\n"
+"PO-Revision-Date: 2025-04-03 12:28+0000\n"
 "Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
 "Language-Team: Finnish <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/fi/>\n"
@@ -237,7 +237,7 @@ msgstr "Jonon tuonti epäonnistui."
 
 #: engine/hunspell_table.py:6079
 msgid "No supported language for speech recognition."
-msgstr "Ei tuettua kieltä puheentunnistusta varten."
+msgstr "Ei tuettua kieltä puheentunnistukseen."
 
 #: engine/hunspell_table.py:6083
 #, python-format
@@ -1171,17 +1171,18 @@ msgstr "Ehdokasikkunan sivun koko:"
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr ""
+"Kuinka monta näytettävää ehdotusehdokasta yhdellä ehdokasluettelon sivulla."
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
 #: setup/main.py:1606
 msgid "Candidate window orientation"
-msgstr ""
+msgstr "Ehdokasikkunan suunta"
 
 #: setup/main.py:1608
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
-msgstr ""
+msgstr "Onko ehdokasikkuna piirrettävä vaaka- vai pystysuunnassa."
 
 #: setup/main.py:1614
 msgid "Horizontal"
@@ -1196,7 +1197,7 @@ msgstr "Pystysuora"
 #. candidates are displayed
 #: setup/main.py:1645
 msgid "Candidate window delay in milliseconds:"
-msgstr ""
+msgstr "Ehdokasikkunan viive millisekunteina:"
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
@@ -1204,16 +1205,18 @@ msgstr ""
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
 msgstr ""
+"Kuinka kauan on odotettava viimeisen näppäimen painalluksen jälkeen, ennen "
+"kuin ehdokkaat tulevat näkyviin."
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
 #: setup/main.py:1676
 msgid "Preedit underline"
-msgstr ""
+msgstr "Esimuokkauksen alleviiva"
 
 #: setup/main.py:1678
 msgid "Which style of underlining to use for the preedit."
-msgstr ""
+msgstr "Käytettävä alleviivauksen tyyli esimuokkaukseen."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
@@ -1247,7 +1250,7 @@ msgstr "Matala"
 #. of characters before a lookup is done.
 #: setup/main.py:1724
 msgid "Use preedit style only if lookup is enabled"
-msgstr ""
+msgstr "Käytä esimuokkaustyyliä vain, jos haku on otettu käyttöön"
 
 #: setup/main.py:1726
 msgid ""
@@ -1256,6 +1259,11 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
+"Jos tämä vaihtoehto on päällä, esimuokkaustyyliä, kuten alleviivausta, "
+"käytetään vain, jos haku on otettu käyttöön. Haku voidaan poistaa käytöstä, "
+"koska käytetään vaihtoehtoa, joka ottaa haun käyttöön vain, kun näppäintä "
+"painetaan, tai koska käytetään vaatimaan vähimmäismäärä merkkejä ennen haun "
+"suorittamista."
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -1263,7 +1271,7 @@ msgstr ""
 #. might contain a spelling error.
 #: setup/main.py:1746
 msgid "Preedit spellchecking"
-msgstr ""
+msgstr "Esimuokkauksen oikoluku"
 
 #: setup/main.py:1748
 msgid ""
@@ -1271,13 +1279,16 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"Täällä voit valita, tehdäänkö esimuokkauksen sisällölle oikoluku ja "
+"käytetäänkö mukautettua väriä osoittamaan, milloin esimuokkaus saattaa "
+"sisältää kirjoitusvirheen."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1774
 msgid "Choose color for preedit spellchecking"
-msgstr ""
+msgstr "Valitse väri esimuokkauksen oikolukua varrten"
 
 #: setup/main.py:1776
 msgid ""
@@ -1285,6 +1296,9 @@ msgid ""
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
+"Tässä voit määrittää, esimuokkaukseen käytettävä väri, kun esimuokkaus "
+"saattaa sisältää kirjoitusvirheitä. Tällä asetuksella on vaikutusta vain, "
+"jos esimuokkauksen oikoluku on otettu käyttöön."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
@@ -1321,43 +1335,45 @@ msgstr ""
 #. custom color is used for the compose preview.
 #: setup/main.py:1850
 msgid "Use color for compose preview"
-msgstr ""
+msgstr "Käytä väriä kokoamisesikatseluun"
 
 #: setup/main.py:1852
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
-msgstr ""
+msgstr "Täällä voit valita käytetäänkö mukautettua väriä kokoamisesikatseluun."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:1876
 msgid "Choose color for compose preview"
-msgstr ""
+msgstr "Valitse kokoamisesikatseluun väri"
 
 #: setup/main.py:1878
 msgid "Here you can specify which color to use for the compose preview."
-msgstr ""
+msgstr "Täällä voit määrittää käytettävä väri kokoamisesikatseluun."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
 #: setup/main.py:1900
 msgid "Use color for user database suggestions"
-msgstr ""
+msgstr "Käytä väriä käyttäjätietokantaehdotuksiin"
 
 #: setup/main.py:1902
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
 msgstr ""
+"Täällä voit valita, käytetäänkö mukautettua väriä käyttäjätietokannasta "
+"tuleviin hakutaulukossa oleviin ehdokkaihin."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
 #: setup/main.py:1923
 msgid "Choose color for user database suggestions"
-msgstr ""
+msgstr "Valitse väri käyttäjätietokantaehdotuksiin"
 
 #: setup/main.py:1925
 msgid ""
@@ -1365,25 +1381,30 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
 msgstr ""
+"Täällä voit määrittää käytettävä väri käyttäjätietokannasta tuleviin "
+"hakutaulukossa oleviin ehdokkaihin. Tällä asetuksella on vaikutusta vain, "
+"jos värin käyttö käyttäjätietokannan ehdokkaille on otettu käyttöön."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
 #: setup/main.py:1946
 msgid "Use color for spellchecking suggestions"
-msgstr ""
+msgstr "Käytä väriä oikoluvun ehdotuksiin"
 
 #: setup/main.py:1948
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
 msgstr ""
+"Täällä voit valita, käytetäänkö mukautettua väriä hakutaulukon ehdokkaille, "
+"jotka tulevat oikoluvusta."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
 #: setup/main.py:1969
 msgid "Choose color for spellchecking suggestions"
-msgstr ""
+msgstr "Valitse väri oikoluvun ehdotuksiin"
 
 #: setup/main.py:1971
 msgid ""
@@ -1391,26 +1412,31 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
 msgstr ""
+"Täällä voit määrittää käytettävä väri oikoluvusta tuleville hakutaulukon "
+"ehdokkaille. Tällä asetuksella on vaikutusta vain, jos värin käyttö "
+"ehdokkaille oikoluvusta on otettu käyttöön."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
 #: setup/main.py:1995
 msgid "Use color for dictionary suggestions"
-msgstr ""
+msgstr "Käytä väriä sanakirjaehdotuksiin"
 
 #: setup/main.py:1997
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
 msgstr ""
+"Täällä voit valita, käytetäänkö mukautettua väriä sanakirjasta tuleviin "
+"hakutaulukossa oleviin ehdokkaihin."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
 #: setup/main.py:2018
 msgid "Choose color for dictionary suggestions"
-msgstr ""
+msgstr "Valitse sanakirjaehdotuksiin väri"
 
 #: setup/main.py:2020
 msgid ""
@@ -1418,83 +1444,96 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
 msgstr ""
+"Täällä voit määrittää käytettävä väri sanakirjasta tuleviin hakutaulukossa "
+"oleviin ehdokkaihin. Tällä asetuksella on vaikutusta vain, jos sanakirjan "
+"ehdokkaiden värien käyttö on otettu käyttöön."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
 #: setup/main.py:2044
 msgid "Use label for user database suggestions"
-msgstr ""
+msgstr "Käytä nimikettä käyttäjätietokantaehdotuksiin"
 
 #: setup/main.py:2046
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
 msgstr ""
+"Tässä voit valita käytettävä nimike käyttäjätietokannasta tuleviin "
+"hakutaulukossa oleviin ehdokkaihin."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
 #: setup/main.py:2079
 msgid "Use label for spellchecking suggestions"
-msgstr ""
+msgstr "Käytä nimikettä oikoluvun ehdotuksiin"
 
 #: setup/main.py:2081
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
 msgstr ""
+"Täällä voit valita, käytetäänkö nimikettä oikoluvusta tuleville "
+"hakutaulukossa oleville ehdokkaille."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2114
 msgid "Use label for dictionary suggestions"
-msgstr ""
+msgstr "Käytä nimikettä sanakirjaehdotuksiin"
 
 #: setup/main.py:2116
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
+"Täällä voit määrittää käytettävä nimike sanakirjasta tuleviin hakutaulukossa "
+"oleviin ehdokkaihin."
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2149
 msgid "Use flags for dictionary suggestions"
-msgstr ""
+msgstr "Käytä lippuja sanakirjaehdotuksiin"
 
 #: setup/main.py:2151
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
+"Täällä voit valita käytettävät liput sanakirjasta tuleviin hakutaulukossa "
+"oleviin ehdokkaihin."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
 #: setup/main.py:2166
 msgid "Use a label to indicate busy state"
-msgstr ""
+msgstr "Käytä nimikettä ilmaisemaan varattu tila"
 
 #: setup/main.py:2168
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
+"Täällä voit valita, käytetäänkö tarraa ilmaisemaan, kun ibus-typing-booster "
+"on varattu."
 
 #. Translators:
 #: setup/main.py:2199 setup/main.py:3326
 msgid "Set “Google application credentials” .json file:"
-msgstr ""
+msgstr "Aseta \"Google-sovelluksen valtuustiedot\".json -tiedosto:"
 
 #: setup/main.py:2201
 msgid "Full path of the “Google application credentials” .json file."
-msgstr ""
+msgstr "\"Google-sovelluksen valtuustiedot\" .json -tiedoston koko polku."
 
 #: setup/main.py:2207
 msgid "File not yet set."
-msgstr ""
+msgstr "Tiedostoa ei ole vielä asetettu."
 
 #. Translators: This is a button to add an autosetting.
 #. “Autosettings” are settings which may change automatically
@@ -1502,7 +1541,7 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2266 setup/main.py:4513
 msgid "Add an autosetting"
-msgstr ""
+msgstr "Lisää automaattinen asetus"
 
 #. Translators: This is a button to remove an autosetting.
 #. “Autosettings” are settings which may change automatically
@@ -1510,7 +1549,7 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2280
 msgid "Remove an autosetting"
-msgstr ""
+msgstr "Poista automaattinen asetus"
 
 #. Translators: This is a button to move an autosetting up in the
 #. order the autosettings are applied. “Up” means it is applied
@@ -1522,7 +1561,7 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2298
 msgid "Move an autosetting up"
-msgstr ""
+msgstr "Siirrä automaattinen asetus ylös"
 
 #. Translators: This is a button to move an autosetting down in the
 #. order the autosettings are applied. “Down” means it is applied
@@ -1534,11 +1573,11 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2316
 msgid "Move an autosetting down"
-msgstr ""
+msgstr "Siirrä automaattinen asetus alas"
 
 #: setup/main.py:2492
 msgid "Spell checking"
-msgstr ""
+msgstr "Oikoluku"
 
 #: setup/main.py:2508
 msgid "Emoji"
@@ -1548,7 +1587,7 @@ msgstr "Emoji"
 #. the automatic settings
 #: setup/main.py:2686
 msgid "Setting"
-msgstr ""
+msgstr "Asetus"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1562,11 +1601,11 @@ msgstr "Arvo"
 #. the automatic settings
 #: setup/main.py:2719
 msgid "Regular expression"
-msgstr ""
+msgstr "Säännöllinen lauseke"
 
 #: setup/main.py:2765
 msgid "Are you sure?"
-msgstr ""
+msgstr "Oletko varma?"
 
 #: setup/main.py:2767 setup/main.py:3329 setup/main.py:3416 setup/main.py:5068
 msgid "_Cancel"
@@ -1578,45 +1617,45 @@ msgstr "_Hyvä on"
 
 #: setup/main.py:2800
 msgid "Another instance of this app is already running."
-msgstr ""
+msgstr "Toinen tämän sovelluksen esiintymä on jo käynnissä."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:2897
 msgid "Do you really want to restore all default settings?"
-msgstr ""
+msgstr "Haluatko todella palauttaa kaikki oletusasetukset?"
 
 #: setup/main.py:3413
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "Valitse .wav-äänitiedosto:"
 
 #: setup/main.py:3593
 msgid "Add dictionary"
-msgstr ""
+msgstr "Lisää sanakirja"
 
 #: setup/main.py:3909
 msgid "Add input method"
-msgstr ""
+msgstr "Lisää syöttömenetelmä"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
 #: setup/main.py:4086
 msgid "Variable"
-msgstr ""
+msgstr "Muuttuja"
 
 #: setup/main.py:4950
 #, python-format
 msgid "Edit key bindings for command “%s”"
-msgstr ""
+msgstr "Muokkaa näppäinsidoksia komennolle \"%s\""
 
 #: setup/main.py:4978
 msgid "Add a key binding"
-msgstr ""
+msgstr "Lisää näppäinsidonta"
 
 #: setup/main.py:4990
 msgid "Remove selected key binding"
-msgstr ""
+msgstr "Poista valittu näppäinsidonta"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1628,6 +1667,8 @@ msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
+"Haluatko todella asettaa kaikkien komentojen näppäinsidokset "
+"oletusarvoihinsa?"
 
 #: setup/main.py:5065
 msgid "Open File ..."
@@ -1636,12 +1677,12 @@ msgstr "Avaa tiedosto ..."
 #: setup/main.py:5084
 #, python-format
 msgid "Learned successfully from file %(filename)s."
-msgstr ""
+msgstr "Oppittu onnistuneesti tiedostosta %(filename)s."
 
 #: setup/main.py:5093
 #, python-format
 msgid "Learning from file %(filename)s failed."
-msgstr ""
+msgstr "Oppiminen tiedostosta %(filename)s epäonnistui."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1658,24 +1699,28 @@ msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr ""
+"Haluatko todella poistaa kaikki kirjoittamisesta tai tiedostojen lukemisesta "
+"opitut kielitiedot?"
 
 #: setup/main.py:6807
 msgid "ibus is not running."
-msgstr ""
+msgstr "ibus ei ole käynnissä."
 
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:9
 msgid ""
 "Emoji Picker is an emoji browsing tool which uses the emoji matching code "
 "from Ibus-typing-booster."
 msgstr ""
+"Emoji Picker on emoji-selaustyökalu, joka käyttää Ibus-typing-boosterin "
+"emoji-vastaavuuskoodia."
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
-msgstr ""
+msgstr "Typing Booster"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:7
 msgid "Predictive input method"
-msgstr ""
+msgstr "Ennakoiva syöttömenetelmä"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:9
 msgid ""
@@ -1683,3 +1728,7 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+"Ibus-typing-booster on ennakoiva syöttömenetelmä, joka ennustaa kokonaisia "
+"sanoja kontekstin ja osittaisen syötteen perusteella. Tämän jälkeen voi "
+"yksinkertaisesti valita haluamasi sanan ehdotusluettelosta ja parantaa "
+"kirjoitusnopeutta ja oikolukua."
