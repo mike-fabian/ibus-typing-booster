@@ -4607,7 +4607,11 @@ class ComposeSequences:
             else:
                 ibus_keyval_to_unicode = IBus.keyval_to_unicode(keyval)
                 if ibus_keyval_to_unicode:
-                    representation += ibus_keyval_to_unicode
+                    if unicodedata.name(ibus_keyval_to_unicode, None) is None:
+                        representation += self._preedit_representations[
+                            IBus.KEY_Multi_key]
+                    else:
+                        representation += ibus_keyval_to_unicode
                 else:
                     representation += chr(keyval)
         if (len(representation) > 1

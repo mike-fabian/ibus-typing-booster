@@ -291,13 +291,41 @@ class ComposeSequencesTestCase(unittest.TestCase):
         # pylint: enable=protected-access
 
     def test_compose_sequence_with_fdd5_unassigned_code_point(self) -> None:
-        ''' https://github.com/ibus/ibus/issues/2646 U+FDD5 is unassigned in Unicode'''
+        '''
+        https://github.com/ibus/ibus/issues/2646 U+FDD5 is unassigned in Unicode
+
+        This is used in the fr(bepo_afnor) keyboard layout, see also:
+
+        https://github.com/ibus/ibus/issues/2748
+        https://gitlab.gnome.org/GNOME/gtk/-/issues/7386
+        https://raw.githubusercontent.com/andrewathalye/bepo-xcompose-fix/main/XCompose
+
+        '''
         # pylint: disable=protected-access
         self._compose_sequences._add_compose_sequence(
             '<UFDD5> <0>', 'fdd5-0-expanded')
         self.assertEqual(
             'fdd5-0-expanded', self._compose_sequences.compose([0x0100fdd5, IBus.KEY_0]))
+        self._compose_sequences._add_compose_sequence(
+            '<UFDD7> <s>', '∫')
+        self.assertEqual('∫', self._compose_sequences.compose([0x0100fdd7, IBus.KEY_s]))
         # pylint: enable=protected-access
+        self.assertEqual(
+            self._compose_sequences.preedit_representation(
+                [0x0100fdd5]),
+            '·')
+        self.assertEqual(
+            self._compose_sequences.preedit_representation(
+                [0x0100fdd7]),
+            '·')
+        self.assertEqual(
+            self._compose_sequences.preedit_representation(
+                [0x0100fdd5, 0x0100fdd7]),
+            '·')
+        self.assertEqual(
+            self._compose_sequences.preedit_representation(
+                [IBus.KEY_Multi_key, 0x0100fdd5, 0x0100fdd7]),
+            '··')
 
     def test_preedit_representations(self) -> None:
         self.assertEqual(
