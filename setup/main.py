@@ -3827,6 +3827,16 @@ class SetupUI(Gtk.Window): # type: ignore
             'row-selected', self._on_input_method_to_add_selected)
         rows = []
         images = {}
+        icon_size = 48
+        pixbuf = GdkPixbuf.Pixbuf()
+        try:
+            pixbuf = Gtk.IconTheme.get_default( # pylint: disable=no-member
+            ).load_icon('image-missing', icon_size, 0)
+        except (GLib.GError,) as error:
+            LOGGER.exception(
+                'Exception when loading "image-missing" icon %s: %s',
+                error.__class__.__name__, error)
+        image_missing = Gtk.Image.new_from_pixbuf(pixbuf)
         for ime in M17N_DB_INFO.get_imes():
             if ime in self._current_imes:
                 continue
@@ -3838,8 +3848,12 @@ class SetupUI(Gtk.Window): # type: ignore
             if all(filter_word in text_to_match for filter_word in filter_words):
                 self._input_methods_add_listbox_imes.append(ime)
                 rows.append(row)
-                images[row] = Gtk.Image.new_from_file(
-                    M17N_DB_INFO.get_icon(ime))
+                images[row] = image_missing
+                icon_file = M17N_DB_INFO.get_icon(ime)
+                if icon_file:
+                    pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                        icon_file, icon_size, icon_size, True)
+                    images[row] = Gtk.Image.new_from_pixbuf(pixbuf)
         for row in rows:
             label = Gtk.Label()
             label.set_text(html.escape(row))
