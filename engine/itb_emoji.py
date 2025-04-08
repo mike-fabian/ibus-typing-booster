@@ -1323,28 +1323,26 @@ class EmojiMatcher():
         original_words = self._string2.split(sep=None)
         self._string2_number_of_words = len(original_words)
         for word in original_words:
-            word_list += [word]
+            word_list.append(word)
             # If a word in the input string is not correctly spelled
             # in any of the enabled dictionaries, add spell checking
-            # suggestions to the list (don’t do that it it is spelled
+            # suggestions to the list (don’t do that if it is spelled
             # correctly in at least one dictionary):
             if len(word) > 5 and IMPORT_ENCHANT_SUCCESSFUL:
-                spelled_correctly = False
-                for dic in self._enchant_dicts:
-                    if dic.check(word) or dic.check(word.title()):
-                        spelled_correctly = True
-                if not spelled_correctly: # incorrect in *all* dictionaries
-                    wlist: List[str] = []
-                    for dic in self._enchant_dicts:
-                        # don’t use spellchecking suggestions shorter then
-                        # 3 characters and lower case everything
-                        wlist += [
-                            x.lower() for x in dic.suggest(word) if len(x) > 2]
-                    # remove possible duplicates from spellchecking
-                    word_list += set(wlist)
-        # Keep duplicates coming from the query string.
+                word_title = word.title()
+                if not any(dic.check(word) or dic.check(word_title)
+                           for dic in self._enchant_dicts):
+                    # incorrect in *all* dictionaries, add suggestions
+                    suggestions = {
+                        x.lower()
+                        for dic in self._enchant_dicts
+                        for x in dic.suggest(word)
+                        if len(x) > 2
+                    }
+                    word_list.extend(suggestions)
+        # Keep duplicates from the original query string.
         # Sort longest words first.
-        self._string2_word_list = sorted(word_list, key=lambda x: -len(x))
+        self._string2_word_list = sorted(word_list, key=len, reverse=True)
         if not self._quick:
             # only needed when using SequenceMatcher()
             self._seq2 = ' ' + self._string2 + ' '
