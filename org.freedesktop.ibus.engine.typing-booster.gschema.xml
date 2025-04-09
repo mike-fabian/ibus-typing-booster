@@ -238,6 +238,16 @@
         nevertheless useful symbols.
       </description>
     </key>
+    <key name="unicodedataall" type="b">
+      <default>false</default>
+      <summary>Load all Unicode characters</summary>
+      <description>
+        Whether to load all Unicode characters from UnicodeData.txt
+        for the Unicode symbols and emoji predictions. If false, many
+        characters which are typically typed directly rather than
+        searched for are ommitted to improve performance.
+      </description>
+    </key>
     <key name="offtherecord" type="b">
       <default>false</default>
       <summary>Off the record mode</summary>

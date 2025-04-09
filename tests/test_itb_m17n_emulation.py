@@ -94,6 +94,7 @@ class ItbM17nEmuTestCase(unittest.TestCase):
     orig_ascii_digits = False
     orig_word_prediction_mode = True
     orig_emoji_prediction_mode = False
+    orig_unicode_data_all_mode = False
     orig_off_the_record_mode = False
     orig_record_mode = 0
     orig_emoji_trigger_characters = '_'
@@ -171,6 +172,8 @@ class ItbM17nEmuTestCase(unittest.TestCase):
             self.engine.get_word_prediction_mode())
         self.orig_emoji_prediction_mode = (
             self.engine.get_emoji_prediction_mode())
+        self.orig_unicode_data_all_mode = (
+            self.engine.get_unicode_data_all_mode())
         self.orig_off_the_record_mode = (
             self.engine.get_off_the_record_mode())
         self.orig_record_mode = (
@@ -228,6 +231,9 @@ class ItbM17nEmuTestCase(unittest.TestCase):
             update_gsettings=False)
         self.engine.set_emoji_prediction_mode(
             self.orig_emoji_prediction_mode,
+            update_gsettings=False)
+        self.engine.set_unicode_data_all_mode(
+            self.orig_unicode_data_all_mode,
             update_gsettings=False)
         self.engine.set_off_the_record_mode(
             self.orig_off_the_record_mode,

@@ -230,6 +230,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'wordpredictions']['user']
         self._emoji_predictions: bool = self._settings_dict[
             'emojipredictions']['user']
+        self._unicode_data_all: bool = self._settings_dict[
+            'unicodedataall']['user']
 
         self.is_lookup_table_enabled_by_min_char_complete = False
         self._min_char_complete: int = self._settings_dict[
@@ -438,7 +440,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.debug('Instantiate EmojiMatcher(languages = %s',
                              self._dictionary_names)
             self.emoji_matcher = itb_emoji.EmojiMatcher(
-                languages=self._dictionary_names)
+                languages=self._dictionary_names,
+                unicode_data_all=self._unicode_data_all)
             if self._debug_level > 1:
                 LOGGER.debug('EmojiMatcher() instantiated.')
         else:
@@ -718,6 +721,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'emojipredictions': {
                 'set': self.set_emoji_prediction_mode,
                 'get': self.get_emoji_prediction_mode},
+            'unicodedataall': {
+                'set': self.set_unicode_data_all_mode,
+                'get': self.get_unicode_data_all_mode},
             'offtherecord': {
                 'set': self.set_off_the_record_mode,
                 'get': self.get_off_the_record_mode},
@@ -1387,7 +1393,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self.emoji_matcher.get_languages()
                 != self._dictionary_names):
                 self.emoji_matcher = itb_emoji.EmojiMatcher(
-                    languages=self._dictionary_names)
+                    languages=self._dictionary_names,
+                    unicode_data_all=self._unicode_data_all)
             emoji_scores: Dict[str, Tuple[int, str]] = {}
             emoji_max_score: int = 0
             for ime in self._current_imes:
@@ -1800,7 +1807,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     self.emoji_matcher.get_languages()
                     != dictionary_names):
                 self.emoji_matcher = itb_emoji.EmojiMatcher(
-                    languages=dictionary_names)
+                    languages=dictionary_names,
+                    unicode_data_all=self._unicode_data_all)
         if not self.is_empty():
             self._update_ui()
         if update_gsettings:
@@ -3015,7 +3023,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self.emoji_matcher.get_languages()
             != self._dictionary_names):
             self.emoji_matcher = itb_emoji.EmojiMatcher(
-                languages=self._dictionary_names)
+                languages=self._dictionary_names,
+                unicode_data_all=self._unicode_data_all)
         if self._debug_level > 0:
             related_candidates = self.emoji_matcher.similar(
                 phrase)
@@ -4476,7 +4485,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                  self.emoji_matcher.get_languages()
                  != self._dictionary_names)):
             self.emoji_matcher = itb_emoji.EmojiMatcher(
-                languages=self._dictionary_names)
+                languages=self._dictionary_names,
+                unicode_data_all=self._unicode_data_all)
         self._update_ui()
         if update_gsettings:
             self._gsettings.set_value(
@@ -4499,6 +4509,57 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
     def get_emoji_prediction_mode(self) -> bool:
         '''Returns the current value of the emoji prediction mode'''
         return self._emoji_predictions
+
+    def set_unicode_data_all_mode(
+            self, mode: bool, update_gsettings: bool = True) -> None:
+        '''Sets the mode whether to load all Unicode characters for
+        Unicode symbol and emoji prediction
+
+        :param mode: Whether to load all Unicode characters
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._unicode_data_all:
+            return
+        self._unicode_data_all = mode
+        if self.emoji_matcher:
+            if self._debug_level > 1:
+                LOGGER.debug('Updating EmojiMatcher')
+            self.emoji_matcher = itb_emoji.EmojiMatcher(
+                languages=self._dictionary_names,
+                unicode_data_all=self._unicode_data_all)
+        self._update_ui()
+        if update_gsettings:
+            self._gsettings.set_value(
+                'unicodedataall',
+                GLib.Variant.new_boolean(mode))
+
+    def toggle_unicode_data_all_mode(
+            self, update_gsettings: bool = True) -> None:
+        '''Toggles whether all Unicode characters are loaded for
+        Unicode symbol and emoji prediction.
+
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        self.set_unicode_data_all_mode(
+            not self._unicode_data_all, update_gsettings)
+
+    def get_unicode_data_all_mode(self) -> bool:
+        '''Returns the current value of the mode whether to load all
+        Unicode characters for Unicode symbol and emoji prediction
+        '''
+        return self._unicode_data_all
 
     def set_off_the_record_mode(
             self,

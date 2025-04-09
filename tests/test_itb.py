@@ -179,6 +179,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_word_prediction_mode())
         self.orig_emoji_prediction_mode = (
             self.engine.get_emoji_prediction_mode())
+        self.orig_unicode_data_all_mode = (
+            self.engine.get_unicode_data_all_mode())
         self.orig_off_the_record_mode = (
             self.engine.get_off_the_record_mode())
         self.orig_record_mode = (
@@ -234,6 +236,9 @@ class ItbTestCase(unittest.TestCase):
             update_gsettings=False)
         self.engine.set_emoji_prediction_mode(
             self.orig_emoji_prediction_mode,
+            update_gsettings=False)
+        self.engine.set_unicode_data_all_mode(
+            self.orig_unicode_data_all_mode,
             update_gsettings=False)
         self.engine.set_off_the_record_mode(
             self.orig_off_the_record_mode,
@@ -2607,6 +2612,38 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'xäb xäb ')
+
+    def test_unicode_data_all(self) -> None:
+        '''https://github.com/mike-fabian/ibus-typing-booster/issues/667'''
+        dummy_trans = self.get_transliterator_or_skip('t-rfc1345')
+        self.engine.set_emoji_prediction_mode(True, update_gsettings=False)
+        self.engine.set_current_imes(['t-rfc1345'], update_gsettings=False)
+        self.engine.set_dictionary_names(['en_US'], update_gsettings=False)
+        # With unicode_data_all_mode set to False,
+        # 'linear_ideogram_bathtub' should find 🛁 U+1F6C1 BATHTUB but
+        # **not** 𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
+        self.engine.set_unicode_data_all_mode(False, update_gsettings=False)
+        for char in 'linear_ideogram_bathtub':
+            if char == '_':
+                char = 'underscore'
+            self.engine.do_process_key_event(getattr(IBus, f'KEY_{char}'), 0, 0)
+        candidate_set = {x[0] for x in self.engine._candidates}
+        self.assertTrue('🛁' in candidate_set) # 🛁 U+1F6C1 BATHTUB
+        self.assertFalse('𐃅' in candidate_set) # 𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        self.assertEqual('', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        # With unicode_data_all_mode set to True,
+        # 'linear_ideogram_bathtub' should find both 🛁 U+1F6C1
+        # BATHTUB **and** 𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
+        self.engine.set_unicode_data_all_mode(True, update_gsettings=False)
+        for char in 'linear_ideogram_bathtub':
+            if char == '_':
+                char = 'underscore'
+            self.engine.do_process_key_event(getattr(IBus, f'KEY_{char}'), 0, 0)
+        candidate_set = {x[0] for x in self.engine._candidates}
+        self.assertTrue('🛁' in candidate_set) # 🛁 U+1F6C1 BATHTUB
+        self.assertTrue('𐃅' in candidate_set) # 𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
 
     def test_compose_transliterated_hi_inscript2(self) -> None:
         '''
