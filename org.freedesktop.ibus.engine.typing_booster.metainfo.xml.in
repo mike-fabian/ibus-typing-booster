@@ -47,6 +47,43 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.31" date="2025-04-09" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.31</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Add a new boolean gsettings option to allow loading
+            **all** Unicode characters from UnicodeData.txt for the
+            Unicode symbols and emoji predictions (Resolves:
+            github-issues#667)
+          </li>
+          <li>
+            Scale image correctly when adding an input method in the
+            setup tool (Resolves: github-issues#675)
+          </li>
+          <li>
+            Display a middle dot in the preedit for keys in a compose
+            sequence which use unassigned Unicode code points
+            (Resolves: github-issues#674)
+          </li>
+          <li>
+            Translation update from Weblate (fi 100%, uk 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/667">
+          github-issues#667
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/675">
+          github-issues#675
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/674">
+          github-issues#674
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.30" date="2025-04-02" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.30</url>
       <description>

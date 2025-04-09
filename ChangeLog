@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 09 Apr 2025 Release 2.27.31
+* Add a new boolean gsettings option to allow loading **all** Unicode characters from UnicodeData.txt for the Unicode symbols and emoji predictions (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/667)
+* Scale image correctly when adding an input method in the setup tool (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/675)
+* Display a middle dot in the preedit for keys in a compose sequence which use unassigned Unicode code points (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/674)
+* Translation update from Weblate (fi 100%, uk 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 02 Apr 2025 Release 2.27.30
 * Commit finished compose sequences immediately if no completions are possible (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/662)
 * Fix summary for asciidigits in the gschema file
