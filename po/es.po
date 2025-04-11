@@ -15,11 +15,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-04-09 17:56+0200\n"
-"PO-Revision-Date: 2025-04-11 05:48+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
-"Language-Team: Spanish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/es/>\n"
+"PO-Revision-Date: 2025-04-11 14:04+0000\n"
+"Last-Translator: Javier Francisco <fserrador@gmail.com>\n"
+"Language-Team: Spanish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +29,7 @@ msgstr ""
 #: engine/emoji-picker.desktop.in.in:3 engine/emoji_picker.py:210
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
-msgstr "Selector de emoyis"
+msgstr "Selector de emoji"
 
 #: engine/emoji-picker.desktop.in.in:4
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:7
@@ -158,7 +157,7 @@ msgstr "La búsqueda no produjo ningún resultado."
 
 #: engine/emoji_picker.py:1561 engine/emoji_picker.py:1689
 msgid "Copied to clipboard!"
-msgstr "Se copió en el portapapeles."
+msgstr "Copiado al portapapeles."
 
 #: engine/emoji_picker.py:2016
 msgid "Lookup on emojipedia"
@@ -738,6 +737,16 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"Selecciona cual familia de entrada sería registrada en la base de datos del "
+"usuario: «Everything»: Cada palabra tecleada es añadida a la base de datos o "
+"su frecuenca es actualizada si ya está ahí. «Correctamente deletreado o "
+"anteriormente registrado»: Una palabra tecleada solamente es añadida a la "
+"base de datos del usuario si es correctamente deletreada. Si una palabra ya "
+"está en la base de datos del usuario y es actualizada frecuentemente no "
+"importa como es deletreada.  «Correctamente deletreada»: Una palabra "
+"tecleada solo es agregada a la base de datos o su frecuenta es actualizada "
+"en la base de datos si es similar a ser correctamente deletreada.  «Nada»: "
+"No registra ninguna entrada dentro de la base de datos del usuario."
 
 #: setup/main.py:679
 msgid "Everything"
@@ -811,6 +820,9 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
+"Si está permitido poner una palabra otra vez en un pre-editor cunado el "
+"cursor se mueva al final o al principio de una palabra. Activando esta "
+"opción es útil para corregir palabras ya realizadas."
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
@@ -835,12 +847,17 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"Algunos métodos de entrada produce dígitos específicos de la lengua por "
+"defecto. Si uno nunca desea utilizar tales dígitos específicos del idioma "
+"pero prefiere los dígitos del oeste (ASCII) siempre, uno puede establecer "
+"esta opción para convertir los dígitos específicos del idioma producido por "
+"métodos de entrada siempre en dígitos ASCII."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
 #: setup/main.py:808
 msgid "Use IBus keymap"
-msgstr ""
+msgstr "Utilizar distribución de teclas IBus"
 
 #: setup/main.py:810
 msgid ""
@@ -848,6 +865,10 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"Si está forzado el uso de una distribución de teclas IBus mientras esté "
+"activo Typing Booster. Para muchos usuarios no utilizan una distribución de "
+"teclado IBus es lo recomendado. En ese caso, la distribución del teclado el "
+"cual fue activo antes que esté utilizado el intercambio al teclado booster."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
