@@ -33,12 +33,12 @@ from typing import Callable
 import os
 import sys
 import re
+import functools
 import gzip
 import json
 import unicodedata
 import html
 import logging
-from difflib import SequenceMatcher
 import gettext
 import itb_util
 
@@ -384,7 +384,6 @@ class EmojiMatcher():
                  emoji_unicode_min: str = '0.0',
                  emoji_unicode_max: str = '100.0',
                  cldr_data: bool = True,
-                 quick: bool = True,
                  variation_selector: str = 'emoji',
                  romaji: bool = True) -> None:
         '''
@@ -396,9 +395,6 @@ class EmojiMatcher():
                                  characters from UnicodeData.txt.
                                  If False, most regular letters are omitted.
         :param cldr_data: Whether to load data from CLDR as well
-        :param quick: Whether to do a quicker but slighly less precise match.
-                      Quick matching is about 4 times faster and usually
-                      good enough.
         :param romaji: Whether to add Latin transliteration for Japanese.
                        Works only when pykakasi is available, if this is not
                        the case, this option is ignored.
@@ -426,7 +422,6 @@ class EmojiMatcher():
         self._unicode_data_all = unicode_data_all
         self._emoji_unicode_min = emoji_unicode_min
         self._emoji_unicode_max = emoji_unicode_max
-        self._quick = quick
         self._variation_selector = variation_selector
         self._romaji = romaji
         self._unicode_blocks: Dict[range, str] = {}
@@ -435,27 +430,9 @@ class EmojiMatcher():
             for language in self._languages:
                 if enchant.dict_exists(language):
                     self._enchant_dicts.append(enchant.Dict(language))
-        # From the documentation
-        # (https://docs.python.org/3.6/library/difflib.html):
-        # “SequenceMatcher computes and caches detailed information
-        # about the second sequence, so if you want to compare one
-        # sequence against many sequences, use set_seq2() to set the
-        # commonly used sequence once and call set_seq1() repeatedly,
-        # once for each of the other sequences.”
-        self._matcher = SequenceMatcher(
-            isjunk=None, a='', b='', autojunk=False)
-        self._match_cache: Dict[Tuple[str, str], int] = {}
-        self._string1 = ''
-        self._seq1 = ''
-        self._len1 = 0
-        self._string2 = ''
-        self._string2_number_of_words = 0
-        self._string2_word_list: List[str] = []
-        self._seq2 = ''
-        self._len2 = 0
         self._emoji_dict: Dict[Tuple[str, str], Dict[str, Any]] = {}
         self._candidate_cache: Dict[
-            Tuple[str, int], List[Tuple[str, str, int]]] = {}
+            Tuple[str, int, str], List[Tuple[str, str, int]]] = {}
         # The three data sources are loaded in this order on purpose.
         # The data from Unicode is loaded first to put the official
         # names first into the list of names to display the official
@@ -1306,190 +1283,79 @@ class EmojiMatcher():
                                  for x in content.split('|')]
                             )
 
-    def _set_seq1(self, string: str) -> None:
-        '''Sequence 1 is a label from the emoji data'''
-        self._string1 = itb_util.remove_accents(string.lower())
-        if not self._quick:
-            # only needed when using SequenceMatcher()
-            self._seq1 = ' ' + self._string1 + ' '
-            self._len1 = len(self._seq1)
-            self._matcher.set_seq1(self._seq1)
-
-    def _set_seq2(self, string: str) -> None:
-        '''Sequence 2 is the query string, i.e. the user input'''
-        self._string2 = itb_util.remove_accents(string.lower())
-        # Split the input string into a list of words:
-        word_list: List[str] = []
-        original_words = self._string2.split(sep=None)
-        self._string2_number_of_words = len(original_words)
-        for word in original_words:
-            word_list.append(word)
-            # If a word in the input string is not correctly spelled
-            # in any of the enabled dictionaries, add spell checking
-            # suggestions to the list (don’t do that if it is spelled
-            # correctly in at least one dictionary):
-            if len(word) > 5 and IMPORT_ENCHANT_SUCCESSFUL:
-                word_title = word.title()
-                if not any(dic.check(word) or dic.check(word_title)
-                           for dic in self._enchant_dicts):
-                    # incorrect in *all* dictionaries, add suggestions
-                    suggestions = {
-                        x.lower()
-                        for dic in self._enchant_dicts
-                        for x in dic.suggest(word)
-                        if len(x) > 2
-                    }
-                    word_list.extend(suggestions)
-        # Keep duplicates from the original query string.
-        # Sort longest words first.
-        self._string2_word_list = sorted(word_list, key=len, reverse=True)
-        if not self._quick:
-            # only needed when using SequenceMatcher()
-            self._seq2 = ' ' + self._string2 + ' '
-            self._len2 = len(self._string2)
-            self._matcher.set_seq2(self._string2)
-            self._match_cache = {}
-
-    def _match(self, label: str, debug: bool = False) -> int:
-        '''Matches a label from the emoji data against the query string.
-
-        The query string must have been already set with
-        self._set_seq2(query_string) before calling self._match().
-
-        '''
-        self._set_seq1(label)
+    # @functools.cache is available only in Python >= 3.9.
+    #
+    # Python >= 3.9 is not available on RHEL8, not yet on openSUSE
+    # Tumbleweed (2021-22-29), ...
+    #
+    # But @functools.lru_cache(maxsize=None) is the same and it is
+    # available for Python >= 3.2, that means it should be available
+    # everywhere.
+    #
+    # Many keywords are of course shared by many emoji, therefore the
+    # query string is often matched against labels already matched
+    # previously. Caching previous matches speeds it up quite a bit.
+    @functools.lru_cache(maxsize=None)
+    @staticmethod
+    def match(label: str, match_string: str) -> int:
+        '''Matches a label from the emoji data against the query string.'''
+        label = itb_util.remove_accents(label.lower())
         total_score = 0
-        if debug:
-            print(f'string1 = “{self._string1}” '
-                  f'string2 = “{self._string2}” '
-                  f'string2_word_list = “{self._string2_word_list}”')
-        if (self._string1, self._string2) in self._match_cache:
-            # Many keywords are of course shared by many emoji,
-            # therefore the query string is often matched against
-            # labels already matched previously. Caching previous
-            # matches speeds it up quite a bit.
-            total_score = self._match_cache[(self._string1, self._string2)]
-            if debug:
-                print(f'Cached, total_score = {total_score}')
-            return total_score
-        # Does the complete query string match exactly?
-        # (If the strings contain white space, we count it as an exact
-        # match if all words match in any order. For example 'black
-        # cat' counts as an exact match for 'cat black'.
-        if set(self._string1.split()) == set(self._string2.split()):
-            if debug:
-                print('Exact match, total_score += 1000')
+        label_words = set(label.split())
+        label_no_spaces = label.replace(' ', '')
+        # Sort longest words first.
+        word_list = sorted(match_string.split(sep=None), key=len, reverse=True)
+        word_set = set(word_list)
+        # Exact set match (highest priority)
+        # For example 'black cat' counts as an exact match for 'cat black'.
+        if label_words == word_set:
             total_score += 1000
-        # Does a word in the query string match exactly?
-        for word in set(self._string2_word_list):
+        # Exact word matches
+        for word in word_set:
             # use set() here to avoid making an exact match stronger
             # just because a word happens to be twice in the input.
-            if word == self._string1:
-                if self._string2_number_of_words == 1:
-                    total_score += 300
-                    if debug:
-                        print(f'Spell check exact match, word = “{word}”, '
-                              'total_score += 300')
-                else:
-                    total_score += 200
-                    if debug:
-                        print(f'Exact match from word_list, word = “{word}”, '
-                              'total_score += 200')
-        # Does a word in the query string match the beginning of a word in
-        # the label?
-        tmp = self._string1
-        for word in self._string2_word_list:
-            match_start = tmp.find(word)
-            if match_start < 0:
-                continue
-            if match_start == 0:
-                total_score += 120 + len(word)
-            elif tmp[match_start - 1] == ' ':
-                total_score += 100 + len(word)
-            else:
-                continue
-            # Slight speed improvement, removing the part of the string
-            # which has already been matched makes the string shorter
-            # and speeds up matching the remaining words
-            tmp = tmp[:match_start] + tmp[match_start + len(word):]
-            if debug:
-                print(f'Substring match from word_list, word = “{word}”, '
-                      f'total_score = {total_score}')
-        # Does a word in the query string match the label if spaces in
-        # the label are ignored?
-        tmp = self._string1.replace(' ', '')
-        for word in self._string2_word_list:
-            match_start = tmp.find(word)
-            if match_start < 0:
-                continue
-            if match_start == 0:
-                total_score += 40 + len(word)
-            else:
-                total_score += 20 + len(word)
-            # Slight speed improvement, removing the part of the string
-            # which has already been matched makes the string shorter
-            # and speeds up matching the remaining words
-            tmp = tmp[:match_start] + tmp[match_start + len(word):]
-            if debug:
-                print('Space insensitive substring match from word_list, '
-                      f'word = “{word}”, '
-                      f'total_score = {total_score}')
-        if self._quick:
-            self._match_cache[(self._string1, self._string2)] = total_score
-            return total_score
-        # The following code using SequenceMatcher() might increase
-        # the total_score by up to 500 approximately. It improves
-        # the matching a little bit but it is very slow.
-        if debug:
-            print(f'seq1 = “{self._seq1}” seq2 = “{self._seq2}”')
-        for tag, i1, i2, j1, j2 in self._matcher.get_opcodes(): # pylint: disable=invalid-name
-            score = 0
-            if tag in ('replace', 'delete', 'insert'):
-                pass
-            if tag == 'equal':
-                match_length = i2 - i1
-                if match_length > 1:
-                    score += match_length
-                    # favor word boundaries
-                    if self._seq1[i1] == ' ':
-                        if i1 == 0 and j1 == 0:
-                            score += 4 * match_length
-                        elif i1 == 0 or j1 == 0:
-                            score += 2 * match_length
-                        else:
-                            score += match_length
-                    if i1 > 0 and j1 > 0 and self._seq1[i1 - 1] == ' ':
-                        score += match_length
-                    if self._seq1[i2 - 1] == ' ':
-                        if i2 == self._len1 and j2 == self._len2:
-                            score += 4 * match_length
-                        elif i2 == self._len1 or j2 == self._len2:
-                            score += 2 * match_length
-                        else:
-                            score += match_length
-            total_score += score
-            if debug:
-                print(
-                    f'{tag:7} a[{i1:2}:{i2:2}] --> b[{j1:2}:{j2:2}]'
-                    f'{score:3} {total_score:3} '
-                    f'{repr(self._seq1[i1:i2])} --> {repr(self._seq2[j1:j2])}')
-        self._match_cache[(self._string1, self._string2)] = total_score
+            if word == label:
+                total_score += 300 if len(word_list) == 1 else 200
+
+        # Substring matches
+        tmp_label = label
+        tmp_no_spaces = label_no_spaces
+        for word in word_list:
+            # Match at word boundaries
+            match_start = tmp_label.find(word)
+            if match_start >= 0:
+                if match_start == 0 or tmp_label[match_start - 1] == ' ':
+                    total_score += 120 if match_start == 0 else 100
+                    total_score += len(word)
+                    # Slight speed improvement, removing the part of
+                    # the string which has already been matched makes
+                    # the string shorter and speeds up matching the
+                    # remaining words
+                    tmp_label = tmp_label[:match_start] + tmp_label[match_start + len(word):]
+
+            # Match with spaces ignored
+            match_start = tmp_no_spaces.find(word)
+            if match_start >= 0:
+                total_score += 40 if match_start == 0 else 20
+                total_score += len(word)
+                # Slight speed improvement, removing the part of the
+                # string which has already been matched makes the
+                # string shorter and speeds up matching the remaining
+                # words
+                tmp_no_spaces = tmp_no_spaces[:match_start] + tmp_no_spaces[match_start + len(word):]
         return total_score
 
     def candidates(
             self,
             query_string: str,
             match_limit: int = 20,
-            trigger_characters: str  = '',
-            debug: Iterable[str] = tuple()) -> List[Tuple[str, str, int]]:
+            trigger_characters: str  = '') -> List[Tuple[str, str, int]]:
         # pylint: disable=line-too-long
         '''
         Find a list of emoji which best match a query string.
 
         :param query_string: A search string
         :param match_limit: Limit the number of matches to this amount
-        :param debug: List or tuple of emojis to print debug information
-                      about the matching to stdout.
         :return: List of emoji which best match the query string
 
         Returns a list of tuples of the form (<emoji>, <name>, <score),
@@ -1580,9 +1446,41 @@ class EmojiMatcher():
 
         >>> mq.candidates('1b')
         [('\\x1b', 'U+1B', 2000), ('🧔🏻\u200d♂️', 'man: light skin tone, beard', 44), ('🧔🏻\u200d♀️', 'woman: light skin tone, beard', 44), ('🧑🏻\u200d🦲', 'person: light skin tone, bald', 44)]
-
         '''
         # pylint: enable=line-too-long
+        if ((query_string, match_limit, trigger_characters)
+            in self._candidate_cache):
+            return self._candidate_cache[(
+                query_string, match_limit, trigger_characters)]
+        # David Mandelberg’s idea to do the emoji search first without
+        # spellchecking and only if nothing matches do it again with
+        # spellchecking doesn’t make it faster as we hoped, it makes
+        # it slower.
+        #
+        #candidates = self._candidates(
+        #    query_string=query_string,
+        #    match_limit=match_limit,
+        #    trigger_characters=trigger_characters,
+        #    spellcheck=False)
+        #if candidates:
+        #    self._candidate_cache[(
+        #        query_string, match_limit, trigger_characters)] = candidates
+        #    return candidates
+        candidates = self._candidates(
+            query_string=query_string,
+            match_limit=match_limit,
+            trigger_characters=trigger_characters,
+            spellcheck=True)
+        self._candidate_cache[(
+            query_string, match_limit, trigger_characters)] = candidates
+        return candidates
+
+    def _candidates(
+            self,
+            query_string: str,
+            match_limit: int = 20,
+            trigger_characters: str  = '',
+            spellcheck: bool = False) -> List[Tuple[str, str, int]]:
         # Remove the trigger characters from the beginning and end of
         # the query string:
         if query_string[:1] and query_string[:1] in trigger_characters:
@@ -1602,25 +1500,33 @@ class EmojiMatcher():
         # transliterates to “ねこ＿” and that should of course match
         # the emoji for “ねこ”　(= “cat”):
         query_string = re.sub(r'[＿_\s]+', ' ', query_string)
-        if ((query_string, match_limit) in self._candidate_cache
-                and not debug):
-            return self._candidate_cache[(query_string, match_limit)]
         if (query_string, 'en') in self._emoji_dict:
             # the query_string is itself an emoji, match similar ones:
             candidates = self.similar(query_string, match_limit=match_limit)
-            self._candidate_cache[(query_string, match_limit)] = candidates
             return candidates
-        self._set_seq2(query_string)
+        match_string = query_string
+        if spellcheck:
+            for word in match_string.split(sep=None):
+                # Keep duplicates from the original query string.
+                # If a word in the input string is not correctly spelled
+                # in any of the enabled dictionaries, add spell checking
+                # suggestions to the list (don’t do that if it is spelled
+                # correctly in at least one dictionary):
+                if len(word) > 5 and IMPORT_ENCHANT_SUCCESSFUL:
+                    word_title = word.title()
+                    if not any(dic.check(word) or dic.check(word_title)
+                               for dic in self._enchant_dicts):
+                        # incorrect in *all* dictionaries, add suggestions
+                        suggestions = {
+                            x.lower()
+                            for dic in self._enchant_dicts
+                            for x in dic.suggest(word)
+                            if len(x) > 2
+                        }
+                        match_string += f' {" ".join(suggestions)}'
+        match_string = itb_util.remove_accents(match_string.lower())
         candidates = []
         for emoji_key, emoji_value in self._emoji_dict.items():
-            if emoji_key[0] in debug:
-                debug_match = True
-                print('===================================')
-                print(f'Debug match for “{emoji_key[0]}”')
-                print('===================================')
-            else:
-                debug_match = False
-
             total_score = 0
             good_match_score = 200
             name_good_match = ''
@@ -1629,25 +1535,25 @@ class EmojiMatcher():
             keyword_good_match = ''
             if 'names' in emoji_value:
                 for name in emoji_value['names']:
-                    score = 2 * self._match(name, debug=debug_match)
+                    score = 2 * self.__class__.match(name, match_string)
                     if score >= good_match_score:
                         name_good_match = name
                     total_score += score
             if 'ucategories' in emoji_value:
                 for ucategory in emoji_value['ucategories']:
-                    score = self._match(ucategory, debug=debug_match)
+                    score = self.__class__.match(ucategory, match_string)
                     if score >= good_match_score:
                         ucategory_good_match = ucategory
                     total_score += score
             if 'categories' in emoji_value:
                 for category in emoji_value['categories']:
-                    score = self._match(category, debug=debug_match)
+                    score = self.__class__.match(category, match_string)
                     if score >= good_match_score:
                         category_good_match = category
                     total_score += score
             if 'keywords' in emoji_value:
                 for keyword in emoji_value['keywords']:
-                    score = self._match(keyword, debug=debug_match)
+                    score = self.__class__.match(keyword, match_string)
                     if score >= good_match_score:
                         keyword_good_match = keyword
                     total_score += score
@@ -1715,7 +1621,6 @@ class EmojiMatcher():
                 x[1]                   # name of the emoji
             ))[:match_limit]
 
-        self._candidate_cache[(query_string, match_limit)] = sorted_candidates
         return sorted_candidates
 
     def names(self, emoji_string: str, language: str = '') -> List[str]:
@@ -2566,6 +2471,8 @@ def main() -> None:
 
     LOGGER.info('itb_util.remove_accents() cache info: %s',
                 itb_util.remove_accents.cache_info())
+    LOGGER.info('EmojiMatcher.match() cache info: %s',
+                EmojiMatcher.match.cache_info())
 
     sys.exit(failed)
 
