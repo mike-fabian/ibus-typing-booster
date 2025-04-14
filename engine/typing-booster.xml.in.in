@@ -14,6 +14,9 @@
     <textdomain>ibus-typing-booster</textdomain>
     <observed-paths>
         <path>${pkgdatadir}/data/</path>
+        <path>/usr/local/share/m17n/</path>
+        <path>/usr/share/m17n/</path>
+        <path>~/.m17n.d/</path>
     </observed-paths>
     <engines exec='${libexecdir}/ibus-engine-typing-booster --xml'/>
 </component>

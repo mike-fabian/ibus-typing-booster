@@ -5172,6 +5172,8 @@ class M17nDbInfo:
         '''Finds the directories which contain the m17n input methods which
         can be used and stores the result in self._dirs
         '''
+        # NOTE: When adding dirs here, also add them to <observed-paths> in
+        # engine/typing-booster.xml.in.in
         self._dirs = []
         user_dir = os.getenv('M17NDIR')
         if not user_dir:
