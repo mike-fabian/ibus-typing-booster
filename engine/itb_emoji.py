@@ -375,6 +375,67 @@ def find_cldr_annotation_path(language: str) -> str:
             return path
     return ''
 
+# @functools.cache is available only in Python >= 3.9.
+#
+# Python >= 3.9 is not available on RHEL8, not yet on openSUSE
+# Tumbleweed (2021-22-29), ...
+#
+# But @functools.lru_cache(maxsize=None) is the same and it is
+# available for Python >= 3.2, that means it should be available
+# everywhere.
+#
+# Many keywords are of course shared by many emoji, therefore the
+# query string is often matched against labels already matched
+# previously. Caching previous matches speeds it up quite a bit.
+@functools.lru_cache(maxsize=None)
+def _match(label: str, match_string: str) -> int:
+    '''Matches a label from the emoji data against the query string.'''
+    label = itb_util.remove_accents(label.lower())
+    total_score = 0
+    label_words = set(label.split())
+    label_no_spaces = label.replace(' ', '')
+    # Sort longest words first.
+    word_list = sorted(match_string.split(sep=None), key=len, reverse=True)
+    word_set = set(word_list)
+    # Exact set match (highest priority)
+    # For example 'black cat' counts as an exact match for 'cat black'.
+    if label_words == word_set:
+        total_score += 1000
+    # Exact word matches
+    for word in word_set:
+        # use set() here to avoid making an exact match stronger
+        # just because a word happens to be twice in the input.
+        if word == label:
+            total_score += 300 if len(word_list) == 1 else 200
+
+    # Substring matches
+    tmp_label = label
+    tmp_no_spaces = label_no_spaces
+    for word in word_list:
+        # Match at word boundaries
+        match_start = tmp_label.find(word)
+        if match_start >= 0:
+            if match_start == 0 or tmp_label[match_start - 1] == ' ':
+                total_score += 120 if match_start == 0 else 100
+                total_score += len(word)
+                # Slight speed improvement, removing the part of
+                # the string which has already been matched makes
+                # the string shorter and speeds up matching the
+                # remaining words
+                tmp_label = tmp_label[:match_start] + tmp_label[match_start + len(word):]
+
+        # Match with spaces ignored
+        match_start = tmp_no_spaces.find(word)
+        if match_start >= 0:
+            total_score += 40 if match_start == 0 else 20
+            total_score += len(word)
+            # Slight speed improvement, removing the part of the
+            # string which has already been matched makes the
+            # string shorter and speeds up matching the remaining
+            # words
+            tmp_no_spaces = tmp_no_spaces[:match_start] + tmp_no_spaces[match_start + len(word):]
+    return total_score
+
 class EmojiMatcher():
     '''A class to find Emoji which best match a query string'''
 
@@ -1283,68 +1344,6 @@ class EmojiMatcher():
                                  for x in content.split('|')]
                             )
 
-    # @functools.cache is available only in Python >= 3.9.
-    #
-    # Python >= 3.9 is not available on RHEL8, not yet on openSUSE
-    # Tumbleweed (2021-22-29), ...
-    #
-    # But @functools.lru_cache(maxsize=None) is the same and it is
-    # available for Python >= 3.2, that means it should be available
-    # everywhere.
-    #
-    # Many keywords are of course shared by many emoji, therefore the
-    # query string is often matched against labels already matched
-    # previously. Caching previous matches speeds it up quite a bit.
-    @functools.lru_cache(maxsize=None)
-    @staticmethod
-    def match(label: str, match_string: str) -> int:
-        '''Matches a label from the emoji data against the query string.'''
-        label = itb_util.remove_accents(label.lower())
-        total_score = 0
-        label_words = set(label.split())
-        label_no_spaces = label.replace(' ', '')
-        # Sort longest words first.
-        word_list = sorted(match_string.split(sep=None), key=len, reverse=True)
-        word_set = set(word_list)
-        # Exact set match (highest priority)
-        # For example 'black cat' counts as an exact match for 'cat black'.
-        if label_words == word_set:
-            total_score += 1000
-        # Exact word matches
-        for word in word_set:
-            # use set() here to avoid making an exact match stronger
-            # just because a word happens to be twice in the input.
-            if word == label:
-                total_score += 300 if len(word_list) == 1 else 200
-
-        # Substring matches
-        tmp_label = label
-        tmp_no_spaces = label_no_spaces
-        for word in word_list:
-            # Match at word boundaries
-            match_start = tmp_label.find(word)
-            if match_start >= 0:
-                if match_start == 0 or tmp_label[match_start - 1] == ' ':
-                    total_score += 120 if match_start == 0 else 100
-                    total_score += len(word)
-                    # Slight speed improvement, removing the part of
-                    # the string which has already been matched makes
-                    # the string shorter and speeds up matching the
-                    # remaining words
-                    tmp_label = tmp_label[:match_start] + tmp_label[match_start + len(word):]
-
-            # Match with spaces ignored
-            match_start = tmp_no_spaces.find(word)
-            if match_start >= 0:
-                total_score += 40 if match_start == 0 else 20
-                total_score += len(word)
-                # Slight speed improvement, removing the part of the
-                # string which has already been matched makes the
-                # string shorter and speeds up matching the remaining
-                # words
-                tmp_no_spaces = tmp_no_spaces[:match_start] + tmp_no_spaces[match_start + len(word):]
-        return total_score
-
     def candidates(
             self,
             query_string: str,
@@ -1535,25 +1534,25 @@ class EmojiMatcher():
             keyword_good_match = ''
             if 'names' in emoji_value:
                 for name in emoji_value['names']:
-                    score = 2 * self.__class__.match(name, match_string)
+                    score = 2 * _match(name, match_string)
                     if score >= good_match_score:
                         name_good_match = name
                     total_score += score
             if 'ucategories' in emoji_value:
                 for ucategory in emoji_value['ucategories']:
-                    score = self.__class__.match(ucategory, match_string)
+                    score = _match(ucategory, match_string)
                     if score >= good_match_score:
                         ucategory_good_match = ucategory
                     total_score += score
             if 'categories' in emoji_value:
                 for category in emoji_value['categories']:
-                    score = self.__class__.match(category, match_string)
+                    score = _match(category, match_string)
                     if score >= good_match_score:
                         category_good_match = category
                     total_score += score
             if 'keywords' in emoji_value:
                 for keyword in emoji_value['keywords']:
-                    score = self.__class__.match(keyword, match_string)
+                    score = _match(keyword, match_string)
                     if score >= good_match_score:
                         keyword_good_match = keyword
                     total_score += score
@@ -2471,8 +2470,7 @@ def main() -> None:
 
     LOGGER.info('itb_util.remove_accents() cache info: %s',
                 itb_util.remove_accents.cache_info())
-    LOGGER.info('EmojiMatcher.match() cache info: %s',
-                EmojiMatcher.match.cache_info())
+    LOGGER.info('_match() cache info: %s', _match.cache_info())
 
     sys.exit(failed)
 
