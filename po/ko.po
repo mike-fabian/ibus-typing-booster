@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-04-09 17:56+0200\n"
+"POT-Creation-Date: 2025-04-15 19:46+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
@@ -256,56 +256,56 @@ msgstr "구글 텍스트 음성 변환 오류. 결점 기록을 참고하세요.
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:959 engine/itb_emoji.py:960 engine/itb_emoji.py:961
-#: engine/itb_emoji.py:1164
+#: engine/itb_emoji.py:997 engine/itb_emoji.py:998 engine/itb_emoji.py:999
+#: engine/itb_emoji.py:1202
 msgid "people"
 msgstr "사람과 신체"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:962 engine/itb_emoji.py:1160
+#: engine/itb_emoji.py:1000 engine/itb_emoji.py:1198
 msgid "nature"
 msgstr "동물과 자연"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:963 engine/itb_emoji.py:1156
+#: engine/itb_emoji.py:1001 engine/itb_emoji.py:1194
 msgid "food"
 msgstr "식품과 음료"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:964 engine/itb_emoji.py:1170
+#: engine/itb_emoji.py:1002 engine/itb_emoji.py:1208
 msgid "travel"
 msgstr "여행과 장소"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:965 engine/itb_emoji.py:974 engine/itb_emoji.py:1152
+#: engine/itb_emoji.py:1003 engine/itb_emoji.py:1012 engine/itb_emoji.py:1190
 msgid "activity"
 msgstr "활동"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:966 engine/itb_emoji.py:1162
+#: engine/itb_emoji.py:1004 engine/itb_emoji.py:1200
 msgid "objects"
 msgstr "물체"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:967 engine/itb_emoji.py:1168
+#: engine/itb_emoji.py:1005 engine/itb_emoji.py:1206
 msgid "symbols"
 msgstr "기호"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:968 engine/itb_emoji.py:1154
+#: engine/itb_emoji.py:1006 engine/itb_emoji.py:1192
 msgid "flags"
 msgstr "깃발"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:969 engine/itb_emoji.py:970 engine/itb_emoji.py:1158
+#: engine/itb_emoji.py:1007 engine/itb_emoji.py:1008 engine/itb_emoji.py:1196
 msgid "modifier"
 msgstr "수정자"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:971 engine/itb_emoji.py:1166
+#: engine/itb_emoji.py:1009 engine/itb_emoji.py:1204
 msgid "regional"
 msgstr "지역"
 
@@ -339,27 +339,27 @@ msgstr "지역"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "기타, 잡다한, 다양한, 다양성"
 
-#: engine/itb_util.py:4517 engine/itb_util.py:5248
+#: engine/itb_util.py:4517 engine/itb_util.py:5250
 msgid "File not found"
 msgstr "파일을 찾을 수 없습니다"
 
-#: engine/itb_util.py:4521 engine/itb_util.py:5252
+#: engine/itb_util.py:4521 engine/itb_util.py:5254
 msgid "Permission error"
 msgstr "권한 오류"
 
-#: engine/itb_util.py:4525 engine/itb_util.py:5256
+#: engine/itb_util.py:4525 engine/itb_util.py:5258
 msgid "Unicode decoding error"
 msgstr "유니코드 디코딩 오류"
 
-#: engine/itb_util.py:4529 engine/itb_util.py:5260
+#: engine/itb_util.py:4529 engine/itb_util.py:5262
 msgid "Unknown error"
 msgstr "알 수 없는 오류"
 
-#: engine/itb_util.py:5226
+#: engine/itb_util.py:5228
 msgid "Native Keyboard"
 msgstr "네이티브 키보드"
 
-#: engine/itb_util.py:5228
+#: engine/itb_util.py:5230
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -372,11 +372,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5911
+#: engine/itb_util.py:5913
 msgid "Key input"
 msgstr "키 입력"
 
-#: engine/itb_util.py:5917
+#: engine/itb_util.py:5919
 msgid "Cancel"
 msgstr "취소"
 
@@ -384,27 +384,27 @@ msgstr "취소"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5924
+#: engine/itb_util.py:5926
 msgid "Please press a key (or a key combination)"
 msgstr "키 (또는 키 조합)를 누르세요"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5929
+#: engine/itb_util.py:5931
 msgid "The dialog will be closed when the key is released"
 msgstr "대화상자는 키를 놓으면 닫힐 것입니다"
 
-#: engine/itb_util.py:5968
+#: engine/itb_util.py:5970
 msgid "A completion input method to speedup typing."
 msgstr "입력 속도를 높여주는 완성형 입력 방식."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5977
+#: engine/itb_util.py:5979
 msgid "translator-credits"
 msgstr "김인수 <simmon@nplob.com>"
 
-#: engine/itb_util.py:5985
+#: engine/itb_util.py:5987
 msgid "Online documentation:"
 msgstr "온라인 문서:"
 

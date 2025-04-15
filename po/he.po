@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-04-09 17:56+0200\n"
+"POT-Creation-Date: 2025-04-15 19:46+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Hebrew <https://translate.fedoraproject.org/projects/ibus-"
@@ -259,56 +259,56 @@ msgstr "שגיאה בדיבור לטקסט של Google. מידע נוסף ב־de
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:959 engine/itb_emoji.py:960 engine/itb_emoji.py:961
-#: engine/itb_emoji.py:1164
+#: engine/itb_emoji.py:997 engine/itb_emoji.py:998 engine/itb_emoji.py:999
+#: engine/itb_emoji.py:1202
 msgid "people"
 msgstr "אנשים"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:962 engine/itb_emoji.py:1160
+#: engine/itb_emoji.py:1000 engine/itb_emoji.py:1198
 msgid "nature"
 msgstr "טבע"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:963 engine/itb_emoji.py:1156
+#: engine/itb_emoji.py:1001 engine/itb_emoji.py:1194
 msgid "food"
 msgstr "אוכל"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:964 engine/itb_emoji.py:1170
+#: engine/itb_emoji.py:1002 engine/itb_emoji.py:1208
 msgid "travel"
 msgstr "טיול"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:965 engine/itb_emoji.py:974 engine/itb_emoji.py:1152
+#: engine/itb_emoji.py:1003 engine/itb_emoji.py:1012 engine/itb_emoji.py:1190
 msgid "activity"
 msgstr "פעילות"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:966 engine/itb_emoji.py:1162
+#: engine/itb_emoji.py:1004 engine/itb_emoji.py:1200
 msgid "objects"
 msgstr "עצמים"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:967 engine/itb_emoji.py:1168
+#: engine/itb_emoji.py:1005 engine/itb_emoji.py:1206
 msgid "symbols"
 msgstr "סימנים"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:968 engine/itb_emoji.py:1154
+#: engine/itb_emoji.py:1006 engine/itb_emoji.py:1192
 msgid "flags"
 msgstr "דגלים"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:969 engine/itb_emoji.py:970 engine/itb_emoji.py:1158
+#: engine/itb_emoji.py:1007 engine/itb_emoji.py:1008 engine/itb_emoji.py:1196
 msgid "modifier"
 msgstr "חלופות"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:971 engine/itb_emoji.py:1166
+#: engine/itb_emoji.py:1009 engine/itb_emoji.py:1204
 msgid "regional"
 msgstr "אזורי"
 
@@ -342,27 +342,27 @@ msgstr "אזורי"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "אחרים, שונות, מגוון, גיוון"
 
-#: engine/itb_util.py:4517 engine/itb_util.py:5248
+#: engine/itb_util.py:4517 engine/itb_util.py:5250
 msgid "File not found"
 msgstr "הקובץ לא נמצא"
 
-#: engine/itb_util.py:4521 engine/itb_util.py:5252
+#: engine/itb_util.py:4521 engine/itb_util.py:5254
 msgid "Permission error"
 msgstr "שגיאת הרשאות"
 
-#: engine/itb_util.py:4525 engine/itb_util.py:5256
+#: engine/itb_util.py:4525 engine/itb_util.py:5258
 msgid "Unicode decoding error"
 msgstr "שגיאת פענוח יוניקוד"
 
-#: engine/itb_util.py:4529 engine/itb_util.py:5260
+#: engine/itb_util.py:4529 engine/itb_util.py:5262
 msgid "Unknown error"
 msgstr "שגיאה לא ידועה"
 
-#: engine/itb_util.py:5226
+#: engine/itb_util.py:5228
 msgid "Native Keyboard"
 msgstr "מקלדת רגילה"
 
-#: engine/itb_util.py:5228
+#: engine/itb_util.py:5230
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -374,11 +374,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5911
+#: engine/itb_util.py:5913
 msgid "Key input"
 msgstr "קלט מקש"
 
-#: engine/itb_util.py:5917
+#: engine/itb_util.py:5919
 msgid "Cancel"
 msgstr "ביטול"
 
@@ -386,27 +386,27 @@ msgstr "ביטול"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5924
+#: engine/itb_util.py:5926
 msgid "Please press a key (or a key combination)"
 msgstr "יש ללחוץ על מקש (או צירוף מקשים)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5929
+#: engine/itb_util.py:5931
 msgid "The dialog will be closed when the key is released"
 msgstr "החלונית תיסגר עם שחרור הלחיצה על המקש"
 
-#: engine/itb_util.py:5968
+#: engine/itb_util.py:5970
 msgid "A completion input method to speedup typing."
 msgstr "שיטת קלט משלימה להאצת ההקלדה."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5977
+#: engine/itb_util.py:5979
 msgid "translator-credits"
 msgstr "ירון שהרבני <sh.yaron@gmail.com>"
 
-#: engine/itb_util.py:5985
+#: engine/itb_util.py:5987
 msgid "Online documentation:"
 msgstr "תיעוד מקוון:"
 
