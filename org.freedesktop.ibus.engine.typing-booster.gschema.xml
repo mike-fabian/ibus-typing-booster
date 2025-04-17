@@ -601,7 +601,9 @@
         'toggle_off_the_record': &lt;['Mod5+F9']&gt;,
         'toggle_ascii_digits': &lt;@as []&gt;,
         'toggle_hide_input': &lt;['Shift+Control+Escape']&gt;,
-        'toggle_input_mode_on_off': &lt;@as []&gt;
+        'toggle_input_mode_on_off': &lt;@as []&gt;,
+        'trigger_emoji_predictions': &lt;@as []&gt;,
+        'trigger_word_predictions': &lt;@as []&gt;
         }
       </default>
       <summary>List of keybindings</summary>

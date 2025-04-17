@@ -4201,6 +4201,64 @@ class ItbTestCase(unittest.TestCase):
             self.engine._typed_string,
             [])
 
+    def test_temporary_emoji_predictions(self) -> None:
+        self.engine.set_emoji_prediction_mode(False, update_gsettings=False)
+        self.engine.set_word_prediction_mode(False, update_gsettings=False)
+        self.engine.set_dictionary_names(['en_US'], update_gsettings=False)
+        self.engine.set_keybindings({
+            'commit_candidate_1': ['F1'],
+            'trigger_emoji_predictions': ['F13'],
+        }, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_F13, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_f, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_p, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, '🤦')
+        self.assertFalse(self.engine._temporary_emoji_predictions)
+
+    @unittest.skipUnless(
+        testutils.get_hunspell_dictionary_length('en_US') >= 10000,
+        'Skipping because en_US dictionary is suspiciously small, '
+        'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
+    def test_temporary_word_predictions(self) -> None:
+        self.engine.set_emoji_prediction_mode(False, update_gsettings=False)
+        self.engine.set_word_prediction_mode(False, update_gsettings=False)
+        self.engine.set_dictionary_names(['en_US'], update_gsettings=False)
+        self.engine.set_keybindings({
+            'commit_candidate_1': ['F1'],
+            'trigger_word_predictions': ['F13'],
+        }, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_F13, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_q, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, 'kumquat')
+        self.assertFalse(self.engine._temporary_word_predictions)
+
+    def test_cancel_temporary_predictions(self) -> None:
+        self.engine.set_emoji_prediction_mode(False, update_gsettings=False)
+        self.engine.set_word_prediction_mode(False, update_gsettings=False)
+        self.engine.set_keybindings({
+            'cancel': ['Escape'],
+            'trigger_emoji_predictions': ['F13'],
+            'trigger_word_predictions': ['F14'],
+        }, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_F13, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_F14, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        self.assertFalse(self.engine._temporary_emoji_predictions)
+        self.assertFalse(self.engine._temporary_word_predictions)
+
 if __name__ == '__main__':
     LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
     LOGGER.setLevel(logging.DEBUG)
