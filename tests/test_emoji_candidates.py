@@ -41,6 +41,13 @@ import testutils # pylint: disable=import-error
 # added, changed, or missing.
 itb_emoji.DOMAINNAME = ''
 
+IMPORT_RAPIDFUZZ_SUCCESSFUL = False
+try:
+    import rapidfuzz
+    IMPORT_RAPIDFUZZ_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_RAPIDFUZZ_SUCCESSFUL = False
+
 IMPORT_ENCHANT_SUCCESSFUL = False
 IMPORT_HUNSPELL_SUCCESSFUL = False
 try:
@@ -118,9 +125,10 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('ネコ＿')[0][:2],
             ('🐈', 'ネコ'))
 
-    def test_candidates_multilingual(self) -> None:
+    def test_candidates_multilingual_classic(self) -> None:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='classic')
         self.assertEqual(
             mq.candidates('ant')[0][:2],
             ('🐜', 'ant'))
@@ -158,6 +166,50 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('factory')[0][:2],
             ('🏭', 'factory'))
 
+    @unittest.skipUnless(
+        IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_multilingual_rapidfuzz(self) -> None:
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='rapidfuzz')
+        self.assertEqual(
+            mq.candidates('ant')[0][:2],
+            ('🐜', 'ant'))
+        self.assertEqual(
+            mq.candidates('ameise')[0][:2],
+            ('🐜', 'Ameise'))
+        self.assertEqual(
+            mq.candidates('Ameise')[0][:2],
+            ('🐜', 'Ameise'))
+        self.assertEqual(
+            mq.candidates('formica')[0][:2],
+            ('🐜', 'formica'))
+        self.assertEqual(
+            mq.candidates('hormiga')[0][:2],
+            ('🐜', 'hormiga'))
+        self.assertEqual(
+            mq.candidates('cacca')[0][:2],
+            ('\U000cacca', 'U+CACCA')) # second candiate is ('💩', 'cacca'))
+        self.assertEqual(
+            mq.candidates('orso')[0][:2],
+            ('🐻', 'orso'))
+        self.assertEqual(
+            mq.candidates('lupo')[0][:2],
+            ('🐺', 'lupo [muso di lupo]'))
+        self.assertEqual(
+            mq.candidates('gatto')[0][:2],
+            ('😼', 'gatto con sorriso sarcastico [gatto sorriso sarcastico]'))
+        self.assertEqual(
+            mq.candidates('gatto sorride')[0][:2],
+            ('😺', 'gatto che sorride'))
+        self.assertEqual(
+            mq.candidates('halo')[0][:2],
+            ('😇', 'smiling face with halo'))
+        self.assertEqual(
+            mq.candidates('factory')[0][:2],
+            ('🧑🏻\u200d🏭', 'factory worker: light skin tone'))
+
     def test_candidates_white_space_and_underscores(self) -> None:
         # Any white space and '_' can be used to separate keywords in the
         # query string:
@@ -173,15 +225,15 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('smiling face with sunglasses')[0][:2],
             ('😎', 'smiling face with sunglasses'))
 
-    def test_candidates_skin_tones(self) -> None:
+    def test_candidates_skin_tones_classic(self) -> None:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['ja_JP'])#, 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+            languages = ['ja_JP'], match_algorithm='classic')
         self.assertEqual(
             mq.candidates('man tone5')[0][:2],
             ('👨🏿', 'man: dark skin tone “man tone5”'))
         self.assertEqual(
             mq.candidates('skin tone')[0][:2],
-            ('🧑🏾\u200d🤝\u200d🧑🏼', 'people holding hands: medium-dark skin tone, medium-light skin tone “people holding hands medium dark skin tone medium light skin tone”'))
+            ('🧑🏾\u200d🤝\u200d🧑🏼', 'people holding hands: medium-dark skin tone, medium-light skin tone'))
         self.assertEqual(
             mq.candidates('tone1')[0][:2],
             ('🏻', 'emoji modifier fitzpatrick type-1-2 “tone1”'))
@@ -189,9 +241,29 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('tone5')[0][:2],
             ('🏿', 'emoji modifier fitzpatrick type-6 “tone5”'))
 
-    def test_candidates_some_letters(self) -> None:
+    @unittest.skipUnless(
+        IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_skin_tones_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+            languages = ['ja_JP'], match_algorithm='rapidfuzz')
+        self.assertEqual(
+            mq.candidates('man tone5')[0][:2],
+            ('👲🏿', 'person with skullcap: dark skin tone “man with chinese cap tone5”'))
+        self.assertEqual(
+            mq.candidates('skin tone')[0][:2],
+            ('🧑🏾\u200d🤝\u200d🧑🏼', 'people holding hands: medium-dark skin tone, medium-light skin tone'))
+        self.assertEqual(
+            mq.candidates('tone1')[0][:2],
+            ('👍🏻', 'thumbs up: light skin tone “thumbsup tone1”'))
+        self.assertEqual(
+            mq.candidates('tone5')[0][:2],
+            ('👍🏿', 'thumbs up: dark skin tone “thumbsup tone5”'))
+
+    def test_candidates_some_letters_classic(self) -> None:
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='classic')
         self.assertEqual(
             mq.candidates('a')[0][:2],
             ('🅰\ufe0f', 'negative squared latin capital letter a'))
@@ -205,15 +277,35 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('c')[0][:2],
             ('©️', 'copyright sign'))
 
-    def test_candidates_flags(self) -> None:
+    @unittest.skipUnless(
+        IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_some_letters_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['en_US'])
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='rapidfuzz')
+        self.assertEqual(
+            mq.candidates('a')[0][:2],
+            ('🅰\ufe0f', 'negative squared latin capital letter a'))
+        self.assertEqual(
+            mq.candidates('squared a')[0][:2],
+            ('🅰\ufe0f', 'negative squared latin capital letter a'))
+        self.assertEqual(
+            mq.candidates('squared capital a')[0][:2],
+            ('🅰\ufe0f', 'negative squared latin capital letter a'))
+        self.assertEqual(
+            mq.candidates('c')[0][:2],
+            ('\x0c', 'U+C'))
+
+    def test_candidates_flags_classic(self) -> None:
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['en_US'], match_algorithm='classic')
         self.assertEqual(
             mq.candidates('us')[0][:2],
             ('🇺🇸', 'flag: united states “us”'))
         self.assertEqual(
             mq.candidates('flag us')[0][:2],
-            ('🇺🇸', 'flag: united states “us”'))
+            ('🇺🇸', 'flag: united states “flag us”'))
         self.assertEqual(
             mq.candidates('united nations')[0][:2],
             ('🇺🇳', 'flag: united nations'))
@@ -225,31 +317,80 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('🇺🇲', 'flag: u.s. outlying islands'))
         self.assertEqual(
             mq.candidates('flag united arab')[0][:2],
-            ('🇦🇪', 'flag: united arab emirates “flag ae”'))
+            ('🇦🇪', 'flag: united arab emirates'))
         self.assertEqual(
             mq.candidates('mm')[0][:2],
             ('🇲🇲', 'flag: myanmar (burma) “mm”'))
         self.assertEqual(
             mq.candidates('flag mm')[0][:2],
-            ('🇲🇲', 'flag: myanmar (burma) “mm”'))
+            ('🇲🇲', 'flag: myanmar (burma) “flag mm”'))
         self.assertEqual(
             mq.candidates('myanmar')[0][:2],
-            ('🇲🇲', 'flag: myanmar (burma) “flag: myanmar burma”'))
+            ('🇲🇲', 'flag: myanmar (burma)'))
         self.assertEqual(
             mq.candidates('sj')[0][:2],
             ('🇸🇯', 'flag: svalbard & jan mayen “sj”'))
         self.assertEqual(
             mq.candidates('flag sj')[0][:2],
-            ('🇸🇯', 'flag: svalbard & jan mayen “sj”'))
+            ('🇸🇯', 'flag: svalbard & jan mayen “flag sj”'))
         self.assertEqual(
             mq.candidates('svalbard')[0][:2],
-            ('🇸🇯', 'flag: svalbard & jan mayen “flag: svalbard &amp; jan mayen”'))
+            ('🇸🇯', 'flag: svalbard & jan mayen'))
         self.assertEqual(
             mq.candidates('jan mayen')[0][:2],
-            ('🇸🇯', 'flag: svalbard & jan mayen “flag: svalbard &amp; jan mayen”'))
+            ('🇸🇯', 'flag: svalbard & jan mayen'))
         self.assertEqual(
             mq.candidates('mayen')[0][:2],
-            ('🇸🇯', 'flag: svalbard & jan mayen “flag: svalbard &amp; jan mayen”'))
+            ('🇸🇯', 'flag: svalbard & jan mayen'))
+
+    @unittest.skipUnless(
+        IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_flags_rapidfuzz(self) -> None:
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['en_US'], match_algorithm='rapidfuzz')
+        self.assertEqual(
+            mq.candidates('us')[0][:2],
+            ('🇺🇸', 'flag: united states “flag us”'))
+        self.assertEqual(
+            mq.candidates('flag us')[0][:2],
+            ('🇺🇸', 'flag: united states “flag us”'))
+        self.assertEqual(
+            mq.candidates('united nations')[0][:2],
+            ('🇺🇳', 'flag: united nations'))
+        self.assertEqual(
+            mq.candidates('united')[0][:2],
+            ('🇺🇳', 'flag: united nations'))
+        self.assertEqual(
+            mq.candidates('outlying islands')[0][:2],
+            ('🇺🇲', 'flag: u.s. outlying islands'))
+        self.assertEqual(
+            mq.candidates('flag united arab emirates')[0][:2],
+            ('🇦🇪', 'flag: united arab emirates'))
+        self.assertEqual(
+            mq.candidates('mm myanmar')[0][:2],
+            ('🇲🇲', 'flag: myanmar (burma) “mm”'))
+        self.assertEqual(
+            mq.candidates('flag mm')[0][:2],
+            ('🇲🇲', 'flag: myanmar (burma) “flag mm”'))
+        self.assertEqual(
+            mq.candidates('myanmar')[0][:2],
+            ('🇲🇲', 'flag: myanmar (burma)'))
+        self.assertEqual(
+            mq.candidates('sj')[0][:2],
+            ('🇸🇯', 'flag: svalbard & jan mayen “flag sj”'))
+        self.assertEqual(
+            mq.candidates('flag sj')[0][:2],
+            ('🇸🇯', 'flag: svalbard & jan mayen “flag sj”'))
+        self.assertEqual(
+            mq.candidates('svalbard')[0][:2],
+            ('🇸🇯', 'flag: svalbard & jan mayen'))
+        self.assertEqual(
+            mq.candidates('jan mayen')[0][:2],
+            ('🇸🇯', 'flag: svalbard & jan mayen'))
+        self.assertEqual(
+            mq.candidates('mayen')[0][:2],
+            ('🇸🇯', 'flag: svalbard & jan mayen'))
 
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
@@ -257,9 +398,9 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         testutils.enchant_working_as_expected(),
         'Skipping because of an unexpected change in the enchant behaviour.')
-    def test_candidates_persons(self) -> None:
+    def test_candidates_persons_classic(self) -> None:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['en_US'])
+            languages = ['en_US'], match_algorithm='classic')
         self.assertEqual(
             mq.candidates('family')[0][:2],
             ('👪', 'family'))
@@ -277,16 +418,53 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('👦', 'boy'))
         self.assertEqual(
             mq.candidates('family man')[0][:2],
-            ('👨\u200d👩\u200d👦', 'family: man, woman, boy “family man woman boy”'))
+            ('👨\u200d👩\u200d👦', 'family: man, woman, boy'))
         self.assertEqual(
             mq.candidates('man man girl boy')[0][:2],
-            ('👨\u200d👧\u200d👦', 'family: man, girl, boy “family man girl boy”'))
+            ('👨\u200d👧\u200d👦', 'family: man, girl, boy'))
         self.assertEqual(
             mq.candidates('manmangirlboy')[0][:2],
             ('👨\u200d👨\u200d👧\u200d👦', 'family: man, man, girl, boy'))
         self.assertEqual(
             mq.candidates('people')[0][:2],
-            ('🧑🏾\u200d🤝\u200d🧑🏼', 'people holding hands: medium-dark skin tone, medium-light skin tone “people holding hands medium dark skin tone medium light skin tone”'))
+            ('🧑🏾\u200d🤝\u200d🧑🏼', 'people holding hands: medium-dark skin tone, medium-light skin tone'))
+
+    @unittest.skipUnless(
+        IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-enchant to work.")
+    @unittest.skipUnless(
+        testutils.enchant_working_as_expected(),
+        'Skipping because of an unexpected change in the enchant behaviour.')
+    @unittest.skipUnless(
+        IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_persons_rapidfuzz(self) -> None:
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['en_US'], match_algorithm='rapidfuzz')
+        self.assertEqual(
+            mq.candidates('family people')[0][:2],
+            ('👪', 'family {people}'))
+        self.assertEqual(
+            mq.candidates('man people')[0][:2],
+            ('👨', 'man {people}'))
+        self.assertEqual(
+            mq.candidates('woman people')[0][:2],
+            ('👩', 'woman {people}'))
+        self.assertEqual(
+            mq.candidates('girl people')[0][:2],
+            ('👧', 'girl {people}'))
+        self.assertEqual(
+            mq.candidates('boy people')[0][:2],
+            ('👦', 'boy {people}'))
+        self.assertEqual(
+            mq.candidates('family man')[0][:2],
+            ('👨\u200d👩\u200d👦', 'family: man, woman, boy “family man woman boy”'))
+        self.assertEqual(
+            mq.candidates('man man girl boy')[0][:2],
+            ('👨\u200d👧\u200d👦', 'family: man, girl, boy “family: man girl boy”'))
+        self.assertEqual(
+            mq.candidates('people')[0][:2],
+            ('🧑🏾\u200d🤝\u200d🧑🏼', 'people holding hands: medium-dark skin tone, medium-light skin tone'))
 
     def test_candidates_birthday_cake(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -304,9 +482,10 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         testutils.enchant_working_as_expected(),
         'Skipping because of an unexpected change in the enchant behaviour.')
-    def test_candidates_symbols(self) -> None:
+    def test_candidates_symbols_classic(self) -> None:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='classic')
         self.assertEqual(
             mq.candidates('symbol')[0][:2],
             ('♻️', 'black universal recycling symbol {Symbol}'))
@@ -326,9 +505,42 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertTrue(
             mq.candidates('peace symbol')[0][1].startswith('peace symbol'))
 
-    def test_candidates_animals(self) -> None:
+    @unittest.skipUnless(
+        IMPORT_ENCHANT_SUCCESSFUL,
+        "Skipping because this test requires python3-enchant to work.")
+    @unittest.skipUnless(
+        testutils.enchant_working_as_expected(),
+        'Skipping because of an unexpected change in the enchant behaviour.')
+    @unittest.skipUnless(
+        IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_symbols_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='rapidfuzz')
+        self.assertEqual(
+            mq.candidates('symbol')[0][:2],
+            ('♻️', 'black universal recycling symbol {Symbol} {symbols}'))
+        self.assertEqual(
+            mq.candidates('atomsymbol')[0][:2],
+            ('⚛\ufe0f', 'atom symbol'))
+        self.assertEqual(
+            mq.candidates('peacesymbol')[0][0], '☮\ufe0f')
+        # .startswith() because it may be 'peace symbol {Symbol}' or
+        # just 'peace symbol'
+        self.assertTrue(
+            mq.candidates('peacesymbol')[0][1].startswith('peace symbol'))
+        self.assertEqual(
+            mq.candidates('peace symbol')[0][0], '☮\ufe0f')
+        # .startswith() because it may be 'peace symbol {Symbol}' or
+        # just 'peace symbol'
+        self.assertTrue(
+            mq.candidates('peace symbol')[0][1].startswith('peace symbol'))
+
+    def test_candidates_animals_classic(self) -> None:
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='classic')
         self.assertEqual(
             mq.candidates('animal')[0][:2],
             ('🐕', 'dog [animal]'))
@@ -342,9 +554,30 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('nature')[0][:2],
             ('🐌', 'snail {nature}'))
 
-    def test_candidates_travel(self) -> None:
+    @unittest.skipUnless(
+        IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_animals_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='rapidfuzz')
+        self.assertEqual(
+            mq.candidates('animal')[0][:2],
+            ('🐕', 'dog [animals]'))
+        self.assertEqual(
+            mq.candidates('dromedary animal')[0][:2],
+            ('🐪', 'dromedary camel [animal]'))
+        self.assertEqual(
+            mq.candidates('camel')[0][:2],
+            ('🐫', 'bactrian camel'))
+        self.assertEqual(
+            mq.candidates('nature')[0][:2],
+            ('🐌', 'snail {nature}'))
+
+    def test_candidates_travel_classic(self) -> None:
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='classic')
         self.assertEqual(
             mq.candidates('camera')[0][:2],
             ('📷', 'camera'))
@@ -362,13 +595,45 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('⛴\ufe0f', 'ferry {travel}'))
         self.assertEqual(
             mq.candidates('boat')[0][:2],
-            ('🚣🏻\u200d♂️', 'man rowing boat: light skin tone “man rowing boat light skin tone”'))
+            ('🚣🏻\u200d♂️', 'man rowing boat: light skin tone'))
         self.assertEqual(
             mq.candidates('anchor')[0][:2],
             ('⚓', 'anchor'))
         self.assertEqual(
             mq.candidates('anchor boat')[0][:2],
-            ('🚣🏻\u200d♂️', 'man rowing boat: light skin tone “man rowing boat light skin tone”'))
+            ('🚣🏻\u200d♂️', 'man rowing boat: light skin tone'))
+
+    @unittest.skipUnless(
+        IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_travel_rapidfuzz(self) -> None:
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='rapidfuzz')
+        self.assertEqual(
+            mq.candidates('camera')[0][:2],
+            ('🎥', 'movie camera'))
+        self.assertEqual(
+            mq.candidates('travel')[0][:2],
+            ('🚂', 'steam locomotive {travel}'))
+        self.assertEqual(
+            mq.candidates('ferry')[0][:2],
+            ('⛴\ufe0f', 'ferry'))
+        self.assertEqual(
+            mq.candidates('ferry travel')[0][:2],
+            ('⛴\ufe0f', 'ferry {travel}'))
+        self.assertEqual(
+            mq.candidates('ferry travel boat')[0][:2],
+            ('⛴\ufe0f', 'ferry {travel}'))
+        self.assertEqual(
+            mq.candidates('boat')[0][:2],
+            ('🚣🏻\u200d♂️', 'man rowing boat: light skin tone “man rowing boat tone1”'))
+        self.assertEqual(
+            mq.candidates('anchor')[0][:2],
+            ('⚓', 'anchor'))
+        self.assertEqual(
+            mq.candidates('anchor boat')[0][:2],
+            ('⚓', 'anchor'))
 
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
@@ -395,9 +660,10 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('🦔', 'hedgehog'),
             mq.candidates('hedgehgo')[0][:2])
 
-    def test_candidates_various_unicode_chars(self) -> None:
+    def test_candidates_various_unicode_chars_classic(self) -> None:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='classic')
         self.assertEqual(
             mq.candidates('euro sign')[0][:2],
             ('€', 'euro sign'))
@@ -415,7 +681,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             ('💨', 'dash symbol'))
         self.assertEqual(
             mq.candidates('close')[0][:2],
-            ('〉', 'right angle bracket “close angle bracket” {Close}'))
+            ('〉', 'right angle bracket {Close} [close]'))
         self.assertEqual(
             mq.candidates('punctuation')[0][:2],
             ('‼\ufe0f', 'double exclamation mark {Punctuation} [punctuation]'))
@@ -441,11 +707,74 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('separator space')[0][:2],
             (' ', 'U+0020 space {Space}'))
 
-    def test_candidates_french_text(self) -> None:
+    @unittest.skipUnless(
+        IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_various_unicode_chars_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['fr_FR'])
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='rapidfuzz')
+        self.assertEqual(
+            mq.candidates('euro sign whatever')[0][:2],
+            ('€', 'euro sign'))
+        self.assertEqual(
+            mq.candidates('superscript one')[0][:2],
+            ('¹', 'superscript one'))
+        self.assertEqual(
+            mq.candidates('currency')[0][:2],
+            ('¤', 'currency sign {Currency}'))
+        self.assertEqual(
+            mq.candidates('connector')[0][:2],
+            ('﹎', 'centreline low line {Connector}'))
+        self.assertEqual(
+            mq.candidates('dash')[0][:2],
+            ('💨', 'dash symbol'))
+        self.assertEqual(
+            mq.candidates('close')[0][:2],
+            ('〉', 'right angle bracket “close angle bracket” {Close}'))
+        self.assertEqual(
+            mq.candidates('punctuation')[0][:2],
+            ('؞', 'arabic triple dot punctuation mark {Punctuation}'))
+        self.assertEqual(
+            mq.candidates('final quote')[0][:2],
+            ('”', 'right double quotation mark {Final quote}'))
+        self.assertEqual(
+            mq.candidates('initial quote')[0][:2],
+            ('“', 'left double quotation mark {Initial quote}'))
+        self.assertEqual(
+            mq.candidates('modifier')[0][:2],
+            ('🏻', 'emoji modifier fitzpatrick type-1-2 {Modifier}'))
+        self.assertEqual(
+            mq.candidates('math')[0][:2],
+            ('📏', 'straight ruler [math]'))
+        self.assertEqual(
+            mq.candidates('separator line')[0][:2],
+            (' ', 'U+2028 line separator {Line}'))
+        self.assertEqual(
+            mq.candidates('separator paragraph')[0][:2],
+            (' ', 'U+2029 paragraph separator {Paragraph}'))
+        self.assertEqual(
+            mq.candidates('separator space')[0][:2],
+            (' ', 'U+0020 space {Space}'))
+
+    def test_candidates_french_text_classic(self) -> None:
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['fr_FR'], match_algorithm='classic')
         self.assertEqual(
             mq.candidates('chat')[0][:2],
+            ('🐈', 'chat'))
+        self.assertEqual(
+            mq.candidates('réflexion')[0][:2],
+            ('🤔', 'visage en pleine réflexion'))
+
+    @unittest.skipUnless(
+        IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_french_text_rapidfuzz(self) -> None:
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['fr_FR'], match_algorithm='rapidfuzz')
+        self.assertEqual(
+            mq.candidates('chat animal')[0][:2],
             ('🐈', 'chat'))
         self.assertEqual(
             mq.candidates('réflexion')[0][:2],
@@ -458,21 +787,40 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             mq.candidates('🤔', match_limit = 3),
             [('🤔', 'visage en pleine réflexion [🤔, émoticône, hum, méditer, penser, réfléchir, réflexion, visage, visage en pleine réflexion]', 9), ('🤐', 'visage avec bouche fermeture éclair [émoticône, visage]', 2), ('🤗', 'visage qui fait un câlin [émoticône, visage]', 2)])
 
-    def test_candidates_code_point_input(self) -> None:
+    def test_candidates_code_point_input_classic(self) -> None:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['fr_FR'])
+            languages = ['fr_FR'], match_algorithm='classic')
         self.assertEqual(
-            mq.candidates('2019'),
-            [('’', 'U+2019 apostrophe droite', 2000)])
+            mq.candidates('2019')[0][:2],
+            ('’', 'U+2019 apostrophe droite'))
         self.assertEqual(
-            mq.candidates('41'),
-            [('A', 'U+41 latin capital letter a', 2000)])
+            mq.candidates('41')[0][:2],
+            ('A', 'U+41 latin capital letter a'))
         self.assertEqual(
-            mq.candidates('2a'),
-            [('*', 'U+2A astérisque', 2000)])
+            mq.candidates('2a')[0][:2],
+            ('*', 'U+2A astérisque'))
         self.assertEqual(
-            mq.candidates('1b'),
-            [('\x1b', 'U+1B', 2000), ('🧔🏻\u200d♂️', 'man: light skin tone, beard', 44), ('🧔🏻\u200d♀️', 'woman: light skin tone, beard', 44), ('🧑🏻\u200d🦲', 'person: light skin tone, bald', 44)])
+            mq.candidates('1b')[0][:2],
+            ('\x1b', 'U+1B'))
+
+    @unittest.skipUnless(
+        IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_code_point_input_rapidfuzz(self) -> None:
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['fr_FR'], match_algorithm='rapidfuzz')
+        self.assertEqual(
+            mq.candidates('2019')[0][:2],
+            ('’', 'U+2019 apostrophe droite'))
+        self.assertEqual(
+            mq.candidates('41')[0][:2],
+            ('A', 'U+41 latin capital letter a'))
+        self.assertEqual(
+            mq.candidates('2a')[0][:2],
+            ('*', 'U+2A astérisque'))
+        self.assertEqual(
+            mq.candidates('1b')[0][:2],
+            ('\x1b', 'U+1B'))
 
     def test_candidates_de_DE_versus_de_CH(self) -> None: # pylint: disable=invalid-name
         # pylint: disable=fixme

@@ -505,10 +505,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         #                        user database, False if not.
         #          spell_checking: Boolean, True if this candidate was produced
         #                          by spellchecking, False if not.
-        self._candidates: List[Tuple[str, int, str, bool, bool]] = []
+        self._candidates: List[Tuple[str, float, str, bool, bool]] = []
         # a copy of self._candidates in case mode 'orig':
         self._candidates_case_mode_orig: List[
-            Tuple[str, int, str, bool, bool]] = []
+            Tuple[str, float, str, bool, bool]] = []
         self._current_case_mode = 'orig'
         # 'orig': candidates have original case.
         # 'capitalize': candidates have been converted to the first character
@@ -1143,7 +1143,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
     def _append_candidate_to_lookup_table(
             self, phrase: str = '',
-            user_freq: int = 0,
+            user_freq: float = 0.0,
             comment: str = '',
             from_user_db: bool = False,
             spell_checking: bool = False) -> None:
@@ -2783,7 +2783,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             elif self._auto_select_candidate == 1:
                 # auto select: Yes, but only when extremely likely
                 first_candidate = ''
-                user_freq = 0
+                user_freq = 0.0
                 typed_string = ''
                 if self._candidates:
                     first_candidate = self._candidates[0][0]

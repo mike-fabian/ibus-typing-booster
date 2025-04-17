@@ -46,6 +46,13 @@ DOMAINNAME = 'ibus-typing-booster'
 _: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
 N_: Callable[[str], str] = lambda a: a
 
+IMPORT_RAPIDFUZZ_SUCCESSFUL = False
+try:
+    import rapidfuzz
+    IMPORT_RAPIDFUZZ_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_RAPIDFUZZ_SUCCESSFUL = False
+
 IMPORT_ENCHANT_SUCCESSFUL = False
 try:
     import enchant # type: ignore
@@ -388,7 +395,7 @@ def find_cldr_annotation_path(language: str) -> str:
 # query string is often matched against labels already matched
 # previously. Caching previous matches speeds it up quite a bit.
 @functools.lru_cache(maxsize=None)
-def _match(label: str, match_string: str) -> int:
+def _match_classic(label: str, match_string: str) -> int:
     '''Matches a label from the emoji data against the query string.'''
     label = itb_util.remove_accents(label.lower())
     total_score = 0
@@ -436,6 +443,12 @@ def _match(label: str, match_string: str) -> int:
             tmp_no_spaces = tmp_no_spaces[:match_start] + tmp_no_spaces[match_start + len(word):]
     return total_score
 
+@functools.lru_cache(maxsize=None)
+def _match_rapidfuzz(label: str, match_string: str) -> float:
+    '''Matches a label from the emoji data against the query string using rapidfuzz.'''
+    label = itb_util.remove_accents(label.lower())
+    return rapidfuzz.fuzz.token_set_ratio(label, match_string, score_cutoff=90.0)
+
 class EmojiMatcher():
     '''A class to find Emoji which best match a query string'''
 
@@ -446,7 +459,8 @@ class EmojiMatcher():
                  emoji_unicode_max: str = '100.0',
                  cldr_data: bool = True,
                  variation_selector: str = 'emoji',
-                 romaji: bool = True) -> None:
+                 romaji: bool = True,
+                 match_algorithm: str = 'rapidfuzz') -> None:
         '''
         Initialize the emoji matcher
 
@@ -493,7 +507,10 @@ class EmojiMatcher():
                     self._enchant_dicts.append(enchant.Dict(language))
         self._emoji_dict: Dict[Tuple[str, str], Dict[str, Any]] = {}
         self._candidate_cache: Dict[
-            Tuple[str, int, str], List[Tuple[str, str, int]]] = {}
+            Tuple[str, int, str], List[Tuple[str, str, float]]] = {}
+        self._match_function: Callable[[Any, Any], Any] = _match_classic
+        self._good_match_score: float = 90.0
+        self.set_match_algorithm(match_algorithm)
         # The three data sources are loaded in this order on purpose.
         # The data from Unicode is loaded first to put the official
         # names first into the list of names to display the official
@@ -512,6 +529,29 @@ class EmojiMatcher():
                 self._load_cldr_annotation_data(language, 'annotations')
                 self._load_cldr_annotation_data(language, 'annotationsDerived')
         self._load_unicode_blocks()
+
+    def set_match_algorithm(self, name: str = 'rapidfuzz') -> None:
+        '''Sets the match algorithm
+
+        Currently supported: 'rapidfuzz', 'classic'
+
+        When 'rapidfuzz is requested byt `import rapidfuzz` has failed,
+        a fallback to 'classic' is used.
+
+        Changing the match algorithm clears the candidate cache.
+        '''
+        self._candidate_cache = {}
+        if name == 'rapidfuzz' and  IMPORT_RAPIDFUZZ_SUCCESSFUL:
+            self._match_function = _match_rapidfuzz
+            self._good_match_score = 90.0
+            return
+        if name == 'classic':
+            self._good_match_score = 200.0
+            self._match_function = _match_classic
+            return
+        self._good_match_score = 200.0
+        self._match_function = _match_classic
+        return
 
     def get_languages(self) -> List[str]:
         # pylint: disable=line-too-long
@@ -1348,7 +1388,7 @@ class EmojiMatcher():
             self,
             query_string: str,
             match_limit: int = 20,
-            trigger_characters: str  = '') -> List[Tuple[str, str, int]]:
+            trigger_characters: str  = '') -> List[Tuple[str, str, float]]:
         # pylint: disable=line-too-long
         '''
         Find a list of emoji which best match a query string.
@@ -1368,83 +1408,174 @@ class EmojiMatcher():
         If the query string is an emoji itself, similar emoji are returned:
 
         >>> mq.candidates('😺', match_limit=3)
-        [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, uc6, animal, grinning, smiling]', 12), ('😸', 'grinning cat face with smiling eyes [So, people, cat, face, smile, uc6, animal, grinning, smiling]', 9), ('😅', 'smiling face with open mouth and cold sweat [So, people, face, open, smile, uc6, grinning, mouth, smiling]', 9)]
+        [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, uc6, animal, grinning, smiling]', 12.0), ('😸', 'grinning cat face with smiling eyes [So, people, cat, face, smile, uc6, animal, grinning, smiling]', 9.0), ('😅', 'smiling face with open mouth and cold sweat [So, people, face, open, smile, uc6, grinning, mouth, smiling]', 9.0)]
 
         It works in different languages:
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('ネコ＿')[0][:2]
+        ('🐈', 'ネコ')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('ネコ＿')[0][:2]
         ('🐈', 'ネコ')
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('ant')[0][:2]
+        ('🐜', 'ant')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('ant')[0][:2]
         ('🐜', 'ant')
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('ameise')[0][:2]
+        ('🐜', 'Ameise')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('ameise')[0][:2]
         ('🐜', 'Ameise')
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('formica')[0][:2]
+        ('🐜', 'formica')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('formica')[0][:2]
         ('🐜', 'formica')
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('hormiga')[0][:2]
+        ('🐜', 'hormiga')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('hormiga')[0][:2]
         ('🐜', 'hormiga')
 
         Any white space and '_' can be used to separate keywords in the
         query string:
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('gatto sorride')[0][:2]
+        ('😺', 'gatto che sorride')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('gatto sorride')[0][:2]
         ('😺', 'gatto che sorride')
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('gatto_	 sorride')[0][:2]
+        ('😺', 'gatto che sorride')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('gatto_	 sorride')[0][:2]
         ('😺', 'gatto che sorride')
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('nerd glasses')[0][:2]
+        ('🤓', 'nerd face [glasses]')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('nerd glasses')[0][:2]
         ('🤓', 'nerd face [glasses]')
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('smiling face with sunglasses')[0][:2]
+        ('😎', 'smiling face with sunglasses')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('smiling face with sunglasses')[0][:2]
         ('😎', 'smiling face with sunglasses')
 
         ASCII emoji match as well:
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates(':-)')[0][:2]
+        ('🙂', 'slightly smiling face “:-)”')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates(':-)')[0][:2]
         ('🙂', 'slightly smiling face “:-)”')
 
         The query string can contain typos:
 
+        >>> mq.set_match_algorithm('rapidfuzz')
         >>> mq.candidates('buterfly')[0][:2]
-        ('\U0001f98b', 'butterfly')
+        ('🦋', 'butterfly')
+        >>> mq.set_match_algorithm('classic')
+        >>> mq.candidates('buterfly')[0][:2]
+        ('🦋', 'butterfly')
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('badminton')[0][:2]
+        ('🏸', 'badminton racquet and shuttlecock')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('badminton')[0][:2]
         ('🏸', 'badminton racquet and shuttlecock')
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('badminton')[0][:2]
+        ('🏸', 'badminton racquet and shuttlecock')
+        >>> mq.set_match_algorithm('classic')
+        >>> mq.candidates('badminton')[0][:2]
+        ('🏸', 'badminton racquet and shuttlecock')
+
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('badmynton')[0][:2]
+        ('🏸', 'Badminton')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('badmynton')[0][:2]
         ('🏸', 'badminton racquet and shuttlecock')
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('padminton')[0][:2]
+        ('🏸', 'Badminton')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('padminton')[0][:2]
         ('🏸', 'badminton racquet and shuttlecock')
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('hedgehgo')[0][:2]
+        ('🦔', 'hedgehog')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('hedgehgo')[0][:2]
         ('🦔', 'hedgehog')
 
         Non-emoji Unicode characters can be matched as well:
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('euro sign c')[0][:2]
+        ('€', 'euro sign')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('euro sign')[0][:2]
         ('€', 'euro sign')
 
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('superscript one')[0][:2]
+        ('¹', 'superscript one')
+        >>> mq.set_match_algorithm('classic')
         >>> mq.candidates('superscript one')[0][:2]
         ('¹', 'superscript one')
 
         Unicode code points can be used in the query:
 
-        >>> mq.candidates('2019')
-        [('’', 'U+2019 right single quotation mark', 2000)]
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('2019')[0][:2]
+        ('’', 'U+2019 right single quotation mark')
+        >>> mq.set_match_algorithm('classic')
+        >>> mq.candidates('2019')[0][:2]
+        ('’', 'U+2019 right single quotation mark')
 
-        >>> mq.candidates('41')
-        [('A', 'U+41 latin capital letter a', 2000)]
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('41')[0][:2]
+        ('A', 'U+41 latin capital letter a')
+        >>> mq.set_match_algorithm('classic')
+        >>> mq.candidates('41')[0][:2]
+        ('A', 'U+41 latin capital letter a')
 
-        >>> mq.candidates('2a')
-        [('*', 'U+2A asterisk', 2000)]
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('2a')[0][:2]
+        ('*', 'U+2A asterisk')
+        >>> mq.set_match_algorithm('classic')
+        >>> mq.candidates('2a')[0][:2]
+        ('*', 'U+2A asterisk')
 
-        >>> mq.candidates('1b')
-        [('\\x1b', 'U+1B', 2000), ('🧔🏻\u200d♂️', 'man: light skin tone, beard', 44), ('🧔🏻\u200d♀️', 'woman: light skin tone, beard', 44), ('🧑🏻\u200d🦲', 'person: light skin tone, bald', 44)]
+        >>> mq.set_match_algorithm('rapidfuzz')
+        >>> mq.candidates('1b')[0][:2]
+        ('\\x1b', 'U+1B')
+        >>> mq.set_match_algorithm('classic')
+        >>> mq.candidates('1b')[0][:2]
+        ('\\x1b', 'U+1B')
         '''
         # pylint: enable=line-too-long
         if ((query_string, match_limit, trigger_characters)
@@ -1479,7 +1610,7 @@ class EmojiMatcher():
             query_string: str,
             match_limit: int = 20,
             trigger_characters: str  = '',
-            spellcheck: bool = False) -> List[Tuple[str, str, int]]:
+            spellcheck: bool = False) -> List[Tuple[str, str, float]]:
         # Remove the trigger characters from the beginning and end of
         # the query string:
         if query_string[:1] and query_string[:1] in trigger_characters:
@@ -1526,34 +1657,33 @@ class EmojiMatcher():
         match_string = itb_util.remove_accents(match_string.lower())
         candidates = []
         for emoji_key, emoji_value in self._emoji_dict.items():
-            total_score = 0
-            good_match_score = 200
+            total_score = 0.0
             name_good_match = ''
             ucategory_good_match = ''
             category_good_match = ''
             keyword_good_match = ''
             if 'names' in emoji_value:
                 for name in emoji_value['names']:
-                    score = 2 * _match(name, match_string)
-                    if score >= good_match_score:
+                    score = self._match_function(name, match_string)
+                    if not name_good_match and score >= self._good_match_score:
                         name_good_match = name
-                    total_score += score
+                    total_score += 2 * score
             if 'ucategories' in emoji_value:
                 for ucategory in emoji_value['ucategories']:
-                    score = _match(ucategory, match_string)
-                    if score >= good_match_score:
+                    score = self._match_function(ucategory, match_string)
+                    if score >= self._good_match_score:
                         ucategory_good_match = ucategory
                     total_score += score
             if 'categories' in emoji_value:
                 for category in emoji_value['categories']:
-                    score = _match(category, match_string)
-                    if score >= good_match_score:
+                    score = self._match_function(category, match_string)
+                    if score >= self._good_match_score:
                         category_good_match = category
                     total_score += score
             if 'keywords' in emoji_value:
                 for keyword in emoji_value['keywords']:
-                    score = _match(keyword, match_string)
-                    if score >= good_match_score:
+                    score = self._match_function(keyword, match_string)
+                    if score >= self._good_match_score:
                         keyword_good_match = keyword
                     total_score += score
 
@@ -1607,7 +1737,7 @@ class EmojiMatcher():
                     (char,
                      'U+' + query_string.upper()
                      + name,
-                     good_match_score * 10))
+                     self._good_match_score * 10.0))
         except (ValueError,):
             pass
 
@@ -1832,7 +1962,7 @@ class EmojiMatcher():
             self,
             emoji_string: str,
             match_limit: int = 1000,
-            show_keywords: bool = True) -> List[Tuple[str, str, int]]:
+            show_keywords: bool = True) -> List[Tuple[str, str, float]]:
         # pylint: disable=line-too-long
         '''Find similar emojis
 
@@ -1865,17 +1995,17 @@ class EmojiMatcher():
         []
 
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, uc1, happy, smiling]', 10), ('🥲', 'smiling face with tear [So, people, face, happy, smile, smiling]', 6), ('😇', 'smiling face with halo [So, people, face, smile, happy, smiling]', 6), ('🙂', 'slightly smiling face [So, people, face, smile, happy, smiling]', 6), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, smile, happy, smiling]', 6)]
+        [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, uc1, happy, smiling]', 10.0), ('🥲', 'smiling face with tear [So, people, face, happy, smile, smiling]', 6.0), ('😇', 'smiling face with halo [So, people, face, smile, happy, smiling]', 6.0), ('🙂', 'slightly smiling face [So, people, face, smile, happy, smiling]', 6.0), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, smile, happy, smiling]', 6.0)]
 
         >>> matcher = EmojiMatcher(languages = ['it_IT'])
         >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, delineata, emozionarsi, faccina, felice, rilassata, sorridente]', 8), ('🤩', 'colpo di fulmine [faccina, felice]', 2), ('😊', 'faccina con occhi sorridenti [faccina, felice]', 2), ('🙂', 'faccina con sorriso accennato [faccina, felice]', 2), ('😂', 'faccina con lacrime di gioia [faccina, felice]', 2)]
+        [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, delineata, emozionarsi, faccina, felice, rilassata, sorridente]', 8.0), ('🤩', 'colpo di fulmine [faccina, felice]', 2.0), ('😊', 'faccina con occhi sorridenti [faccina, felice]', 2.0), ('🙂', 'faccina con sorriso accennato [faccina, felice]', 2.0), ('😂', 'faccina con lacrime di gioia [faccina, felice]', 2.0)]
 
         Some symbols which are not emoji work as well:
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
         >>> matcher.similar('€', match_limit = 5)
-        [('€', 'euro [€, divisa, EUR, euro, moneda]', 5), ('£', 'libra esterlina [divisa, moneda]', 2), ('₽', 'rublo [divisa, moneda]', 2), ('₹', 'rupia india [divisa, moneda]', 2), ('¥', 'yen [divisa, moneda]', 2)]
+        [('€', 'euro [€, divisa, EUR, euro, moneda]', 5.0), ('£', 'libra esterlina [divisa, moneda]', 2.0), ('₽', 'rublo [divisa, moneda]', 2.0), ('₹', 'rupia india [divisa, moneda]', 2.0), ('¥', 'yen [divisa, moneda]', 2.0)]
 
         '''
         # pylint: enable=line-too-long
@@ -1947,7 +2077,7 @@ class EmojiMatcher():
                                 candidate_scores[scores_key].append(label)
                             else:
                                 candidate_scores[scores_key] = [label]
-        candidates: List[Tuple[str, str, int]] = []
+        candidates: List[Tuple[str, str, float]] = []
         cldr_order_emoji_string = self.cldr_order(emoji_string)
         for csi in sorted(
                 candidate_scores.items(),
@@ -1969,7 +2099,7 @@ class EmojiMatcher():
             else:
                 name = csi[0][2]
             score = len(csi[1])
-            candidates.append((emoji, name, score))
+            candidates.append((emoji, name, float(score)))
         return candidates
 
     def emoji_by_label(self) -> Dict[str, Dict[str, Dict[str, List[str]]]]:
@@ -2470,7 +2600,8 @@ def main() -> None:
 
     LOGGER.info('itb_util.remove_accents() cache info: %s',
                 itb_util.remove_accents.cache_info())
-    LOGGER.info('_match() cache info: %s', _match.cache_info())
+    LOGGER.info('_match_classic() cache info: %s', _match_classic.cache_info())
+    LOGGER.info('_match_rapidfuzz() cache info: %s', _match_rapidfuzz.cache_info())
 
     sys.exit(failed)
 
