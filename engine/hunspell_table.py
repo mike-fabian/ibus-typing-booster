@@ -2869,6 +2869,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return
         if (self._min_char_complete != 0
             or self._hide_input
+            or not self._word_predictions
             or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
             # If the lookup table would be hidden anyway, there is no
             # point in updating the candidates, save some time by making
