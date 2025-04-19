@@ -41,6 +41,40 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.36" date="2025-04-19" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.36</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+             Skip the itb_emoji.py doctests if rapidfuzz or enchant
+             could not be imported (Resolves: github-issues#664)
+          </li>
+          <li>
+            Use rapidfuzz to improve emoji and Unicode character
+            search performance (Resolves: github-issues#679)
+          </li>
+          <li>
+            Do not try to complete on empty input when word
+            predictions are disabled (Resolves: github-issues#684)
+          </li>
+          <li>
+            Translation update from Weblate (it 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/664">
+          github-pull#664
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/679">
+          github-pull#679
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/684">
+          github-pull#684
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.34" date="2025-04-18" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.34</url>
       <description>
@@ -51,13 +85,13 @@
              by David Mandelberg (Resolves: github-pull#658)
           </li>
           <li>
-            Translation update from Weblate (es 95.9%)
+            Translation update from Weblate (kab 75.1%)
           </li>
         </ul>
       </description>
       <issues>
         <issue url="https://github.com/mike-fabian/ibus-typing-booster/pull/658">
-          github-pull#661
+          github-pull#658
         </issue>
       </issues>
     </release>

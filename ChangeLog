@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 19 Apr 2025 Release 2.27.36
+* Skip the itb_emoji.py doctests if rapidfuzz or enchant could not be imported (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/664)
+* Use rapidfuzz to improve emoji and Unicode character search performance (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/679)
+* Do not try to complete on empty input when word predictions are disabled (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/684)
+* Translation update from Weblate (it 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 18 Apr 2025 Release 2.27.34
 * Add trigger hotkeys for temporary word/emoji prediction, by David Mandelberg (Resolves: https://github.com/mike-fabian/ibus-typing-booster/pull/658)
 * Translation update from Weblate (kab 75.1%)
