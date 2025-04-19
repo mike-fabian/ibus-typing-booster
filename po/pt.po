@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-04-15 19:46+0200\n"
+"POT-Creation-Date: 2025-04-19 11:04+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Portuguese <https://translate.fedoraproject.org/projects/ibus-"
@@ -168,21 +168,21 @@ msgstr "Predefinição do sistema"
 msgid "Set Font"
 msgstr "Definir a fonte"
 
-#: engine/hunspell_table.py:559 engine/hunspell_table.py:593
-#: engine/hunspell_table.py:614
+#: engine/hunspell_table.py:561 engine/hunspell_table.py:595
+#: engine/hunspell_table.py:616
 msgid "Off"
 msgstr "Desligado"
 
-#: engine/hunspell_table.py:564 engine/hunspell_table.py:598
-#: engine/hunspell_table.py:619
+#: engine/hunspell_table.py:566 engine/hunspell_table.py:600
+#: engine/hunspell_table.py:621
 msgid "On"
 msgstr "Ligado"
 
-#: engine/hunspell_table.py:583
+#: engine/hunspell_table.py:585
 msgid "Input mode"
 msgstr "Modo de entrada"
 
-#: engine/hunspell_table.py:584
+#: engine/hunspell_table.py:586
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Pode ligar or desligar o ibus-typing-booster aqui."
 
@@ -193,7 +193,7 @@ msgstr "Pode ligar or desligar o ibus-typing-booster aqui."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:603 engine/hunspell_table.py:605 setup/main.py:615
+#: engine/hunspell_table.py:605 engine/hunspell_table.py:607 setup/main.py:615
 msgid "Unicode symbols and emoji predictions"
 msgstr "Previsão de símbolos unicode e emoji"
 
@@ -204,116 +204,116 @@ msgstr "Previsão de símbolos unicode e emoji"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:624 engine/hunspell_table.py:625 setup/main.py:640
+#: engine/hunspell_table.py:626 engine/hunspell_table.py:627 setup/main.py:640
 msgid "Off the record mode"
 msgstr "Fora do modo de gravação"
 
-#: engine/hunspell_table.py:1980
+#: engine/hunspell_table.py:1989
 msgid "Highest priority dictionary"
 msgstr "Dicionário de alta prioridade"
 
-#: engine/hunspell_table.py:1981
+#: engine/hunspell_table.py:1990
 msgid "Choose highest priority dictionary"
 msgstr "Escolha o dicionário de prioridade alta"
 
-#: engine/hunspell_table.py:2010
+#: engine/hunspell_table.py:2019
 msgid "Preedit input method"
 msgstr "Método de entrada de pré-edição"
 
-#: engine/hunspell_table.py:2011
+#: engine/hunspell_table.py:2020
 msgid "Switch preedit input method"
 msgstr "Mudar o método de entrada de pré-edição"
 
-#: engine/hunspell_table.py:2356
+#: engine/hunspell_table.py:2365
 msgid "Setup"
 msgstr "Configurar"
 
-#: engine/hunspell_table.py:2359 setup/main.py:142
+#: engine/hunspell_table.py:2368 setup/main.py:142
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferências para o ibus-typing-booster"
 
-#: engine/hunspell_table.py:6129
+#: engine/hunspell_table.py:6139
 msgid "Failed to import Google speech-to-text."
 msgstr "Falha ao importar a conversão de fala para texto do Google."
 
-#: engine/hunspell_table.py:6132
+#: engine/hunspell_table.py:6142
 msgid "Failed to import pyaudio."
 msgstr "Falha a importar pyaudio."
 
-#: engine/hunspell_table.py:6135
+#: engine/hunspell_table.py:6145
 msgid "Failed to import queue."
 msgstr "Falha ao importar a fila."
 
-#: engine/hunspell_table.py:6140
+#: engine/hunspell_table.py:6150
 msgid "No supported language for speech recognition."
 msgstr "Nenhuma língua suportada para reconhecimento de fala."
 
-#: engine/hunspell_table.py:6144
+#: engine/hunspell_table.py:6154
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Ficheiro “Google application credentials” “%s” não encontrado."
 
-#: engine/hunspell_table.py:6157
+#: engine/hunspell_table.py:6167
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Falha ao iniciar a conversão de fala em texto do Google. Consulte debug.log."
 
-#: engine/hunspell_table.py:6265
+#: engine/hunspell_table.py:6275
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Erro de conversão de fala em texto do Google. Consulte debug.log."
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:997 engine/itb_emoji.py:998 engine/itb_emoji.py:999
-#: engine/itb_emoji.py:1202
+#: engine/itb_emoji.py:1037 engine/itb_emoji.py:1038 engine/itb_emoji.py:1039
+#: engine/itb_emoji.py:1242
 msgid "people"
 msgstr "pessoas"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1000 engine/itb_emoji.py:1198
+#: engine/itb_emoji.py:1040 engine/itb_emoji.py:1238
 msgid "nature"
 msgstr "natureza"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1001 engine/itb_emoji.py:1194
+#: engine/itb_emoji.py:1041 engine/itb_emoji.py:1234
 msgid "food"
 msgstr "comida"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1002 engine/itb_emoji.py:1208
+#: engine/itb_emoji.py:1042 engine/itb_emoji.py:1248
 msgid "travel"
 msgstr "viajem"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1003 engine/itb_emoji.py:1012 engine/itb_emoji.py:1190
+#: engine/itb_emoji.py:1043 engine/itb_emoji.py:1052 engine/itb_emoji.py:1230
 msgid "activity"
 msgstr "atividade"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1004 engine/itb_emoji.py:1200
+#: engine/itb_emoji.py:1044 engine/itb_emoji.py:1240
 msgid "objects"
 msgstr "objetos"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1005 engine/itb_emoji.py:1206
+#: engine/itb_emoji.py:1045 engine/itb_emoji.py:1246
 msgid "symbols"
 msgstr "símbolos"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1006 engine/itb_emoji.py:1192
+#: engine/itb_emoji.py:1046 engine/itb_emoji.py:1232
 msgid "flags"
 msgstr "sinalizadores"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1007 engine/itb_emoji.py:1008 engine/itb_emoji.py:1196
+#: engine/itb_emoji.py:1047 engine/itb_emoji.py:1048 engine/itb_emoji.py:1236
 msgid "modifier"
 msgstr "modificador"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1009 engine/itb_emoji.py:1204
+#: engine/itb_emoji.py:1049 engine/itb_emoji.py:1244
 msgid "regional"
 msgstr "regional"
 
