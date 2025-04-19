@@ -2578,6 +2578,10 @@ def main() -> None:
             unicode_data=True, cldr_data=True)
         matcher.debug_loading_data()
         matcher.list_emoji_one_bugs()
+    elif not IMPORT_RAPIDFUZZ_SUCCESSFUL:
+        LOGGER.info('Skipping doctests because rapidfuzz is not available.')
+    elif not IMPORT_ENCHANT_SUCCESSFUL:
+        LOGGER.info('Skipping doctests because enchant is not available.')
     else:
         import doctest # pylint: disable=import-outside-toplevel
         # Set the domain name to something invalid to avoid using
