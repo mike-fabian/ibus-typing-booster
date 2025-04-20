@@ -3,72 +3,72 @@ title: User Documentation 👩
 date: 2021-09-30
 ---
 
-## Contents
+# Contents
 
-1. [Installing ibus-typing-booster](#0)
-1. [Adding ibus-typing-booster to your desktop](#1)
-    * [When using the Gnome3 desktop](#1_1)
-    * [When using older Gnome3 desktops like in Ubuntu 21.04](#1_2)
-    * [When using other desktops than Gnome3](#1_3)
-    * [When using the Unity desktop on Ubuntu 16.04](#1_4)
-1. [Setup](#2)
-    * [Basic setup for your language](#2_1)
-    * [More advanced options](#2_2)
-        * [Enable suggestions by a key](#2_2_1)
-        * [Use inline completion](#2_2_2)
-            * [Inline completion is hard to use on Wayland](#2_2_2_1)
-        * [Spellchecking](#2_2_3)
-        * [Toggle input mode on/off (Direct Input Mode)](#2_2_4)
-        * [Reopening preëdits](#2_2_5)
-        * [Disabling in terminals](#2_2_6)
-        * [Autosettings](#2_2_7)
-        * [Forcing an IBus keymap](#2_2_8)
-    * [Simulate the behaviour of ibus-m17n](#2_3)
-1. [Key and Mouse bindings](#3)
-    * [The “AltGr” key](#3_1)
-    * [Table of default key bindings](#3_2)
-    * [Mouse bindings](#3_3)
-    * [Customizing key bindings](#3_4)
-        * [Customizing key bindings using digits](#3_5)
-    * [⚠️ Caveat: Key bindings can only work when there is input focus](#3_6)
-1. [Multilingual input](#4)
-    * [Example using Hindi and English at the same time](#4_1)
-    * [Example using Spanish and English at the same time](#4_2)
-1. [Compose support (About dead keys and the Compose key)](#5)
-    * [“Dead keys”](#5_1)
-    * [The “Compose” key](#5_2)
-    * [Customizing compose sequences](#5_3)
-    * [Special “Compose” features in Typing Booster](#5_4)
-        * [Why Typing Booster has its own “Compose” implementation](#5_4_1)
-        * [Automatically add “missing” dead key sequences](#5_4_2)
-        * [Fallbacks for “missing” keypad sequences](#5_4_3)
-        * [How undefined sequences are handled](#5_4_4)
-        * [Show possible completions of compose sequences](#5_4_5)
-            * [A peculiarity of Gnome3 and compose completions](#5_4_5_1)
-        * [Optional colour for the compose preëdit](#5_4_6)
-1. [Unicode symbols and emoji predictions](#7)
-    * [Emoji input](#7_1)
-    * [Emoji input fuzzy matching](#7_2)
-    * [Emoji input using multiple keywords](#7_3)
-    * [Looking up related emoji](#7_4)
-    * [Multilingual emoji input](#7_5)
-        * [Emoji input using German and English](#7_5_1)
-        * [Emoji input using Hindi and English](#7_5_2)
-        * [Emoji input using Japanese](#7_5_3)
-        * [Emoji input using Japanese or Chinese phonetics](#7_5_4)
-    * [Unicode symbol input](#7_6)
-    * [Unicode code point input](#7_7)
-    * [Quickly toggling emoji mode on and off](#7_8)
-    * [Emoji picker](#7_9)
-    * [Emoji fonts](#7_10)
-        * [<span style="color:red">Historic:</span> Showing emoji in colour](#7_10_1)
-1. [The Gnome on-screen keyboard, enabling and using it](#8)
-1. [Using NLTK to find related words](#9)
-1. [Speech recognition](#10)
+* [Installing ibus-typing-booster](#installing-ibus-typing-booster)
+* [Adding ibus-typing-booster to your desktop](#adding-ibus-typing-booster-to-your-desktop)
+    * [When using the Gnome3 desktop](#when-using-the-gnome3-desktop)
+    * [When using older Gnome3 desktops like in Ubuntu 21.04](#gnome3-ubuntu-21)
+    * [When using other desktops than Gnome3](#when-using-other-desktops-than-gnome3)
+    * [When using the Unity desktop on Ubuntu 16.04](#ubuntu-unity-ubuntu-16)
+* [Setup](#setup)
+    * [Basic setup for your language](#basic-setup-for-your-language)
+    * [More advanced options](#more-advanced-options)
+        * [Enable suggestions by a key](#enable-suggestions-by-a-key)
+        * [Use inline completion](#use-inline-completion)
+            * [Inline completion is hard to use on Wayland](#inline-completion-is-hard-to-use-on-wayland)
+        * [Spellchecking](#spellchecking)
+        * [Toggle input mode on/off (Direct Input Mode)](#direct-input-mode)
+        * [Reopening preëdits](#reopening-preedits)
+        * [Disabling in terminals](#disabling-in-terminals)
+        * [Autosettings](#autosettings)
+        * [Forcing an IBus keymap](#forcing-an-ibus-keymap)
+    * [Simulate the behaviour of ibus-m17n](#simulate-the-behaviour-of-ibus-m17n)
+* [Key and Mouse bindings](#key-and-mouse-bindings)
+    * [The “AltGr” key](#the-alt-gr-key)
+    * [Table of default key bindings](#table-of-default-key-bindings)
+    * [Mouse bindings](#mouse-bindings)
+    * [⚠️ Caveat: Key bindings can only work when there is input focus](#key-bindings-only-when-input-focus)
+    * [Customizing key bindings](#customizing-key-bindings)
+        * [Customizing key bindings using digits](#customizing-key-bindings-using-digits)
+        * [Key bindings for temporary emoji and word predictions](#key-bindings-temporary-predictions)
+* [Multilingual input](#multilingual-input)
+    * [Example using Hindi and English at the same time](#example-hindi-english)
+    * [Example using Spanish and English at the same time](#example-spanish-english)
+* [Compose support (About dead keys and the Compose key)](#compose-support)
+    * [“Dead keys”](#dead-keys)
+    * [The “Compose” key](#the-compose-key)
+    * [Customizing compose sequences](#customizing-compose-sequences)
+    * [Special “Compose” features in Typing Booster](#special-compose-features-in-typing-booster)
+        * [Why Typing Booster has its own “Compose” implementation](#why-own-compose-implementation)
+        * [Automatically add “missing” dead key sequences](#automatic-dead-key-sequences)
+        * [Fallbacks for “missing” keypad sequences](#fallbacks-for-missing-dead-key-sequences)
+        * [How undefined sequences are handled](#handling-of-undefined-sequences)
+        * [Show possible completions of compose sequences](#show-compose-completions)
+            * [A peculiarity of Gnome3 and compose completions](#a-peculiarity-of-gnome3-and-compose-completions)
+        * [Optional colour for the compose preëdit](#optional-colour-for-compose-preedit)
+* [Unicode symbols and emoji predictions](#unicode-symbols-and-emoji-predictions)
+    * [Emoji input](#emoji-input)
+    * [Emoji input fuzzy matching](#emoji-input-fuzzy-matching)
+    * [Emoji input using multiple keywords](#emoji-input-multiple-keywords)
+    * [Looking up related emoji](#lookup-related-emoji)
+    * [Multilingual emoji input](#multilingual-emoji-input)
+        * [Emoji input using German and English](#emoji-input-german-english)
+        * [Emoji input using Hindi and English](#emoji-input-hindi-english)
+        * [Emoji input using Japanese](#emoji-input-japanese)
+        * [Emoji input using Japanese or Chinese phonetics](#emoji-input-japanese-chinese-phonetics)
+    * [Unicode symbol input](#unicode-symbol-input)
+    * [Unicode code point input](#unicode-code-point-input)
+    * [Quickly toggling emoji mode on and off](#quickly-toggling-emoji-mode)
+    * [Emoji picker](#emoji-picker)
+    * [Emoji fonts](#emoji-fonts)
+        * [<span style="color:red">Historic:</span> Showing emoji in colour](#historic-emoji-colour)
+* [The Gnome on-screen keyboard, enabling and using it](#gnome-osk)
+* [Using NLTK to find related words](#nltk-related-words)
+* [Speech recognition](#speech-recognition)
 ---------
 
-###### 0
-## Installing ibus-typing-booster
+# Installing ibus-typing-booster {#installing-ibus-typing-booster}
 
 For most distributions, there are binary packages available
 already. Here are some examples for common distributions how you can
@@ -102,21 +102,19 @@ already installed, it finishes immediately 😀.
 and log in again after installing!  On most other desktops one can
 often avoid that by calling `ibus restart` from the command line but
 on Gnome one has to log out and log in again, otherwise one will not
-find ibus-typing-booster when trying to [add it it in the desktop
-settings](#1).
+find ibus-typing-booster when trying to [add it in the desktop
+settings](#adding-ibus-typing-booster-to-your-desktop).
 
 {{< video label="Installing using “Ubuntu Software” on Ubuntu 21.04" mp4="/videos/user-docs/installing-using-ubuntu-software-on-ubuntu-21.04.mp4" >}}
 
-###### 1
-## Adding ibus-typing-booster to your desktop
+# Adding ibus-typing-booster to your desktop {#adding-ibus-typing-booster-to-your-desktop}
 
 This section assumes that you have already installed ibus-typing-booster either using binary packages or from source and now want to add an ibus-typing-booster input method to your desktop.
 
 The procedure to add an ibus-typing-booster input method differs slightly depending on which type of desktop you use, the following sections show the procedure for popular desktop choices.
 
 
-###### 1_1
-## When using the Gnome3 desktop
+## When using the Gnome3 desktop {#when-using-the-gnome3-desktop}
 
 {{< video label="Adding ibus-typing-booster to the Gnome3 desktop" mp4="/videos/user-docs/When-using-the-Gnome3-desktop.mp4" >}}
 
@@ -124,7 +122,7 @@ This video shows how to add ibus-typing-booster to recent Gnome3
 desktops, using Gnome3 on Fedora 34 in this example. In older versions
 of Gnome3, the input method setup was in the “Region & Language”
 settings instead of in the “Keyboard” settings, for example [Ubuntu
-21.04 has such an older version of Gnome](#1_2).
+21.04 has such an older version of Gnome](#gnome3-ubuntu-21).
 
 1. First click on the panel menu in the top right corner of the desktop and then click on the “screwdriver and wrench” icon to open the Gnome3 control center.
 
@@ -132,7 +130,7 @@ settings instead of in the “Keyboard” settings, for example [Ubuntu
 
 1. At the bottom you see a list of input sources which have already been added to the desktop before. In this case there are already: “English (US, with euro on 5)” and “Japanese (Kana Kanji)”. This is just an example of course, the list of already added input methods could look different for you. The first entry, “English (US, with euro on 5)”, is not really an input engine, it is just a keyboard layout. One can see that an entry in the list of input sources is a keyboard layout if it does not have the icon showing two tooth-wheels at the right side.
 
-    It is recommended to use a keyboard layout with ibus-typing-booster which has a real “AltGr” key and does not just make the “AltGr” or “Alt” key on the right side of the space bar basically a duplicate of the left “Alt” key. For details, see The [“AltGr” key](#3_1).
+    It is recommended to use a keyboard layout with ibus-typing-booster which has a real “AltGr” key and does not just make the “AltGr” or “Alt” key on the right side of the space bar basically a duplicate of the left “Alt” key. For details, see The [“AltGr” key](#the-alt-gr-key).
 
     The second entry, “Japanese (Kana Kanji)” is not just a keyboard layout, it is an input engine to type Japanese.
 
@@ -156,7 +154,7 @@ settings instead of in the “Keyboard” settings, for example [Ubuntu
 
     When the input source menu of the Gnome panel is open and an ibus-typing-booster engine is selected, there is a menu entry “Setup” which is an quicker way to open the setup tool than going to the “Region & Language” settings dialogue.
 
-    Some options are also directly available in the input source menu of the gnome panel to have quicker access to these often used options than having to open the setup tool. There are also [key and mouse bindings](#3) for these frequently used options which are shown in the input source menu of the gnome panel as well as a reminder.
+    Some options are also directly available in the input source menu of the gnome panel to have quicker access to these often used options than having to open the setup tool. There are also [key and mouse bindings](#key-and-mouse-bindings) for these frequently used options which are shown in the input source menu of the gnome panel as well as a reminder.
 
 1. Now type something, for example into gedit and you should see some suggestions for completions.
 
@@ -164,18 +162,16 @@ settings instead of in the “Keyboard” settings, for example [Ubuntu
 
     To switch between ibus-typing-booster and other input methods or a simple keyboard layout, you can use the input sources menu in the Gnome panel or the keyboard shortcut, which is Super+Space by default (can be changed in the gnome-control-center).
 
-###### 1_2
-## When using older Gnome3 desktops like in Ubuntu 21.04
+## When using older Gnome3 desktops like in Ubuntu 21.04 {#gnome3-ubuntu-21}
 
 {{< video label="Adding ibus-typing-booster to older Gnome3 desktops like in Ubuntu 21.04" mp4="/videos/user-docs/When-using-Ubuntu-21.04.mp4" >}}
 
 This video shows how to add ibus-typing-booster to older Gnome3 desktops
 like for example in Ubuntu 21.04 where the input method setup was still
 in the “Region & Language” settings instead of in the “Keyboard” settings.
-For adding ibus-typing-booster in newer versions of Gnome look [here](#1_1).
+For adding ibus-typing-booster in newer versions of Gnome look [here](#when-using-the-gnome3-desktop).
 
-###### 1_3
-## When using other desktops than Gnome3
+## When using other desktops than Gnome3 {#when-using-other-desktops-than-gnome3}
 
 {{< video label="When using other desktops than Gnome3" mp4="/videos/user-docs/When-using-other-desktops-than-Gnome3.mp4" >}}
 
@@ -212,7 +208,7 @@ This chapter shows how to add the ibus-typing-booster input method on most deskt
 
     You see a list of input sources which have already been added to the desktop before. In this case there are already: “English - English (US, euro on 5)” and “Japanese - Anthy”. This is just an example of course, the list of already added input methods could look different for you. The first entry, “English - English (US, euro on 5)”, is not really an input engine, it is just a keyboard layout.
 
-    It is recommended to use a keyboard layout with ibus-typing-booster which has a real “AltGr” key and does not just make the “AltGr” or “Alt” key on the right side of the space bar basically a duplicate of the left “Alt” key. For details, see The [“AltGr” key](#3_1). By the way, in the “Advanced” tab of `ibus-setup` there is an option “Use system keyboard layout”, if this option is selected, ibus-typing-booster will always use the system keyboard layout, otherwise it will use the keyboard layout from the list of input methods which was used last before switching to ibus-typing-booster.
+    It is recommended to use a keyboard layout with ibus-typing-booster which has a real “AltGr” key and does not just make the “AltGr” or “Alt” key on the right side of the space bar basically a duplicate of the left “Alt” key. For details, see The [“AltGr” key](#the-alt-gr-key). By the way, in the “Advanced” tab of `ibus-setup` there is an option “Use system keyboard layout”, if this option is selected, ibus-typing-booster will always use the system keyboard layout, otherwise it will use the keyboard layout from the list of input methods which was used last before switching to ibus-typing-booster.
 
     The second entry which is already there in the list of input methods, “Japanese (Kana Kanji)”, is a real input engine, not a keyboard layout.
 
@@ -237,8 +233,7 @@ This chapter shows how to add the ibus-typing-booster input method on most deskt
     To switch between ibus-typing-booster and other input methods or a simple keyboard layout, you can use the input methods menu you get by clicking on the system tray icon or you can use the keyboard shortcut, which is Super+Space by default (can be changed using `ibus-setup`).
 
 
-###### 1_4
-## When using the Unity desktop on Ubuntu 16.04
+## When using the Unity desktop on Ubuntu 16.04 {#ubuntu-unity-ubuntu-16}
 
 {{<
 figure src="/images/user-docs/When-using-the-Unity-desktop-on-Ubuntu.gif"
@@ -257,7 +252,7 @@ These instructions are for ibus-typing-booster 1.5.x. For ibus-typing-booster >=
 
 1. Some input sources may be already be listed at the left side of this dialogue. In this example we see “English (US, with euro on 5)” which is not really an input engine, it is just a keyboard layout.
 
-    It is recommended to use a keyboard layout with ibus-typing-booster which has a real “AltGr” key and does not just make the “AltGr” or “Alt” key on the right side of the space bar basically a duplicate of the left “Alt” key. For details, see [The “AltGr” key](#3_1).
+    It is recommended to use a keyboard layout with ibus-typing-booster which has a real “AltGr” key and does not just make the “AltGr” or “Alt” key on the right side of the space bar basically a duplicate of the left “Alt” key. For details, see [The “AltGr” key](#the-alt-gr-key).
 
     Now click on the “+” button at the lower left to add another input source.
 
@@ -273,7 +268,7 @@ These instructions are for ibus-typing-booster 1.5.x. For ibus-typing-booster >=
 
     When the input source menu of the panel is open and an ibus-typing-booster engine is selected, there is a menu entry “Setup” which is an quicker way to open the setup tool ibus-typing-booster setup tool than going via the system settings.
 
-    Some options of ibus-typing-booster are also directly available in the input source menu of the panel to have quicker access to these often used options than having to open the setup tool. For example the option to switch emoji mode on or off is available in the panel menu. There are also [key and mouse bindings](#3) for these frequently used options which are shown in the input source menu of the panel as well as a reminder.
+    Some options of ibus-typing-booster are also directly available in the input source menu of the panel to have quicker access to these often used options than having to open the setup tool. For example the option to switch emoji mode on or off is available in the panel menu. There are also [key and mouse bindings](#key-and-mouse-bindings) for these frequently used options which are shown in the input source menu of the panel as well as a reminder.
 
 1. Now type something, for example into gedit and you should see some suggestions for completions.
 
@@ -290,13 +285,11 @@ These instructions are for ibus-typing-booster 1.5.x. For ibus-typing-booster >=
     The screenshot also shows how a much bigger font was chosen for the candidate list with the “Use custom font” option in ibus-setup.
 
 
-###### 2
-## Setup
+# Setup {#setup}
 Ibus-typing-booster has a setup tool which allows to adapt the behaviour a lot to your preferences.
 
 
-###### 2_1
-## Basic setup for your language
+## Basic setup for your language {#basic-setup-for-your-language}
 
 {{< video label="Default settings in Hindi locale" mp4="/videos/user-docs/hindi-locale-default-settings.mp4" >}}
 
@@ -368,13 +361,10 @@ particularly useful to me, but apparently there are some users who use
 ibus-typing-booster mostly as a convenient input method for emoji or
 special symbols and in that case one doesn’t need a dictionary.
 
-###### 2_2
-## More advanced options
+## More advanced options {#more-advanced-options}
 This chapter explains more advanced options how to adapt the behaviour and the look and feel of ibus-typing-booster to your preferences.
 
-
-###### 2_2_1
-## Enable suggestions by a key
+### Enable suggestions by a key {#enable-suggestions-by-a-key}
 
 {{< video label="Enable suggestions by key" mp4="/videos/user-docs/enable-suggestions-by-key.mp4" >}}
 
@@ -403,7 +393,7 @@ by key”.
 
 If that option is enabled, no candidate list is shown unless a special
 key is pressed to request a candidate list. By default that special
-key is Tab but this can be changed by the [customizing the keys](#3_4)
+key is Tab but this can be changed by the [customizing the keys](#customizing-key-bindings)
 bound to the command “enable_lookup”.
 
 In the beginning of the video, this option is **not** enabled. When typing
@@ -449,8 +439,7 @@ colour as normal text, no matter what options to influence the preedit
 style are chosen in the setup tool of ibus-typing-booster. That is a
 missing feature in Wayland.
 
-###### 2_2_2
-## Use inline completion
+## Use inline completion {#use-inline-completion}
 
 {{< video label="“Normal” completion versus inline completion" mp4="/videos/user-docs/inline-completion.mp4" >}}
 
@@ -510,8 +499,7 @@ One can also ignore the candidate displayed inline completely and just
 continue typing more input characters until a better candidate is
 displayed.
 
-###### 2_2_2_1
-## Inline completion is hard to use on Wayland
+#### Inline completion is hard to use on Wayland {#inline-completion-is-hard-to-use-on-wayland}
 
 {{< video label="Inline completion is hard to use on Wayland" mp4="/videos/user-docs/inline-completion-wayland.mp4" >}}
 
@@ -537,8 +525,7 @@ text and the inline completion is hard to see on Wayland, but I found
 this to be quite hard.
 
 
-###### 2_2_3
-## Spellchecking
+### Spellchecking {#spellchecking}
 
 {{< video label="Spellchecking in the preedit and candidate list" mp4="/videos/user-docs/spellchecking-preedit-and-candidate-list.mp4" >}}
 
@@ -609,8 +596,7 @@ the same foreground and background colour as normal text, no matter
 what options to influence the preedit style are chosen in the setup
 tool of ibus-typing-booster. That is a missing feature in Wayland.
 
-###### 2_2_4
-## Toggle input mode on/off (Direct Input Mode)
+### Toggle input mode on/off (Direct Input Mode) {#direct-input-mode}
 
 {{<
 video label="Configuring a key to toggle Typing Booster on/off"
@@ -641,7 +627,7 @@ bit slow as well because:
   layout to switch typing booster off.
 
 * By switching to the plain keyboard layout, one looses the [Compose
-  support](#5) of Typing Booster which has [extra features](#5_4).
+  support](#compose-support) of Typing Booster which has [extra features](#special-compose-features-in-typing-booster).
 
 Therefore, if one wants a really quick way to switch Typing Booster
 off and on again while keeping the currently used keyboard layout and
@@ -675,10 +661,9 @@ and a Typing Booster key binding to switch Typing Booster on/off:
 * The Typing Booster on/off key binding only works when something
   which can receive input has focus
 
-See also: [⚠️ Caveat: Key bindings can only work when there is input focus](#3_6).
+See also: [⚠️ Caveat: Key bindings can only work when there is input focus](#key-bindings-only-when-input-focus).
 
-###### 2_2_5
-## Reopening preëdits
+### Reopening preëdits {#reopening-preedits}
 
 {{<
 video label="Demonstration of reopening preëdits"
@@ -768,8 +753,7 @@ preëdits:
   a preëdit. I cannot get correct “surrounding text” results after mouse
   movements at the moment (2021-09-16).
 
-###### 2_2_6
-## Disabling in terminals
+### Disabling in terminals {#disabling-in-terminals}
 
 {{<
 video label="Demonstration of disabling in terminals"
@@ -800,7 +784,7 @@ Some users may want to disable Typing Booster in terminals because
 
 To disable Typing Booster in terminals, check the “☑️ Disable in
 terminals” option. If you do so, Typing Booster will mostly disable
-itself in terminals, except for [Compose support](#5), which doesn’t
+itself in terminals, except for [Compose support](#compose-support), which doesn’t
 interfere with shell completion or password input.
 
 Please note that whether this option works or not depends on the
@@ -842,10 +826,9 @@ Please note that if you disable Typing Booster as described above in
 terminals, you won't be able to switch it on again temporarily. If you
 want to disable Typing Booster always when the focus enters a terminal
 but still be able to switch it on using a key binding, please see the
-more advanced setup in the “[Autosettings](#2_2_7)” chapter.
+more advanced setup in the “[Autosettings](#autosettings)” chapter.
 
-###### 2_2_7
-## Autosettings
+### Autosettings {#autosettings}
 
 {{<
 video label="Demonstration of using autosettings"
@@ -932,18 +915,18 @@ autosetting to switch the input mode to `false` in the terminal did
 match, one can see that because the icon in the floating toolbar and
 the panel switched from 🚀 (Rocket, means Typing Booster is on) to 🐌
 (Snail, means Typing Booster is in direct input mode, which basically
-means off except for [Compose support](#5)). But one can still switch
+means off except for [Compose support](#compose-support)). But one can still switch
 Typing Booster on again temporarily in that terminal if one has set a
 keybinding for the command `toggle_input_mode_on_off`. For the
 demonstration video, the keybinding for `toggle_input_mode_on_off` has
 been set to `['Control+Tab']` (For details see [Toggle input mode
-on/off (Direct Input Mode)](#2_2_4)).  When this key combination is
+on/off (Direct Input Mode)](#direct-input-mode)).  When this key combination is
 typed into the terminal, the icon changes from 🐌 to 🚀 again and
 Typing Booster is on again in that terminal. Moving the focus out of
 the terminal and back into the terminal switches Typing Booster off
 again.
 
-This differs from the [Disabling in terminals](#2_2_6) option, which
+This differs from the [Disabling in terminals](#disabling-in-terminals) option, which
 completely disables Typing Booster without the option to switch it
 back on within the terminal.
 
@@ -968,8 +951,7 @@ be in the environment to make it work. Qt5 programs on Wayland need
 `QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1` and Qt4 programs on Wayland need
 `QT_ACCESSIBILITY=1`.
 
-###### 2_2_8
-## Forcing an IBus keymap
+### Forcing an IBus keymap {#forcing-an-ibus-keymap}
 
 {{<
 figure src="/images/user-docs/setup-tool-options-tab-showing-use-ibus-keymap-option.png"
@@ -1176,8 +1158,7 @@ all and should just leave it unchecked (which is the default):
 Enable this only if you really need it and know what you are doing! It can
 be very confusing!
 
-###### 2_3
-## Simulate the behaviour of ibus-m17n
+## Simulate the behaviour of ibus-m17n {#simulate-the-behaviour-of-ibus-m17n}
 
 {{< video label="Simulating ibus-m17n (hi-itrans)" mp4="/videos/user-docs/simulating-ibus-m17n-hi-itrans.mp4" >}}
 
@@ -1289,7 +1270,7 @@ on previous user input and multilingual input.
 
 If you used the `☑️ Use US keyboard layout` option in an ibus-m17n
 engine, you want to use the `☑️ Use IBus keymap [ English (IN) ]`
-option to [force the use of an English IBus keymap](#2_2_8) in the
+option to [force the use of an English IBus keymap](#forcing-an-ibus-keymap) in the
 ibus-typing booster engine mimicking that ibus-m17n engine.
 
 ⚠️ **Current limitations**: 
@@ -1298,14 +1279,12 @@ ibus-typing booster engine mimicking that ibus-m17n engine.
     support configuring preedit text foreground and background
     colors. This feature is unlikely to be added.
 
-###### 3
-## Key and Mouse bindings
+# Key and Mouse bindings {#key-and-mouse-bindings}
 
-###### 3_1
-### The “AltGr” key
+## The “AltGr” key {#the-alt-gr-key}
 Ibus-typing-booster does not change your keyboard layout, it just uses the keyboard layout which was selected last.
 
-As some of the default key bindings in the table below use key combinations starting with “AltGr”, it is recommended to use a keyboard layout where the right “Alt” key is really an “AltGr” key and not just a duplicate of the left “Alt” key. If you do not have a real “AltGr” key, you can still use most of the key bindings in the table below but of course not those which start with “AltGr”. In that case, you might want to use the setup tool to [customize your key bindings](#3_4).
+As some of the default key bindings in the table below use key combinations starting with “AltGr”, it is recommended to use a keyboard layout where the right “Alt” key is really an “AltGr” key and not just a duplicate of the left “Alt” key. If you do not have a real “AltGr” key, you can still use most of the key bindings in the table below but of course not those which start with “AltGr”. In that case, you might want to use the setup tool to [customize your key bindings](#customizing-key-bindings).
 
 The standard “English (US)” keyboard layout makes the “AltGr” key on the right side of the space bar basically behave as a duplicate of the left “Alt” key. So if you like the US English layout, better use the keyboard layout “English (US, with euro on 5)” instead of the standard one. “English (US, with euro on 5)” is very similar to the standard “English (US)” layout but has a real “AltGr” key.
 
@@ -1313,9 +1292,8 @@ Many (but not all) keyboard layouts for other languages different from US Englis
 
 You can check whether your keyboard layout has a real “AltGr” key with “xev”, “xev” should show you the keysym “ISO_Level3_Shift” when pressing the “AltGr” (right “Alt”) key and not the keysym “Alt_R”.
 
-###### 3_2
-### Table of default key bindings
-Some of these key bindings can be customized in the setup tool, see [Customizing key bindings](#3_4). The following table explains the defaults.
+## Table of default key bindings {#table-of-default-key-bindings}
+Some of these key bindings can be customized in the setup tool, see [Customizing key bindings](#customizing-key-bindings). The following table explains the defaults.
 
 <table border="2" cellspacing="10" cellpadding="10">
 <thead>
@@ -1647,8 +1625,7 @@ When more than one input method at the same time is used, the following addition
 </table>
 
 
-###### 3_3
-### Mouse bindings
+## Mouse bindings {#mouse-bindings}
 
  These mouse bindings are currently hardcoded and can not yet be customized. 
 
@@ -1709,8 +1686,22 @@ When more than one input method at the same time is used, the following addition
 </table>
 
 
-###### 3_4
-### Customizing key bindings
+## ⚠️ Caveat: Key bindings can only work when there is input focus {#key-bindings-only-when-input-focus}
+
+Key bindings of Typing Booster only work when
+something where one can actually can type into has focus.
+
+For example, if you type some keys while the focus is on the desktop
+background or while the focus is on a webpage and no input area in
+that webpage has focus, then Typing Booster doesn’t see these key
+events at all! So there is no way Typing Booster can react in any way
+to such key events.
+
+Only when something has focus which can actually receive input Typing
+Booster gets the key events and can react to the key events and do
+something.
+
+## Customizing key bindings {#customizing-key-bindings}
 
 {{< video label="Customizing key bindings" mp4="/videos/user-docs/key-bindings-customization.mp4" >}}
 
@@ -1734,10 +1725,9 @@ is mapped to the AltGr key on many keyboard layouts, see also The
 “AltGr” key. If your keyboard layout does not have that key, you might
 want to change these settings.
 
-###### 3_5
-## Customizing key bindings using digits
+### Customizing key bindings using digits {#customizing-key-bindings-using-digits}
 
-In the [default key bindings](#3_2), the digit keys on the “normal”
+In the [default key bindings](#table-of-default-key-bindings), the digit keys on the “normal”
 layout (`1`, …, `9`) **and** the digit keys on the keypad (`KP_1`, …,
 `KP_9`) **and** the `F1`, …, `F9` keys are bound to the commands
 `commit_candidate_1_plus_space`, …, `commit_candidate_9_plus_space`.
@@ -1764,7 +1754,7 @@ completed to “2021”. As the “2” is committed immediately, no
 completion can be tried.
 
 Being able to type digits into the preëdit is also necessary if
-one wants to use the [Unicode code point input](#6_7) feature.
+one wants to use the [Unicode code point input](#unicode-code-point-input) feature.
 
 If one wants to treat digits more like other keys and be able to type
 text containing digits into the preëdit, it is necessary to remove either
@@ -1779,24 +1769,9 @@ bound to the command “select_next_candidate” (by default `Tab`,
 that far more often than committing the candidate directly via its
 number.
 
-###### 3_6
-## ⚠️ Caveat: Key bindings can only work when there is input focus
+### Key bindings for temporary emoji and word predictions {#key-bindings-temporary-predictions}
 
-Key bindings of Typing Booster only work when
-something where one can actually can type into has focus.
-
-For example, if you type some keys while the focus is on the desktop
-background or while the focus is on a webpage and no input area in
-that webpage has focus, then Typing Booster doesn’t see these key
-events at all! So there is no way Typing Booster can react in any way
-to such key events.
-
-Only when something has focus which can actually receive input Typing
-Booster gets the key events and can react to the key events and do
-something.
-
-###### 4
-## Multilingual input
+# Multilingual input {#multilingual-input}
 
 {{< video label="Setup several dictionaries and input methods" mp4="/videos/user-docs/setup-several-dictionaries-and-input-methods.mp4" >}}
 
@@ -1884,9 +1859,7 @@ Fedora:
 sudo dnf install hunspell-es hunspell-fr
 ```
 
-
-###### 4_1
-### Example using Hindi and English at the same time
+## Example using Hindi and English at the same time {#example-hindi-english}
 
 {{< video label="Example using Hindi and English at the same time" mp4="/videos/user-docs/Example-using-Hindi-and-English-at-the-same-time.mp4" >}}
 
@@ -1903,7 +1876,7 @@ see that two dictionaries have been added, “hi_IN” for Hindi and
 “en_GB” for British English.  And two input methods have been added,
 “hi-itrans” to type Hindi and “NoIme” (“Native Keyboard”, i.e. direct
 keyboard input) to type English (How to setup dictionaries and input
-methods is described [here](#2_1).).
+methods is described [here](#basic-setup-for-your-language).).
 
 There are several input methods available for Hindi: “hi-inscript2”,
 “hi-inscript”, “hi-phonetic”, “hi-itrans”, “hi-remington”,
@@ -1969,7 +1942,7 @@ are “Control+Down” and “Control+up”. With only two input methods as in
 the current example, both key bindings behave the same. But there can
 be more than two input methods and then “Control+Down” moves in one
 direction through the list of input methods and “Control+Up” in the
-other direction (see [key and mouse bindings](#3)).
+other direction (see [key and mouse bindings](#key-and-mouse-bindings)).
 
 As an alternative to using the “Control+Down” and “Control+Up” key
 bindings, the priorities of input methods can also be switched using
@@ -1998,8 +1971,7 @@ had an effect on the order shown in the setup tool because the option
 video.
 
 
-###### 4_2
-### Example using Spanish and English at the same time
+## Example using Spanish and English at the same time {#example-spanish-english}
 
 {{<
 figure src="/images/user-docs/Example-using-Spanish-and-English-at-the-same-time.gif"
@@ -2050,15 +2022,13 @@ One can add as many dictionaries as one likes, but adding more
 dictionaries than one really needs slows the system down unnessarily
 and reduces the prediction accuracy.
 
-###### 5
-## Compose support (About dead keys and the Compose key)
+# Compose support (About dead keys and the Compose key) {#compose-support}
 
 “Compose sequences” are sequences of keys containing so
 called “dead keys” or containing the “Compose key” or even both
 and usually one or more “normal” keys.
 
-###### 5_1
-## “Dead keys”
+## “Dead keys” {#dead-keys}
 
 Some keyboard layout have so called [“dead
 keys”](https://en.wikipedia.org/wiki/Dead_key). They are called “dead”
@@ -2121,8 +2091,7 @@ The keys marked in red on this layout are “dead” keys.
 
 Of course that “English (US, international with dead keys)” is not the only layout with dead keys, many national layouts use dead keys as well.
 
-###### 5_2
-## The “Compose” key
+## The “Compose” key {#the-compose-key}
 
 Wikipedia explains nicely what a [Compose
 key](https://en.wikipedia.org/wiki/Compose_key) is. It is often also
@@ -2195,8 +2164,7 @@ IBus and Typing Booster then also changed and followed the way Gtk
 displays this to have a consistent user experience across these 3
 compose sequence implementations.
 
-###### 5_3
-## Customizing compose sequences
+## Customizing compose sequences {#customizing-compose-sequences}
 
 <!--
 https://www.x.org/releases/X11R7.5/doc/man/man5/Compose.5.html
@@ -2297,14 +2265,12 @@ user definitions in `~/.XCompose` would be available!
   For the compose support in Typing Booster and IBus, the leading `/` makes
   no difference.
 
-###### 5_4
-## Special “Compose” features in Typing Booster
+## Special “Compose” features in Typing Booster {#special-compose-features-in-typing-booster}
 
 This section explains some details about the “Compose” implementation
 in Typing Booster which are a bit special.
 
-###### 5_4_1
-## Why Typing Booster has its own “Compose” implementation
+### Why Typing Booster has its own “Compose” implementation {#why-own-compose-implementation}
 
 Typing Booster needed its own implementation of compose sequences
 because it needs full control about such compose sequences **inside**
@@ -2346,8 +2312,7 @@ Typing `compose` `"` `u` then displays:
 Now “grün” is in the preëdit and Typing Booster can continue to search
 for completions.
 
-###### 5_4_2
-## Automatically add “missing” dead key sequences
+### Automatically add “missing” dead key sequences {#automatic-dead-key-sequences}
 
 To write the character ė̄ (U+0117 LATIN SMALL LETTER E WITH DOT ABOVE
 U+0304 COMBINING MACRON) which is used for writing
@@ -2411,8 +2376,7 @@ reasonable dead key sequences which are “missing” in the Compose files.
 has **always** priority, only if no definition exists this automatic
 fallback is used.
 
-###### 5_4_3
-## Fallbacks for “missing” keypad sequences
+### Fallbacks for “missing” keypad sequences {#fallbacks-for-missing-dead-key-sequences}
 
 From a user point of view, it should not matter whether
 a character like `0`, `1`, …,`9`, `/`, `*`, `-`, `+`, `.` is typed
@@ -2513,13 +2477,12 @@ crazy to me, I cannot imagine why somebody would want to define
 something like that, but there might be reasons for wanting to make
 such differences and I didn’t want to take away that possibility.
 
-Just as in [Automatically add “missing” dead key sequences](#5_4_2),
+Just as in [Automatically add “missing” dead key sequences](#automatic-dead-key-sequences),
 **if** a definition exists in the Compose file(s) read, this
 definition has **always** priority, only if no definition exists
 Typing Booster tries to be helpful and offers a reasonable fallback.
 
-###### 5_4_4
-## How undefined sequences are handled
+### How undefined sequences are handled {#handling-of-undefined-sequences}
 
 When an undefined compose or dead key sequence is typed using
 Xorg/libX11, the result is nothing at all, the sequence is just
@@ -2558,25 +2521,24 @@ compose implementations:
 | Undefined compose sequence | Xorg (libX11 1.7.2) | IBus 1.5.24 | Gtk3 3.24.30  | Typing Booster 2.14.4 |
 |---|---|---|---|---|
 | `dead_circumflex` `@` | nothing | nothing | ^@ | <span style="text-decoration: underline">^</span> <br> (keep `dead_circumflex` in preëdit and beep) |
-| `dead_circumflex` `x` | nothing | nothing | ^x | x̂ <br> (x +  ̂  U+0302 COMBINING CIRCUMFLEX ACCENT) <br> (Because of [automatic dead key fallback](#5_4_2)) |
-| `dead_macron` `dead_abovedot` `e` | nothing | nothing | ¯ ̇e |  ė̄  <br> (ė U+0117 LATIN SMALL LETTER E WITH DOT ABOVE +  ̄  U+0304 COMBINING MACRON) <br> (Because of [automatic dead key fallback](#5_4_2)) |
+| `dead_circumflex` `x` | nothing | nothing | ^x | x̂ <br> (x +  ̂  U+0302 COMBINING CIRCUMFLEX ACCENT) <br> (Because of [automatic dead key fallback](#automatic-dead-key-sequences)) |
+| `dead_macron` `dead_abovedot` `e` | nothing | nothing | ¯ ̇e |  ė̄  <br> (ė U+0117 LATIN SMALL LETTER E WITH DOT ABOVE +  ̄  U+0304 COMBINING MACRON) <br> (Because of [automatic dead key fallback](#automatic-dead-key-sequences)) |
 | `compose` `-` `-` `x` | nothing | nothing |  nothing | <span style="text-decoration: underline">--</span> <br> (keep `compose` `-` `-` in preëdit and beep) |
-| `compose` `KP_1` `KP_2` | 2 <br> (`compose` `KP_1` produces nothing, then `KP_2` produces “2”)| 2 <br> (`compose` `KP_1` produces nothing, then `KP_2` produces “2”) |  2 <br> (`compose` `KP_1` produces nothing, then `KP_2` produces “2”) | ½ <br> (Because of [fallback for “missing” keypad sequences](#5_4_3) it falls back to the defined sequence `compose` `1` `2`) |
+| `compose` `KP_1` `KP_2` | 2 <br> (`compose` `KP_1` produces nothing, then `KP_2` produces “2”)| 2 <br> (`compose` `KP_1` produces nothing, then `KP_2` produces “2”) |  2 <br> (`compose` `KP_1` produces nothing, then `KP_2` produces “2”) | ½ <br> (Because of [fallback for “missing” keypad sequences](#fallbacks-for-missing-dead-key-sequences) it falls back to the defined sequence `compose` `1` `2`) |
 
 The behaviour of Typing Booster for undefined compose sequences is:
 
-* try [automatic dead key fallback](#5_4_2)
-* try [fallback for “missing” keypad sequences](#5_4_3)
+* try [automatic dead key fallback](#automatic-dead-key-sequences)
+* try [fallback for “missing” keypad sequences](#fallbacks-for-missing-dead-key-sequences)
 
 If that didn’t help, discard only the key which made the sequence
 invalid, keep the valid part of the sequence in preëdit, and play an
 error beep.
 
 When hearing the error beep, the user can then type Tab to [show how
-the sequence could be completed](#5_4_5).
+the sequence could be completed](#show-compose-completions).
 
-###### 5_4_5
-## Show possible completions of compose sequences
+### Show possible completions of compose sequences {#show-compose-completions}
 
 {{< video label="Show possible completions of compose sequences" mp4="/videos/user-docs/show-possible-completions-of-compose-sequences.mp4" >}}
 
@@ -2590,7 +2552,7 @@ was used last before switching to Typing Booster!).
 
 Then `compose` `-` is typed.
 
-(Look [here](#5_2) for details about what the compose key is and to see a video showing
+(Look [here](#the-compose-key) for details about what the compose key is and to see a video showing
 how to choose a compose key in Gnome3).
 
 The compose sequence `compose` `-` is not complete yet.
@@ -2698,8 +2660,7 @@ layout neither has the dead psili nor the “α”.
 Finally, in the video, that candidate number 8, “ἄ” is selected using
 the mouse.
 
-###### 5_4_5_1
-## A peculiarity of Gnome3 and compose completions
+#### A peculiarity of Gnome3 and compose completions {#a-peculiarity-of-gnome3-and-compose-completions}
 
 This chapter is specific to Gnome3, as far as I know none of the other
 desktops does this weird grouping of keyboard layouts in groups of 3.
@@ -2755,8 +2716,7 @@ first group of 3 keyboard layouts and no matter whether the “English
 completions shown would have always included all keys from both the
 English and the Greek layout!
 
-###### 5_4_6
-## Optional colour for the compose preëdit
+### Optional colour for the compose preëdit {#optional-colour-for-compose-preedit}
 
 {{< video label="Optional colour for the compose preëdit" mp4="/videos/user-docs/optional-color-for-the-compose-preedit.mp4" >}}
 
@@ -2786,16 +2746,14 @@ Using colour in the compose part of the preëdit makes it much more obvious
 which part of the preëdit was already there before the compose sequence was
 started and which part is an unfinished compose sequence.
 
-###### 7
-## Unicode symbols and emoji predictions
+# Unicode symbols and emoji predictions {#unicode-symbols-and-emoji-predictions}
 
 ibus-typing-booster supports prediction of emoji and Unicode symbols as well (actually almost all Unicode characters except letters can be typed this way). This can be enabled or disabled with the option “Emoji predictions” in the setup tool which is on by default.
 
 To make all emoji display correctly, you need good fonts which contain all emoji, see Emoji fonts for details about available fonts and font setup.
 
 
-###### 7_1
-### Emoji input
+## Emoji input {#emoji-input}
 
 {{< video label="Typing Emoji in English with Emoji option on" mp4="/videos/user-docs/emoji-english-emoji-option-on.mp4" >}}
 
@@ -2820,11 +2778,10 @@ time.
 
 As having the “☑️ Unicode symbols and emoji predictions” option enabled
 slows down the search for predictions, you might want to look
-at [Quickly toggling emoji mode on and off](#7_8), especially if you
+at [Quickly toggling emoji mode on and off](#quickly-toggling-emoji-mode), especially if you
 use emoji only occasionally.
 
-###### 7_2
-## Emoji input fuzzy matching
+## Emoji input fuzzy matching {#emoji-input-fuzzy-matching}
 
 {{< video label="Emoji input fuzzy matching" mp4="/videos/user-docs/emoji-english-fuzzy-castle.mp4" >}}
 
@@ -2837,8 +2794,7 @@ spelled correctly. Nevertheless, one gets the match 🏰 (U+1F3F0
 EUROPEAN CASTLE).
 
 
-###### 7_3
-### Emoji input using multiple keywords
+## Emoji input using multiple keywords {#emoji-input-multiple-keywords}
 
 {{< video label="Emoji input using multiple keywords" mp4="/videos/user-docs/emoji-english-multiple-keywords-castle-japanese.mp4" >}}
 
@@ -2855,8 +2811,7 @@ EUROPEAN CASTLE). If this is not what we wanted we can type
 “castle_japanese” (or “japanese_castle”) to get 🏯 (U+1F3EF JAPANESE
 CASTLE).
 
-###### 7_4
-### Looking up related emoji
+## Looking up related emoji {#lookup-related-emoji}
 
 {{< video label="Looking up related emoji" mp4="/videos/user-docs/related-emoji.mp4" >}}
 
@@ -2865,7 +2820,7 @@ matched the typed text well but are related to the emoji shown because
 they share keywords or categories.
 
 To show related emoji, click an emoji shown in the candidate list with
-the right mouse button (see [Mouse bindings](#3_3)).
+the right mouse button (see [Mouse bindings](#mouse-bindings)).
 
 Or, if you prefer to use a key binding instead of the mouse: select an
 emoji in the candidate list by moving up or down in the candidate list
@@ -2877,18 +2832,16 @@ AltGr+F12 is the default key binding for the command
 lookup of related stuff for the preëdit is tried. In this case, the
 preëdit contains the text “liz” which is not an emoji. So no
 related emoji will be found. But if NLTK is used, related words for
-“liz” may be shown, see [Using NLTK to find related words](#7).
+“liz” may be shown, see [Using NLTK to find related words](#nltk-related-words).
 
 As seen in the screen shot, looking up related emoji for the “lizard”
 gives us emoji for other types of reptiles and related animals. By
 typing the “Escape” key, one can go back to the original list.
 
 
-###### 7_5
-### Multilingual emoji input
+## Multilingual emoji input {#multilingual-emoji-input}
 
-###### 7_5_1
-#### Emoji input using German and English
+### Emoji input using German and English {#emoji-input-german-english}
 
 {{< video label="Emoji input using German and English" mp4="/videos/user-docs/emoji-german-english.mp4" >}}
 
@@ -2903,21 +2856,20 @@ typing “Schloss” not only matches 🏰 (U+1F3F0 EUROPEAN CASTLE) and 🏯
 (U+1F3EF JAPANESE CASTLE but also 🔓 (U+1F513 OPEN LOCK) and other
 lock emoji.
 
-###### 7_5_2
-#### Emoji input using Hindi and English
+### Emoji input using Hindi and English {#emoji-input-hindi-english}
 
 {{< video label="Emoji input using Hindi and English" mp4="/videos/user-docs/emoji-hindi-english.mp4" >}}
 
 This example video shows using Hindi and English to lookup emoji.
 
 Both languages are configured in the setup tool (See: [Basic setup for
-your language](#2_1))
+your language](#basic-setup-for-your-language))
 
 First “namaste” is typed. The transliteration method “hi-itrans”
 transliterates this to “नमस्ते” which is shown in the preëdit because
 the “hi-itrans” input method is at the highest priority (For details
 about multilingual input and how to switch the script shown in the
-preëdit, see [Multilingual input](#4)).
+preëdit, see [Multilingual input](#multilingual-input)).
 
 Both “namaste” and “नमस्ते” are then used to search for matching words
 and emoji. Only “नमस्ते” matches an emoji which can be seen in the
@@ -2934,8 +2886,7 @@ Typing Control+Down then changes the priority of the input methods and
 puts “NoIME” on top which reveals that “folded_hands” was actually
 typed as this is now shown in the preëdit.
 
-###### 7_5_3
-#### Emoji input using Japanese
+### Emoji input using Japanese {#emoji-input-japanese}
 
 {{< video label="Emoji input using Japanese" mp4="/videos/user-docs/emoji-japanese.mp4" >}}
 
@@ -2956,7 +2907,7 @@ required to make the ja-anthy input method of the m17n library work.
 Then one needs to add the “ja-anthy” input method and the Japanese
 dictionary (“ja_JP”) to the setup of ibus typing booster. For details
 how to add input methods and dictionaries see [Basic setup for your
-language](#2_1).
+language](#basic-setup-for-your-language).
 
 Now one can type emoji keywords using Japanese. For example when
 typing “katasumuri” (which means “snail”), one gets the emoji 🐌
@@ -2985,10 +2936,9 @@ highest priority in the setup tool. When the Japanese dictionary had
 the highest priority in the setup tool, the related emoji would be
 shown with their Japanese names.
 
-###### 7_5_4
-#### Emoji input using Japanese or Chinese phonetics
+### Emoji input using Japanese or Chinese phonetics {#emoji-input-japanese-chinese-phonetics}
 
-The chapter [Emoji input using Japanese](#7_5_3) described how one
+The chapter [Emoji input using Japanese](#emoji-input-japanese) described how one
 can search for emoji using the Japanese input method “ja-anthy”. But
 this has a few disadvantages:
 
@@ -3066,8 +3016,7 @@ video label="Emoji input using Japanese or Chinese phonetics"
 mp4="/videos/user-docs/emoji-japanese-chinese-phonetics.mp4"
 >}}
 
-###### 7_6
-### Unicode symbol input
+## Unicode symbol input {#unicode-symbol-input}
 
 {{< video label="Unicode symbol input" mp4="/videos/user-docs/unicode-symbol-input.mp4" >}}
 
@@ -3085,7 +3034,7 @@ mathematical characters for integrals in the candidate list and can
 scroll down to the next pages for more.
 
 If one wants to be more specific, one can also type more than one keyword
-by combining keywords with “_” (see [Emoji input using multiple keywords](#6_3)).
+by combining keywords with “_” (see [Emoji input using multiple keywords](#emoji-input-multiple-keywords)).
 For example one can type something like “volume_integral” to get more specific matches
 for integral signs related to volume integrals.
 
@@ -3100,8 +3049,7 @@ Finally “radical_turtle” is typed which finds the CJK radicals for
 Anything in Unicode except normal letters is possible.
 
 
-###### 7_7
-### Unicode code point input
+## Unicode code point input {#unicode-code-point-input}
 
 {{< video label="Unicode code point input" mp4="/videos/user-docs/unicode-code-point-input.mp4" >}}
 
@@ -3113,7 +3061,7 @@ As Unicode code points are hexadecimal numbers, it is first necessary
 to make it possible to input digits at all into the preëdit. By
 default, both the digits on the regular keyboard layout **and** the
 digits on the keypad are bound to commands committing candidates.  See
-[Customizing key bindings using digits](#3_5) about changing that.
+[Customizing key bindings using digits](#customizing-key-bindings-using-digits) about changing that.
 
 The video shows the key bindings tab of the setup tool and one can see
 that there are no KP_1 … KP_9 keys used in the commands to commit
@@ -3132,8 +3080,7 @@ Then “2019” is typed which matches ’ U+2019 RIGHT SINGLE QUOTATION MARK.
 
 Then “20B9” is typed which matches ₹ U+20B9 INDIAN RUPEE SIGN.
 
-###### 7_8
-### Quickly toggling emoji mode on and off
+## Quickly toggling emoji mode on and off {#quickly-toggling-emoji-mode}
 
 {{< video label="Quickly toggling emoji mode on and off" mp4="/videos/user-docs/emoji-quick-toggle.mp4" >}}
 
@@ -3180,8 +3127,7 @@ Using these “Emoji trigger characters” at the beginning or end of the
 search input temporarily turns on emoji search just for this one
 lookup.
 
-###### 7_9
-### Emoji picker
+## Emoji picker {#emoji-picker}
 
 {{<
 figure src="images/emoji-picker.png"
@@ -3310,10 +3256,9 @@ emoji-picker --font "Noto Color Emoji" --fontsize 32
 The command line font options override the font options in the
 graphical user interface.
 
-For more about emoji fonts and colour, see [Emoji fonts](#6_10).
+For more about emoji fonts and colour, see [Emoji fonts](#emoji-fonts).
 
-###### 7_10
-### Emoji fonts
+## Emoji fonts {#emoji-fonts}
 
 Good fonts to display emoji:
 
@@ -3410,8 +3355,7 @@ The following video shows the above mentioned fonts used in “emoji-picker”:
 
 {{< video label="Emoji font selection in emoji-picker" mp4="/videos/user-docs/emoji-font-selection-in-emoji-picker.mp4" >}}
 
-###### 7_10_1
-#### <span style="color:red">Historic:</span> Showing emoji in colour
+### <span style="color:red">Historic:</span> Showing emoji in colour {#historic-emoji-colour}
 
 Once upon a time it was not possible at all to display colourful emoji
 using Linux.  The best one could get using color emoji fonts like
@@ -3434,8 +3378,7 @@ the “Noto Color Emoji” the highest priority.
 Luckily these times are long gone and as far as I know all recent
 Linux distributions display nice, colourful emoji by default now.
 
-###### 8
-## The Gnome on-screen keyboard, enabling and using it
+# The Gnome on-screen keyboard, enabling and using it {#gnome-osk}
 
 {{<
 video label="Enabling and using the Gnome on-screen keyboard"
@@ -3528,8 +3471,7 @@ using the on-screen keyboard with input methods:
   even after a commit happened. See:
   [https://bugzilla.redhat.com/show_bug.cgi?id=2015149](https://bugzilla.redhat.com/show_bug.cgi?id=2015149)
 
-###### 9
-## Using NLTK to find related words
+# Using NLTK to find related words {#nltk-related-words}
 
 {{<
 figure src="/images/user-docs/gnome-castle-word-related.png"
@@ -3555,8 +3497,7 @@ figure src="/images/user-docs/nltk-wordnet-corpus-download.png"
 caption="Downloading the Wordnet corpus"
 >}}
 
-###### 10
-## Speech recognition
+# Speech recognition {#speech-recognition}
 
 ibus-typing-booster supports speech recognition using the [Google Cloud Speech-to-Text](https://cloud.google.com/speech-to-text/) service which [supports 120 languages](https://cloud.google.com/speech-to-text/docs/languages).
 
