@@ -687,7 +687,14 @@ leaves you with the <code>F1</code> … <code>F9</code> keys to commit candidate
 bound to the command “select_next_candidate” (by default <code>Tab</code>,
 <code>ISO_Left_Tab</code>, <code>Down</code>, <code>KP_Down</code>) and then <code>space</code>. Personally, I use
 that far more often than committing the candidate directly via its
-number.</p><h3 id=key-bindings-temporary-predictions>Key bindings for temporary emoji and word predictions</h3><h1 id=multilingual-input>Multilingual input</h1><video playsinline aria-label="Setup several dictionaries and input methods" style=width:100%;height:auto controls>
+number.</p><h3 id=key-bindings-temporary-predictions>Key bindings for temporary emoji and word predictions</h3><p>David Mandelberg contributed two new key-bindable commands:</p><p><code>trigger_emoji_predictions</code> and <code>trigger_word_predictions</code>. These are
+useful when you want predictions disabled by default but still wish to
+request them temporarily while typing the next word.</p><p>For example, pressing the key bound to trigger_emoji_predictions will
+enable emoji and Unicode character predictions <em>only</em> for the next
+word you type. After that word is completed, predictions turn off
+automatically. This differs from <code>toggle_emoji_prediction</code>, which
+enables emoji and Unicode predictions <em>indefinitely</em>—requiring manual
+disabling later.</p><h1 id=multilingual-input>Multilingual input</h1><video playsinline aria-label="Setup several dictionaries and input methods" style=width:100%;height:auto controls>
 <source src=../../videos/user-docs/setup-several-dictionaries-and-input-methods.mp4 type=video/mp4><p>Your browser does not support video.</p></video><p>This video shows how to setup multiple dictionaries and input methods.</p><p>Ibus-typing-booster supports using more than one dictionary and more
 than one input method/transliteration at the same time.</p><p>That makes it possible to write text in more than one language without
 having to switch languages manually. If one often writes in different
