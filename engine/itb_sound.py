@@ -132,7 +132,12 @@ class SoundObject:
         if not IMPORT_PYGAME_MIXER_SUCCESSFUL:
             return ''
         try:
-            pygame.mixer.init()
+            # pygame defaults to a low latency (small buffer) that is more
+            # appropriate for foreground games than background processes. Use a
+            # larger than default buffer to prevent audio issues in other
+            # processes when the system is under load:
+            # https://github.com/mike-fabian/ibus-typing-booster/issues/681
+            pygame.mixer.init(buffer=4096)
             if pygame.mixer.get_init():
                 pygame.mixer.music.load(self._path_to_sound_file)
                 return 'pygame'
