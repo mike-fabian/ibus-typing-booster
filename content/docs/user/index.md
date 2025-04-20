@@ -1771,6 +1771,19 @@ number.
 
 ### Key bindings for temporary emoji and word predictions {#key-bindings-temporary-predictions}
 
+David Mandelberg contributed two new key-bindable commands:
+
+`trigger_emoji_predictions` and `trigger_word_predictions`. These are
+useful when you want predictions disabled by default but still wish to
+request them temporarily while typing the next word.
+
+For example, pressing the key bound to trigger_emoji_predictions will
+enable emoji and Unicode character predictions _only_ for the next
+word you type. After that word is completed, predictions turn off
+automatically. This differs from `toggle_emoji_prediction`, which
+enables emoji and Unicode predictions _indefinitely_—requiring manual
+disabling later.
+
 # Multilingual input {#multilingual-input}
 
 {{< video label="Setup several dictionaries and input methods" mp4="/videos/user-docs/setup-several-dictionaries-and-input-methods.mp4" >}}
