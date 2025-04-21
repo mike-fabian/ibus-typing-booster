@@ -387,7 +387,6 @@ def get_fonts_used_for_text(
     'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced'
     >>> fonts_used[0][1]['opentype-tables']
     ['COLR']
-
     '''
     # pylint: enable=line-too-long
     fonts_used = []
@@ -497,27 +496,12 @@ def emoji_font_fallback_needed(font: str, text: str) -> bool:
 
     >>> emoji_font_fallback_needed('Twemoji', '🏴󠁧󠁢󠁷󠁬󠁳󠁿🤥')
     True
+
+    >>> emoji_font_fallback_needed('OpenMoji Color', '🧗‍♀️')
+    False
     '''
-    if not  font:
+    if not font:
         return True
-    for char in ('\uFE0E', '\uFE0F'):
-        # With some fonts sequences containing variations selectors
-        # get extra glyphs for the variation selectors, even though
-        # these are invisible and apparently irrelevant for whether
-        # the font supports the emoji or not.
-        #
-        # For example with “Twemoji”, '☺\uFE0F' gets 1 glyph but with
-        # “Twitter Color Emoji” it gets 2 glyphs and both fonts
-        # support that emoji.  Another example is 😶‍🌫️ U+1F636 U+200D
-        # U+1F32B U+FE0F FACE IN CLOUDS which gets two glyphs when
-        # using the black and white “Noto Emoji” font but the second
-        # glyph is for U+FE0F and irrelevant.  ❤️‍🔥 U+2764 U+FE0F
-        # U+200D U+1F525 HEART ON FIRE also gets two glyphs with “Noto
-        # Emoji” but only one if the U+FE0F is removed.
-        #
-        # Therefore, removing the variation selectors gives better results
-        # for whether a fallback font is needed:
-        text = text.replace(char, '')
     if not text:
         return False
     fonts_used = get_fonts_used_for_text(font, text, fallback=False)
@@ -530,12 +514,39 @@ def emoji_font_fallback_needed(font: str, text: str) -> bool:
         # assume it is needed for the moment:
         return True
     results_for_run = fonts_used[0][1]
-    if results_for_run['glyph-count'] > 1:
-        return True
-    if not results_for_run['visible']:
-        return True
-    if 'glyph-available' in results_for_run and not results_for_run['glyph-available']:
-        return True
+    if (results_for_run['glyph-count'] > 1
+        or not results_for_run['visible']
+        or ('glyph-available' in results_for_run
+            and not results_for_run['glyph-available'])):
+        text_new = text
+        for char in ('\uFE0E', '\uFE0F'):
+            # With some fonts sequences containing variations selectors
+            # get extra glyphs for the variation selectors, even though
+            # these are invisible and apparently irrelevant for whether
+            # the font supports the emoji or not.
+            #
+            # For example with “Twemoji”, '☺\uFE0F' gets 1 glyph but with
+            # “Twitter Color Emoji” it gets 2 glyphs and both fonts
+            # support that emoji.  Another example is 😶‍🌫️ U+1F636 U+200D
+            # U+1F32B U+FE0F FACE IN CLOUDS which gets two glyphs when
+            # using the black and white “Noto Emoji” font but the second
+            # glyph is for U+FE0F and irrelevant.  ❤️‍🔥 U+2764 U+FE0F
+            # U+200D U+1F525 HEART ON FIRE also gets two glyphs with “Noto
+            # Emoji” but only one if the U+FE0F is removed.
+            #
+            # If the original sequence which might contain variation
+            # selectors was already detected as supported False should
+            # be returned, no fallback is needed then. If it was
+            # detected as not supported, try again with the variation
+            # selectors removed, if that is detected as supported, no
+            # fallback is needed.
+            text_new = text_new.replace(char, '')
+        if text_new == text:
+            # Variation selectors were already removed or didn’t exist
+            # in the first place:
+            return True
+        # Try again with the variation selectors removed:
+        return emoji_font_fallback_needed(font, text_new)
     return False
 
 def _init() -> None:
