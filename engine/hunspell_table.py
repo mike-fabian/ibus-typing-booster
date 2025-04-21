@@ -1404,7 +1404,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self.emoji_matcher = itb_emoji.EmojiMatcher(
                     languages=self._dictionary_names,
                     unicode_data_all=self._unicode_data_all)
-            emoji_scores: Dict[str, Tuple[int, str]] = {}
+            emoji_scores: Dict[str, Tuple[float, str]] = {}
             emoji_max_score: int = 0
             for ime in self._current_imes:
                 if (self._transliterated_strings[ime]
@@ -1420,7 +1420,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                 or cand[2] > emoji_scores[cand[0]][0]):
                             emoji_scores[cand[0]] = (cand[2], cand[1])
             phrase_candidates_emoji_name: List[Tuple[
-                str, int, str, bool, bool]] = []
+                str, float, str, bool, bool]] = []
             for cand in phrase_candidates:
                 # If this candidate is duplicated in the emoji candidates,
                 # don’t use this as a text candidate but increase the score
