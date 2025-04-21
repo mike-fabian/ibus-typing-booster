@@ -819,7 +819,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
 
         self._header_bar.set_title(label)
         if label:
-            self._header_bar.set_subtitle(str(len(emoji_list)))
+            self._header_bar.set_subtitle(f'({len(emoji_list)})')
         else:
             self._header_bar.set_subtitle('')
 
@@ -1113,24 +1113,26 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         :param emoji: The emoji for which a description should be
                       shown in the header bar.
         '''
-        self._header_bar.set_title(emoji)
-        self._header_bar.set_subtitle('')
+        title = emoji
+        # Start the subtitle with the number of emoji in this flowbox
+        subtitle =  f'({len(self._flowbox.get_children())})'
         # Display the names of the emoji in the first language
         # where names are available in the header bar title:
         for language in itb_util.expand_languages(self._languages):
             names = self._emoji_matcher.names(emoji, language=language)
             if names:
-                self._header_bar.set_title(emoji + ' ' + ', '.join(names))
+                title += f' {", ".join(names)}'
                 break
         # Display the keywords of the emoji in the first language
         # where keywords are available in the header bar subtitle:
         for language in itb_util.expand_languages(self._languages):
             keywords = self._emoji_matcher.keywords(emoji, language=language)
             if keywords:
-                self._header_bar.set_subtitle(
-                    self._translate_key('Keywords', language) + ': '
-                    + ', '.join(keywords))
+                subtitle += (
+                    f' {self._translate_key("Keywords", language)}: {", ".join(keywords)}')
                 break
+        self._header_bar.set_title(title)
+        self._header_bar.set_subtitle(subtitle)
 
     @staticmethod
     def _print_profiling_information() -> None:
@@ -1252,11 +1254,11 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 self._query_string)
         candidates = self._emoji_matcher.candidates(
             self._query_string,
-            match_limit=1000)
+            match_limit=100_000)
 
         self._browse_treeview_unselect_all()
         self._header_bar.set_title(_('Search Results'))
-        self._header_bar.set_subtitle(str(len(candidates)))
+        self._header_bar.set_subtitle(f'({(len(candidates))})')
 
         if not candidates:
             candidates = [('∅', _('Search produced empty result.'), 1)]
