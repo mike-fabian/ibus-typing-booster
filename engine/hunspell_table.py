@@ -234,6 +234,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._temporary_emoji_predictions = False
         self._unicode_data_all: bool = self._settings_dict[
             'unicodedataall']['user']
+        self._emoji_match_limit = 10_000
 
         self.is_lookup_table_enabled_by_min_char_complete = False
         self._min_char_complete: int = self._settings_dict[
@@ -1413,6 +1414,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                              or self._tab_enable)):
                     emoji_matcher_candidates = self.emoji_matcher.candidates(
                         self._transliterated_strings[ime],
+                        match_limit=self._emoji_match_limit,
                         trigger_characters=self._emoji_trigger_characters)
                     for cand in emoji_matcher_candidates:
                         emoji_max_score = max(emoji_max_score, cand[2])
@@ -1445,7 +1447,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         - x[1][0],   # score
                         - len(x[0]), # length of emoji string
                         x[1][1]      # name of emoji
-                    ))[:20]:
+                    ))[:self._emoji_match_limit]:
                 emoji_candidates.append((key, value[0], value[1]))
             page_size = self._lookup_table.get_page_size()
             phrase_candidates_top = phrase_candidates_emoji_name[:page_size-1]
