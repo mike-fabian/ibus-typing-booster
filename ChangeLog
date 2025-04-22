@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 23 Apr 2025 Release 2.27.38
+* Use a NamedTuple for candidate lists instead of a simple tuple to improve code readability
+* Increase the maximum number of emoji displayed in the lookup table from 20 to 10_000 (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/686)
+* Improve detection whether a fallback for an emoji is needed (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/690)
+* Show number of matched emoji always in the subtitle in emoji-picker and increase matchlimit to 100_000 for searches (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/689)
+* Increase pygame.mixer's buffer size (Thanks to David Mandelberg) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/681)
+* Translation update from Weblate (es 99.6%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 19 Apr 2025 Release 2.27.36
 * Skip the itb_emoji.py doctests if rapidfuzz or enchant could not be imported (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/664)
 * Use rapidfuzz to improve emoji and Unicode character search performance (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/679)
