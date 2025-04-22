@@ -22,6 +22,7 @@ Module for ibus-typing-booster to access the sqlite3 databases
 from typing import Dict
 from typing import List
 from typing import Tuple
+from typing import NamedTuple
 from typing import Optional
 from typing import Any
 from typing import Callable
@@ -374,41 +375,39 @@ class TabSqliteDb:
     def best_candidates(
             cls,
             phrase_frequencies: Dict[str, float],
-            title: bool = False) -> List[Tuple[str, float]]:
+            title: bool = False) -> List[itb_util.PredictionCandidate]:
         '''Sorts the phrase_frequencies dictionary and returns the best
         candidates.
 
         Should *not* change the phrase_frequencies dictionary!
         '''
-        candidates = sorted(phrase_frequencies.items(),
+        candidates = [
+            itb_util.PredictionCandidate(phrase=y[0], user_freq=y[1])
+            for y in
+            sorted(phrase_frequencies.items(),
                             key=lambda x: (
                                 -1*x[1],   # user_freq descending
                                 len(x[0]), # len(phrase) ascending
                                 x[0]       # phrase alphabetical
-                            ))[:20]
+                            ))[:20]]
         if not title:
             return candidates
-        candidates_title = []
+        candidates_title: List[itb_util.PredictionCandidate] = []
         phrases_title = set()
         for candidate in candidates:
-            phrase = candidate[0]
-            phrase_title = phrase[:1].title() + phrase[1:]
+            phrase_title = candidate.phrase[:1].title() + candidate.phrase[1:]
             if phrase_title in phrases_title:
                 continue
-            candidates_title.append((phrase_title, candidate[1]))
+            candidates_title.append(
+                itb_util.PredictionCandidate(
+                    phrase=phrase_title, user_freq=candidate.user_freq))
             phrases_title.add(phrase_title)
         return candidates_title
 
     def select_shortcuts(
             self,
-            input_phrase: str) -> List[Tuple[str, float]]:
-        '''
-        Get shortcuts from database completing input_phrase.
-
-        Returns a list of matches where each match is a tuple in the
-        form of (phrase, user_freq), i.e. returns something like
-        [(phrase, user_freq), ...]
-        '''
+            input_phrase: str) -> List[itb_util.PredictionCandidate]:
+        '''Get shortcuts from database completing input_phrase.'''
         input_phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
         if DEBUG_LEVEL > 1:
@@ -440,7 +439,7 @@ class TabSqliteDb:
     def select_words_empty_input(
             self,
             p_phrase: str,
-            pp_phrase: str) -> List[Tuple[str, float]]:
+            pp_phrase: str) -> List[itb_util.PredictionCandidate]:
         '''Get phrases from database which occured previously with
         any input after the given context
 
@@ -500,7 +499,7 @@ class TabSqliteDb:
             self,
             input_phrase: str,
             p_phrase: str = '',
-            pp_phrase: str = '') -> List[Tuple[str, float]]:
+            pp_phrase: str = '') -> List[itb_util.PredictionCandidate]:
         '''
         Get phrases from database completing input_phrase.
 

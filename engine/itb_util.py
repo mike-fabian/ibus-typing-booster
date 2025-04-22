@@ -22,6 +22,7 @@ Utility functions used in ibus-typing-booster
 
 from typing import Any
 from typing import Tuple
+from typing import NamedTuple
 from typing import List
 from typing import Dict
 from typing import Set
@@ -3735,6 +3736,38 @@ def get_hunspell_dictionary_wordlist(
         for x in dic_buffer
     ]
     return (dic_path, dictionary_encoding, word_list)
+
+class PredictionCandidate(NamedTuple):
+    '''
+    A named tuple containing the parts of a prediction candidate
+    found in the user database, the (hunspell) dictionaries, produced
+    by hunspell spellchecking, found by the emoji matcher, or found by
+    looking up related matches.
+
+    phrase: str = ''              The candidate itself, i.e. the text
+                                  which might be eventually committed.
+    user_freq: float = 0.0        A number indicating a usage frequency.
+                                  If the candidate comes from the user database,
+                                  this is a floating point number between 0 and 1.
+                                  If the candidate comes from the emoji matcher,
+                                  it is some bigger floating point number.
+                                  If the candidate comes from looking up related
+                                  stuff it is usually a small integer  number.
+    comment: str = ''             May give some extra  information about
+                                  the candidate, for example the name of an emoji.
+                                  This is just some extra information, it will not be
+                                  committed.
+    from_user_db: bool = False    True if this candidate comes from the
+                                  user database, False if not.
+    spell_checking: bool = False  True if this candidate was produced
+                                  by spellchecking, False if not.
+
+    '''
+    phrase: str = ''
+    user_freq: float = 0.0
+    comment: str = ''
+    from_user_db: bool = False
+    spell_checking: bool = False
 
 class Capabilite(Flag):
     '''Compatibility class to handle IBus.Capabilite the same way no matter

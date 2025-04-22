@@ -1261,7 +1261,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._header_bar.set_subtitle(f'({(len(candidates))})')
 
         if not candidates:
-            candidates = [('∅', _('Search produced empty result.'), 1)]
+            candidates = [itb_util.PredictionCandidate(
+                phrase='∅',
+                user_freq=1,
+                comment=_('Search produced empty result.'))]
 
         for candidate in candidates:
             # Do *not* do
@@ -1275,9 +1278,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             # filled. But then the on_search_entry_search_changed()
             # callback will think that nothing needs to be done
             # because self._candidates_invalid is True already.
-            emoji = self._variation_selector_normalize_for_font(candidate[0])
-            name = candidate[1]
-            dummy_score = candidate[2]
+            emoji = self._variation_selector_normalize_for_font(candidate.phrase)
+            dummy_score = candidate.user_freq
+            name = candidate.comment
             label = Gtk.Label()
             # Make font for emoji large using pango markup
             fallback = self._optimize_pango_fallback(emoji)

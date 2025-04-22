@@ -204,9 +204,13 @@ class TabSqliteDbTestCase(unittest.TestCase):
             input_phrase='suoicodilaipxecitsiligarfilacrepus',
             phrase='suoicodilaipxecitsiligarfilacrepus',
             user_freq=1)
-        self.assertEqual(
-            [('suoicodilaipxecitsiligarfilacrepus', 1.0)],
-            self.database.select_words('suoicodilaipxecitsiligarfilacrepus'))
+        candidates = self.database.select_words('suoicodilaipxecitsiligarfilacrepus')
+        self.assertEqual(len(candidates), 1)
+        self.assertEqual(candidates[0].phrase, 'suoicodilaipxecitsiligarfilacrepus')
+        self.assertEqual(candidates[0].user_freq, 1.0)
+        self.assertEqual(candidates[0].comment, '')
+        self.assertEqual(candidates[0].from_user_db, False)
+        self.assertEqual(candidates[0].spell_checking, False)
         self.assertEqual(
             1,
             self.database.phrase_exists('suoicodilaipxecitsiligarfilacrepus'))

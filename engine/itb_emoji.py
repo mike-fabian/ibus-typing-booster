@@ -507,7 +507,7 @@ class EmojiMatcher():
                     self._enchant_dicts.append(enchant.Dict(language))
         self._emoji_dict: Dict[Tuple[str, str], Dict[str, Any]] = {}
         self._candidate_cache: Dict[
-            Tuple[str, int, str], List[Tuple[str, str, float]]] = {}
+            Tuple[str, int, str], List[itb_util.PredictionCandidate]] = {}
         self._match_function: Callable[[Any, Any], Any] = _match_classic
         self._good_match_score: float = 90.0
         self.set_match_algorithm(match_algorithm)
@@ -1388,7 +1388,7 @@ class EmojiMatcher():
             self,
             query_string: str,
             match_limit: int = 20,
-            trigger_characters: str  = '') -> List[Tuple[str, str, float]]:
+            trigger_characters: str  = '') -> List[itb_util.PredictionCandidate]:
         # pylint: disable=line-too-long
         '''
         Find a list of emoji which best match a query string.
@@ -1407,175 +1407,324 @@ class EmojiMatcher():
 
         If the query string is an emoji itself, similar emoji are returned:
 
-        >>> mq.candidates('😺', match_limit=3)
-        [('😺', 'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, uc6, animal, grinning, smiling]', 12.0), ('😸', 'grinning cat face with smiling eyes [So, people, cat, face, smile, uc6, animal, grinning, smiling]', 9.0), ('😅', 'smiling face with open mouth and cold sweat [So, people, face, open, smile, uc6, grinning, mouth, smiling]', 9.0)]
+        >>> matches = mq.candidates('😺', match_limit=3)
+        >>> matches[0].phrase
+        '😺'
+        >>> matches[0].comment
+        'smiling cat face with open mouth [😺, So, people, cat, face, mouth, open, smile, uc6, animal, grinning, smiling]'
+        >>> matches[0].user_freq
+        12.0
+        >>> matches[1].phrase
+        '😸'
+        >>> matches[1].comment
+        'grinning cat face with smiling eyes [So, people, cat, face, smile, uc6, animal, grinning, smiling]'
+        >>> matches[1].user_freq
+        9.0
+        >>> matches[2].phrase
+        '😅'
+        >>> matches[2].comment
+        'smiling face with open mouth and cold sweat [So, people, face, open, smile, uc6, grinning, mouth, smiling]'
+        >>> matches[2].user_freq
+        9.0
 
         It works in different languages:
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('ネコ＿')[0][:2]
-        ('🐈', 'ネコ')
+        >>> first_match = mq.candidates('ネコ＿')[0]
+        >>> first_match.phrase
+        '🐈'
+        >>> first_match.comment
+        'ネコ'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('ネコ＿')[0][:2]
-        ('🐈', 'ネコ')
+        >>> first_match = mq.candidates('ネコ＿')[0]
+        >>> first_match.phrase
+        '🐈'
+        >>> first_match.comment
+        'ネコ'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('ant')[0][:2]
-        ('🐜', 'ant')
+        >>> first_match = mq.candidates('ant')[0]
+        >>> first_match.phrase
+        '🐜'
+        >>> first_match.comment
+        'ant'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('ant')[0][:2]
-        ('🐜', 'ant')
+        >>> first_match = mq.candidates('ant')[0]
+        >>> first_match.phrase
+        '🐜'
+        >>> first_match.comment
+        'ant'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('ameise')[0][:2]
-        ('🐜', 'Ameise')
+        >>> first_match = mq.candidates('ameise')[0]
+        >>> first_match.phrase
+        '🐜'
+        >>> first_match.comment
+        'Ameise'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('ameise')[0][:2]
-        ('🐜', 'Ameise')
+        >>> first_match = mq.candidates('ameise')[0]
+        >>> first_match.phrase
+        '🐜'
+        >>> first_match.comment
+        'Ameise'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('formica')[0][:2]
-        ('🐜', 'formica')
+        >>> first_match = mq.candidates('formica')[0]
+        >>> first_match.phrase
+        '🐜'
+        >>> first_match.comment
+        'formica'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('formica')[0][:2]
-        ('🐜', 'formica')
+        >>> first_match = mq.candidates('formica')[0]
+        >>> first_match.phrase
+        '🐜'
+        >>> first_match.comment
+        'formica'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('hormiga')[0][:2]
-        ('🐜', 'hormiga')
+        >>> first_match = mq.candidates('hormiga')[0]
+        >>> first_match.phrase
+        '🐜'
+        >>> first_match.comment
+        'hormiga'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('hormiga')[0][:2]
-        ('🐜', 'hormiga')
+        >>> first_match = mq.candidates('hormiga')[0]
+        >>> first_match.phrase
+        '🐜'
+        >>> first_match.comment
+        'hormiga'
 
         Any white space and '_' can be used to separate keywords in the
         query string:
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('gatto sorride')[0][:2]
-        ('😺', 'gatto che sorride')
+        >>> first_match = mq.candidates('gatto sorride')[0]
+        >>> first_match.phrase
+        '😺'
+        >>> first_match.comment
+        'gatto che sorride'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('gatto sorride')[0][:2]
-        ('😺', 'gatto che sorride')
+        >>> first_match = mq.candidates('gatto sorride')[0]
+        >>> first_match.phrase
+        '😺'
+        >>> first_match.comment
+        'gatto che sorride'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('gatto_	 sorride')[0][:2]
-        ('😺', 'gatto che sorride')
+        >>> first_match = mq.candidates('gatto_	 sorride')[0]
+        >>> first_match.phrase
+        '😺'
+        >>> first_match.comment
+        'gatto che sorride'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('gatto_	 sorride')[0][:2]
-        ('😺', 'gatto che sorride')
+        >>> first_match = mq.candidates('gatto_	 sorride')[0]
+        >>> first_match.phrase
+        '😺'
+        >>> first_match.comment
+        'gatto che sorride'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('nerd glasses')[0][:2]
-        ('🤓', 'nerd face [glasses]')
+        >>> first_match = mq.candidates('nerd glasses')[0]
+        >>> first_match.phrase
+        '🤓'
+        >>> first_match.comment
+        'nerd face [glasses]'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('nerd glasses')[0][:2]
-        ('🤓', 'nerd face [glasses]')
+        >>> first_match = mq.candidates('nerd glasses')[0]
+        >>> first_match.phrase
+        '🤓'
+        >>> first_match.comment
+        'nerd face [glasses]'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('smiling face with sunglasses')[0][:2]
-        ('😎', 'smiling face with sunglasses')
+        >>> first_match = mq.candidates('smiling face with sunglasses')[0]
+        >>> first_match.phrase
+        '😎'
+        >>> first_match.comment
+        'smiling face with sunglasses'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('smiling face with sunglasses')[0][:2]
-        ('😎', 'smiling face with sunglasses')
+        >>> first_match = mq.candidates('smiling face with sunglasses')[0]
+        >>> first_match.phrase
+        '😎'
+        >>> first_match.comment
+        'smiling face with sunglasses'
 
         ASCII emoji match as well:
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates(':-)')[0][:2]
-        ('🙂', 'slightly smiling face “:-)”')
+        >>> first_match = mq.candidates(':-)')[0]
+        >>> first_match.phrase
+        '🙂'
+        >>> first_match.comment
+        'slightly smiling face “:-)”'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates(':-)')[0][:2]
-        ('🙂', 'slightly smiling face “:-)”')
+        >>> first_match = mq.candidates(':-)')[0]
+        >>> first_match.phrase
+        '🙂'
+        >>> first_match.comment
+        'slightly smiling face “:-)”'
 
         The query string can contain typos:
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('buterfly')[0][:2]
-        ('🦋', 'butterfly')
+        >>> first_match = mq.candidates('buterfly')[0]
+        >>> first_match.phrase
+        '🦋'
+        >>> first_match.comment
+        'butterfly'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('buterfly')[0][:2]
-        ('🦋', 'butterfly')
+        >>> first_match = mq.candidates('buterfly')[0]
+        >>> first_match.phrase
+        '🦋'
+        >>> first_match.comment
+        'butterfly'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('badminton')[0][:2]
-        ('🏸', 'badminton racquet and shuttlecock')
+        >>> first_match = mq.candidates('badminton')[0]
+        >>> first_match.phrase
+        '🏸'
+        >>> first_match.comment
+        'badminton racquet and shuttlecock'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('badminton')[0][:2]
-        ('🏸', 'badminton racquet and shuttlecock')
+        >>> first_match = mq.candidates('badminton')[0]
+        >>> first_match.phrase
+        '🏸'
+        >>> first_match.comment
+        'badminton racquet and shuttlecock'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('badminton')[0][:2]
-        ('🏸', 'badminton racquet and shuttlecock')
+        >>> first_match = mq.candidates('badminton')[0]
+        >>> first_match.phrase
+        '🏸'
+        >>> first_match.comment
+        'badminton racquet and shuttlecock'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('badminton')[0][:2]
-        ('🏸', 'badminton racquet and shuttlecock')
+        >>> first_match = mq.candidates('badminton')[0]
+        >>> first_match.phrase
+        '🏸'
+        >>> first_match.comment
+        'badminton racquet and shuttlecock'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('badmynton')[0][:2]
-        ('🏸', 'Badminton')
+        >>> first_match = mq.candidates('badmynton')[0]
+        >>> first_match.phrase
+        '🏸'
+        >>> first_match.comment
+        'Badminton'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('badmynton')[0][:2]
-        ('🏸', 'badminton racquet and shuttlecock')
+        >>> first_match = mq.candidates('badmynton')[0]
+        >>> first_match.phrase
+        '🏸'
+        >>> first_match.comment
+        'badminton racquet and shuttlecock'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('padminton')[0][:2]
-        ('🏸', 'Badminton')
+        >>> first_match = mq.candidates('padminton')[0]
+        >>> first_match.phrase
+        '🏸'
+        >>> first_match.comment
+        'Badminton'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('padminton')[0][:2]
-        ('🏸', 'badminton racquet and shuttlecock')
+        >>> first_match = mq.candidates('padminton')[0]
+        >>> first_match.phrase
+        '🏸'
+        >>> first_match.comment
+        'badminton racquet and shuttlecock'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('hedgehgo')[0][:2]
-        ('🦔', 'hedgehog')
+        >>> first_match = mq.candidates('hedgehgo')[0]
+        >>> first_match.phrase
+        '🦔'
+        >>> first_match.comment
+        'hedgehog'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('hedgehgo')[0][:2]
-        ('🦔', 'hedgehog')
+        >>> first_match = mq.candidates('hedgehgo')[0]
+        >>> first_match.phrase
+        '🦔'
+        >>> first_match.comment
+        'hedgehog'
 
         Non-emoji Unicode characters can be matched as well:
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('euro sign c')[0][:2]
-        ('€', 'euro sign')
+        >>> first_match = mq.candidates('euro sign c')[0]
+        >>> first_match.phrase
+        '€'
+        >>> first_match.comment
+        'euro sign'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('euro sign')[0][:2]
-        ('€', 'euro sign')
+        >>> first_match = mq.candidates('euro sign')[0]
+        >>> first_match.phrase
+        '€'
+        >>> first_match.comment
+        'euro sign'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('superscript one')[0][:2]
-        ('¹', 'superscript one')
+        >>> first_match = mq.candidates('superscript one')[0]
+        >>> first_match.phrase
+        '¹'
+        >>> first_match.comment
+        'superscript one'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('superscript one')[0][:2]
-        ('¹', 'superscript one')
+        >>> first_match = mq.candidates('superscript one')[0]
+        >>> first_match.phrase
+        '¹'
+        >>> first_match.comment
+        'superscript one'
 
         Unicode code points can be used in the query:
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('2019')[0][:2]
-        ('’', 'U+2019 right single quotation mark')
+        >>> first_match = mq.candidates('2019')[0]
+        >>> first_match.phrase
+        '’'
+        >>> first_match.comment
+        'U+2019 right single quotation mark'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('2019')[0][:2]
-        ('’', 'U+2019 right single quotation mark')
+        >>> first_match = mq.candidates('2019')[0]
+        >>> first_match.phrase
+        '’'
+        >>> first_match.comment
+        'U+2019 right single quotation mark'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('41')[0][:2]
-        ('A', 'U+41 latin capital letter a')
+        >>> first_match = mq.candidates('41')[0]
+        >>> first_match.phrase
+        'A'
+        >>> first_match.comment
+        'U+41 latin capital letter a'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('41')[0][:2]
-        ('A', 'U+41 latin capital letter a')
+        >>> first_match = mq.candidates('41')[0]
+        >>> first_match.phrase
+        'A'
+        >>> first_match.comment
+        'U+41 latin capital letter a'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('2a')[0][:2]
-        ('*', 'U+2A asterisk')
+        >>> first_match = mq.candidates('2a')[0]
+        >>> first_match.phrase
+        '*'
+        >>> first_match.comment
+        'U+2A asterisk'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('2a')[0][:2]
-        ('*', 'U+2A asterisk')
+        >>> first_match = mq.candidates('2a')[0]
+        >>> first_match.phrase
+        '*'
+        >>> first_match.comment
+        'U+2A asterisk'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> mq.candidates('1b')[0][:2]
-        ('\\x1b', 'U+1B')
+        >>> first_match = mq.candidates('1b')[0]
+        >>> first_match.phrase
+        '\\x1b'
+        >>> first_match.comment
+        'U+1B'
         >>> mq.set_match_algorithm('classic')
-        >>> mq.candidates('1b')[0][:2]
-        ('\\x1b', 'U+1B')
+        >>> first_match = mq.candidates('1b')[0]
+        >>> first_match.phrase
+        '\\x1b'
+        >>> first_match.comment
+        'U+1B'
         '''
         # pylint: enable=line-too-long
         if ((query_string, match_limit, trigger_characters)
@@ -1610,7 +1759,7 @@ class EmojiMatcher():
             query_string: str,
             match_limit: int = 20,
             trigger_characters: str  = '',
-            spellcheck: bool = False) -> List[Tuple[str, str, float]]:
+            spellcheck: bool = False) -> List[itb_util.PredictionCandidate]:
         # Remove the trigger characters from the beginning and end of
         # the query string:
         if query_string[:1] and query_string[:1] in trigger_characters:
@@ -1710,12 +1859,12 @@ class EmojiMatcher():
                     display_name += ' {' + category_good_match + '}'
                 if keyword_good_match not in display_name:
                     display_name += ' [' + keyword_good_match + ']'
-                candidates.append((
-                    self.variation_selector_normalize(
+                candidates.append(itb_util.PredictionCandidate(
+                    phrase=self.variation_selector_normalize(
                         emoji_key[0],
                         self._variation_selector),
-                    display_name,
-                    total_score))
+                    user_freq=total_score,
+                    comment=display_name))
 
         try:
             codepoint = int(query_string, 16)
@@ -1733,21 +1882,20 @@ class EmojiMatcher():
                         pass
                 if name:
                     name = ' ' + name
-                candidates.append(
-                    (char,
-                     'U+' + query_string.upper()
-                     + name,
-                     self._good_match_score * 10.0))
+                candidates.append(itb_util.PredictionCandidate(
+                    phrase=char,
+                    user_freq=self._good_match_score * 10.0,
+                    comment=f'U+{query_string.upper()}{name}'))
         except (ValueError,):
             pass
 
         sorted_candidates = sorted(
             candidates,
             key=lambda x: (
-                - x[2],                # score
-                self.cldr_order(x[0]), # CLDR order
-                - len(x[0]),           # length of the emoji sequence
-                x[1]                   # name of the emoji
+                - x.user_freq,             # score
+                self.cldr_order(x.phrase), # CLDR order
+                - len(x.phrase),           # length of the emoji sequence
+                x.comment                  # name of the emoji
             ))[:match_limit]
 
         return sorted_candidates
@@ -1962,7 +2110,7 @@ class EmojiMatcher():
             self,
             emoji_string: str,
             match_limit: int = 1000,
-            show_keywords: bool = True) -> List[Tuple[str, str, float]]:
+            show_keywords: bool = True) -> List[itb_util.PredictionCandidate]:
         # pylint: disable=line-too-long
         '''Find similar emojis
 
@@ -1994,19 +2142,105 @@ class EmojiMatcher():
         >>> matcher.similar('this is not an emoji', match_limit = 5)
         []
 
-        >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'white smiling face [☺️, So, people, face, outlined, relaxed, smile, uc1, happy, smiling]', 10.0), ('🥲', 'smiling face with tear [So, people, face, happy, smile, smiling]', 6.0), ('😇', 'smiling face with halo [So, people, face, smile, happy, smiling]', 6.0), ('🙂', 'slightly smiling face [So, people, face, smile, happy, smiling]', 6.0), ('😆', 'smiling face with open mouth and tightly-closed eyes [So, people, face, smile, happy, smiling]', 6.0)]
+        >>> matches = matcher.similar('☺', match_limit = 5)
+        >>> matches[0].phrase
+        '☺️'
+        >>> matches[0].comment
+        'white smiling face [☺️, So, people, face, outlined, relaxed, smile, uc1, happy, smiling]'
+        >>> matches[0].user_freq
+        10.0
+        >>> matches[1].phrase
+        '🥲'
+        >>> matches[1].comment
+        'smiling face with tear [So, people, face, happy, smile, smiling]'
+        >>> matches[1].user_freq
+        6.0
+        >>> matches[2].phrase
+        '😇'
+        >>> matches[2].comment
+        'smiling face with halo [So, people, face, smile, happy, smiling]'
+        >>> matches[2].user_freq
+        6.0
+        >>> matches[3].phrase
+        '🙂'
+        >>> matches[3].comment
+        'slightly smiling face [So, people, face, smile, happy, smiling]'
+        >>> matches[3].user_freq
+        6.0
+        >>> matches[4].phrase
+        '😆'
+        >>> matches[4].comment
+        'smiling face with open mouth and tightly-closed eyes [So, people, face, smile, happy, smiling]'
+        >>> matches[4].user_freq
+        6.0
 
         >>> matcher = EmojiMatcher(languages = ['it_IT'])
-        >>> matcher.similar('☺', match_limit = 5)
-        [('☺️', 'faccina sorridente [☺️, contorno faccina sorridente, delineata, emozionarsi, faccina, felice, rilassata, sorridente]', 8.0), ('🤩', 'colpo di fulmine [faccina, felice]', 2.0), ('😊', 'faccina con occhi sorridenti [faccina, felice]', 2.0), ('🙂', 'faccina con sorriso accennato [faccina, felice]', 2.0), ('😂', 'faccina con lacrime di gioia [faccina, felice]', 2.0)]
+        >>> matches = matcher.similar('☺', match_limit = 5)
+        >>> matches[0].phrase
+        '☺️'
+        >>> matches[0].comment
+        'faccina sorridente [☺️, contorno faccina sorridente, delineata, emozionarsi, faccina, felice, rilassata, sorridente]'
+        >>> matches[0].user_freq
+        8.0
+        >>> matches[1].phrase
+        '🤩'
+        >>> matches[1].comment
+        'colpo di fulmine [faccina, felice]'
+        >>> matches[1].user_freq
+        2.0
+        >>> matches[2].phrase
+        '😊'
+        >>> matches[2].comment
+        'faccina con occhi sorridenti [faccina, felice]'
+        >>> matches[2].user_freq
+        2.0
+        >>> matches[3].phrase
+        '🙂'
+        >>> matches[3].comment
+        'faccina con sorriso accennato [faccina, felice]'
+        >>> matches[3].user_freq
+        2.0
+        >>> matches[4].phrase
+        '😂'
+        >>> matches[4].comment
+        'faccina con lacrime di gioia [faccina, felice]'
+        >>> matches[4].user_freq
+        2.0
 
         Some symbols which are not emoji work as well:
 
         >>> matcher = EmojiMatcher(languages = ['es_ES',  'it_IT', 'es_MX', 'de_DE', 'en_US', 'ja_JP'])
-        >>> matcher.similar('€', match_limit = 5)
-        [('€', 'euro [€, divisa, EUR, euro, moneda]', 5.0), ('£', 'libra esterlina [divisa, moneda]', 2.0), ('₽', 'rublo [divisa, moneda]', 2.0), ('₹', 'rupia india [divisa, moneda]', 2.0), ('¥', 'yen [divisa, moneda]', 2.0)]
-
+        >>> matches = matcher.similar('€', match_limit = 5)
+        >>> matches[0].phrase
+        '€'
+        >>> matches[0].comment
+        'euro [€, divisa, EUR, euro, moneda]'
+        >>> matches[0].user_freq
+        5.0
+        >>> matches[1].phrase
+        '£'
+        >>> matches[1].comment
+        'libra esterlina [divisa, moneda]'
+        >>> matches[1].user_freq
+        2.0
+        >>> matches[2].phrase
+        '₽'
+        >>> matches[2].comment
+        'rublo [divisa, moneda]'
+        >>> matches[2].user_freq
+        2.0
+        >>> matches[3].phrase
+        '₹'
+        >>> matches[3].comment
+        'rupia india [divisa, moneda]'
+        >>> matches[3].user_freq
+        2.0
+        >>> matches[4].phrase
+        '¥'
+        >>> matches[4].comment
+        'yen [divisa, moneda]'
+        >>> matches[4].user_freq
+        2.0
         '''
         # pylint: enable=line-too-long
         #
@@ -2077,7 +2311,7 @@ class EmojiMatcher():
                                 candidate_scores[scores_key].append(label)
                             else:
                                 candidate_scores[scores_key] = [label]
-        candidates: List[Tuple[str, str, float]] = []
+        candidates: List[itb_util.PredictionCandidate] = [] #List[Tuple[str, str, float]] = []
         cldr_order_emoji_string = self.cldr_order(emoji_string)
         for csi in sorted(
                 candidate_scores.items(),
@@ -2099,7 +2333,8 @@ class EmojiMatcher():
             else:
                 name = csi[0][2]
             score = len(csi[1])
-            candidates.append((emoji, name, float(score)))
+            candidates.append(itb_util.PredictionCandidate(
+                phrase=emoji, user_freq=float(score), comment=name))
         return candidates
 
     def emoji_by_label(self) -> Dict[str, Dict[str, Dict[str, List[str]]]]:

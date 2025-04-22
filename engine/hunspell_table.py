@@ -26,6 +26,7 @@ from typing import Any
 from typing import Dict
 from typing import List
 from typing import Tuple
+from typing import NamedTuple
 from typing import Union
 from typing import Optional
 from typing import Iterable
@@ -479,37 +480,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._transliterated_strings_compose_part = ''
         self._transliterators: Dict[str, m17n_translit.Transliterator] = {}
         self._init_transliterators()
-        # self._candidates: Array to hold candidates found in the
-        #                   user database, the (hunspell) dictionaries,
-        #                   produced by hunspell spellchecking, found
-        #                   by the emoji matcher, or found by looking
-        #                   up related matches.
-        #
-        # Each elememt of the self._candidates array is a tuple like
-        #
-        #     (phrase, user_freq, comment, from_user_db, spell_checking)
-        #
-        #          phrase:  String, the candidate itself, i.e. the text
-        #                   which might be eventually committed.
-        #          user_freq: Float, a number indicating a usage frequency.
-        #                     If the candidate comes from the user database,
-        #                     this is a floating point number between 0 and 1.
-        #                     If the candidate comes from the emoji matcher,
-        #                     it is some integer number, usually quite big.
-        #                     If the candidate comes from looking up related
-        #                     stuff it is usually a small integer  number.
-        #          comment: String, may give some extra  information about
-        #                   the candidate, for example the name of an emoji.
-        #                   This is just some extra information, it will not be
-        #                   committed.
-        #          from_user_db: Boolean, True if this candidate comes from the
-        #                        user database, False if not.
-        #          spell_checking: Boolean, True if this candidate was produced
-        #                          by spellchecking, False if not.
-        self._candidates: List[Tuple[str, float, str, bool, bool]] = []
+        self._candidates: List[itb_util.PredictionCandidate] = []
         # a copy of self._candidates in case mode 'orig':
-        self._candidates_case_mode_orig: List[
-            Tuple[str, float, str, bool, bool]] = []
+        self._candidates_case_mode_orig: List[itb_util.PredictionCandidate] = []
         self._current_case_mode = 'orig'
         # 'orig': candidates have original case.
         # 'capitalize': candidates have been converted to the first character
@@ -1313,7 +1286,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return
         self._candidates = []
         phrase_frequencies: Dict[str, int] = {}
-        phrase_candidates: List[Tuple[str, int, str, bool, bool]] = []
+        phrase_candidates: List[itb_util.PredictionCandidate] = []
         self.is_lookup_table_enabled_by_min_char_complete = False
         if self._word_predictions or self._temporary_word_predictions:
             for ime in self._current_imes:
@@ -1345,7 +1318,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                 'Exception when calling select_words: %s: %s',
                                 error.__class__.__name__, error)
                     if candidates and prefix:
-                        candidates = [(prefix+x[0], x[1]) for x in candidates]
+                        candidates = [
+                            itb_util.PredictionCandidate(
+                                phrase=prefix+x.phrase,
+                                user_freq=x.user_freq)
+                            for x in candidates]
                     shortcut_candidates: List[Tuple[str, float]] = []
                     try:
                         shortcut_candidates = self.database.select_shortcuts(
@@ -1355,11 +1332,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                             'Exception when calling select_shortcuts: %s: %s',
                             error.__class__.__name__, error)
                     for cand in candidates + shortcut_candidates:
-                        if cand[0] in phrase_frequencies:
-                            phrase_frequencies[cand[0]] = max(
-                                phrase_frequencies[cand[0]], cand[1])
+                        if cand.phrase in phrase_frequencies:
+                            phrase_frequencies[cand.phrase] = max(
+                                phrase_frequencies[cand.phrase],
+                                cand.user_freq)
                         else:
-                            phrase_frequencies[cand[0]] = cand[1]
+                            phrase_frequencies[cand.phrase] = cand.user_freq
             phrase_candidates = self.database.best_candidates(phrase_frequencies)
         # If the first candidate is exactly the same as the typed string
         # prefer longer candidates which start exactly with the typed
@@ -1372,21 +1350,21 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._transliterated_strings[
                     self.get_current_imes()[0]])
             first_candidate = itb_util.normalize_nfc_and_composition_exclusions(
-                phrase_candidates[0][0])
+                phrase_candidates[0].phrase)
             if typed_string == first_candidate:
                 phrase_frequencies = {}
-                first_candidate_user_freq = phrase_candidates[0][1]
+                first_candidate_user_freq = phrase_candidates[0].user_freq
                 first_candidate_length = len(first_candidate)
                 for cand in phrase_candidates:
                     candidate_normalized = (
                         itb_util.normalize_nfc_and_composition_exclusions(
-                            cand[0]))
+                            cand.phrase))
                     if (len(candidate_normalized) > first_candidate_length
                         and candidate_normalized.startswith(first_candidate)):
-                        phrase_frequencies[cand[0]] = (
-                            cand[1] + first_candidate_user_freq)
+                        phrase_frequencies[cand.phrase] = (
+                            cand.user_freq + first_candidate_user_freq)
                     else:
-                        phrase_frequencies[cand[0]] = cand[1]
+                        phrase_frequencies[cand.phrase] = cand.user_freq
                 phrase_candidates = self.database.best_candidates(
                     phrase_frequencies)
         if ((self._emoji_predictions
@@ -1406,7 +1384,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     languages=self._dictionary_names,
                     unicode_data_all=self._unicode_data_all)
             emoji_scores: Dict[str, Tuple[float, str]] = {}
-            emoji_max_score: int = 0
+            emoji_max_score: float = 0.0
             for ime in self._current_imes:
                 if (self._transliterated_strings[ime]
                         and ((len(self._transliterated_strings[ime])
@@ -1416,31 +1394,34 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         self._transliterated_strings[ime],
                         match_limit=self._emoji_match_limit,
                         trigger_characters=self._emoji_trigger_characters)
-                    for cand in emoji_matcher_candidates:
-                        emoji_max_score = max(emoji_max_score, cand[2])
-                        if (cand[0] not in emoji_scores
-                                or cand[2] > emoji_scores[cand[0]][0]):
-                            emoji_scores[cand[0]] = (cand[2], cand[1])
-            phrase_candidates_emoji_name: List[Tuple[
-                str, float, str, bool, bool]] = []
+                    for ecand in emoji_matcher_candidates:
+                        emoji_max_score = max(emoji_max_score, ecand.user_freq)
+                        if (ecand.phrase not in emoji_scores
+                                or ecand.user_freq > emoji_scores[ecand.phrase][0]):
+                            emoji_scores[ecand.phrase] = (ecand.user_freq, ecand.comment)
+            phrase_candidates_emoji_name: List[itb_util.PredictionCandidate] = []
             for cand in phrase_candidates:
                 # If this candidate is duplicated in the emoji candidates,
                 # don’t use this as a text candidate but increase the score
                 # of the emoji candidate:
                 emoji = ''
-                if cand[0] in emoji_scores:
-                    emoji = cand[0]
-                elif (cand[0][0] in self._emoji_trigger_characters
-                    and cand[0][1:] in emoji_scores):
-                    emoji = cand[0][1:]
+                if cand.phrase in emoji_scores:
+                    emoji = cand.phrase
+                elif (cand.phrase[0] in self._emoji_trigger_characters
+                    and cand.phrase[1:] in emoji_scores):
+                    emoji = cand.phrase[1:]
                 if emoji:
-                    emoji_scores[emoji] = (emoji_max_score + cand[1],
+                    emoji_scores[emoji] = (emoji_max_score + cand.user_freq,
                                            emoji_scores[emoji][1])
                 else:
-                    phrase_candidates_emoji_name.append((
-                        cand[0], cand[1], self.emoji_matcher.name(cand[0]),
-                        cand[1] > 0, cand[1] < 0))
-            emoji_candidates = []
+                    phrase_candidates_emoji_name.append(
+                        itb_util.PredictionCandidate(
+                            phrase=cand.phrase,
+                            user_freq=cand.user_freq,
+                            comment=self.emoji_matcher.name(cand.phrase),
+                            from_user_db=cand.user_freq > 0,
+                            spell_checking=cand.user_freq < 0))
+            emoji_candidates: List[itb_util.PredictionCandidate] = []
             for (key, value) in sorted(
                     emoji_scores.items(),
                     key=lambda x: (
@@ -1448,7 +1429,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         - len(x[0]), # length of emoji string
                         x[1][1]      # name of emoji
                     ))[:self._emoji_match_limit]:
-                emoji_candidates.append((key, value[0], value[1]))
+                emoji_candidates.append(
+                    itb_util.PredictionCandidate(
+                        phrase=key, user_freq=value[0], comment=value[1]))
             page_size = self._lookup_table.get_page_size()
             phrase_candidates_top = phrase_candidates_emoji_name[:page_size-1]
             phrase_candidates_rest = phrase_candidates_emoji_name[page_size-1:]
@@ -1456,24 +1439,52 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             emoji_candidates_rest = emoji_candidates[page_size:]
             for cand in phrase_candidates_top:
                 self._candidates.append(
-                    (cand[0], cand[1], cand[2], cand[3], cand[4]))
+                    itb_util.PredictionCandidate(
+                        phrase=cand.phrase,
+                        user_freq=cand.user_freq,
+                        comment=cand.comment,
+                        from_user_db=cand.from_user_db,
+                        spell_checking=cand.spell_checking))
             for cand in emoji_candidates_top:
                 self._candidates.append(
-                    (cand[0], cand[1], cand[2], False, False))
+                    itb_util.PredictionCandidate(
+                        phrase=cand.phrase,
+                        user_freq=cand.user_freq,
+                        comment=cand.comment,
+                        from_user_db=False,
+                        spell_checking=False))
             for cand in phrase_candidates_rest:
                 self._candidates.append(
-                    (cand[0], cand[1], cand[2], cand[3], cand[4]))
+                    itb_util.PredictionCandidate(
+                        phrase=cand.phrase,
+                        user_freq=cand.user_freq,
+                        comment=cand.comment,
+                        from_user_db=cand.from_user_db,
+                        spell_checking=cand.spell_checking))
             for cand in emoji_candidates_rest:
                 self._candidates.append(
-                    (cand[0], cand[1], cand[2], False, False))
+                    itb_util.PredictionCandidate(
+                        phrase=cand.phrase,
+                        user_freq=cand.user_freq,
+                        comment=cand.comment,
+                        from_user_db=False,
+                        spell_checking=False))
         else:
             for cand in phrase_candidates:
                 self._candidates.append(
-                    (cand[0], cand[1], '', cand[1] > 0, cand[1] < 0))
+                    itb_util.PredictionCandidate(
+                        phrase=cand.phrase,
+                        user_freq=cand.user_freq,
+                        comment='',
+                        from_user_db=cand.user_freq > 0,
+                        spell_checking=cand.user_freq < 0))
         for cand in self._candidates:
             self._append_candidate_to_lookup_table(
-                phrase=cand[0], user_freq=cand[1], comment=cand[2],
-                from_user_db=cand[3], spell_checking=cand[4])
+                phrase=cand.phrase,
+                user_freq=cand.user_freq,
+                comment=cand.comment,
+                from_user_db=cand.from_user_db,
+                spell_checking=cand.spell_checking)
         self._candidates_case_mode_orig = self._candidates.copy()
         if self._current_case_mode != 'orig':
             self._case_mode_change(mode=self._current_case_mode)
@@ -2902,12 +2913,21 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         else:
             super().update_auxiliary_text(
                 IBus.Text.new_from_string(''), False)
-        self._candidates = [(cand[0], cand[1], '', True, False)
-                            for cand in phrase_candidates]
+        self._candidates = [
+            itb_util.PredictionCandidate(
+                phrase=cand[0],
+                user_freq=cand[1],
+                comment='',
+                from_user_db=True,
+                spell_checking=False)
+            for cand in phrase_candidates]
         for cand in self._candidates:
             self._append_candidate_to_lookup_table(
-                phrase=cand[0], user_freq=cand[1], comment=cand[2],
-                from_user_db=cand[3], spell_checking=cand[4])
+                phrase=cand.phrase,
+                user_freq=cand.user_freq,
+                comment=cand.comment,
+                from_user_db=cand.from_user_db,
+                spell_checking=cand.spell_checking)
         self._candidates_case_mode_orig = self._candidates.copy()
         if self._current_case_mode != 'orig':
             self._case_mode_change(mode=self._current_case_mode)
@@ -3049,11 +3069,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.info('Getting related words from nltk for: “%s”', phrase)
             try:
                 for synonym in itb_nltk.synonyms(phrase, keep_original=False):
-                    related_candidates.append((synonym, '[synonym]', 0))
+                    related_candidates.append(itb_util.PredictionCandidate(
+                        phrase=synonym, user_freq=0, comment='[synonym]'))
                 for hypernym in itb_nltk.hypernyms(phrase, keep_original=False):
-                    related_candidates.append((hypernym, '[hypernym]', 0))
+                    related_candidates.append(itb_util.PredictionCandidate(
+                        phrase=hypernym, user_freq=0, comment='[hypernym]'))
                 for hyponym in itb_nltk.hyponyms(phrase, keep_original=False):
-                    related_candidates.append((hyponym, '[hyponym]', 0))
+                    related_candidates.append(itb_util.PredictionCandidate(
+                        phrase=hyponym, user_freq=0, comment='[hyponym]'))
             except (LookupError,) as error:
                 LOGGER.exception(
                     'Exception when trying to use nltk: %s: %s',
@@ -3079,9 +3102,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.get_lookup_table().clear()
         self.get_lookup_table().set_cursor_visible(False)
         for cand in related_candidates:
-            self._candidates.append((cand[0], cand[2], cand[1], False, False))
+            self._candidates.append(
+                itb_util.PredictionCandidate(
+                    phrase=cand.phrase,
+                    user_freq=cand.user_freq,
+                    comment=cand.comment,
+                    from_user_db=False,
+                    spell_checking=False))
             self._append_candidate_to_lookup_table(
-                phrase=cand[0], user_freq=cand[2], comment=cand[1])
+                phrase=cand.phrase, user_freq=cand.user_freq, comment=cand.comment)
         self._lookup_table_shows_related_candidates = True
         self._update_lookup_table_and_aux()
         return True
@@ -3127,9 +3156,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         new_candidates = []
         for cand in self._candidates_case_mode_orig:
             new_candidates.append(
-                (self._case_modes[self._current_case_mode]['function'](
-                    cand[0]),
-                 cand[1], cand[2], cand[3], cand[4]))
+                itb_util.PredictionCandidate(
+                    phrase=self._case_modes[
+                        self._current_case_mode]['function'](cand[0]),
+                    user_freq=cand[1],
+                    comment=cand[2],
+                    from_user_db=cand[3],
+                    spell_checking=cand[4]))
         self._candidates = new_candidates
         cursor_visible = self.get_lookup_table().cursor_visible
         cursor_pos = self.get_lookup_table().get_cursor_pos()
@@ -6496,7 +6529,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     self._typed_compose_sequence + compose_completion)
                 if compose_result:
                     self._candidates.append(
-                        (compose_result, 0, '', False, False))
+                        itb_util.PredictionCandidate(
+                            phrase=compose_result,
+                            user_freq=0,
+                            comment='',
+                            from_user_db=False,
+                            spell_checking=False))
                     text_for_lookup_table = (
                         self._compose_sequences.lookup_representation(
                             compose_completion))
@@ -7882,7 +7920,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 comment = (
                     f'U+{ord(candidate):04X} ' + unicodedata.name(candidate))
             if candidate:
-                self._candidates.append((candidate, 0, '', False, False))
+                prediction_candidate = itb_util.PredictionCandidate(
+                    phrase=candidate,
+                    user_freq=0,
+                    comment='',
+                    from_user_db=False,
+                    spell_checking=False)
+                self._candidates.append(prediction_candidate)
                 self._append_candidate_to_lookup_table(phrase=candidate,
                                                        comment=comment)
         if not self.get_lookup_table().get_number_of_candidates():
