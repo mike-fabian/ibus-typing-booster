@@ -375,33 +375,35 @@ class TabSqliteDb:
     def best_candidates(
             cls,
             phrase_frequencies: Dict[str, float],
-            title: bool = False) -> List[itb_util.PredictionCandidate]:
+            title: bool = False,
+            max_candidates: int = 20) -> List[itb_util.PredictionCandidate]:
         '''Sorts the phrase_frequencies dictionary and returns the best
         candidates.
 
         Should *not* change the phrase_frequencies dictionary!
         '''
+        if not phrase_frequencies:
+            return []
         candidates = [
-            itb_util.PredictionCandidate(phrase=y[0], user_freq=y[1])
-            for y in
+            itb_util.PredictionCandidate(phrase=phrase, user_freq=freq)
+            for phrase, freq in
             sorted(phrase_frequencies.items(),
                             key=lambda x: (
                                 -1*x[1],   # user_freq descending
                                 len(x[0]), # len(phrase) ascending
                                 x[0]       # phrase alphabetical
-                            ))[:20]]
+                            ))[:max_candidates]]
         if not title:
             return candidates
         candidates_title: List[itb_util.PredictionCandidate] = []
-        phrases_title = set()
+        seen_phrases = set()
         for candidate in candidates:
             phrase_title = candidate.phrase[:1].title() + candidate.phrase[1:]
-            if phrase_title in phrases_title:
-                continue
-            candidates_title.append(
-                itb_util.PredictionCandidate(
-                    phrase=phrase_title, user_freq=candidate.user_freq))
-            phrases_title.add(phrase_title)
+            if phrase_title not in seen_phrases:
+                candidates_title.append(
+                    itb_util.PredictionCandidate(
+                        phrase=phrase_title, user_freq=candidate.user_freq))
+                seen_phrases.add(phrase_title)
         return candidates_title
 
     def select_shortcuts(
