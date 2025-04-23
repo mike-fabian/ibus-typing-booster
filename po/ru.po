@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-04-19 11:04+0200\n"
+"POT-Creation-Date: 2025-04-23 01:33+0200\n"
 "PO-Revision-Date: 2024-07-28 17:22+0000\n"
 "Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
 "memory@weblate.org>\n"
@@ -134,7 +134,7 @@ msgstr "Категории Юникода"
 msgid "Unicode block:"
 msgstr "Версия Юникода:"
 
-#: engine/emoji_picker.py:762 engine/emoji_picker.py:1903
+#: engine/emoji_picker.py:762 engine/emoji_picker.py:1908
 msgid "Left click to copy"
 msgstr "Нажмите левую кнопку мыши, чтобы скопировать"
 
@@ -146,46 +146,46 @@ msgstr "Длительное нажатие или средний щелчок �
 msgid "Right click for info"
 msgstr "Правая кнопка мыши для показа информации"
 
-#: engine/emoji_picker.py:1258
+#: engine/emoji_picker.py:1260
 msgid "Search Results"
 msgstr "Результаты поиска"
 
-#: engine/emoji_picker.py:1262
+#: engine/emoji_picker.py:1267
 msgid "Search produced empty result."
 msgstr "Поиск не дал никаких результатов."
 
-#: engine/emoji_picker.py:1561 engine/emoji_picker.py:1689
+#: engine/emoji_picker.py:1566 engine/emoji_picker.py:1694
 msgid "Copied to clipboard!"
 msgstr "Скопировано в буфер обмена!"
 
-#: engine/emoji_picker.py:2016
+#: engine/emoji_picker.py:2021
 msgid "Lookup on emojipedia"
 msgstr "Искать в emojipedia"
 
-#: engine/emoji_picker.py:2164 engine/emoji_picker.py:2165
-#: engine/emoji_picker.py:2166 setup/main.py:1618
+#: engine/emoji_picker.py:2169 engine/emoji_picker.py:2170
+#: engine/emoji_picker.py:2171 setup/main.py:1618
 msgid "System default"
 msgstr "Системные по умолчанию"
 
-#: engine/emoji_picker.py:2301
+#: engine/emoji_picker.py:2306
 msgid "Set Font"
 msgstr "Установить шрифт"
 
-#: engine/hunspell_table.py:561 engine/hunspell_table.py:595
-#: engine/hunspell_table.py:616
+#: engine/hunspell_table.py:535 engine/hunspell_table.py:569
+#: engine/hunspell_table.py:590
 msgid "Off"
 msgstr "Выкл."
 
-#: engine/hunspell_table.py:566 engine/hunspell_table.py:600
-#: engine/hunspell_table.py:621
+#: engine/hunspell_table.py:540 engine/hunspell_table.py:574
+#: engine/hunspell_table.py:595
 msgid "On"
 msgstr "Вкл."
 
-#: engine/hunspell_table.py:585
+#: engine/hunspell_table.py:559
 msgid "Input mode"
 msgstr "Режим ввода"
 
-#: engine/hunspell_table.py:586
+#: engine/hunspell_table.py:560
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Здесь вы можете включить или выключить ibus-typing-booster."
 
@@ -196,7 +196,7 @@ msgstr "Здесь вы можете включить или выключить 
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:605 engine/hunspell_table.py:607 setup/main.py:615
+#: engine/hunspell_table.py:579 engine/hunspell_table.py:581 setup/main.py:615
 msgid "Unicode symbols and emoji predictions"
 msgstr "Символы Юникода и предсказания эмодзи"
 
@@ -207,60 +207,60 @@ msgstr "Символы Юникода и предсказания эмодзи"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:626 engine/hunspell_table.py:627 setup/main.py:640
+#: engine/hunspell_table.py:600 engine/hunspell_table.py:601 setup/main.py:640
 msgid "Off the record mode"
 msgstr "Выключить режим записи"
 
-#: engine/hunspell_table.py:1989
+#: engine/hunspell_table.py:2002
 msgid "Highest priority dictionary"
 msgstr "Словарь с наивысшим приоритетом"
 
-#: engine/hunspell_table.py:1990
+#: engine/hunspell_table.py:2003
 msgid "Choose highest priority dictionary"
 msgstr "Выберите словарь с наивысшим приоритетом"
 
-#: engine/hunspell_table.py:2019
+#: engine/hunspell_table.py:2032
 msgid "Preedit input method"
 msgstr "Метод предварительного редактирования"
 
-#: engine/hunspell_table.py:2020
+#: engine/hunspell_table.py:2033
 msgid "Switch preedit input method"
 msgstr "Переключение метода предварительного редактирования ввода"
 
-#: engine/hunspell_table.py:2365
+#: engine/hunspell_table.py:2378
 msgid "Setup"
 msgstr "Настройка"
 
-#: engine/hunspell_table.py:2368 setup/main.py:142
+#: engine/hunspell_table.py:2381 setup/main.py:142
 msgid "Preferences for ibus-typing-booster"
 msgstr "Предпочтения для ibus-typing-booster"
 
-#: engine/hunspell_table.py:6139
+#: engine/hunspell_table.py:6174
 msgid "Failed to import Google speech-to-text."
 msgstr "Не удалось импортировать речь-в-текст Google."
 
-#: engine/hunspell_table.py:6142
+#: engine/hunspell_table.py:6177
 msgid "Failed to import pyaudio."
 msgstr "Не удалось импортировать pyaudio."
 
-#: engine/hunspell_table.py:6145
+#: engine/hunspell_table.py:6180
 msgid "Failed to import queue."
 msgstr "Не удалось импортировать очередь."
 
-#: engine/hunspell_table.py:6150
+#: engine/hunspell_table.py:6185
 msgid "No supported language for speech recognition."
 msgstr "Нет поддерживаемого языка для распознавания речи."
 
-#: engine/hunspell_table.py:6154
+#: engine/hunspell_table.py:6189
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Файл \"Учетные данные приложения Google\" \"%s\" не найден."
 
-#: engine/hunspell_table.py:6167
+#: engine/hunspell_table.py:6202
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Не удалось инициировать Google речь-в-текст. Смотрите debug.log."
 
-#: engine/hunspell_table.py:6275
+#: engine/hunspell_table.py:6310
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Ошибка преобразования речи в текст Google. См. файл debug.log."
 
@@ -345,32 +345,32 @@ msgstr "региональный"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2837
+#: engine/itb_util.py:2838
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util.py:4517 engine/itb_util.py:5250
+#: engine/itb_util.py:4550 engine/itb_util.py:5283
 msgid "File not found"
 msgstr "Файл не найден"
 
-#: engine/itb_util.py:4521 engine/itb_util.py:5254
+#: engine/itb_util.py:4554 engine/itb_util.py:5287
 #, fuzzy
 msgid "Permission error"
 msgstr "Ошибка разрешения"
 
-#: engine/itb_util.py:4525 engine/itb_util.py:5258
+#: engine/itb_util.py:4558 engine/itb_util.py:5291
 msgid "Unicode decoding error"
 msgstr "Ошибка декодирования Юникода"
 
-#: engine/itb_util.py:4529 engine/itb_util.py:5262
+#: engine/itb_util.py:4562 engine/itb_util.py:5295
 msgid "Unknown error"
 msgstr "Неизвестная ошибка"
 
-#: engine/itb_util.py:5228
+#: engine/itb_util.py:5261
 msgid "Native Keyboard"
 msgstr ""
 
-#: engine/itb_util.py:5230
+#: engine/itb_util.py:5263
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -384,11 +384,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:5913
+#: engine/itb_util.py:5946
 msgid "Key input"
 msgstr "Ввод клавиши"
 
-#: engine/itb_util.py:5919
+#: engine/itb_util.py:5952
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -396,27 +396,27 @@ msgstr "Отмена"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5926
+#: engine/itb_util.py:5959
 msgid "Please press a key (or a key combination)"
 msgstr "Нажмите клавишу (или комбинацию клавиш)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:5931
+#: engine/itb_util.py:5964
 msgid "The dialog will be closed when the key is released"
 msgstr "Диалоговое окно будет закрыто, когда клавиша будет отпущена"
 
-#: engine/itb_util.py:5970
+#: engine/itb_util.py:6003
 msgid "A completion input method to speedup typing."
 msgstr ""
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:5979
+#: engine/itb_util.py:6012
 msgid "translator-credits"
 msgstr ""
 
-#: engine/itb_util.py:5987
+#: engine/itb_util.py:6020
 msgid "Online documentation:"
 msgstr ""
 
