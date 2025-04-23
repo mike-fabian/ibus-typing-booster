@@ -32,6 +32,7 @@ from typing import Optional
 from typing import Iterable
 from typing import Callable
 import os
+import sys
 import unicodedata
 import re
 import fnmatch
@@ -40,6 +41,7 @@ import time
 import copy
 import logging
 import threading
+import subprocess
 from gettext import dgettext
 # pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
@@ -178,7 +180,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._bus = bus
         self.database = database
         self.emoji_matcher: Optional[itb_emoji.EmojiMatcher] = None
-        self._setup_pid = 0
+        self._setup_process: Optional[subprocess.Popen[Any]] = None
         self._gsettings = Gio.Settings(
             schema='org.freedesktop.ibus.engine.typing-booster',
             path=schema_path)
@@ -2443,26 +2445,41 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
     def _start_setup(self) -> None:
         '''Start the setup tool if it is not running yet'''
-        if self._setup_pid != 0:
-            pid, dummy_state = os.waitpid(self._setup_pid, os.P_NOWAIT)
-            if pid != self._setup_pid:
-                # If the last setup tool started from here is still
-                # running the pid returned by the above os.waitpid()
-                # is 0. In that case just return, don’t start a
-                # second setup tool.
-                return
-            self._setup_pid = 0
-        setup_cmd = os.path.join(
-            str(os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION')),
-            'ibus-setup-typing-booster')
-        if self._debug_level > 0:
-            LOGGER.debug('Starting setup tool: "%s"\n', setup_cmd)
-        self._setup_pid = os.spawnl(
-            os.P_NOWAIT,
-            setup_cmd,
-            'ibus-setup-typing-booster',
-            '--engine-name',
-            self._engine_name)
+        if self._is_setup_running():
+            LOGGER.info('Another setup tool is still running, terminating it ...')
+            self._stop_setup()
+
+        if os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION'):
+            setup_cmd = os.path.join(
+                os.getenv('IBUS_TYPING_BOOSTER_LIB_LOCATION', ''),
+                'ibus-setup-typing-booster')
+            cmd = [setup_cmd, '--engine-name', self._engine_name]
+        else:
+            setup_python_script = os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                '../setup/main.py')
+            cmd = [sys.executable, setup_python_script, '--engine-name', self._engine_name]
+        LOGGER.info('Starting setup tool: "%s"', ' '.join(cmd))
+        try:
+            self._setup_process = subprocess.Popen(cmd)
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.exception(
+                'Exception when starting setup tools: %s: %s',
+                error.__class__.__name__, error)
+            self._setup_process = None
+
+    def _is_setup_running(self) -> bool:
+        '''Check if the setup process is still running.'''
+        if self._setup_process is None:
+            return False
+        return self._setup_process.poll() is None # None means still running
+
+    def _stop_setup(self) -> None:
+        '''Terminate the setup process if running.'''
+        if self._is_setup_running() and self._setup_process:
+            self._setup_process.terminate()
+            # self._setup_process.kill()
+            LOGGER.info('Stopped setup tool.')
 
     def _clear_input_and_update_ui(self) -> None:
         '''Clear the preëdit and close the lookup table
