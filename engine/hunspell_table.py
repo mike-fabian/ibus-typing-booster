@@ -1287,7 +1287,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # empty input does not pointlessly try to find candidates.
             return
         self._candidates = []
-        phrase_frequencies: Dict[str, int] = {}
+        phrase_frequencies: Dict[str, float] = {}
         phrase_candidates: List[itb_util.PredictionCandidate] = []
         self.is_lookup_table_enabled_by_min_char_complete = False
         if self._word_predictions or self._temporary_word_predictions:
@@ -1340,7 +1340,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                 cand.user_freq)
                         else:
                             phrase_frequencies[cand.phrase] = cand.user_freq
-            phrase_candidates = self.database.best_candidates(phrase_frequencies)
+            phrase_candidates = itb_util.best_candidates(phrase_frequencies)
         # If the first candidate is exactly the same as the typed string
         # prefer longer candidates which start exactly with the typed
         # string. If the user wants the typed string, he can easily
@@ -1367,7 +1367,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                             cand.user_freq + first_candidate_user_freq)
                     else:
                         phrase_frequencies[cand.phrase] = cand.user_freq
-                phrase_candidates = self.database.best_candidates(
+                phrase_candidates = itb_util.best_candidates(
                     phrase_frequencies)
         if ((self._emoji_predictions
              and not self.client_capabilities & itb_util.Capabilite.OSK)

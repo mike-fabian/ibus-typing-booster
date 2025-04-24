@@ -371,41 +371,6 @@ class TabSqliteDb:
         if commit:
             self.database.commit()
 
-    @classmethod
-    def best_candidates(
-            cls,
-            phrase_frequencies: Dict[str, float],
-            title: bool = False,
-            max_candidates: int = 20) -> List[itb_util.PredictionCandidate]:
-        '''Sorts the phrase_frequencies dictionary and returns the best
-        candidates.
-
-        Should *not* change the phrase_frequencies dictionary!
-        '''
-        if not phrase_frequencies:
-            return []
-        candidates = [
-            itb_util.PredictionCandidate(phrase=phrase, user_freq=freq)
-            for phrase, freq in
-            sorted(phrase_frequencies.items(),
-                            key=lambda x: (
-                                -1*x[1],   # user_freq descending
-                                len(x[0]), # len(phrase) ascending
-                                x[0]       # phrase alphabetical
-                            ))[:max_candidates]]
-        if not title:
-            return candidates
-        candidates_title: List[itb_util.PredictionCandidate] = []
-        seen_phrases = set()
-        for candidate in candidates:
-            phrase_title = candidate.phrase[:1].title() + candidate.phrase[1:]
-            if phrase_title not in seen_phrases:
-                candidates_title.append(
-                    itb_util.PredictionCandidate(
-                        phrase=phrase_title, user_freq=candidate.user_freq))
-                seen_phrases.add(phrase_title)
-        return candidates_title
-
     def select_shortcuts(
             self,
             input_phrase: str) -> List[itb_util.PredictionCandidate]:
@@ -432,7 +397,7 @@ class TabSqliteDb:
                  error.__class__.__name__, error)
         if results_shortcuts:
             phrase_frequencies.update(results_shortcuts)
-        best_shortcut_candidates = self.best_candidates(phrase_frequencies)
+        best_shortcut_candidates = itb_util.best_candidates(phrase_frequencies)
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'best_shortcut_candidates=%s', best_shortcut_candidates)
@@ -455,7 +420,7 @@ class TabSqliteDb:
                 'p_phrase=%s pp_phrase=%s', p_phrase, pp_phrase)
         phrase_frequencies: Dict[str, float] = {}
         if not p_phrase or not pp_phrase:
-            return self.best_candidates(phrase_frequencies)
+            return itb_util.best_candidates(phrase_frequencies)
         p_phrase = itb_util.remove_accents(p_phrase.lower())
         pp_phrase = itb_util.remove_accents(pp_phrase.lower())
         sqlargs = {'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
@@ -472,7 +437,7 @@ class TabSqliteDb:
                 error.__class__.__name__, error)
             results = None
         if not results:
-            return self.best_candidates(phrase_frequencies)
+            return itb_util.best_candidates(phrase_frequencies)
         sqlstr = (
             'SELECT sum(user_freq) FROM user_db.phrases '
             'WHERE p_phrase = :p_phrase AND pp_phrase = :pp_phrase;')
@@ -487,15 +452,15 @@ class TabSqliteDb:
                  error.__class__.__name__, error)
             count_pp_phrase_p_phrase = 0
         if not count_pp_phrase_p_phrase:
-            return self.best_candidates(phrase_frequencies)
+            return itb_util.best_candidates(phrase_frequencies)
         for result in results:
             phrase_frequencies.update(
                 [(result[0], result[1]/float(count_pp_phrase_p_phrase))])
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Best candidates for empty input with given context=%s',
-                self.best_candidates(phrase_frequencies))
-        return self.best_candidates(phrase_frequencies)
+                itb_util.best_candidates(phrase_frequencies))
+        return itb_util.best_candidates(phrase_frequencies)
 
     def select_words(
             self,
@@ -532,7 +497,7 @@ class TabSqliteDb:
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'hunspell: best_candidates=%s',
-                self.best_candidates(phrase_frequencies, title=title_case))
+                itb_util.best_candidates(phrase_frequencies, title=title_case))
         # Remove the accents *after* getting the hunspell candidates.
         # If the accents were removed before getting the hunspell candidates
         # an input phrase like “Glühwürmchen” would not be added as a
@@ -603,7 +568,7 @@ class TabSqliteDb:
             # If no unigrams matched, bigrams and trigrams cannot
             # match either. We can stop here and return what we got
             # from hunspell.
-            return self.best_candidates(phrase_frequencies, title=title_case)
+            return itb_util.best_candidates(phrase_frequencies, title=title_case)
         # Now normalize the unigram frequencies with the total count
         # (which is 11 in the above example), which gives us the
         # normalized result:
@@ -625,11 +590,11 @@ class TabSqliteDb:
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Unigram best_candidates=%s',
-                self.best_candidates(phrase_frequencies, title=title_case))
+                itb_util.best_candidates(phrase_frequencies, title=title_case))
         if not p_phrase:
             # If no context for bigram matching is available, return
             # what we have so far:
-            return self.best_candidates(phrase_frequencies, title=title_case)
+            return itb_util.best_candidates(phrase_frequencies, title=title_case)
         sqlstr = (
             'SELECT phrase, sum(user_freq) FROM like_input_phrase_view '
             'WHERE p_phrase = :p_phrase GROUP BY phrase;')
@@ -642,7 +607,7 @@ class TabSqliteDb:
                 error.__class__.__name__, error)
         if not results_bi:
             # If no bigram could be matched, return what we have so far:
-            return self.best_candidates(phrase_frequencies, title=title_case)
+            return itb_util.best_candidates(phrase_frequencies, title=title_case)
         # get the total count of p_phrase to normalize the bigram frequencies:
         sqlstr = (
             'SELECT sum(user_freq) FROM like_input_phrase_view '
@@ -666,11 +631,11 @@ class TabSqliteDb:
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Bigram best_candidates=%s',
-                self.best_candidates(phrase_frequencies, title=title_case))
+                itb_util.best_candidates(phrase_frequencies, title=title_case))
         if not pp_phrase:
             # If no context for trigram matching is available, return
             # what we have so far:
-            return self.best_candidates(phrase_frequencies, title=title_case)
+            return itb_util.best_candidates(phrase_frequencies, title=title_case)
         sqlstr = ('SELECT phrase, sum(user_freq) FROM like_input_phrase_view '
                   'WHERE p_phrase = :p_phrase '
                   'AND pp_phrase = :pp_phrase GROUP BY phrase;')
@@ -683,7 +648,7 @@ class TabSqliteDb:
                  error.__class__.__name__, error)
         if not results_tri:
             # if no trigram could be matched, return what we have so far:
-            return self.best_candidates(phrase_frequencies, title=title_case)
+            return itb_util.best_candidates(phrase_frequencies, title=title_case)
         # get the total count of (p_phrase, pp_phrase) pairs to
         # normalize the bigram frequencies:
         sqlstr = (
@@ -710,8 +675,8 @@ class TabSqliteDb:
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Trigram best_candidates=%s',
-                self.best_candidates(phrase_frequencies, title=title_case))
-        return self.best_candidates(phrase_frequencies, title=title_case)
+                itb_util.best_candidates(phrase_frequencies, title=title_case))
+        return itb_util.best_candidates(phrase_frequencies, title=title_case)
 
     def generate_userdb_desc(self) -> None:
         '''

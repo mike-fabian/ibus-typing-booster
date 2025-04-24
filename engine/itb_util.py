@@ -3769,6 +3769,39 @@ class PredictionCandidate(NamedTuple):
     from_user_db: bool = False
     spell_checking: bool = False
 
+def best_candidates(
+        phrase_frequencies: Dict[str, float],
+        title: bool = False,
+        max_candidates: int = 20) -> List[PredictionCandidate]:
+    '''Sorts the phrase_frequencies dictionary and returns the best
+    candidates.
+
+    Should *not* change the phrase_frequencies dictionary!
+    '''
+    if not phrase_frequencies:
+        return []
+    candidates = [
+        PredictionCandidate(phrase=phrase, user_freq=freq)
+        for phrase, freq in
+        sorted(phrase_frequencies.items(),
+                        key=lambda x: (
+                            -1*x[1],   # user_freq descending
+                            len(x[0]), # len(phrase) ascending
+                            x[0]       # phrase alphabetical
+                        ))[:max_candidates]]
+    if not title:
+        return candidates
+    candidates_title: List[PredictionCandidate] = []
+    seen_phrases = set()
+    for candidate in candidates:
+        phrase_title = candidate.phrase[:1].title() + candidate.phrase[1:]
+        if phrase_title not in seen_phrases:
+            candidates_title.append(
+                PredictionCandidate(
+                    phrase=phrase_title, user_freq=candidate.user_freq))
+            seen_phrases.add(phrase_title)
+    return candidates_title
+
 class Capabilite(Flag):
     '''Compatibility class to handle IBus.Capabilite the same way no matter
     what version of ibus is used.
