@@ -1301,29 +1301,20 @@ class EmojiMatcher():
 
         for language in itb_util.expand_languages(self._languages):
             if self._gettext_translations[language]:
+                translator = self._gettext_translations[language].gettext
                 translated_categories = []
                 for category in categories:
-                    translated_category = self._gettext_translations[
-                        language].gettext(category)
-                    translated_categories.append(
-                        translated_category)
+                    translated = translator(category)
+                    translated_categories.append(translated)
                     if language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
-                        translated_category_hiragana = (
-                            kakasi_convert(
-                                translated_category, target='hira'))
-                        if (translated_category_hiragana
-                                != translated_category):
-                            translated_categories.append(
-                                translated_category_hiragana)
+                        hiragana = kakasi_convert(translated, target='hira')
+                        if hiragana != translated:
+                            translated_categories.append(hiragana)
                         if self._romaji:
-                            translated_category_romaji = (
-                                kakasi_convert(
-                                    translated_category,
-                                    target='hepburn')).lower()
-                            if (translated_category_romaji
-                                    != translated_category):
-                                translated_categories.append(
-                                    translated_category_romaji)
+                            romaji = kakasi_convert(
+                                translated, target='hepburn').lower()
+                            if romaji != translated:
+                                translated_categories.append(romaji)
                 self._add_to_emoji_dict(
                     (emoji_string, language),
                     'categories', translated_categories)
