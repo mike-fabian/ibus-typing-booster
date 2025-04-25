@@ -1070,83 +1070,92 @@ class EmojiMatcher():
         if open_function is None:
             LOGGER.warning('could not find open function')
             return
-        with open_function( # type: ignore
-                path, mode='rt', encoding='utf-8') as unicode_emoji_test_file:
-            group = ''
-            subgroup = ''
-            cldr_order = 0
-            cldr_group_to_emojione_category = {
-                'Smileys & People': N_('people'),
-                'Smileys & Emotion': N_('people'), # New in Unicode 12.0
-                'People & Body': N_('people'), # New in Unicode 12.0
-                'Animals & Nature': N_('nature'),
-                'Food & Drink': N_('food'),
-                'Travel & Places': N_('travel'),
-                'Activities': N_('activity'),
-                'Objects': N_('objects'),
-                'Symbols': N_('symbols'),
-                'Flags': N_('flags'),
-                'Modifiers': N_('modifier'), # not in emoji-test.txt
-                'Component': N_('modifier'), # New in Unicode 12.0
-                'Regional': N_('regional'), # not in emoji-test.txt
-            }
-            cldr_subgroup_to_emojione_category = {
-                'person-sport':  N_('activity'),
-            }
-            for line in unicode_emoji_test_file.readlines():
-                pattern = re.compile(r'# group:(?P<group>.+)$')
-                match = pattern.match(line)
-                if match and match.group('group'):
-                    group = match.group('group').strip()
-                    continue
-                pattern = re.compile(r'# subgroup:(?P<subgroup>.+)$')
-                match = pattern.match(line)
-                if match and match.group('subgroup'):
-                    subgroup = match.group('subgroup').strip()
-                    continue
-                name = ''
-                pattern = re.compile(
-                    r'[^#]+#\s+\S+\s+E(?P<eversion>[0-9]+\.[0-9]+)'
-                    + r'\s+(?P<name>.+)$')
-                match = pattern.match(line)
-                if match and match.group('name'):
-                    name = match.group('name').strip()
-                line = re.sub(r'#.*$', '', line).strip()
-                if not line:
-                    continue
-                codepoints, property_string = (
-                    x.strip() for x in line.split(';')[:2])
-                if property_string != 'fully-qualified':
-                    # The non-fully-qualified sequences are
-                    # all duplicates of the fully-qualified
-                    # sequences.
-                    continue
-                cldr_order += 1
-                emoji_string = ''
-                for codepoint in codepoints.split(' '):
-                    emoji_string += chr(int(codepoint, 16))
-                if emoji_string:
-                    categories = [cldr_group_to_emojione_category[group]]
-                    if subgroup in cldr_subgroup_to_emojione_category:
-                        categories.append(
-                            cldr_subgroup_to_emojione_category[subgroup])
-                    self._add_to_emoji_dict(
-                        (emoji_string, 'en'), 'cldr_order', str(cldr_order))
-                    self._add_to_emoji_dict(
-                        (emoji_string, 'en'), 'categories', categories)
-                    self._add_translated_categories_to_emoji_dict(
-                        emoji_string, categories)
-                    if name:
+        try:
+            with open_function( # type: ignore
+                    path, mode='rt', encoding='utf-8') as unicode_emoji_test_file:
+                group = ''
+                subgroup = ''
+                cldr_order = 0
+                cldr_group_to_emojione_category = {
+                    'Smileys & People': N_('people'),
+                    'Smileys & Emotion': N_('people'), # New in Unicode 12.0
+                    'People & Body': N_('people'), # New in Unicode 12.0
+                    'Animals & Nature': N_('nature'),
+                    'Food & Drink': N_('food'),
+                    'Travel & Places': N_('travel'),
+                    'Activities': N_('activity'),
+                    'Objects': N_('objects'),
+                    'Symbols': N_('symbols'),
+                    'Flags': N_('flags'),
+                    'Modifiers': N_('modifier'), # not in emoji-test.txt
+                    'Component': N_('modifier'), # New in Unicode 12.0
+                    'Regional': N_('regional'), # not in emoji-test.txt
+                }
+                cldr_subgroup_to_emojione_category = {
+                    'person-sport':  N_('activity'),
+                }
+                for line in unicode_emoji_test_file:
+                    pattern = re.compile(r'# group:(?P<group>.+)$')
+                    match = pattern.match(line)
+                    if match and match.group('group'):
+                        group = match.group('group').strip()
+                        continue
+                    pattern = re.compile(r'# subgroup:(?P<subgroup>.+)$')
+                    match = pattern.match(line)
+                    if match and match.group('subgroup'):
+                        subgroup = match.group('subgroup').strip()
+                        continue
+                    name = ''
+                    pattern = re.compile(
+                        r'[^#]+#\s+\S+\s+E(?P<eversion>[0-9]+\.[0-9]+)'
+                        + r'\s+(?P<name>.+)$')
+                    match = pattern.match(line)
+                    if match and match.group('name'):
+                        name = match.group('name').strip()
+                    line = line.partition('#')[0].strip()
+                    if not line:
+                        continue
+                    try:
+                        codepoints, property_string = (
+                            x.strip() for x in line.split(';', 2))
+                    except ValueError:
+                        continue # Malformed line
+                    if property_string != 'fully-qualified':
+                        # The non-fully-qualified sequences are
+                        # all duplicates of the fully-qualified
+                        # sequences.
+                        continue
+                    cldr_order += 1
+                    emoji_string = ''
+                    for codepoint in codepoints.split(' '):
+                        emoji_string += chr(int(codepoint, 16))
+                    if emoji_string:
+                        emoji_dict_key = (emoji_string, 'en')
+                        categories = [cldr_group_to_emojione_category[group]]
+                        if subgroup in cldr_subgroup_to_emojione_category:
+                            categories.append(
+                                cldr_subgroup_to_emojione_category[subgroup])
                         self._add_to_emoji_dict(
-                            (emoji_string, 'en'), 'names', [name.lower()])
-                    if self.emoji_version(emoji_string) == '':
-                        LOGGER.warning('Emoji “%s” lacks emoji version, '
-                                       'this should not happen!',
-                                       emoji_string)
-                    if self.unicode_version(emoji_string) == '':
-                        LOGGER.warning('Emoji “%s” lacks Unicode version, '
-                                       'this should not happen!',
-                                       emoji_string)
+                            emoji_dict_key, 'cldr_order', str(cldr_order))
+                        self._add_to_emoji_dict(
+                            emoji_dict_key, 'categories', categories)
+                        self._add_translated_categories_to_emoji_dict(
+                            emoji_string, categories)
+                        if name:
+                            self._add_to_emoji_dict(
+                                emoji_dict_key, 'names', [name.lower()])
+                        if self.emoji_version(emoji_string) == '':
+                            LOGGER.warning('Emoji “%s” lacks emoji version, '
+                                           'this should not happen!',
+                                           emoji_string)
+                        if self.unicode_version(emoji_string) == '':
+                            LOGGER.warning('Emoji “%s” lacks Unicode version, '
+                                           'this should not happen!',
+                                           emoji_string)
+        except Exception as error:
+            LOGGER.exception(
+                'Error while loading emoji-test.txt: %s: %s',
+                error.__class__.__name__, error)
 
     def _load_emojione_data(self) -> None:
         '''
