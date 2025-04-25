@@ -4,23 +4,24 @@
 # Ahmed M. Farrag <a.m.farrag@gmail.com>, 2019, 2020.
 # Mike FABIAN <mfabian@redhat.com>, 2019, 2025.
 # Avid Seeker <avidseeker7@protonmail.com>, 2022, 2023.
+# joo es <johndevand@tutanota.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-04-23 01:33+0200\n"
-"PO-Revision-Date: 2025-04-02 07:48+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Arabic <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ar/>\n"
+"PO-Revision-Date: 2025-04-25 17:40+0000\n"
+"Last-Translator: joo es <johndevand@tutanota.com>\n"
+"Language-Team: Arabic <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.11\n"
 
 #: engine/emoji-picker.desktop.in.in:3 engine/emoji_picker.py:210
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -29,10 +30,8 @@ msgstr "منتقي الإيموجي"
 
 #: engine/emoji-picker.desktop.in.in:4
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:7
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji browsing tool"
-msgstr "نسخة يونيكود:"
+msgstr "أداة تصفح الرموز التعبيرية"
 
 #: engine/emoji_picker.py:323
 msgid "Clear recently used"
@@ -103,36 +102,28 @@ msgid "Unicode Version:"
 msgstr "نسخة يونيكود:"
 
 #: engine/emoji_picker.py:723
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji Version:"
-msgstr "نسخة يونيكود:"
+msgstr "إصدار الرموز التعبيرية:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:730
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji properties:"
-msgstr "نسخة يونيكود:"
+msgstr "خصائص الرموز التعبيرية:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
 #: engine/emoji_picker.py:736
-#, fuzzy
-#| msgid "Unicode categories"
 msgid "Unicode category:"
-msgstr "تصنيفات يونيكود"
+msgstr "تصنيف اليونيكود:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
 #: engine/emoji_picker.py:743
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Unicode block:"
-msgstr "نسخة يونيكود:"
+msgstr "كُتلة اليونيكود:"
 
 #: engine/emoji_picker.py:762 engine/emoji_picker.py:1908
 msgid "Left click to copy"
@@ -421,16 +412,12 @@ msgid "Online documentation:"
 msgstr "دليل الاستخدام على الإنترنت:"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:3
-#, fuzzy
-#| msgid "Typing Booster"
 msgid "Typing Booster Preferences"
-msgstr "مسرّع الكتابة"
+msgstr "تفضيلات مسرّع الكتابة"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:4
-#, fuzzy
-#| msgid "Typing Booster"
 msgid "Set Typing Booster Options"
-msgstr "مسرّع الكتابة"
+msgstr "عيّن خيارات مسرّع الكتابة"
 
 #: setup/main.py:148
 msgid "Preferences"
@@ -668,16 +655,12 @@ msgstr ""
 
 #. Translators: Whether ibus-typing-booster should show word predictions.
 #: setup/main.py:596
-#, fuzzy
-#| msgid "Add dictionary"
 msgid "Word predictions"
-msgstr "أضف قاموساً"
+msgstr "تنبؤات الكلمات"
 
 #: setup/main.py:598
-#, fuzzy
-#| msgid "Whether ibus-typing-booster should be disabled in terminals."
 msgid "Whether ibus-typing-booster should show word predictions."
-msgstr "ما إذا كان يجب تعطيل مُدعِّمُ كتابةِ ‎ibus‏ في الطرفيات."
+msgstr "ما إذا كان يجب ibus-typing-booster إظهار تنبؤات الكلمات."
 
 #: setup/main.py:617
 msgid ""
@@ -709,10 +692,8 @@ msgstr ""
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
 #: setup/main.py:662
-#, fuzzy
-#| msgid "Off the record mode"
 msgid "Record mode"
-msgstr "وضع عدم التسجيل"
+msgstr "وضع التسجيل"
 
 #: setup/main.py:664
 msgid ""
@@ -726,24 +707,30 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"يحدد نوع الإدخال الذي يجب تسجيله في قاعدة بيانات المستخدم: \"كل شيء\": تتم "
+"إضافة كل كلمة مكتوبة إلى قاعدة بيانات المستخدم أو تُحدّث تردّدها إذا كانت "
+"موجودة بالفعل. \"مهجئة صحيحًا أو سجلت مسبقًا\": تتم إضافة كلمة مكتوبة فقط إلى "
+"قاعدة بيانات المستخدم إذا كان من المحتمل إنها مهجئة صحيحًا. إذا كانت كلمة ما "
+"في قاعدة بيانات المستخدم يتم تحديث تردّدها بغض النظر عن تهجئها.  "
+"\"مهجئة صحيحًا\": تتم إضافة كلمة مكتوبة فقط إلى قاعدة البيانات أو تحديث تردّ"
+"دها في قاعدة البيانات إذا كان من المحتمل إنها مهجئة صحيحًا.  \"لا شيء\": لا "
+"تسجّل أي مدخلات على الإطلاق في قاعدة بيانات المستخدم."
 
 #: setup/main.py:679
 msgid "Everything"
-msgstr ""
+msgstr "كل شيء"
 
 #: setup/main.py:681
 msgid "Correctly spelled or previously recorded"
-msgstr ""
+msgstr "مهجئة صحيحًا أو سجلت مسبقًا"
 
 #: setup/main.py:683
-#, fuzzy
-#| msgid "Clear recently used"
 msgid "Correctly spelled"
-msgstr "مسح المُستخدم حديثاً"
+msgstr "مهجئة صحيحًا"
 
 #: setup/main.py:685
 msgid "Nothing"
-msgstr ""
+msgstr "لا شيء"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -836,7 +823,7 @@ msgstr ""
 #. forced while Typing Booster is active
 #: setup/main.py:808
 msgid "Use IBus keymap"
-msgstr ""
+msgstr "استخدم IBus keymap"
 
 #: setup/main.py:810
 msgid ""
@@ -844,6 +831,9 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"ما إذا كان استخدام IBus keymap هو إجبار أثناء كتابة الداعم نشط. بالنسبة "
+"لمعظم المستخدمين الذين لا يستخدمون IBus keymap يُوصى به. في هذه الحالة، تُ"
+"ستخدم تخطيط لوحة المفاتيح الذي كان نشطًا قبل التبديل إلى معززة الكتابة."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -925,12 +915,8 @@ msgid "Play sound file on error"
 msgstr "شغل ملفاً صوتياً في حال وجود خطأ"
 
 #: setup/main.py:948
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for a suggestion shown "
-#| "inline."
 msgid "Here you can choose whether a sound file is played if an error occurs."
-msgstr "يمكنك هنا اختيار لونٍ ليُستخدم للاقتراحات المضمّنة."
+msgstr "هنا يمكنك اختيار ما إذا كان يتم تشغيل ملف صوت في حالة حدوث خطأ."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -1190,17 +1176,15 @@ msgstr "رأسيا"
 #. the system needs to be idle after pressing a key before
 #. candidates are displayed
 #: setup/main.py:1645
-#, fuzzy
-#| msgid "Candidate window page size:"
 msgid "Candidate window delay in milliseconds:"
-msgstr "حجم نافذة الاقتراحات:"
+msgstr "تأخير نافذة المُرشَّح بالميلي ثانية:"
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
 #: setup/main.py:1649
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
-msgstr ""
+msgstr "كم من الوقت للانتظار بعد آخر مكبس المفتاح قبل عرض المُرشَّحين."
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
@@ -1695,6 +1679,8 @@ msgid ""
 "Emoji Picker is an emoji browsing tool which uses the emoji matching code "
 "from Ibus-typing-booster."
 msgstr ""
+"منتقي الإيموجي هي أداة تصفح الرموز التعبيرية التي تستخدم رمز مطابقة الرموز "
+"التعبيرية من Ibus-typing-booster."
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
