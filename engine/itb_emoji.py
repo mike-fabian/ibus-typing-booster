@@ -860,7 +860,6 @@ class EmojiMatcher():
                 'Error while loading UnicodeData: %s: %s',
                 error.__class__.__name__, error)
 
-
     def _load_unicode_emoji_data(self) -> None:
         '''
         Loads emoji property data from emoji-data.txt
@@ -878,40 +877,48 @@ class EmojiMatcher():
         if open_function is None:
             LOGGER.warning('could not find open function')
             return
-        with open_function( # type: ignore
-                path, mode='rt', encoding='utf-8') as unicode_emoji_data_file:
-            for line in unicode_emoji_data_file.readlines():
-                emoji_version = ''
-                pattern = re.compile(
-                    r'[^;]*;[^;]*#\s*E(?P<eversion>[0-9]+\.[0-9]+)\s*'
-                    + r'\[[0-9]+\]')
-                match = pattern.match(line)
-                if match and match.group('eversion'):
-                    emoji_version = match.group('eversion')
-                line = re.sub(r'#.*$', '', line).strip()
-                if not line:
-                    continue
-                codepoint_string, property_string = (
-                    x.strip() for x in line.split(';')[:2])
-                codepoint_range = [
-                    int(x, 16) for x in codepoint_string.split('..')]
-                if len(codepoint_range) == 1:
-                    codepoint_range.append(codepoint_range[0])
-                assert len(codepoint_range) == 2
-                for codepoint in range(
-                        codepoint_range[0], codepoint_range[1] + 1):
-                    emoji_string = chr(codepoint)
-                    self._add_to_emoji_dict(
-                        (emoji_string, 'en'), 'properties', [property_string])
-                    if emoji_version:
+        try:
+            with open_function( # type: ignore
+                    path, mode='rt', encoding='utf-8') as unicode_emoji_data_file:
+                for line in unicode_emoji_data_file.readlines():
+                    emoji_version = ''
+                    pattern = re.compile(
+                        r'[^;]*;[^;]*#\s*E(?P<eversion>[0-9]+\.[0-9]+)\s*'
+                        + r'\[[0-9]+\]')
+                    match = pattern.match(line)
+                    if match and match.group('eversion'):
+                        emoji_version = match.group('eversion')
+                    line = line.partition('#')[0].strip()
+                    if not line:
+                        continue
+                    try:
+                        codepoint_string, property_string = (
+                            x.strip() for x in line.split(';', 1))
+                    except ValueError:
+                        continue # Malformed line
+                    if '..' in codepoint_string:
+                        start_hex, end_hex = codepoint_string.split('..')
+                        start, end = int(start_hex, 16), int(end_hex, 16)
+                    else:
+                        start = end = int(codepoint_string, 16)
+                    for codepoint in range(start, end +1):
+                        emoji_string = chr(codepoint)
+                        emoji_dict_key = (emoji_string, 'en')
                         self._add_to_emoji_dict(
-                            (emoji_string, 'en'), 'eversion', emoji_version)
-                        # Redundant, as these are single code points,
-                        # the Unicode version will be overwritten by
-                        # Data from DerivedAge.txt when calling
-                        # _load_derived_age():
-                        self._add_to_emoji_dict(
-                            (emoji_string, 'en'), 'uversion', emoji_version)
+                            emoji_dict_key, 'properties', [property_string])
+                        if emoji_version:
+                            self._add_to_emoji_dict(
+                                emoji_dict_key, 'eversion', emoji_version)
+                            # Redundant, as these are single code points,
+                            # the Unicode version will be overwritten by
+                            # Data from DerivedAge.txt when calling
+                            # _load_derived_age():
+                            self._add_to_emoji_dict(
+                                emoji_dict_key, 'uversion', emoji_version)
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.exception(
+                'Error while loading emoji-data.txt: %s: %s',
+                error.__class__.__name__, error)
 
     def _load_unicode_emoji_sequences(self) -> None:
         '''
