@@ -2852,10 +2852,15 @@ def main() -> None:
         stats.print_stats('difflib', 25)
         stats.print_stats('enchant', 25)
 
-    LOGGER.info('itb_util.remove_accents() cache info: %s',
-                itb_util.remove_accents.cache_info())
-    LOGGER.info('_match_classic() cache info: %s', _match_classic.cache_info())
-    LOGGER.info('_match_rapidfuzz() cache info: %s', _match_rapidfuzz.cache_info())
+    LOGGER.info(
+        'itb_util.remove_accents() cache info: %s',
+        itb_util.remove_accents.cache_info())
+    LOGGER.info(
+        '_match_classic() cache info: %s',
+        _match_classic.cache_info()) # pylint: disable=no-value-for-parameter
+    LOGGER.info(
+        '_match_rapidfuzz() cache info: %s',
+        _match_rapidfuzz.cache_info()) # pylint: disable=no-value-for-parameter
 
     sys.exit(failed)
 

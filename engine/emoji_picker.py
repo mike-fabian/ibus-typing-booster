@@ -1135,7 +1135,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._header_bar.set_subtitle(subtitle)
 
     @staticmethod
-    def _print_profiling_information() -> None:
+    def print_profiling_information() -> None:
         '''
         Print some profiling information to the log.
         '''
@@ -1157,7 +1157,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         '''
         self._save_recently_used_emoji()
         if _ARGS.debug:
-            self.__class__._print_profiling_information()
+            self.__class__.print_profiling_information()
         Gtk.main_quit()
 
     def on_destroy_event(self, *_args: Any) -> None:
@@ -1166,7 +1166,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         '''
         self._save_recently_used_emoji()
         if _ARGS.debug:
-            self._print_profiling_information()
+            self.print_profiling_information()
         Gtk.main_quit()
 
     def on_main_window_key_press_event(

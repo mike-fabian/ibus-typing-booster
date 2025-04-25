@@ -2419,8 +2419,8 @@ class SetupUI(Gtk.Window): # type: ignore
             'inputmethod': self.set_current_imes,
             'dictionary': self.set_dictionary_names,
             'keybindings': self.set_keybindings,
-            'dictionaryinstalltimestamp': self.__class__._reload_dictionaries,
-            'inputmethodchangetimestamp': self.__class__._reload_input_methods,
+            'dictionaryinstalltimestamp': self.__class__.reload_dictionaries,
+            'inputmethodchangetimestamp': self.__class__.reload_input_methods,
             'autosettings': self.set_autosettings,
         }
 
@@ -2616,7 +2616,8 @@ class SetupUI(Gtk.Window): # type: ignore
         for ime in self._current_imes:
             label = Gtk.Label()
             label.set_text(html.escape(
-                self.__class__._fill_input_methods_listbox_row(ime)))
+                self.__class__._fill_input_methods_listbox_row( # pylint: disable=protected-access
+                    ime)))
             label.set_use_markup(True)
             label.set_xalign(0)
             margin = 1
@@ -2742,7 +2743,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._autosettings_treeview.show()
 
     @staticmethod
-    def __run_message_dialog(
+    def run_message_dialog(
             message: str,
             message_type: Gtk.MessageType = Gtk.MessageType.INFO) -> None:
         '''Run a dialog to show an error or warning message'''
@@ -2796,7 +2797,7 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         if (dbus.SessionBus().request_name("org.ibus.typingbooster")
                 != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER):
-            self.__class__.__run_message_dialog(
+            self.__class__.run_message_dialog(
                 _("Another instance of this app is already running."),
                 Gtk.MessageType.ERROR)
             sys.exit(1)
@@ -2826,7 +2827,7 @@ class SetupUI(Gtk.Window): # type: ignore
 
     # pylint: disable=unused-argument
     @staticmethod
-    def _reload_dictionaries(
+    def reload_dictionaries(
             value: Any, update_gsettings: bool = False) -> None:
         '''(re)load all dictionaries
 
@@ -2842,7 +2843,7 @@ class SetupUI(Gtk.Window): # type: ignore
 
     # pylint: disable=unused-argument
     @staticmethod
-    def _reload_input_methods(
+    def reload_input_methods(
             value: Any, update_gsettings: bool = False) -> None:
         '''(re)load all input methods
 
@@ -3566,7 +3567,7 @@ class SetupUI(Gtk.Window): # type: ignore
             # Probably it is better not to make this message translatable
             # in order not to create extra work for the translators to
             # translate a message which should never be displayed anyway.
-            self.__class__.__run_message_dialog(
+            self.__class__.run_message_dialog(
                 'The maximum number of dictionaries '
                 f'is {itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES}.',
                 message_type=Gtk.MessageType.ERROR)
@@ -3841,7 +3842,8 @@ class SetupUI(Gtk.Window): # type: ignore
             if ime in self._current_imes:
                 continue
             filter_words = itb_util.remove_accents(filter_text.lower()).split()
-            row = self.__class__._fill_input_methods_listbox_row(ime)
+            row = self.__class__._fill_input_methods_listbox_row( # pylint: disable=protected-access
+                ime)
             text_to_match = row.replace(' ', '').lower()
             ime_language = ime.split('-')[0]
             text_to_match += ' ' + itb_util.locale_text_to_match(ime_language)
@@ -3896,7 +3898,7 @@ class SetupUI(Gtk.Window): # type: ignore
             # Probably it is better not to make this message translatable
             # in order not to create extra work for the translators to
             # translate a message which should never be displayed anyway.
-            self.__class__.__run_message_dialog(
+            self.__class__.run_message_dialog(
                 'The maximum number of input methods '
                 f'is {itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS}.',
                 message_type=Gtk.MessageType.ERROR)
@@ -4069,7 +4071,8 @@ class SetupUI(Gtk.Window): # type: ignore
         hbox.set_spacing(10)
         label = Gtk.Label()
         label.set_text(html.escape(
-            self.__class__._fill_input_methods_listbox_row(ime)))
+            self.__class__._fill_input_methods_listbox_row( # pylint: disable=protected-access
+                ime)))
         margin = 1
         label.set_margin_start(margin)
         label.set_margin_end(margin)

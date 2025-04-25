@@ -26,7 +26,6 @@ from typing import Any
 from typing import Dict
 from typing import List
 from typing import Tuple
-from typing import NamedTuple
 from typing import Union
 from typing import Optional
 from typing import Iterable
@@ -225,7 +224,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         self._ibus_keymap: str = self._settings_dict['ibuskeymap']['user']
         self._ibus_keymap_object: Optional[IBus.Keymap] = (
-            self._new_ibus_keymap(self._ibus_keymap))
+            self.new_ibus_keymap(self._ibus_keymap))
         self._use_ibus_keymap: bool = self._settings_dict[
             'useibuskeymap']['user']
 
@@ -2461,7 +2460,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             cmd = [sys.executable, setup_python_script, '--engine-name', self._engine_name]
         LOGGER.info('Starting setup tool: "%s"', ' '.join(cmd))
         try:
-            self._setup_process = subprocess.Popen(cmd)
+            self._setup_process = subprocess.Popen( # pylint: disable=consider-using-with
+                cmd)
         except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Exception when starting setup tools: %s: %s',
@@ -5841,7 +5841,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 GLib.Variant.new_boolean(mode))
 
     @staticmethod
-    def _new_ibus_keymap(keymap: str = 'in') -> Optional[IBus.Keymap]:
+    def new_ibus_keymap(keymap: str = 'in') -> Optional[IBus.Keymap]:
         '''Construct a new IBus.Keymap object and store it in
         self._ibus_keymap_object
         '''
@@ -5886,7 +5886,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if keymap == self._ibus_keymap:
             return
         self._ibus_keymap = keymap
-        self._ibus_keymap_object = self.__class__._new_ibus_keymap(keymap)
+        self._ibus_keymap_object = self.__class__.new_ibus_keymap(keymap)
         if update_gsettings:
             self._gsettings.set_value(
                 'ibuskeymap',
