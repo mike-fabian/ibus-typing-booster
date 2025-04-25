@@ -1321,9 +1321,7 @@ class EmojiMatcher():
 
     def _load_cldr_annotation_data(self, language: str, subdir: str) -> None:
         '''
-        Loads translations of emoji names and keywords.
-
-        Translations are loaded from the annotation data from CLDR.
+        Loads emoji name translations and keywords from CLDR XML annotation files.
         '''
         dirnames = CLDR_ANNOTATION_DIRNAMES
         basenames = (language + '.xml',)
@@ -1339,92 +1337,59 @@ class EmojiMatcher():
         # but only the fallback 'es' was really found):
         language = os.path.basename(
             path).replace('.gz', '').replace('.xml', '')
-        with open_function( # type: ignore
-                path, mode='rt', encoding='utf-8') as cldr_annotation_file:
-            pattern = re.compile(
-                r'.*<annotation cp="(?P<emojistring>[^"]+)"'
-                +r'\s*(?P<tts>type="tts"){0,1}'
-                +r'[^>]*>'
-                +r'(?P<content>.+)'
-                +r'</annotation>.*'
-            )
-            for line in cldr_annotation_file.readlines():
-                match = pattern.match(line)
-                if match:
+        is_english = language.startswith('en')
+        add_pinyin = language in ('zh', 'zh_Hant') and IMPORT_PINYIN_SUCCESSFUL
+        add_japanese_phonetics = language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL
+        try:
+            with open_function( # type: ignore
+                    path, mode='rt', encoding='utf-8') as cldr_annotation_file:
+                pattern = re.compile(
+                    r'.*<annotation cp="(?P<emojistring>[^"]+)"'
+                    +r'\s*(?P<tts>type="tts"){0,1}'
+                    +r'[^>]*>'
+                    +r'(?P<content>.+)'
+                    +r'</annotation>.*'
+                )
+                for line in cldr_annotation_file:
+                    match = pattern.match(line)
+                    if not match:
+                        continue
                     emoji_string = match.group('emojistring')
+                    emoji_dict_key = (emoji_string, language)
                     content = html.unescape(match.group('content'))
                     if content == '↑↑↑':
                         continue
-                    if language.startswith('en'):
+                    if is_english:
                         content = content.lower()
                     if match.group('tts'):
-                        if (language in ('zh', 'zh_Hant')
-                                and IMPORT_PINYIN_SUCCESSFUL):
-                            self._add_to_emoji_dict(
-                                (emoji_string, language),
-                                'names',
-                                [content,
-                                 pinyin.get(content)]
-                            )
-                        elif language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
-                            self._add_to_emoji_dict(
-                                (emoji_string, language),
-                                'names',
-                                [content,
-                                 kakasi_convert(content, target='hira')]
-                            )
-                            if self._romaji:
-                                self._add_to_emoji_dict(
-                                    (emoji_string, language),
-                                    'names',
-                                    [content,
-                                     kakasi_convert(content,
-                                                    target='hepburn').lower()]
-                                )
-                        else:
-                            self._add_to_emoji_dict(
-                                (emoji_string, language),
-                                'names',
-                                [content]
-                            )
+                        content_parts = [content.strip()]
+                        label = 'names'
                     else:
-                        if (language in ('zh', 'zh_Hant')
-                                and IMPORT_PINYIN_SUCCESSFUL):
-                            for content_part in content.split('|'):
-                                keyword = content_part.strip()
-                                keyword_pinyin = pinyin.get(keyword)
-                                self._add_to_emoji_dict(
-                                    (emoji_string, language),
-                                    'keywords',
-                                    [keyword, keyword_pinyin]
-                                )
-                        elif language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
-                            for content_part in content.split('|'):
-                                keyword = content_part.strip()
-                                keyword_hiragana = kakasi_convert(
-                                    keyword, target='hira')
-                                self._add_to_emoji_dict(
-                                    (emoji_string, language),
-                                    'keywords',
-                                    [keyword, keyword_hiragana]
-                                )
-                            if self._romaji:
-                                for content_part in content.split('|'):
-                                    keyword = content_part.strip()
-                                    keyword_romaji = kakasi_convert(
-                                        keyword, target='hepburn').lower()
-                                    self._add_to_emoji_dict(
-                                        (emoji_string, language),
-                                        'keywords',
-                                        [keyword, keyword_romaji]
-                                    )
-                        else:
+                        content_parts = [part.strip() for part in content.split('|')]
+                        label = 'keywords'
+                    if add_pinyin:
+                        for part in content_parts:
+                            pinyin_str = pinyin.get(part)
                             self._add_to_emoji_dict(
-                                (emoji_string, language),
-                                'keywords',
-                                [x.strip()
-                                 for x in content.split('|')]
-                            )
+                                emoji_dict_key, label, [part, pinyin_str])
+                    elif add_japanese_phonetics:
+                        for part in content_parts:
+                            hiragana = kakasi_convert(part, target='hira')
+                            self._add_to_emoji_dict(
+                                emoji_dict_key, label, [part, hiragana])
+                        if self._romaji:
+                            for part in content_parts:
+                                romaji = kakasi_convert(
+                                    part, target='hepburn').lower()
+                                self._add_to_emoji_dict(
+                                    emoji_dict_key, label, [part, romaji])
+                    else:
+                        self._add_to_emoji_dict(
+                            emoji_dict_key, label, content_parts)
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.exception(
+                'Error while loading cldr annotation data: %s: %s',
+                error.__class__.__name__, error)
 
     def candidates(
             self,
