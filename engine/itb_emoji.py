@@ -2848,8 +2848,7 @@ def main() -> None:
         stats = pstats.Stats(profile)
         stats.strip_dirs()
         stats.sort_stats('cumulative')
-        stats.print_stats('itb_emoji', 25)
-        stats.print_stats('difflib', 25)
+        stats.print_stats('itb_emoji', 50)
         stats.print_stats('enchant', 25)
 
     LOGGER.info(
