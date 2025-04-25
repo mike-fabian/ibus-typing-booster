@@ -649,38 +649,28 @@ class EmojiMatcher():
         '⛹\ufe0f'
         '''
         # pylint: enable=line-too-long
-        if emoji_string != '\ufe0e':
-            emoji_string = emoji_string.replace('\ufe0e', '')
-        if emoji_string != '\ufe0f':
-            emoji_string = emoji_string.replace('\ufe0f', '')
-        if not variation_selector:
+        if emoji_string in {'\ufe0e', '\ufe0f'}:
+            return emoji_string
+        emoji_string = emoji_string.replace('\ufe0e', '').replace('\ufe0f', '')
+        if variation_selector not in ('emoji', 'text'):
             return emoji_string
         if '\U0001f1e6' <= emoji_string[0] <= '\U0001f1ff':
             # do not insert any variation selectors in flag sequences:
             return emoji_string
-        retval = ''
-        length = len(emoji_string)
+        result: List[str] = []
+        selector = '\ufe0f' if variation_selector == 'emoji' else '\ufe0e'
         for index, character in enumerate(emoji_string):
-            retval += character
-            if variation_selector == 'emoji':
-                if ((character not in SKIN_TONE_MODIFIERS)
-                        and ('Emoji' in self.properties(character))
-                        and ('Emoji_Presentation'
-                             not in self.properties(character))
-                        and not (index < length - 1
-                                 and
-                                 emoji_string[index + 1]
-                                 in SKIN_TONE_MODIFIERS)):
-                    retval += '\ufe0f'
-            elif variation_selector == 'text':
-                if ((character not in SKIN_TONE_MODIFIERS)
-                        and ('Emoji' in self.properties(character))
-                        and not (index < length - 1
-                                 and
-                                 emoji_string[index + 1]
-                                 in SKIN_TONE_MODIFIERS)):
-                    retval += '\ufe0e'
-        return retval
+            result.append(character)
+            is_last = index == len(emoji_string) - 1
+            next_character = emoji_string[index + 1] if not is_last else ''
+            is_skin_tone_next = next_character in SKIN_TONE_MODIFIERS
+            if (character not in SKIN_TONE_MODIFIERS
+                and 'Emoji' in self.properties(character)
+                and (variation_selector == 'text'
+                     or 'Emoji_Presentation' not in self.properties(character))
+                and not is_skin_tone_next):
+                result.append(selector)
+        return ''.join(result)
 
     def _add_to_emoji_dict(
             self,
