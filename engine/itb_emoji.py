@@ -746,7 +746,19 @@ class EmojiMatcher():
                           int(block_end, 16) + 1)] = block_name
 
     def _load_derived_age(self) -> None:
-        '''Loads in which Unicode versions code points were added'''
+        '''Loads in which Unicode versions code points were added
+
+        This updates 'uversion' for codepoints in `self._emoji_dict`, based on
+        the DerivedAge.txt Unicode data file.
+
+        This might overwrite uversion data already loaded from the
+        emoji-data.txt file, for example:
+
+        🧦 was added in Unicode 10.0 in and added to Emoji 5.0 in
+        2017. So when by the emoji data files 5.0 was found,
+        'uversion' will be overwritten with 10.0 here and 5.0 will
+        still be available as 'eversion'.
+        '''
         dirnames = (USER_DATADIR, DATADIR,
                     # On Fedora, the “unicode-ucd” package has the
                     # DerivedAge.txt file here:
@@ -763,39 +775,33 @@ class EmojiMatcher():
         if open_function is None:
             LOGGER.warning('could not find open function')
             return
-        lines = []
-        with open_function( # type: ignore
-                path, mode='rt', encoding='utf-8') as derived_age_file:
-            lines = derived_age_file.readlines()
-        for line in lines:
-            unicode_version = ''
-            line = re.sub(r'#.*$', '', line).strip()
-            if not line:
-                continue
-            codepoint_string, unicode_version = (
-                x.strip() for x in line.split(';')[:2])
-            if not unicode_version:
-                continue
-            codepoint_range = [
-                int(x, 16) for x in codepoint_string.split('..')]
-            if len(codepoint_range) == 1:
-                codepoint_range.append(codepoint_range[0])
-            assert len(codepoint_range) == 2
-            for codepoint in range(
-                    codepoint_range[0], codepoint_range[1] + 1):
-                emoji_string = chr(codepoint)
-                emoji_dict_key = (emoji_string, 'en')
-                if emoji_dict_key in self._emoji_dict:
-                    # This might overwrite uversion data already loaded
-                    # from the emoji-data.txt file, for example:
-                    #
-                    # 🧦 was added in Unicode 10.0 in and added to
-                    # Emoji 5.0 in 2017. So when by the emoji data
-                    # files 5.0 was found, 'uversion' will be
-                    # overwritten with 10.0 here and 5.0 will still be
-                    # available as 'eversion'.
-                    self._add_to_emoji_dict(
-                        (emoji_string, 'en'), 'uversion', unicode_version)
+        try:
+            with open_function( # type: ignore
+                    path, mode='rt', encoding='utf-8') as derived_age_file:
+                for line in derived_age_file:
+                    line = line.partition('#')[0].strip()
+                    if not line:
+                        continue
+                    try:
+                        codepoint_string, unicode_version = (
+                            part.strip() for part in line.split(';', 1))
+                    except ValueError:
+                        continue # Malformed line
+                    if '..' in codepoint_string:
+                        start_hex, end_hex = codepoint_string.split('..')
+                        start, end = int(start_hex, 16), int(end_hex, 16)
+                    else:
+                        start = end = int(codepoint_string, 16)
+                    for codepoint in range(start, end + 1):
+                        emoji_string = chr(codepoint)
+                        emoji_dict_key = (emoji_string, 'en')
+                        if emoji_dict_key in self._emoji_dict:
+                            self._add_to_emoji_dict(
+                                emoji_dict_key, 'uversion', unicode_version)
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.exception(
+                'Error while loading DerivedAge: %s: %s',
+                error.__class__.__name__, error)
 
     def _load_unicode_data(self) -> None:
         '''Loads emoji names from UnicodeData.txt'''
