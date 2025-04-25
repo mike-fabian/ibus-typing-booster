@@ -395,10 +395,10 @@ def find_cldr_annotation_path(language: str) -> str:
 # query string is often matched against labels already matched
 # previously. Caching previous matches speeds it up quite a bit.
 @functools.lru_cache(maxsize=None)
-def _match_classic(label: str, match_string: str) -> int:
+def _match_classic(label: str, match_string: str) -> float:
     '''Matches a label from the emoji data against the query string.'''
     label = itb_util.remove_accents(label.lower())
-    total_score = 0
+    total_score = 0.0
     label_words = set(label.split())
     label_no_spaces = label.replace(' ', '')
     # Sort longest words first.
@@ -407,13 +407,13 @@ def _match_classic(label: str, match_string: str) -> int:
     # Exact set match (highest priority)
     # For example 'black cat' counts as an exact match for 'cat black'.
     if label_words == word_set:
-        total_score += 1000
+        total_score += 1000.0
     # Exact word matches
     for word in word_set:
         # use set() here to avoid making an exact match stronger
         # just because a word happens to be twice in the input.
         if word == label:
-            total_score += 300 if len(word_list) == 1 else 200
+            total_score += 300.0 if len(word_list) == 1 else 200.0
 
     # Substring matches
     tmp_label = label
@@ -423,7 +423,7 @@ def _match_classic(label: str, match_string: str) -> int:
         match_start = tmp_label.find(word)
         if match_start >= 0:
             if match_start == 0 or tmp_label[match_start - 1] == ' ':
-                total_score += 120 if match_start == 0 else 100
+                total_score += 120.0 if match_start == 0 else 100.0
                 total_score += len(word)
                 # Slight speed improvement, removing the part of
                 # the string which has already been matched makes
@@ -434,7 +434,7 @@ def _match_classic(label: str, match_string: str) -> int:
         # Match with spaces ignored
         match_start = tmp_no_spaces.find(word)
         if match_start >= 0:
-            total_score += 40 if match_start == 0 else 20
+            total_score += 40.0 if match_start == 0 else 20.0
             total_score += len(word)
             # Slight speed improvement, removing the part of the
             # string which has already been matched makes the
