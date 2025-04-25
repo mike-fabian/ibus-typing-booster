@@ -922,7 +922,7 @@ class EmojiMatcher():
 
     def _load_unicode_emoji_sequences(self) -> None:
         '''
-        Loads emoji property data from emoji-data.txt
+        Loads emoji property data from emoji-sequences.txt
 
         http://unicode.org/Public/emoji/5.0/emoji-sequences.txt
         '''
@@ -937,47 +937,56 @@ class EmojiMatcher():
         if open_function is None:
             LOGGER.warning('could not find open function')
             return
-        with open_function( # type: ignore
-                path,
-                mode='rt',
-                encoding='utf-8') as unicode_emoji_sequences_file:
-            for line in unicode_emoji_sequences_file.readlines():
-                emoji_version = ''
-                pattern = re.compile(
-                    r'[^;]*;[^;]*;[^;]*#\s*E(?P<eversion>[0-9]+\.[0-9]+)\s*'
-                    + r'\[[0-9]+\]')
-                match = pattern.match(line)
-                if match and match.group('eversion'):
-                    emoji_version = match.group('eversion')
-                line = re.sub(r'#.*$', '', line).strip()
-                if not line:
-                    continue
-                codepoints, property_string, name = (
-                    x.strip() for x in line.split(';')[:3])
-                if property_string == 'Basic_Emoji':
-                    continue
-                if codepoints == '0023 FE0F 20E3' and name == 'keycap:':
-                    name = 'keycap: #'
-                emoji_string = ''
-                for codepoint in codepoints.split(' '):
-                    emoji_string += chr(int(codepoint, 16))
-                if emoji_string:
-                    self._add_to_emoji_dict(
-                        (emoji_string, 'en'), 'properties', [property_string])
-                    self._add_to_emoji_dict(
-                        (emoji_string, 'en'), 'names', [name.lower()])
-                    if emoji_version:
+        try:
+            with open_function( # type: ignore
+                    path,
+                    mode='rt',
+                    encoding='utf-8') as unicode_emoji_sequences_file:
+                for line in unicode_emoji_sequences_file:
+                    emoji_version = ''
+                    pattern = re.compile(
+                        r'[^;]*;[^;]*;[^;]*#\s*E(?P<eversion>[0-9]+\.[0-9]+)\s*'
+                        + r'\[[0-9]+\]')
+                    match = pattern.match(line)
+                    if match and match.group('eversion'):
+                        emoji_version = match.group('eversion')
+                    line = line.partition('#')[0].strip()
+                    if not line:
+                        continue
+                    try:
+                        codepoints, property_string, name = (
+                            x.strip() for x in line.split(';', 2))
+                    except ValueError:
+                        continue # Malformed line
+                    if property_string == 'Basic_Emoji':
+                        continue
+                    if codepoints == '0023 FE0F 20E3' and name == 'keycap:':
+                        name = 'keycap: #'
+                    emoji_string = ''
+                    for codepoint in codepoints.split(' '):
+                        emoji_string += chr(int(codepoint, 16))
+                    if emoji_string:
+                        emoji_dict_key = (emoji_string, 'en')
                         self._add_to_emoji_dict(
-                            (emoji_string, 'en'), 'eversion', emoji_version)
-                        # Sequences also need to have some Unicode version set
-                        # otherwise the emoji-picker GUI will not display
-                        # them:
-                        unicode_version = emoji_version
-                        if emoji_version in EMOJI_VERSION_TO_UNICODE_VERSIONS:
-                            unicode_version = EMOJI_VERSION_TO_UNICODE_VERSIONS[
-                                emoji_version][-1]
+                            emoji_dict_key, 'properties', [property_string])
                         self._add_to_emoji_dict(
-                            (emoji_string, 'en'), 'uversion', unicode_version)
+                            emoji_dict_key, 'names', [name.lower()])
+                        if emoji_version:
+                            self._add_to_emoji_dict(
+                                emoji_dict_key, 'eversion', emoji_version)
+                            # Sequences also need to have some Unicode version set
+                            # otherwise the emoji-picker GUI will not display
+                            # them:
+                            unicode_version = emoji_version
+                            if emoji_version in EMOJI_VERSION_TO_UNICODE_VERSIONS:
+                                unicode_version = EMOJI_VERSION_TO_UNICODE_VERSIONS[
+                                    emoji_version][-1]
+                            self._add_to_emoji_dict(
+                                emoji_dict_key, 'uversion', unicode_version)
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.exception(
+                'Error while loading emoji-sequences.txt: %s: %s',
+                error.__class__.__name__, error)
 
     def _load_unicode_emoji_zwj_sequences(self) -> None:
         '''
