@@ -5526,31 +5526,59 @@ class KeyvalsToKeycodes:
     '''
     def __init__(self) -> None:
         self.keyvals_to_keycodes: Dict[int, List[int]] = {}
-        display = None
-        keymap = None
         display = Gdk.Display.get_default()
         if not display:
             LOGGER.warning('Gdk.Display.get_default() returned %s', display)
-        else:
-            keymap = Gdk.Keymap.get_for_display(display)
+            self._fallback_to_std_us_layout()
+            return
+        keymap = Gdk.Keymap.get_for_display(display)
         if not keymap:
             LOGGER.warning('Could not get keymap')
-        else:
-            for keycode in range(0, 256):
-                (keycode_found,
-                 dummy_keymapkeys,
-                 keyvals) = Gdk.Keymap.get_entries_for_keycode(keymap, keycode)
-                if keycode_found:
-                    for keyval in keyvals:
-                        if keyval:
-                            if (keyval in self.keyvals_to_keycodes
-                                and
-                                keycode
-                                not in self.keyvals_to_keycodes[keyval]):
-                                self.keyvals_to_keycodes[keyval].append(
-                                    keycode)
-                            else:
-                                self.keyvals_to_keycodes[keyval] = [keycode]
+            self._fallback_to_std_us_layout()
+            return
+        # Checking AltGr state should not just check for Mod5,
+        # that works only on Legacy X11 systems. Modern X11 and
+        # Wayland systems use Mod1 + Level3 (1 << 16) instead:
+        altgr_mods = (
+            Gdk.ModifierType.MOD1_MASK |
+            Gdk.ModifierType(1 << 16) |
+            Gdk.ModifierType.MOD5_MASK
+        )
+        # Keycodes 1-7 were traditionally reserved for internal X
+        # server use (e.g., fake keys for pointer buttons).  Keycodes
+        # 8-255 were for physical keys
+        for keycode in range(8, 256):
+            success, _keys, base_keyvals = keymap.get_entries_for_keycode(
+                keycode)
+            if not success:
+                continue
+            all_keyvals = set(base_keyvals)
+            (success,
+             keyval,
+             _effective_group,
+             _comsumed_modifiers,
+             _locked_modifiers) = keymap.translate_keyboard_state(
+                 keycode, Gdk.ModifierType.SHIFT_MASK, 0)
+            if success:
+                all_keyvals.add(keyval)
+            (success,
+             keyval,
+             _effective_group,
+             _consumed_modifiers,
+             _locked_modifiers) = keymap.translate_keyboard_state(
+                 keycode, altgr_mods, 0)
+            if success and keyval:
+                all_keyvals.add(keyval)
+            for keyval in all_keyvals:
+                if keyval:
+                    self.keyvals_to_keycodes.setdefault(
+                        keyval, []).append(keycode)
+        if not self.keyvals_to_keycodes:
+            LOGGER.warning('No keycodes found, falling back to standard US layout')
+            self._fallback_to_std_us_layout()
+
+    def _fallback_to_std_us_layout(self) -> None:
+        """Fallback mapping for when keycode detection fails"""
         # Gdk.Keymap.get_entries_for_keycode() seems to never find any
         # key codes on big endian platforms (s390x). Might be a bug in
         # that function. Until I figure out what the problem really
@@ -5560,12 +5588,9 @@ class KeyvalsToKeycodes:
             IBus.KEY_Left: [113],
             IBus.KEY_BackSpace: [22],
             IBus.KEY_a: [38],
+        # Add more fallbacks as needed
         }
-        for keyval, keycodes in self._std_us_keyvals_to_keycodes.items():
-            if keyval not in self.keyvals_to_keycodes:
-                LOGGER.warning('No keycodes found: keyval: %s name: %s',
-                               keyval, IBus.keyval_name(keyval))
-                self.keyvals_to_keycodes[keyval] = keycodes
+        self.keyvals_to_keycodes.update(self._std_us_keyvals_to_keycodes)
 
     def keyvals(self) -> Set[int]:
         '''Returns the Set of keyvals available on the keyboard layout'''
