@@ -690,21 +690,36 @@ class EmojiMatcher():
         '''Adds data to the emoji_dict if not already there'''
         if not emoji_dict_key or not values_key or not values:
             return
-        emoji_dict_key = (
+        normalized_key = (
             self.variation_selector_normalize(
                 emoji_dict_key[0], variation_selector=''),
             emoji_dict_key[1])
-        if emoji_dict_key not in self._emoji_dict:
-            self._emoji_dict[emoji_dict_key] = {}
+        # inner_dict = self._emoji_dict.setdefault(normalized_key, {})
+        # is slower than the below try/except for mostly-existing keys
+        # because the default argument {} is always evaluated before
+        # checking the key. So it needlesssly creates empty
+        # dictionaries. Also, Method calls like setdefault() in Python
+        # are slower than direct try/except or in checks.
+        #
+        # Approach   When Key Exists (Hit)   When Key Missing (Miss)   Best For
+        # try/except Fastest (direct access) Slow (exception handling) Hit rate >90%
+        # in check   Slower (two lookups)    Fastest (no exception)    Hit rate <50%
+        try:
+            inner_dict = self._emoji_dict[normalized_key]
+        except KeyError:
+            inner_dict = {}
+            self._emoji_dict[normalized_key] = inner_dict
+
         if isinstance(values, list):
-            if values_key not in self._emoji_dict[emoji_dict_key]:
-                self._emoji_dict[emoji_dict_key][values_key] = []
+            if values_key not in inner_dict:
+                inner_dict[values_key] = []
+            existing = inner_dict[values_key]
             for value in values:
-                if (value not in
-                        self._emoji_dict[emoji_dict_key][values_key]):
-                    self._emoji_dict[emoji_dict_key][values_key] += [value]
+                if value not in existing:
+                    # append() is slightly slower than += for small lists
+                    existing += [value]
         else:
-            self._emoji_dict[emoji_dict_key][values_key] = values
+            inner_dict[values_key] = values
 
     def _load_unicode_blocks(self) -> None:
         '''Loads the names of Unicode blocks'''
