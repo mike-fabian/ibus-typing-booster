@@ -34,6 +34,7 @@ import os
 import sys
 import re
 import functools
+import itertools
 import gzip
 import json
 import unicodedata
@@ -217,10 +218,10 @@ VALID_CHARACTERS = {
     '𰻞', # CJK IDEOGRAPH-30EDE biáng traditional
     '𰻝', # CJK IDEOGRAPH-30EDD biáng simplified
 }
-UNICODE_DATA_EXTRA_LINES = [
+UNICODE_DATA_EXTRA_LINES = (
     '30EDE;<CJK Ideograph Extension G> biáng Traditional Chinese;Lo;0;L;;;;;N;;;;;',
     '30EDD;<CJK Ideograph Extension G> biáng Simplified Chinese;Lo;0;L;;;;;N;;;;;',
-]
+)
 
 SKIN_TONE_MODIFIERS = ('🏻', '🏼', '🏽', '🏾', '🏿')
 
@@ -821,39 +822,44 @@ class EmojiMatcher():
         if open_function is None:
             LOGGER.warning('could not find open function')
             return
-        lines = []
-        with open_function( # type: ignore
-                path, mode='rt', encoding='utf-8') as unicode_data_file:
-            lines = unicode_data_file.readlines()
-        lines += UNICODE_DATA_EXTRA_LINES
-        for line in lines:
-            if not line.strip():
-                continue
-            codepoint_string, name, category = line.split(';')[:3]
-            codepoint_integer = int(codepoint_string, 16)
-            emoji_string = chr(codepoint_integer)
-            if category in ('Cc', 'Co', 'Cs'):
-                # Never load control characters (“Cc”), they cause
-                # too much problems when trying to display
-                # them. Never load the “First” and “Last”
-                # characters of private use characters “Co” and
-                # surrogates (“Cs”) either as these are completely
-                # useless.
-                continue
-            if (not self._unicode_data_all
-                    and not UNICODE_CATEGORIES[category]['valid']
-                    and emoji_string not in VALID_CHARACTERS):
-                continue
-            self._add_to_emoji_dict(
-                (emoji_string, 'en'), 'names', [name.lower()])
-            self._add_to_emoji_dict(
-                (emoji_string, 'en'),
-                'ucategories', [
-                    category,
-                    UNICODE_CATEGORIES[category]['major'],
-                    UNICODE_CATEGORIES[category]['minor'],
-                ]
-            )
+        try:
+            with open_function( # type: ignore
+                    path, mode='rt', encoding='utf-8') as unicode_data_file:
+                for line in itertools.chain(unicode_data_file,
+                                            UNICODE_DATA_EXTRA_LINES):
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        codepoint_string, name, category, _ = line.split(';', 3)
+                    except ValueError:
+                        continue  # Malformed line
+                    emoji_string = chr(int(codepoint_string, 16))
+                    if category in ('Cc', 'Co', 'Cs'):
+                        # Never load control characters (“Cc”), they cause
+                        # too much problems when trying to display
+                        # them. Never load the “First” and “Last”
+                        # characters of private use characters “Co” and
+                        # surrogates (“Cs”) either as these are completely
+                        # useless.
+                        continue
+                    if (not self._unicode_data_all
+                            and not UNICODE_CATEGORIES[category]['valid']
+                            and emoji_string not in VALID_CHARACTERS):
+                        continue
+                    self._add_to_emoji_dict(
+                        (emoji_string, 'en'), 'names', [name.lower()])
+                    self._add_to_emoji_dict(
+                        (emoji_string, 'en'),
+                        'ucategories', [
+                            category,
+                            UNICODE_CATEGORIES[category]['major'],
+                            UNICODE_CATEGORIES[category]['minor']])
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.exception(
+                'Error while loading UnicodeData: %s: %s',
+                error.__class__.__name__, error)
+
 
     def _load_unicode_emoji_data(self) -> None:
         '''
