@@ -1152,7 +1152,7 @@ class EmojiMatcher():
                             LOGGER.warning('Emoji “%s” lacks Unicode version, '
                                            'this should not happen!',
                                            emoji_string)
-        except Exception as error:
+        except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Error while loading emoji-test.txt: %s: %s',
                 error.__class__.__name__, error)
