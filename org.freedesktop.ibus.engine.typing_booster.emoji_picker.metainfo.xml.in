@@ -41,6 +41,35 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.41" date="2025-04-26" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.41</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Improve KeyvalsToKeycodes to work correctly also on
+            Wayland (The old code worked correctly only on X11)
+            (Resolves: github-issues#691)
+          </li>
+          <li>
+            Improve starting of the setup tool, make it work correctly
+            when starting from a git clone (Resolves:
+            github-issues#692)
+          </li>
+          <li>
+            Translation update from Weblate (ar 99.6%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/686">
+          github-issues#686
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/692">
+          github-issues#692
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.38" date="2025-04-23" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.38</url>
       <description>
