@@ -581,6 +581,20 @@ class EmojiMatcher():
         # more inconvenient:
         return list(self._languages)
 
+    # Don’t use @lru_cache(maxsize=None) here, that has a high risk of
+    # memory leaks.  It caches forever — and it keeps strong
+    # references to all function arguments and results. If the method
+    # is on a class instance (self), and the cache calls involving
+    # self, then self gets kept alive — even if no other code
+    # references it! That is a high risk of memory leaks when
+    # instantiated class objects go out of scope.  With a bounded
+    # cache, Python will evict the oldest cache entries automatically
+    # when the cache grows beyond 500,000 entries. That is much safer
+    # The self reference can still stay around as long as there are
+    # still entries in the cache for that instance. But if all entries
+    # referring to a self are evicted, then self can be garbage
+    # collected properly.
+    @functools.lru_cache(maxsize=500_000)
     def variation_selector_normalize(
             self, emoji_string: str, variation_selector: str ='emoji') -> str:
         # pylint: disable=line-too-long
@@ -2846,6 +2860,9 @@ def main() -> None:
     LOGGER.info(
         'itb_util.remove_accents() cache info: %s',
         itb_util.remove_accents.cache_info())
+    LOGGER.info(
+        'variation_selector_normalize() cache info: %s',
+        EmojiMatcher.variation_selector_normalize.cache_info()) # pylint: disable=no-value-for-parameter
     LOGGER.info(
         '_match_classic() cache info: %s',
         _match_classic.cache_info()) # pylint: disable=no-value-for-parameter
