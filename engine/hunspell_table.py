@@ -2956,9 +2956,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._unit_test:
             self._update_lookup_table_and_aux()
             return
+        delay = self._candidates_delay_milliseconds
+        if self.client_capabilities & itb_util.Capabilite.OSK:
+            delay = 0
         self._timeout_source_id = GLib.timeout_add(
-            self._candidates_delay_milliseconds,
-            self._update_lookup_table_and_aux)
+            delay, self._update_lookup_table_and_aux)
 
     def _update_ui(self) -> None:
         '''Update User Interface'''
@@ -3005,9 +3007,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._unit_test:
             self._update_candidates_and_lookup_table_and_aux()
             return
+        delay = self._candidates_delay_milliseconds
+        if self.client_capabilities & itb_util.Capabilite.OSK:
+            delay = 0
         self._timeout_source_id = GLib.timeout_add(
-            self._candidates_delay_milliseconds,
-            self._update_candidates_and_lookup_table_and_aux)
+            delay, self._update_candidates_and_lookup_table_and_aux)
 
     def _lookup_related_candidates(self) -> bool:
         '''Lookup related (similar) emoji or related words (synonyms,
