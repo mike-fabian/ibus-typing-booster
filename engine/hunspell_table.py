@@ -1251,9 +1251,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # paragraphs, this uses far too much space in the lookup
         # table.
         phrase = phrase.replace('\n', '↩')
-        if self._debug_level > 1:
+        if (self._debug_level > 1
+            and not self.client_capabilities & itb_util.Capabilite.OSK):
             # Show frequency information for debugging
-            phrase += ' ' + str(user_freq)
+            phrase += f' {str(user_freq)}'
             attrs.append(IBus.attr_foreground_new(
                 itb_util.color_string_to_argb('HotPink'),
                 len(phrase) - len(str(user_freq)),
