@@ -47,6 +47,32 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.42" date="2025-04-27" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.42</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Ignore self._candidates_delay_milliseconds when OSK is in
+            use (Resolves: github-issues#695)
+          </li>
+          <li>
+            Do not show frequency debugging information in the looup
+            table when OSK is active
+          </li>
+          <li>
+            Improve instantiation speed of EmojiMatcher: Use
+            @functools.lru_cache(maxsize=500_000) to cache the
+            variation_selector_normalize() method
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/695">
+          github-issues#695
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.41" date="2025-04-26" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.41</url>
       <description>

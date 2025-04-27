@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 27 Apr 2025 Release 2.27.42
+* Ignore self._candidates_delay_milliseconds when OSK is in use (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/695)
+* Do not show frequency debugging information in the looup table when OSK is active
+* Improve instantiation time of EmojiMatcher: Use @functools.lru_cache(maxsize=500_000) to cache the variation_selector_normalize() method
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 26 Apr 2025 Release 2.27.41
 * Improve KeyvalsToKeycodes to work correctly also on Wayland (The old code worked correctly only on X11) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/691)
 * Improve starting of the setup tool, make it work correctly when starting from a git clone (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/692)
