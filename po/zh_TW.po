@@ -5,6 +5,7 @@
 # Anonymous <noreply@weblate.org>, 2019, 2020.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 # hsu zangmen <chzang55@gmail.com>, 2025.
+# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -12,7 +13,8 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2025-04-27 15:58+0200\n"
 "PO-Revision-Date: 2025-04-29 00:02+0000\n"
-"Last-Translator: hsu zangmen <chzang55@gmail.com>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Chinese (Traditional) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_TW/>\n"
 "Language: zh_TW\n"
@@ -388,7 +390,7 @@ msgstr "請按鍵盤按鍵 (或是按鍵組合)"
 #. command.
 #: engine/itb_util.py:6022
 msgid "The dialog will be closed when the key is released"
-msgstr ""
+msgstr "釋放按鍵時，對話框將會關閉"
 
 #: engine/itb_util.py:6061
 msgid "A completion input method to speedup typing."
@@ -457,7 +459,7 @@ msgstr ""
 #. existing key bindings
 #: setup/main.py:323 setup/main.py:1471
 msgid "Key bindings"
-msgstr ""
+msgstr "按鍵綁定"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence how
@@ -675,7 +677,7 @@ msgstr ""
 
 #: setup/main.py:679
 msgid "Everything"
-msgstr ""
+msgstr "一切"
 
 #: setup/main.py:681
 msgid "Correctly spelled or previously recorded"
@@ -687,7 +689,7 @@ msgstr "正確拼寫"
 
 #: setup/main.py:685
 msgid "Nothing"
-msgstr ""
+msgstr "無"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -792,7 +794,7 @@ msgstr ""
 #. “English” keymap used.
 #: setup/main.py:834
 msgid "English"
-msgstr ""
+msgstr "英文"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
@@ -1016,7 +1018,7 @@ msgstr ""
 
 #: setup/main.py:1439
 msgid "Current key bindings:"
-msgstr ""
+msgstr "目前的按鍵綁定："
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
@@ -1030,11 +1032,11 @@ msgstr "編輯"
 
 #: setup/main.py:1498
 msgid "Edit the key bindings for the selected command"
-msgstr ""
+msgstr "編輯選取指令的按鍵綁定"
 
 #: setup/main.py:1509 setup/main.py:5019
 msgid "Set default key bindings for the selected command"
-msgstr ""
+msgstr "為選取的指令設定預設按鍵綁定"
 
 #: setup/main.py:1516
 msgid "Set all to default"
@@ -1042,7 +1044,7 @@ msgstr ""
 
 #: setup/main.py:1520
 msgid "Set default key bindings for all commands"
-msgstr ""
+msgstr "設定所有指令的預設按鍵綁定"
 
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
@@ -1475,7 +1477,7 @@ msgstr ""
 
 #: setup/main.py:2766
 msgid "Are you sure?"
-msgstr ""
+msgstr "你確定嗎？"
 
 #: setup/main.py:2768 setup/main.py:3330 setup/main.py:3417 setup/main.py:5085
 msgid "_Cancel"
@@ -1540,7 +1542,7 @@ msgstr ""
 
 #: setup/main.py:5082
 msgid "Open File ..."
-msgstr ""
+msgstr "開啟檔案"
 
 #: setup/main.py:5101
 #, python-format
