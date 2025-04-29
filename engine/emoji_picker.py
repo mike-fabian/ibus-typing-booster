@@ -130,6 +130,14 @@ def parse_args() -> Any:
               'Slows the search down and is usually not needed. '
               'default: %(default)s'))
     parser.add_argument(
+        '--match-limit',
+        nargs='?',
+        type=int,
+        action='store',
+        default=1_000,
+        help=('Limit for the number of results for searches. '
+              'default: %(default)s'))
+    parser.add_argument(
         '--fallback',
         nargs='?',
         type=int,
@@ -144,7 +152,7 @@ def parse_args() -> Any:
               'default: "%(default)s"')
         )
     parser.add_argument(
-        '--emoji_unicode_min',
+        '--emoji-unicode-min',
         nargs='?',
         type=str,
         action='store',
@@ -170,7 +178,7 @@ def parse_args() -> Any:
         if current_date > date:
             current_unicode_version = version
     parser.add_argument(
-        '--emoji_unicode_max',
+        '--emoji-unicode-max',
         nargs='?',
         type=str,
         action='store',
@@ -1254,7 +1262,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 self._query_string)
         candidates = self._emoji_matcher.candidates(
             self._query_string,
-            match_limit=100_000)
+            match_limit=_ARGS.match_limit)
 
         self._browse_treeview_unselect_all()
         self._header_bar.set_title(_('Search Results'))
