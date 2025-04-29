@@ -3598,6 +3598,8 @@ class ItbTestCase(unittest.TestCase):
         dummy_trans = self.get_transliterator_or_skip('t-lsymbol')
         self.engine.set_current_imes(
             ['t-lsymbol', 'NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['None'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_slash, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_colon, 0, 0)
@@ -4011,6 +4013,8 @@ class ItbTestCase(unittest.TestCase):
         dummy_trans = self.get_transliterator_or_skip('ja-anthy')
         self.engine.set_current_imes(
             ['ja-anthy', 'NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['None'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
@@ -4158,6 +4162,8 @@ class ItbTestCase(unittest.TestCase):
         dummy_trans = self.get_transliterator_or_skip('ja-anthy')
         self.engine.set_current_imes(
             ['ja-anthy', 'NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(
+            ['None'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
