@@ -4,14 +4,15 @@
 # Mike FABIAN <mfabian@redhat.com>, 2019, 2020, 2022.
 # Anonymous <noreply@weblate.org>, 2019, 2020.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
+# hsu zangmen <chzang55@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-04-27 15:58+0200\n"
-"PO-Revision-Date: 2022-09-01 09:38+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"PO-Revision-Date: 2025-04-29 00:02+0000\n"
+"Last-Translator: hsu zangmen <chzang55@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_TW/>\n"
 "Language: zh_TW\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 5.11\n"
 
 #: engine/emoji-picker.desktop.in.in:3 engine/emoji_picker.py:210
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -166,7 +167,7 @@ msgstr "關閉"
 #: engine/hunspell_table.py:541 engine/hunspell_table.py:575
 #: engine/hunspell_table.py:596
 msgid "On"
-msgstr ""
+msgstr "開"
 
 #: engine/hunspell_table.py:560
 msgid "Input mode"
@@ -256,13 +257,13 @@ msgstr ""
 #: engine/itb_emoji.py:1094 engine/itb_emoji.py:1095 engine/itb_emoji.py:1096
 #: engine/itb_emoji.py:1307
 msgid "people"
-msgstr ""
+msgstr "人物"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1097 engine/itb_emoji.py:1303
 msgid "nature"
-msgstr ""
+msgstr "自然"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1098 engine/itb_emoji.py:1299
@@ -396,11 +397,11 @@ msgstr ""
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:6070
 msgid "translator-credits"
-msgstr ""
+msgstr "Zang-Men Hsu 許展銘 <chzang55@gmail.com>, 2025"
 
 #: engine/itb_util.py:6078
 msgid "Online documentation:"
-msgstr ""
+msgstr "線上文件:"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:3
 msgid "Typing Booster Preferences"
@@ -469,7 +470,7 @@ msgstr ""
 #. diffent types of candidates should be marked with labels.
 #: setup/main.py:345
 msgid "Appearance"
-msgstr ""
+msgstr "配色"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
@@ -528,10 +529,8 @@ msgid ""
 msgstr ""
 
 #: setup/main.py:449 setup/main.py:510
-#, fuzzy
-#| msgid "None"
 msgid "No"
-msgstr "無"
+msgstr "否"
 
 #: setup/main.py:451
 msgid "Yes, with fallback to popup"
@@ -619,10 +618,8 @@ msgstr ""
 #. option is enabled, such a change is remembered even if
 #. the session is restarted.
 #: setup/main.py:581
-#, fuzzy
-#| msgid "Input mode"
 msgid "Remember input mode"
-msgstr "輸入模式"
+msgstr "記住輸入模式"
 
 #: setup/main.py:583
 msgid ""
@@ -685,10 +682,8 @@ msgid "Correctly spelled or previously recorded"
 msgstr ""
 
 #: setup/main.py:683
-#, fuzzy
-#| msgid "Recently used"
 msgid "Correctly spelled"
-msgstr "最近使用"
+msgstr "正確拼寫"
 
 #: setup/main.py:685
 msgid "Nothing"
@@ -867,7 +862,7 @@ msgstr ""
 #. debug information may also be shown graphically.
 #: setup/main.py:983
 msgid "Debug level:"
-msgstr ""
+msgstr "除錯層級:"
 
 #: setup/main.py:985
 msgid ""
@@ -1011,7 +1006,7 @@ msgstr ""
 #. existing shortcuts
 #: setup/main.py:1417
 msgid "Shortcut"
-msgstr ""
+msgstr "捷徑"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -1462,7 +1457,7 @@ msgstr "繪文字"
 #. the automatic settings
 #: setup/main.py:2687
 msgid "Setting"
-msgstr ""
+msgstr "設定"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1470,7 +1465,7 @@ msgstr ""
 #. for the currently selected input method
 #: setup/main.py:2696 setup/main.py:4112
 msgid "Value"
-msgstr ""
+msgstr "值"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1575,7 +1570,7 @@ msgstr ""
 
 #: setup/main.py:6824
 msgid "ibus is not running."
-msgstr ""
+msgstr "ibus 未正在執行。"
 
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:9
 msgid ""
