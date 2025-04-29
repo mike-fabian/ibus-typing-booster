@@ -841,13 +841,13 @@ class EmojiMatcher():
                     path, mode='rt', encoding='utf-8') as unicode_data_file:
                 for line in itertools.chain(unicode_data_file,
                                             UNICODE_DATA_EXTRA_LINES):
-                    line = line.strip()
-                    if not line:
-                        continue
-                    try:
-                        codepoint_string, name, category, _ = line.split(';', 3)
-                    except ValueError:
-                        continue  # Malformed line
+                    fields = line.strip().split(';')
+                    if len(fields) < 12:
+                        continue # Malformed line
+                    codepoint_string = fields[0]
+                    name = fields[1]
+                    category = fields[2]
+                    old_name = fields[10]
                     emoji_string = chr(int(codepoint_string, 16))
                     if category in ('Cc', 'Co', 'Cs'):
                         # Never load control characters (“Cc”), they cause
@@ -861,10 +861,14 @@ class EmojiMatcher():
                             and not UNICODE_CATEGORIES[category]['valid']
                             and emoji_string not in VALID_CHARACTERS):
                         continue
+                    emoji_dict_key = (emoji_string, 'en')
                     self._add_to_emoji_dict(
-                        (emoji_string, 'en'), 'names', [name.lower()])
+                        emoji_dict_key, 'names', [name.lower()])
+                    if old_name:
+                        self._add_to_emoji_dict(
+                            emoji_dict_key, 'names', [old_name.lower()])
                     self._add_to_emoji_dict(
-                        (emoji_string, 'en'),
+                        emoji_dict_key,
                         'ucategories', [
                             category,
                             UNICODE_CATEGORIES[category]['major'],
