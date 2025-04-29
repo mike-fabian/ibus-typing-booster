@@ -3547,6 +3547,15 @@ class SetupUI(Gtk.Window): # type: ignore
             self._dictionaries_add_listbox.insert(label, -1)
         self._dictionaries_add_popover.show_all()
 
+    def _on_dictionaries_search_entry_grab_focus(
+            self, search_entry: Gtk.SearchEntry) -> None:
+        '''
+        Signal handler called when the search entry grabs focus
+
+        :param search_entry: The search entry
+        '''
+        LOGGER.debug('search_entry = %s\n', repr(search_entry))
+
     def _on_dictionaries_search_entry_changed(
             self, search_entry: Gtk.SearchEntry) -> None:
         '''
@@ -3608,6 +3617,8 @@ class SetupUI(Gtk.Window): # type: ignore
         dictionaries_add_popover_search_entry.set_vexpand(False)
         dictionaries_add_popover_search_entry.connect(
             'search-changed', self._on_dictionaries_search_entry_changed)
+        dictionaries_add_popover_search_entry.connect(
+            'grab-focus', self._on_dictionaries_search_entry_grab_focus)
         dictionaries_add_popover_vbox.add(
             dictionaries_add_popover_search_entry)
         self._dictionaries_add_popover_scroll = Gtk.ScrolledWindow()
@@ -3622,6 +3633,7 @@ class SetupUI(Gtk.Window): # type: ignore
         if GTK_VERSION >= (3, 22, 0):
             self._dictionaries_add_popover.popup()
         self._dictionaries_add_popover.show_all()
+        dictionaries_add_popover_search_entry.grab_focus_without_selecting()
 
     def _on_dictionaries_remove_button_clicked(self, *_args: Any) -> None:
         '''
@@ -3879,6 +3891,15 @@ class SetupUI(Gtk.Window): # type: ignore
             self._input_methods_add_listbox.insert(hbox, -1)
         self._input_methods_add_popover.show_all()
 
+    def _on_input_methods_search_entry_grab_focus(
+            self, search_entry: Gtk.SearchEntry) -> None:
+        '''
+        Signal handler called when the search entry grabs focus
+
+        :param search_entry: The search entry
+        '''
+        LOGGER.debug('search_entry = %s\n', repr(search_entry))
+
     def _on_input_methods_search_entry_changed(
             self, search_entry: Gtk.SearchEntry) -> None:
         '''
@@ -3939,6 +3960,8 @@ class SetupUI(Gtk.Window): # type: ignore
         input_methods_add_popover_search_entry.set_vexpand(False)
         input_methods_add_popover_search_entry.connect(
             'search-changed', self._on_input_methods_search_entry_changed)
+        input_methods_add_popover_search_entry.connect(
+            'grab-focus', self._on_input_methods_search_entry_grab_focus)
         input_methods_add_popover_vbox.add(
             input_methods_add_popover_search_entry)
         self._input_methods_add_popover_scroll = Gtk.ScrolledWindow()
@@ -3953,6 +3976,7 @@ class SetupUI(Gtk.Window): # type: ignore
         if GTK_VERSION >= (3, 22, 0):
             self._input_methods_add_popover.popup()
         self._input_methods_add_popover.show_all()
+        input_methods_add_popover_search_entry.grab_focus_without_selecting()
 
     def _on_input_methods_remove_button_clicked(self, *_args: Any) -> None:
         '''
@@ -4497,6 +4521,15 @@ class SetupUI(Gtk.Window): # type: ignore
             self._autosettings_add_listbox.insert(label, -1)
         self._autosettings_add_popover.show_all()
 
+    def _on_autosettings_search_entry_grab_focus(
+            self, search_entry: Gtk.SearchEntry) -> None:
+        '''
+        Signal handler called when the search entry grabs focus
+
+        :param search_entry: The search entry
+        '''
+        LOGGER.debug('search_entry = %s\n', repr(search_entry))
+
     def _on_autosettings_search_entry_changed(
             self, search_entry: Gtk.SearchEntry) -> None:
         '''
@@ -4544,6 +4577,8 @@ class SetupUI(Gtk.Window): # type: ignore
         autosettings_add_popover_search_entry.set_vexpand(False)
         autosettings_add_popover_search_entry.connect(
             'search-changed', self._on_autosettings_search_entry_changed)
+        autosettings_add_popover_search_entry.connect(
+            'grab-focus', self._on_autosettings_search_entry_grab_focus)
         autosettings_add_popover_vbox.add(
             autosettings_add_popover_search_entry)
         self._autosettings_add_popover_scroll = Gtk.ScrolledWindow()
@@ -4558,6 +4593,7 @@ class SetupUI(Gtk.Window): # type: ignore
         if GTK_VERSION >= (3, 22, 0):
             self._autosettings_add_popover.popup()
         self._autosettings_add_popover.show_all()
+        autosettings_add_popover_search_entry.grab_focus_without_selecting()
 
     def _on_autosettings_remove_button_clicked(self, *_args: Any) -> None:
         '''
