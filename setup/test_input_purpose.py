@@ -23,6 +23,8 @@ A test program to test input purpose and hints
 
 from typing import Dict
 from typing import Any
+from typing import Optional
+from types import FrameType
 import sys
 import signal
 import logging
@@ -30,8 +32,10 @@ import logging.handlers
 
 # pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
+require_version('GLib', '2.0')
+from gi.repository import GLib # type: ignore
 require_version('Gtk', '3.0')
-from gi.repository import Gtk # type: ignore
+from gi.repository import Gtk
 # pylint: enable=wrong-import-position
 
 # pylint: disable=import-error
@@ -40,6 +44,8 @@ import itb_util
 # pylint: enable=import-error
 
 LOGGER = logging.getLogger('ibus-typing-booster')
+
+GLIB_MAIN_LOOP: Optional[GLib.MainLoop] = None
 
 class InputPurposeTest(Gtk.Window): # type: ignore
     '''
@@ -138,16 +144,22 @@ class InputPurposeTest(Gtk.Window): # type: ignore
         self.show_all() # pylint: disable=no-member
 
     def on_delete_event(self, *_args: Any) -> None: # pylint: disable=no-self-use
-        '''
-        The window has been deleted, probably by the window manager.
-        '''
-        Gtk.main_quit()
+        '''The window has been deleted, probably by the window manager.'''
+        LOGGER.info('Window deleted by the window manager.')
+        if GLIB_MAIN_LOOP is not None:
+            GLIB_MAIN_LOOP.quit()
+        else:
+            raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
 
     def on_destroy_event(self, *_args: Any) -> None: # pylint: disable=no-self-use
         '''
         The window has been destroyed.
         '''
-        Gtk.main_quit()
+        LOGGER.info('Window has been destroyed.')
+        if GLIB_MAIN_LOOP is not None:
+            GLIB_MAIN_LOOP.quit()
+        else:
+            raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
 
     def on_test_entry( # pylint: disable=no-self-use
             self, widget: Gtk.Entry, _property_spec: Any) -> None:
@@ -237,6 +249,24 @@ class InputPurposeTest(Gtk.Window): # type: ignore
                     'hint: %s %s',
                     str(hint), format(int(hint), '016b'))
 
+def quit_glib_main_loop(
+        signum: int, _frame: Optional[FrameType] = None) -> None:
+    '''Signal handler for signals from Python’s signal module
+
+    :param signum: The signal number
+    :param _frame:  Almost never used (it’s for debugging).
+    '''
+    if signum is not None:
+        try:
+            signal_name = signal.Signals(signum).name
+        except ValueError: # In case signum isn't in Signals enum
+            signal_name = str(signum)
+        LOGGER.info('Received signal %s (%s), exiting...', signum, signal_name)
+    if GLIB_MAIN_LOOP is not None:
+        GLIB_MAIN_LOOP.quit()
+    else:
+        raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
+
 if __name__ == '__main__':
     LOG_HANDLER_STREAM = logging.StreamHandler(stream=sys.stdout)
     LOG_FORMATTER = logging.Formatter(
@@ -248,8 +278,14 @@ if __name__ == '__main__':
     LOGGER.addHandler(LOG_HANDLER_STREAM)
     LOGGER.info('********** STARTING **********')
 
-    # https://bugzilla.gnome.org/show_bug.cgi?id=622084
-    # Bug 622084 - Ctrl+C does not exit gtk app
-    signal.signal(signal.SIGINT, signal.SIG_DFL)
     INPUT_PURPOSE_TEST = InputPurposeTest()
-    Gtk.main()
+    GLIB_MAIN_LOOP = GLib.MainLoop()
+    signal.signal(signal.SIGTERM, quit_glib_main_loop) # kill <pid>
+    # Ctrl+C (optional, can also use try/except KeyboardInterrupt)
+    # signal.signal(signal.SIGINT, quit_glib_main_loop)
+    try:
+        GLIB_MAIN_LOOP.run()
+    except KeyboardInterrupt:
+        # SIGNINT (Control+C) received
+        LOGGER.info('Control+C pressed, exiting ...')
+        GLIB_MAIN_LOOP.quit()
