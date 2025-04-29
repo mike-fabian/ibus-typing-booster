@@ -519,6 +519,7 @@ class EmojiMatcher():
         # are the long names of emojione.
         if unicode_data:
             self._load_unicode_data()
+            self._load_name_aliases()
         self._load_unicode_emoji_data()
         self._load_unicode_emoji_sequences()
         self._load_unicode_emoji_zwj_sequences()
@@ -816,6 +817,46 @@ class EmojiMatcher():
         except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Error while loading DerivedAge: %s: %s',
+                error.__class__.__name__, error)
+
+    def _load_name_aliases(self) -> None:
+        '''Loads alternative names from NameAliases.txt'''
+        dirnames = (USER_DATADIR, DATADIR,
+                    # On Fedora, the “unicode-ucd” package has the
+                    # NameAliases.txt file here:
+                    '/usr/share/unicode/ucd',
+                    # On Ubuntu 20.04.3 it is here:
+                    '/usr/share/unicode/',)
+        basenames = ('NameAliases.txt',)
+        (path, open_function) = _find_path_and_open_function(
+            dirnames, basenames)
+        if not path:
+            LOGGER.warning(
+                'could not find "%s" in "%s"', basenames, dirnames)
+            return
+        if open_function is None:
+            LOGGER.warning('could not find open function')
+            return
+        try:
+            with open_function( # type: ignore
+                    path, mode='rt', encoding='utf-8') as name_aliases_file:
+                for line in name_aliases_file:
+                    line = line.partition('#')[0].strip()
+                    if not line:
+                        continue
+                    try:
+                        codepoint_string, alias, _alias_type = (
+                            part.strip() for part in line.split(';', 2))
+                    except ValueError:
+                        continue # Malformed line
+                    emoji_string = chr(int(codepoint_string, 16))
+                    emoji_dict_key = (emoji_string, 'en')
+                    if emoji_dict_key in self._emoji_dict:
+                        self._add_to_emoji_dict(
+                            emoji_dict_key, 'names', [alias.lower()])
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.exception(
+                'Error while loading NameAliases: %s: %s',
                 error.__class__.__name__, error)
 
     def _load_unicode_data(self) -> None:

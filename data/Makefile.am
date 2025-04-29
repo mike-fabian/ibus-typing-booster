@@ -23,6 +23,7 @@ extradata_DATA = \
 	UnicodeData.txt \
 	DerivedAge.txt \
 	Blocks.txt \
+	NameAliases.txt \
 	emoji-data.txt \
 	emoji-variation-sequences.txt \
 	emoji-zwj-sequences.txt \
