@@ -739,7 +739,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         first_match = mq.candidates('initial quote')[0]
         self.assertEqual(first_match.phrase, '“')
         self.assertEqual(first_match.comment, 'left double quotation mark {Initial quote}')
-        first_match = mq.candidates('modifier')[0]
+        first_match = mq.candidates('emoji modifier')[0]
         self.assertEqual(first_match.phrase, '🏻')
         self.assertEqual(first_match.comment, 'emoji modifier fitzpatrick type-1-2 {Modifier}')
         first_match = mq.candidates('math')[0]
