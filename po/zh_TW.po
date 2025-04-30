@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-04-27 15:58+0200\n"
-"PO-Revision-Date: 2025-04-29 00:54+0000\n"
+"PO-Revision-Date: 2025-04-30 04:50+0000\n"
 "Last-Translator: hsu zangmen <chzang55@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_TW/>\n"
@@ -580,9 +580,9 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
-"您輸入的內容會透過自動選擇最佳候選人來自動修正。如果此選項關閉，您必須使用按"
-"鍵綁定手動選擇下一個候選人。如果此選項為開啟，且您不想使用自動選擇的候選人，"
-"您可以使用 「取消 」命令的按鍵綁定，這將取消選擇所有候選人。"
+"您輸入的內容會透過自動選擇最佳候選字來自動修正。如果此選項關閉，您必須使用按"
+"鍵綁定手動選擇下一個候選字。如果此選項為開啟，且您不想使用自動選擇的候選字，"
+"您可以使用 「取消 」命令的按鍵綁定，這將取消選擇所有候選字。"
 
 #: setup/main.py:512
 msgid "Yes, but only when extremely likely"
@@ -697,6 +697,13 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"選擇哪一種輸入應記錄在使用者資料庫中：「所有」： "
+"每個輸入的字詞都會加入使用者資料庫，或更新其頻率（如果已經存在）。「正確拼寫"
+"或先前記錄」： "
+"鍵入的單字只有在拼寫可能正確時才會加入使用者資料庫。如果一個字已經在使用者資"
+"料庫中，無論它如何拼寫，其頻率都會被更新。 「拼寫正確」： "
+"只有在詞彙拼寫可能正確的情況下，才會將該詞彙加入資料庫或更新其頻率。 「無」："
+" 不在使用者資料庫中記錄任何輸入。"
 
 #: setup/main.py:679
 msgid "Everything"
@@ -704,7 +711,7 @@ msgstr "一切"
 
 #: setup/main.py:681
 msgid "Correctly spelled or previously recorded"
-msgstr ""
+msgstr "正確拼寫或先前記錄"
 
 #: setup/main.py:683
 msgid "Correctly spelled"
@@ -754,7 +761,9 @@ msgid ""
 "Use a workaround if the %s function is broken. Enable this option only if "
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
-msgstr ""
+msgstr "如果 %s "
+"功能被破壞，請使用其它變通方案。只有在絕對必要時才啟用此選項，它也可能造成問"
+"題，尤其是在使用 XIM 時。"
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -762,30 +771,31 @@ msgstr ""
 #. committed words.
 #: setup/main.py:756
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "啟用自動重新開啟預編"
 
 #: setup/main.py:758
 msgid ""
 "Whether it is allowed to put a word back into a preedit when the cursor "
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
-msgstr ""
+msgstr "當游標移到一個字的結尾或開頭時，是否允許將該字放回預編中。啟用此選項有助於修"
+"正已編輯的字詞。"
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:774
 msgid "Disable in terminals"
-msgstr ""
+msgstr "在終端機中停用"
 
 #: setup/main.py:776
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "是否應該在終端機中停用 ibus-typing-booster。"
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
 #: setup/main.py:789
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "將特定語言的數字轉換為 ASCII 數字"
 
 #: setup/main.py:791
 msgid ""
@@ -794,12 +804,15 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"某些輸入法預設會產生特定語言的數字。如果您從來不想使用這些特定語言的數字，"
+"而偏好使用西式 (ASCII) 數字，您可以設定此選項，"
+"將輸入法產生的特定語言數字始終轉換為 ASCII 數字。"
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
 #: setup/main.py:808
 msgid "Use IBus keymap"
-msgstr ""
+msgstr "使用 IBus 鍵盤映射"
 
 #: setup/main.py:810
 msgid ""
@@ -807,6 +820,9 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"當打字輔助器啟動時，是否強制使用 IBus 鍵盤映射。對大多數使用者而言，"
+"建議不使用 IBus "
+"鍵盤映射。在此情況下，會使用切換至打字加速器之前啟用的鍵盤配置。"
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -824,13 +840,14 @@ msgstr "英文"
 #. “Unicode symbols and emoji predictions” is off.
 #: setup/main.py:856
 msgid "Emoji trigger characters:"
-msgstr ""
+msgstr "表情符號觸發字元："
 
 #: setup/main.py:858
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
-msgstr ""
+msgstr "即使「Unicode 符號和表情符號預測」選項已關閉，"
+"此清單中的字元仍會觸發表情符號和 Unicode 符號查詢。"
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -846,7 +863,7 @@ msgstr ""
 #. (which is the default).
 #: setup/main.py:887
 msgid "Auto commit characters:"
-msgstr ""
+msgstr "自動提交字元："
 
 #: setup/main.py:889
 msgid ""
@@ -860,27 +877,33 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
+"此清單中的字元會導致預編自動提交，並在後面加上空格。 例如，如果\". "
+"\"是自動提交字元"
+"，就可以節省您在句子結束後手動輸入空格的時間。您可以自由編輯這個清單，合理的"
+"值可能是「.,;:?!)」。例如，如果您使用 Latin-Pre (t-latn-pre)，"
+"在該列表中加入\". 「是個壞主意，因為它會阻止您輸入」.s 「來獲得 」ṡ\"。"
+"您也可以將清單設定為空 (這是預設值)，以完全停用此功能。"
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
 #: setup/main.py:919
 msgid "Minimum number of chars for completion:"
-msgstr ""
+msgstr "完成的最小字元數："
 
 #: setup/main.py:921
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
-msgstr ""
+msgstr "當輸入的字元少於此數字時，不顯示任何建議。"
 
 #. Translators: A checkbox where one can choose whether a
 #. sound is played on error
 #: setup/main.py:946
 msgid "Play sound file on error"
-msgstr ""
+msgstr "發生錯誤時，開始播放聲音檔"
 
 #: setup/main.py:948
 msgid "Here you can choose whether a sound file is played if an error occurs."
-msgstr ""
+msgstr "您可以在此選擇發生錯誤時，是否播放聲音檔。"
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -893,139 +916,139 @@ msgstr "除錯層級:"
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
-msgstr ""
+msgstr "當大於 0 時，除錯資訊可能會列印到記錄檔，或者以圖形顯示。"
 
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
 #. reading that text file.
 #: setup/main.py:1009
 msgid "Learn from text file"
-msgstr ""
+msgstr "從文字檔開始學習"
 
 #: setup/main.py:1011
 msgid "Learn your style by reading a text file"
-msgstr ""
+msgstr "透過閱讀文字檔了解您的風格"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
 #: setup/main.py:1023
 msgid "Delete learned data"
-msgstr ""
+msgstr "刪除已學習的資料"
 
 #: setup/main.py:1025
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
-msgstr ""
+msgstr "刪除所有透過打字或閱讀檔案，從中學到的個人語言資料"
 
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:1039
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "使用下列語言的字典："
 
 #: setup/main.py:1068
 msgid "Add a dictionary"
-msgstr ""
+msgstr "新增字典"
 
 #: setup/main.py:1079
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "移除字典"
 
 #: setup/main.py:1090
 msgid "Move dictionary up"
-msgstr ""
+msgstr "向上移動字典"
 
 #: setup/main.py:1102
 msgid "Move dictionary down"
-msgstr ""
+msgstr "向下移動字典"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
 #: setup/main.py:1109
 msgid "Install missing dictionaries"
-msgstr ""
+msgstr "安裝遺失的字典"
 
 #: setup/main.py:1111
 msgid "Install the dictionaries which are setup here but not installed"
-msgstr ""
+msgstr "安裝已設定但未安裝的字典"
 
 #: setup/main.py:1118 setup/main.py:1263 setup/main.py:1505 setup/main.py:5014
 msgid "Set to default"
-msgstr ""
+msgstr "設定為預設值"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
 #: setup/main.py:1124
 msgid "Set dictionaries to the default for the current locale."
-msgstr ""
+msgstr "將字典設定為目前本地的預設值。"
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:1165
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "使用下列輸入方法："
 
 #: setup/main.py:1194
 msgid "Add an input method"
-msgstr ""
+msgstr "新增輸入方法"
 
 #: setup/main.py:1206
 msgid "Remove an input method"
-msgstr ""
+msgstr "移除輸入方法"
 
 #: setup/main.py:1218
 msgid "Move input method up"
-msgstr ""
+msgstr "將輸入法上移"
 
 #: setup/main.py:1230
 msgid "Move input method down"
-msgstr ""
+msgstr "將輸入法下移"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
 #: setup/main.py:1238
 msgid "Input Method Help"
-msgstr ""
+msgstr "輸入方法說明"
 
 #: setup/main.py:1240
 msgid "Display some help showing how to use the input method selected above."
-msgstr ""
+msgstr "顯示一些說明如何使用上面所選輸入法的說明。"
 
 #. Translators: Tooltip for a button to set some advanced
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1256
 msgid "Options for the input method selected above."
-msgstr ""
+msgstr "上面所選輸入法的選項。"
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
 #: setup/main.py:1269
 msgid "Set input methods to the default for the current locale."
-msgstr ""
+msgstr "將輸入法設定為目前本地的預設值。"
 
 #: setup/main.py:1309
 msgid "Enter shortcut here:"
-msgstr ""
+msgstr "在此輸入捷徑："
 
 #: setup/main.py:1331
 msgid "Enter shortcut expansion here:"
-msgstr ""
+msgstr "在此輸入捷徑擴充："
 
 #: setup/main.py:1361
 msgid "Clear input"
-msgstr ""
+msgstr "清除輸入"
 
 #: setup/main.py:1372
 msgid "Delete shortcut"
-msgstr ""
+msgstr "刪除捷徑"
 
 #: setup/main.py:1383
 msgid "Add shortcut"
-msgstr ""
+msgstr "新增捷徑"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -1037,7 +1060,7 @@ msgstr "捷徑"
 #. existing shortcuts
 #: setup/main.py:1425
 msgid "Shortcut expansion"
-msgstr ""
+msgstr "捷徑擴充"
 
 #: setup/main.py:1439
 msgid "Current key bindings:"
@@ -1063,7 +1086,7 @@ msgstr "為選取的指令設定預設按鍵綁定"
 
 #: setup/main.py:1516
 msgid "Set all to default"
-msgstr ""
+msgstr "全部設定為預設值"
 
 #: setup/main.py:1520
 msgid "Set default key bindings for all commands"
@@ -1074,13 +1097,13 @@ msgstr "設定所有指令的預設按鍵綁定"
 #. top of the list of candidates.
 #: setup/main.py:1542
 msgid "Display total number of candidates"
-msgstr ""
+msgstr "顯示候選字總數"
 
 #: setup/main.py:1544
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
-msgstr ""
+msgstr "顯示有多少個候選字，以及哪一位候選字被選在候選字清單的最上方。"
 
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
@@ -1090,7 +1113,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1558
 msgid "Show status info in auxiliary text"
-msgstr ""
+msgstr "在輔助文字中顯示狀態資訊"
 
 #: setup/main.py:1560
 msgid ""
@@ -1099,28 +1122,31 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
+"在輔助文字中顯示 「表情預測 」模式和 「關閉記錄 "
+"」模式是否開啟，並顯示預編輯目前使用哪種輸入法。輔助文字是顯示在候選字清單上"
+"方可選的一行文字。"
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
 #: setup/main.py:1582
 msgid "Candidate window page size:"
-msgstr ""
+msgstr "候選字視窗頁面大小："
 
 #: setup/main.py:1584
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
-msgstr ""
+msgstr "在候選字清單的一頁中，顯示多少個建議候選字。"
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
 #: setup/main.py:1606
 msgid "Candidate window orientation"
-msgstr ""
+msgstr "候選字視窗方向"
 
 #: setup/main.py:1608
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
-msgstr ""
+msgstr "候選字視窗應水平或垂直繪製。"
 
 #: setup/main.py:1614
 msgid "Horizontal"
@@ -1135,24 +1161,24 @@ msgstr "垂直"
 #. candidates are displayed
 #: setup/main.py:1645
 msgid "Candidate window delay in milliseconds:"
-msgstr ""
+msgstr "候選字視窗延遲（毫秒）："
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
 #: setup/main.py:1649
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
-msgstr ""
+msgstr "在最後一個按鍵按下後，得等待多久才會顯示候選字。"
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
 #: setup/main.py:1676
 msgid "Preedit underline"
-msgstr ""
+msgstr "預編底線"
 
 #: setup/main.py:1678
 msgid "Which style of underlining to use for the preedit."
-msgstr ""
+msgstr "預編要使用哪種底線樣式。"
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
@@ -1170,13 +1196,13 @@ msgstr "單一"
 #. underline for the preedit.
 #: setup/main.py:1693
 msgid "Double"
-msgstr ""
+msgstr "雙倍"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
 #: setup/main.py:1697
 msgid "Low"
-msgstr ""
+msgstr "低"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is
@@ -1186,7 +1212,7 @@ msgstr ""
 #. of characters before a lookup is done.
 #: setup/main.py:1724
 msgid "Use preedit style only if lookup is enabled"
-msgstr ""
+msgstr "僅在啟用查詢時使用預編輯樣式"
 
 #: setup/main.py:1726
 msgid ""
@@ -1195,6 +1221,9 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
+"如果啟用此選項，則只有在啟用了查找功能時，才會使用像下劃線這樣的編前樣式。可"
+"以禁用查找，因為有人使用選項只在按鍵時啟用查找，或者有人使用選項要求在完成查"
+"找之前最少要有多少個字元。"
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -1202,233 +1231,239 @@ msgstr ""
 #. might contain a spelling error.
 #: setup/main.py:1746
 msgid "Preedit spellchecking"
-msgstr ""
+msgstr "編輯前拼寫檢查"
 
 #: setup/main.py:1748
 msgid ""
 "Here you can choose whether spellchecking is done on the contents of the "
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
-msgstr ""
+msgstr "在這裡，您可以選擇是否對預編內容進行拼字檢查，並使用自訂顏色顯示預編可能包含"
+"拼字錯誤。"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1774
 msgid "Choose color for preedit spellchecking"
-msgstr ""
+msgstr "選擇預編拼寫檢查的顏色"
 
 #: setup/main.py:1776
 msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
-msgstr ""
+msgstr "您可以在此指定，當預編可能包含拼字錯誤時，預編要使用何種顏色。只有啟用預編拼"
+"字檢查時，此設定才會生效。"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
 #: setup/main.py:1799
 msgid "Use color for inline completion"
-msgstr ""
+msgstr "在內線完成時使用顏色"
 
 #: setup/main.py:1801
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
-msgstr ""
+msgstr "您可以在此選擇是否使用自訂顏色來顯示內嵌的建議。"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
 #: setup/main.py:1825
 msgid "Choose color for inline completion"
-msgstr ""
+msgstr "為內嵌完成選擇顏色"
 
 #: setup/main.py:1827
 msgid ""
 "Here you can specify which color to use for inline completion. This setting "
 "only has an effect if the use of color for inline completion is enabled and "
 "inline completion is enabled."
-msgstr ""
+msgstr "您可以在此指定內列完成要使用的顏色。此設定只有在啟用內列完成使用顏色且啟用內"
+"列完成時才會生效。"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
 #: setup/main.py:1850
 msgid "Use color for compose preview"
-msgstr ""
+msgstr "使用顏色編寫預覽"
 
 #: setup/main.py:1852
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
-msgstr ""
+msgstr "您可以在此選擇是否在撰寫預覽中使用自訂顏色。"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:1876
 msgid "Choose color for compose preview"
-msgstr ""
+msgstr "為撰寫預覽選擇顏色"
 
 #: setup/main.py:1878
 msgid "Here you can specify which color to use for the compose preview."
-msgstr ""
+msgstr "您可以在此指定撰寫預覽要使用的顏色。"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
 #: setup/main.py:1900
 msgid "Use color for user database suggestions"
-msgstr ""
+msgstr "使用使用者資料庫建議的顏色"
 
 #: setup/main.py:1902
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
-msgstr ""
+msgstr "在這裡，您可以選擇是否對來自使用者資料庫的查詢表中的候選字使用自訂顏色。"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
 #: setup/main.py:1923
 msgid "Choose color for user database suggestions"
-msgstr ""
+msgstr "為使用者資料庫建議選擇顏色"
 
 #: setup/main.py:1925
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
-msgstr ""
+msgstr "您可以在此指定對來自使用者資料庫的候選字使用哪種顏色。只有啟用了對來自使用者"
+"資料庫的候選字使用顏色時，此設定才會生效。"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
 #: setup/main.py:1946
 msgid "Use color for spellchecking suggestions"
-msgstr ""
+msgstr "使用顏色提供拼字檢查建議"
 
 #: setup/main.py:1948
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
-msgstr ""
+msgstr "在這裡，您可以選擇是否使用自訂顏色來表示查詢表中來自拼字檢查的候選字。"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
 #: setup/main.py:1969
 msgid "Choose color for spellchecking suggestions"
-msgstr ""
+msgstr "為拼字檢查建議選擇顏色"
 
 #: setup/main.py:1971
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
-msgstr ""
+msgstr "您可以在此指定在查詢表中來自拼字檢查的候選字使用何種顏色。只有當啟用了對來自"
+"拼字檢查的候選字使用顏色時，此設定才會生效。"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
 #: setup/main.py:1995
 msgid "Use color for dictionary suggestions"
-msgstr ""
+msgstr "使用顏色提供字典建議"
 
 #: setup/main.py:1997
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
-msgstr ""
+msgstr "在這裡，您可以選擇是否要對查詢表中來自字典的候選字使用自訂顏色。"
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
 #: setup/main.py:2018
 msgid "Choose color for dictionary suggestions"
-msgstr ""
+msgstr "選擇字典建議的顏色"
 
 #: setup/main.py:2020
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
-msgstr ""
+msgstr "您可以在此指定對查詢表中來自字典的候選字使用何種顏色。此設定只有在來自字典的"
+"候選字使用顏色的功能啟用時才會生效。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
 #: setup/main.py:2044
 msgid "Use label for user database suggestions"
-msgstr ""
+msgstr "使用使用者資料庫建議的標籤"
 
 #: setup/main.py:2046
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
-msgstr ""
+msgstr "在這裡，您可以選擇是否為查詢表中來自使用者資料庫的候選字使用標籤。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
 #: setup/main.py:2079
 msgid "Use label for spellchecking suggestions"
-msgstr ""
+msgstr "使用標籤取得拼字檢查建議"
 
 #: setup/main.py:2081
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
-msgstr ""
+msgstr "在這裡，您可以選擇是否為查詢表中來自拼字檢查的候選字使用標籤。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2114
 msgid "Use label for dictionary suggestions"
-msgstr ""
+msgstr "使用字典建議的標籤"
 
 #: setup/main.py:2116
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
-msgstr ""
+msgstr "在這裡，您可以選擇是否為查詢表中來自字典的候選字使用標籤。"
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2149
 msgid "Use flags for dictionary suggestions"
-msgstr ""
+msgstr "使用字典建議旗標"
 
 #: setup/main.py:2151
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
-msgstr ""
+msgstr "在這裡，您可以選擇是否對查詢表中來自字典的候選字使用旗標。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
 #: setup/main.py:2166
 msgid "Use a label to indicate busy state"
-msgstr ""
+msgstr "使用標籤顯示忙碌狀態"
 
 #: setup/main.py:2168
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
-msgstr ""
+msgstr "您可以在此選擇是否使用標籤來指示 ibus-typing-booster 是否忙碌。"
 
 #. Translators:
 #: setup/main.py:2199 setup/main.py:3327
 msgid "Set “Google application credentials” .json file:"
-msgstr ""
+msgstr "設定「Google 應用程式憑證」的 .json 檔案："
 
 #: setup/main.py:2201
 msgid "Full path of the “Google application credentials” .json file."
-msgstr ""
+msgstr "「Google 應用程式憑證」的 .json 檔案的完整路徑。"
 
 #: setup/main.py:2207
 msgid "File not yet set."
-msgstr ""
+msgstr "檔案尚未設定。"
 
 #. Translators: This is a button to add an autosetting.
 #. “Autosettings” are settings which may change automatically
@@ -1436,7 +1471,7 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2266 setup/main.py:4530
 msgid "Add an autosetting"
-msgstr ""
+msgstr "新增自動設定"
 
 #. Translators: This is a button to remove an autosetting.
 #. “Autosettings” are settings which may change automatically
@@ -1444,7 +1479,7 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2280
 msgid "Remove an autosetting"
-msgstr ""
+msgstr "移除自動設定"
 
 #. Translators: This is a button to move an autosetting up in the
 #. order the autosettings are applied. “Up” means it is applied
@@ -1456,7 +1491,7 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2298
 msgid "Move an autosetting up"
-msgstr ""
+msgstr "將自動設定上移"
 
 #. Translators: This is a button to move an autosetting down in the
 #. order the autosettings are applied. “Down” means it is applied
@@ -1468,11 +1503,11 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2316
 msgid "Move an autosetting down"
-msgstr ""
+msgstr "向下移動自動設定"
 
 #: setup/main.py:2492
 msgid "Spell checking"
-msgstr ""
+msgstr "拼字檢查"
 
 #: setup/main.py:2508
 msgid "Emoji"
@@ -1496,7 +1531,7 @@ msgstr "值"
 #. the automatic settings
 #: setup/main.py:2720
 msgid "Regular expression"
-msgstr ""
+msgstr "正規表達式"
 
 #: setup/main.py:2766
 msgid "Are you sure?"
@@ -1512,45 +1547,45 @@ msgstr "確定(_O)"
 
 #: setup/main.py:2801
 msgid "Another instance of this app is already running."
-msgstr ""
+msgstr "此應用程式的另一個實例，已經正在執行中。"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:2898
 msgid "Do you really want to restore all default settings?"
-msgstr ""
+msgstr "您真的想要還原所有預設設定嗎？"
 
 #: setup/main.py:3414
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "請選擇副檔名為 .wav 音效檔案："
 
 #: setup/main.py:3594
 msgid "Add dictionary"
-msgstr ""
+msgstr "新增字典"
 
 #: setup/main.py:3925
 msgid "Add input method"
-msgstr ""
+msgstr "新增輸入方法"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
 #: setup/main.py:4103
 msgid "Variable"
-msgstr ""
+msgstr "可變變數"
 
 #: setup/main.py:4967
 #, python-format
 msgid "Edit key bindings for command “%s”"
-msgstr ""
+msgstr "編輯命令 \"%s\" 的按鍵綁定"
 
 #: setup/main.py:4995
 msgid "Add a key binding"
-msgstr ""
+msgstr "新增按鍵綁定"
 
 #: setup/main.py:5007
 msgid "Remove selected key binding"
-msgstr ""
+msgstr "移除選取的按鍵綁定"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1561,7 +1596,7 @@ msgstr ""
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
-msgstr ""
+msgstr "您真的要將所有指令的按鍵綁定設定為預設值？"
 
 #: setup/main.py:5082
 msgid "Open File ..."
@@ -1570,12 +1605,12 @@ msgstr "開啟檔案 ..."
 #: setup/main.py:5101
 #, python-format
 msgid "Learned successfully from file %(filename)s."
-msgstr ""
+msgstr "成功從檔案 %(filename)s 學習。"
 
 #: setup/main.py:5110
 #, python-format
 msgid "Learning from file %(filename)s failed."
-msgstr ""
+msgstr "從檔案 %(filename)s 學習失敗。"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1591,7 +1626,7 @@ msgstr ""
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
-msgstr ""
+msgstr "您真的想要刪除所有從打字或讀取檔案所學到的語言資料嗎？"
 
 #: setup/main.py:6824
 msgid "ibus is not running."
@@ -1601,15 +1636,16 @@ msgstr "ibus 未正在執行。"
 msgid ""
 "Emoji Picker is an emoji browsing tool which uses the emoji matching code "
 "from Ibus-typing-booster."
-msgstr ""
+msgstr "Emoji Picker 是一個表情符號瀏覽工具，它使用 Ibus-typing-booster "
+"的表情符號匹配程式碼。"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
-msgstr ""
+msgstr "打字輔助器"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:7
 msgid "Predictive input method"
-msgstr ""
+msgstr "預測輸入法"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:9
 msgid ""
@@ -1617,6 +1653,9 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+"Ibus-typing-booster "
+"是一種預測輸入法，可根據上下文和部分輸入內容預測完整的單字。人們只需從建議清"
+"單中選擇所需的字詞，即可提高打字速度和拼寫能力。"
 
 #, fuzzy
 #~| msgid "Emoji"
