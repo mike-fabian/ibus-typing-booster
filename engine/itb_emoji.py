@@ -1464,7 +1464,8 @@ class EmojiMatcher():
             self,
             query_string: str,
             match_limit: int = 20,
-            trigger_characters: str  = '') -> List[itb_util.PredictionCandidate]:
+            trigger_characters: str  = '',
+            spellcheck: bool = True) -> List[itb_util.PredictionCandidate]:
         # pylint: disable=line-too-long
         '''
         Find a list of emoji which best match a query string.
@@ -1807,25 +1808,11 @@ class EmojiMatcher():
             in self._candidate_cache):
             return self._candidate_cache[(
                 query_string, match_limit, trigger_characters)]
-        # David Mandelberg’s idea to do the emoji search first without
-        # spellchecking and only if nothing matches do it again with
-        # spellchecking doesn’t make it faster as we hoped, it makes
-        # it slower.
-        #
-        #candidates = self._candidates(
-        #    query_string=query_string,
-        #    match_limit=match_limit,
-        #    trigger_characters=trigger_characters,
-        #    spellcheck=False)
-        #if candidates:
-        #    self._candidate_cache[(
-        #        query_string, match_limit, trigger_characters)] = candidates
-        #    return candidates
         candidates = self._candidates(
             query_string=query_string,
             match_limit=match_limit,
             trigger_characters=trigger_characters,
-            spellcheck=True)
+            spellcheck=spellcheck)
         self._candidate_cache[(
             query_string, match_limit, trigger_characters)] = candidates
         return candidates

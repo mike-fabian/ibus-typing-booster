@@ -27,6 +27,7 @@ from typing import Tuple
 from typing import Iterable
 from typing import Dict
 from typing import Optional
+from typing import Union
 from typing import Callable
 import sys
 import os
@@ -76,6 +77,19 @@ DOMAINNAME = 'ibus-typing-booster'
 _: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
 N_: Callable[[str], str] = lambda a: a
 
+def str2bool(v: Union[bool, str]) -> bool:
+    '''
+    Convert a string to a boolean for argparse.
+    '''
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
 def parse_args() -> Any:
     '''
     Parse the command line arguments.
@@ -116,14 +130,20 @@ def parse_args() -> Any:
               'default: "%(default)s"'))
     parser.add_argument(
         '-m', '--modal',
-        action='store_true',
+        nargs='?',
+        type=str2bool,
+        action='store',
+        const=True, # if -m or --modal with no value, assume True
         default=False,
         help=('Make the window of emoji-picker modal. '
               'default: %(default)s'))
     parser.add_argument(
         '-a', '--all',
-        action='store_true',
-        default=False,
+        nargs='?',
+        type=str2bool,
+        action='store',
+        const=True, # if -a or --all with no value, assume True
+        default=True,
         help=('Load all Unicode characters. '
               'Makes all Unicode characters accessible, '
               'even normal letters. '
@@ -140,17 +160,27 @@ def parse_args() -> Any:
     parser.add_argument(
         '--fallback',
         nargs='?',
-        type=int,
+        type=str2bool,
         action='store',
+        const=True, # if --fallback with no value, assume True
         default=None,
         help=('Whether to use fallback fonts when rendering emoji. '
-              'If not 0, pango will use fallback fonts as necessary. '
-              'If 0, pango will use only glyphs from '
+              'If True, pango will use fallback fonts as necessary. '
+              'If False, pango will use only glyphs from '
               'the closest matching font on the system. No fallback '
               'will be done to other fonts on the system that '
               'might contain the glyhps needed to render an emoji. '
               'default: "%(default)s"')
         )
+    parser.add_argument(
+        '--spellcheck',
+        nargs='?',
+        type=str2bool,
+        action='store',
+        const=True, # if --spellcheck with no value, assume True
+        default=True,
+        help=('Whether to add spellchecking suggestions automatically to search strings'
+              'default: %(default)s'))
     parser.add_argument(
         '--emoji-unicode-min',
         nargs='?',
@@ -188,7 +218,10 @@ def parse_args() -> Any:
               'default: %(default)s'))
     parser.add_argument(
         '-d', '--debug',
-        action='store_true',
+        nargs='?',
+        type=str2bool,
+        action='store',
+        const=True, # if -d or --debug with no value assume True
         default=False,
         help=('Print some debug output to stdout. '
               'default: %(default)s'))
@@ -210,11 +243,13 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                  languages: Iterable[str] = ('en_US',),
                  modal: bool = False,
                  unicode_data_all: bool = False,
-                 emoji_unicode_min: Optional[str] = '0.0',
-                 emoji_unicode_max: Optional[str] = '100.0',
+                 emoji_unicode_min: str = '0.0',
+                 emoji_unicode_max: str = '100.0',
                  font: Optional[str] = None,
                  fontsize: Optional[float] = None,
-                 fallback: Optional[bool] = None) -> None:
+                 fallback: Optional[bool] = None,
+                 match_limit: int = 1_000,
+                 spellcheck: bool = True) -> None:
         Gtk.Window.__init__(self, title='🚀 ' + _('Emoji Picker'))
 
         self.set_name('EmojiPicker')
@@ -268,13 +303,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self.connect('delete-event', self.on_delete_event)
         self.connect('key-press-event', self.on_main_window_key_press_event)
         self._languages = languages
-        self._emoji_unicode_min = '0.0'
-        if emoji_unicode_min is not None:
-            self._emoji_unicode_min = emoji_unicode_min
-        self._emoji_unicode_max = '100.0'
-        if emoji_unicode_max is not None:
-            self._emoji_unicode_max = emoji_unicode_max
-
+        self._emoji_unicode_min = emoji_unicode_min
+        self._emoji_unicode_max = emoji_unicode_max
+        self._match_limit = match_limit
+        self._spellcheck = spellcheck
         self._unicode_data_all = unicode_data_all
         self._emoji_matcher = itb_emoji.EmojiMatcher(
             languages=self._languages,
@@ -1262,7 +1294,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 self._query_string)
         candidates = self._emoji_matcher.candidates(
             self._query_string,
-            match_limit=_ARGS.match_limit)
+            match_limit=self._match_limit,
+            spellcheck=self._spellcheck)
 
         self._browse_treeview_unselect_all()
         self._header_bar.set_title(_('Search Results'))
@@ -2400,5 +2433,7 @@ if __name__ == '__main__':
         modal=_ARGS.modal,
         unicode_data_all=_ARGS.all,
         emoji_unicode_min=_ARGS.emoji_unicode_min,
-        emoji_unicode_max=_ARGS.emoji_unicode_max)
+        emoji_unicode_max=_ARGS.emoji_unicode_max,
+        match_limit=_ARGS.match_limit,
+        spellcheck=_ARGS.spellcheck)
     Gtk.main()
