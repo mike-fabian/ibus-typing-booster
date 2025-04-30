@@ -745,21 +745,25 @@ class EmojiMatcher():
         if open_function is None:
             LOGGER.warning('could not find open function')
             return
-        lines = []
-        with open_function( # type: ignore
-                path, mode='rt', encoding='utf-8') as blocks_file:
-            lines = blocks_file.readlines()
-        blocks_pattern = re.compile(r'([0-9A-F]+)\.\.([0-9A-F]+);\ (\S.*\S)')
-        for line in lines:
-            line = re.sub(r'#.*$', '', line).strip()
-            if not line:
-                continue
-            match = blocks_pattern.match(line)
-            if match:
-                block_start, block_end, block_name = match.groups()
-                self._unicode_blocks[
-                    range(int(block_start, 16),
-                          int(block_end, 16) + 1)] = block_name
+        try:
+            with open_function( # type: ignore
+                    path, mode='rt', encoding='utf-8') as blocks_file:
+                blocks_pattern = re.compile(r'([0-9A-F]+)\.\.([0-9A-F]+);\ (\S.*\S)')
+                for line in blocks_file:
+                    line = line.partition('#')[0].strip()
+                    if not line:
+                        continue
+                    match = blocks_pattern.match(line)
+                    if match:
+                        block_start, block_end, block_name = match.groups()
+                        start_int = int(block_start, 16)
+                        end_int = int(block_end, 16)
+                        self._unicode_blocks[
+                            range(start_int, end_int + 1)] = block_name
+        except (OSError, IOError) as error:
+            LOGGER.exception(
+                'Error while loading Blocks from %s: %s: %s',
+                path, error.__class__.__name__, error)
 
     def _load_derived_age(self) -> None:
         '''Loads in which Unicode versions code points were added
