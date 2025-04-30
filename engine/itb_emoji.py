@@ -760,6 +760,12 @@ class EmojiMatcher():
                         end_int = int(block_end, 16)
                         self._unicode_blocks[
                             range(start_int, end_int + 1)] = block_name
+                        for codepoint in range(start_int, end_int + 1):
+                            emoji_string = chr(codepoint)
+                            emoji_dict_key = (emoji_string, 'en')
+                            if emoji_dict_key in self._emoji_dict:
+                                self._add_to_emoji_dict(
+                                    emoji_dict_key, 'block', block_name)
         except (OSError, IOError) as error:
             LOGGER.exception(
                 'Error while loading Blocks from %s: %s: %s',
@@ -1881,6 +1887,7 @@ class EmojiMatcher():
             ucategory_good_match = ''
             category_good_match = ''
             keyword_good_match = ''
+            block_good_match = ''
             if 'names' in emoji_value:
                 for name in emoji_value['names']:
                     score = self._match_function(name, match_string)
@@ -1904,6 +1911,12 @@ class EmojiMatcher():
                     score = self._match_function(keyword, match_string)
                     if score >= self._good_match_score:
                         keyword_good_match = keyword
+                    total_score += score
+            if 'block' in emoji_value:
+                block = emoji_value['block']
+                score = self._match_function(block, match_string)
+                if score >= self._good_match_score:
+                    block_good_match = block
                     total_score += score
 
             if total_score > 0:
@@ -1929,6 +1942,8 @@ class EmojiMatcher():
                     display_name += ' {' + category_good_match + '}'
                 if keyword_good_match not in display_name:
                     display_name += ' [' + keyword_good_match + ']'
+                if block_good_match not in display_name:
+                    display_name += ' {' + block_good_match + '}'
                 candidates.append(itb_util.PredictionCandidate(
                     phrase=self.variation_selector_normalize(
                         emoji_key[0],

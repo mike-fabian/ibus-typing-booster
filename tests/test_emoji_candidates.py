@@ -324,9 +324,9 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         first_match = mq.candidates('flag mm')[0]
         self.assertEqual(first_match.phrase, '🇲🇲')
         self.assertEqual(first_match.comment, 'flag: myanmar (burma) “flag mm”')
-        first_match = mq.candidates('myanmar')[0]
+        first_match = mq.candidates('myanmar burma')[0]
         self.assertEqual(first_match.phrase, '🇲🇲')
-        self.assertEqual(first_match.comment, 'flag: myanmar (burma)')
+        self.assertEqual(first_match.comment, 'flag: myanmar (burma) “flag: myanmar burma”')
         first_match = mq.candidates('sj')[0]
         self.assertEqual(first_match.phrase, '🇸🇯')
         self.assertEqual(first_match.comment, 'flag: svalbard & jan mayen “sj”')
@@ -731,8 +731,8 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.phrase, '〉')
         self.assertEqual(first_match.comment, 'right angle bracket “close angle bracket” {Close}')
         first_match = mq.candidates('punctuation')[0]
-        self.assertEqual(first_match.phrase, '؞')
-        self.assertEqual(first_match.comment, 'arabic triple dot punctuation mark {Punctuation}')
+        self.assertEqual(first_match.phrase, '𒑲')
+        self.assertEqual(first_match.comment, 'cuneiform punctuation sign diagonal colon {Punctuation} {Cuneiform Numbers and Punctuation}')
         first_match = mq.candidates('final quote')[0]
         self.assertEqual(first_match.phrase, '”')
         self.assertEqual(first_match.comment, 'right double quotation mark {Final quote}')
