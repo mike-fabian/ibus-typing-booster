@@ -1127,7 +1127,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return
         phrase = itb_util.normalize_nfc_and_composition_exclusions(phrase)
         dictionary_matches: List[str] = []
-        if not comment:
+        if (len(phrase) >= 3
+            and not comment
+            and not self._m17n_trans_parts.candidates
+            and not self._typed_compose_sequence):
             dictionary_matches = (
                 self.database.hunspell_obj.spellcheck_match_list(phrase))
         # U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR make
