@@ -150,6 +150,15 @@ def parse_args() -> Any:
               'Slows the search down and is usually not needed. '
               'default: %(default)s'))
     parser.add_argument(
+        '--unikemet',
+        nargs='?',
+        type=str2bool,
+        action='store',
+        const=True, # if --unikemet with no value, assume True
+        default=True,
+        help=('Load the Unikemet.txt file for Egyptian Hieroglyphs. '
+              'default: %(default)s'))
+    parser.add_argument(
         '--match-limit',
         nargs='?',
         type=int,
@@ -243,6 +252,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                  languages: Iterable[str] = ('en_US',),
                  modal: bool = False,
                  unicode_data_all: bool = False,
+                 unikemet: bool = True,
                  emoji_unicode_min: str = '0.0',
                  emoji_unicode_max: str = '100.0',
                  font: Optional[str] = None,
@@ -308,9 +318,11 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._match_limit = match_limit
         self._spellcheck = spellcheck
         self._unicode_data_all = unicode_data_all
+        self._unikemet = unikemet
         self._emoji_matcher = itb_emoji.EmojiMatcher(
             languages=self._languages,
             unicode_data_all=self._unicode_data_all,
+            unikemet=self._unikemet,
             emoji_unicode_min=self._emoji_unicode_min,
             emoji_unicode_max=self._emoji_unicode_max,
             variation_selector='emoji')
@@ -2432,6 +2444,7 @@ if __name__ == '__main__':
         fallback=_ARGS.fallback,
         modal=_ARGS.modal,
         unicode_data_all=_ARGS.all,
+        unikemet=_ARGS.unikemet,
         emoji_unicode_min=_ARGS.emoji_unicode_min,
         emoji_unicode_max=_ARGS.emoji_unicode_max,
         match_limit=_ARGS.match_limit,

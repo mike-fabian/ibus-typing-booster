@@ -456,6 +456,7 @@ class EmojiMatcher():
     def __init__(self, languages: Iterable[str] = ('en_US',),
                  unicode_data: bool = True,
                  unicode_data_all: bool = False,
+                 unikemet: bool = False,
                  emoji_unicode_min: str = '0.0',
                  emoji_unicode_max: str = '100.0',
                  cldr_data: bool = True,
@@ -470,6 +471,8 @@ class EmojiMatcher():
         :param unicode_data_all: Whether to load *all* of the Unicode
                                  characters from UnicodeData.txt.
                                  If False, most regular letters are omitted.
+        :param unikemet: Whether to load the Unikemet.txt file
+                         for Egyptian Hieroglyphs (requires unicode_data == True)
         :param cldr_data: Whether to load data from CLDR as well
         :param romaji: Whether to add Latin transliteration for Japanese.
                        Works only when pykakasi is available, if this is not
@@ -520,6 +523,8 @@ class EmojiMatcher():
         if unicode_data:
             self._load_unicode_data()
             self._load_name_aliases()
+            if unikemet:
+                self._load_unikemet()
         self._load_unicode_emoji_data()
         self._load_unicode_emoji_sequences()
         self._load_unicode_emoji_zwj_sequences()
@@ -726,6 +731,61 @@ class EmojiMatcher():
                     existing += [value]
         else:
             inner_dict[values_key] = values
+
+    def _load_unikemet(self) -> None:
+        '''Loads Unikemet.txt for Egyptian Hieroglyphs'''
+        dirnames = (USER_DATADIR, DATADIR,
+                    # On Fedora, the “unicode-ucd” package has the
+                    # Blocks.txt file here:
+                    '/usr/share/unicode/ucd',
+                    # On Ubuntu 20.04.3 it is here:
+                    '/usr/share/unicode/',)
+        basenames = ('Unikemet.txt',)
+        (path, open_function) = _find_path_and_open_function(
+            dirnames, basenames)
+        if not path:
+            LOGGER.warning(
+                'could not find "%s" in "%s"', basenames, dirnames)
+            return
+        if open_function is None:
+            LOGGER.warning('could not find open function')
+            return
+        try:
+            with open_function( # type: ignore
+                    path, mode='rt', encoding='utf-8') as unikemet_file:
+                for line in unikemet_file:
+                    line = line.partition('#')[0].strip()
+                    if not line:
+                        continue
+                    try:
+                        codepoint_string, tag, value = (
+                            part.strip() for part in line.split('\t', 2))
+                    except ValueError:
+                        continue # Malformed line
+                    emoji_string = chr(int(codepoint_string[2:],16))
+                    emoji_dict_key = (emoji_string, 'en')
+                    if emoji_dict_key in self._emoji_dict:
+                        if tag == 'kEH_Desc':
+                            value = value.strip('.')
+                            for name in value.split(','):
+                                self._add_to_emoji_dict(
+                                    emoji_dict_key, 'names', [name])
+                        elif tag == 'kEH_Func':
+                            if not ' ' in value:
+                                self._add_to_emoji_dict(
+                                    emoji_dict_key, 'keywords', [value])
+                            else:
+                                function, description = (
+                                    part.strip() for part in value.split(' ', 1))
+                                self._add_to_emoji_dict(
+                                    emoji_dict_key, 'keywords', [function])
+                                self._add_to_emoji_dict(
+                                    emoji_dict_key, 'keywords',
+                                    [description.strip('()')])
+        except (OSError, IOError) as error:
+            LOGGER.exception(
+                'Error while loading Blocks from %s: %s: %s',
+                path, error.__class__.__name__, error)
 
     def _load_unicode_blocks(self) -> None:
         '''Loads the names of Unicode blocks'''
