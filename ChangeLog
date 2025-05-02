@@ -1,4 +1,19 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 03 May 2025 Release 2.27.46
+* Add support for .bz2 and .xz to opening files for emoji data
+* Do not add useless dictionary match labels (or flags) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/702)
+* Load also the Unikemet.txt file from UCD (if available)
+* emoji_picker.py: Improve argument parsing, add --spellcheck option
+* Also match against the Unicode block names from Block.txt
+* Migrate test_0_gtk.py from Gtk.main() to GLib.MainLoop()
+* The search entries for adding dictionaries, inputmethods, and autosettings should grab focus immediately when the popover is shown
+* Reduce match_limit in emoji-picker by default to 1_000 again but add a --match-limit command line option
+* Load also the NameAliases.txt file from UCD
+* Load also the old Unicode 1.0 name from UnicodeData.txt (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/698)
+* Migrate from Gtk.main() to GLib.MainLoop() (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/699)
+* Translation update from Weblate (kab 75.5%, zh_TW 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 27 Apr 2025 Release 2.27.42
 * Ignore self._candidates_delay_milliseconds when OSK is in use (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/695)
 * Do not show frequency debugging information in the looup table when OSK is active

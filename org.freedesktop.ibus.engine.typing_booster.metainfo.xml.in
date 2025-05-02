@@ -47,6 +47,69 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.46" date="2025-05-03" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.46</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Add support for .bz2 and .xz to opening files for emoji
+            data
+          </li>
+          <li>
+            Do not add useless dictionary match labels (or flags)
+            (Resolves: github-issues#702)
+          </li>
+          <li>
+            Load also the Unikemet.txt file from UCD (if available)
+          </li>
+          <li>
+            emoji_picker.py: Improve argument parsing, add
+            --spellcheck option
+          </li>
+          <li>
+            Also match against the Unicode block names from Block.txt
+          </li>
+          <li>
+            Migrate test_0_gtk.py from Gtk.main() to GLib.MainLoop()
+          </li>
+          <li>
+            The search entries for adding dictionaries, inputmethods,
+            and autosettings should grab focus immediately when the
+            popover is shown
+          </li>
+          <li>
+            Reduce match_limit in emoji-picker by default to 1_000
+            again but add a --match-limit command line option
+          </li>
+          <li>
+            Load also the NameAliases.txt file from UCD
+          </li>
+          <li>
+            Load also the old Unicode 1.0 name from UnicodeData.txt
+            (Resolves: github-issues#698)
+          </li>
+          <li>
+            Migrate from Gtk.main() to GLib.MainLoop() (Resolves:
+            github-issues#699)
+          </li>
+          <li>
+            Translation update from Weblate (kab 75.5%, zh_TW 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/702">
+          github-issues#702
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/698">
+          github-issues#698
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/699">
+          github-issues#699
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.42" date="2025-04-27" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.42</url>
       <description>
