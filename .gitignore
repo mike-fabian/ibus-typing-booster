@@ -1,4 +1,7 @@
 /ABOUT-NLS
+/INSTALL
+/missing
+/py-compile
 Makefile
 Makefile.in
 /aclocal.m4
