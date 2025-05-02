@@ -47,6 +47,19 @@ DOMAINNAME = 'ibus-typing-booster'
 _: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
 N_: Callable[[str], str] = lambda a: a
 
+IMPORT_BZ2_SUCCESSFUL = False
+try:
+    import bz2
+    IMPORT_BZ2_SUCCESSFUL = True
+except ImportError:
+    pass
+IMPORT_LZMA_SUCCESSFUL = False
+try:
+    import lzma
+    IMPORT_LZMA_SUCCESSFUL = True
+except ImportError:
+    pass
+
 IMPORT_RAPIDFUZZ_SUCCESSFUL = False
 try:
     import rapidfuzz
@@ -81,6 +94,22 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 DATADIR = os.path.join(os.path.dirname(__file__), '../data')
 # USER_DATADIR will be “~/.local/share/ibus-typing-booster/data” by default
 USER_DATADIR = itb_util.xdg_save_data_path('ibus-typing-booster/data')
+UNICODE_DATA_DIRNAMES = (
+    USER_DATADIR, DATADIR,
+    # On Fedora, the “unicode-ucd” package has
+    # UnicodeData.txt, Blocks.txt, ... files here:
+    '/usr/share/unicode/ucd',
+    # On Ubuntu 20.04.3 and Debian they are here:
+    '/usr/share/unicode/')
+UNICODE_EMOJI_DATA_DIRNAMES = (
+    USER_DATADIR, DATADIR,
+    # The unicode-emoji package on Fedora has all 5 emoji data files
+    # in this directory. On Debian the unicode-data package has all 5
+    # files in the same directory:
+    '/usr/share/unicode/emoji',
+    # The unicode-ucd package on Fedora has emoj-data.txt and
+    # emoji-variation-sequences.txt here::
+    '/usr/share/unicode/ucd/')
 CLDR_ANNOTATION_DIRNAMES = (
     USER_DATADIR, DATADIR,
     # On Fedora >= 25 there is a
@@ -334,12 +363,12 @@ def _find_path_and_open_function(
     '''Find the first existing file of a list of basenames and dirnames
 
     For each file in “basenames”, tries whether that file or the
-    file with “.gz” added can be found in the list of directories
+    file with “.gz|.bz2|.xz” added can be found in the list of directories
     “dirnames” where “subdir” is added to each directory in the list.
 
     Returns a tuple (path, open_function) where “path” is the
     complete path of the first file found and the open function
-    is either “open()” or “gzip.open()”.
+    is either “open()”, “gzip.open()”, “bz2.open()”, or “lzma.open()”.
 
     :param dirnames: A list of directories to search in
     :param basenames: A list of file names to search for
@@ -347,14 +376,35 @@ def _find_path_and_open_function(
     '''
     for basename in basenames:
         for dirname in dirnames:
-            path = os.path.join(dirname, subdir, basename)
-            if os.path.exists(path):
-                if path.endswith('.gz'):
-                    return (path, gzip.open)
-                return (path, open)
-            path = os.path.join(dirname, subdir, basename + '.gz')
-            if os.path.exists(path):
-                return (path, gzip.open)
+            base_path = os.path.expanduser(
+                os.path.join(dirname, subdir, basename))
+            if os.path.exists(base_path):
+                if base_path.endswith('.gz'):
+                    LOGGER.info('Found gzip file: %s', base_path)
+                    return (base_path, gzip.open)
+                if base_path.endswith('.bz2') and IMPORT_BZ2_SUCCESSFUL:
+                    LOGGER.info('Found bzip2 file: %s', base_path)
+                    return (base_path, bz2.open)
+                if base_path.endswith('.xz') and IMPORT_LZMA_SUCCESSFUL:
+                    LOGGER.info('Found xz file: %s', base_path)
+                    return (base_path, lzma.open)
+                LOGGER.info('Found uncompressed file: %s', base_path)
+                return (base_path, open)
+            gz_path = base_path + '.gz'
+            if os.path.exists(gz_path):
+                LOGGER.info('Found gzip file: %s', gz_path)
+                return (gz_path, gzip.open)
+            if IMPORT_BZ2_SUCCESSFUL:
+                bz2_path = base_path + '.bz2'
+                if os.path.exists(bz2_path):
+                    LOGGER.info('Found bzip2 file: %s', bz2_path)
+                    return (bz2_path, bz2.open)
+            if IMPORT_LZMA_SUCCESSFUL:
+                xz_path = base_path + '.xz'
+                if os.path.exists(xz_path):
+                    LOGGER.info('Found xz file: %s', xz_path)
+                    return (xz_path, lzma.open)
+    LOGGER.warning('Could not find any "%s" in "%s"', basenames, dirnames)
     return ('', None)
 
 def find_cldr_annotation_path(language: str) -> str:
@@ -734,21 +784,11 @@ class EmojiMatcher():
 
     def _load_unikemet(self) -> None:
         '''Loads Unikemet.txt for Egyptian Hieroglyphs'''
-        dirnames = (USER_DATADIR, DATADIR,
-                    # On Fedora, the “unicode-ucd” package has the
-                    # Blocks.txt file here:
-                    '/usr/share/unicode/ucd',
-                    # On Ubuntu 20.04.3 it is here:
-                    '/usr/share/unicode/',)
+        dirnames = UNICODE_DATA_DIRNAMES
         basenames = ('Unikemet.txt',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
-        if not path:
-            LOGGER.warning(
-                'could not find "%s" in "%s"', basenames, dirnames)
-            return
-        if open_function is None:
-            LOGGER.warning('could not find open function')
+        if not path or open_function is None:
             return
         try:
             with open_function( # type: ignore
@@ -789,21 +829,11 @@ class EmojiMatcher():
 
     def _load_unicode_blocks(self) -> None:
         '''Loads the names of Unicode blocks'''
-        dirnames = (USER_DATADIR, DATADIR,
-                    # On Fedora, the “unicode-ucd” package has the
-                    # Blocks.txt file here:
-                    '/usr/share/unicode/ucd',
-                    # On Ubuntu 20.04.3 it is here:
-                    '/usr/share/unicode/',)
+        dirnames = UNICODE_DATA_DIRNAMES
         basenames = ('Blocks.txt',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
-        if not path:
-            LOGGER.warning(
-                'could not find "%s" in "%s"', basenames, dirnames)
-            return
-        if open_function is None:
-            LOGGER.warning('could not find open function')
+        if not path or open_function is None:
             return
         try:
             with open_function( # type: ignore
@@ -845,21 +875,11 @@ class EmojiMatcher():
         'uversion' will be overwritten with 10.0 here and 5.0 will
         still be available as 'eversion'.
         '''
-        dirnames = (USER_DATADIR, DATADIR,
-                    # On Fedora, the “unicode-ucd” package has the
-                    # DerivedAge.txt file here:
-                    '/usr/share/unicode/ucd',
-                    # On Ubuntu 20.04.3 it is here:
-                    '/usr/share/unicode/',)
+        dirnames = UNICODE_DATA_DIRNAMES
         basenames = ('DerivedAge.txt',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
-        if not path:
-            LOGGER.warning(
-                'could not find "%s" in "%s"', basenames, dirnames)
-            return
-        if open_function is None:
-            LOGGER.warning('could not find open function')
+        if not path or open_function is None:
             return
         try:
             with open_function( # type: ignore
@@ -891,21 +911,11 @@ class EmojiMatcher():
 
     def _load_name_aliases(self) -> None:
         '''Loads alternative names from NameAliases.txt'''
-        dirnames = (USER_DATADIR, DATADIR,
-                    # On Fedora, the “unicode-ucd” package has the
-                    # NameAliases.txt file here:
-                    '/usr/share/unicode/ucd',
-                    # On Ubuntu 20.04.3 it is here:
-                    '/usr/share/unicode/',)
+        dirnames = UNICODE_DATA_DIRNAMES
         basenames = ('NameAliases.txt',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
-        if not path:
-            LOGGER.warning(
-                'could not find "%s" in "%s"', basenames, dirnames)
-            return
-        if open_function is None:
-            LOGGER.warning('could not find open function')
+        if not path or open_function is None:
             return
         try:
             with open_function( # type: ignore
@@ -930,22 +940,12 @@ class EmojiMatcher():
                 error.__class__.__name__, error)
 
     def _load_unicode_data(self) -> None:
-        '''Loads emoji names from UnicodeData.txt'''
-        dirnames = (USER_DATADIR, DATADIR,
-                    # On Fedora, the “unicode-ucd” package has the
-                    # UnicodeData.txt file here:
-                    '/usr/share/unicode/ucd',
-                    # On Ubuntu 20.04.3 it is here:
-                    '/usr/share/unicode/',)
+        '''Loads character names from UnicodeData.txt'''
+        dirnames = UNICODE_DATA_DIRNAMES
         basenames = ('UnicodeData.txt',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
-        if not path:
-            LOGGER.warning(
-                'could not find "%s" in "%s"', basenames, dirnames)
-            return
-        if open_function is None:
-            LOGGER.warning('could not find open function')
+        if not path or open_function is None:
             return
         try:
             with open_function( # type: ignore
@@ -995,16 +995,11 @@ class EmojiMatcher():
 
         http://unicode.org/Public/emoji/5.0/emoji-data.txt
         '''
-        dirnames = (USER_DATADIR, DATADIR)
+        dirnames = UNICODE_EMOJI_DATA_DIRNAMES
         basenames = ('emoji-data.txt',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
-        if not path:
-            LOGGER.warning(
-                'could not find "%s" in "%s"', basenames, dirnames)
-            return
-        if open_function is None:
-            LOGGER.warning('could not find open function')
+        if not path or open_function is None:
             return
         try:
             with open_function( # type: ignore
@@ -1055,16 +1050,11 @@ class EmojiMatcher():
 
         http://unicode.org/Public/emoji/5.0/emoji-sequences.txt
         '''
-        dirnames = (USER_DATADIR, DATADIR)
+        dirnames = UNICODE_EMOJI_DATA_DIRNAMES
         basenames = ('emoji-sequences.txt',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
-        if not path:
-            LOGGER.warning(
-                'could not find "%s" in "%s"', basenames, dirnames)
-            return
-        if open_function is None:
-            LOGGER.warning('could not find open function')
+        if not path or open_function is None:
             return
         try:
             with open_function( # type: ignore
@@ -1123,16 +1113,11 @@ class EmojiMatcher():
 
         http://unicode.org/Public/emoji/5.0/emoji-zwj-sequences.txt
         '''
-        dirnames = (USER_DATADIR, DATADIR)
+        dirnames = UNICODE_EMOJI_DATA_DIRNAMES
         basenames = ('emoji-zwj-sequences.txt',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
-        if not path:
-            LOGGER.warning(
-                'could not find "%s" in "%s"', basenames, dirnames)
-            return
-        if open_function is None:
-            LOGGER.warning('could not find open function')
+        if not path or open_function is None:
             return
         try:
             with open_function( # type: ignore
@@ -1188,16 +1173,11 @@ class EmojiMatcher():
 
         This is mostly for emoji sorting and for some categorization
         '''
-        dirnames = (USER_DATADIR, DATADIR)
+        dirnames = UNICODE_EMOJI_DATA_DIRNAMES
         basenames = ('emoji-test.txt',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
-        if not path:
-            LOGGER.warning(
-                'could not find "%s" in "%s"', basenames, dirnames)
-            return
-        if open_function is None:
-            LOGGER.warning('could not find open function')
+        if not path or open_function is None:
             return
         try:
             with open_function( # type: ignore
@@ -1298,12 +1278,7 @@ class EmojiMatcher():
         basenames = ('emoji.json', 'emojione.json')
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames)
-        if not path:
-            LOGGER.warning(
-                'could not find "%s" in "%s"', basenames, dirnames)
-            return
-        if open_function is None:
-            LOGGER.warning('could not find open function')
+        if not path or open_function is None:
             return
         with open_function( # type: ignore
                 path, mode='rt', encoding='utf-8') as emoji_one_file:
@@ -1456,16 +1431,16 @@ class EmojiMatcher():
         basenames = (language + '.xml',)
         (path, open_function) = _find_path_and_open_function(
             dirnames, basenames, subdir=subdir)
-        if not path:
-            return
-        if open_function is None:
-            LOGGER.warning('could not find open function')
+        if not path or open_function is None:
             return
         # change language to the language of the file which was really
         # found (For example, it could be that 'es_ES' was requested,
         # but only the fallback 'es' was really found):
-        language = os.path.basename(
-            path).replace('.gz', '').replace('.xml', '')
+        language = os.path.basename(path).replace(
+            '.gz', '').replace(
+                '.bz2', '').replace(
+                    '.xz', '').replace(
+                        '.xml', '')
         is_english = language.startswith('en')
         add_pinyin = language in ('zh', 'zh_Hant') and IMPORT_PINYIN_SUCCESSFUL
         add_japanese_phonetics = language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL
