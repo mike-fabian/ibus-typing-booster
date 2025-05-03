@@ -8440,7 +8440,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     'self.is_empty(): KeyEvent object: %s', key)
             # This is the first character typed since the last commit
             # there is nothing in the preëdit yet.
-            if key.val < 32 or key.val == IBus.KEY_Escape:
+            if key.val < 32:
                 # If the first character of a new word is a control
                 # character, return False to pass the character through as is,
                 # it makes no sense trying to complete something

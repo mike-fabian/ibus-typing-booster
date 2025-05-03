@@ -5691,9 +5691,10 @@ class KeyEvent:
         self.msymbol = self.unicode
         if not self.msymbol:
             self.msymbol = self.name
-        if self.msymbol == '\r':
+        if self.msymbol in ('\r', '\x1b'):
             # https://github.com/mike-fabian/ibus-typing-booster/issues/457
-            self.msymbol = self.name # “Return”
+            # https://github.com/mike-fabian/ibus-typing-booster/issues/704
+            self.msymbol = self.name # “Return”, “Escape”
         self.shift = self.state & IBus.ModifierType.SHIFT_MASK != 0
         self.lock = self.state & IBus.ModifierType.LOCK_MASK != 0
         self.control = self.state & IBus.ModifierType.CONTROL_MASK != 0

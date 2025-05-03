@@ -27,8 +27,11 @@ import logging
 import unittest
 import unicodedata
 
+# pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
+from gi.repository import IBus # type: ignore
+# pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -175,6 +178,52 @@ class ItbUtilTestCase(unittest.TestCase):
                     unicodedata.normalize('NFD', 'alkoholförgiftning'),
                     keep=unicodedata.normalize('NFD', 'åÅÖö'))),
             'alkoholförgiftning')
+
+    def test_msymbol_for_return_and_escape(self) -> None:
+        '''
+        Return: https://github.com/mike-fabian/ibus-typing-booster/issues/457
+        Escape: https://github.com/mike-fabian/ibus-typing-booster/issues/704
+        '''
+        key_event = itb_util.KeyEvent(
+            IBus.KEY_Escape,
+            0,
+            0)
+        self.assertEqual(key_event.msymbol, 'Escape')
+        key_event = itb_util.KeyEvent(
+            IBus.KEY_Escape,
+            0,
+            IBus.ModifierType.SHIFT_MASK)
+        self.assertEqual(key_event.msymbol, 'S-Escape')
+        key_event = itb_util.KeyEvent(
+            IBus.KEY_Escape,
+            0,
+            IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(key_event.msymbol, 'C-Escape')
+        key_event = itb_util.KeyEvent(
+            IBus.KEY_Escape,
+            0,
+            IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(key_event.msymbol, 'S-C-Escape')
+        key_event = itb_util.KeyEvent(
+            IBus.KEY_Return,
+            0,
+            0)
+        self.assertEqual(key_event.msymbol, 'Return')
+        key_event = itb_util.KeyEvent(
+            IBus.KEY_Return,
+            0,
+            IBus.ModifierType.SHIFT_MASK)
+        self.assertEqual(key_event.msymbol, 'S-Return')
+        key_event = itb_util.KeyEvent(
+            IBus.KEY_Return,
+            0,
+            IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(key_event.msymbol, 'C-Return')
+        key_event = itb_util.KeyEvent(
+            IBus.KEY_Return,
+            0,
+            IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(key_event.msymbol, 'S-C-Return')
 
 if __name__ == '__main__':
     LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
