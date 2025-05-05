@@ -373,6 +373,21 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'ä ')
 
+    def test_te_rts_tab(self) -> None:
+        '''https://github.com/mike-fabian/ibus-typing-booster/issues/708
+
+        `Tab` needs to work as input, it is used in some m17n-db input methods.
+        '''
+        dummy_trans = self.get_transliterator_or_skip('te-rts')
+        self.engine.set_current_imes(
+            ['te-rts'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine.mock_preedit_text, 'మ్')
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine.mock_preedit_text, 'ం\t')
+
     def test_shift_space_latn_post(self) -> None:
         '''https://github.com/mike-fabian/ibus-typing-booster/issues/524'''
         dummy_trans = self.get_transliterator_or_skip('t-latn-post')
