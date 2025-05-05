@@ -56,6 +56,7 @@ test_exec_SCRIPTS = \
 	run_tests \
 	chant_d_automne.txt \
 	the_road_not_taken.txt \
+	test-issue-707.mim \
 	$(NULL)
 test_execdir = $(libexecdir)/installed-tests/ibus-typing-booster
 
@@ -82,6 +83,7 @@ EXTRA_DIST = \
 	run_tests.in \
 	chant_d_automne.txt \
 	the_road_not_taken.txt \
+	test-issue-707.mim \
 	$(TESTS) \
 	$(NULL)
 

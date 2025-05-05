@@ -21,16 +21,24 @@
 This file implements test cases for finding key codes for key values
 '''
 
+from typing import Optional
 from typing import Any
 import sys
 import os
+import shutil
 import locale
 import tempfile
+import logging
 import unittest
 
+LOGGER = logging.getLogger('ibus-typing-booster')
+
 # Avoid failing test cases because of stuff in the users M17NDIR ('~/.m17n.d'):
-os.environ['M17NDIR'] = tempfile.TemporaryDirectory().name # pylint: disable=consider-using-with
-M17N_CONFIG_FILE= os.path.join(os.environ['M17NDIR'], 'config.mic')
+# The environments needs to be changed *before* `import m17n_translit`
+# since libm17n reads it at load time!
+_ORIG_M17NDIR = os.environ.pop('M17NDIR', None)
+_TEMPDIR = tempfile.TemporaryDirectory() # pylint: disable=consider-using-with
+os.environ['M17NDIR'] = _TEMPDIR.name
 
 # pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
@@ -49,9 +57,44 @@ M17N_DB_VERSION = (M17N_DB_INFO.get_major_version(),
                    M17N_DB_INFO.get_micro_version())
 
 class M17nTranslitTestCase(unittest.TestCase):
-    def setUp(self) -> None:
-        # Avoid translations changing test case results:
+    _tempdir: Optional[tempfile.TemporaryDirectory] = None # type: ignore[type-arg]
+    # Python 3.12+: _tempdir: Optional[tempfile.TemporaryDirectory[str]] = None
+    _orig_m17ndir: Optional[str] = None
+    _m17ndir: Optional[str] = None
+    _m17n_config_file: Optional[str] = None
+
+    @classmethod
+    def setUpClass(cls) -> None:
         locale.setlocale(locale.LC_MESSAGES, 'en_US.UTF-8')
+        cls._tempdir = _TEMPDIR
+        cls._orig_m17ndir = _ORIG_M17NDIR
+        cls._m17ndir = cls._tempdir.name
+        cls._m17n_config_file = os.path.join(cls._m17ndir, 'config.mic')
+        # Copy test input methods into M17NDIR
+        for mim_file in ('test-issue-707.mim',):
+            mim_file_path = os.path.join(os.path.dirname(__file__), mim_file)
+            shutil.copy(mim_file_path, cls._m17ndir)
+        m17n_dir_files = [os.path.join(cls._m17ndir, name)
+                          for name in os.listdir(cls._m17ndir)]
+        for path in m17n_dir_files:
+            LOGGER.info('M17NDIR content: %r', path)
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        if cls._orig_m17ndir is not None:
+            os.environ['M17NDIR'] = cls._orig_m17ndir
+        else:
+            _value = os.environ.pop('M17NDIR', None)
+        if cls._tempdir is not None:
+            cls._tempdir.cleanup()
+
+    @property
+    def m17n_config_file(self) -> str:
+        assert self.__class__._m17n_config_file is not None # pylint: disable=protected-access
+        return self.__class__._m17n_config_file # pylint: disable=protected-access
+
+    def setUp(self) -> None:
+        pass
 
     def tearDown(self) -> None:
         pass
@@ -83,6 +126,14 @@ class M17nTranslitTestCase(unittest.TestCase):
         except Exception: # pylint: disable=broad-except
             # Something unexpected happened:
             self.assertTrue(False) # pylint: disable=redundant-unittest-assert
+
+    def test_issue_707_mim(self) -> None:
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/707 '''
+        trans = self.get_transliterator_or_skip('t-test-issue-707')
+        self.assertEqual(trans.transliterate(['C-u']), 'prompt:')
+        self.assertEqual(trans.transliterate(['C-u', ' ']), ' ')
+        self.assertEqual(trans.transliterate(['C-u', 'C-c']), 'C-c')
+        self.assertEqual(trans.transliterate(['C-u'] + list('foo')), 'bar')
 
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 8),
@@ -1896,7 +1947,7 @@ class M17nTranslitTestCase(unittest.TestCase):
               'Hiragana or Katakana (not yet implemented)\nSelect Hiragana or Katakana',
               'katakana'),
              ('zen-han', 'Zenkaku or Hankaku (not yet implemented)', 'hankaku')])
-        with open(M17N_CONFIG_FILE, encoding='utf-8') as config_file:
+        with open(self.m17n_config_file, encoding='utf-8') as config_file:
             config_file_contents = config_file.read()
         self.assertEqual(
             config_file_contents,
@@ -1917,7 +1968,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         trans_bn_national_jatiya.set_variables({'use-automatic-vowel-forming': '1'})
         trans_t_unicode.set_variables({'prompt': 'U+'})
         trans_ja_anthy.set_variables({'input-mode': 'hiragana', 'zen-han': 'zenkaku'})
-        with open(M17N_CONFIG_FILE, encoding='utf-8') as config_file:
+        with open(self.m17n_config_file, encoding='utf-8') as config_file:
             config_file_contents = config_file.read()
         self.assertEqual(
             config_file_contents,
@@ -1940,7 +1991,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         trans_ja_anthy.set_variables({'input-mode': '', 'zen-han': ''})
         # Setting the *global* default values like this should make the config
         # file empty (except for the comment line at the top):
-        with open(M17N_CONFIG_FILE, encoding='utf-8') as config_file:
+        with open(self.m17n_config_file, encoding='utf-8') as config_file:
             config_file_contents = config_file.read()
         self.assertEqual(
             config_file_contents,
@@ -1958,7 +2009,7 @@ class M17nTranslitTestCase(unittest.TestCase):
               '1')])
         self.assertEqual(trans.transliterate(['a']), 'ঋ')  # U+098B BENGALI LETTER VOCALIC R
         trans.set_variables({'use-automatic-vowel-forming': '0'})
-        with open(M17N_CONFIG_FILE, encoding='utf-8') as config_file:
+        with open(self.m17n_config_file, encoding='utf-8') as config_file:
             config_file_contents = config_file.read()
         self.assertEqual(
             config_file_contents,
@@ -1983,7 +2034,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         trans.set_variables({'use-automatic-vowel-forming': ''})
         # Setting the *global* default value like this should make the config
         # file empty (except for the comment line at the top):
-        with open(M17N_CONFIG_FILE, encoding='utf-8') as config_file:
+        with open(self.m17n_config_file, encoding='utf-8') as config_file:
             config_file_contents = config_file.read()
         self.assertEqual(
             config_file_contents,
@@ -2002,4 +2053,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(['a']), 'ঋ')  # U+098B BENGALI LETTER VOCALIC R
 
 if __name__ == '__main__':
+    LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(LOG_HANDLER)
     unittest.main()

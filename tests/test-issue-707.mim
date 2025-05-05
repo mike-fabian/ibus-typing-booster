@@ -1,0 +1,13 @@
+(input-method t test-issue-707)
+
+(map
+  (prompt ((C-U) "prompt:"))
+  (map ("foo" (delete @<) "bar")))
+
+(state
+  (init
+    (prompt (shift map)))
+  (map
+    (map (shift init))
+    (nil (delete @<) (shift init))))
+
