@@ -5691,10 +5691,11 @@ class KeyEvent:
         self.msymbol = self.unicode
         if not self.msymbol:
             self.msymbol = self.name
-        if self.msymbol in ('\r', '\x1b', '\t'):
+        if self.msymbol in ('\r', '\x1b', '\t', '\x08', '\x7f'):
+            # “Return”, “Escape”, “Tab”, “BackSpace”, “Delete”
             # https://github.com/mike-fabian/ibus-typing-booster/issues/457
             # https://github.com/mike-fabian/ibus-typing-booster/issues/704
-            self.msymbol = self.name # “Return”, “Escape”, “Tab”
+            self.msymbol = self.name
         self.shift = self.state & IBus.ModifierType.SHIFT_MASK != 0
         self.lock = self.state & IBus.ModifierType.LOCK_MASK != 0
         self.control = self.state & IBus.ModifierType.CONTROL_MASK != 0

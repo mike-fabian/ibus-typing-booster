@@ -8517,7 +8517,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if (key.msymbol not in ('G- ', 'G-_')
             and not (key.msymbol in ('S- ')
                  and self._has_transliteration([key.msymbol]))
-            and (key.val in self._commit_trigger_keys
+            and ((key.val in self._commit_trigger_keys
+                  # https://github.com/mike-fabian/ibus-typing-booster/issues/709
+                  and not self._has_transliteration([key.msymbol]))
                  or (len(key.msymbol) == 1
                      and (key.control
                           or key.mod1 # mod1: Usually Alt
@@ -8901,7 +8903,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     self._forward_generated_key_event(IBus.KEY_Left)
             return False
 
-        if key.unicode:
+        if (key.unicode
+            # https://github.com/mike-fabian/ibus-typing-booster/issues/709
+            or (key.msymbol and self._has_transliteration([key.msymbol]))):
             # If the suggestions are only enabled by Tab key, i.e. the
             # lookup table is not shown until Tab has been typed, hide
             # the lookup table again when characters are added to the

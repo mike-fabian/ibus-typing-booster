@@ -225,6 +225,24 @@ class ItbUtilTestCase(unittest.TestCase):
             IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
         self.assertEqual(key_event.msymbol, 'S-C-Return')
 
+    def test_msymbol_for_tab_backspace_delete(self) -> None:
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/709 '''
+        key_event = itb_util.KeyEvent(
+            IBus.KEY_Tab,
+            0,
+            0)
+        self.assertEqual(key_event.msymbol, 'Tab')
+        key_event = itb_util.KeyEvent(
+            IBus.KEY_BackSpace,
+            0,
+            0)
+        self.assertEqual(key_event.msymbol, 'BackSpace')
+        key_event = itb_util.KeyEvent(
+            IBus.KEY_Delete,
+            0,
+            0)
+        self.assertEqual(key_event.msymbol, 'Delete')
+
 if __name__ == '__main__':
     LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
     LOGGER.setLevel(logging.DEBUG)

@@ -438,7 +438,9 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, '। ')
 
     def test_hi_itrans_commit_to_preedit(self) -> None:
-        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/457 '''
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/457
+        hi-itrans uses S-C-Return as a commit-key.
+        '''
         self.engine.set_current_imes(
             ['hi-itrans', 'mr-itrans', 'NoIME'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
@@ -470,7 +472,9 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'न्ट् अ\r')
 
     def test_mr_itrans_no_commit_to_preedit(self) -> None:
-        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/457 '''
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/457
+        mr-itrans does **not** define a commit-key.
+        '''
         self.engine.set_current_imes(
             ['mr-itrans', 'hi-itrans', 'NoIME'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
