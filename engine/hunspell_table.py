@@ -8738,6 +8738,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         input_phrase = input_phrase[:-len(key.msymbol)]
                         input_phrase = self._case_modes[
                             self._current_case_mode]['function'](input_phrase)
+                        if input_phrase == '':
+                            if self._debug_level > 1:
+                                LOGGER.debug(
+                                    'Cutting off the commit key made the '
+                                    'transliteration empty. '
+                                    'Call clear input and update UI to remove'
+                                    'any remaining preedit or lookup table.')
+                            self._clear_input_and_update_ui()
+                            return False
                     else:
                         # The commit key has been absorbed by the
                         # transliteration.  Add the key to the input
