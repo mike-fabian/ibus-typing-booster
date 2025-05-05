@@ -106,6 +106,7 @@ class SimpleGtkTestCase(unittest.TestCase):
     _flag: bool = False
     _gsettings: Optional[Gio.Settings] = None
     _orig_dictionary: str = ''
+    _orig_inputmethod: str = ''
     _orig_tabenable: bool = False
     _orig_inputmode: bool = True
     _orig_inline_completion: int = 0
@@ -120,6 +121,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             schema='org.freedesktop.ibus.engine.typing-booster',
             path='/org/freedesktop/ibus/engine/typing-booster/')
         cls._orig_dictionary = cls._gsettings.get_string('dictionary')
+        cls._orig_inputmethod = cls._gsettings.get_string('inputmethod')
         cls._orig_tabenable = cls._gsettings.get_boolean('tabenable')
         cls._orig_inputmode = cls._gsettings.get_boolean('inputmode')
         cls._orig_inline_completion = cls._gsettings.get_int('inlinecompletion')
@@ -139,6 +141,7 @@ class SimpleGtkTestCase(unittest.TestCase):
     def tearDownClass(cls) -> None:
         if cls._gsettings is not None:
             cls._gsettings.set_string('dictionary', cls._orig_dictionary)
+            cls._gsettings.set_string('inputmethod', cls._orig_inputmethod)
             cls._gsettings.set_boolean('tabenable', cls._orig_tabenable)
             cls._gsettings.set_boolean('inputmode', cls._orig_inputmode)
             cls._gsettings.set_int('inlinecompletion', cls._orig_inline_completion)
@@ -167,6 +170,7 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__commit_done = False # pylint: disable=unused-private-member
         if self._gsettings is not None:
             self._gsettings.set_string('dictionary', 'fr_FR,en_US')
+            self._gsettings.set_string('inputmethod', 'NoIME')
             self._gsettings.set_boolean('tabenable', False)
             self._gsettings.set_boolean('inputmode', True)
             self._gsettings.set_int('inlinecompletion', 0)
