@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 06 May 2025 Release 2.27.48
+* Don’t use spellchecking by default when searching for emoji and Unicode characters (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/710)
+* Support a few more unusual keys for transliteration (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/709)
+* If a key which triggers a commit makes input_phrase empty, clear the input and update to UI to remove preedit and lookup table (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/707)
+* Make self.msymbol == Tab when Tab is typed to enable m17n transliterations for Tab (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/708)
+* Update emoji annotations from CLDR
+* Allow Escape as input and make self.msymbol == 'Escape' when Escape is typed to enable m17n transliterations for Escape (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/704)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 03 May 2025 Release 2.27.46
 * Add support for .bz2 and .xz to opening files for emoji data
 * Do not add useless dictionary match labels (or flags) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/702)

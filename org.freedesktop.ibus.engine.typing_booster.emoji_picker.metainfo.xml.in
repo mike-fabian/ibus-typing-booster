@@ -41,6 +41,57 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.48" date="2025-05-06" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.48</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Don’t use spellchecking by default when searching for
+            emoji and Unicode characters (Resolves:
+            github-issues#710)
+          </li>
+          <li>
+            Support a few more unusual keys for transliteration
+            (Resolves: github-issues#709)
+          </li>
+          <li>
+            If a key which triggers a commit makes input_phrase empty,
+            clear the input and update to UI to remove preedit and
+            lookup table (Resolves: github-issues#707)
+          </li>
+          <li>
+            Make self.msymbol == Tab when Tab is typed to enable m17n
+            transliterations for Tab (Resolves: github-issues#708)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Allow Escape as input and make self.msymbol == 'Escape'
+            when Escape is typed to enable m17n transliterations for
+            Escape (Resolves: github-issues#704)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/710">
+          github-issues#710
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/709">
+          github-issues#709
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/707">
+          github-issues#707
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/708">
+          github-issues#708
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/704">
+          github-issues#704
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.46" date="2025-05-03" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.46</url>
       <description>
