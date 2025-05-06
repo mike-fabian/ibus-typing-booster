@@ -28,6 +28,8 @@ import os
 import sys
 import logging
 import unicodedata
+import tempfile
+import shutil
 import unittest
 import importlib
 from unittest import mock
@@ -60,6 +62,13 @@ from mock_engine import MockPropList
 # pylint: enable=import-error
 
 import testutils # pylint: disable=import-error
+
+# Avoid failing test cases because of stuff in the users M17NDIR ('~/.m17n.d'):
+# The environments needs to be changed *before* `import m17n_translit`
+# since libm17n reads it at load time!
+_ORIG_M17NDIR = os.environ.pop('M17NDIR', None)
+_TEMPDIR = tempfile.TemporaryDirectory() # pylint: disable=consider-using-with
+os.environ['M17NDIR'] = _TEMPDIR.name
 
 # pylint: disable=wrong-import-order
 sys.path.insert(0, "../engine")
@@ -119,13 +128,47 @@ class ItbTestCase(unittest.TestCase):
     ibus_lookup_table = IBus.LookupTable
     ibus_property = IBus.Property
     ibus_prop_list = IBus.PropList
+    _tempdir: Optional[tempfile.TemporaryDirectory] = None # type: ignore[type-arg]
+    # Python 3.12+: _tempdir: Optional[tempfile.TemporaryDirectory[str]] = None
+    _orig_m17ndir: Optional[str] = None
+    _m17ndir: Optional[str] = None
+    _m17n_config_file: Optional[str] = None
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls._tempdir = _TEMPDIR
+        cls._orig_m17ndir = _ORIG_M17NDIR
+        cls._m17ndir = cls._tempdir.name
+        cls._m17n_config_file = os.path.join(cls._m17ndir, 'config.mic')
+        # Copy test input methods into M17NDIR
+        for mim_file in ('test-issue-707.mim',):
+            mim_file_path = os.path.join(os.path.dirname(__file__), mim_file)
+            shutil.copy(mim_file_path, cls._m17ndir)
+        m17n_dir_files = [os.path.join(cls._m17ndir, name)
+                          for name in os.listdir(cls._m17ndir)]
+        for path in m17n_dir_files:
+            LOGGER.info('M17NDIR content: %r', path)
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        if cls._orig_m17ndir is not None:
+            os.environ['M17NDIR'] = cls._orig_m17ndir
+        else:
+            _value = os.environ.pop('M17NDIR', None)
+        if cls._tempdir is not None:
+            cls._tempdir.cleanup()
+
+    @property
+    def m17n_config_file(self) -> str:
+        assert self.__class__._m17n_config_file is not None # pylint: disable=protected-access
+        return self.__class__._m17n_config_file # pylint: disable=protected-access
 
     def setUp(self) -> None:
         # Patch the IBus stuff with the mock classes:
-        self.engine_patcher.start()
-        self.lookup_table_patcher.start()
-        self.property_patcher.start()
-        self.prop_list_patcher.start()
+        self.__class__.engine_patcher.start()
+        self.__class__.lookup_table_patcher.start()
+        self.__class__.property_patcher.start()
+        self.__class__.prop_list_patcher.start()
         assert IBus.Engine is not self.ibus_engine
         assert IBus.Engine is MockEngine
         assert IBus.LookupTable is not self.ibus_lookup_table
@@ -157,10 +200,10 @@ class ItbTestCase(unittest.TestCase):
         if self.database is not None:
             self.database.database.close()
         # Remove the patches from the IBus stuff:
-        self.engine_patcher.stop()
-        self.lookup_table_patcher.stop()
-        self.property_patcher.stop()
-        self.prop_list_patcher.stop()
+        self.__class__.engine_patcher.stop()
+        self.__class__.lookup_table_patcher.stop()
+        self.__class__.property_patcher.stop()
+        self.__class__.prop_list_patcher.stop()
         assert IBus.Engine is self.ibus_engine
         assert IBus.Engine is not MockEngine
         assert IBus.LookupTable is self.ibus_lookup_table
@@ -4283,6 +4326,30 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
         self.assertFalse(self.engine._temporary_emoji_predictions)
         self.assertFalse(self.engine._temporary_word_predictions)
+
+    def test_issuse_707_mim(self) -> None:
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/707 '''
+        dummy_trans = self.get_transliterator_or_skip('t-test-issue-707')
+        self.engine.set_current_imes(
+            ['t-test-issue-707'], update_gsettings=False)
+        self.engine.do_process_key_event(
+            IBus.KEY_u, 0, IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'prompt:')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, ' ')
+        self.engine.do_process_key_event(
+            IBus.KEY_u, 0, IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'prompt:')
+        self.assertEqual(self.engine.mock_committed_text, ' ')
+        for char in 'foo':
+            self.engine.do_process_key_event(getattr(IBus, f'KEY_{char}'), 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'bar')
+        self.assertEqual(self.engine.mock_committed_text, ' ')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, ' bar ')
 
 if __name__ == '__main__':
     LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
