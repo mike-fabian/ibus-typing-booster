@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-05-03 01:17+0200\n"
+"POT-Creation-Date: 2025-05-06 10:36+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
@@ -372,11 +372,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6004
+#: engine/itb_util.py:6006
 msgid "Key input"
 msgstr "키 입력"
 
-#: engine/itb_util.py:6010
+#: engine/itb_util.py:6012
 msgid "Cancel"
 msgstr "취소"
 
@@ -384,27 +384,27 @@ msgstr "취소"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6017
+#: engine/itb_util.py:6019
 msgid "Please press a key (or a key combination)"
 msgstr "키 (또는 키 조합)를 누르세요"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6022
+#: engine/itb_util.py:6024
 msgid "The dialog will be closed when the key is released"
 msgstr "대화상자는 키를 놓으면 닫힐 것입니다"
 
-#: engine/itb_util.py:6061
+#: engine/itb_util.py:6063
 msgid "A completion input method to speedup typing."
 msgstr "입력 속도를 높여주는 완성형 입력 방식."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6070
+#: engine/itb_util.py:6072
 msgid "translator-credits"
 msgstr "김인수 <simmon@nplob.com>"
 
-#: engine/itb_util.py:6078
+#: engine/itb_util.py:6080
 msgid "Online documentation:"
 msgstr "온라인 문서:"
 
