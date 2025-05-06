@@ -380,29 +380,29 @@ def _find_path_and_open_function(
                 os.path.join(dirname, subdir, basename))
             if os.path.exists(base_path):
                 if base_path.endswith('.gz'):
-                    LOGGER.info('Found gzip file: %s', base_path)
+                    LOGGER.debug('Found gzip file: %s', base_path)
                     return (base_path, gzip.open)
                 if base_path.endswith('.bz2') and IMPORT_BZ2_SUCCESSFUL:
-                    LOGGER.info('Found bzip2 file: %s', base_path)
+                    LOGGER.debug('Found bzip2 file: %s', base_path)
                     return (base_path, bz2.open)
                 if base_path.endswith('.xz') and IMPORT_LZMA_SUCCESSFUL:
-                    LOGGER.info('Found xz file: %s', base_path)
+                    LOGGER.debug('Found xz file: %s', base_path)
                     return (base_path, lzma.open)
-                LOGGER.info('Found uncompressed file: %s', base_path)
+                LOGGER.debug('Found uncompressed file: %s', base_path)
                 return (base_path, open)
             gz_path = base_path + '.gz'
             if os.path.exists(gz_path):
-                LOGGER.info('Found gzip file: %s', gz_path)
+                LOGGER.debug('Found gzip file: %s', gz_path)
                 return (gz_path, gzip.open)
             if IMPORT_BZ2_SUCCESSFUL:
                 bz2_path = base_path + '.bz2'
                 if os.path.exists(bz2_path):
-                    LOGGER.info('Found bzip2 file: %s', bz2_path)
+                    LOGGER.debug('Found bzip2 file: %s', bz2_path)
                     return (bz2_path, bz2.open)
             if IMPORT_LZMA_SUCCESSFUL:
                 xz_path = base_path + '.xz'
                 if os.path.exists(xz_path):
-                    LOGGER.info('Found xz file: %s', xz_path)
+                    LOGGER.debug('Found xz file: %s', xz_path)
                     return (xz_path, lzma.open)
     LOGGER.warning('Could not find any "%s" in "%s"', basenames, dirnames)
     return ('', None)
