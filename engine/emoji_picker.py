@@ -187,7 +187,7 @@ def parse_args() -> Any:
         type=str2bool,
         action='store',
         const=True, # if --spellcheck with no value, assume True
-        default=True,
+        default=False,
         help=('Whether to add spellchecking suggestions automatically to search strings'
               'default: %(default)s'))
     parser.add_argument(

@@ -642,19 +642,19 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     def test_candidates_spellchecking(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])
-        first_match = mq.candidates('buterfly')[0]
+        first_match = mq.candidates('buterfly', spellcheck=True)[0]
         self.assertEqual(first_match.phrase, '\U0001f98b')
         self.assertEqual(first_match.comment, 'butterfly')
-        first_match = mq.candidates('badminton')[0]
+        first_match = mq.candidates('badminton', spellcheck=True)[0]
         self.assertEqual(first_match.phrase, '🏸')
         self.assertEqual(first_match.comment, 'badminton racquet and shuttlecock')
-        first_match = mq.candidates('badmynton')[0]
+        first_match = mq.candidates('badmynton', spellcheck=True)[0]
         self.assertEqual(first_match.phrase, '🏸')
         self.assertEqual(first_match.comment, 'badminton racquet and shuttlecock')
-        first_match = mq.candidates('padminton')[0]
+        first_match = mq.candidates('padminton', spellcheck=True)[0]
         self.assertEqual(first_match.phrase, '🏸')
         self.assertEqual(first_match.comment, 'badminton racquet and shuttlecock')
-        first_match = mq.candidates('hedgehgo')[0]
+        first_match = mq.candidates('hedgehgo', spellcheck=True)[0]
         self.assertEqual(first_match.phrase, '🦔')
         self.assertEqual(first_match.comment, 'hedgehog')
 

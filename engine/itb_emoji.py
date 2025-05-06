@@ -1500,7 +1500,7 @@ class EmojiMatcher():
             query_string: str,
             match_limit: int = 20,
             trigger_characters: str  = '',
-            spellcheck: bool = True) -> List[itb_util.PredictionCandidate]:
+            spellcheck: bool = False) -> List[itb_util.PredictionCandidate]:
         # pylint: disable=line-too-long
         '''
         Find a list of emoji which best match a query string.
@@ -1685,7 +1685,7 @@ class EmojiMatcher():
         >>> first_match.comment
         'butterfly'
         >>> mq.set_match_algorithm('classic')
-        >>> first_match = mq.candidates('buterfly')[0]
+        >>> first_match = mq.candidates('buterfly', spellcheck=True)[0]
         >>> first_match.phrase
         '🦋'
         >>> first_match.comment
@@ -1718,39 +1718,39 @@ class EmojiMatcher():
         'badminton racquet and shuttlecock'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> first_match = mq.candidates('badmynton')[0]
+        >>> first_match = mq.candidates('badmynton', spellcheck=True)[0]
         >>> first_match.phrase
         '🏸'
         >>> first_match.comment
         'Badminton'
         >>> mq.set_match_algorithm('classic')
-        >>> first_match = mq.candidates('badmynton')[0]
+        >>> first_match = mq.candidates('badmynton', spellcheck=True)[0]
         >>> first_match.phrase
         '🏸'
         >>> first_match.comment
         'badminton racquet and shuttlecock'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> first_match = mq.candidates('padminton')[0]
+        >>> first_match = mq.candidates('padminton', spellcheck=True)[0]
         >>> first_match.phrase
         '🏸'
         >>> first_match.comment
         'Badminton'
         >>> mq.set_match_algorithm('classic')
-        >>> first_match = mq.candidates('padminton')[0]
+        >>> first_match = mq.candidates('padminton', spellcheck=True)[0]
         >>> first_match.phrase
         '🏸'
         >>> first_match.comment
         'badminton racquet and shuttlecock'
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> first_match = mq.candidates('hedgehgo')[0]
+        >>> first_match = mq.candidates('hedgehgo', spellcheck=True)[0]
         >>> first_match.phrase
         '🦔'
         >>> first_match.comment
         'hedgehog'
         >>> mq.set_match_algorithm('classic')
-        >>> first_match = mq.candidates('hedgehgo')[0]
+        >>> first_match = mq.candidates('hedgehgo', spellcheck=True)[0]
         >>> first_match.phrase
         '🦔'
         >>> first_match.comment
