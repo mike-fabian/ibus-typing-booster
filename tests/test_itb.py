@@ -2760,30 +2760,47 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_current_imes(['t-rfc1345'], update_gsettings=False)
         self.engine.set_dictionary_names(['en_US'], update_gsettings=False)
         # With unicode_data_all_mode set to False,
-        # 'linear_ideogram_bathtub' should find 🛁 U+1F6C1 BATHTUB but
+        # 'bathtub' should find 🛁 U+1F6C1 BATHTUB but
         # **not** 𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
         self.engine.set_unicode_data_all_mode(False, update_gsettings=False)
-        for char in 'linear_ideogram_bathtub':
+        for char in 'bathtub':
             if char == '_':
                 char = 'underscore'
             self.engine.do_process_key_event(getattr(IBus, f'KEY_{char}'), 0, 0)
         candidate_set = {x[0] for x in self.engine._candidates}
         self.assertTrue('🛁' in candidate_set) # 🛁 U+1F6C1 BATHTUB
-        self.assertFalse('𐃅' in candidate_set) # 𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
+        self.assertTrue('𐃅' not in candidate_set) # 𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
         self.assertEqual('', self.engine.mock_preedit_text)
         self.assertEqual('', self.engine.mock_committed_text)
         # With unicode_data_all_mode set to True,
-        # 'linear_ideogram_bathtub' should find both 🛁 U+1F6C1
+        # 'bathtub' should find both 🛁 U+1F6C1
         # BATHTUB **and** 𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
         self.engine.set_unicode_data_all_mode(True, update_gsettings=False)
-        for char in 'linear_ideogram_bathtub':
+        for char in 'bathtub':
             if char == '_':
                 char = 'underscore'
             self.engine.do_process_key_event(getattr(IBus, f'KEY_{char}'), 0, 0)
         candidate_set = {x[0] for x in self.engine._candidates}
         self.assertTrue('🛁' in candidate_set) # 🛁 U+1F6C1 BATHTUB
         self.assertTrue('𐃅' in candidate_set) # 𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        self.assertEqual('', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
+        # With unicode_data_all_mode set to True,
+        # 'linear_ideogram_bathtub' should not find 🛁 U+1F6C1
+        # BATHTUB but  𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
+        self.engine.set_unicode_data_all_mode(True, update_gsettings=False)
+        for char in 'linear_ideogram_bathtub':
+            if char == '_':
+                char = 'underscore'
+            self.engine.do_process_key_event(getattr(IBus, f'KEY_{char}'), 0, 0)
+        candidate_set = {x[0] for x in self.engine._candidates}
+        self.assertTrue('🛁'  not in candidate_set) # 🛁 U+1F6C1 BATHTUB
+        self.assertTrue('𐃅' in candidate_set) # 𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        self.assertEqual('', self.engine.mock_preedit_text)
+        self.assertEqual('', self.engine.mock_committed_text)
 
     def test_compose_transliterated_hi_inscript2(self) -> None:
         '''
@@ -4356,16 +4373,10 @@ class ItbTestCase(unittest.TestCase):
             'trigger_emoji_predictions': ['F13'],
         }, update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_F13, 0, 0)
-        self.engine.do_process_key_event(IBus.KEY_f, 0, 0)
-        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
-        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
-        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
-        self.engine.do_process_key_event(IBus.KEY_p, 0, 0)
-        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
-        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
-        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        for char in 'dromedary':
+            self.engine.do_process_key_event(getattr(IBus, f'KEY_{char}'), 0, 0)
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
-        self.assertEqual(self.engine.mock_committed_text, '🤦')
+        self.assertEqual(self.engine.mock_committed_text, '🐪')
         self.assertFalse(self.engine._temporary_emoji_predictions)
 
     @unittest.skipUnless(

@@ -161,7 +161,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'gatto che sorride')
         first_match = mq.candidates('halo')[0]
         self.assertEqual(first_match.phrase, '😇')
-        self.assertEqual(first_match.comment, 'smiling face with halo')
+        self.assertEqual(first_match.comment, 'cara sonriendo con aureola [halo]')
         first_match = mq.candidates('factory')[0]
         self.assertEqual(first_match.phrase, '🏭')
         self.assertEqual(first_match.comment, 'factory')
@@ -172,7 +172,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     def test_candidates_multilingual_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
-            match_algorithm='rapidfuzz')
+            match_algorithm = 'rapidfuzz')
         first_match = mq.candidates('ant')[0]
         self.assertEqual(first_match.phrase, '🐜')
         self.assertEqual(first_match.comment, 'ant')
@@ -183,14 +183,15 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.phrase, '🐜', 'Ameise')
         first_match = mq.candidates('formica')[0]
         self.assertEqual(first_match.phrase, '🐜')
-        self.assertEqual(first_match.comment, 'formica')
+        self.assertEqual(first_match.comment, 'formica [formichina]')
         first_match = mq.candidates('hormiga')[0]
         self.assertEqual(first_match.phrase, '🐜')
         self.assertEqual(first_match.comment, 'hormiga')
-        first_match = mq.candidates('cacca')[0]
-        # second candiate is ('💩', 'cacca'))
-        self.assertEqual(first_match.phrase, '\U000cacca')
-        self.assertEqual(first_match.comment, 'U+CACCA')
+        first_match, second_match = mq.candidates('cacca')[:2]
+        self.assertEqual(first_match.phrase, '💩')
+        self.assertEqual(first_match.comment, 'cacca')
+        self.assertEqual(second_match.phrase, '\U000cacca')
+        self.assertEqual(second_match.comment, 'U+CACCA')
         first_match = mq.candidates('orso')[0]
         self.assertEqual(first_match.phrase, '🐻')
         self.assertEqual(first_match.comment, 'orso')
@@ -198,26 +199,46 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.phrase, '🐺')
         self.assertEqual(first_match.comment, 'lupo [muso di lupo]')
         first_match = mq.candidates('gatto')[0]
-        self.assertEqual(first_match.phrase, '😼')
-        self.assertEqual(first_match.comment, 'gatto con sorriso sarcastico [gatto sorriso sarcastico]')
-        first_match = mq.candidates('gatto sorride')[0]
         self.assertEqual(first_match.phrase, '😺')
         self.assertEqual(first_match.comment, 'gatto che sorride')
+        first_match = mq.candidates('gatto sorride')[0]
+        self.assertEqual(first_match.phrase, '😺')
+        self.assertEqual(first_match.comment, 'gatto che sorride [sorridente]')
         first_match = mq.candidates('halo')[0]
         self.assertEqual(first_match.phrase, '😇')
         self.assertEqual(first_match.comment, 'smiling face with halo')
         first_match = mq.candidates('factory')[0]
-        self.assertEqual(first_match.phrase, '🧑🏻\u200d🏭')
-        self.assertEqual(first_match.comment, 'factory worker: light skin tone')
+        self.assertEqual(first_match.phrase, '🧑\u200d🏭')
+        self.assertEqual(first_match.comment, 'factory worker')
 
-    def test_candidates_white_space_and_underscores(self) -> None:
+    def test_candidates_white_space_and_underscores_classic(self) -> None:
         # Any white space and '_' can be used to separate keywords in the
         # query string:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='classic')
         first_match = mq.candidates('gatto_	 sorride')[0]
         self.assertEqual(first_match.phrase, '😺')
         self.assertEqual(first_match.comment, 'gatto che sorride')
+        first_match = mq.candidates('nerd glasses')[0]
+        self.assertEqual(first_match.phrase, '🤓')
+        self.assertEqual(first_match.comment, 'nerd face [glasses]')
+        first_match = mq.candidates('smiling face with sunglasses')[0]
+        self.assertEqual(first_match.phrase, '😎')
+        self.assertEqual(first_match.comment, 'smiling face with sunglasses')
+
+    @unittest.skipUnless(
+        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_white_space_and_underscores_rapidfuzz(self) -> None:
+        # Any white space and '_' can be used to separate keywords in the
+        # query string:
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm='rapidfuzz')
+        first_match = mq.candidates('gatto_	 sorride')[0]
+        self.assertEqual(first_match.phrase, '😺')
+        self.assertEqual(first_match.comment, 'gatto che sorride [sorridente]')
         first_match = mq.candidates('nerd glasses')[0]
         self.assertEqual(first_match.phrase, '🤓')
         self.assertEqual(first_match.comment, 'nerd face [glasses]')
@@ -232,8 +253,8 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.phrase, '👨🏿')
         self.assertEqual(first_match.comment, 'man: dark skin tone “man tone5”')
         first_match = mq.candidates('skin tone')[0]
-        self.assertEqual(first_match.phrase, '🧑🏾\u200d🤝\u200d🧑🏼')
-        self.assertEqual(first_match.comment, 'people holding hands: medium-dark skin tone, medium-light skin tone')
+        self.assertEqual(first_match.phrase, '👋🏻')
+        self.assertEqual(first_match.comment, 'waving hand: light skin tone')
         first_match = mq.candidates('tone1')[0]
         self.assertEqual(first_match.phrase, '🏻')
         self.assertEqual(first_match.comment, 'emoji modifier fitzpatrick type-1-2 “tone1”')
@@ -248,23 +269,23 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['ja_JP'], match_algorithm='rapidfuzz')
         first_match = mq.candidates('man tone5')[0]
-        self.assertEqual(first_match.phrase, '👲🏿')
-        self.assertEqual(first_match.comment, 'person with skullcap: dark skin tone “man with chinese cap tone5”')
+        self.assertEqual(first_match.phrase, '👨🏿')
+        self.assertEqual(first_match.comment, 'man: dark skin tone “man tone5”')
         first_match = mq.candidates('skin tone')[0]
-        self.assertEqual(first_match.phrase, '🧑🏾\u200d🤝\u200d🧑🏼')
-        self.assertEqual(first_match.comment, 'people holding hands: medium-dark skin tone, medium-light skin tone')
+        self.assertEqual(first_match.phrase, '👋🏻')
+        self.assertEqual(first_match.comment, 'waving hand: light skin tone')
         first_match = mq.candidates('tone1')[0]
-        self.assertEqual(first_match.phrase, '👍🏻')
-        self.assertEqual(first_match.comment, 'thumbs up: light skin tone “thumbsup tone1”')
+        self.assertEqual(first_match.phrase, '👋🏻')
+        self.assertEqual(first_match.comment, 'waving hand: light skin tone “wave tone1”')
         first_match = mq.candidates('tone5')[0]
-        self.assertEqual(first_match.phrase, '👍🏿')
-        self.assertEqual(first_match.comment, 'thumbs up: dark skin tone “thumbsup tone5”')
+        self.assertEqual(first_match.phrase, '👋🏿')
+        self.assertEqual(first_match.comment, 'waving hand: dark skin tone “wave tone5”')
 
     def test_candidates_some_letters_classic(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
             match_algorithm='classic')
-        first_match = mq.candidates('a')[0]
+        first_match = mq.candidates('latin capital letter a')[0]
         self.assertEqual(first_match.phrase, '🅰\ufe0f')
         self.assertEqual(first_match.comment, 'negative squared latin capital letter a')
         first_match = mq.candidates('squared a')[0]
@@ -273,9 +294,9 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         first_match = mq.candidates('squared capital a')[0]
         self.assertEqual(first_match.phrase, '🅰\ufe0f')
         self.assertEqual(first_match.comment, 'negative squared latin capital letter a')
-        first_match = mq.candidates('c')[0]
-        self.assertEqual(first_match.phrase, '©️')
-        self.assertEqual(first_match.comment,'copyright sign')
+        first_match = mq.candidates('latin small letter c')[0]
+        self.assertEqual(first_match.phrase, '🔡')
+        self.assertEqual(first_match.comment, 'input symbol for latin small letters')
 
     @unittest.skipUnless(
         itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
@@ -284,7 +305,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
             match_algorithm='rapidfuzz')
-        first_match = mq.candidates('a')[0]
+        first_match = mq.candidates('latin capital letter a')[0]
         self.assertEqual(first_match.phrase, '🅰\ufe0f')
         self.assertEqual(first_match.comment, 'negative squared latin capital letter a')
         first_match = mq.candidates('squared a')[0]
@@ -293,9 +314,9 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         first_match = mq.candidates('squared capital a')[0]
         self.assertEqual(first_match.phrase, '🅰\ufe0f')
         self.assertEqual(first_match.comment, 'negative squared latin capital letter a')
-        first_match = mq.candidates('c')[0]
-        self.assertEqual(first_match.phrase, '\x0c')
-        self.assertEqual(first_match.comment, 'U+C')
+        first_match = mq.candidates('latin small letter c')[0]
+        self.assertEqual(first_match.phrase, '🔡')
+        self.assertEqual(first_match.comment, 'input symbol for latin small letters')
 
     def test_candidates_flags_classic(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -350,17 +371,17 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'], match_algorithm='rapidfuzz')
         first_match = mq.candidates('us')[0]
-        self.assertEqual(first_match.phrase, '🇺🇸')
-        self.assertEqual(first_match.comment, 'flag: united states “flag us”')
+        self.assertEqual(first_match.phrase, '🇺🇲')
+        self.assertEqual(first_match.comment, 'flag: us outlying islands')
         first_match = mq.candidates('flag us')[0]
         self.assertEqual(first_match.phrase, '🇺🇸')
-        self.assertEqual(first_match.comment, 'flag: united states “flag us”')
+        self.assertEqual(first_match.comment, 'flag: united states “flag us” {flags}')
         first_match = mq.candidates('united nations')[0]
         self.assertEqual(first_match.phrase, '🇺🇳')
         self.assertEqual(first_match.comment, 'flag: united nations')
         first_match = mq.candidates('united')[0]
-        self.assertEqual(first_match.phrase, '🇺🇳')
-        self.assertEqual(first_match.comment, 'flag: united nations')
+        self.assertEqual(first_match.phrase, '🇦🇪')
+        self.assertEqual(first_match.comment, 'flag: united arab emirates')
         first_match = mq.candidates('outlying islands')[0]
         self.assertEqual(first_match.phrase, '🇺🇲')
         self.assertEqual(first_match.comment, 'flag: u.s. outlying islands')
@@ -369,10 +390,10 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'flag: united arab emirates')
         first_match = mq.candidates('mm myanmar')[0]
         self.assertEqual(first_match.phrase, '🇲🇲')
-        self.assertEqual(first_match.comment, 'flag: myanmar (burma) “mm”')
+        self.assertEqual(first_match.comment, 'flag: myanmar (burma)')
         first_match = mq.candidates('flag mm')[0]
         self.assertEqual(first_match.phrase, '🇲🇲')
-        self.assertEqual(first_match.comment, 'flag: myanmar (burma) “flag mm”')
+        self.assertEqual(first_match.comment, 'flag: myanmar (burma) “flag mm” {flags}')
         first_match = mq.candidates('myanmar')[0]
         self.assertEqual(first_match.phrase, '🇲🇲')
         self.assertEqual(first_match.comment, 'flag: myanmar (burma)')
@@ -381,7 +402,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'flag: svalbard & jan mayen “flag sj”')
         first_match = mq.candidates('flag sj')[0]
         self.assertEqual(first_match.phrase, '🇸🇯')
-        self.assertEqual(first_match.comment, 'flag: svalbard & jan mayen “flag sj”')
+        self.assertEqual(first_match.comment, 'flag: svalbard & jan mayen “flag sj” {flags}')
         first_match = mq.candidates('svalbard')[0]
         self.assertEqual(first_match.phrase, '🇸🇯')
         self.assertEqual(first_match.comment, 'flag: svalbard & jan mayen')
@@ -419,15 +440,12 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         first_match = mq.candidates('family man')[0]
         self.assertEqual(first_match.phrase, '👨\u200d👩\u200d👦')
         self.assertEqual(first_match.comment, 'family: man, woman, boy')
-        first_match = mq.candidates('man man girl boy')[0]
-        self.assertEqual(first_match.phrase, '👨\u200d👧\u200d👦')
-        self.assertEqual(first_match.comment, 'family: man, girl, boy')
-        first_match = mq.candidates('manmangirlboy')[0]
-        self.assertEqual(first_match.phrase, '👨\u200d👨\u200d👧\u200d👦')
-        self.assertEqual(first_match.comment, 'family: man, man, girl, boy')
-        first_match = mq.candidates('people')[0]
-        self.assertEqual(first_match.phrase, '🧑🏾\u200d🤝\u200d🧑🏼')
-        self.assertEqual(first_match.comment, 'people holding hands: medium-dark skin tone, medium-light skin tone')
+        first_match = mq.candidates('man woman girl boy')[0]
+        self.assertEqual(first_match.phrase, '👨‍👩‍👧‍👦')
+        self.assertEqual(first_match.comment, 'family: man, woman, girl, boy')
+        first_match = mq.candidates('people holding hands')[0]
+        self.assertEqual(first_match.phrase, '🧑‍🤝‍🧑')
+        self.assertEqual(first_match.comment, 'people holding hands')
 
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
@@ -458,21 +476,36 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'boy {people}')
         first_match = mq.candidates('family man')[0]
         self.assertEqual(first_match.phrase, '👨\u200d👩\u200d👦')
-        self.assertEqual(first_match.comment, 'family: man, woman, boy “family man woman boy”')
-        first_match = mq.candidates('man man girl boy')[0]
-        self.assertEqual(first_match.phrase, '👨\u200d👧\u200d👦')
-        self.assertEqual(first_match.comment, 'family: man, girl, boy “family: man girl boy”')
-        first_match = mq.candidates('people')[0]
-        self.assertEqual(first_match.phrase, '🧑🏾\u200d🤝\u200d🧑🏼')
-        self.assertEqual(first_match.comment, 'people holding hands: medium-dark skin tone, medium-light skin tone')
+        self.assertEqual(first_match.comment, 'family: man, woman, boy')
+        first_match = mq.candidates('man woman girl boy')[0]
+        self.assertEqual(first_match.phrase, '👨‍👩‍👧‍👦')
+        self.assertEqual(first_match.comment, 'family: man, woman, girl, boy')
+        first_match = mq.candidates('people holding hands')[0]
+        self.assertEqual(first_match.phrase, '🧑‍🤝‍🧑')
+        self.assertEqual(first_match.comment, 'people holding hands')
 
-    def test_candidates_birthday_cake(self) -> None:
+    def test_candidates_birthday_cake_classic(self) -> None:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'])
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm = 'classic')
         first_match = mq.candidates('birthday')[0]
         self.assertEqual(first_match.phrase, '🎂')
         self.assertEqual(first_match.comment, 'birthday cake')
-        first_match = mq.candidates('birth')[0]
+        first_match = mq.candidates('birth bottle')[0]
+        self.assertEqual(first_match.phrase, '🍼')
+        self.assertEqual(first_match.comment, 'baby bottle [birth]')
+
+    @unittest.skipUnless(
+        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_birthday_cake_rapidfuzz(self) -> None:
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            match_algorithm = 'rapidfuzz')
+        first_match = mq.candidates('birthday')[0]
+        self.assertEqual(first_match.phrase, '🎂')
+        self.assertEqual(first_match.comment, 'birthday cake [bday]')
+        first_match = mq.candidates('birth bottle')[0]
         self.assertEqual(first_match.phrase, '🍼')
         self.assertEqual(first_match.comment, 'baby bottle [birth]')
 
@@ -486,14 +519,14 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
             match_algorithm='classic')
-        first_match = mq.candidates('symbol')[0]
+        first_match = mq.candidates('recycling symbol')[0]
         self.assertEqual(first_match.phrase, '♻️')
         self.assertEqual(first_match.comment,
                          'black universal recycling symbol {Symbol}')
-        first_match = mq.candidates('atomsymbol')[0]
+        first_match = mq.candidates('atom symbol')[0]
         self.assertEqual(first_match.phrase, '⚛\ufe0f')
-        self.assertEqual(first_match.comment, 'atom symbol')
-        first_match = mq.candidates('peacesymbol')[0]
+        self.assertEqual(first_match.comment, 'atom symbol {Symbol}')
+        first_match = mq.candidates('peace symbol')[0]
         self.assertEqual(first_match.phrase, '☮\ufe0f')
         # .startswith() because it may be 'peace symbol {Symbol}' or
         # just 'peace symbol'
@@ -517,14 +550,14 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
             match_algorithm='rapidfuzz')
-        first_match = mq.candidates('symbol')[0]
+        first_match = mq.candidates('recycling symbol')[0]
         self.assertEqual(first_match.phrase, '♻️')
         self.assertEqual(first_match.comment,
-                         'black universal recycling symbol {Symbol} {symbols}')
-        first_match = mq.candidates('atomsymbol')[0]
+                         'black universal recycling symbol {Symbol}')
+        first_match = mq.candidates('atom symbol')[0]
         self.assertEqual(first_match.phrase, '⚛\ufe0f')
-        self.assertEqual(first_match.comment, 'atom symbol')
-        first_match = mq.candidates('peacesymbol')[0]
+        self.assertEqual(first_match.comment, 'atom symbol {Symbol} {symbols}')
+        first_match = mq.candidates('peace symbol')[0]
         self.assertEqual(first_match.phrase, '☮\ufe0f')
         # .startswith() because it may be 'peace symbol {Symbol}' or
         # just 'peace symbol'
@@ -539,16 +572,16 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
             match_algorithm='classic')
-        first_match = mq.candidates('animal')[0]
-        self.assertEqual(first_match.phrase, '🐕')
-        self.assertEqual(first_match.comment, 'dog [animal]')
+        first_match = mq.candidates('animal dog')[0]
+        self.assertEqual(first_match.phrase, '🐶')
+        self.assertEqual(first_match.comment, 'dog face [animal]')
         first_match = mq.candidates('dromedary animal')[0]
         self.assertEqual(first_match.phrase, '🐪')
         self.assertEqual(first_match.comment, 'dromedary camel [animal]')
-        first_match = mq.candidates('camel')[0]
+        first_match = mq.candidates('camel bac')[0]
         self.assertEqual(first_match.phrase, '🐫')
         self.assertEqual(first_match.comment, 'bactrian camel')
-        first_match = mq.candidates('nature')[0]
+        first_match = mq.candidates('nature snail')[0]
         self.assertEqual(first_match.phrase, '🐌')
         self.assertEqual(first_match.comment, 'snail {nature}')
 
@@ -559,16 +592,16 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
             match_algorithm='rapidfuzz')
-        first_match = mq.candidates('animal')[0]
-        self.assertEqual(first_match.phrase, '🐕')
-        self.assertEqual(first_match.comment, 'dog [animals]')
+        first_match = mq.candidates('animal dog')[0]
+        self.assertEqual(first_match.phrase, '🐶')
+        self.assertEqual(first_match.comment, 'dog face [animal]')
         first_match = mq.candidates('dromedary animal')[0]
         self.assertEqual(first_match.phrase, '🐪')
         self.assertEqual(first_match.comment, 'dromedary camel [animal]')
-        first_match = mq.candidates('camel')[0]
+        first_match = mq.candidates('camel bac')[0]
         self.assertEqual(first_match.phrase, '🐫')
         self.assertEqual(first_match.comment, 'bactrian camel')
-        first_match = mq.candidates('nature')[0]
+        first_match = mq.candidates('nature snail')[0]
         self.assertEqual(first_match.phrase, '🐌')
         self.assertEqual(first_match.comment, 'snail {nature}')
 
@@ -579,7 +612,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         first_match = mq.candidates('camera')[0]
         self.assertEqual(first_match.phrase, '📷')
         self.assertEqual(first_match.comment, 'camera')
-        first_match = mq.candidates('travel')[0]
+        first_match = mq.candidates('travel locomotive')[0]
         self.assertEqual(first_match.phrase, '🚂')
         self.assertEqual(first_match.comment, 'steam locomotive {travel}')
         first_match = mq.candidates('ferry')[0]
@@ -592,14 +625,14 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.phrase, '⛴\ufe0f')
         self.assertEqual(first_match.comment, 'ferry {travel}')
         first_match = mq.candidates('boat')[0]
-        self.assertEqual(first_match.phrase, '🚣🏻\u200d♂️')
-        self.assertEqual(first_match.comment, 'man rowing boat: light skin tone')
+        self.assertEqual(first_match.phrase, '🚣')
+        self.assertEqual(first_match.comment, 'rowboat')
         first_match = mq.candidates('anchor')[0]
         self.assertEqual(first_match.phrase, '⚓')
         self.assertEqual(first_match.comment, 'anchor')
-        first_match = mq.candidates('anchor boat')[0]
-        self.assertEqual(first_match.phrase, '🚣🏻\u200d♂️')
-        self.assertEqual(first_match.comment, 'man rowing boat: light skin tone')
+        first_match = mq.candidates('anchor ship')[0]
+        self.assertEqual(first_match.phrase, '⚓')
+        self.assertEqual(first_match.comment, 'anchor')
 
     @unittest.skipUnless(
         itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
@@ -611,7 +644,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         first_match = mq.candidates('camera')[0]
         self.assertEqual(first_match.phrase, '🎥')
         self.assertEqual(first_match.comment, 'movie camera')
-        first_match = mq.candidates('travel')[0]
+        first_match = mq.candidates('travel locomotive')[0]
         self.assertEqual(first_match.phrase, '🚂')
         self.assertEqual(first_match.comment, 'steam locomotive {travel}')
         first_match = mq.candidates('ferry')[0]
@@ -624,12 +657,12 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.phrase, '⛴\ufe0f')
         self.assertEqual(first_match.comment, 'ferry {travel}')
         first_match = mq.candidates('boat')[0]
-        self.assertEqual(first_match.phrase, '🚣🏻\u200d♂️')
-        self.assertEqual(first_match.comment, 'man rowing boat: light skin tone “man rowing boat tone1”')
+        self.assertEqual(first_match.phrase, '🚣')
+        self.assertEqual(first_match.comment, 'rowboat')
         first_match = mq.candidates('anchor')[0]
         self.assertEqual(first_match.phrase, '⚓')
         self.assertEqual(first_match.comment, 'anchor')
-        first_match = mq.candidates('anchor boat')[0]
+        first_match = mq.candidates('anchor ship')[0]
         self.assertEqual(first_match.phrase, '⚓')
         self.assertEqual(first_match.comment, 'anchor')
 
@@ -662,15 +695,19 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
             match_algorithm='classic')
-        first_match = mq.candidates('euro sign')[0]
-        self.assertEqual(first_match.phrase, '€')
-        self.assertEqual(first_match.comment, 'euro sign')
+        first_match, second_match = mq.candidates('euro sign')[:2]
+        self.assertEqual(first_match.phrase, '💶')
+        self.assertEqual(first_match.comment, 'banknote with euro sign')
+        self.assertEqual(second_match.phrase, '€')
+        self.assertEqual(second_match.comment, 'euro sign')
         first_match = mq.candidates('superscript one')[0]
         self.assertEqual(first_match.phrase, '¹')
         self.assertEqual(first_match.comment, 'superscript one')
-        first_match = mq.candidates('currency')[0]
-        self.assertEqual(first_match.phrase, '₳')
-        self.assertEqual(first_match.comment, 'austral sign {Currency} [currency]')
+        first_match, second_match = mq.candidates('currency sign')[:2]
+        self.assertEqual(first_match.phrase, '¤')
+        self.assertEqual(first_match.comment, 'currency sign {Currency}')
+        self.assertEqual(second_match.phrase, '💴')
+        self.assertEqual(second_match.comment, 'banknote with yen sign [currency]')
         first_match = mq.candidates('connector')[0]
         self.assertEqual(first_match.phrase, '﹎')
         self.assertEqual(first_match.comment, 'centreline low line {Connector}')
@@ -678,23 +715,23 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.phrase, '💨')
         self.assertEqual(first_match.comment, 'dash symbol')
         first_match = mq.candidates('close')[0]
-        self.assertEqual(first_match.phrase, '〉')
-        self.assertEqual(first_match.comment, 'right angle bracket {Close} [close]')
-        first_match = mq.candidates('punctuation')[0]
-        self.assertEqual(first_match.phrase, '‼\ufe0f')
-        self.assertEqual(first_match.comment, 'double exclamation mark {Punctuation} [punctuation]')
-        first_match = mq.candidates('final quote')[0]
+        self.assertEqual(first_match.phrase, '😥')
+        self.assertEqual(first_match.comment, 'disappointed but relieved face [close]')
+        first_match = mq.candidates('punctuation dotted')[0]
+        self.assertEqual(first_match.phrase, '⁜')
+        self.assertEqual(first_match.comment, 'dotted cross {Punctuation}')
+        first_match = mq.candidates('final double quote')[0]
         self.assertEqual(first_match.phrase, '”')
         self.assertEqual(first_match.comment, 'right double quotation mark {Final quote}')
-        first_match = mq.candidates('initial quote')[0]
+        first_match = mq.candidates('initial double quote')[0]
         self.assertEqual(first_match.phrase, '“')
         self.assertEqual(first_match.comment, 'left double quotation mark {Initial quote}')
         first_match = mq.candidates('modifier')[0]
         self.assertEqual(first_match.phrase, '🏻')
         self.assertEqual(first_match.comment, 'emoji modifier fitzpatrick type-1-2 {Modifier}')
-        first_match = mq.candidates('math')[0]
-        self.assertEqual(first_match.phrase, '𝜵')
-        self.assertEqual(first_match.comment, 'mathematical bold italic nabla {Math}')
+        first_match = mq.candidates('math nabla')[0]
+        self.assertEqual(first_match.phrase, '∇')
+        self.assertEqual(first_match.comment, 'nabla {Math}')
         first_match = mq.candidates('separator line')[0]
         self.assertEqual(first_match.phrase, ' ')
         self.assertEqual(first_match.comment, 'U+2028 line separator {Line}')
@@ -712,39 +749,43 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
             match_algorithm='rapidfuzz')
-        first_match = mq.candidates('euro sign whatever')[0]
-        self.assertEqual(first_match.phrase, '€')
-        self.assertEqual(first_match.comment, 'euro sign')
+        first_match, second_match = mq.candidates('euro sign')[:2]
+        self.assertEqual(first_match.phrase, '💶')
+        self.assertEqual(first_match.comment, 'banknote with euro sign')
+        self.assertEqual(second_match.phrase, '€')
+        self.assertEqual(second_match.comment, 'euro sign')
         first_match = mq.candidates('superscript one')[0]
         self.assertEqual(first_match.phrase, '¹')
         self.assertEqual(first_match.comment, 'superscript one')
-        first_match = mq.candidates('currency')[0]
-        self.assertEqual(first_match.phrase, '¤')
-        self.assertEqual(first_match.comment, 'currency sign {Currency}')
+        first_match, second_match = mq.candidates('currency sign')[:2]
+        self.assertEqual(first_match.phrase, '💲')
+        self.assertEqual(first_match.comment, 'heavy dollar sign')
+        self.assertEqual(second_match.phrase, '💴')
+        self.assertEqual(second_match.comment, 'banknote with yen sign [currency]')
         first_match = mq.candidates('connector')[0]
-        self.assertEqual(first_match.phrase, '﹎')
-        self.assertEqual(first_match.comment, 'centreline low line {Connector}')
+        self.assertEqual(first_match.phrase, '_')
+        self.assertEqual(first_match.comment, 'low line {Connector}')
         first_match = mq.candidates('dash')[0]
         self.assertEqual(first_match.phrase, '💨')
-        self.assertEqual(first_match.comment, 'dash symbol')
+        self.assertEqual(first_match.comment, 'dash symbol [dashing]')
         first_match = mq.candidates('close')[0]
-        self.assertEqual(first_match.phrase, '〉')
-        self.assertEqual(first_match.comment, 'right angle bracket “close angle bracket” {Close}')
+        self.assertEqual(first_match.phrase, '📕')
+        self.assertEqual(first_match.comment, 'closed book')
         first_match = mq.candidates('punctuation')[0]
-        self.assertEqual(first_match.phrase, '𒑲')
-        self.assertEqual(first_match.comment, 'cuneiform punctuation sign diagonal colon {Punctuation} {Cuneiform Numbers and Punctuation}')
-        first_match = mq.candidates('final quote')[0]
+        self.assertEqual(first_match.phrase, '❗')
+        self.assertEqual(first_match.comment, 'heavy exclamation mark symbol [punctuation]')
+        first_match = mq.candidates('final double quote')[0]
         self.assertEqual(first_match.phrase, '”')
         self.assertEqual(first_match.comment, 'right double quotation mark {Final quote}')
-        first_match = mq.candidates('initial quote')[0]
+        first_match = mq.candidates('initial double quote')[0]
         self.assertEqual(first_match.phrase, '“')
         self.assertEqual(first_match.comment, 'left double quotation mark {Initial quote}')
         first_match = mq.candidates('emoji modifier')[0]
         self.assertEqual(first_match.phrase, '🏻')
         self.assertEqual(first_match.comment, 'emoji modifier fitzpatrick type-1-2 {Modifier}')
-        first_match = mq.candidates('math')[0]
-        self.assertEqual(first_match.phrase, '📏')
-        self.assertEqual(first_match.comment, 'straight ruler [math]')
+        first_match = mq.candidates('math nabla')[0]
+        self.assertEqual(first_match.phrase, '∇')
+        self.assertEqual(first_match.comment, 'nabla {Math}')
         first_match = mq.candidates('separator line')[0]
         self.assertEqual(first_match.phrase, ' ')
         self.assertEqual(first_match.comment, 'U+2028 line separator {Line}')
@@ -827,14 +868,15 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.phrase, '\x1b')
         self.assertEqual(first_match.comment, 'U+1B')
 
-    def test_candidates_de_DE_versus_de_CH(self) -> None: # pylint: disable=invalid-name
+    def test_candidates_de_DE_versus_de_CH_classic(self) -> None: # pylint: disable=invalid-name
         # pylint: disable=fixme
         # FIXME: This doesn’t work perfectly, when de_CH is the main
         # language, “Reissverschluss” should be preferred in the
         # results.
         # pylint: enable=fixme
         mq = itb_emoji.EmojiMatcher(
-            languages = ['de_DE'])
+            languages = ['de_DE'],
+            match_algorithm = 'classic')
         first_match = mq.candidates('Reissverschluss')[0]
         self.assertEqual(first_match.phrase, '🤐')
         self.assertEqual(first_match.comment, 'Gesicht mit Reißverschlussmund')
@@ -845,7 +887,8 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.phrase, '🤐')
         self.assertEqual(first_match.comment, 'Gesicht mit Reißverschlussmund')
         mq = itb_emoji.EmojiMatcher(
-            languages = ['de_CH'])
+            languages = ['de_CH'],
+            match_algorithm = 'classic')
         first_match = mq.candidates('Reissverschluss')[0]
         self.assertEqual(first_match.phrase, '🤐')
         self.assertEqual(first_match.comment, 'Gesicht mit Reißverschlussmund')
@@ -855,6 +898,40 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         first_match = mq.candidates('Reißverschluß')[0]
         self.assertEqual(first_match.phrase, '🤐')
         self.assertEqual(first_match.comment, 'Gesicht mit Reißverschlussmund')
+
+    @unittest.skipUnless(
+        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        'Skipping because this test requires rapidfuzz to work.')
+    def test_candidates_de_DE_versus_de_CH_rapidfuzz(self) -> None: # pylint: disable=invalid-name
+        # pylint: disable=fixme
+        # FIXME: This doesn’t work perfectly, when de_CH is the main
+        # language, “Reissverschluss” should be preferred in the
+        # results.
+        # pylint: enable=fixme
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['de_DE'],
+            match_algorithm = 'rapidfuzz')
+        first_match = mq.candidates('Reissverschluss')[0]
+        self.assertEqual(first_match.phrase, '🤐')
+        self.assertEqual(first_match.comment, 'Gesicht mit Reißverschlussmund')
+        first_match = mq.candidates('Reißverschluss')[0]
+        self.assertEqual(first_match.phrase, '🤐')
+        self.assertEqual(first_match.comment, 'Gesicht mit Reißverschlussmund')
+        first_match = mq.candidates('Reißverschluß')[0]
+        self.assertEqual(first_match.phrase, '🤐')
+        self.assertEqual(first_match.comment, 'Gesicht mit Reißverschlussmund')
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['de_CH'],
+            match_algorithm = 'rapidfuzz')
+        first_match = mq.candidates('Reissverschluss')[0]
+        self.assertEqual(first_match.phrase, '🤐')
+        self.assertEqual(first_match.comment, 'Smiley mit Reissverschlussmund')
+        first_match = mq.candidates('Reißverschluss')[0]
+        self.assertEqual(first_match.phrase, '🤐')
+        self.assertEqual(first_match.comment, 'Smiley mit Reissverschlussmund')
+        first_match = mq.candidates('Reißverschluß')[0]
+        self.assertEqual(first_match.phrase, '🤐')
+        self.assertEqual(first_match.comment, 'Smiley mit Reissverschlussmund')
 
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
@@ -871,9 +948,10 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin failed.")
-    def test_candidates_pinyin_available_zh_CN(self) -> None: # pylint: disable=invalid-name
+    def test_candidates_pinyin_available_zh_CN_classic(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
-            languages = ['zh_CN'])
+            languages = ['zh_CN'],
+            match_algorithm = 'classic')
         first_match = mq.candidates('赛马')[0]
         self.assertEqual(first_match.phrase, '🏇')
         self.assertEqual(first_match.comment, '赛马')
@@ -881,12 +959,40 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.phrase, '🏇')
         self.assertEqual(first_match.comment, '赛马 “sàimǎ”')
 
+    @unittest.skipUnless(
+        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        "Skipping because import pinyin failed.")
+    def test_candidates_pinyin_available_zh_CN_rapidfuzz(self) -> None: # pylint: disable=invalid-name
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['zh_CN'],
+            match_algorithm = 'rapidfuzz')
+        first_match = mq.candidates('赛马')[0]
+        self.assertEqual(first_match.phrase, '🏇')
+        self.assertEqual(first_match.comment, '赛马')
+        first_match = mq.candidates('saima')[0]
+        self.assertEqual(first_match.phrase, '🏇')
+        self.assertEqual(first_match.comment, '赛马 “sàimǎ” [qímǎ]')
+
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin worked.")
-    def test_candidates_pinyin_missing_zh_TW(self) -> None: # pylint: disable=invalid-name
+    def test_candidates_pinyin_missing_zh_TW_classic(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
-            languages = ['zh_TW'])
+            languages = ['zh_TW'],
+            match_algorithm = 'classic')
+        first_match = mq.candidates('賽馬')[0]
+        self.assertEqual(first_match.phrase, '🏇')
+        self.assertEqual(first_match.comment, '賽馬')
+        self.assertEqual(
+            0, len(mq.candidates('saima')))
+
+    @unittest.skipIf(
+        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        "Skipping because import pinyin worked.")
+    def test_candidates_pinyin_missing_zh_TW_rapidfuzz(self) -> None: # pylint: disable=invalid-name
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['zh_TW'],
+            match_algorithm = 'rapidfuzz')
         first_match = mq.candidates('賽馬')[0]
         self.assertEqual(first_match.phrase, '🏇')
         self.assertEqual(first_match.comment, '賽馬')
@@ -896,9 +1002,10 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
         "Skipping because import pinyin failed.")
-    def test_candidates_pinyin_available_zh_TW(self) -> None: # pylint: disable=invalid-name
+    def test_candidates_pinyin_available_zh_TW_classic(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
-            languages = ['zh_TW'])
+            languages = ['zh_TW'],
+            match_algorithm = 'classic')
         first_match = mq.candidates('賽馬')[0]
         self.assertEqual(first_match.phrase, '🏇')
         self.assertEqual(first_match.comment, '賽馬')
@@ -906,12 +1013,70 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.phrase, '🏇')
         self.assertEqual(first_match.comment, '賽馬 “sàimǎ”')
 
+    @unittest.skipUnless(
+        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        "Skipping because import pinyin failed.")
+    def test_candidates_pinyin_available_zh_TW_rapidfuzz(self) -> None: # pylint: disable=invalid-name
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['zh_TW'],
+            match_algorithm = 'rapidfuzz')
+        first_match = mq.candidates('賽馬')[0]
+        self.assertEqual(first_match.phrase, '🏇')
+        self.assertEqual(first_match.comment, '賽馬')
+        first_match = mq.candidates('saima')[0]
+        self.assertEqual(first_match.phrase, '🏇')
+        self.assertEqual(first_match.comment, '賽馬 “sàimǎ” [qímǎ]')
+
     @unittest.skipIf(
         itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
         "Skipping because import pykakasi worked.")
-    def test_candidates_pykakasi_missing_ja_JP(self) -> None: # pylint: disable=invalid-name
+    def test_candidates_pykakasi_missing_ja_JP_classic(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
-            languages = ['ja_JP'])
+            languages = ['ja_JP'],
+            match_algorithm = 'classic')
+        self.assertEqual(
+            0, len(mq.candidates('katatsumuri')))
+        first_match = mq.candidates('かたつむり')[0]
+        self.assertEqual(first_match.phrase, '🐌')
+        self.assertEqual(first_match.comment, 'かたつむり')
+        first_match = mq.candidates('かたつむり_')[0]
+        self.assertEqual(first_match.phrase, '🐌')
+        self.assertEqual(first_match.comment, 'かたつむり')
+        first_match = mq.candidates('かたつむり＿')[0]
+        self.assertEqual(first_match.phrase, '🐌')
+        self.assertEqual(first_match.comment, 'かたつむり')
+        first_match = mq.candidates('カタツムリ')[0]
+        self.assertEqual(first_match.phrase, '🐌')
+        self.assertEqual(first_match.comment, 'かたつむり [カタツムリ]')
+        first_match = mq.candidates('カタツムリ_')[0]
+        self.assertEqual(first_match.phrase, '🐌')
+        self.assertEqual(first_match.comment, 'かたつむり [カタツムリ]')
+        first_match = mq.candidates('カタツムリ＿')[0]
+        self.assertEqual(first_match.phrase, '🐌')
+        self.assertEqual(first_match.comment, 'かたつむり [カタツムリ]')
+        first_match = mq.candidates('ネコ')[0]
+        self.assertEqual(first_match.phrase, '🐈')
+        self.assertEqual(first_match.comment, 'ネコ')
+        first_match = mq.candidates('ネコ_')[0]
+        self.assertEqual(first_match.phrase, '🐈')
+        self.assertEqual(first_match.comment, 'ネコ')
+        first_match = mq.candidates('ネコ＿')[0]
+        self.assertEqual(first_match.phrase, '🐈')
+        self.assertEqual(first_match.comment, 'ネコ')
+        self.assertEqual(
+            0, len(mq.candidates('ねこ')))
+        self.assertEqual(
+            0, len(mq.candidates('ねこ_')))
+        self.assertEqual(
+            0, len(mq.candidates('ねこ＿')))
+
+    @unittest.skipIf(
+        itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
+        "Skipping because import pykakasi worked.")
+    def test_candidates_pykakasi_missing_ja_JP_rapidfuzz(self) -> None: # pylint: disable=invalid-name
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['ja_JP'],
+            match_algorithm = 'rapidfuzz')
         self.assertEqual(
             0, len(mq.candidates('katatsumuri')))
         first_match = mq.candidates('かたつむり')[0]
@@ -951,9 +1116,57 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
         "Skipping because import pykakasi failed.")
-    def test_candidates_pykakasi_available_ja_JP(self) -> None: # pylint: disable=invalid-name
+    def test_candidates_pykakasi_available_ja_JP_classic(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
-            languages = ['ja_JP'])
+            languages = ['ja_JP'],
+            match_algorithm = 'classic')
+        first_match = mq.candidates('katatsumuri')[0]
+        self.assertEqual(first_match.phrase, '🐌')
+        self.assertEqual(first_match.comment, 'かたつむり “katatsumuri”')
+        first_match = mq.candidates('かたつむり')[0]
+        self.assertEqual(first_match.phrase, '🐌')
+        self.assertEqual(first_match.comment, 'かたつむり')
+        first_match = mq.candidates('かたつむり_')[0]
+        self.assertEqual(first_match.phrase, '🐌')
+        self.assertEqual(first_match.comment, 'かたつむり')
+        first_match = mq.candidates('かたつむり＿')[0]
+        self.assertEqual(first_match.phrase, '🐌')
+        self.assertEqual(first_match.comment, 'かたつむり')
+        first_match = mq.candidates('カタツムリ')[0]
+        self.assertEqual(first_match.phrase, '🐌')
+        self.assertEqual(first_match.comment, 'かたつむり [カタツムリ]')
+        first_match = mq.candidates('カタツムリ_')[0]
+        self.assertEqual(first_match.phrase, '🐌')
+        self.assertEqual(first_match.comment, 'かたつむり [カタツムリ]')
+        first_match = mq.candidates('カタツムリ＿')[0]
+        self.assertEqual(first_match.phrase, '🐌')
+        self.assertEqual(first_match.comment, 'かたつむり [カタツムリ]')
+        first_match = mq.candidates('ネコ')[0]
+        self.assertEqual(first_match.phrase, '🐈')
+        self.assertEqual(first_match.comment, 'ネコ')
+        first_match = mq.candidates('ネコ_')[0]
+        self.assertEqual(first_match.phrase, '🐈')
+        self.assertEqual(first_match.comment, 'ネコ')
+        first_match = mq.candidates('ネコ＿')[0]
+        self.assertEqual(first_match.phrase, '🐈')
+        self.assertEqual(first_match.comment, 'ネコ')
+        first_match = mq.candidates('ねこ')[0]
+        self.assertEqual(first_match.phrase, '🐈')
+        self.assertEqual(first_match.comment, 'ネコ “ねこ”')
+        first_match = mq.candidates('ねこ_')[0]
+        self.assertEqual(first_match.phrase, '🐈')
+        self.assertEqual(first_match.comment, 'ネコ “ねこ”')
+        first_match = mq.candidates('ねこ＿')[0]
+        self.assertEqual(first_match.phrase, '🐈')
+        self.assertEqual(first_match.comment, 'ネコ “ねこ”')
+
+    @unittest.skipUnless(
+        itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
+        "Skipping because import pykakasi failed.")
+    def test_candidates_pykakasi_available_ja_JP_rapidfuzz(self) -> None: # pylint: disable=invalid-name
+        mq = itb_emoji.EmojiMatcher(
+            languages = ['ja_JP'],
+            match_algorithm = 'rapidfuzz')
         first_match = mq.candidates('katatsumuri')[0]
         self.assertEqual(first_match.phrase, '🐌')
         self.assertEqual(first_match.comment, 'かたつむり “katatsumuri”')

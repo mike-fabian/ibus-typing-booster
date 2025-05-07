@@ -468,7 +468,7 @@ def _match_classic(label: str, match_string: str) -> float:
 def _match_rapidfuzz(label: str, match_string: str) -> float:
     '''Matches a label from the emoji data against the query string using rapidfuzz.'''
     label = itb_util.remove_accents(label.lower())
-    return rapidfuzz.fuzz.token_set_ratio(label, match_string, score_cutoff=90.0)
+    return rapidfuzz.fuzz.token_set_ratio(label, match_string)
 
 class EmojiMatcher():
     '''A class to find Emoji which best match a query string'''
@@ -531,9 +531,9 @@ class EmojiMatcher():
                     self._enchant_dicts.append(enchant.Dict(language))
         self._emoji_dict: Dict[Tuple[str, str], Dict[str, Any]] = {}
         self._candidate_cache: Dict[
-            Tuple[str, int, str], List[itb_util.PredictionCandidate]] = {}
+            Tuple[str, int, str, bool], List[itb_util.PredictionCandidate]] = {}
         self._match_function: Callable[[Any, Any], Any] = _match_classic
-        self._good_match_score: float = 90.0
+        self._good_match_score: float = 60.0
         self.set_match_algorithm(match_algorithm)
         # The three data sources are loaded in this order on purpose.
         # The data from Unicode is loaded first to put the official
@@ -570,7 +570,7 @@ class EmojiMatcher():
         self._candidate_cache = {}
         if name == 'rapidfuzz' and  IMPORT_RAPIDFUZZ_SUCCESSFUL:
             self._match_function = _match_rapidfuzz
-            self._good_match_score = 90.0
+            self._good_match_score = 60.0
             return
         if name == 'classic':
             self._good_match_score = 200.0
@@ -1555,7 +1555,7 @@ class EmojiMatcher():
         >>> first_match.phrase
         '🐜'
         >>> first_match.comment
-        'formica'
+        'formica [formichina]'
         >>> mq.set_match_algorithm('classic')
         >>> first_match = mq.candidates('formica')[0]
         >>> first_match.phrase
@@ -1584,7 +1584,7 @@ class EmojiMatcher():
         >>> first_match.phrase
         '😺'
         >>> first_match.comment
-        'gatto che sorride'
+        'gatto che sorride [sorridente]'
         >>> mq.set_match_algorithm('classic')
         >>> first_match = mq.candidates('gatto sorride')[0]
         >>> first_match.phrase
@@ -1597,7 +1597,7 @@ class EmojiMatcher():
         >>> first_match.phrase
         '😺'
         >>> first_match.comment
-        'gatto che sorride'
+        'gatto che sorride [sorridente]'
         >>> mq.set_match_algorithm('classic')
         >>> first_match = mq.candidates('gatto_	 sorride')[0]
         >>> first_match.phrase
@@ -1638,7 +1638,7 @@ class EmojiMatcher():
         >>> first_match.phrase
         '🙂'
         >>> first_match.comment
-        'slightly smiling face “:-)”'
+        'slightly smiling face “:)”'
         >>> mq.set_match_algorithm('classic')
         >>> first_match = mq.candidates(':-)')[0]
         >>> first_match.phrase
@@ -1649,7 +1649,7 @@ class EmojiMatcher():
         The query string can contain typos:
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> first_match = mq.candidates('buterfly')[0]
+        >>> first_match = mq.candidates('buterfly', spellcheck=True)[0]
         >>> first_match.phrase
         '🦋'
         >>> first_match.comment
@@ -1666,26 +1666,26 @@ class EmojiMatcher():
         >>> first_match.phrase
         '🏸'
         >>> first_match.comment
-        'badminton racquet and shuttlecock'
+        'Badminton'
         >>> mq.set_match_algorithm('classic')
         >>> first_match = mq.candidates('badminton')[0]
         >>> first_match.phrase
         '🏸'
         >>> first_match.comment
-        'badminton racquet and shuttlecock'
+        'Badminton'
 
         >>> mq.set_match_algorithm('rapidfuzz')
         >>> first_match = mq.candidates('badminton')[0]
         >>> first_match.phrase
         '🏸'
         >>> first_match.comment
-        'badminton racquet and shuttlecock'
+        'Badminton'
         >>> mq.set_match_algorithm('classic')
         >>> first_match = mq.candidates('badminton')[0]
         >>> first_match.phrase
         '🏸'
         >>> first_match.comment
-        'badminton racquet and shuttlecock'
+        'Badminton'
 
         >>> mq.set_match_algorithm('rapidfuzz')
         >>> first_match = mq.candidates('badmynton', spellcheck=True)[0]
@@ -1698,7 +1698,7 @@ class EmojiMatcher():
         >>> first_match.phrase
         '🏸'
         >>> first_match.comment
-        'badminton racquet and shuttlecock'
+        'Badminton'
 
         >>> mq.set_match_algorithm('rapidfuzz')
         >>> first_match = mq.candidates('padminton', spellcheck=True)[0]
@@ -1711,7 +1711,7 @@ class EmojiMatcher():
         >>> first_match.phrase
         '🏸'
         >>> first_match.comment
-        'badminton racquet and shuttlecock'
+        'Badminton'
 
         >>> mq.set_match_algorithm('rapidfuzz')
         >>> first_match = mq.candidates('hedgehgo', spellcheck=True)[0]
@@ -1726,20 +1726,40 @@ class EmojiMatcher():
         >>> first_match.comment
         'hedgehog'
 
-        Non-emoji Unicode characters can be matched as well:
+        Non-emoji Unicode characters can be matched as well, as emoji
+        are preferred, the first match might be an emoji if there is a
+        suitable one:
 
         >>> mq.set_match_algorithm('rapidfuzz')
-        >>> first_match = mq.candidates('euro sign c')[0]
+        >>> first_match, second_match = mq.candidates('euro sign')[:2]
         >>> first_match.phrase
-        '€'
+        '💶'
         >>> first_match.comment
+        'banknote with euro sign'
+        >>> second_match.phrase
+        '€'
+        >>> second_match.comment
         'euro sign'
+        >>> first_match = mq.candidates('integral surf')[0]
+        >>> first_match.phrase
+        '∯'
+        >>> first_match.comment
+        'surface integral'
         >>> mq.set_match_algorithm('classic')
-        >>> first_match = mq.candidates('euro sign')[0]
+        >>> first_match, second_match = mq.candidates('euro sign')[:2]
         >>> first_match.phrase
-        '€'
+        '💶'
         >>> first_match.comment
+        'banknote with euro sign'
+        >>> second_match.phrase
+        '€'
+        >>> second_match.comment
         'euro sign'
+        >>> first_match = mq.candidates('integral surf')[0]
+        >>> first_match.phrase
+        '∯'
+        >>> first_match.comment
+        'surface integral'
 
         >>> mq.set_match_algorithm('rapidfuzz')
         >>> first_match = mq.candidates('superscript one')[0]
@@ -1801,6 +1821,7 @@ class EmojiMatcher():
         '\\x1b'
         >>> first_match.comment
         'U+1B'
+
         >>> mq.set_match_algorithm('classic')
         >>> first_match = mq.candidates('1b')[0]
         >>> first_match.phrase
@@ -1809,17 +1830,20 @@ class EmojiMatcher():
         'U+1B'
         '''
         # pylint: enable=line-too-long
-        if ((query_string, match_limit, trigger_characters)
+        if ((query_string, match_limit, trigger_characters, spellcheck)
             in self._candidate_cache):
             return self._candidate_cache[(
-                query_string, match_limit, trigger_characters)]
+                query_string, match_limit, trigger_characters, spellcheck)]
         candidates = self._candidates(
             query_string=query_string,
             match_limit=match_limit,
             trigger_characters=trigger_characters,
             spellcheck=spellcheck)
         self._candidate_cache[(
-            query_string, match_limit, trigger_characters)] = candidates
+            query_string,
+            match_limit,
+            trigger_characters,
+            spellcheck)] = candidates
         return candidates
 
     def _candidates(
@@ -1874,42 +1898,56 @@ class EmojiMatcher():
         match_string = itb_util.remove_accents(match_string.lower())
         candidates = []
         for emoji_key, emoji_value in self._emoji_dict.items():
+            if (not spellcheck
+                and any(all(token not in label
+                            for label in self.get_all_label_words(emoji_key))
+                        for token in match_string.split())):
+                # Skip this emoji immediately if not all tokens from
+                # match_string are *exact* substrings of at least one
+                # label, no fuzziness here.  This should get rid of
+                # unrelated matches ...
+                # This cannot be done when spellchecking is on though,
+                # the spellchecking adds so many words to match_string
+                # that it is practically guaranteed that at least one
+                # of the words added will not be a substring of at least
+                # one label.
+                continue
             total_score = 0.0
             name_good_match = ''
             ucategory_good_match = ''
             category_good_match = ''
             keyword_good_match = ''
             block_good_match = ''
-            if 'names' in emoji_value:
-                for name in emoji_value['names']:
-                    score = self._match_function(name, match_string)
-                    if not name_good_match and score >= self._good_match_score:
-                        name_good_match = name
-                    total_score += 2 * score
-            if 'ucategories' in emoji_value:
-                for ucategory in emoji_value['ucategories']:
-                    score = self._match_function(ucategory, match_string)
-                    if score >= self._good_match_score:
-                        ucategory_good_match = ucategory
-                    total_score += score
-            if 'categories' in emoji_value:
-                for category in emoji_value['categories']:
-                    score = self._match_function(category, match_string)
-                    if score >= self._good_match_score:
-                        category_good_match = category
-                    total_score += score
-            if 'keywords' in emoji_value:
-                for keyword in emoji_value['keywords']:
-                    score = self._match_function(keyword, match_string)
-                    if score >= self._good_match_score:
-                        keyword_good_match = keyword
-                    total_score += score
-            if 'block' in emoji_value:
-                block = emoji_value['block']
+            for name in emoji_value.get('names', []):
+                score = self._match_function(name, match_string)
+                if not name_good_match and score >= self._good_match_score:
+                    name_good_match = name
+                total_score = max(total_score, 2.0 * score)
+            for ucategory in emoji_value.get('ucategories', []):
+                score = self._match_function(ucategory, match_string)
+                if score >= self._good_match_score:
+                    ucategory_good_match = ucategory
+                total_score = max(total_score, score)
+            for category in emoji_value.get('categories', []):
+                score = self._match_function(category, match_string)
+                if score >= self._good_match_score:
+                    category_good_match = category
+                total_score = max(total_score, score)
+            for keyword in emoji_value.get('keywords', []):
+                score = self._match_function(keyword, match_string)
+                if score >= self._good_match_score:
+                    keyword_good_match = keyword
+                total_score = max(total_score, score)
+            block = emoji_value.get('block', '')
+            if block:
                 score = self._match_function(block, match_string)
                 if score >= self._good_match_score:
                     block_good_match = block
-                    total_score += score
+                total_score = max(total_score, score)
+
+            if any('Emoji' in self.properties(character) for character in emoji_key[0]):
+                # prefer emoji over other Unicode characters:
+                total_score *= 5.0
 
             if total_score > 0:
                 if 'names' in emoji_value:
@@ -1976,6 +2014,36 @@ class EmojiMatcher():
             ))[:match_limit]
 
         return sorted_candidates
+
+    # Don’t use @lru_cache(maxsize=None) here, that has a high risk of
+    # memory leaks.  It caches forever — and it keeps strong
+    # references to all function arguments and results. If the method
+    # is on a class instance (self), and the cache calls involving
+    # self, then self gets kept alive — even if no other code
+    # references it! That is a high risk of memory leaks when
+    # instantiated class objects go out of scope.  With a bounded
+    # cache, Python will evict the oldest cache entries automatically
+    # when the cache grows beyond 500,000 entries. That is much safer
+    # The self referenc can still stay around as long as there are
+    # still entries in the cache for that instance. But if all entries
+    # referring to a self are evicted, then self can be garbage
+    # collected properly.
+    @functools.lru_cache(maxsize=500_000)
+    def get_all_label_words(self, emoji_key: Tuple[str, str]) -> Set[str]:
+        '''Returns all words in all labels of an emoji'''
+        emoji_value = self._emoji_dict.get(emoji_key, None)
+        if emoji_value is None:
+            return set()
+        fields = ['names', 'ucategories', 'categories', 'keywords']
+        all_labels = itertools.chain(
+            itertools.chain.from_iterable(
+                (emoji_value.get(field, []) for field in fields)),
+            [emoji_value.get('block', '')])
+        return {
+            itb_util.remove_accents(word)
+            for label in all_labels if label
+            for word in label.lower().split()
+        }
 
     def names(self, emoji_string: str, language: str = '') -> List[str]:
         # pylint: disable=line-too-long
@@ -2917,8 +2985,11 @@ def main() -> None:
         'itb_util.remove_accents() cache info: %s',
         itb_util.remove_accents.cache_info())
     LOGGER.info(
-        'variation_selector_normalize() cache info: %s',
+        'EmojiMatcher.variation_selector_normalize() cache info: %s',
         EmojiMatcher.variation_selector_normalize.cache_info()) # pylint: disable=no-value-for-parameter
+    LOGGER.info(
+        'EmojiMatcher.get_all_label_words() cache info: %s',
+        EmojiMatcher.get_all_label_words.cache_info()) # pylint: disable=no-value-for-parameter
     LOGGER.info(
         '_match_classic() cache info: %s',
         _match_classic.cache_info()) # pylint: disable=no-value-for-parameter
