@@ -1127,19 +1127,21 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return
         phrase = itb_util.normalize_nfc_and_composition_exclusions(phrase)
         dictionary_matches: List[str] = []
-        if (len(phrase) >= 3
+        if itb_util.is_invisible(phrase):
+            if len(phrase) == 1:
+                if comment == '':
+                    # There may be a comment already if this came from
+                    # EmojiMatcher, if a comment is already there, leave
+                    # it alone.
+                    comment = f'U+{ord(phrase):04X} ' + itb_util.unicode_name(
+                        phrase).lower()
+            phrase = repr(phrase)
+        elif (len(phrase) >= 3
             and not comment
             and not self._m17n_trans_parts.candidates
             and not self._typed_compose_sequence):
             dictionary_matches = (
                 self.database.hunspell_obj.spellcheck_match_list(phrase))
-        # U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR make
-        # the line spacing in the lookup table huge, which looks ugly.
-        # Remove them to make the lookup table look better.
-        # Selecting them does still work because the string which
-        # is committed is not read from the lookup table but
-        # from self._candidates[index][0].
-        phrase = phrase.replace(' ', '').replace(' ', '')
         # Embed “phrase” and “comment” separately with “Explicit
         # Directional Embeddings” (RLE, LRE, PDF).
         #
@@ -1242,18 +1244,26 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 attrs.append(IBus.attr_foreground_new(
                     self._color_dictionary_argb, 0, len(phrase)))
                 color_used = True
-        # If a candidate contains newlines, replace them with an arrow
-        # indicating the new line. Rendering the real newlines in the
-        # lookup table looks terrible. On non-Gnome desktops, all
-        # entries in the lookup table always have the same height. So when one
-        # entry uses 3 lines in the lookup table, all other
-        # entries use 3 lines as well. In Gnome this works somewhat
-        # better, only the entry which really uses multiple lines
-        # uses extra space in the lookup table. But this still looks
-        # terrible. When one uses custom shortcuts to expand to whole
-        # paragraphs, this uses far too much space in the lookup
-        # table.
-        phrase = phrase.replace('\n', '↩')
+        # If a candidate (longer than one character) contains
+        # newlines, replace them with a symbol indicating the new
+        # line. Rendering the real newlines in the lookup table looks
+        # terrible. On non-Gnome desktops, all entries in the lookup
+        # table always have the same height. So when one entry uses 3
+        # lines in the lookup table, all other entries use 3 lines as
+        # well. In Gnome this works somewhat better, only the entry
+        # which really uses multiple lines uses extra space in the
+        # lookup table. But this still looks terrible. When one uses
+        # custom shortcuts to expand to whole paragraphs, this uses
+        # far too much space in the lookup table.
+        #
+        # U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR also make
+        # the line spacing in the lookup table huge, which looks ugly.
+        # Replace them with repr(character).
+        phrase = phrase.replace(
+            '\n', '␤').replace( # ␤ U+2424 SYMBOL FOR NEWLINE
+                '\r', '␍').replace( # ␍ U+240D SYMBOL FOR CARRIAGE RETURN
+                    '\u2028', repr('\u2028')).replace(
+                        '\u2029', repr('\u2029'))
         if (self._debug_level > 1
             and not self.client_capabilities & itb_util.Capabilite.OSK):
             # Show frequency information for debugging
@@ -1570,7 +1580,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # the index given is out of range
             return ''
         return itb_util.normalize_nfc_and_composition_exclusions(
-            self._candidates[index][0])
+            self._candidates[index].phrase)
 
     def get_string_from_lookup_table_current_page(self, index: int) -> str:
         '''
@@ -7936,14 +7946,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         super().update_auxiliary_text(
             self._current_auxiliary_text, False)
         for candidate in self._m17n_trans_parts.candidates:
-            # Add a comment to the lookup table if the candidate
-            # is a single, invisible character:
-            comment = ''
-            if (len(candidate) == 1
-                and unicodedata.category(candidate)
-                in ('Cc', 'Cf', 'Zl', 'Zp', 'Zs')):
-                comment = (
-                    f'U+{ord(candidate):04X} ' + unicodedata.name(candidate))
             if candidate:
                 prediction_candidate = itb_util.PredictionCandidate(
                     phrase=candidate,
@@ -7952,8 +7954,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     from_user_db=False,
                     spell_checking=False)
                 self._candidates.append(prediction_candidate)
-                self._append_candidate_to_lookup_table(phrase=candidate,
-                                                       comment=comment)
+                self._append_candidate_to_lookup_table(
+                    phrase=candidate, comment='')
         if not self.get_lookup_table().get_number_of_candidates():
             # ja-anthy sometimes produces empty candidates.  Which is
             # *very* weird! Also reproducible with ibus-m17n!  I added

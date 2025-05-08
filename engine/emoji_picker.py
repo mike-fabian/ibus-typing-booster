@@ -906,7 +906,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 f'<span font="{self._font} {self._fontsize}" '
                 f'fallback="{str(fallback).lower()}">'
                 f'{html.escape(emoji)}</span>')
-            if itb_emoji.is_invisible(emoji):
+            if itb_util.is_invisible(emoji):
                 text += (
                     f'<span fallback="false" font="{self._fontsize / 2}">'
                     f' U+{ord(emoji):04X} {self._emoji_matcher.name(emoji)}'

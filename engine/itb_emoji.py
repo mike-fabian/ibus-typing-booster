@@ -254,36 +254,6 @@ UNICODE_DATA_EXTRA_LINES = (
 
 SKIN_TONE_MODIFIERS = ('🏻', '🏼', '🏽', '🏾', '🏿')
 
-def is_invisible(text: str) -> bool:
-    '''Checks whether a text is invisible
-
-    Returns True if the text is invisible, False if not.
-
-    May return True for some texts which are not completely
-    invisible but hard to see in most fonts.
-
-    :param text: The text
-
-    Examples:
-
-    >>> is_invisible('a')
-    False
-
-    >>> is_invisible(' ')
-    True
-
-    >>> is_invisible(' a')
-    False
-
-    >>> is_invisible('  ')
-    True
-
-    >>> is_invisible('')
-    True
-    '''
-    return all(unicodedata.category(character)
-               in ('Cc', 'Cf', 'Zl', 'Zp', 'Zs') for character in text)
-
 if IMPORT_PYKAKASI_SUCCESSFUL:
     def kakasi_convert(text: str, target: str='orig') -> str:
         '''
@@ -1947,7 +1917,7 @@ class EmojiMatcher():
                 else:
                     display_name = self.name(emoji_key[0])
                 if (len(emoji_key[0]) == 1
-                        and is_invisible(emoji_key[0])):
+                        and itb_util.is_invisible(emoji_key[0])):
                     # Add the code point to the display name of
                     # “invisible” characters:
                     display_name = (f'U+{ord(emoji_key[0]):04X} '
@@ -2392,7 +2362,7 @@ class EmojiMatcher():
             else:
                 similar_name = self.name(similar_string)
             if (len(similar_string) == 1
-                    and is_invisible(similar_string)):
+                    and itb_util.is_invisible(similar_string)):
                 # Add the code point to the display name of
                 # “invisible” characters:
                 similar_name = (f'U+{ord(similar_string):04X} '
