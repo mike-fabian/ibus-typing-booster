@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 10 May 2025 Release 2.27.52
+* Don’t trigger a new search in emoji-picker when the search entry changes just by trailing or leading whitespace
+* Improve emoji matching (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/705)
+* Apply the current case mode and normalization only to the parts of the preedit which do not belong to an “inner” preedit (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/717)
+* Show the code point and a comment in the lookup table for control characters or other invisible characters (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/715)
+* Do not ignore the composition exclusions for Hebrew when normalizing to NFC (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/716)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 06 May 2025 Release 2.27.48
 * Don’t use spellchecking by default when searching for emoji and Unicode characters (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/710)
 * Support a few more unusual keys for transliteration (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/709)

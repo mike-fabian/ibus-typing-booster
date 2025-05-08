@@ -47,6 +47,50 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.52" date="2025-05-10" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.52</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Don’t trigger a new search in emoji-picker when the search
+            entry changes just by trailing or leading whitespace
+          </li>
+          <li>
+            Improve emoji matching (Resolves: github-issues#705)
+          </li>
+          <li>
+            Apply the current case mode and normalization only to the
+            parts of the preedit which do not belong to an “inner”
+            preedit (Resolves: github-issues#717)
+          </li>
+          <li>
+            Show a comment in the lookup table for control characters
+            or other invisible characters (Resolves:
+            github-issues#715)
+          </li>
+          <li>
+            Do not ignore the composition exclusions for Hebrew when
+            normalizing to NFC (Resolves:
+            github-issues#716)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/705">
+          github-issues#705
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/717">
+          github-issues#717
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/715">
+          github-issues#715
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/716">
+          github-issues#716
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.48" date="2025-05-06" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.48</url>
       <description>
