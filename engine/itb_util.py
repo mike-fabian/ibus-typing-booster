@@ -3443,6 +3443,8 @@ def normalize_nfc_and_composition_exclusions(text: str) -> str:
     'gr\u00FCn \u09dc \u09dd \u09df \u09a1'
     '''
     # pylint: enable=line-too-long
+    if text == '':
+        return ''
     text = unicodedata.normalize('NFC', text)
 
     # openSUSE Leap 15.4 still has only Python 3.6.

@@ -2272,7 +2272,7 @@ class ItbTestCase(unittest.TestCase):
         testutils.get_hunspell_dictionary_length('en_US') >= 10000,
         'Skipping because en_US dictionary is suspiciously small, '
         'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
-    def test_toggle_candidate_case(self) -> None:
+    def test_toggle_candidate_case_mode(self) -> None:
         self.engine.set_current_imes(
             ['NoIME', 't-latn-post'], update_gsettings=False)
         self.engine.set_dictionary_names(
@@ -2305,7 +2305,7 @@ class ItbTestCase(unittest.TestCase):
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')
-    def test_toggle_case_then_return(self) -> None:
+    def test_toggle_case_mode_then_return(self) -> None:
         '''
         For https://github.com/mike-fabian/ibus-typing-booster/issues/558
         '''
@@ -2343,7 +2343,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'Test\rTEST\r')
 
-    def test_toggle_case_for_multiple_words(self) -> None:
+    def test_toggle_case_mode_for_multiple_words(self) -> None:
         self.engine.set_current_imes(
             ['NoIME', 't-latn-post'], update_gsettings=False)
         self.engine.set_dictionary_names(
@@ -2471,7 +2471,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'In Germany In Germany IN GERMANY In Germany in germany ')
 
-    def test_toggle_case_without_candidates(self) -> None:
+    def test_toggle_case_mode_without_candidates(self) -> None:
         '''
         For https://github.com/mike-fabian/ibus-typing-booster/issues/640
         '''
@@ -2496,6 +2496,84 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(
             IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
         self.assertEqual(self.engine.mock_preedit_text, 'Test')
+
+    def test_case_mode_and_compose_preedit(self) -> None:
+        '''https://github.com/mike-fabian/ibus-typing-booster/issues/717
+
+        The current case mode should not have an influence on the
+        Compose preedit.
+        '''
+        self.engine.set_current_imes(['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(['en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'test')
+        # Shift_L goes to 'capitalize':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'Test')
+        # Next Shift_L goes to 'upper':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'TEST')
+        self.engine.do_process_key_event(IBus.KEY_Left, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_Left, 0, 0)
+        self.assertEqual(2, self.engine.mock_preedit_text_cursor_pos)
+        self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        # The “a” in “TEaST” should not be upper cased:
+        self.assertEqual(self.engine.mock_preedit_text, 'TEaST')
+        self.engine.do_process_key_event(IBus.KEY_quotedbl, 0, 0)
+        # Typing the double quote has finished the compose sequence
+        # and produced an “ä“ which should then become upper cased
+        # as the current case mode is 'upper':
+        self.assertEqual(self.engine.mock_preedit_text, 'TEÄST')
+
+    def test_case_mode_and_rfc1345(self) -> None:
+        '''https://github.com/mike-fabian/ibus-typing-booster/issues/717
+
+        The current case mode should not have an influence on an unfinished
+        m17n transliteration.
+        '''
+        self.engine.set_current_imes(['t-rfc1345'], update_gsettings=False)
+        self.engine.set_dictionary_names(['en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'test')
+        # Shift_L goes to 'capitalize':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'Test')
+        # Next Shift_L goes to 'upper':
+        self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
+        self.engine.do_process_key_event(
+            IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'TEST')
+        self.engine.do_process_key_event(IBus.KEY_ampersand, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        # The 'c' in the unfinished m17n transliteration should
+        # not be upper cased:
+        self.assertEqual(self.engine.mock_preedit_text, 'TEST&c')
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        # Typing the 'o' has finished the m17n transliteration:
+        self.assertEqual(self.engine.mock_preedit_text, 'TEST℅')
+        self.engine.do_process_key_event(IBus.KEY_ampersand, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        # Again we have an unfinished transliteration, the 'c'
+        # should not be upper cased:
+        self.assertEqual(self.engine.mock_preedit_text, 'TEST℅&c')
+        self.engine.do_process_key_event(IBus.KEY_x, 0, 0)
+        # Typing the 'x' finished the transliteration and the result
+        # was '&cx'. This finished result gets upper cased because
+        # of the current case mode:
+        self.assertEqual(self.engine.mock_preedit_text, 'TEST℅&CX')
 
     def test_sinhala_wijesekara(self) -> None:
         dummy_trans = self.get_transliterator_or_skip('si-wijesekara')

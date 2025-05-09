@@ -2568,14 +2568,43 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             length_committed,
             length_committed + length_preedit))
 
+    def _get_normalized_preedit_string_with_case_mode_applied(self) -> str:
+        '''Apply the current case mode and normalization only to the
+        parts of the preedit which do not belong to an “inner” preedit.
+
+        An “inner” preedit might come from a compose sequence, an m17n
+        candidate list, or an unfinished m17n transliteration.
+        '''
+        ime = self.get_current_imes()[0]
+        trans = self._transliterators[ime]
+        text = itb_util.normalize_nfc_and_composition_exclusions(
+            self._transliterated_strings[ime])
+        if self._typed_compose_sequence:
+            before = self._transliterated_strings_before_compose[ime]
+            inner_preedit = self._transliterated_strings_compose_part
+        elif self._m17n_trans_parts.candidates:
+            before = self._m17n_trans_parts.committed
+            inner_preedit = self._m17n_trans_parts.preedit
+        else:
+            transliterated_parts = trans.transliterate_parts(
+                list(text), ascii_digits=self._ascii_digits)
+            before = transliterated_parts.committed
+            inner_preedit = transliterated_parts.preedit
+        after = text[len(before) + len(inner_preedit):]
+        cm_func = self._case_modes[self._current_case_mode]['function']
+        before = cm_func(before)
+        after = cm_func(after)
+        # I think everything should be normalized here, otherwise the
+        # get_caret() which also uses normalizes to NFC might give a
+        # wrong result:
+        return itb_util.normalize_nfc_and_composition_exclusions(
+            before + inner_preedit + after)
+
     def _update_preedit(self) -> None:
         '''Update Preedit String in UI'''
         if self._debug_level > 1:
             LOGGER.debug('entering function')
-        # get_caret() should also use NFC!
-        _str = itb_util.normalize_nfc_and_composition_exclusions(
-            self._transliterated_strings[self.get_current_imes()[0]])
-        _str = self._case_modes[self._current_case_mode]['function'](_str)
+        _str = self._get_normalized_preedit_string_with_case_mode_applied()
         if self._debug_level > 2:
             LOGGER.debug('_str=“%s”', _str)
         if self._hide_input:
