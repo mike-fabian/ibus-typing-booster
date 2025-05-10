@@ -1199,9 +1199,21 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         stats.strip_dirs()
         stats.sort_stats('cumulative')
         stats.print_stats('emoji_picker', 25)
-        stats.print_stats('itb_emoji', 25)
+        stats.print_stats('itb_emoji', 50)
         stats.print_stats('itb_pango', 25)
         LOGGER.info('Profiling info:\n%s', stats_stream.getvalue())
+        LOGGER.info(
+            'itb_util.remove_accents() cache info: %s',
+            itb_util.remove_accents.cache_info())
+        LOGGER.info(
+            'itb_emoji.EmojiMatcher.variation_selector_normalize() cache info: %s',
+            itb_emoji.EmojiMatcher.variation_selector_normalize.cache_info()) # pylint: disable=no-value-for-parameter
+        LOGGER.info(
+            'itb_emoji._match_classic() cache info: %s',
+            itb_emoji._match_classic.cache_info()) # pylint: disable=no-value-for-parameter
+        LOGGER.info(
+            'itb_emoji._match_rapidfuzz() cache info: %s',
+            itb_emoji._match_rapidfuzz.cache_info()) # pylint: disable=no-value-for-parameter
 
     def on_delete_event(self, *_args: Any) -> None:
         '''
