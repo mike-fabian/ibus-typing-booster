@@ -1483,14 +1483,21 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             # the search bar is invisible, ignore it.
             return
         if query_string.isspace():
-            # Keep it possible to search for space like characters when
-            # typing just white space:
-            self._query_string = query_string
+            # Keep it possible to search for space like characters
+            # when typing just white space characters, keep the last
+            # white space character typed and search for that:
+            query_string = query_string[-1:]
         else:
             # If the query_string contains non-whitespace characters,
             # strip it otherwise 'black cat ' would not be an exact match
             # for 'black cat'.
-            self._query_string = query_string.strip()
+            query_string = query_string.strip()
+        if query_string == self._query_string:
+            if _ARGS.debug:
+                LOGGER.debug(
+                    'query string effectively unchanged (only whitespace change)')
+            return
+        self._query_string = query_string
         if self._candidates_invalid:
             if _ARGS.debug:
                 LOGGER.debug(
