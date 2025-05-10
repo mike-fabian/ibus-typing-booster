@@ -1209,6 +1209,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             'itb_emoji.EmojiMatcher.variation_selector_normalize() cache info: %s',
             itb_emoji.EmojiMatcher.variation_selector_normalize.cache_info()) # pylint: disable=no-value-for-parameter
         LOGGER.info(
+            'itb_emoji.EmojiMatcher.get_all_label_words() cache info: %s',
+            itb_emoji.EmojiMatcher.get_all_label_words.cache_info()) # pylint: disable=no-value-for-parameter
+        LOGGER.info(
             'itb_emoji._match_classic() cache info: %s',
             itb_emoji._match_classic.cache_info()) # pylint: disable=no-value-for-parameter
         LOGGER.info(
