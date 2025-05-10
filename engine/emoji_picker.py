@@ -1344,12 +1344,12 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             # callback will think that nothing needs to be done
             # because self._candidates_invalid is True already.
             emoji = self._variation_selector_normalize_for_font(candidate.phrase)
-            dummy_score = candidate.user_freq
+            score = candidate.user_freq
             name = candidate.comment
             label = Gtk.Label()
             # Make font for emoji large using pango markup
             fallback = self._optimize_pango_fallback(emoji)
-            label.set_text(
+            text = (
                 f'<span font="{self._font} {self._fontsize}" '
                 f'fallback="{str(fallback).lower()}">'
                 + html.escape(emoji)
@@ -1357,6 +1357,12 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 + f'<span font="{self._fontsize / 2}">'
                 + ' ' + html.escape(name)
                 + '</span>')
+            if _ARGS.debug:
+                text += (
+                    f'<span font="{self._fontsize / 2}" foreground="purple">'
+                    + f' {score:0.2f}'
+                    + '</span>')
+            label.set_text(text)
             label.set_use_markup(True)
             label.set_can_focus(False)
             label.set_selectable(False)
