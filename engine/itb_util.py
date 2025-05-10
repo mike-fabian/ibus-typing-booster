@@ -5343,7 +5343,9 @@ class M17nDbInfo:
             try:
                 result = subprocess.run(
                     [m17n_db_binary, '-v'],
-                    encoding='utf-8', check=True, capture_output=True)
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    encoding='utf-8', check=True)
                 self._version = result.stdout.strip()
                 LOGGER.info('%s printed: %s', m17n_db_binary, self._version)
             except FileNotFoundError as error:
@@ -5381,7 +5383,9 @@ class M17nDbInfo:
             try:
                 result = subprocess.run(
                     [m17n_db_binary],
-                    encoding='utf-8', check=True, capture_output=True)
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    encoding='utf-8', check=True)
                 system_dir = result.stdout.strip()
                 LOGGER.info('%s printed: %s', m17n_db_binary, system_dir)
             except FileNotFoundError as error:
