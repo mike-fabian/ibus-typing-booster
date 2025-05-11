@@ -5,8 +5,6 @@ defaultContentLanguage = "en"
 title = "ibus-typing-booster"
 theme = "cayman-hugo-theme"
 
-# Disqus comments
-disqusShortname = "yourdiscussshortname"
 
 # Syntax highlighting
 pygmentsCodefences = true
