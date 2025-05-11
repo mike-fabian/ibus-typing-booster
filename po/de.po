@@ -14,16 +14,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-05-11 23:06+0200\n"
-"PO-Revision-Date: 2025-04-02 07:48+0000\n"
+"PO-Revision-Date: 2025-05-11 21:50+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.11.3\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:262
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -1343,7 +1343,7 @@ msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
 msgstr ""
-"Hier kann man wählen ob eine Benutzerdefinierte Farbe verwendet wird wenn "
+"Hier kann man wählen ob eine benutzerdefinierte Farbe verwendet wird wenn "
 "eine Vervollständigung inline angezeigt wird."
 
 #. Translators: Used in the title bar of the colour chooser
@@ -1374,7 +1374,7 @@ msgstr "Farbe für Composevorschau verwenden"
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
-"Hier kann man wählen ob eine Benutzerdefinierte Farbe für die "
+"Hier kann man wählen ob eine benutzerdefinierte Farbe für die "
 "Composevorschau verwendet wird."
 
 #. Translators: Used in the title bar of the colour chooser
@@ -1392,37 +1392,26 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the m17n preedit.
 #: setup/main.py:1903
-#, fuzzy
-#| msgid "Use color for compose preview"
 msgid "Use color for m17n preedit"
-msgstr "Farbe für Composevorschau verwenden"
+msgstr "Farbe für m17n Preedit verwenden"
 
 #: setup/main.py:1905
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for the compose "
-#| "preview."
 msgid ""
 "Here you can choose whether a custom color is used for the m17n preedit."
 msgstr ""
-"Hier kann man wählen ob eine Benutzerdefinierte Farbe für die "
-"Composevorschau verwendet wird."
+"Hier kann man wählen ob eine benutzerdefinierte Farbe für das m17n Preedit "
+"verwendet wird."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the m17n preedit.
 #: setup/main.py:1929
-#, fuzzy
-#| msgid "Choose color for compose preview"
 msgid "Choose color for m17n preedit"
-msgstr "Farbe für Composevorschau auswählen"
+msgstr "Farbe für m17n Preedit auswählen"
 
 #: setup/main.py:1931
-#, fuzzy
-#| msgid "Here you can specify which color to use for the compose preview."
 msgid "Here you can specify which color to use for the m17n preedit."
-msgstr ""
-"Hier kann man wählen welche Farbe für die Composevorschau verwendet wird."
+msgstr "Hier kann man wählen welche Farbe für das m17n Preedit verwendet wird."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
