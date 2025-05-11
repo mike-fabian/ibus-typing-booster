@@ -1193,11 +1193,20 @@ time.</p><p>As having the “☑️ Unicode symbols and emoji predictions” opt
 slows down the search for predictions, you might want to look
 at <a href=#quickly-toggling-emoji-mode>Quickly toggling emoji mode on and off</a>, especially if you
 use emoji only occasionally.</p><h2 id=emoji-input-fuzzy-matching>Emoji input fuzzy matching</h2><video playsinline aria-label="Emoji input fuzzy matching" style=width:100%;height:auto controls>
-<source src=../../videos/user-docs/emoji-english-fuzzy-castle.mp4 type=video/mp4><p>Your browser does not support video.</p></video><p>Ibus-typing-booster tries to match the emoji names in a fuzzy way, in
-many cases you will get a match even if your input contains spelling
-mistakes.</p><p>In this example video, the input “casle” is typed, i.e. it is not
-spelled correctly. Nevertheless, one gets the match 🏰 (U+1F3F0
-EUROPEAN CASTLE).</p><h2 id=emoji-input-multiple-keywords>Emoji input using multiple keywords</h2><video playsinline aria-label="Emoji input using multiple keywords" style=width:100%;height:auto controls>
+<source src=../../videos/user-docs/emoji-english-fuzzy-castle.mp4 type=video/mp4><p>Your browser does not support video.</p></video><p>Fuzzy emoji matching using the Enchant spellchecker has been removed
+from ibus-typing-booster ≥ 2.27.52, as it caused more problems than it
+solved. For example, searching for Syriac characters by typing
+&ldquo;syriac&rdquo; incorrectly matched the 💉 (U+1F489 SYRINGE) emoji with the
+highest score.</p><p>While the new emoji search no longer performs spellchecking, it works
+significantly better than before—especially with multiple search terms
+that rely on substring matches. For instance, even though &ldquo;casle&rdquo; no
+longer yields results, a short substring like &ldquo;cas&rdquo; is now sufficient
+to match a castle emoji.</p><p>Additionally, to find a specific castle emoji, users can now combine
+multiple short substrings with underscores or spaces. For example:</p><ul><li><p>The search term &ldquo;cas_eur&rdquo; matches 🏰 (U+1F3F0 EUROPEAN CASTLE).</p></li><li><p>The search term &ldquo;cas_jap&rdquo; matches 🏯 (U+1F3EF JAPANESE CASTLE).</p></li></ul><p>(The old search struggled with such short partial matches.)</p><p>On top of these improvements, the new emoji search algorithm is much faster.</p><p>If users cannot find a desired emoji or character due to misspelled
+names or keywords, they can still use <code>emoji-picker --spellcheck</code>. By
+default, <code>emoji-picker</code> no longer uses spellchecking either, but the old
+spellcheck-based search remains available as an option.</p><p>I chose not to add the old spellchecking search to Typing Booster as I
+found it largely ineffective.</p><h2 id=emoji-input-multiple-keywords>Emoji input using multiple keywords</h2><video playsinline aria-label="Emoji input using multiple keywords" style=width:100%;height:auto controls>
 <source src=../../videos/user-docs/emoji-english-multiple-keywords-castle-japanese.mp4 type=video/mp4><p>Your browser does not support video.</p></video><p>This video shows how to use multiple keywords to search for emoji.</p><p>If typing a single word does not give you the emoji you are looking
 for, you can type as many keywords as you like and concatenate them
 with underscores “_” (Or spaces “ ”. Typing space usually commits the
