@@ -1362,7 +1362,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 + '</span>')
             if _ARGS.debug:
                 text += (
-                    f'<span font="{self._fontsize / 2}" foreground="purple">'
+                    f'<span font="{self._fontsize / 2}" foreground="red">'
                     + f' {score:0.2f}'
                     + '</span>')
             label.set_text(text)
