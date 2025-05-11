@@ -17,6 +17,22 @@
         the compose preview.
       </description>
     </key>
+    <key name="colorm17npreedit" type="b">
+      <default>false</default>
+      <summary>Use color for m17n preedit</summary>
+      <description>
+        Here you can choose whether a custom color is used for
+        the m17n preedit.
+      </description>
+    </key>
+    <key name="colorm17npreeditstring" type="s">
+      <default>'rgb(127,127,127)'</default>
+      <summary>Choose color for m17n preedit</summary>
+      <description>
+        Here you can specify which color to use for
+        the m17n preedit.
+      </description>
+    </key>
     <key name="colorpreeditspellcheck" type="b">
       <default>false</default>
       <summary>Preedit spellchecking</summary>

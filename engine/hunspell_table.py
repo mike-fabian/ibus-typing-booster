@@ -340,6 +340,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._color_compose_preview_argb = itb_util.color_string_to_argb(
             self._color_compose_preview_string)
 
+        self._color_m17n_preedit: bool = self._settings_dict[
+            'colorm17npreedit']['user']
+
+        self._color_m17n_preedit_string: str = self._settings_dict[
+            'colorm17npreeditstring']['user']
+        self._color_m17n_preedit_argb = itb_util.color_string_to_argb(
+            self._color_m17n_preedit_string)
+
         self._color_userdb: bool = self._settings_dict['coloruserdb']['user']
 
         self._color_userdb_string: str = self._settings_dict[
@@ -794,6 +802,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'colorcomposepreviewstring': {
                 'set': self.set_color_compose_preview_string,
                 'get': self.get_color_compose_preview_string},
+            'colorm17npreedit': {
+                'set': self.set_color_m17n_preedit,
+                'get': self.get_color_m17n_preedit},
+            'colorm17npreeditstring': {
+                'set': self.set_color_m17n_preedit_string,
+                'get': self.get_color_m17n_preedit_string},
             'coloruserdb': {
                 'set': self.set_color_userdb,
                 'get': self.get_color_userdb},
@@ -2511,7 +2525,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         super().destroy()
 
     def _add_color_to_attrs_for_spellcheck(
-            self, attrs: IBus.AttrList, text: str) -> None:
+            self, attrs: IBus.AttrList, text: str) -> bool:
         '''May color the preedit if spellchecking fails
 
         :param attrs: The attribute list of the preedit
@@ -2522,7 +2536,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             or self._m17n_trans_parts.candidates
             or self.get_current_imes()[0][:2] in ('zh', 'ja')
             or not self._color_preedit_spellcheck):
-            return
+            return False
         stripped_text = itb_util.strip_token(text)
         prefix_length = text.find(stripped_text)
         if (len(stripped_text) >= 4
@@ -2532,15 +2546,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._color_preedit_spellcheck_argb,
                 prefix_length,
                 prefix_length + len(stripped_text)))
+            return True
+        return False
 
-    def _add_color_to_attrs_for_compose(self, attrs: IBus.AttrList) -> None:
+    def _add_color_to_attrs_for_compose(self, attrs: IBus.AttrList) -> bool:
         '''May color the compose part of the preedit
 
         :param attrs: The attribute list of the preedit
         '''
         if (not self._typed_compose_sequence
             or not self._color_compose_preview):
-            return
+            return False
         ime = self.get_current_imes()[0]
         length_before_compose = len(
             self._transliterated_strings_before_compose[ime])
@@ -2550,23 +2566,36 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._color_compose_preview_argb,
             length_before_compose,
             length_before_compose + length_compose))
+        return True
 
-    def _add_color_to_attrs_for_m17n_candidates(self, attrs: IBus.AttrList) -> None:
+    def _add_color_to_attrs_for_m17n_preedit(
+            self, attrs: IBus.AttrList) -> bool:
         '''May color the m17n candidate part of the preedit
 
         :param attrs: The attribute list of the preedit
 
         Uses the same color as for compose preedits.
         '''
-        if (not self._m17n_trans_parts.candidates
-            or not self._color_compose_preview):
-            return
-        length_committed = len(self._m17n_trans_parts.committed)
-        length_preedit = len(self._m17n_trans_parts.preedit)
+        if (self._typed_compose_sequence
+            or not self._color_m17n_preedit):
+            return False
+        if self._m17n_trans_parts.candidates:
+            length_before = len(self._m17n_trans_parts.committed)
+            length_inner_preedit = len(self._m17n_trans_parts.preedit)
+        else:
+            ime = self.get_current_imes()[0]
+            trans = self._transliterators[ime]
+            transliterated_parts = trans.transliterate_parts(
+                self._typed_string, ascii_digits=self._ascii_digits)
+            length_before = len(transliterated_parts.committed)
+            length_inner_preedit = len(transliterated_parts.preedit)
+        if not length_inner_preedit:
+            return False
         attrs.append(IBus.attr_foreground_new(
-            self._color_compose_preview_argb,
-            length_committed,
-            length_committed + length_preedit))
+            self._color_m17n_preedit_argb,
+            length_before,
+            length_before + length_inner_preedit))
+        return True
 
     def _get_normalized_preedit_string_with_case_mode_applied(self) -> str:
         '''Apply the current case mode and normalization only to the
@@ -2626,9 +2655,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             or self.is_lookup_table_enabled_by_min_char_complete):
             attrs.append(IBus.attr_underline_new(
                 self._preedit_underline, 0, len(_str)))
-            self._add_color_to_attrs_for_compose(attrs)
-            self._add_color_to_attrs_for_m17n_candidates(attrs)
-            self._add_color_to_attrs_for_spellcheck(attrs, _str)
+            compose_colored = self._add_color_to_attrs_for_compose(attrs)
+            m17n_colored = False
+            if not compose_colored:
+                m17n_colored = self._add_color_to_attrs_for_m17n_preedit(attrs)
+            if not (compose_colored or m17n_colored):
+                self._add_color_to_attrs_for_spellcheck(attrs, _str)
         else:
             # Preedit style “only when lookup is enabled” is
             # requested and lookup is *not* enabled.  Therefore,
@@ -2811,7 +2843,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._preedit_underline,
                 len(typed_string), len(typed_string + completion)))
         else:
-            self._add_color_to_attrs_for_spellcheck(attrs, typed_string)
+            m17n_colored = self._add_color_to_attrs_for_m17n_preedit(attrs)
+            if not m17n_colored:
+                self._add_color_to_attrs_for_spellcheck(attrs, typed_string)
             if self._color_inline_completion:
                 attrs.append(IBus.attr_foreground_new(
                     self._color_inline_completion_argb,
@@ -4967,6 +5001,70 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
     def get_color_compose_preview_string(self) -> str:
         '''Returns the current value of the “color compose preview” string'''
         return self._color_compose_preview_string
+
+    def set_color_m17n_preedit(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets whether to use color for the m17n preedit
+
+        :param mode: Whether to use color for the m17n preedit
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._color_m17n_preedit:
+            return
+        self._color_m17n_preedit = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorm17npreedit',
+                GLib.Variant.new_boolean(mode))
+
+    def get_color_m17n_preedit(self) -> bool:
+        '''Returns the current value of the “color m17n preedit” mode'''
+        return self._color_m17n_preedit
+
+    def set_color_m17n_preedit_string(
+            self,
+            color_string: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the color for the m17n preedit
+
+        :param color_string: The color for the m17n preedit
+                             It is a string in one of the following formats:
+                             - Standard name from the X11 rgb.txt
+                             - Hex value: “#rgb”, “#rrggbb”, “#rrrgggbbb”
+                                          or ”#rrrrggggbbbb”
+                             - RGB color: “rgb(r,g,b)”
+                             - RGBA color: “rgba(r,g,b,a)”
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', color_string, update_gsettings)
+        if color_string == self._color_m17n_preedit_string:
+            return
+        self._color_m17n_preedit_string = color_string
+        self._color_m17n_preedit_argb = itb_util.color_string_to_argb(
+            self._color_m17n_preedit_string)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'colorm17npreeditstring',
+                GLib.Variant.new_string(color_string))
+
+    def get_color_m17n_preedit_string(self) -> str:
+        '''Returns the current value of the “color m17n preedit” string'''
+        return self._color_m17n_preedit_string
 
     def set_color_userdb(
             self,
