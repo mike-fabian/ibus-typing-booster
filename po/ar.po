@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-05-10 23:33+0200\n"
+"POT-Creation-Date: 2025-05-11 23:06+0200\n"
 "PO-Revision-Date: 2025-04-25 17:40+0000\n"
 "Last-Translator: joo es <johndevand@tutanota.com>\n"
 "Language-Team: Arabic <https://translate.fedoraproject.org/projects/ibus-"
@@ -23,7 +23,7 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Weblate 5.11\n"
 
-#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:263
+#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:262
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
 msgstr "منتقي الإيموجي"
@@ -33,27 +33,27 @@ msgstr "منتقي الإيموجي"
 msgid "Emoji browsing tool"
 msgstr "أداة تصفح الرموز التعبيرية"
 
-#: engine/emoji_picker.py:375
+#: engine/emoji_picker.py:374
 msgid "Clear recently used"
 msgstr "مسح المُستخدم حديثاً"
 
-#: engine/emoji_picker.py:381 setup/main.py:234
+#: engine/emoji_picker.py:380 setup/main.py:234
 msgid "About"
 msgstr "عن"
 
-#: engine/emoji_picker.py:385
+#: engine/emoji_picker.py:384
 msgid "Quit"
 msgstr "خروج"
 
-#: engine/emoji_picker.py:394
+#: engine/emoji_picker.py:393
 msgid "Search for emoji"
 msgstr "البحث عن إيموجي"
 
-#: engine/emoji_picker.py:406
+#: engine/emoji_picker.py:405
 msgid "Set the font to display emoji"
 msgstr "ضبط خط عرض الإيموجي"
 
-#: engine/emoji_picker.py:414
+#: engine/emoji_picker.py:413
 msgid "Set font size"
 msgstr "ضبط حجم الخط"
 
@@ -65,11 +65,11 @@ msgstr "ضبط حجم الخط"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:435
+#: engine/emoji_picker.py:434
 msgid "Fallback"
 msgstr "الرجوع لبديل"
 
-#: engine/emoji_picker.py:437
+#: engine/emoji_picker.py:436
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -77,106 +77,106 @@ msgstr ""
 "ما إذا أُريد استخدام خط احتياطي للإيموجي أو أجزائها التي لا يمكن عرضها "
 "باستخدام الخط المحدد."
 
-#: engine/emoji_picker.py:513
+#: engine/emoji_picker.py:512
 msgid "Recently used"
 msgstr "المُستخدم حديثاً"
 
-#: engine/emoji_picker.py:693
+#: engine/emoji_picker.py:692
 msgid "Categories"
 msgstr "التصنيفات"
 
-#: engine/emoji_picker.py:694
+#: engine/emoji_picker.py:693
 msgid "Unicode categories"
 msgstr "تصنيفات يونيكود"
 
-#: engine/emoji_picker.py:695
+#: engine/emoji_picker.py:694
 msgid "Keywords"
 msgstr "الكلمات المفتاحية"
 
-#: engine/emoji_picker.py:713
+#: engine/emoji_picker.py:712
 msgid "Fonts used to render this emoji:"
 msgstr "الخطوط المُستخدمة لرسم هذا الوجه التعبيري:"
 
-#: engine/emoji_picker.py:771
+#: engine/emoji_picker.py:770
 msgid "Unicode Version:"
 msgstr "نسخة يونيكود:"
 
-#: engine/emoji_picker.py:775
+#: engine/emoji_picker.py:774
 msgid "Emoji Version:"
 msgstr "إصدار الرموز التعبيرية:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
-#: engine/emoji_picker.py:782
+#: engine/emoji_picker.py:781
 msgid "Emoji properties:"
 msgstr "خصائص الرموز التعبيرية:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
-#: engine/emoji_picker.py:788
+#: engine/emoji_picker.py:787
 msgid "Unicode category:"
 msgstr "تصنيف اليونيكود:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
-#: engine/emoji_picker.py:795
+#: engine/emoji_picker.py:794
 msgid "Unicode block:"
 msgstr "كُتلة اليونيكود:"
 
-#: engine/emoji_picker.py:814 engine/emoji_picker.py:1989
+#: engine/emoji_picker.py:813 engine/emoji_picker.py:1988
 msgid "Left click to copy"
 msgstr "انقر بالزر الأيسر للنسخ"
 
-#: engine/emoji_picker.py:817
+#: engine/emoji_picker.py:816
 msgid "Long press or middle click for skin tones"
 msgstr "انقر طويلًا أو بالزر الأوسط لتغيير لون البشرة"
 
-#: engine/emoji_picker.py:818
+#: engine/emoji_picker.py:817
 msgid "Right click for info"
 msgstr "انقر بالزر الأيمن للتفاصيل"
 
-#: engine/emoji_picker.py:1328
+#: engine/emoji_picker.py:1327
 msgid "Search Results"
 msgstr "نتائج البحث"
 
-#: engine/emoji_picker.py:1335
+#: engine/emoji_picker.py:1334
 msgid "Search produced empty result."
 msgstr "لم يسفر البحث عن أية نتائج."
 
-#: engine/emoji_picker.py:1647 engine/emoji_picker.py:1775
+#: engine/emoji_picker.py:1646 engine/emoji_picker.py:1774
 msgid "Copied to clipboard!"
 msgstr "نُسخ للحافظة!"
 
-#: engine/emoji_picker.py:2102
+#: engine/emoji_picker.py:2101
 msgid "Lookup on emojipedia"
 msgstr "ابحث في موسوعة الإيموجي emojipedia"
 
-#: engine/emoji_picker.py:2250 engine/emoji_picker.py:2251
-#: engine/emoji_picker.py:2252 setup/main.py:1622
+#: engine/emoji_picker.py:2249 engine/emoji_picker.py:2250
+#: engine/emoji_picker.py:2251 setup/main.py:1622
 msgid "System default"
 msgstr "وضع النظام الافتراضي"
 
-#: engine/emoji_picker.py:2387
+#: engine/emoji_picker.py:2386
 msgid "Set Font"
 msgstr "اختر الخط"
 
-#: engine/hunspell_table.py:536 engine/hunspell_table.py:570
-#: engine/hunspell_table.py:591
+#: engine/hunspell_table.py:544 engine/hunspell_table.py:578
+#: engine/hunspell_table.py:599
 msgid "Off"
 msgstr "إيقاف التشغيل"
 
-#: engine/hunspell_table.py:541 engine/hunspell_table.py:575
-#: engine/hunspell_table.py:596
+#: engine/hunspell_table.py:549 engine/hunspell_table.py:583
+#: engine/hunspell_table.py:604
 msgid "On"
 msgstr "تشغيل"
 
-#: engine/hunspell_table.py:560
+#: engine/hunspell_table.py:568
 msgid "Input mode"
 msgstr "وضع الإدخال"
 
-#: engine/hunspell_table.py:561
+#: engine/hunspell_table.py:569
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "هنا يمكنك تشغيل وإيقاف ibus-typing-booster."
 
@@ -187,7 +187,7 @@ msgstr "هنا يمكنك تشغيل وإيقاف ibus-typing-booster."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:580 engine/hunspell_table.py:582 setup/main.py:619
+#: engine/hunspell_table.py:588 engine/hunspell_table.py:590 setup/main.py:619
 msgid "Unicode symbols and emoji predictions"
 msgstr "تنبؤات رموز وإيموجي اليونيكود"
 
@@ -198,60 +198,60 @@ msgstr "تنبؤات رموز وإيموجي اليونيكود"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:601 engine/hunspell_table.py:602 setup/main.py:644
+#: engine/hunspell_table.py:609 engine/hunspell_table.py:610 setup/main.py:644
 msgid "Off the record mode"
 msgstr "وضع عدم التسجيل"
 
-#: engine/hunspell_table.py:2017
+#: engine/hunspell_table.py:2031
 msgid "Highest priority dictionary"
 msgstr "القاموس الأعلى أولوية"
 
-#: engine/hunspell_table.py:2018
+#: engine/hunspell_table.py:2032
 msgid "Choose highest priority dictionary"
 msgstr "اختر القاموس الأعلى أولوية"
 
-#: engine/hunspell_table.py:2047
+#: engine/hunspell_table.py:2061
 msgid "Preedit input method"
 msgstr "طريقة إدخال التحرير المبدأي"
 
-#: engine/hunspell_table.py:2048
+#: engine/hunspell_table.py:2062
 msgid "Switch preedit input method"
 msgstr "بدّل طريقة إدخال التحرير المبدأي"
 
-#: engine/hunspell_table.py:2393
+#: engine/hunspell_table.py:2407
 msgid "Setup"
 msgstr "الإعدادات"
 
-#: engine/hunspell_table.py:2396 setup/main.py:146
+#: engine/hunspell_table.py:2410 setup/main.py:146
 msgid "Preferences for ibus-typing-booster"
 msgstr "تفضيلات معزز ibus للكتابة"
 
-#: engine/hunspell_table.py:6238
+#: engine/hunspell_table.py:6338
 msgid "Failed to import Google speech-to-text."
 msgstr "فشل استيراد محرك غوغل لتحويل الحديث لنصوص."
 
-#: engine/hunspell_table.py:6241
+#: engine/hunspell_table.py:6341
 msgid "Failed to import pyaudio."
 msgstr "فشل استيراد pyaudio."
 
-#: engine/hunspell_table.py:6244
+#: engine/hunspell_table.py:6344
 msgid "Failed to import queue."
 msgstr "فشل استيراد طابور الانتظار."
 
-#: engine/hunspell_table.py:6249
+#: engine/hunspell_table.py:6349
 msgid "No supported language for speech recognition."
 msgstr "لا توجد لغة مدعومة للتعرف على الكلام."
 
-#: engine/hunspell_table.py:6253
+#: engine/hunspell_table.py:6353
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "ملف اعتماد تطبيقات غوغل %s غير موجود."
 
-#: engine/hunspell_table.py:6266
+#: engine/hunspell_table.py:6366
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "فشل بدء محرك غوغل لتحويل الكلام لنصوص. طالع السجل debug.log."
 
-#: engine/hunspell_table.py:6374
+#: engine/hunspell_table.py:6474
 msgid "Google speech-to-text error. See debug.log."
 msgstr "وقع خطأ في محرك غوغل لتحويل الكام لنصوص. طالع السجل debug.log."
 
@@ -427,7 +427,7 @@ msgstr "التفضيلات"
 msgid "Restore all defaults"
 msgstr "استرجع الوضع الافتراضي"
 
-#: setup/main.py:254 setup/main.py:6800
+#: setup/main.py:254 setup/main.py:6930
 msgid "_Close"
 msgstr "إغلاق (_غ)"
 
@@ -483,7 +483,7 @@ msgstr "المظهر"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:365 setup/main.py:2519
+#: setup/main.py:365 setup/main.py:2570
 msgid "Speech recognition"
 msgstr "التعرف على الكلام"
 
@@ -494,7 +494,7 @@ msgstr "التعرف على الكلام"
 #. Translators: This is the header of the list of settings
 #. changed automatically depending on the which window has
 #. focus:
-#: setup/main.py:381 setup/main.py:2237
+#: setup/main.py:381 setup/main.py:2286
 msgid "Autosettings"
 msgstr "الإعدادات التلقائية"
 
@@ -989,7 +989,7 @@ msgstr "تثبيت القواميس الناقصة"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "ثبيت القواميس التي جرى إعدادها هنا لكنها غير مثبتة"
 
-#: setup/main.py:1122 setup/main.py:1267 setup/main.py:1509 setup/main.py:5054
+#: setup/main.py:1122 setup/main.py:1267 setup/main.py:1509 setup/main.py:5126
 msgid "Set to default"
 msgstr "عيّنه افتراضياً"
 
@@ -1096,7 +1096,7 @@ msgstr "تعديل"
 msgid "Edit the key bindings for the selected command"
 msgstr "تعديل ارتباطات المفاتيح للأمر المختار"
 
-#: setup/main.py:1513 setup/main.py:5059
+#: setup/main.py:1513 setup/main.py:5131
 msgid "Set default key bindings for the selected command"
 msgstr "اختر ارتباطات المفاتيح الافتراضية للأمر المختار"
 
@@ -1328,13 +1328,45 @@ msgid "Here you can specify which color to use for the compose preview."
 msgstr "هنا تستطيع تحديد اللون المستخدم للتأليف المُعايَن."
 
 #. Translators: A checkbox where one can choose whether a
+#. custom color is used for the m17n preedit.
+#: setup/main.py:1903
+#, fuzzy
+#| msgid "Use color for compose preview"
+msgid "Use color for m17n preedit"
+msgstr "استخدم لونًا للتكملة للتأليف المُعايَن"
+
+#: setup/main.py:1905
+#, fuzzy
+#| msgid ""
+#| "Here you can choose whether a custom color is used for the compose "
+#| "preview."
+msgid ""
+"Here you can choose whether a custom color is used for the m17n preedit."
+msgstr "يمكنك هنا اختيار لونٍ للتأليف المُعايَن."
+
+#. Translators: Used in the title bar of the colour chooser
+#. dialog window where one can choose a custom colour for
+#. the m17n preedit.
+#: setup/main.py:1929
+#, fuzzy
+#| msgid "Choose color for compose preview"
+msgid "Choose color for m17n preedit"
+msgstr "اختر لونًا للتأليف المُعايَن"
+
+#: setup/main.py:1931
+#, fuzzy
+#| msgid "Here you can specify which color to use for the compose preview."
+msgid "Here you can specify which color to use for the m17n preedit."
+msgstr "هنا تستطيع تحديد اللون المستخدم للتأليف المُعايَن."
+
+#. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
-#: setup/main.py:1904
+#: setup/main.py:1953
 msgid "Use color for user database suggestions"
 msgstr "استخدم لونًا للاقتراحات من قاعدة بيانات المستخدم"
 
-#: setup/main.py:1906
+#: setup/main.py:1955
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
@@ -1345,11 +1377,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
-#: setup/main.py:1927
+#: setup/main.py:1976
 msgid "Choose color for user database suggestions"
 msgstr "اختر لونًا للاقتراحات من قاعدة بيانات المستخدم"
 
-#: setup/main.py:1929
+#: setup/main.py:1978
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
@@ -1361,11 +1393,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
-#: setup/main.py:1950
+#: setup/main.py:1999
 msgid "Use color for spellchecking suggestions"
 msgstr "استخدم لوناً لاقتراحات التدقيق الإملائي"
 
-#: setup/main.py:1952
+#: setup/main.py:2001
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
@@ -1376,11 +1408,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
-#: setup/main.py:1973
+#: setup/main.py:2022
 msgid "Choose color for spellchecking suggestions"
 msgstr "اختر لونًا لاقتراحات التدقيق الإملائي"
 
-#: setup/main.py:1975
+#: setup/main.py:2024
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
@@ -1393,11 +1425,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
-#: setup/main.py:1999
+#: setup/main.py:2048
 msgid "Use color for dictionary suggestions"
 msgstr "استخدم لوناً لاقتراحات القاموس"
 
-#: setup/main.py:2001
+#: setup/main.py:2050
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
@@ -1408,11 +1440,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
-#: setup/main.py:2022
+#: setup/main.py:2071
 msgid "Choose color for dictionary suggestions"
 msgstr "استخدم لونًا لاقتراحات القاموس"
 
-#: setup/main.py:2024
+#: setup/main.py:2073
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
@@ -1425,11 +1457,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
-#: setup/main.py:2048
+#: setup/main.py:2097
 msgid "Use label for user database suggestions"
 msgstr "استخدم وسماً للاقتراحات من قاعدة بيانات المستخدِم"
 
-#: setup/main.py:2050
+#: setup/main.py:2099
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
@@ -1440,11 +1472,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
-#: setup/main.py:2083
+#: setup/main.py:2132
 msgid "Use label for spellchecking suggestions"
 msgstr "استخدم وسماً لاقتراحات التدقيق الإملائي"
 
-#: setup/main.py:2085
+#: setup/main.py:2134
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
@@ -1455,11 +1487,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
-#: setup/main.py:2118
+#: setup/main.py:2167
 msgid "Use label for dictionary suggestions"
 msgstr "استخدم وسماً لاقتراحات القاموس"
 
-#: setup/main.py:2120
+#: setup/main.py:2169
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
@@ -1470,11 +1502,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
-#: setup/main.py:2153
+#: setup/main.py:2202
 msgid "Use flags for dictionary suggestions"
 msgstr "استخدم علامة لاقتراحات القاموس"
 
-#: setup/main.py:2155
+#: setup/main.py:2204
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
@@ -1484,26 +1516,26 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
-#: setup/main.py:2170
+#: setup/main.py:2219
 msgid "Use a label to indicate busy state"
 msgstr "استخدم وسماً للإشارة لحالة الانشغال"
 
-#: setup/main.py:2172
+#: setup/main.py:2221
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr "يمكنك هنا اختيار ظهور وسمٍ يُبيّن انشغال معزز ibus للكتابة."
 
 #. Translators:
-#: setup/main.py:2203 setup/main.py:3335
+#: setup/main.py:2252 setup/main.py:3407
 msgid "Set “Google application credentials” .json file:"
 msgstr "إعداد ملف جيسون .json الخاص ب\"اعتماديات تطبيقات غوغل\":"
 
-#: setup/main.py:2205
+#: setup/main.py:2254
 msgid "Full path of the “Google application credentials” .json file."
 msgstr "المسار الكامل لملف جيسون .json الخاص ب\"اعتماديات تطبيق غوغل\"."
 
-#: setup/main.py:2211
+#: setup/main.py:2260
 msgid "File not yet set."
 msgstr "لم يُحدد ملف بعد."
 
@@ -1511,7 +1543,7 @@ msgstr "لم يُحدد ملف بعد."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2270 setup/main.py:4567
+#: setup/main.py:2319 setup/main.py:4639
 msgid "Add an autosetting"
 msgstr "أضِف إعداداً تلقائياً"
 
@@ -1519,7 +1551,7 @@ msgstr "أضِف إعداداً تلقائياً"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2284
+#: setup/main.py:2333
 msgid "Remove an autosetting"
 msgstr "احذف إعداداً افتراضياً"
 
@@ -1531,7 +1563,7 @@ msgstr "احذف إعداداً افتراضياً"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2302
+#: setup/main.py:2351
 msgid "Move an autosetting up"
 msgstr "نقل إعداد تلقائي للإعلى"
 
@@ -1543,21 +1575,21 @@ msgstr "نقل إعداد تلقائي للإعلى"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2320
+#: setup/main.py:2369
 msgid "Move an autosetting down"
 msgstr "نقل إعداد تلقائي للأسفل"
 
-#: setup/main.py:2496
+#: setup/main.py:2547
 msgid "Spell checking"
 msgstr "التدقيق الإملائي"
 
-#: setup/main.py:2512
+#: setup/main.py:2563
 msgid "Emoji"
 msgstr "الإيموجي"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2691
+#: setup/main.py:2742
 msgid "Setting"
 msgstr "إعداد"
 
@@ -1565,67 +1597,67 @@ msgstr "إعداد"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2700 setup/main.py:4140
+#: setup/main.py:2751 setup/main.py:4212
 msgid "Value"
 msgstr "قيمة"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2724
+#: setup/main.py:2775
 msgid "Regular expression"
 msgstr "تعبير نمطي"
 
-#: setup/main.py:2770
+#: setup/main.py:2821
 msgid "Are you sure?"
 msgstr "هل أنت واثق؟"
 
-#: setup/main.py:2772 setup/main.py:3338 setup/main.py:3423 setup/main.py:5125
+#: setup/main.py:2823 setup/main.py:3410 setup/main.py:3495 setup/main.py:5197
 msgid "_Cancel"
 msgstr "إل_غاء"
 
-#: setup/main.py:2773 setup/main.py:3339 setup/main.py:3424 setup/main.py:5126
+#: setup/main.py:2824 setup/main.py:3411 setup/main.py:3496 setup/main.py:5198
 msgid "_OK"
 msgstr "_موافق"
 
-#: setup/main.py:2803
+#: setup/main.py:2854
 msgid "Another instance of this app is already running."
 msgstr "هذا البرنامج يعمل بالفعل."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:2906
+#: setup/main.py:2957
 msgid "Do you really want to restore all default settings?"
 msgstr "هل ترغب حقا في إعادة ضبط الإعدادات؟"
 
-#: setup/main.py:3420
+#: setup/main.py:3492
 msgid "Select .wav sound file:"
 msgstr "اختر ملف .wav الصوتي:"
 
-#: setup/main.py:3607
+#: setup/main.py:3679
 msgid "Add dictionary"
 msgstr "أضف قاموساً"
 
-#: setup/main.py:3950
+#: setup/main.py:4022
 msgid "Add input method"
 msgstr "إضافة طريقة إدخال"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4131
+#: setup/main.py:4203
 msgid "Variable"
 msgstr "متغير"
 
-#: setup/main.py:5007
+#: setup/main.py:5079
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "تعديل ارتباطات المفاتيح للأمر \"%s\""
 
-#: setup/main.py:5035
+#: setup/main.py:5107
 msgid "Add a key binding"
 msgstr "إضافة ارتباط مفاتيح"
 
-#: setup/main.py:5047
+#: setup/main.py:5119
 msgid "Remove selected key binding"
 msgstr "إزالة ارتباط المفاتيح المختار"
 
@@ -1634,22 +1666,22 @@ msgstr "إزالة ارتباط المفاتيح المختار"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5107
+#: setup/main.py:5179
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "هل ترغب حقا في إعادة تعيين ارتباطات المفاتيح لوضعها الافتراضي؟"
 
-#: setup/main.py:5122
+#: setup/main.py:5194
 msgid "Open File ..."
 msgstr "افتح ملف..."
 
-#: setup/main.py:5139
+#: setup/main.py:5211
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "تم التعلم من ملف \"%(filename)s\" بنجاح."
 
-#: setup/main.py:5148
+#: setup/main.py:5220
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "فسل التعلم من ملف \"%(filename)s\"."
@@ -1664,13 +1696,13 @@ msgstr "فسل التعلم من ملف \"%(filename)s\"."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5171
+#: setup/main.py:5243
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr "هل تريد حقا حذف كل بيانات اللغة المُتعلَّمة من الكتابة أو قراءة الملفات؟"
 
-#: setup/main.py:6876
+#: setup/main.py:7006
 msgid "ibus is not running."
 msgstr "ibus لم يُشغّل."
 
