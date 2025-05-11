@@ -2595,7 +2595,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         before = cm_func(before)
         after = cm_func(after)
         # I think everything should be normalized here, otherwise the
-        # get_caret() which also uses normalizes to NFC might give a
+        # get_caret() which also uses normalization to NFC might give a
         # wrong result:
         return itb_util.normalize_nfc_and_composition_exclusions(
             before + inner_preedit + after)
