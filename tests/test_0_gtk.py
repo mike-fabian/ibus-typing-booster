@@ -101,7 +101,7 @@ def printerr(sentence: str) -> None:
     itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
     'Skipping because no en_US dictionary could be found. ')
 class SimpleGtkTestCase(unittest.TestCase):
-    _glib_main_loop: Optional[GLib.MainLoop] = None
+    glib_main_loop: Optional[GLib.MainLoop] = None
     ENGINE_PATH = '/com/redhat/IBus/engines/typing_booster/Test/Engine'
     _flag: bool = False
     _gsettings: Optional[Gio.Settings] = None
@@ -154,8 +154,8 @@ class SimpleGtkTestCase(unittest.TestCase):
     def signal_handler(cls, user_data: Any) -> None:
         (signum, original_handler) = user_data
         cls.tearDownClass()
-        if cls._glib_main_loop is not None:
-            cls._glib_main_loop.quit()
+        if cls.glib_main_loop is not None:
+            cls.glib_main_loop.quit()
         signal.signal(signum, original_handler)
         cls._flag = True
         assert False, 'signal received: ' + str(signum)
@@ -176,12 +176,12 @@ class SimpleGtkTestCase(unittest.TestCase):
             self._gsettings.set_int('inlinecompletion', 0)
             self._gsettings.set_int('autoselectcandidate', 0)
             self._gsettings.set_int('candidatesdelaymilliseconds', 0)
-        self.__class__._glib_main_loop = GLib.MainLoop()
+        self.__class__.glib_main_loop = GLib.MainLoop()
         Gtk.init()
 
     def tearDown(self) -> None:
-        if self.__class__._glib_main_loop is not None:
-            self.__class__._glib_main_loop.quit()
+        if self.__class__.glib_main_loop is not None:
+            self.__class__.glib_main_loop.quit()
 
     def register_ibus_engine(self) -> bool:
         self.__bus = IBus.Bus()
@@ -251,7 +251,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             or not IMPORT_TABSQLITEDB_SUCCESSFUL):
             with self.subTest(i='create-engine'):
                 self.fail('NG: ibus-typing-booster not installed?')
-            self.__class__._glib_main_loop.quit()
+            self.__class__.glib_main_loop.quit()
             return None
         self.__id += 1
         object_path = f'{self.ENGINE_PATH}/{self.__id:d}'
@@ -277,8 +277,8 @@ class SimpleGtkTestCase(unittest.TestCase):
 
     def __engine_focus_in(self, _engine: IBus.Engine) -> None:
         if self.__test_index == len(TestCases['tests']):
-            if DONE_EXIT and self.__class__._glib_main_loop is not None:
-                self.__class__._glib_main_loop.quit()
+            if DONE_EXIT and self.__class__.glib_main_loop is not None:
+                self.__class__.glib_main_loop.quit()
             return
         # Workaround because focus-out resets the preedit text
         # ibus_bus_set_global_engine() calls bus_input_context_set_engine()
@@ -299,8 +299,8 @@ class SimpleGtkTestCase(unittest.TestCase):
     def __entry_focus_in_event_cb(
             self, entry: Gtk.Entry, event: Gdk.EventFocus) -> bool:
         if self.__test_index == len(TestCases['tests']):
-            if DONE_EXIT and self.__class__._glib_main_loop is not None:
-                self.__class__._glib_main_loop.quit()
+            if DONE_EXIT and self.__class__.glib_main_loop is not None:
+                self.__class__.glib_main_loop.quit()
             return False
         self.__bus.set_global_engine_async('testTyping-booster',
                                            -1, None, self.__set_engine_cb)
@@ -328,8 +328,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         if len(preedit_str) == 0:
             return
         if self.__test_index == len(TestCases['tests']):
-            if DONE_EXIT and self.__class__._glib_main_loop is not None:
-                self.__class__._glib_main_loop.quit()
+            if DONE_EXIT and self.__class__.glib_main_loop is not None:
+                self.__class__.glib_main_loop.quit()
             return
         self.__preedit_index += 1
         if self.__preedit_index != self.__get_test_condition_length('preedit'):
@@ -423,8 +423,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         if cases['string'] == self.__inserted_text:
             printflush(f'OK: {self.__test_index} "{self.__inserted_text}"')
         else:
-            if DONE_EXIT and self.__class__._glib_main_loop is not None:
-                self.__class__._glib_main_loop.quit()
+            if DONE_EXIT and self.__class__.glib_main_loop is not None:
+                self.__class__.glib_main_loop.quit()
             with self.subTest(i=self.__test_index):
                 self.fail(
                     f'NG: {self.__test_index:d} '
@@ -432,8 +432,8 @@ class SimpleGtkTestCase(unittest.TestCase):
         self.__inserted_text = ''
         self.__test_index += 1
         if self.__test_index == len(TestCases['tests']):
-            if DONE_EXIT and self.__class__._glib_main_loop is not None:
-                self.__class__._glib_main_loop.quit()
+            if DONE_EXIT and self.__class__.glib_main_loop is not None:
+                self.__class__.glib_main_loop.quit()
             return
         self.__commit_done = True # pylint: disable=unused-private-member
         self.__entry.set_text('')
@@ -442,8 +442,8 @@ class SimpleGtkTestCase(unittest.TestCase):
     def create_window(self) -> None:
         window = Gtk.Window(type=Gtk.WindowType.TOPLEVEL)
         self.__entry = entry = Gtk.Entry()
-        if self.__class__._glib_main_loop is not None:
-            window.connect('destroy', self.__class__._glib_main_loop.quit)
+        if self.__class__.glib_main_loop is not None:
+            window.connect('destroy', self.__class__.glib_main_loop.quit)
         entry.connect('focus-in-event', self.__entry_focus_in_event_cb)
         entry.connect('preedit-changed', self.__entry_preedit_changed_cb)
         buffer: Gtk.EntryBuffer = entry.get_buffer()
@@ -454,8 +454,8 @@ class SimpleGtkTestCase(unittest.TestCase):
     def main(self) -> None: # pylint: disable=no-self-use
         # Some ATK relative warnings are called during launching GtkWindow.
         flags = GLib.log_set_always_fatal(GLib.LogLevelFlags.LEVEL_CRITICAL)
-        if self.__class__._glib_main_loop is not None:
-            self.__class__._glib_main_loop.run()
+        if self.__class__.glib_main_loop is not None:
+            self.__class__.glib_main_loop.run()
         GLib.log_set_always_fatal(flags)
 
     def test_typing(self) -> None:

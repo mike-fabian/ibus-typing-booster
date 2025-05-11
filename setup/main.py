@@ -3547,7 +3547,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._dictionaries_add_listbox.insert(label, -1)
         self._dictionaries_add_popover.show_all()
 
-    def _on_dictionaries_search_entry_grab_focus(
+    def _on_dictionaries_search_entry_grab_focus( # pylint: disable=no-self-use
             self, search_entry: Gtk.SearchEntry) -> None:
         '''
         Signal handler called when the search entry grabs focus
@@ -3891,7 +3891,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._input_methods_add_listbox.insert(hbox, -1)
         self._input_methods_add_popover.show_all()
 
-    def _on_input_methods_search_entry_grab_focus(
+    def _on_input_methods_search_entry_grab_focus( # pylint: disable=no-self-use
             self, search_entry: Gtk.SearchEntry) -> None:
         '''
         Signal handler called when the search entry grabs focus
@@ -4521,7 +4521,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._autosettings_add_listbox.insert(label, -1)
         self._autosettings_add_popover.show_all()
 
-    def _on_autosettings_search_entry_grab_focus(
+    def _on_autosettings_search_entry_grab_focus( # pylint: disable=no-self-use
             self, search_entry: Gtk.SearchEntry) -> None:
         '''
         Signal handler called when the search entry grabs focus

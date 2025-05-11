@@ -85,10 +85,9 @@ def str2bool(v: Union[bool, str]) -> bool:
         return v
     if v.lower() in ('yes', 'true', 't', '1'):
         return True
-    elif v.lower() in ('no', 'false', 'f', '0'):
+    if v.lower() in ('no', 'false', 'f', '0'):
         return False
-    else:
-        raise argparse.ArgumentTypeError('Boolean value expected.')
+    raise argparse.ArgumentTypeError('Boolean value expected.')
 
 def parse_args() -> Any:
     '''
@@ -1213,10 +1212,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             itb_emoji.EmojiMatcher.get_all_label_words.cache_info()) # pylint: disable=no-value-for-parameter
         LOGGER.info(
             'itb_emoji._match_classic() cache info: %s',
-            itb_emoji._match_classic.cache_info()) # pylint: disable=no-value-for-parameter
+            itb_emoji._match_classic.cache_info()) # pylint: disable=no-value-for-parameter, protected-access
         LOGGER.info(
             'itb_emoji._match_rapidfuzz() cache info: %s',
-            itb_emoji._match_rapidfuzz.cache_info()) # pylint: disable=no-value-for-parameter
+            itb_emoji._match_rapidfuzz.cache_info()) # pylint: disable=no-value-for-parameter, protected-access
 
     def on_delete_event(self, *_args: Any) -> None:
         '''
