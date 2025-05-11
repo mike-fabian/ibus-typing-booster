@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 12 May 2025 Release 2.27.53
+* Get transliterated parts for preedit text using the raw input `self._typed_string` instead of the existing preedit text (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/726)
+* Fix modifier keybindings for Gtk4 (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/725)
+* Add option to colour the “inner” m17n preedit not only when there are candidates but always (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/719)
+* Translation update from Weblate (de 100%, fr 100%, ja 99.6%, ka 100%, sv 100%, uk 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 10 May 2025 Release 2.27.52
 * Don’t trigger a new search in emoji-picker when the search entry changes just by trailing or leading whitespace
 * Improve emoji matching (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/705)
