@@ -6102,6 +6102,7 @@ class HotKeys:
             # like “Shift_L” then “a” followed by releasing the “a”
             # and the “Shift_L”.
             if (prev_key.val != val
+                or prev_key.state & IBus.ModifierType.RELEASE_MASK
                 or not state & IBus.ModifierType.RELEASE_MASK):
                 return False
             state &= ~IBus.ModifierType.RELEASE_MASK
