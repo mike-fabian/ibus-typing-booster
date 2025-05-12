@@ -184,7 +184,7 @@ or git clone), follow these steps:
 
 ## 1. Build
 
-Build as [usual](#building-and-installing-from-source), just ommit the `make
+Build as [usual](#building-and-installing-from-source), just omit the `make
 install` at the end.
 
 ## 2. Check and Kill Any Running Instances
