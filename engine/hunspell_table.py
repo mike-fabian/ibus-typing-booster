@@ -2616,7 +2616,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             inner_preedit = self._m17n_trans_parts.preedit
         else:
             transliterated_parts = trans.transliterate_parts(
-                list(text), ascii_digits=self._ascii_digits)
+                self._typed_string, ascii_digits=self._ascii_digits)
             before = transliterated_parts.committed
             inner_preedit = transliterated_parts.preedit
         after = text[len(before) + len(inner_preedit):]
