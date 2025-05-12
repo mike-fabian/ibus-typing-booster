@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-05-11 23:06+0200\n"
+"POT-Creation-Date: 2025-05-12 15:48+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
@@ -233,36 +233,36 @@ msgstr "Instellen"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Voorkeuren van ibus-typing-booster"
 
-#: engine/hunspell_table.py:6338
+#: engine/hunspell_table.py:6336
 msgid "Failed to import Google speech-to-text."
 msgstr "Het importeren van Google tekst-naar-spraak is mislukt."
 
-#: engine/hunspell_table.py:6341
+#: engine/hunspell_table.py:6339
 msgid "Failed to import pyaudio."
 msgstr "Het importeren van pyaudio is mislukt."
 
-#: engine/hunspell_table.py:6344
+#: engine/hunspell_table.py:6342
 msgid "Failed to import queue."
 msgstr "Het importeren van de wachtrij is mislukt."
 
-#: engine/hunspell_table.py:6349
+#: engine/hunspell_table.py:6347
 msgid "No supported language for speech recognition."
 msgstr "Geen ondersteunde taal aangetroffen voor spraakherkenning."
 
-#: engine/hunspell_table.py:6353
+#: engine/hunspell_table.py:6351
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "Het bestand '%s', wat nodig is voor je Google-inloggegevens, is niet "
 "aangetroffen."
 
-#: engine/hunspell_table.py:6366
+#: engine/hunspell_table.py:6364
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Het starten van Google tekst-naar-spraak is mislukt. Bekijk het bestand "
 "'debug.log'."
 
-#: engine/hunspell_table.py:6474
+#: engine/hunspell_table.py:6472
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google tekst-naar-spraak-fout. Bekijk het bestand 'debug.log'."
 
@@ -384,11 +384,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6141
+#: engine/itb_util.py:6142
 msgid "Key input"
 msgstr "Toetsaanslag"
 
-#: engine/itb_util.py:6147
+#: engine/itb_util.py:6148
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -396,28 +396,28 @@ msgstr "Annuleren"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6154
+#: engine/itb_util.py:6155
 msgid "Please press a key (or a key combination)"
 msgstr "Druk op een toets (of een toetscombinatie)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6159
+#: engine/itb_util.py:6160
 msgid "The dialog will be closed when the key is released"
 msgstr "Het venster wordt gesloten zodra je de toets(en) loslaat"
 
-#: engine/itb_util.py:6198
+#: engine/itb_util.py:6199
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Een invoermethode met automatisch aanvullen om sneller te kunnen typen."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6207
+#: engine/itb_util.py:6208
 msgid "translator-credits"
 msgstr "Heimen Stoffels"
 
-#: engine/itb_util.py:6215
+#: engine/itb_util.py:6216
 msgid "Online documentation:"
 msgstr "Online-documentatie:"
 

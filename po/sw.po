@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-05-11 23:06+0200\n"
+"POT-Creation-Date: 2025-05-12 15:48+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/ibus-"
@@ -234,35 +234,35 @@ msgstr "Mipangilio"
 msgid "Preferences for ibus-typing-booster"
 msgstr "Pendekezo ya msaidizi-wa-kuchapa-mbio-wa-ibus"
 
-#: engine/hunspell_table.py:6338
+#: engine/hunspell_table.py:6336
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 "Haiwezekana kuwezesha programmu ya Google ya utamboaji otomatiki wa usemi."
 
-#: engine/hunspell_table.py:6341
+#: engine/hunspell_table.py:6339
 msgid "Failed to import pyaudio."
 msgstr "Haiwezekana kutumia programmu pyaudio."
 
-#: engine/hunspell_table.py:6344
+#: engine/hunspell_table.py:6342
 msgid "Failed to import queue."
 msgstr "Haiwezekana kuleta foleni."
 
-#: engine/hunspell_table.py:6349
+#: engine/hunspell_table.py:6347
 msgid "No supported language for speech recognition."
 msgstr "Hakuna lugha ina utamboaji wa usemi."
 
-#: engine/hunspell_table.py:6353
+#: engine/hunspell_table.py:6351
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Faili “%s” ya “programmu ya Google ya utambolisho“ haionekana."
 
-#: engine/hunspell_table.py:6366
+#: engine/hunspell_table.py:6364
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Haiwezekana kuanza programmu ya Google ya utamboaji wa usemi. Angalia faili "
 "ya batli ya eua."
 
-#: engine/hunspell_table.py:6474
+#: engine/hunspell_table.py:6472
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Kosa ya Google utambaoji wa usemi. Angalia faili ya batli ya eua."
 
@@ -383,11 +383,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6141
+#: engine/itb_util.py:6142
 msgid "Key input"
 msgstr "Chagua kitufe"
 
-#: engine/itb_util.py:6147
+#: engine/itb_util.py:6148
 msgid "Cancel"
 msgstr "Futa"
 
@@ -395,27 +395,27 @@ msgstr "Futa"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6154
+#: engine/itb_util.py:6155
 msgid "Please press a key (or a key combination)"
 msgstr "Tafadhali bofya kitufe (au mchanganyiko wa vitufe)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6159
+#: engine/itb_util.py:6160
 msgid "The dialog will be closed when the key is released"
 msgstr "Kisanduku hiki kitajifunga baada ya kuachilia kitufe"
 
-#: engine/itb_util.py:6198
+#: engine/itb_util.py:6199
 msgid "A completion input method to speedup typing."
 msgstr "Mbinu ya kuharakisha uingizaji kwa kujaliza."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6207
+#: engine/itb_util.py:6208
 msgid "translator-credits"
 msgstr "watafsiri"
 
-#: engine/itb_util.py:6215
+#: engine/itb_util.py:6216
 msgid "Online documentation:"
 msgstr "Maelezo ya mtandaoni:"
 

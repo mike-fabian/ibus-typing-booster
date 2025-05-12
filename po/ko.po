@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-05-11 23:06+0200\n"
+"POT-Creation-Date: 2025-05-12 15:48+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
@@ -225,32 +225,32 @@ msgstr "설정"
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster 환경설정"
 
-#: engine/hunspell_table.py:6338
+#: engine/hunspell_table.py:6336
 msgid "Failed to import Google speech-to-text."
 msgstr "구글 텍스트 음성 변환을 가져오는 데 실패함."
 
-#: engine/hunspell_table.py:6341
+#: engine/hunspell_table.py:6339
 msgid "Failed to import pyaudio."
 msgstr "pyaudio를 가져오는 데 실패함."
 
-#: engine/hunspell_table.py:6344
+#: engine/hunspell_table.py:6342
 msgid "Failed to import queue."
 msgstr "대기열을 가져오는 데 실패함."
 
-#: engine/hunspell_table.py:6349
+#: engine/hunspell_table.py:6347
 msgid "No supported language for speech recognition."
 msgstr "음성 인식용 지원 언어가 없습니다."
 
-#: engine/hunspell_table.py:6353
+#: engine/hunspell_table.py:6351
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "\"구글 응용프로그램 자격증명\" 파일 \"%s\"를 찾을 수 없습니다."
 
-#: engine/hunspell_table.py:6366
+#: engine/hunspell_table.py:6364
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "구글 텍스트 음성 변환을 초기화 하는 데 실패함. 결점 기록을 참고하세요."
 
-#: engine/hunspell_table.py:6474
+#: engine/hunspell_table.py:6472
 msgid "Google speech-to-text error. See debug.log."
 msgstr "구글 텍스트 음성 변환 오류. 결점 기록을 참고하세요."
 
@@ -372,11 +372,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6141
+#: engine/itb_util.py:6142
 msgid "Key input"
 msgstr "키 입력"
 
-#: engine/itb_util.py:6147
+#: engine/itb_util.py:6148
 msgid "Cancel"
 msgstr "취소"
 
@@ -384,27 +384,27 @@ msgstr "취소"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6154
+#: engine/itb_util.py:6155
 msgid "Please press a key (or a key combination)"
 msgstr "키 (또는 키 조합)를 누르세요"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6159
+#: engine/itb_util.py:6160
 msgid "The dialog will be closed when the key is released"
 msgstr "대화상자는 키를 놓으면 닫힐 것입니다"
 
-#: engine/itb_util.py:6198
+#: engine/itb_util.py:6199
 msgid "A completion input method to speedup typing."
 msgstr "입력 속도를 높여주는 완성형 입력 방식."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6207
+#: engine/itb_util.py:6208
 msgid "translator-credits"
 msgstr "김인수 <simmon@nplob.com>"
 
-#: engine/itb_util.py:6215
+#: engine/itb_util.py:6216
 msgid "Online documentation:"
 msgstr "온라인 문서:"
 

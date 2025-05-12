@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-05-11 23:06+0200\n"
+"POT-Creation-Date: 2025-05-12 15:48+0200\n"
 "PO-Revision-Date: 2025-04-30 04:50+0000\n"
 "Last-Translator: hsu zangmen <chzang55@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://translate.fedoraproject.org/"
@@ -226,32 +226,32 @@ msgstr "設置"
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster 的偏好設定"
 
-#: engine/hunspell_table.py:6338
+#: engine/hunspell_table.py:6336
 msgid "Failed to import Google speech-to-text."
 msgstr "匯入 Google 語音轉文字失敗。"
 
-#: engine/hunspell_table.py:6341
+#: engine/hunspell_table.py:6339
 msgid "Failed to import pyaudio."
 msgstr "匯入 pyaudio 失敗。"
 
-#: engine/hunspell_table.py:6344
+#: engine/hunspell_table.py:6342
 msgid "Failed to import queue."
 msgstr "匯入佇列失敗。"
 
-#: engine/hunspell_table.py:6349
+#: engine/hunspell_table.py:6347
 msgid "No supported language for speech recognition."
 msgstr "語音辨識不支援該語言。"
 
-#: engine/hunspell_table.py:6353
+#: engine/hunspell_table.py:6351
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "未找到 「Google 應用程式憑證」 檔案 \"%s\"。"
 
-#: engine/hunspell_table.py:6366
+#: engine/hunspell_table.py:6364
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "啟動 Google 語音轉文字失敗。請參閱 debug.log。"
 
-#: engine/hunspell_table.py:6474
+#: engine/hunspell_table.py:6472
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google speech-to-text 錯誤。請參閱 debug.log。"
 
@@ -372,11 +372,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6141
+#: engine/itb_util.py:6142
 msgid "Key input"
 msgstr "按鍵輸入"
 
-#: engine/itb_util.py:6147
+#: engine/itb_util.py:6148
 msgid "Cancel"
 msgstr "取消"
 
@@ -384,27 +384,27 @@ msgstr "取消"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6154
+#: engine/itb_util.py:6155
 msgid "Please press a key (or a key combination)"
 msgstr "請按鍵盤按鍵 (或是按鍵組合)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6159
+#: engine/itb_util.py:6160
 msgid "The dialog will be closed when the key is released"
 msgstr "釋放按鍵時，對話框將會關閉"
 
-#: engine/itb_util.py:6198
+#: engine/itb_util.py:6199
 msgid "A completion input method to speedup typing."
 msgstr "可加快完成打字速度的輸入法。"
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6207
+#: engine/itb_util.py:6208
 msgid "translator-credits"
 msgstr "Zang-Men Hsu 許展銘/neko0xff <chzang55@gmail.com>, 2025"
 
-#: engine/itb_util.py:6215
+#: engine/itb_util.py:6216
 msgid "Online documentation:"
 msgstr "線上文件:"
 

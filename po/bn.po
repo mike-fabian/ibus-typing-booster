@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-05-11 23:06+0200\n"
+"POT-Creation-Date: 2025-05-12 15:48+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/ibus-"
@@ -234,32 +234,32 @@ msgstr "সেটআপ"
 msgid "Preferences for ibus-typing-booster"
 msgstr "আইবাস-টাইপিং-বুস্টারের জন্য রূপরেখা নির্ধারণ করুন"
 
-#: engine/hunspell_table.py:6338
+#: engine/hunspell_table.py:6336
 msgid "Failed to import Google speech-to-text."
 msgstr "গুগল বক্তৃতা-থেকে-পাঠ্য আমদানি করতে ব্যর্থ হয়েছে।"
 
-#: engine/hunspell_table.py:6341
+#: engine/hunspell_table.py:6339
 msgid "Failed to import pyaudio."
 msgstr "পাইঅডিও আমদানি করতে ব্যর্থ হয়েছে৷"
 
-#: engine/hunspell_table.py:6344
+#: engine/hunspell_table.py:6342
 msgid "Failed to import queue."
 msgstr "সারিবদ্ধ আমদানি করতে ব্যর্থ হয়েছে৷"
 
-#: engine/hunspell_table.py:6349
+#: engine/hunspell_table.py:6347
 msgid "No supported language for speech recognition."
 msgstr "বক্তৃতা বুঝতে পারে এমন কোনো সমর্থিত ভাষা নেই।"
 
-#: engine/hunspell_table.py:6353
+#: engine/hunspell_table.py:6351
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“গুগল আবেদন প্রমাণপত্রাদি” নথি “%s” পাওয়া যায় নি।"
 
-#: engine/hunspell_table.py:6366
+#: engine/hunspell_table.py:6364
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "গুগল বক্তৃতা-থেকে-পাঠ্য শুরু করতে ব্যর্থ হয়েছে। ডিবাগ লগ দেখুন।"
 
-#: engine/hunspell_table.py:6474
+#: engine/hunspell_table.py:6472
 msgid "Google speech-to-text error. See debug.log."
 msgstr "গুগল বক্তৃতা-থেকে-পাঠ্য ত্রুটি। ডিবাগ লগ দেখুন।"
 
@@ -381,11 +381,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6141
+#: engine/itb_util.py:6142
 msgid "Key input"
 msgstr "কী ইনপুট"
 
-#: engine/itb_util.py:6147
+#: engine/itb_util.py:6148
 msgid "Cancel"
 msgstr "বাতিল"
 
@@ -393,27 +393,27 @@ msgstr "বাতিল"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6154
+#: engine/itb_util.py:6155
 msgid "Please press a key (or a key combination)"
 msgstr "অনুগ্রহ করে একটি কী চাপুন (অথবা একটি কী সমন্বয় করুন)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6159
+#: engine/itb_util.py:6160
 msgid "The dialog will be closed when the key is released"
 msgstr "একটি কী প্রবেশ করানোর পর এই বার্তা দেখানো বন্ধ হয়ে যাবে"
 
-#: engine/itb_util.py:6198
+#: engine/itb_util.py:6199
 msgid "A completion input method to speedup typing."
 msgstr "টাইপ করার গতি বাড়ানোর জন্য একটি সম্পূর্ণ ইনপুট পদ্ধতি।"
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6207
+#: engine/itb_util.py:6208
 msgid "translator-credits"
 msgstr "মাহমুদুল হাসান"
 
-#: engine/itb_util.py:6215
+#: engine/itb_util.py:6216
 msgid "Online documentation:"
 msgstr "অনলাইন ব্যবহার নির্দেশিকা:"
 
