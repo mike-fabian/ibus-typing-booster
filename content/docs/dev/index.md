@@ -182,12 +182,12 @@ on your [distribution](#distribution-specific-stuff)!):
 To run Typing Booster directly from the source directory (unpacked tar
 or git clone), follow these steps:
 
-## 1. Build
+## Build
 
 Build as [usual](#building-and-installing-from-source), just omit the `make
 install` at the end.
 
-## 2. Check and Kill Any Running Instances
+## Check and Kill Any Running Instances
 
 Before starting, ensure no other Typing Booster process is active. You
 can check and terminate it using one of these methods:
@@ -208,7 +208,7 @@ mfabian  2803020  8.1  1.4 2617344 474388 ?      SLl  23:33   0:04 /usr/bin/pyth
 $ kill 2803020
 ```
 
-## 3. Start Typing Booster from Source
+## Start Typing Booster from Source
 
 From the top-level source directory, run:
 
@@ -220,7 +220,7 @@ $ python3 ./engine/main.py --profile
 --profile` works too. Using the full path makes it easier to grep for
 the process later.)
 
-## 4. Switch to Typing Booster in IBus
+## Switch to Typing Booster in IBus
 
 - First, switch to any other IBus engine (e.g., a plain keyboard
   layout) using `Super+space` or the system panel.
