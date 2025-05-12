@@ -12,17 +12,17 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-05-11 23:06+0200\n"
-"PO-Revision-Date: 2025-04-03 08:10+0000\n"
+"PO-Revision-Date: 2025-05-12 06:01+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/uk/>\n"
+"Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.11.3\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:262
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -1383,37 +1383,28 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the m17n preedit.
 #: setup/main.py:1903
-#, fuzzy
-#| msgid "Use color for compose preview"
 msgid "Use color for m17n preedit"
-msgstr "Використовувати кольори для перегляду композиції"
+msgstr "Використовувати кольори для попереднього редагування m17n"
 
 #: setup/main.py:1905
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for the compose "
-#| "preview."
 msgid ""
 "Here you can choose whether a custom color is used for the m17n preedit."
 msgstr ""
-"Тут ви можете визначити , чи буде використано нетиповий колір для перегляду "
-"композиції."
+"Тут ви можете визначити , чи буде використано нетиповий колір для "
+"попереднього редагування m17n."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the m17n preedit.
 #: setup/main.py:1929
-#, fuzzy
-#| msgid "Choose color for compose preview"
 msgid "Choose color for m17n preedit"
-msgstr "Вибрати колір для перегляду композиції"
+msgstr "Вибрати колір для попереднього редагування m17n"
 
 #: setup/main.py:1931
-#, fuzzy
-#| msgid "Here you can specify which color to use for the compose preview."
 msgid "Here you can specify which color to use for the m17n preedit."
 msgstr ""
-"Тут ви можете вказати, який колір слід використати для перегляду композиції."
+"Тут ви можете вказати, який колір слід використати для попереднього "
+"редагування m17n."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
