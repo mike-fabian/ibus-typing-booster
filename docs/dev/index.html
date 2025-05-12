@@ -45,16 +45,16 @@ to convert Chinese text into pinyin. This is only needed if you
 want to type emoji by typing the Chinese names of the emoji in
 pinyin Latin transliteration. There is no “pinyin” for Fedora, if
 you want this feature you need to install it from source.</p></li></ul><h1 id=running-from-a-source-tree>Running from a source tree 🌳🏃‍♀️‍➡️</h1><p>To run Typing Booster directly from the source directory (unpacked tar
-or git clone), follow these steps:</p><h2 id=1-build>1. Build</h2><p>Build as <a href=#building-and-installing-from-source>usual</a>, just omit the <code>make install</code> at the end.</p><h2 id=2-check-and-kill-any-running-instances>2. Check and Kill Any Running Instances</h2><p>Before starting, ensure no other Typing Booster process is active. You
+or git clone), follow these steps:</p><h2 id=build>Build</h2><p>Build as <a href=#building-and-installing-from-source>usual</a>, just omit the <code>make install</code> at the end.</p><h2 id=check-and-kill-any-running-instances>Check and Kill Any Running Instances</h2><p>Before starting, ensure no other Typing Booster process is active. You
 can check and terminate it using one of these methods:</p><p><strong>Using</strong> <code>pgrep</code> <strong>and</strong> <code>pkill</code>:</p><div class=highlight><pre style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ pgrep -u <span style=color:#b68;font-weight:700>${</span><span style=color:#19177c>USER</span><span style=color:#b68;font-weight:700>}</span> -a -f ibus-typing-booster/engine/main.py
 <span style=color:#666>2803020</span> /usr/bin/python3 /usr/share/ibus-typing-booster/engine/main.py --ibus
 $ pkill -u <span style=color:#b68;font-weight:700>${</span><span style=color:#19177c>USER</span><span style=color:#b68;font-weight:700>}</span> -f ibus-typing-booster/engine/main.py
 </code></pre></div><p><strong>Using</strong> <code>ps</code> <strong>and</strong> <code>kill</code>:</p><div class=highlight><pre style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ ps aux | grep ibus-typing-booster/engine/main.py
 mfabian  <span style=color:#666>2803020</span>  8.1  1.4 <span style=color:#666>2617344</span> <span style=color:#666>474388</span> ?      SLl  23:33   0:04 /usr/bin/python3 /usr/share/ibus-typing-booster/engine/main.py --ibus
 $ <span style=color:green>kill</span> <span style=color:#666>2803020</span>
-</code></pre></div><h2 id=3-start-typing-booster-from-source>3. Start Typing Booster from Source</h2><p>From the top-level source directory, run:</p><div class=highlight><pre style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ python3 ./engine/main.py --profile
+</code></pre></div><h2 id=start-typing-booster-from-source>Start Typing Booster from Source</h2><p>From the top-level source directory, run:</p><div class=highlight><pre style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ python3 ./engine/main.py --profile
 </code></pre></div><p>(Alternatively, <code>python3 ../ibus-typing-booster/engine/main.py --profile</code> works too. Using the full path makes it easier to grep for
-the process later.)</p><h2 id=4-switch-to-typing-booster-in-ibus>4. Switch to Typing Booster in IBus</h2><ul><li><p>First, switch to any other IBus engine (e.g., a plain keyboard
+the process later.)</p><h2 id=switch-to-typing-booster-in-ibus>Switch to Typing Booster in IBus</h2><ul><li><p>First, switch to any other IBus engine (e.g., a plain keyboard
 layout) using <code>Super+space</code> or the system panel.</p></li><li><p>Then, switch back to Typing Booster. Since you already started it
 manually, IBus will reuse your local instance instead of launching
 the system-wide version.</p></li></ul><h2 id=notes>Notes:</h2><ul><li><p><code>--profile</code> <strong>flag (optional):</strong> Enables profiling, logging performance
