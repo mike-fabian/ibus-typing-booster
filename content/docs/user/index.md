@@ -1275,9 +1275,14 @@ ibus-typing booster engine mimicking that ibus-m17n engine.
 
 ⚠️ **Current limitations**: 
 
-- **Preedit Colours**: Unlike ibus-m17n, Typing Booster does not
-    support configuring preedit text foreground and background
-    colors. This feature is unlikely to be added.
+- **Preedit Colours** (currently work only on Xorg, not on Wayland):
+
+    Since Typing Booster >= 2.27.53, a foreground colour for the
+    m17n preedit text can be set.
+
+    Unlike ibus-m17n, Typing Booster does not support configuring a
+    background colour for the m17n preedit text This feature is
+    unlikely to be added.
 
 # Key and Mouse bindings {#key-and-mouse-bindings}
 
