@@ -2076,18 +2076,13 @@ class EmojiMatcher():
         emoji_string = self.variation_selector_normalize(
             emoji_string, variation_selector='')
         if language:
-            if ((emoji_string, language) in self._emoji_dict
-                    and
-                    'names' in self._emoji_dict[(emoji_string, language)]):
-                return list(
-                    self._emoji_dict[(emoji_string, language)]['names'])
-            return []
+            return list(self._emoji_dict.get(
+                (emoji_string, language), {}).get('names', []))
         for _language in itb_util.expand_languages(self._languages):
-            if ((emoji_string, _language) in self._emoji_dict
-                    and
-                    'names' in self._emoji_dict[(emoji_string, _language)]):
-                return list(
-                    self._emoji_dict[(emoji_string, _language)]['names'])
+            names = list(self._emoji_dict.get(
+                (emoji_string, _language), {}).get('names', []))
+            if names:
+                return names
         return []
 
     def name(self, emoji_string: str, language: str = '') -> str:
@@ -2195,18 +2190,13 @@ class EmojiMatcher():
         emoji_string = self.variation_selector_normalize(
             emoji_string, variation_selector='')
         if language:
-            if ((emoji_string, language) in self._emoji_dict
-                    and
-                    'keywords' in self._emoji_dict[(emoji_string, language)]):
-                return list(
-                    self._emoji_dict[(emoji_string, language)]['keywords'])
-            return []
+            return list(self._emoji_dict.get(
+                (emoji_string, language), {}).get('keywords', []))
         for _language in itb_util.expand_languages(self._languages):
-            if ((emoji_string, _language) in self._emoji_dict
-                    and
-                    'keywords' in self._emoji_dict[(emoji_string, _language)]):
-                return list(
-                    self._emoji_dict[(emoji_string, _language)]['keywords'])
+            keywords = list(self._emoji_dict.get(
+                    (emoji_string, _language), {}).get('keywords', []))
+            if keywords:
+                return keywords
         return []
 
     def categories(self, emoji_string: str, language: str = '') -> List[str]:
@@ -2237,18 +2227,13 @@ class EmojiMatcher():
         emoji_string = self.variation_selector_normalize(
             emoji_string, variation_selector='')
         if language:
-            if ((emoji_string, language) in self._emoji_dict
-                    and 'categories' in
-                    self._emoji_dict[(emoji_string, language)]):
-                return list(
-                    self._emoji_dict[(emoji_string, language)]['categories'])
-            return []
+            return list(self._emoji_dict.get(
+                (emoji_string, language), {}).get('categories', []))
         for _language in itb_util.expand_languages(self._languages):
-            if ((emoji_string, _language) in self._emoji_dict
-                    and 'categories' in
-                    self._emoji_dict[(emoji_string, _language)]):
-                return list(
-                    self._emoji_dict[(emoji_string, _language)]['categories'])
+            categories = list(self._emoji_dict.get(
+                (emoji_string, _language), {}).get('categories', []))
+            if categories:
+                return categories
         return []
 
     def similar(
