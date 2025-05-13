@@ -250,12 +250,13 @@ the process later.)
 - **Debug level:** Adjust verbosity in the setup tool—higher levels log more details.
 
 - **New gsettings options**: If you added any new gsettings options
-    (rare), the schema file needs to be installed systemwide and compiled, otherwise Typing Booster
+    (rare), the schema file needs to be installed and compiled, otherwise Typing Booster
     and the setup tool trying to use the new options will fail:
 
   ```bash
-  $ sudo cp org.freedesktop.ibus.engine.typing-booster.gschema.xml /usr/share/glib-2.0/schemas
-  $ sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
+  $ mkdir -p ~/.local/share/glib-2.0/schemas
+  $ cp org.freedesktop.ibus.engine.typing-booster.gschema.xml ~/.local/share/glib-2.0/schemas
+  $ glib-compile-schemas ~/.local/share/glib-2.0/schemas
   ```
 
 # Distribution specific stuff for building, installing, and running {#distribution-specific-stuff}
