@@ -629,7 +629,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             IBus.KEY_space, IBus.KEY_Tab,
             IBus.KEY_Return, IBus.KEY_KP_Enter,
             IBus.KEY_Delete, IBus.KEY_KP_Delete,
-            IBus.KEY_BackSpace)
+            IBus.KEY_BackSpace, IBus.KEY_Escape)
         self.connect('set-surrounding-text', self.on_set_surrounding_text)
         self._set_surrounding_text_text: Optional[str] = None
         self._set_surrounding_text_cursor_pos: Optional[int] = None
