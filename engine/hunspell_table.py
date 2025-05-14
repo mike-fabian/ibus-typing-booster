@@ -8874,8 +8874,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                 LOGGER.debug(
                                     'Cutting off the commit key made the '
                                     'transliteration empty. '
-                                    'Call clear input and update UI to remove'
+                                    'If anything is selected in the '
+                                    'lookup table, commit it. '
+                                    'Then call clear input and update UI to remove'
                                     'any remaining preedit or lookup table.')
+                            if (self.get_lookup_table().get_number_of_candidates()
+                                and self.get_lookup_table().cursor_visible):
+                                # something is selected in the lookup
+                                # table, commit the selected phrase
+                                super().commit_text(IBus.Text.new_from_string(
+                                    self.get_string_from_lookup_table_cursor_pos()))
                             self._clear_input_and_update_ui()
                             return False
                     else:
