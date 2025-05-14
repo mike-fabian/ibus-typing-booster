@@ -141,7 +141,7 @@ class ItbTestCase(unittest.TestCase):
         cls._m17ndir = cls._tempdir.name
         cls._m17n_config_file = os.path.join(cls._m17ndir, 'config.mic')
         # Copy test input methods into M17NDIR
-        for mim_file in ('test-issue-707.mim',):
+        for mim_file in ('test-issue-707.mim', 'test-issue-704.mim'):
             mim_file_path = os.path.join(os.path.dirname(__file__), mim_file)
             shutil.copy(mim_file_path, cls._m17ndir)
         m17n_dir_files = [os.path.join(cls._m17ndir, name)
@@ -4439,6 +4439,39 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, ' bar ')
+
+    def test_issue_704_mim(self) -> None:
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/704 '''
+        dummy_trans = self.get_transliterator_or_skip('t-test-issue-704')
+        self.engine.set_current_imes(
+            ['t-test-issue-704'], update_gsettings=False)
+        self.engine.do_process_key_event(
+            IBus.KEY_Escape, 0, IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'foo')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # This Escape clears the existing preedit:
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        # Now that the preedit is empty, the Escape key is handled as
+        # input as t-test-issue-704 transliterates it to 'Escape\n':
+        self.assertEqual(self.engine.mock_preedit_text, 'Escape\n')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        for char in 'foo':
+            self.engine.do_process_key_event(getattr(IBus, f'KEY_{char}'), 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'Escape\nbar')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # There 'space' still commits:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'Escape\nbar ')
+        # 'BackSpace' is transliterated by t-test-issue-704:
+        self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'BackSpace\n')
+        self.assertEqual(self.engine.mock_committed_text, 'Escape\nbar ')
+        # And 'space' still commits:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'Escape\nbar BackSpace\n ')
 
 if __name__ == '__main__':
     LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)

@@ -71,7 +71,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         cls._m17ndir = cls._tempdir.name
         cls._m17n_config_file = os.path.join(cls._m17ndir, 'config.mic')
         # Copy test input methods into M17NDIR
-        for mim_file in ('test-issue-707.mim',):
+        for mim_file in ('test-issue-707.mim', 'test-issue-704.mim'):
             mim_file_path = os.path.join(os.path.dirname(__file__), mim_file)
             shutil.copy(mim_file_path, cls._m17ndir)
         m17n_dir_files = [os.path.join(cls._m17ndir, name)
@@ -134,6 +134,14 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(['C-u', ' ']), ' ')
         self.assertEqual(trans.transliterate(['C-u', 'C-c']), 'C-c')
         self.assertEqual(trans.transliterate(['C-u'] + list('foo')), 'bar')
+
+    def test_issue_704_mim(self) -> None:
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/704 '''
+        trans = self.get_transliterator_or_skip('t-test-issue-704')
+        self.assertEqual(trans.transliterate(['C-Escape']), 'foo')
+        self.assertEqual(trans.transliterate(['Escape']), 'Escape\n')
+        self.assertEqual(trans.transliterate(['F12']), 'F12\n')
+        self.assertEqual(trans.transliterate(['BackSpace']), 'BackSpace\n')
 
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 8),
