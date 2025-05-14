@@ -612,6 +612,7 @@
         'select_next_candidate': &lt;['Tab', 'ISO_Left_Tab', 'Down', 'KP_Down']&gt;,
         'select_previous_candidate': &lt;['Shift+Tab', 'Shift+ISO_Left_Tab', 'Up', 'KP_Up']&gt;,
         'setup': &lt;['Mod5+F10']&gt;,
+        'show_selection_info': &lt;@as []&gt;,
         'speech_recognition': &lt;@as []&gt;,
         'toggle_emoji_prediction': &lt;['Mod5+F6']&gt;,
         'toggle_off_the_record': &lt;['Mod5+F9']&gt;,

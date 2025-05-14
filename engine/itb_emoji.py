@@ -2083,6 +2083,11 @@ class EmojiMatcher():
                 (emoji_string, _language), {}).get('names', []))
             if names:
                 return names
+        if len(emoji_string) == 1:
+            try:
+                return [unicodedata.name(emoji_string).lower()]
+            except ValueError:
+                return []
         return []
 
     def name(self, emoji_string: str, language: str = '') -> str:
@@ -2147,8 +2152,10 @@ class EmojiMatcher():
         >>> matcher.name('⚽')
         'Fussball'
 
+        Fallback from unicodedata.name('a'):
+
         >>> matcher.name('a')
-        ''
+        'latin small letter a'
 
         >>> matcher.name(' ')
         'space'

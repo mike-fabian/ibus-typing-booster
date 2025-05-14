@@ -58,6 +58,17 @@ import itb_sound
 import itb_emoji
 import itb_version
 
+IMPORT_REGEX_SUCCESFUL = False
+try:
+    import regex # type: ignore
+    IMPORT_REGEX_SUCCESFUL = True
+    # Enable new improved regex engine instead of backwards compatible
+    # v0.  regex.match('ß', 'SS', regex.IGNORECASE) matches only with
+    # the improved version!  See also: https://pypi.org/project/regex/
+    regex.DEFAULT_VERSION = regex.VERSION1 # pylint: disable=no-member
+except (ImportError,):
+    IMPORT_REGEX_SUCCESFUL = False
+
 IMPORT_ITB_NLTK_SUCCESSFUL = False
 try:
     import itb_nltk
@@ -1137,11 +1148,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             from_user_db: bool = False,
             spell_checking: bool = False) -> None:
         '''append candidate to lookup_table'''
-        if not phrase:
-            return
         phrase = itb_util.normalize_nfc_and_composition_exclusions(phrase)
         dictionary_matches: List[str] = []
-        if itb_util.is_invisible(phrase):
+        if phrase and itb_util.is_invisible(phrase):
             if len(phrase) == 1:
                 if comment == '':
                     # There may be a comment already if this came from
@@ -6768,6 +6777,111 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._update_ui()
             return True
         return False
+
+    def _command_show_selection_info(self) -> bool:
+        '''Show info about the currently selected text'''
+        if not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
+            LOGGER.info('Surrounding text not supported, cannot get selection')
+            return False
+        surrounding_text = self.get_surrounding_text()
+        if not surrounding_text:
+            LOGGER.debug('Surrounding text object is None. '
+                         'Should never happen.')
+            return False
+        text = surrounding_text[0].get_text()
+        cursor_pos = surrounding_text[1]
+        anchor_pos = surrounding_text[2]
+        LOGGER.debug(
+            'surrounding_text = [%r, %s, %s]', text, cursor_pos, anchor_pos)
+        selection_start = min(cursor_pos, anchor_pos)
+        selection_end = max(cursor_pos, anchor_pos)
+        selection_text = text[selection_start:selection_end]
+        LOGGER.debug('selection_text = %r', selection_text)
+        if selection_text == '':
+            LOGGER.info('Nothing selected.')
+            return False
+        # Make sure we have an EmojiMatcher to be able to get
+        # names for emoji:
+        if (not self.emoji_matcher
+            or self.emoji_matcher.get_languages() != self._dictionary_names):
+            self.emoji_matcher = itb_emoji.EmojiMatcher(
+                languages=self._dictionary_names,
+                unicode_data_all=self._unicode_data_all)
+        grapheme_clusters = selection_text
+        if IMPORT_REGEX_SUCCESFUL:
+            grapheme_clusters = regex.findall(r'\X', selection_text)
+        if not grapheme_clusters:
+            LOGGER.debug('No grapheme clusters found in selection.')
+            return False
+        candidates = []
+        code_point_list_phrase = ''
+        code_point_list_comment = 'Code point list'
+        full_breakdown_phrase = ''
+        full_breakdown_comment = 'Full breakdown with code points and names'
+        for cluster in grapheme_clusters:
+            name = self.emoji_matcher.name(cluster)
+            if len(cluster) == 1:
+                phrase = f'\u00A0{cluster} U+{ord(cluster):04X} {name}'
+                comment = phrase
+                candidates.append(itb_util.PredictionCandidate(
+                    phrase=phrase, comment=comment))
+                full_breakdown_phrase += phrase
+                code_point_list_phrase += f' U+{ord(cluster):04X}'
+                continue
+            phrase = f'\u00A0{cluster}'
+            if name:
+                phrase += f' {name}'
+            comment = phrase
+            candidates.append(itb_util.PredictionCandidate(
+                phrase=phrase, comment=comment))
+            for index, char in enumerate(cluster):
+                name = self.emoji_matcher.name(char)
+                phrase = f'\u00A0{char} U+{ord(char):04X}'
+                if name:
+                    phrase += f' {name}'
+                if index < len(cluster) - 1:
+                    comment = f' ├─{phrase}'
+                else:
+                    comment = f' └─{phrase}'
+                candidates.append(itb_util.PredictionCandidate(
+                    phrase=phrase, comment=comment))
+                full_breakdown_phrase += phrase
+                code_point_list_phrase += f' U+{ord(char):04X}'
+        if not candidates:
+            LOGGER.debug('Nothing found in the selection.')
+            return False
+        candidates.append(itb_util.PredictionCandidate(
+            phrase=code_point_list_phrase, comment=code_point_list_comment))
+        candidates.append(itb_util.PredictionCandidate(
+            phrase=full_breakdown_phrase, comment=full_breakdown_comment))
+        self._candidates = candidates
+        self.get_lookup_table().clear()
+        self.get_lookup_table().set_cursor_visible(False)
+        for candidate in self._candidates:
+            self._append_candidate_to_lookup_table(
+                phrase='', comment=candidate.comment)
+        # Setting self._lookup_table_shows_related_candidates = True
+        # is needed to make sure a standard lookup table is shown,
+        # never an inline completion:
+        self._lookup_table_shows_related_candidates = True
+        self._update_lookup_table_and_aux()
+        LOGGER.debug(
+                'Cancelling the selection here by sending '
+                'Control+c (copies the selection) followed by '
+                'Control+v (replaces the selection with its copy).')
+        time.sleep(self._ibus_event_sleep_seconds)
+        self._forward_generated_key_event(
+            IBus.KEY_c, keystate=IBus.ModifierType.CONTROL_MASK)
+        self._forward_generated_key_event(
+            IBus.KEY_c, keystate=
+            IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.RELEASE_MASK)
+        self._forward_generated_key_event(
+            IBus.KEY_v, keystate=IBus.ModifierType.CONTROL_MASK)
+        self._forward_generated_key_event(
+            IBus.KEY_v, keystate=
+            IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.RELEASE_MASK)
+        time.sleep(self._ibus_event_sleep_seconds)
+        return True
 
     def _command_next_input_method(self) -> bool:
         '''Handle hotkey for the command “next_input_method”
