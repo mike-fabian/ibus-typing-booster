@@ -881,6 +881,15 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         for emoji in emoji_list:
             while Gtk.events_pending():
                 Gtk.main_iteration()
+            if self._currently_selected_label != (language, label_key, label):
+                # If a new label has been selected, stop filling the flowbox
+                # with contents for the old label:
+                LOGGER.debug(
+                    'Selected label changed: %r -> %r',
+                    (language, label_key, label),
+                    self._currently_selected_label)
+                self._busy_stop()
+                return
             emoji = self._variation_selector_normalize_for_font(emoji)
             if not is_recently_used:
                 skin_tone_variants = self._emoji_matcher.skin_tone_variants(
