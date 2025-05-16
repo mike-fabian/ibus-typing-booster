@@ -346,7 +346,6 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 self._gettext_translations[language] = None
 
         self._currently_selected_label: Optional[Tuple[str, str, str]] = None
-        self._candidates_invalid = False
         self._query_string = ''
         self._emoji_selected_popover: Optional[Gtk.Popover] = None
         self._emoji_info_popover: Optional[Gtk.Popover] = None
@@ -444,6 +443,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._header_bar.pack_end(self._spinner)
         self.set_titlebar(self._header_bar)
 
+        self._search_timeout_source_id: int = 0
         self._search_entry = Gtk.SearchEntry()
         self._search_entry.set_hexpand(False)
         self._search_entry.set_vexpand(False)
@@ -857,6 +857,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             LOGGER.debug(
                 'language = %s label_key = %s label = %s\n',
                 language, label_key, label)
+        self._busy_start()
+        self._clear_flowbox()
         emoji_list = []
         is_recently_used = False
         sorted_recently_used = self._sorted_recently_used()
@@ -972,6 +974,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                   id_cancel,
                   id_cancelled)))
             self._flowbox.insert(event_box, -1)
+            # showing after each insert shows some progress
+            self._flowbox.show_all()
 
         for child in self._flowbox.get_children():
             child.set_can_focus(False)
@@ -1327,8 +1331,11 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             LOGGER.debug(
                 '_fill_flowbox_with_search_results() query_string = %s\n',
                 self._query_string)
+        self._busy_start()
+        self._clear_flowbox()
+        query_string = self._query_string
         candidates = self._emoji_matcher.candidates(
-            self._query_string,
+            query_string,
             match_limit=self._match_limit,
             spellcheck=self._spellcheck)
 
@@ -1343,17 +1350,16 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 comment=_('Search produced empty result.'))]
 
         for candidate in candidates:
-            # Do *not* do
-            #
-            # while Gtk.events_pending():
-            #     Gtk.main_iteration()
-            #
-            # here. Although this will keep the spinner turning, it
-            # will have the side effect that further key events maybe
-            # added to the query string while the flowbox is being
-            # filled. But then the on_search_entry_search_changed()
-            # callback will think that nothing needs to be done
-            # because self._candidates_invalid is True already.
+            while Gtk.events_pending():
+                Gtk.main_iteration()
+            if self._query_string != query_string:
+                # If the query string changed, stop filling the flowbox
+                # with the results of the old query:
+                LOGGER.debug(
+                    'query string changed: %r -> %r',
+                    query_string, self._query_string)
+                self._busy_stop()
+                return
             emoji = self._variation_selector_normalize_for_font(candidate.phrase)
             score = candidate.user_freq
             name = candidate.comment
@@ -1425,15 +1431,17 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                   id_cancel,
                   id_cancelled)))
             self._flowbox.insert(event_box, -1)
+            # showing after each insert shows some progress
+            self._flowbox.show_all()
 
         for child in self._flowbox.get_children():
             child.set_can_focus(False)
 
         self.show_all() # pylint: disable=no-member
         if self._flowbox.get_children():
+            # Auto-select the first search result:
             event_box = self._flowbox.get_children()[0].get_child()
             self._emoji_event_box_selected(event_box, popover=False)
-        self._candidates_invalid = False
         self._busy_stop()
 
     def on_fontsize_spin_button_grab_focus( # pylint: disable=no-self-use
@@ -1506,16 +1514,12 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                     'query string effectively unchanged (only whitespace change)')
             return
         self._query_string = query_string
-        if self._candidates_invalid:
-            if _ARGS.debug:
-                LOGGER.debug(
-                    'self._candidates_invalid = %s\n',
-                    self._candidates_invalid)
-            return
-        self._candidates_invalid = True
-        self._clear_flowbox()
-        self._busy_start()
-        GLib.idle_add(self._fill_flowbox_with_search_results)
+        if self._search_timeout_source_id:
+            GLib.source_remove(self._search_timeout_source_id)
+            self._search_timeout_source_id = 0
+        self._search_timeout_source_id = GLib.timeout_add(
+            100, # 100 milliseconds, hardcoded for the moment
+            self._fill_flowbox_with_search_results)
 
     def on_label_selected(
             self,
@@ -1539,11 +1543,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         language = model[iterator][1]
         label_key = model[iterator][2]
         label = model[iterator][3]
-        if self._currently_selected_label != (language, label_key, label):
-            self._currently_selected_label = (language, label_key, label)
-            self._clear_flowbox()
-            self._busy_start()
-            GLib.idle_add(self._fill_flowbox_browse)
+        if self._currently_selected_label == (language, label_key, label):
+            return
+        self._currently_selected_label = (language, label_key, label)
+        GLib.idle_add(self._fill_flowbox_browse)
 
     def on_row_activated( # pylint: disable=no-self-use
             self,
@@ -1709,6 +1712,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         Update the font and fontsize used in the current content
         of the flowbox.
         '''
+        self._busy_start()
         for flowbox_child in self._flowbox.get_children():
             label = flowbox_child.get_child().get_child()
             text = label.get_label()
@@ -2191,7 +2195,6 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 'on_fontsize_adjustment_value_changed() value = %s\n', value)
         self._fontsize = value
         self._save_options()
-        self._busy_start()
         GLib.idle_add(self._change_flowbox_font)
 
     def on_fallback_check_button_toggled(
@@ -2208,7 +2211,6 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 'on_fallback_check_button_toggled() self._fallback = %s\n',
                 self._fallback)
         self._save_options()
-        self._busy_start()
         GLib.idle_add(self._change_flowbox_font)
 
     def _list_font_names(self) -> List[str]:
@@ -2367,7 +2369,6 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._font = font
         self._font_button.set_label(self._font)
         self._save_options()
-        self._busy_start()
         GLib.idle_add(self._change_flowbox_font)
 
     def on_font_button_clicked(self, _button: Gtk.Button) -> None:
