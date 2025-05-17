@@ -10,11 +10,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-05-12 15:48+0200\n"
+"POT-Creation-Date: 2025-05-17 17:37+0200\n"
 "PO-Revision-Date: 2025-05-16 09:36+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
-"Language-Team: Korean <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/ko/>\n"
+"Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.11.3\n"
 
-#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:262
+#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:266
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
 msgstr "이모지 선택기"
@@ -32,27 +32,27 @@ msgstr "이모지 선택기"
 msgid "Emoji browsing tool"
 msgstr "이모지 검색 도구"
 
-#: engine/emoji_picker.py:374
+#: engine/emoji_picker.py:377
 msgid "Clear recently used"
 msgstr "최근 사용된 항목 지우기"
 
-#: engine/emoji_picker.py:380 setup/main.py:234
+#: engine/emoji_picker.py:383 setup/main.py:234
 msgid "About"
 msgstr "정보"
 
-#: engine/emoji_picker.py:384
+#: engine/emoji_picker.py:387
 msgid "Quit"
 msgstr "종료"
 
-#: engine/emoji_picker.py:393
+#: engine/emoji_picker.py:396
 msgid "Search for emoji"
 msgstr "이모지 검색"
 
-#: engine/emoji_picker.py:405
+#: engine/emoji_picker.py:408
 msgid "Set the font to display emoji"
 msgstr "이모지 표시 끌꼴 설정"
 
-#: engine/emoji_picker.py:413
+#: engine/emoji_picker.py:416
 msgid "Set font size"
 msgstr "글꼴 크기 설정"
 
@@ -64,11 +64,11 @@ msgstr "글꼴 크기 설정"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:434
+#: engine/emoji_picker.py:437
 msgid "Fallback"
 msgstr "되돌리기"
 
-#: engine/emoji_picker.py:436
+#: engine/emoji_picker.py:439
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -76,106 +76,106 @@ msgstr ""
 "선택한 글꼴을 사용하여 표시 할 수 없는 이모지 또는 이모지 배열을 위한 글꼴 대"
 "체 기능을 사용해야 하는지에 대한 여부."
 
-#: engine/emoji_picker.py:512
+#: engine/emoji_picker.py:523
 msgid "Recently used"
 msgstr "최근 사용"
 
-#: engine/emoji_picker.py:692
+#: engine/emoji_picker.py:703
 msgid "Categories"
 msgstr "항목"
 
-#: engine/emoji_picker.py:693
+#: engine/emoji_picker.py:704
 msgid "Unicode categories"
 msgstr "유니코드 항목"
 
-#: engine/emoji_picker.py:694
+#: engine/emoji_picker.py:705
 msgid "Keywords"
 msgstr "핵심용어"
 
-#: engine/emoji_picker.py:712
+#: engine/emoji_picker.py:723
 msgid "Fonts used to render this emoji:"
 msgstr "이 이미지를 렌더링하는 데 사용된 글꼴:"
 
-#: engine/emoji_picker.py:770
+#: engine/emoji_picker.py:781
 msgid "Unicode Version:"
 msgstr "유니코드 버전:"
 
-#: engine/emoji_picker.py:774
+#: engine/emoji_picker.py:785
 msgid "Emoji Version:"
 msgstr "이모지 버전:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
-#: engine/emoji_picker.py:781
+#: engine/emoji_picker.py:792
 msgid "Emoji properties:"
 msgstr "이모지 속성:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
-#: engine/emoji_picker.py:787
+#: engine/emoji_picker.py:798
 msgid "Unicode category:"
 msgstr "유니코드 항목:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
-#: engine/emoji_picker.py:794
+#: engine/emoji_picker.py:805
 msgid "Unicode block:"
 msgstr "유니코드 블록:"
 
-#: engine/emoji_picker.py:813 engine/emoji_picker.py:1988
+#: engine/emoji_picker.py:824 engine/emoji_picker.py:2031
 msgid "Left click to copy"
 msgstr "복사하려면 왼쪽을 눌러주세요"
 
-#: engine/emoji_picker.py:816
+#: engine/emoji_picker.py:827
 msgid "Long press or middle click for skin tones"
 msgstr "피부 색상을 위해 길게 누르거나 중앙을 눌러주세요"
 
-#: engine/emoji_picker.py:817
+#: engine/emoji_picker.py:828
 msgid "Right click for info"
 msgstr "정보를 위해 오른쪽을 눌러주세요"
 
-#: engine/emoji_picker.py:1327
+#: engine/emoji_picker.py:1369
 msgid "Search Results"
 msgstr "검색 결과"
 
-#: engine/emoji_picker.py:1334
+#: engine/emoji_picker.py:1376
 msgid "Search produced empty result."
 msgstr "검색은 비어 있는 결과가 나타났습니다."
 
-#: engine/emoji_picker.py:1646 engine/emoji_picker.py:1774
+#: engine/emoji_picker.py:1690 engine/emoji_picker.py:1817
 msgid "Copied to clipboard!"
 msgstr "클립보드에 복사됨!"
 
-#: engine/emoji_picker.py:2101
+#: engine/emoji_picker.py:2144
 msgid "Lookup on emojipedia"
 msgstr "이모지피디아에서 검색"
 
-#: engine/emoji_picker.py:2249 engine/emoji_picker.py:2250
-#: engine/emoji_picker.py:2251 setup/main.py:1622
+#: engine/emoji_picker.py:2290 engine/emoji_picker.py:2291
+#: engine/emoji_picker.py:2292 setup/main.py:1622
 msgid "System default"
 msgstr "시스템 기본값"
 
-#: engine/emoji_picker.py:2386
+#: engine/emoji_picker.py:2426
 msgid "Set Font"
 msgstr "글꼴 설정"
 
-#: engine/hunspell_table.py:544 engine/hunspell_table.py:578
-#: engine/hunspell_table.py:599
+#: engine/hunspell_table.py:555 engine/hunspell_table.py:589
+#: engine/hunspell_table.py:610
 msgid "Off"
 msgstr "끄기"
 
-#: engine/hunspell_table.py:549 engine/hunspell_table.py:583
-#: engine/hunspell_table.py:604
+#: engine/hunspell_table.py:560 engine/hunspell_table.py:594
+#: engine/hunspell_table.py:615
 msgid "On"
 msgstr "켜기"
 
-#: engine/hunspell_table.py:568
+#: engine/hunspell_table.py:579
 msgid "Input mode"
 msgstr "입력 방식"
 
-#: engine/hunspell_table.py:569
+#: engine/hunspell_table.py:580
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "여기에서 ibus-typing-booster를 켜거나 끌 수 있습니다."
 
@@ -186,7 +186,7 @@ msgstr "여기에서 ibus-typing-booster를 켜거나 끌 수 있습니다."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:588 engine/hunspell_table.py:590 setup/main.py:619
+#: engine/hunspell_table.py:599 engine/hunspell_table.py:601 setup/main.py:619
 msgid "Unicode symbols and emoji predictions"
 msgstr "유니코드 기호 및 이모지 예측"
 
@@ -197,60 +197,60 @@ msgstr "유니코드 기호 및 이모지 예측"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:609 engine/hunspell_table.py:610 setup/main.py:644
+#: engine/hunspell_table.py:620 engine/hunspell_table.py:621 setup/main.py:644
 msgid "Off the record mode"
 msgstr "기록 방식 끄기"
 
-#: engine/hunspell_table.py:2031
+#: engine/hunspell_table.py:2040
 msgid "Highest priority dictionary"
 msgstr "최우선 순위 사전"
 
-#: engine/hunspell_table.py:2032
+#: engine/hunspell_table.py:2041
 msgid "Choose highest priority dictionary"
 msgstr "최우순 순위 사전을 선택합니다"
 
-#: engine/hunspell_table.py:2061
+#: engine/hunspell_table.py:2070
 msgid "Preedit input method"
 msgstr "사전편집 입력 방식"
 
-#: engine/hunspell_table.py:2062
+#: engine/hunspell_table.py:2071
 msgid "Switch preedit input method"
 msgstr "사전편집 입력방식으로 전환합니다"
 
-#: engine/hunspell_table.py:2407
+#: engine/hunspell_table.py:2416
 msgid "Setup"
 msgstr "설정"
 
-#: engine/hunspell_table.py:2410 setup/main.py:146
+#: engine/hunspell_table.py:2419 setup/main.py:146
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster 환경설정"
 
-#: engine/hunspell_table.py:6336
+#: engine/hunspell_table.py:6345
 msgid "Failed to import Google speech-to-text."
 msgstr "구글 텍스트 음성 변환을 가져오는 데 실패함."
 
-#: engine/hunspell_table.py:6339
+#: engine/hunspell_table.py:6348
 msgid "Failed to import pyaudio."
 msgstr "pyaudio를 가져오는 데 실패함."
 
-#: engine/hunspell_table.py:6342
+#: engine/hunspell_table.py:6351
 msgid "Failed to import queue."
 msgstr "대기열을 가져오는 데 실패함."
 
-#: engine/hunspell_table.py:6347
+#: engine/hunspell_table.py:6356
 msgid "No supported language for speech recognition."
 msgstr "음성 인식용 지원 언어가 없습니다."
 
-#: engine/hunspell_table.py:6351
+#: engine/hunspell_table.py:6360
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "\"구글 응용프로그램 자격증명\" 파일 \"%s\"를 찾을 수 없습니다."
 
-#: engine/hunspell_table.py:6364
+#: engine/hunspell_table.py:6373
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "구글 텍스트 음성 변환을 초기화 하는 데 실패함. 결점 기록을 참고하세요."
 
-#: engine/hunspell_table.py:6472
+#: engine/hunspell_table.py:6481
 msgid "Google speech-to-text error. See debug.log."
 msgstr "구글 텍스트 음성 변환 오류. 결점 기록을 참고하세요."
 
@@ -1350,7 +1350,8 @@ msgstr "m17n 사전편집을 위해 색상을 사용합니다"
 #: setup/main.py:1905
 msgid ""
 "Here you can choose whether a custom color is used for the m17n preedit."
-msgstr "여기에서 당신은 사용자 정의 색상이 m17n 사전편집을 위해 사용되었는지 여부를 "
+msgstr ""
+"여기에서 당신은 사용자 정의 색상이 m17n 사전편집을 위해 사용되었는지 여부를 "
 "선택 할 수 있습니다."
 
 #. Translators: Used in the title bar of the colour chooser
@@ -1362,7 +1363,8 @@ msgstr "m17n 사전편집을 위해 색상을 선택합니다"
 
 #: setup/main.py:1931
 msgid "Here you can specify which color to use for the m17n preedit."
-msgstr "여기에서 당신은 m17n 사전편집을 위해 사용하려는 색상을 지정 할 수 있습니다."
+msgstr ""
+"여기에서 당신은 m17n 사전편집을 위해 사용하려는 색상을 지정 할 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the

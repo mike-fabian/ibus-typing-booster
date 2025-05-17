@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-05-12 15:48+0200\n"
+"POT-Creation-Date: 2025-05-17 17:37+0200\n"
 "PO-Revision-Date: 2025-05-12 07:44+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://translate.fedoraproject.org/projects/ibus-"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.11.3\n"
 
-#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:262
+#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:266
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
 msgstr "ემოჯის არჩევა"
@@ -31,27 +31,27 @@ msgstr "ემოჯის არჩევა"
 msgid "Emoji browsing tool"
 msgstr "ემოჯების დასათვალიერებელი პროგრამა"
 
-#: engine/emoji_picker.py:374
+#: engine/emoji_picker.py:377
 msgid "Clear recently used"
 msgstr "ახლახანს გამოყენებულის გასუფთავება"
 
-#: engine/emoji_picker.py:380 setup/main.py:234
+#: engine/emoji_picker.py:383 setup/main.py:234
 msgid "About"
 msgstr "შესახებ"
 
-#: engine/emoji_picker.py:384
+#: engine/emoji_picker.py:387
 msgid "Quit"
 msgstr "გასვლა"
 
-#: engine/emoji_picker.py:393
+#: engine/emoji_picker.py:396
 msgid "Search for emoji"
 msgstr "ემოჯის მოძებნა"
 
-#: engine/emoji_picker.py:405
+#: engine/emoji_picker.py:408
 msgid "Set the font to display emoji"
 msgstr "ემოჯის საჩვენებელი ფონტი"
 
-#: engine/emoji_picker.py:413
+#: engine/emoji_picker.py:416
 msgid "Set font size"
 msgstr "ფონტის ზომის დაყენება"
 
@@ -63,11 +63,11 @@ msgstr "ფონტის ზომის დაყენება"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:434
+#: engine/emoji_picker.py:437
 msgid "Fallback"
 msgstr "გადართვა შეცდომის შემთხვევაში"
 
-#: engine/emoji_picker.py:436
+#: engine/emoji_picker.py:439
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -75,106 +75,106 @@ msgstr ""
 "გამოყენებული იქნება თუ არა სხვა ფონტზე გადართვა ემოჯისთვის ან ემოჯიების "
 "მიმდევრობებისთვის, რომლებიც არჩეული ფონტით ნაჩვენები ვერ იქნება."
 
-#: engine/emoji_picker.py:512
+#: engine/emoji_picker.py:523
 msgid "Recently used"
 msgstr "ახლახანს გამოყენებული"
 
-#: engine/emoji_picker.py:692
+#: engine/emoji_picker.py:703
 msgid "Categories"
 msgstr "კატეგორიები"
 
-#: engine/emoji_picker.py:693
+#: engine/emoji_picker.py:704
 msgid "Unicode categories"
 msgstr "უნიკოდის კატეგორიები"
 
-#: engine/emoji_picker.py:694
+#: engine/emoji_picker.py:705
 msgid "Keywords"
 msgstr "საკვანძო სიტყვები"
 
-#: engine/emoji_picker.py:712
+#: engine/emoji_picker.py:723
 msgid "Fonts used to render this emoji:"
 msgstr "ამ ემოჯის რენდერისთვის გამოყენებული ფონტები:"
 
-#: engine/emoji_picker.py:770
+#: engine/emoji_picker.py:781
 msgid "Unicode Version:"
 msgstr "უნიკოდის ვერსია:"
 
-#: engine/emoji_picker.py:774
+#: engine/emoji_picker.py:785
 msgid "Emoji Version:"
 msgstr "ემოჯის ვერსია:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
-#: engine/emoji_picker.py:781
+#: engine/emoji_picker.py:792
 msgid "Emoji properties:"
 msgstr "ემოჯის თვისებები:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
-#: engine/emoji_picker.py:787
+#: engine/emoji_picker.py:798
 msgid "Unicode category:"
 msgstr "უნიკოდის კატეგორია:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
-#: engine/emoji_picker.py:794
+#: engine/emoji_picker.py:805
 msgid "Unicode block:"
 msgstr "უნიკოდის ბლოკი:"
 
-#: engine/emoji_picker.py:813 engine/emoji_picker.py:1988
+#: engine/emoji_picker.py:824 engine/emoji_picker.py:2031
 msgid "Left click to copy"
 msgstr "მარცხენა წკაპი კოპირებისთვის"
 
-#: engine/emoji_picker.py:816
+#: engine/emoji_picker.py:827
 msgid "Long press or middle click for skin tones"
 msgstr "თემის ტონებისთვის დიდხანს ან შუა ღილაკით დააწექით"
 
-#: engine/emoji_picker.py:817
+#: engine/emoji_picker.py:828
 msgid "Right click for info"
 msgstr "მარჯვენა წკაპი ინფორმაიისთვის"
 
-#: engine/emoji_picker.py:1327
+#: engine/emoji_picker.py:1369
 msgid "Search Results"
 msgstr "ძებნის შედეგები"
 
-#: engine/emoji_picker.py:1334
+#: engine/emoji_picker.py:1376
 msgid "Search produced empty result."
 msgstr "ცარიელი შედეგი."
 
-#: engine/emoji_picker.py:1646 engine/emoji_picker.py:1774
+#: engine/emoji_picker.py:1690 engine/emoji_picker.py:1817
 msgid "Copied to clipboard!"
 msgstr "დაკოპირდა გაცვლის ბაფერში!"
 
-#: engine/emoji_picker.py:2101
+#: engine/emoji_picker.py:2144
 msgid "Lookup on emojipedia"
 msgstr "Emojipedia-ზე მოძებნა"
 
-#: engine/emoji_picker.py:2249 engine/emoji_picker.py:2250
-#: engine/emoji_picker.py:2251 setup/main.py:1622
+#: engine/emoji_picker.py:2290 engine/emoji_picker.py:2291
+#: engine/emoji_picker.py:2292 setup/main.py:1622
 msgid "System default"
 msgstr "სისტემის ნაგულისხმები"
 
-#: engine/emoji_picker.py:2386
+#: engine/emoji_picker.py:2426
 msgid "Set Font"
 msgstr "ფონტის დაყენება"
 
-#: engine/hunspell_table.py:544 engine/hunspell_table.py:578
-#: engine/hunspell_table.py:599
+#: engine/hunspell_table.py:555 engine/hunspell_table.py:589
+#: engine/hunspell_table.py:610
 msgid "Off"
 msgstr "გამორთული"
 
-#: engine/hunspell_table.py:549 engine/hunspell_table.py:583
-#: engine/hunspell_table.py:604
+#: engine/hunspell_table.py:560 engine/hunspell_table.py:594
+#: engine/hunspell_table.py:615
 msgid "On"
 msgstr "ჩართული"
 
-#: engine/hunspell_table.py:568
+#: engine/hunspell_table.py:579
 msgid "Input mode"
 msgstr "შეყვანის რეჟიმი"
 
-#: engine/hunspell_table.py:569
+#: engine/hunspell_table.py:580
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "აქ შეგიძლიათ ibus-typing-booster ჩართოთ ან გამორთოთ."
 
@@ -185,7 +185,7 @@ msgstr "აქ შეგიძლიათ ibus-typing-booster ჩართო�
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:588 engine/hunspell_table.py:590 setup/main.py:619
+#: engine/hunspell_table.py:599 engine/hunspell_table.py:601 setup/main.py:619
 msgid "Unicode symbols and emoji predictions"
 msgstr "უნიკოდის სიმბოლოები და ემოჯიების წინასწარი ამოცნობა"
 
@@ -196,60 +196,60 @@ msgstr "უნიკოდის სიმბოლოები და ემო
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:609 engine/hunspell_table.py:610 setup/main.py:644
+#: engine/hunspell_table.py:620 engine/hunspell_table.py:621 setup/main.py:644
 msgid "Off the record mode"
 msgstr "ჩაწერის რეჟიმის გამორთვა"
 
-#: engine/hunspell_table.py:2031
+#: engine/hunspell_table.py:2040
 msgid "Highest priority dictionary"
 msgstr "უმაღლესი პრიორიტეტის მქონე ლექსიკონი"
 
-#: engine/hunspell_table.py:2032
+#: engine/hunspell_table.py:2041
 msgid "Choose highest priority dictionary"
 msgstr "აირჩეთ უმაღლესი პრიორიტეტის მქონე ლექსიკონი"
 
-#: engine/hunspell_table.py:2061
+#: engine/hunspell_table.py:2070
 msgid "Preedit input method"
 msgstr "წინასწარი ჩასწორების შეტანის მეთოდი"
 
-#: engine/hunspell_table.py:2062
+#: engine/hunspell_table.py:2071
 msgid "Switch preedit input method"
 msgstr "სინასწარი ჩასწორების შეტანის მეთოდის გადართვა"
 
-#: engine/hunspell_table.py:2407
+#: engine/hunspell_table.py:2416
 msgid "Setup"
 msgstr "მორგება"
 
-#: engine/hunspell_table.py:2410 setup/main.py:146
+#: engine/hunspell_table.py:2419 setup/main.py:146
 msgid "Preferences for ibus-typing-booster"
 msgstr "\"ibus-typing-booster\"-ის მორგება"
 
-#: engine/hunspell_table.py:6336
+#: engine/hunspell_table.py:6345
 msgid "Failed to import Google speech-to-text."
 msgstr "Google speech-to-text-ის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:6339
+#: engine/hunspell_table.py:6348
 msgid "Failed to import pyaudio."
 msgstr "Pyaudio-ის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:6342
+#: engine/hunspell_table.py:6351
 msgid "Failed to import queue."
 msgstr "რიგის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:6347
+#: engine/hunspell_table.py:6356
 msgid "No supported language for speech recognition."
 msgstr "საუბრის ამოსაცნობად ენა მხარდაუჭერელია."
 
-#: engine/hunspell_table.py:6351
+#: engine/hunspell_table.py:6360
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google -ის აპლიკაციაში შესვლის დეტალების” ფაილი “%s” არ არსებობს."
 
-#: engine/hunspell_table.py:6364
+#: engine/hunspell_table.py:6373
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Google speech-to-text -ის ინიციალიზაციის შეცდომა. იხილეთ debug.log."
 
-#: engine/hunspell_table.py:6472
+#: engine/hunspell_table.py:6481
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google speech-to-text -ის შეცდომა. ხილეთ debug.log."
 

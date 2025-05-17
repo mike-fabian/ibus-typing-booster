@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-05-12 15:48+0200\n"
+"POT-Creation-Date: 2025-05-17 17:37+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Hebrew <https://translate.fedoraproject.org/projects/ibus-"
@@ -21,7 +21,7 @@ msgstr ""
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Generator: Weblate 5.10.4\n"
 
-#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:262
+#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:266
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
 msgstr "בוחר אמוג׳י"
@@ -33,27 +33,27 @@ msgstr "בוחר אמוג׳י"
 msgid "Emoji browsing tool"
 msgstr "גרסת אמוג׳י:"
 
-#: engine/emoji_picker.py:374
+#: engine/emoji_picker.py:377
 msgid "Clear recently used"
 msgstr "לפנות את האחרונים שהיו בשימוש"
 
-#: engine/emoji_picker.py:380 setup/main.py:234
+#: engine/emoji_picker.py:383 setup/main.py:234
 msgid "About"
 msgstr "על אודות"
 
-#: engine/emoji_picker.py:384
+#: engine/emoji_picker.py:387
 msgid "Quit"
 msgstr "יציאה"
 
-#: engine/emoji_picker.py:393
+#: engine/emoji_picker.py:396
 msgid "Search for emoji"
 msgstr "חיפוש אמוג׳י"
 
-#: engine/emoji_picker.py:405
+#: engine/emoji_picker.py:408
 msgid "Set the font to display emoji"
 msgstr "הגדרת הגופן להצגת אמוג׳י"
 
-#: engine/emoji_picker.py:413
+#: engine/emoji_picker.py:416
 msgid "Set font size"
 msgstr "הגדרת גודל גופן"
 
@@ -65,11 +65,11 @@ msgstr "הגדרת גודל גופן"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:434
+#: engine/emoji_picker.py:437
 msgid "Fallback"
 msgstr "במקרה כשל"
 
-#: engine/emoji_picker.py:436
+#: engine/emoji_picker.py:439
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -77,106 +77,106 @@ msgstr ""
 "האם להשתמש בגופן למקרי כשל או לחלקים מרצפי האמוג׳י שלא ניתנים להצגה בעזרת "
 "הגופן הנבחר."
 
-#: engine/emoji_picker.py:512
+#: engine/emoji_picker.py:523
 msgid "Recently used"
 msgstr "בשימוש לאחרונה"
 
-#: engine/emoji_picker.py:692
+#: engine/emoji_picker.py:703
 msgid "Categories"
 msgstr "קטגוריות"
 
-#: engine/emoji_picker.py:693
+#: engine/emoji_picker.py:704
 msgid "Unicode categories"
 msgstr "קטגוריות יוניקוד"
 
-#: engine/emoji_picker.py:694
+#: engine/emoji_picker.py:705
 msgid "Keywords"
 msgstr "מילות מפתח"
 
-#: engine/emoji_picker.py:712
+#: engine/emoji_picker.py:723
 msgid "Fonts used to render this emoji:"
 msgstr "גופנים שמשמשים לעיבוד תצוגת האמוג׳י הזה:"
 
-#: engine/emoji_picker.py:770
+#: engine/emoji_picker.py:781
 msgid "Unicode Version:"
 msgstr "גרסת יוניקוד:"
 
-#: engine/emoji_picker.py:774
+#: engine/emoji_picker.py:785
 msgid "Emoji Version:"
 msgstr "גרסת אמוג׳י:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
-#: engine/emoji_picker.py:781
+#: engine/emoji_picker.py:792
 msgid "Emoji properties:"
 msgstr "מאפייני אמוג׳י:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
-#: engine/emoji_picker.py:787
+#: engine/emoji_picker.py:798
 msgid "Unicode category:"
 msgstr "קטגוריות יוניקוד:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
-#: engine/emoji_picker.py:794
+#: engine/emoji_picker.py:805
 msgid "Unicode block:"
 msgstr "בלוק יוניקוד:"
 
-#: engine/emoji_picker.py:813 engine/emoji_picker.py:1988
+#: engine/emoji_picker.py:824 engine/emoji_picker.py:2031
 msgid "Left click to copy"
 msgstr "לחיצה שמאלית להעתקה"
 
-#: engine/emoji_picker.py:816
+#: engine/emoji_picker.py:827
 msgid "Long press or middle click for skin tones"
 msgstr "לחיצה ארוכה או אמצעית כדי להחליף גוון עור"
 
-#: engine/emoji_picker.py:817
+#: engine/emoji_picker.py:828
 msgid "Right click for info"
 msgstr "מקש ימני לקבלת מידע"
 
-#: engine/emoji_picker.py:1327
+#: engine/emoji_picker.py:1369
 msgid "Search Results"
 msgstr "תוצאות חיפוש"
 
-#: engine/emoji_picker.py:1334
+#: engine/emoji_picker.py:1376
 msgid "Search produced empty result."
 msgstr "החיפוש לא הניב תוצאות."
 
-#: engine/emoji_picker.py:1646 engine/emoji_picker.py:1774
+#: engine/emoji_picker.py:1690 engine/emoji_picker.py:1817
 msgid "Copied to clipboard!"
 msgstr "הועתק ללוח הגזירים!"
 
-#: engine/emoji_picker.py:2101
+#: engine/emoji_picker.py:2144
 msgid "Lookup on emojipedia"
 msgstr "חיפוש ב־emojipedia"
 
-#: engine/emoji_picker.py:2249 engine/emoji_picker.py:2250
-#: engine/emoji_picker.py:2251 setup/main.py:1622
+#: engine/emoji_picker.py:2290 engine/emoji_picker.py:2291
+#: engine/emoji_picker.py:2292 setup/main.py:1622
 msgid "System default"
 msgstr "בררת המחדל של המערכת"
 
-#: engine/emoji_picker.py:2386
+#: engine/emoji_picker.py:2426
 msgid "Set Font"
 msgstr "הגדרת גופן"
 
-#: engine/hunspell_table.py:544 engine/hunspell_table.py:578
-#: engine/hunspell_table.py:599
+#: engine/hunspell_table.py:555 engine/hunspell_table.py:589
+#: engine/hunspell_table.py:610
 msgid "Off"
 msgstr "כבוי"
 
-#: engine/hunspell_table.py:549 engine/hunspell_table.py:583
-#: engine/hunspell_table.py:604
+#: engine/hunspell_table.py:560 engine/hunspell_table.py:594
+#: engine/hunspell_table.py:615
 msgid "On"
 msgstr "פעיל"
 
-#: engine/hunspell_table.py:568
+#: engine/hunspell_table.py:579
 msgid "Input mode"
 msgstr "מצב קלט"
 
-#: engine/hunspell_table.py:569
+#: engine/hunspell_table.py:580
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "כאן ניתן להפעיל או לכבות את ibus-typing-booster."
 
@@ -187,7 +187,7 @@ msgstr "כאן ניתן להפעיל או לכבות את ibus-typing-booster."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:588 engine/hunspell_table.py:590 setup/main.py:619
+#: engine/hunspell_table.py:599 engine/hunspell_table.py:601 setup/main.py:619
 msgid "Unicode symbols and emoji predictions"
 msgstr "סימני יוניקוד וחיזוי אמוג׳י"
 
@@ -198,62 +198,62 @@ msgstr "סימני יוניקוד וחיזוי אמוג׳י"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:609 engine/hunspell_table.py:610 setup/main.py:644
+#: engine/hunspell_table.py:620 engine/hunspell_table.py:621 setup/main.py:644
 msgid "Off the record mode"
 msgstr "מצב שלא לציטוט"
 
-#: engine/hunspell_table.py:2031
+#: engine/hunspell_table.py:2040
 msgid "Highest priority dictionary"
 msgstr "מילון עדיפות עליונה"
 
-#: engine/hunspell_table.py:2032
+#: engine/hunspell_table.py:2041
 msgid "Choose highest priority dictionary"
 msgstr "נא לבחור את מילון העדיפות העליונה"
 
-#: engine/hunspell_table.py:2061
+#: engine/hunspell_table.py:2070
 msgid "Preedit input method"
 msgstr "שיטת קלט בעריכה מוקדמת"
 
-#: engine/hunspell_table.py:2062
+#: engine/hunspell_table.py:2071
 msgid "Switch preedit input method"
 msgstr "החלפת מצב שיטת קלט בעריכה מוקדמת"
 
-#: engine/hunspell_table.py:2407
+#: engine/hunspell_table.py:2416
 msgid "Setup"
 msgstr "הגדרה"
 
-#: engine/hunspell_table.py:2410 setup/main.py:146
+#: engine/hunspell_table.py:2419 setup/main.py:146
 msgid "Preferences for ibus-typing-booster"
 msgstr "העדפות ל־ibus-typing-booster"
 
-#: engine/hunspell_table.py:6336
+#: engine/hunspell_table.py:6345
 msgid "Failed to import Google speech-to-text."
 msgstr "הייבוא של דיבור לטקסט של Google נכשל."
 
-#: engine/hunspell_table.py:6339
+#: engine/hunspell_table.py:6348
 msgid "Failed to import pyaudio."
 msgstr "הייבוא של pyaudio נכשל."
 
-#: engine/hunspell_table.py:6342
+#: engine/hunspell_table.py:6351
 msgid "Failed to import queue."
 msgstr "ייבוא התור נכשל."
 
-#: engine/hunspell_table.py:6347
+#: engine/hunspell_table.py:6356
 msgid "No supported language for speech recognition."
 msgstr "אין שפה נתמכת לזיהוי דיבור."
 
-#: engine/hunspell_table.py:6351
+#: engine/hunspell_table.py:6360
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "הקובץ „%s” של „Google application credentials” (פרטי הגישה ליישומים של "
 "Google) לא נמצא."
 
-#: engine/hunspell_table.py:6364
+#: engine/hunspell_table.py:6373
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "הפעלת המרת דיבור לטקסט של Google נכשלה. מידע נוסף ב־debug.log."
 
-#: engine/hunspell_table.py:6472
+#: engine/hunspell_table.py:6481
 msgid "Google speech-to-text error. See debug.log."
 msgstr "שגיאה בדיבור לטקסט של Google. מידע נוסף ב־debug.log."
 
