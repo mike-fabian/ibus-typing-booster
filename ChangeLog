@@ -1,4 +1,15 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 17 May 2025 Release 2.27.54
+* Migrate emoji_picker.py from Gtk.main() to GLib.MainLoop() (Makes Control-C work even while flowboxes are filled)
+* emoji-picker: use a progress bar instead of a spinner (Spinner is currently broken in Gtk3 but the progress bar is nicer anyway)
+* Use GLib.timeout_add() in emoji-picker when typing into the search entry (That avoids starting a new search after every keypress when typing very fast, instead wait for a short pause in typing before starting a search.)
+* Add a new command `show_selection_info` to analyze a selection and show the Unicode code points, grapheme clusters, emoji sequences, … (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/733)
+* When committing with space while the preedit is empty, something might be selected in the lookup table which needs to be committed then (Related: https://github.com/mike-fabian/ibus-typing-booster/issues/707)
+* If a new label is selected in emoji-picker, stop filling the flowbox with contents for the old label (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/734)
+* Add IBus.KEY_Escape to self._commit_trigger_keys (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/731)
+* Translation update from Weblate (kab 77.4%, ko 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 12 May 2025 Release 2.27.53
 * Get transliterated parts for preedit text using the raw input `self._typed_string` instead of the existing preedit text (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/726)
 * Fix modifier keybindings for Gtk4 (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/725)
