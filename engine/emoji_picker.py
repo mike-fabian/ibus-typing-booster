@@ -439,8 +439,15 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._fallback_check_button.connect(
             'toggled', self.on_fallback_check_button_toggled)
         self._header_bar.pack_start(self._fallback_check_button)
-        self._spinner = Gtk.Spinner()
-        self._header_bar.pack_end(self._spinner)
+        self._progress_bar = Gtk.ProgressBar()
+        self._progress_bar.set_show_text(True)
+        self._progress_bar.set_pulse_step(0)
+        self._progress_bar.set_size_request(150, -1) # Width 150px, natural height
+        self._progress_bar.set_vexpand(True)
+        self._progress_bar.set_valign(Gtk.Align.CENTER)
+        self._progress_bar.set_margin_start(10)
+        self._progress_bar.set_margin_end(10)
+        self._header_bar.pack_end(self._progress_bar)
         self.set_titlebar(self._header_bar)
 
         self._search_timeout_source_id: int = 0
@@ -606,18 +613,18 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             Gdk.SELECTION_PRIMARY)
 
     def _busy_start(self) -> None:
-        '''
-        Show that this program is busy
-        '''
-        self._spinner.start()
+        ''' Show that this program is busy '''
+        self._progress_bar.show()
         # self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.WATCH))
         # Gdk.flush()
 
+    def _busy_fraction(self, fraction: float) -> None:
+        ''' Set the percent of progress made when the program is busy '''
+        self._progress_bar.set_fraction(fraction)
+
     def _busy_stop(self) -> None:
-        '''
-        Stop showing that this program is busy
-        '''
-        self._spinner.stop()
+        ''' Stop showing that this program is busy '''
+        self._progress_bar.hide()
         # self.get_root_window().set_cursor(Gdk.Cursor(Gdk.CursorType.ARROW))
 
     def _variation_selector_normalize_for_font(self, emoji: str) -> str:
@@ -880,7 +887,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             self._busy_stop()
             return
 
-        for emoji in emoji_list:
+        for index, emoji in enumerate(emoji_list):
+            self._busy_fraction(index/len(emoji_list))
             while Gtk.events_pending():
                 Gtk.main_iteration()
             if self._currently_selected_label != (language, label_key, label):
@@ -1349,7 +1357,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 user_freq=1,
                 comment=_('Search produced empty result.'))]
 
-        for candidate in candidates:
+        for index, candidate in enumerate(candidates):
+            self._busy_fraction(index/len(candidates))
             while Gtk.events_pending():
                 Gtk.main_iteration()
             if self._query_string != query_string:
@@ -1712,7 +1721,6 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         Update the font and fontsize used in the current content
         of the flowbox.
         '''
-        self._busy_start()
         for flowbox_child in self._flowbox.get_children():
             label = flowbox_child.get_child().get_child()
             text = label.get_label()
@@ -1732,8 +1740,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                         + '</span>')
                 label.set_text(new_text)
                 label.set_use_markup(True)
-        self.show_all() # pylint: disable=no-member
-        self._busy_stop()
+        self._flowbox.show_all()
 
     def _skin_tone_selected_popover_popdown(self) -> bool:
         '''
