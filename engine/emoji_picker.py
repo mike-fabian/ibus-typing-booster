@@ -29,9 +29,11 @@ from typing import Dict
 from typing import Optional
 from typing import Union
 from typing import Callable
+from types import FrameType
 import sys
 import os
 import re
+import threading
 import ast
 import signal
 import argparse
@@ -68,6 +70,8 @@ import itb_pango
 import itb_version
 
 LOGGER = logging.getLogger('ibus-typing-booster')
+
+GLIB_MAIN_LOOP: Optional[GLib.MainLoop] = None
 
 GTK_VERSION = (Gtk.get_major_version(),
                Gtk.get_minor_version(),
@@ -889,8 +893,13 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
 
         for index, emoji in enumerate(emoji_list):
             self._busy_fraction(index/len(emoji_list))
-            while Gtk.events_pending():
-                Gtk.main_iteration()
+            # Process pending events, replacement for:
+            # while Gtk.events_pending():
+            #     Gtk.main_iteration())
+            while GLib.MainContext.default().iteration(False):
+                if SIGNAL_HANDLER.interrupt_requested:
+                    LOGGER.info('Control+C pressed, exiting ...')
+                    sys.exit(1)
             if self._currently_selected_label != (language, label_key, label):
                 # If a new label has been selected, stop filling the flowbox
                 # with contents for the old label:
@@ -1239,22 +1248,26 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             itb_emoji._match_rapidfuzz.cache_info()) # pylint: disable=no-value-for-parameter, protected-access
 
     def on_delete_event(self, *_args: Any) -> None:
-        '''
-        The window has been deleted, probably by the window manager.
-        '''
+        ''' The window has been deleted, probably by the window manager. '''
+        LOGGER.info('Window deleted by the window manager.')
         self._save_recently_used_emoji()
         if _ARGS.debug:
             self.__class__.print_profiling_information()
-        Gtk.main_quit()
+        if GLIB_MAIN_LOOP is not None:
+            GLIB_MAIN_LOOP.quit()
+        else:
+            raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
 
     def on_destroy_event(self, *_args: Any) -> None:
-        '''
-        The window has been destroyed.
-        '''
+        ''' The window has been destroyed. '''
+        LOGGER.info('Window destroyed.')
         self._save_recently_used_emoji()
         if _ARGS.debug:
             self.print_profiling_information()
-        Gtk.main_quit()
+        if GLIB_MAIN_LOOP is not None:
+            GLIB_MAIN_LOOP.quit()
+        else:
+            raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
 
     def on_main_window_key_press_event(
             self,
@@ -1313,8 +1326,13 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         # fast. For example, when typing “flow” fast one may get
         # “flwo”.
         if not self._search_entry.get_window():
-            while Gtk.events_pending():
-                Gtk.main_iteration()
+            # Process pending events, replacement for:
+            # while Gtk.events_pending():
+            #     Gtk.main_iteration())
+            while GLib.MainContext.default().iteration(False):
+                if SIGNAL_HANDLER.interrupt_requested:
+                    LOGGER.info('Control+C pressed, exiting ...')
+                    sys.exit(1)
         self._search_bar.handle_event(event_key)
 
     def on_about_button_clicked(self, _button: Gtk.Button) -> None:
@@ -1359,8 +1377,13 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
 
         for index, candidate in enumerate(candidates):
             self._busy_fraction(index/len(candidates))
-            while Gtk.events_pending():
-                Gtk.main_iteration()
+            # Process pending events, replacement for:
+            # while Gtk.events_pending():
+            #     Gtk.main_iteration())
+            while GLib.MainContext.default().iteration(False):
+                if SIGNAL_HANDLER.interrupt_requested:
+                    LOGGER.info('Control+C pressed, exiting ...')
+                    sys.exit(1)
             if self._query_string != query_string:
                 # If the query string changed, stop filling the flowbox
                 # with the results of the old query:
@@ -2445,6 +2468,66 @@ def get_languages() -> List[str]:
         languages.append(re.sub(r'[.@].*', '', language))
     return languages
 
+class SignalHandler:
+    '''Thread-safe signal handler for interrupt requests (e.g., Ctrl+C).
+
+    This class provides a safe way to check and set an interrupt flag
+    from multiple threads.  It is designed to work with GLib’s signal
+    handling (e.g., `GLib.unix_signal_add()`) while preventing race
+    conditions during access.
+
+    Attributes:
+        interrupt_requested (bool):
+            Read-only property indicating whether an interrupt
+            (e.g., SIGINT/Ctrl+C) was triggered. Thread-safe.
+    '''
+    def __init__(self) -> None:
+        '''Init the signal handler class.
+
+        The threading.Lock() is unused at the moment as I don’t use
+        threads now. But I might use threads in future.
+        '''
+        self._interrupt_requested: bool = False
+        self._lock = threading.Lock()
+
+    @property
+    def interrupt_requested(self) -> bool:
+        '''Check if an interrupt was requested with thread-safe
+        read-only access.
+        '''
+        with self._lock:
+            return self._interrupt_requested
+
+    def handle_sigint(self, *_args: Any) -> bool:
+        ''' Callback for Ctrl+C (SIGINT).
+
+        :return: bool: True to keep the handler alive,
+                       False to remove it.
+        '''
+        with self._lock:
+            self._interrupt_requested = True
+        return True
+
+SIGNAL_HANDLER: SignalHandler = SignalHandler()
+
+def quit_glib_main_loop(
+        signum: int, _frame: Optional[FrameType] = None) -> None:
+    '''Signal handler for signals from Python’s signal module
+
+    :param signum: The signal number
+    :param _frame:  Almost never used (it’s for debugging).
+    '''
+    if signum is not None:
+        try:
+            signal_name = signal.Signals(signum).name
+        except ValueError: # In case signum isn't in Signals enum
+            signal_name = str(signum)
+        LOGGER.info('Received signal %s (%s), exiting...', signum, signal_name)
+    if GLIB_MAIN_LOOP is not None:
+        GLIB_MAIN_LOOP.quit()
+    else:
+        raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
+
 if __name__ == '__main__':
     if not _ARGS.debug:
         LOG_HANDLER_NULL = logging.NullHandler()
@@ -2464,10 +2547,6 @@ if __name__ == '__main__':
         PROFILE = cProfile.Profile()
         PROFILE.enable()
 
-    # Workaround for
-    # https://bugzilla.gnome.org/show_bug.cgi?id=622084
-    # Bug 622084 - Ctrl+C does not exit gtk app
-    signal.signal(signal.SIGINT, signal.SIG_DFL)
     try:
         locale.setlocale(locale.LC_ALL, '')
     except locale.Error:
@@ -2493,4 +2572,18 @@ if __name__ == '__main__':
         emoji_unicode_max=_ARGS.emoji_unicode_max,
         match_limit=_ARGS.match_limit,
         spellcheck=_ARGS.spellcheck)
-    Gtk.main()
+    GLIB_MAIN_LOOP = GLib.MainLoop()
+    signal.signal(signal.SIGTERM, quit_glib_main_loop) # kill <pid>
+    # Ctrl+C (optional, can also use try/except KeyboardInterrupt)
+    # signal.signal(signal.SIGINT, quit_glib_main_loop)
+    GLib.unix_signal_add(
+        GLib.PRIORITY_DEFAULT,
+        signal.SIGINT,
+        SIGNAL_HANDLER.handle_sigint,
+        None)
+    try:
+        GLIB_MAIN_LOOP.run()
+    except KeyboardInterrupt:
+        # SIGNINT (Control+C) received
+        LOGGER.info('Control+C pressed, exiting ...')
+        GLIB_MAIN_LOOP.quit()
