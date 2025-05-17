@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # ButterflyOfFire <butterflyoffire@users.noreply.translate.fedoraproject.org>, 2024, 2025.
 # Rachida SA <rgebbid@gmail.com>, 2024.
+# Moonshadow <starlight@users.noreply.translate.fedoraproject.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-05-12 15:48+0200\n"
-"PO-Revision-Date: 2025-05-13 22:13+0000\n"
-"Last-Translator: ButterflyOfFire "
-"<butterflyoffire@users.noreply.translate.fedoraproject.org>\n"
+"PO-Revision-Date: 2025-05-17 13:41+0000\n"
+"Last-Translator: Moonshadow "
+"<starlight@users.noreply.translate.fedoraproject.org>\n"
 "Language-Team: Kabyle <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/kab/>\n"
 "Language: kab\n"
@@ -106,7 +107,7 @@ msgstr "Lqem n yimuji:"
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:781
 msgid "Emoji properties:"
-msgstr ""
+msgstr "Taɣara n yimujiten:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
@@ -575,7 +576,7 @@ msgstr ""
 
 #: setup/main.py:516
 msgid "Yes, but only when extremely likely"
-msgstr ""
+msgstr "Ih, maca ala ma yella yettwaman d tidet"
 
 #: setup/main.py:518
 msgid "Yes, always"
@@ -1264,10 +1265,8 @@ msgstr "Dagi tzemreḍ ad tsuzzgeḍ anwa ini ara tesqedceḍ i teskant n tsudes
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the m17n preedit.
 #: setup/main.py:1903
-#, fuzzy
-#| msgid "Use color for compose preview"
 msgid "Use color for m17n preedit"
-msgstr "Seqdec ini i uskan n tsuddest"
+msgstr "Seqdec ini i m17n yettucaren"
 
 #: setup/main.py:1905
 #, fuzzy
@@ -1284,10 +1283,8 @@ msgstr ""
 #. dialog window where one can choose a custom colour for
 #. the m17n preedit.
 #: setup/main.py:1929
-#, fuzzy
-#| msgid "Choose color for compose preview"
 msgid "Choose color for m17n preedit"
-msgstr "Fren ini i teskant n tsudest"
+msgstr "Fren ini i m17n i yettucaren"
 
 #: setup/main.py:1931
 #, fuzzy
