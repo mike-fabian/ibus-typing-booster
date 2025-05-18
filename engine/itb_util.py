@@ -3911,10 +3911,15 @@ def best_candidates(
     '''
     if not phrase_frequencies:
         return []
+    # Normalize the candidates here because there is no
+    # normalization on commit anymore:
+    phrase_frequencies_normalized = {
+        normalize_nfc_and_composition_exclusions(phrase): freq
+        for phrase, freq in phrase_frequencies.items()}
     candidates = [
         PredictionCandidate(phrase=phrase, user_freq=freq)
         for phrase, freq in
-        sorted(phrase_frequencies.items(),
+        sorted(phrase_frequencies_normalized.items(),
                         key=lambda x: (
                             -1*x[1],   # user_freq descending
                             len(x[0]), # len(phrase) ascending

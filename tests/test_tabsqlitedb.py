@@ -316,7 +316,9 @@ class TabSqliteDbTestCase(unittest.TestCase):
         # -7.3% saved on Fedora 35 when typing the French poem with
         # the fr_FR dictionary. On openSUSE Tumbleweed (2021-11-23)
         # it is -8.2%.
-        self.assertEqual(-7.3, round(stats['percent'], 1))
+        # -9.0% on Fedora 42 when the results from select_words()
+        # are normalized to NFC.
+        self.assertEqual(-9.0, round(stats['percent'], 1))
         self.assertEqual(
             'plonge',
             self.database.select_words(
@@ -336,15 +338,19 @@ class TabSqliteDbTestCase(unittest.TestCase):
         LOGGER.info('stats=%s', repr(stats))
         # -37.6% saved when typing the French poem with the trained database
         # and the fr_FR dictionary:
-        self.assertEqual(-37.6, round(stats['percent'], 1))
-        # Set the fr_FR dictionary and see whether that makes the result worse:
+        # -50.0% saved when the results from select_words()
+        # are normalized to NFC.
+        self.assertEqual(-50.0, round(stats['percent'], 1))
+        # Set the en_US dictionary and see whether that makes the result worse:
         self.database.hunspell_obj.set_dictionary_names(['en_US'])
         stats = self.simulate_typing_file(training_file, verbose=False)
         LOGGER.info('stats=%s', repr(stats))
         # -37.6% saved when typing the French poem with the trained database
         # and the en_US dictionary. When the database is trained so well,
         # the dictionary almost doesn’t matter anymore:
-        self.assertEqual(-37.6, round(stats['percent'], 1))
+        # -50.0% saved when the results from select_words()
+        # are normalized to NFC.
+        self.assertEqual(-50.0, round(stats['percent'], 1))
 
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],

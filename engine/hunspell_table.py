@@ -1602,8 +1602,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if index >= len(self._candidates):
             # the index given is out of range
             return ''
-        return itb_util.normalize_nfc_and_composition_exclusions(
-            self._candidates[index].phrase)
+        # mypy loses track of this being a str due to NamedTuple default
+        return str(self._candidates[index].phrase)
 
     def get_string_from_lookup_table_current_page(self, index: int) -> str:
         '''
@@ -3476,9 +3476,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if not input_phrase:
             input_phrase = self._transliterated_strings[
                 self.get_current_imes()[0]]
-        # commit always in NFC:
-        commit_phrase = itb_util.normalize_nfc_and_composition_exclusions(
-            commit_phrase)
         if not commit_phrase.isspace():
             # If commit_phrase contains only white space
             # leave self._new_sentence as it is!
@@ -6824,7 +6821,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 phrase = f'\u00A0{cluster} U+{ord(cluster):04X} {name}'
                 comment = phrase
                 candidates.append(itb_util.PredictionCandidate(
-                    phrase=phrase, comment=comment))
+                    phrase=selection_text + phrase, comment=comment))
                 full_breakdown_phrase += phrase
                 code_point_list_phrase += f' U+{ord(cluster):04X}'
                 continue
@@ -6833,7 +6830,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 phrase += f' {name}'
             comment = phrase
             candidates.append(itb_util.PredictionCandidate(
-                phrase=phrase, comment=comment))
+                phrase=selection_text + phrase, comment=comment))
             for index, char in enumerate(cluster):
                 name = self.emoji_matcher.name(char)
                 phrase = f'\u00A0{char} U+{ord(char):04X}'
@@ -6844,16 +6841,18 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 else:
                     comment = f' └─{phrase}'
                 candidates.append(itb_util.PredictionCandidate(
-                    phrase=phrase, comment=comment))
+                    phrase=selection_text + phrase, comment=comment))
                 full_breakdown_phrase += phrase
                 code_point_list_phrase += f' U+{ord(char):04X}'
         if not candidates:
             LOGGER.debug('Nothing found in the selection.')
             return False
         candidates.append(itb_util.PredictionCandidate(
-            phrase=code_point_list_phrase, comment=code_point_list_comment))
+            phrase=selection_text + code_point_list_phrase,
+            comment=code_point_list_comment))
         candidates.append(itb_util.PredictionCandidate(
-            phrase=full_breakdown_phrase, comment=full_breakdown_comment))
+            phrase=selection_text + full_breakdown_phrase,
+            comment=full_breakdown_comment))
         self._candidates = candidates
         self.get_lookup_table().clear()
         self.get_lookup_table().set_cursor_visible(False)
@@ -6865,22 +6864,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # never an inline completion:
         self._lookup_table_shows_related_candidates = True
         self._update_lookup_table_and_aux()
-        LOGGER.debug(
-                'Cancelling the selection here by sending '
-                'Control+c (copies the selection) followed by '
-                'Control+v (replaces the selection with its copy).')
-        time.sleep(self._ibus_event_sleep_seconds)
-        self._forward_generated_key_event(
-            IBus.KEY_c, keystate=IBus.ModifierType.CONTROL_MASK)
-        self._forward_generated_key_event(
-            IBus.KEY_c, keystate=
-            IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.RELEASE_MASK)
-        self._forward_generated_key_event(
-            IBus.KEY_v, keystate=IBus.ModifierType.CONTROL_MASK)
-        self._forward_generated_key_event(
-            IBus.KEY_v, keystate=
-            IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.RELEASE_MASK)
-        time.sleep(self._ibus_event_sleep_seconds)
         return True
 
     def _command_next_input_method(self) -> bool:

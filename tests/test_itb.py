@@ -1298,8 +1298,9 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '안녕하세이')
-        candidates = [unicodedata.normalize('NFC', x[0])
-                      for x in self.engine._candidates]
+        #candidates = [unicodedata.normalize('NFC', x[0])
+        #              for x in self.engine._candidates]
+        candidates = [x[0] for x in self.engine._candidates]
         self.assertEqual(True, '안녕하세요' in candidates)
         self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '안녕하세요')
@@ -1320,14 +1321,15 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '안녕하세이')
-        candidates = [unicodedata.normalize('NFC', x[0])
-                      for x in self.engine._candidates]
+        #candidates = [unicodedata.normalize('NFC', x[0])
+        #              for x in self.engine._candidates]
+        candidates = [x[0] for x in self.engine._candidates]
         self.assertEqual(True, '안녕하세요' in candidates)
         self.assertEqual('안녕하세요', candidates[0])
 
     def test_accent_insensitive_matching_german_dictionary(self) -> None:
         self.engine.set_current_imes(
-            ['NoIME', 't-latn-post'], update_gsettings=False)
+            ['NoIME'], update_gsettings=False)
         self.engine.set_dictionary_names(
             ['de_DE'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_A, 0, 0)
@@ -1341,12 +1343,38 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
-        self.assertEqual(
-            unicodedata.normalize('NFC',
-                                  self.engine._candidates[0][0]),
-            'Alpenglühen')
+        self.assertEqual(self.engine.mock_preedit_text, 'Alpengluhen')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine._candidates[0][0], 'Alpenglühen')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'Alpenglühen ')
+        # Now try to input NFD:
+        self.engine.do_process_key_event(IBus.KEY_A, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_p, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_g, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
+        # U+0308 COMBINING DIAERESIS
+        self.engine.do_process_key_event(0x01000308, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        # The preedit text is still normalized for display:
+        self.assertEqual(self.engine.mock_preedit_text, 'Alpengl\u00fchen')
+        # But the transliterated string which will be committed is in NFD:
+        self.assertEqual(self.engine._transliterated_strings['NoIME'],
+                         'Alpenglu\u0308hen')
+        self.assertEqual(self.engine.mock_committed_text, 'Alpengl\u00fchen ')
+        # Now commit with space:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine._transliterated_strings['NoIME'], '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'Alpengl\u00fchen Alpenglu\u0308hen ')
 
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
@@ -3677,8 +3705,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual('discrepânci', self.engine.mock_preedit_text)
         self.assertEqual('discrepância ', self.engine.mock_committed_text)
         self.assertEqual('discrepância',
-                         unicodedata.normalize(
-                             'NFC', self.engine._candidates[0][0]))
+                         self.engine._candidates[0][0])
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_comma, 0, 0)
         self.assertEqual(
