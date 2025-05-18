@@ -562,7 +562,7 @@ class EmojiMatcher():
 
         Currently supported: 'rapidfuzz', 'classic'
 
-        When 'rapidfuzz is requested byt `import rapidfuzz` has failed,
+        When 'rapidfuzz is requested but `import rapidfuzz` has failed,
         a fallback to 'classic' is used.
 
         Changing the match algorithm clears the candidate cache.
