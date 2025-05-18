@@ -477,6 +477,7 @@ class EmojiMatcher():
                  unicode_data: bool = True,
                  unicode_data_all: bool = False,
                  unikemet: bool = False,
+                 nameslist: bool = True,
                  emoji_unicode_min: str = '0.0',
                  emoji_unicode_max: str = '100.0',
                  cldr_data: bool = True,
@@ -545,6 +546,8 @@ class EmojiMatcher():
             self._load_name_aliases()
             if unikemet:
                 self._load_unikemet()
+            if nameslist:
+                self._load_nameslist()
         self._load_unicode_emoji_data()
         self._load_unicode_emoji_sequences()
         self._load_unicode_emoji_zwj_sequences()
@@ -751,6 +754,49 @@ class EmojiMatcher():
                     existing += [value]
         else:
             inner_dict[values_key] = values
+
+    def _load_nameslist(self) -> None:
+        '''Loads alternative names from NamesList.txt
+
+        The rules used for this process are aimed at readability for
+	the human reader, at the expense of some details; therefore,
+	this file should not be parsed for machine-readable
+	information.
+
+        But after all humans are reading this when using emoji-picker…
+        '''
+        dirnames = UNICODE_DATA_DIRNAMES
+        basenames = ('NamesList.txt',)
+        (path, open_function) = _find_path_and_open_function(
+            dirnames, basenames)
+        if not path or open_function is None:
+            return
+        try:
+            with open_function( # type: ignore
+                    path, mode='rt', encoding='utf-8') as nameslist_file:
+                code_point_line_pattern = re.compile(r'([0-9A-F]+)\s(\S.*\S)')
+                name_line_pattern = re.compile(r'\s+=\ (?P<names>\S.*\S)')
+                emoji_string = ''
+                emoji_dict_key = ('', 'en')
+                for line in  nameslist_file:
+                    match = code_point_line_pattern.match(line)
+                    if match:
+                        codepoint_string, _official_name = match.groups()
+                        emoji_string = chr(int(codepoint_string, 16))
+                        emoji_dict_key = (emoji_string, 'en')
+                    if emoji_dict_key not in self._emoji_dict:
+                        continue
+                    match = name_line_pattern.match(line)
+                    if match:
+                        names = match.group('names')
+                        for name in names.split(','):
+                            self._add_to_emoji_dict(
+                                emoji_dict_key, 'names', [name.strip()])
+        except (OSError, IOError) as error:
+            LOGGER.exception(
+                'Error while loading NamesList from %s: %s: %s',
+                path, error.__class__.__name__, error)
+
 
     def _load_unikemet(self) -> None:
         '''Loads Unikemet.txt for Egyptian Hieroglyphs'''

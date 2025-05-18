@@ -369,7 +369,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_flags_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
-            languages = ['en_US'], match_algorithm='rapidfuzz')
+            languages = ['en_US'], nameslist=False, match_algorithm='rapidfuzz')
         first_match = mq.candidates('us')[0]
         self.assertEqual(first_match.phrase, '🇺🇲')
         self.assertEqual(first_match.comment, 'flag: us outlying islands')
@@ -549,6 +549,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     def test_candidates_symbols_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            nameslist=False,
             match_algorithm='rapidfuzz')
         first_match = mq.candidates('recycling symbol')[0]
         self.assertEqual(first_match.phrase, '♻️')
@@ -608,6 +609,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     def test_candidates_travel_classic(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US', 'it_IT', 'es_MX', 'es_ES', 'de_DE', 'ja_JP'],
+            nameslist=False,
             match_algorithm='classic')
         first_match = mq.candidates('camera')[0]
         self.assertEqual(first_match.phrase, '📷')
