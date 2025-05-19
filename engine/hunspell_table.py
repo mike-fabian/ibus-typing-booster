@@ -6796,9 +6796,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         selection_end = max(cursor_pos, anchor_pos)
         selection_text = text[selection_start:selection_end]
         LOGGER.debug('selection_text = %r', selection_text)
-        if selection_text == '':
-            LOGGER.info('Nothing selected.')
-            return False
         # Make sure we have an EmojiMatcher to be able to get
         # names for emoji:
         if (not self.emoji_matcher
@@ -6806,17 +6803,24 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages=self._dictionary_names,
                 unicode_data_all=self._unicode_data_all)
-        grapheme_clusters = selection_text
+        # If a selection could be fetched from surrounding text use
+        # it, if not use the surrounding text up to the cursor.
+        grapheme_clusters = text[:cursor_pos]
+        if selection_text != '':
+            grapheme_clusters = selection_text
         if IMPORT_REGEX_SUCCESFUL:
-            grapheme_clusters = regex.findall(r'\X', selection_text)
+            grapheme_clusters = regex.findall(r'\X', grapheme_clusters)
+        # If a selection text was found, use all grapheme clusters in
+        # that selection. If no selection was found, use only the
+        # grapheme cluster directly to the left of the cursor.
+        if selection_text == '':
+            grapheme_clusters = grapheme_clusters[-1:]
         if not grapheme_clusters:
-            LOGGER.debug('No grapheme clusters found in selection.')
+            LOGGER.debug('No grapheme clusters found in selection or before cursor.')
             return False
         candidates = []
         code_point_list_phrase = ''
-        code_point_list_comment = 'Code point list'
         full_breakdown_phrase = ''
-        full_breakdown_comment = 'Full breakdown with code points and names'
         for cluster in grapheme_clusters:
             name = self.emoji_matcher.name(cluster)
             if len(cluster) == 1:
@@ -6847,14 +6851,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 full_breakdown_phrase += phrase
                 code_point_list_phrase += f' U+{ord(char):04X}'
         if not candidates:
-            LOGGER.debug('Nothing found in the selection.')
+            LOGGER.debug('No candidates found.')
             return False
         candidates.append(itb_util.PredictionCandidate(
             phrase=selection_text + code_point_list_phrase,
-            comment=code_point_list_comment))
+            comment=itb_util.elide_middle(
+                code_point_list_phrase, max_length=40)))
         candidates.append(itb_util.PredictionCandidate(
             phrase=selection_text + full_breakdown_phrase,
-            comment=full_breakdown_comment))
+            comment=itb_util.elide_middle(
+                full_breakdown_phrase, max_length=40)))
         self._candidates = candidates
         self.get_lookup_table().clear()
         self.get_lookup_table().set_cursor_visible(False)
@@ -9537,6 +9543,20 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # no current input, neither "normal" nor compose input. In that
             # case, there is nothing to record in the database, no pending
             # input needs to be cleared and the UI needs no update.
+            # Except a lookup table might need to be removed. Because
+            # a lookup table might have been created by
+            # _command_show_selection_info() with an empty preedit.
+            self.get_lookup_table().clear()
+            self.get_lookup_table().set_cursor_visible(False)
+            self.hide_lookup_table()
+            self._lookup_table_hidden = True
+            self._current_auxiliary_text = IBus.Text.new_from_string('')
+            super().update_auxiliary_text(
+                self._current_auxiliary_text, False)
+            self.is_lookup_table_enabled_by_tab = False
+            self._lookup_table_shows_m17n_candidates = False
+            self._lookup_table_shows_compose_completions = False
+            self._lookup_table_shows_related_candidates = False
             if (self._prev_key
                 and
                 self._prev_key.val in (
