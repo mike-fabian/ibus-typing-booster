@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 19 May 2025 Release 2.27.56
+* Use the order of spellchecking suggestions coming from enchant for the score of the spellchecking candidates (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/739)
+* Use @dataclass for PredictionCandidate instead of NamedTuple for Python 3.7+, fall back to the NamedTuple for Python < 3.7.
+* command `show_selection_info`: Instead of cancelling the selection, add the selection to the candidates (Related: https://github.com/mike-fabian/ibus-typing-booster/issues/733)
+* Parse NamesList.txt if available in the system (Related: https://github.com/mike-fabian/ibus-typing-booster/issues/698)
+* Translation update from Weblate (pl 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 17 May 2025 Release 2.27.54
 * Migrate emoji_picker.py from Gtk.main() to GLib.MainLoop() (Makes Control-C work even while flowboxes are filled)
 * emoji-picker: use a progress bar instead of a spinner (Spinner is currently broken in Gtk3 but the progress bar is nicer anyway)

@@ -47,6 +47,47 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.56" date="2025-05-19" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.56</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Use the order of spellchecking suggestions coming from
+            enchant for the score of the spellchecking candidates
+            (Resolves: github-issues#739)
+          </li>
+          <li>
+            Use @dataclass for PredictionCandidate instead of
+            NamedTuple for Python 3.7+, fall back to the NamedTuple
+            for Python &lt; 3.7.
+          </li>
+          <li>
+            command `show_selection_info`: Instead of cancelling the
+            selection, add the selection to the candidates (Related:
+            github-issues#733)
+          </li>
+          <li>
+            Parse NamesList.txt if available in the system (Related:
+            github-issues#698)
+          </li>
+          <li>
+             Translation update from Weblate (kab 77.4%, ko 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/739">
+          github-issues#739
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/733">
+          github-issues#733
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/698">
+          github-issues#698
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.54" date="2025-05-17" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.54</url>
       <description>
