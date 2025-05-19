@@ -3589,33 +3589,31 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
-        self.assertEqual(self.engine._candidates, [
-            itb_util.PredictionCandidate(phrase='kissa',
-                                         user_freq=-1,
-                                         comment='',
-                                         from_user_db=False,
-                                         spell_checking=True),
-            itb_util.PredictionCandidate(phrase='Kiassa',
-                                         user_freq=-1,
-                                         comment='',
-                                         from_user_db=False,
-                                         spell_checking=True),
-            itb_util.PredictionCandidate(phrase='kissaa',
-                                         user_freq=-1,
-                                         comment='',
-                                         from_user_db=False,
-                                         spell_checking=True),
-            itb_util.PredictionCandidate(phrase='kisassa',
-                                         user_freq=-1,
-                                         comment='',
-                                         from_user_db=False,
-                                         spell_checking=True),
-            itb_util.PredictionCandidate(phrase='kisussa',
-                                         user_freq=-1,
-                                         comment='',
-                                         from_user_db=False,
-                                         spell_checking=True)
-        ])
+        self.assertEqual(self.engine._candidates[0].phrase, 'kissa')
+        self.assertEqual(self.engine._candidates[0].user_freq, -1)
+        self.assertEqual(self.engine._candidates[0].comment, '')
+        self.assertEqual(self.engine._candidates[0].from_user_db, False)
+        self.assertEqual(self.engine._candidates[0].spell_checking, True)
+        self.assertEqual(self.engine._candidates[1].phrase, 'kissaa')
+        self.assertEqual(self.engine._candidates[1].user_freq, -2)
+        self.assertEqual(self.engine._candidates[1].comment, '')
+        self.assertEqual(self.engine._candidates[1].from_user_db, False)
+        self.assertEqual(self.engine._candidates[1].spell_checking, True)
+        self.assertEqual(self.engine._candidates[2].phrase, 'kisassa')
+        self.assertEqual(self.engine._candidates[2].user_freq, -3)
+        self.assertEqual(self.engine._candidates[2].comment, '')
+        self.assertEqual(self.engine._candidates[2].from_user_db, False)
+        self.assertEqual(self.engine._candidates[2].spell_checking, True)
+        self.assertEqual(self.engine._candidates[3].phrase, 'kisussa')
+        self.assertEqual(self.engine._candidates[3].user_freq, -4)
+        self.assertEqual(self.engine._candidates[3].comment, '')
+        self.assertEqual(self.engine._candidates[3].from_user_db, False)
+        self.assertEqual(self.engine._candidates[3].spell_checking, True)
+        self.assertEqual(self.engine._candidates[4].phrase, 'Kiassa')
+        self.assertEqual(self.engine._candidates[4].user_freq, -5)
+        self.assertEqual(self.engine._candidates[4].comment, '')
+        self.assertEqual(self.engine._candidates[4].from_user_db, False)
+        self.assertEqual(self.engine._candidates[4].spell_checking, True)
 
     @unittest.skipUnless(
         testutils.get_libvoikko_version() >= '4.3',
@@ -3647,42 +3645,17 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
-        self.assertTrue(itb_util.PredictionCandidate(phrase='kiss',
-                                                     user_freq=-1,
-                                                     comment='',
-                                                     from_user_db=False,
-                                                     spell_checking=True)
-                        in self.engine._candidates)
-        self.assertTrue(itb_util.PredictionCandidate(phrase='kissa',
-                                                     user_freq=-1,
-                                                     comment='',
-                                                     from_user_db=False,
-                                                     spell_checking=True)
-                        in self.engine._candidates)
-        self.assertTrue(itb_util.PredictionCandidate(phrase='Kiassa',
-                                                     user_freq=-1,
-                                                     comment='',
-                                                     from_user_db=False,
-                                                     spell_checking=True)
-                        in self.engine._candidates)
-        self.assertTrue(itb_util.PredictionCandidate(phrase='kissaa',
-                                                     user_freq=-1,
-                                                     comment='',
-                                                     from_user_db=False,
-                                                     spell_checking=True)
-                        in self.engine._candidates)
-        self.assertTrue(itb_util.PredictionCandidate(phrase='kisassa',
-                                                     user_freq=-1,
-                                                     comment='',
-                                                     from_user_db=False,
-                                                     spell_checking=True)
-                        in self.engine._candidates)
-        self.assertTrue(itb_util.PredictionCandidate(phrase='kisussa',
-                                                     user_freq=-1,
-                                                     comment='',
-                                                     from_user_db=False,
-                                                     spell_checking=True)
-                        in self.engine._candidates)
+        candidate_phrases_found = set()
+        candidate_phrases = set(
+            ('kiss', 'kissa', 'Kiassa', 'kissaa', 'kisassa', 'kisussa'))
+        for candidate in self.engine._candidates:
+            if candidate.phrase in candidate_phrases:
+                self.assertTrue(candidate.user_freq < 0)
+                self.assertEqual(candidate.comment, '')
+                self.assertEqual(candidate.from_user_db, False)
+                self.assertEqual(candidate.spell_checking, True)
+                candidate_phrases_found.add(candidate.phrase)
+        self.assertTrue(candidate_phrases_found == candidate_phrases)
 
     def test_control_alpha(self) -> None:
         '''Test case for

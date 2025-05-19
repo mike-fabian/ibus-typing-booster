@@ -158,10 +158,10 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(
             h.suggest('principianti'),
             [('principianti', 0),
-             ('principiati', -1),
-             ('principiante', -1),
-             ('principiarti', -1),
-             ('principiasti', -1)])
+             ('principiati', -2),
+             ('principiante', -3),
+             ('principiarti', -4),
+             ('principiasti', -5)])
 
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('es_ES')[0],
@@ -171,12 +171,12 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(
             h.suggest('teneis'),
             [('tene\u0301is', 0),
-             ('tenes', -1),
-             ('tenis', -1),
-             ('teneos', -1),
-             ('tienes', -1),
-             ('te neis', -1),
-             ('te-neis', -1)])
+             ('teneos', -2),
+             ('tenes', -3),
+             ('tenis', -4),
+             ('tienes', -5),
+             ('te neis', -6),
+             ('te-neis', -7)])
         self.assertEqual(
             h.suggest('tenéis')[0],
             ('tene\u0301is', 0))
@@ -196,15 +196,16 @@ class HunspellSuggestTestCase(unittest.TestCase):
         'see: https://bugzilla.redhat.com/show_bug.cgi?id=2218460')
     def test_en_US(self) -> None:
         h = hunspell_suggest.Hunspell(['en_US'])
-        self.assertTrue(('Camel', 0) in h.suggest('camel'))
-        self.assertTrue(('camel', 0) in h.suggest('camel'))
-        self.assertTrue(('Camelot', 0) in h.suggest('camel'))
-        self.assertTrue(('camellia', 0) in h.suggest('camel'))
-        self.assertTrue(('camelhair', 0) in h.suggest('camel'))
-        self.assertTrue(('Camelopardalis', 0) in h.suggest('camel'))
-        self.assertTrue(('came', -1) in h.suggest('camel'))
-        self.assertTrue(('cameo', -1) in h.suggest('camel'))
-        self.assertTrue(('camels', -1) in h.suggest('camel'))
+        normal_suggestions = set((
+            'Camel', 'camel', 'Camelot', 'camellia', 'camelhair', 'Camelopardalis'))
+        spellcheck_suggestions = set(('came', 'cameo', 'camels'))
+        for word, freq in h.suggest('camel'):
+            if word in normal_suggestions and freq == 0:
+                normal_suggestions.remove(word)
+            if word in spellcheck_suggestions and freq < 0:
+                spellcheck_suggestions.remove(word)
+        self.assertEqual(normal_suggestions, set())
+        self.assertEqual(spellcheck_suggestions, set())
 
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
@@ -248,18 +249,19 @@ class HunspellSuggestTestCase(unittest.TestCase):
         d = hunspell_suggest.Dictionary('fi_FI')
         self.assertEqual(d.has_spellchecking(), True)
         h = hunspell_suggest.Hunspell(['fi_FI'])
+        print(h.suggest('kisssa'))
         self.assertEqual(
             h.suggest('kisssa'),
             [('kissa', -1),
-             ('Kiassa', -1),
-             ('kissaa', -1),
-             ('kisassa', -1),
-             ('kisussa', -1)])
+             ('kissaa', -2),
+             ('kisassa', -3),
+             ('kisussa', -4),
+             ('Kiassa', -5)])
         self.assertEqual(
             h.suggest('Pariisin-suurlähettila'),
             [('Pariisin-suurla\u0308hettila\u0308s', 0),
-             ('Pariisin-suurlähetetila', -1),
-             ('Pariisin-suurlähettiala', -1)])
+             ('Pariisin-suurlähettiala', -1),
+             ('Pariisin-suurlähetetila', -2)])
 
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
@@ -371,7 +373,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
              ('östgöte', 0),
              ('östgötsk', 0),
              ('östgötska', 0),
-             ('östgot', -1)])
+             ('östgot', -2)])
 
 if __name__ == '__main__':
     unittest.main()

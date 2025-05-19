@@ -255,8 +255,8 @@ class TabSqliteDbTestCase(unittest.TestCase):
         self.database.hunspell_obj.set_dictionary_names(['en_US'])
         stats = self.simulate_typing_file(training_file, verbose=False)
         LOGGER.info('stats=%s', repr(stats))
-        # -9.3% saved when typing the English poem with the en_US dictionary:
-        self.assertEqual(-9.3, round(stats['percent'], 1))
+        # -9.8% saved when typing the English poem with the en_US dictionary:
+        self.assertEqual(-9.8, round(stats['percent'], 1))
         self.assertEqual(
             'undergrad',
             self.database.select_words(

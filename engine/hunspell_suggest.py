@@ -600,8 +600,7 @@ class Hunspell:
                 <score> can have these values:
                     0: This is a completion, i.e. input_phrase matches
                        the beginning of <word> (accent insensitive match)
-                   -1: This is a spell checking correction from hunspell
-                       (i.e. either from enchant or pyhunspell)
+                   negative number: This is a spell checking correction
 
         Examples:
 
@@ -632,11 +631,11 @@ class Hunspell:
 
         >>> h = Hunspell(['it_IT'])
         >>> h.suggest('principianti')
-        [('principianti', 0), ('principiati', -1), ('principiante', -1), ('principiarti', -1), ('principiasti', -1)]
+        [('principianti', 0), ('principiati', -2), ('principiante', -3), ('principiarti', -4), ('principiasti', -5)]
 
         >>> h = Hunspell(['es_ES'])
         >>> h.suggest('teneis')
-        [('tenéis', 0), ('tenes', -1), ('tenis', -1), ('teneos', -1), ('tienes', -1), ('te neis', -1), ('te-neis', -1)]
+        [('tenéis', 0), ('teneos', -2), ('tenes', -3), ('tenis', -4), ('tienes', -5), ('te neis', -6), ('te-neis', -7)]
 
         >>> h.suggest('tenéis')[0]
         ('tenéis', 0)
@@ -745,7 +744,7 @@ class Hunspell:
                         for x in
                         dictionary.spellcheck_suggest(input_phrase)
                     ]
-                    for suggestion in extra_suggestions:
+                    for index, suggestion in enumerate(extra_suggestions):
                         if suggestion not in suggested_words:
                             if (dictionary.word_pairs
                                 and
@@ -756,11 +755,11 @@ class Hunspell:
                                 == input_phrase_no_accents):
                                 suggested_words[suggestion] = 0
                             else:
-                                suggested_words[suggestion] = -1
+                                suggested_words[suggestion] = -(index + 1)
         sorted_suggestions = sorted(
             suggested_words.items(),
             key=lambda x: (
-                - x[1],    # 0: in dictionary, -1: hunspell
+                - x[1],    # 0: in dictionary, negative: spellcheck
                 len(x[0]), # length of word ascending
                 x[0],      # alphabetical
             ))[0:MAX_WORDS]
