@@ -1196,11 +1196,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # and then you cannot see the whole candidate anyway. So it is
         # better to elide extremely long candidates. Maybe best to
         # elide them in the middle?:
-        if len(phrase) > 80:
-            phrase = phrase[:40] + '…' + phrase[-40:]
+        phrase = itb_util.elide_middle(phrase, max_length=80)
         attrs = IBus.AttrList()
-        if len(comment) > 80:
-            comment = comment[:40] + '…' + comment[-40:]
+        comment = itb_util.elide_middle(comment, max_length=80)
         if comment:
             phrase += ' ' + itb_util.bidi_embed(comment)
         color_used = False

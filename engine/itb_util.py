@@ -3103,6 +3103,19 @@ def color_string_to_argb(color_string: str) -> int:
             + ((int(gdk_rgba.green * 0xff) & 0xff) << 8)
             + (int(gdk_rgba.blue * 0xff) & 0xff))
 
+def elide_middle(text: str, max_length: int = 80, ellipsis: str = '…') -> str:
+    '''Elides a string in the middle if it is too long
+
+    Example:
+
+    >>> elide_middle('This text has more than 10 characters.', max_length=10)
+    'This…ers.'
+    '''
+    if len(text) <= max_length:
+        return text
+    half = (max_length - len(ellipsis)) // 2
+    return f'{text[:half]}{ellipsis}{text[-half:]}'
+
 def is_ascii(text: str) -> bool:
     '''Checks whether all characters in text are ASCII characters
 
