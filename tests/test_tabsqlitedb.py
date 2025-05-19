@@ -123,7 +123,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
                 for i in range(1, len(token)):
                     candidates = self.database.select_words(
                         token[:i], p_phrase=p_token, pp_phrase=pp_token)
-                    if candidates and candidates[0][0] == token:
+                    if candidates and candidates[0].phrase == token:
                         length_typed = i
                         break
                     if i == len(token) - 1:
@@ -175,11 +175,11 @@ class TabSqliteDbTestCase(unittest.TestCase):
         self.init_database(
             user_db_file=':memory:', dictionary_names=['en_US'])
         print(self.database.select_words(
-            'baltim', p_phrase='foo', pp_phrase='bar')[0][0])
+            'baltim', p_phrase='foo', pp_phrase='bar')[0].phrase)
         self.assertEqual(
             'Baltimore',
             self.database.select_words(
-                'baltim', p_phrase='foo', pp_phrase='bar')[0][0])
+                'baltim', p_phrase='foo', pp_phrase='bar')[0].phrase)
 
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
@@ -260,7 +260,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
         self.assertEqual(
             'undergrad',
             self.database.select_words(
-                'undergr', p_phrase='in', pp_phrase='the')[0][0])
+                'undergr', p_phrase='in', pp_phrase='the')[0].phrase)
         self.assertEqual(0, self.database.number_of_rows_in_database())
         self.assertEqual(
             True, self.read_training_data_from_file(training_file))
@@ -271,7 +271,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
         self.assertEqual(
             'undergrowth',
             self.database.select_words(
-                'undergr', p_phrase='in', pp_phrase='the')[0][0])
+                'undergr', p_phrase='in', pp_phrase='the')[0].phrase)
         stats = self.simulate_typing_file(training_file, verbose=False)
         LOGGER.info('stats=%s', repr(stats))
         # -51.3% saved when typing the English poem with the trained database
@@ -322,7 +322,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
         self.assertEqual(
             'plonge',
             self.database.select_words(
-                'plong', p_phrase='nous', pp_phrase='Bientôt')[0][0])
+                'plong', p_phrase='nous', pp_phrase='Bientôt')[0].phrase)
         self.assertEqual(0, self.database.number_of_rows_in_database())
         self.assertEqual(
             True, self.read_training_data_from_file(training_file))
@@ -333,7 +333,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
         self.assertEqual(
             'plongerons',
             self.database.select_words(
-                'plong', p_phrase='nous', pp_phrase='Bientôt')[0][0])
+                'plong', p_phrase='nous', pp_phrase='Bientôt')[0].phrase)
         stats = self.simulate_typing_file(training_file, verbose=False)
         LOGGER.info('stats=%s', repr(stats))
         # -37.6% saved when typing the French poem with the trained database

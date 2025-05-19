@@ -1602,7 +1602,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if index >= len(self._candidates):
             # the index given is out of range
             return ''
-        # mypy loses track of this being a str due to NamedTuple default
+        # mypy loses track of this being a str (bug in mypy?)
         return str(self._candidates[index].phrase)
 
     def get_string_from_lookup_table_current_page(self, index: int) -> str:
@@ -1655,7 +1655,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return False
         index = self._lookup_table.get_cursor_pos()
         if 0 <= index <= len(self._candidates_case_mode_orig):
-            case_mode_orig_phrase = self._candidates_case_mode_orig[index][0]
+            case_mode_orig_phrase = self._candidates_case_mode_orig[
+                index].phrase
             if self._debug_level > 1:
                 LOGGER.debug('Removing phrase with original case mode “%s”',
                              case_mode_orig_phrase)
@@ -2815,7 +2816,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._transliterated_strings[
                 self.get_current_imes()[0]])
         first_candidate = itb_util.normalize_nfc_and_composition_exclusions(
-            self._candidates[0][0])
+            self._candidates[0].phrase)
         if (not first_candidate.startswith(typed_string)
             or first_candidate == typed_string):
             # The first candidate is not a direct completion of the
@@ -2902,8 +2903,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 user_freq = 0.0
                 typed_string = ''
                 if self._candidates:
-                    first_candidate = self._candidates[0][0]
-                    user_freq = self._candidates[0][1]
+                    first_candidate = self._candidates[0].phrase
+                    user_freq = self._candidates[0].user_freq
                 typed_string = itb_util.normalize_nfc_and_composition_exclusions(
                     self._transliterated_strings[self.get_current_imes()[0]])
                 spellcheck_single_dictionary = (
@@ -3018,8 +3019,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 IBus.Text.new_from_string(''), False)
         self._candidates = [
             itb_util.PredictionCandidate(
-                phrase=cand[0],
-                user_freq=cand[1],
+                phrase=cand.phrase,
+                user_freq=cand.user_freq,
                 comment='',
                 from_user_db=True,
                 spell_checking=False)
@@ -3265,19 +3266,22 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             new_candidates.append(
                 itb_util.PredictionCandidate(
                     phrase=self._case_modes[
-                        self._current_case_mode]['function'](cand[0]),
-                    user_freq=cand[1],
-                    comment=cand[2],
-                    from_user_db=cand[3],
-                    spell_checking=cand[4]))
+                        self._current_case_mode]['function'](cand.phrase),
+                    user_freq=cand.user_freq,
+                    comment=cand.comment,
+                    from_user_db=cand.from_user_db,
+                    spell_checking=cand.spell_checking))
         self._candidates = new_candidates
         cursor_visible = self.get_lookup_table().cursor_visible
         cursor_pos = self.get_lookup_table().get_cursor_pos()
         self.get_lookup_table().clear()
         for cand in self._candidates:
             self._append_candidate_to_lookup_table(
-                phrase=cand[0], user_freq=cand[1], comment=cand[2],
-                from_user_db=cand[3], spell_checking=cand[4])
+                phrase=cand.phrase,
+                user_freq=cand.user_freq,
+                comment=cand.comment,
+                from_user_db=cand.from_user_db,
+                spell_checking=cand.spell_checking)
         self.get_lookup_table().set_cursor_pos(cursor_pos)
         self.get_lookup_table().set_cursor_visible(cursor_visible)
         return True
@@ -9400,7 +9404,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 input_phrase)
             first_candidate = ''
             if self._candidates:
-                first_candidate = self._candidates[0][0]
+                first_candidate = self._candidates[0].phrase
             if (not self._inline_completion
                 or (self.client_capabilities & itb_util.Capabilite.OSK)
                 or self.get_lookup_table().get_cursor_pos() != 0

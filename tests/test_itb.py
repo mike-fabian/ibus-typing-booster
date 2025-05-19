@@ -833,7 +833,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
-        self.assertEqual(self.engine._candidates[0][0], 'cerulean')
+        self.assertEqual(self.engine._candidates[0].phrase, 'cerulean')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'cerulean ')
 
@@ -1042,7 +1042,7 @@ class ItbTestCase(unittest.TestCase):
             'This is an English sentence. '
             'This is an English sentence. '
             'This is an English ')
-        self.assertEqual(self.engine._candidates[0][0], 'sentence')
+        self.assertEqual(self.engine._candidates[0].phrase, 'sentence')
 
     def test_commit_command_keybinding(self) -> None:
         '''Test binding a key to the “commit” command
@@ -1172,14 +1172,13 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
-        self.assertEqual(self.engine._candidates[0][0], 'Camel')
-        self.assertEqual(self.engine._candidates[1][0], 'camel')
-        self.assertEqual(self.engine._candidates[5][0], '🐫')
-        self.assertEqual(self.engine._candidates[5][2],
-                         'bactrian camel')
+        self.assertEqual(self.engine._candidates[0].phrase, 'Camel')
+        self.assertEqual(self.engine._candidates[1].phrase, 'camel')
+        self.assertEqual(self.engine._candidates[5].phrase, '🐫')
+        self.assertEqual(self.engine._candidates[5].comment, 'bactrian camel')
         self.engine.do_candidate_clicked(5, 3, 0)
-        self.assertEqual(self.engine._candidates[0][0], '🐫')
-        self.assertEqual(self.engine._candidates[1][0], '🐪')
+        self.assertEqual(self.engine._candidates[0].phrase, '🐫')
+        self.assertEqual(self.engine._candidates[1].phrase, '🐪')
         self.assertEqual(
             self.engine.get_lookup_table().cursor_visible,
             False)
@@ -1211,11 +1210,10 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(
             self.engine.get_lookup_table().get_cursor_pos(),
             0)
-        self.assertEqual(self.engine._candidates[0][0], 'Camel')
-        self.assertEqual(self.engine._candidates[1][0], 'camel')
-        self.assertEqual(self.engine._candidates[5][0], '🐫')
-        self.assertEqual(self.engine._candidates[5][2],
-                         'bactrian camel')
+        self.assertEqual(self.engine._candidates[0].phrase, 'Camel')
+        self.assertEqual(self.engine._candidates[1].phrase, 'camel')
+        self.assertEqual(self.engine._candidates[5].phrase, '🐫')
+        self.assertEqual(self.engine._candidates[5].comment, 'bactrian camel')
         self.engine.do_process_key_event(IBus.KEY_Down, 0, 0)
         self.assertEqual(
             self.engine.get_lookup_table().cursor_visible,
@@ -1298,9 +1296,9 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '안녕하세이')
-        #candidates = [unicodedata.normalize('NFC', x[0])
+        #candidates = [unicodedata.normalize('NFC', x.phrase)
         #              for x in self.engine._candidates]
-        candidates = [x[0] for x in self.engine._candidates]
+        candidates = [x.phrase for x in self.engine._candidates]
         self.assertEqual(True, '안녕하세요' in candidates)
         self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '안녕하세요')
@@ -1321,9 +1319,9 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '안녕하세이')
-        #candidates = [unicodedata.normalize('NFC', x[0])
+        #candidates = [unicodedata.normalize('NFC', x.phrase)
         #              for x in self.engine._candidates]
-        candidates = [x[0] for x in self.engine._candidates]
+        candidates = [x.phrase for x in self.engine._candidates]
         self.assertEqual(True, '안녕하세요' in candidates)
         self.assertEqual('안녕하세요', candidates[0])
 
@@ -1345,7 +1343,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'Alpengluhen')
         self.assertEqual(self.engine.mock_committed_text, '')
-        self.assertEqual(self.engine._candidates[0][0], 'Alpenglühen')
+        self.assertEqual(self.engine._candidates[0].phrase, 'Alpenglühen')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'Alpenglühen ')
@@ -1408,12 +1406,12 @@ class ItbTestCase(unittest.TestCase):
         #  the first candidate here:
         self.assertEqual(
             unicodedata.normalize('NFC',
-                                  self.engine._candidates[0][0]),
+                                  self.engine._candidates[0].phrase),
             'Glühwürmchen')
         # user_freq must be 0 because this word has not been found in
         # the user database, it is only a candidate because it is a
         # valid word according to hunspell:
-        self.assertEqual(self.engine._candidates[0][1], 0)
+        self.assertEqual(self.engine._candidates[0].user_freq, 0)
         # Commit with F1:
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         # Type “Glühwürmchen” again:
@@ -1434,11 +1432,11 @@ class ItbTestCase(unittest.TestCase):
         # Again it should be the first candidate:
         self.assertEqual(
             unicodedata.normalize('NFC',
-                                  self.engine._candidates[0][0]),
+                                  self.engine._candidates[0].phrase),
             'Glühwürmchen')
         # But now user_freq must be > 0 because the last commit
         # added this word to the user database:
-        self.assertTrue(self.engine._candidates[0][1] > 0)
+        self.assertTrue(self.engine._candidates[0].user_freq > 0)
         # Commit with F1:
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(
@@ -1463,7 +1461,7 @@ class ItbTestCase(unittest.TestCase):
         # accents are removed from the input phrase:
         self.assertEqual(
             unicodedata.normalize('NFC',
-                                  self.engine._candidates[0][0]),
+                                  self.engine._candidates[0].phrase),
             'Glühwürmchen')
         # Commit with F1:
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
@@ -1492,7 +1490,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.assertEqual(
             unicodedata.normalize('NFC',
-                                  self.engine._candidates[0][0]),
+                                  self.engine._candidates[0].phrase),
             'différemment')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'différemment ')
@@ -1517,9 +1515,9 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
-        self.assertEqual(self.engine._candidates[0][0], 'Camel')
-        self.assertEqual(self.engine._candidates[1][0], 'camel')
-        self.assertEqual(False, self.engine._candidates[5][0] == '🐫')
+        self.assertEqual(self.engine._candidates[0].phrase, 'Camel')
+        self.assertEqual(self.engine._candidates[1].phrase, 'camel')
+        self.assertEqual(False, self.engine._candidates[5].phrase == '🐫')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Camel ')
         # Now again with a leading underscore an emoji should match.
@@ -1529,11 +1527,10 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
-        self.assertEqual(self.engine._candidates[0][0], '_Camel')
-        self.assertEqual(self.engine._candidates[1][0], '_camel')
-        self.assertEqual(self.engine._candidates[5][0], '🐫')
-        self.assertEqual(self.engine._candidates[5][2],
-                         'bactrian camel')
+        self.assertEqual(self.engine._candidates[0].phrase, '_Camel')
+        self.assertEqual(self.engine._candidates[1].phrase, '_camel')
+        self.assertEqual(self.engine._candidates[5].phrase, '🐫')
+        self.assertEqual(self.engine._candidates[5].comment, 'bactrian camel')
         self.engine.do_process_key_event(IBus.KEY_F6, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Camel 🐫 ')
 
@@ -1602,7 +1599,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'test')
         self.assertEqual(self.engine.mock_committed_text, '')
-        self.assertEqual(self.engine._candidates[0][0], 'test')
+        self.assertEqual(self.engine._candidates[0].phrase, 'test')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'test ')
@@ -1613,7 +1610,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'test')
         self.assertEqual(self.engine.mock_committed_text, 'test ')
-        self.assertEqual(self.engine._candidates[0][0], 'test')
+        self.assertEqual(self.engine._candidates[0].phrase, 'test')
         self.engine.do_process_key_event(IBus.KEY_period, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
@@ -1625,7 +1622,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'Test')
         self.assertEqual(self.engine.mock_committed_text, 'test test. ')
-        self.assertEqual(self.engine._candidates[0][0], 'Test')
+        self.assertEqual(self.engine._candidates[0].phrase, 'Test')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'test test. Test ')
@@ -1636,7 +1633,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'test')
         self.assertEqual(self.engine.mock_committed_text, 'test test. Test ')
-        self.assertEqual(self.engine._candidates[0][0], 'Test')
+        self.assertEqual(self.engine._candidates[0].phrase, 'Test')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text,
@@ -1655,7 +1652,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, 'Test')
         self.assertEqual(self.engine.mock_committed_text,
                          'test test. Test test . ')
-        self.assertEqual(self.engine._candidates[0][0], 'Test')
+        self.assertEqual(self.engine._candidates[0].phrase, 'Test')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text,
@@ -1674,7 +1671,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, 'hello')
         self.assertEqual(self.engine.mock_committed_text,
                          'test test. Test test . Test , ')
-        self.assertEqual(self.engine._candidates[0][0], 'hello')
+        self.assertEqual(self.engine._candidates[0].phrase, 'hello')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text,
@@ -1697,7 +1694,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(2, self.engine.get_inline_completion())
         self.engine.do_process_key_event(IBus.KEY_A, 0, 0)
         self.assertEqual(True, self.engine._lookup_table_hidden)
-        self.assertEqual(self.engine._candidates[0][0], 'A')
+        self.assertEqual(self.engine._candidates[0].phrase, 'A')
         self.assertEqual(True, len(self.engine._candidates) >= 3)
         # No commit by index should be possible now because the lookup
         # table is hidden:
@@ -1712,7 +1709,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.assertEqual(True, self.engine._lookup_table_hidden)
-        self.assertEqual(self.engine._candidates[0][0], 'winter')
+        self.assertEqual(self.engine._candidates[0].phrase, 'winter')
         self.assertEqual(True, len(self.engine._candidates) >= 3)
         # No commit by index should be possible now because the lookup
         # table is hidden:
@@ -1728,7 +1725,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
         self.assertEqual(True, self.engine._lookup_table_hidden)
-        self.assertEqual(self.engine._candidates[0][0], 'Autumn')
+        self.assertEqual(self.engine._candidates[0].phrase, 'Autumn')
         self.assertEqual(True, len(self.engine._candidates) >= 3)
         self.assertEqual(self.engine.mock_committed_text, 'A4 wint1 ')
         # Preedit text shows inline completion:
@@ -1774,7 +1771,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'test')
         self.assertEqual(self.engine.mock_committed_text, '')
-        self.assertEqual(self.engine._candidates[0][0], 'test')
+        self.assertEqual(self.engine._candidates[0].phrase, 'test')
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         # By default a space should be added:
@@ -1790,7 +1787,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'test')
         self.assertEqual(self.engine.mock_committed_text, 'test ')
-        self.assertEqual(self.engine._candidates[0][0], 'test')
+        self.assertEqual(self.engine._candidates[0].phrase, 'test')
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         # No space should be added now:
@@ -1826,7 +1823,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_Insert, 0, 0)
-        self.assertEqual(self.engine._candidates[0][0], 'cerulean')
+        self.assertEqual(self.engine._candidates[0].phrase, 'cerulean')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'test\tcerulean ')
 
@@ -2280,7 +2277,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
-        self.assertEqual(self.engine._candidates[0][0], 'cerulean')
+        self.assertEqual(self.engine._candidates[0].phrase, 'cerulean')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'cerulean ')
         self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
@@ -2289,7 +2286,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
-        self.assertEqual(self.engine._candidates[0][0], 'cerulean')
+        self.assertEqual(self.engine._candidates[0].phrase, 'cerulean')
         self.engine.do_process_key_event(IBus.KEY_Right, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'cerulean cerulean')
 
@@ -2311,22 +2308,22 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
-        self.assertEqual(self.engine._candidates[0][0], 'cerulean')
+        self.assertEqual(self.engine._candidates[0].phrase, 'cerulean')
         # Shift_L goes to 'capitalize':
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
         self.engine.do_process_key_event(
             IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
-        self.assertEqual(self.engine._candidates[0][0], 'Cerulean')
+        self.assertEqual(self.engine._candidates[0].phrase, 'Cerulean')
         # The next Shift_L goes to 'upper':
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
         self.engine.do_process_key_event(
             IBus.KEY_Shift_L, 0, IBus.ModifierType.RELEASE_MASK)
-        self.assertEqual(self.engine._candidates[0][0], 'CERULEAN')
+        self.assertEqual(self.engine._candidates[0].phrase, 'CERULEAN')
         # Shift_R goes back to 'capitalize':
         self.engine.do_process_key_event(IBus.KEY_Shift_R, 0, 0)
         self.engine.do_process_key_event(
             IBus.KEY_Shift_R, 0, IBus.ModifierType.RELEASE_MASK)
-        self.assertEqual(self.engine._candidates[0][0], 'Cerulean')
+        self.assertEqual(self.engine._candidates[0].phrase, 'Cerulean')
         self.engine.do_process_key_event(IBus.KEY_F1, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, 'Cerulean ')
 
@@ -2412,7 +2409,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'in Germany')
         # there should be a candidate now:
-        self.assertEqual(self.engine._candidates[0][0], 'In Germany')
+        self.assertEqual(self.engine._candidates[0].phrase, 'In Germany')
         # Shift_L goes to 'capitalize':
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
         self.engine.do_process_key_event(
@@ -2420,7 +2417,7 @@ class ItbTestCase(unittest.TestCase):
         # Now the first letter of the preedit should be capitalized
         # and the rest unchanged:
         self.assertEqual(self.engine.mock_preedit_text, 'In Germany')
-        self.assertEqual(self.engine._candidates[0][0], 'In Germany')
+        self.assertEqual(self.engine._candidates[0].phrase, 'In Germany')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text, 'In Germany In Germany ')
@@ -2435,7 +2432,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
         # there should be at least one candidate now:
-        self.assertEqual(self.engine._candidates[0][0], 'In Germany')
+        self.assertEqual(self.engine._candidates[0].phrase, 'In Germany')
         # Shift_L goes to 'capitalize':
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
         self.engine.do_process_key_event(
@@ -2459,8 +2456,8 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
         # there should be two candidates now:
-        self.assertEqual(self.engine._candidates[0][0], 'IN GERMANY')
-        self.assertEqual(self.engine._candidates[1][0], 'In Germany')
+        self.assertEqual(self.engine._candidates[0].phrase, 'IN GERMANY')
+        self.assertEqual(self.engine._candidates[1].phrase, 'In Germany')
         # Shift_L goes to 'capitalize':
         self.engine.do_process_key_event(IBus.KEY_Shift_L, 0, 0)
         self.engine.do_process_key_event(
@@ -2488,8 +2485,8 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_y, 0, 0)
         # there should be two candidates now:
-        self.assertEqual(self.engine._candidates[0][0], 'In Germany')
-        self.assertEqual(self.engine._candidates[1][0], 'IN GERMANY')
+        self.assertEqual(self.engine._candidates[0].phrase, 'In Germany')
+        self.assertEqual(self.engine._candidates[1].phrase, 'IN GERMANY')
         # Shift_R goes to 'previous' from 'orig', i.e. to 'lower':
         self.engine.do_process_key_event(IBus.KEY_Shift_R, 0, 0)
         self.engine.do_process_key_event(
@@ -2795,7 +2792,7 @@ class ItbTestCase(unittest.TestCase):
             if char == '_':
                 char = 'underscore'
             self.engine.do_process_key_event(getattr(IBus, f'KEY_{char}'), 0, 0)
-        candidate_set = {x[0] for x in self.engine._candidates}
+        candidate_set = {x.phrase for x in self.engine._candidates}
         self.assertTrue('🛁' in candidate_set) # 🛁 U+1F6C1 BATHTUB
         self.assertTrue('𐃅' not in candidate_set) # 𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
@@ -2809,7 +2806,7 @@ class ItbTestCase(unittest.TestCase):
             if char == '_':
                 char = 'underscore'
             self.engine.do_process_key_event(getattr(IBus, f'KEY_{char}'), 0, 0)
-        candidate_set = {x[0] for x in self.engine._candidates}
+        candidate_set = {x.phrase for x in self.engine._candidates}
         self.assertTrue('🛁' in candidate_set) # 🛁 U+1F6C1 BATHTUB
         self.assertTrue('𐃅' in candidate_set) # 𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
@@ -2823,7 +2820,7 @@ class ItbTestCase(unittest.TestCase):
             if char == '_':
                 char = 'underscore'
             self.engine.do_process_key_event(getattr(IBus, f'KEY_{char}'), 0, 0)
-        candidate_set = {x[0] for x in self.engine._candidates}
+        candidate_set = {x.phrase for x in self.engine._candidates}
         self.assertTrue('🛁'  not in candidate_set) # 🛁 U+1F6C1 BATHTUB
         self.assertTrue('𐃅' in candidate_set) # 𐃅 U+100C5 LINEAR B IDEOGRAM B225 BATHTUB
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
@@ -3003,7 +3000,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(3, len(self.engine._candidates))
         candidates = []
         for candidate in self.engine._candidates:
-            candidates.append(candidate[0])
+            candidates.append(candidate.phrase)
         self.assertEqual(['­', '—', '–'], candidates)
         # Commit to preedit:
         self.engine.do_process_key_event(IBus.KEY_3, 0, 0)
@@ -3029,7 +3026,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(3, len(self.engine._candidates))
         candidates = []
         for candidate in self.engine._candidates:
-            candidates.append(candidate[0])
+            candidates.append(candidate.phrase)
         self.assertEqual(['­', '—', '–'], candidates)
         # Select first candidate:
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
@@ -3046,7 +3043,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(3, len(self.engine._candidates))
         candidates = []
         for candidate in self.engine._candidates:
-            candidates.append(candidate[0])
+            candidates.append(candidate.phrase)
         self.assertEqual(['­', '—', '–'], candidates)
         # Select second candidate:
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
@@ -3073,7 +3070,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertTrue(0 < len(self.engine._candidates))
         candidates = []
         for candidate in self.engine._candidates:
-            candidates.append(candidate[0])
+            candidates.append(candidate.phrase)
         self.assertTrue('ầ' in candidates)
         # Finish the sequence:
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
@@ -3174,7 +3171,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_d, 0, 0)
         self.assertEqual('Cassand', self.engine.mock_preedit_text)
         self.assertEqual(7, self.engine.mock_preedit_text_cursor_pos)
-        self.assertEqual('Cassandra', self.engine._candidates[0][0])
+        self.assertEqual('Cassandra', self.engine._candidates[0].phrase)
         # Tab should select the first candidate, i.e. “Cassandra” now:
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
         # When Backspace is typed, “Cassandra” is put into the preedit
@@ -3182,7 +3179,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
         self.assertEqual('Cassandr', self.engine.mock_preedit_text)
         self.assertEqual(8, self.engine.mock_preedit_text_cursor_pos)
-        self.assertEqual('Cassandra', self.engine._candidates[0][0])
+        self.assertEqual('Cassandra', self.engine._candidates[0].phrase)
         # Tab should again select the first candidate, which should
         # still be “Cassandra” now:
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
@@ -3193,7 +3190,7 @@ class ItbTestCase(unittest.TestCase):
             IBus.KEY_Left, 0, IBus.ModifierType.CONTROL_MASK)
         self.assertEqual('Cassandra', self.engine.mock_preedit_text)
         self.assertEqual(0, self.engine.mock_preedit_text_cursor_pos)
-        self.assertEqual('Cassandra', self.engine._candidates[0][0])
+        self.assertEqual('Cassandra', self.engine._candidates[0].phrase)
         # Tab should select again the first candidate, which should
         # still be “Cassandra” now:
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
@@ -3205,7 +3202,7 @@ class ItbTestCase(unittest.TestCase):
             IBus.KEY_Left, 0, 0)
         self.assertEqual('Cassandra', self.engine.mock_preedit_text)
         self.assertEqual(8, self.engine.mock_preedit_text_cursor_pos)
-        self.assertEqual('Cassandra', self.engine._candidates[0][0])
+        self.assertEqual('Cassandra', self.engine._candidates[0].phrase)
 
     @unittest.skipUnless(
         testutils.get_hunspell_dictionary_length('en_US') >= 10000,
@@ -3228,7 +3225,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.assertEqual('tastin', self.engine.mock_preedit_text)
-        self.assertEqual('tasting', self.engine._candidates[0][0])
+        self.assertEqual('tasting', self.engine._candidates[0].phrase)
         # Tab should select the first candidate, i.e. “tasting” now:
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
         # Typing an “s” should then replace the typed string
@@ -3249,7 +3246,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.assertEqual('tastin', self.engine.mock_preedit_text)
-        self.assertEqual('tasting', self.engine._candidates[0][0])
+        self.assertEqual('tasting', self.engine._candidates[0].phrase)
         # Tab should select the first candidate, i.e. “tasting” now:
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
         # Now type “ß” using compose, this should also replace the
@@ -3593,11 +3590,31 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(self.engine._candidates, [
-            ('kissa', -1, '', False, True),
-            ('Kiassa', -1, '', False, True),
-            ('kissaa', -1, '', False, True),
-            ('kisassa', -1, '', False, True),
-            ('kisussa', -1, '', False, True)
+            itb_util.PredictionCandidate(phrase='kissa',
+                                         user_freq=-1,
+                                         comment='',
+                                         from_user_db=False,
+                                         spell_checking=True),
+            itb_util.PredictionCandidate(phrase='Kiassa',
+                                         user_freq=-1,
+                                         comment='',
+                                         from_user_db=False,
+                                         spell_checking=True),
+            itb_util.PredictionCandidate(phrase='kissaa',
+                                         user_freq=-1,
+                                         comment='',
+                                         from_user_db=False,
+                                         spell_checking=True),
+            itb_util.PredictionCandidate(phrase='kisassa',
+                                         user_freq=-1,
+                                         comment='',
+                                         from_user_db=False,
+                                         spell_checking=True),
+            itb_util.PredictionCandidate(phrase='kisussa',
+                                         user_freq=-1,
+                                         comment='',
+                                         from_user_db=False,
+                                         spell_checking=True)
         ])
 
     @unittest.skipUnless(
@@ -3630,12 +3647,42 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_s, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
-        self.assertTrue(('kiss', -1, '', False, True) in self.engine._candidates)
-        self.assertTrue(('kissa', -1, '', False, True) in self.engine._candidates)
-        self.assertTrue(('Kiassa', -1, '', False, True) in self.engine._candidates)
-        self.assertTrue(('kissaa', -1, '', False, True) in self.engine._candidates)
-        self.assertTrue(('kisassa', -1, '', False, True) in self.engine._candidates)
-        self.assertTrue(('kisussa', -1, '', False, True) in self.engine._candidates)
+        self.assertTrue(itb_util.PredictionCandidate(phrase='kiss',
+                                                     user_freq=-1,
+                                                     comment='',
+                                                     from_user_db=False,
+                                                     spell_checking=True)
+                        in self.engine._candidates)
+        self.assertTrue(itb_util.PredictionCandidate(phrase='kissa',
+                                                     user_freq=-1,
+                                                     comment='',
+                                                     from_user_db=False,
+                                                     spell_checking=True)
+                        in self.engine._candidates)
+        self.assertTrue(itb_util.PredictionCandidate(phrase='Kiassa',
+                                                     user_freq=-1,
+                                                     comment='',
+                                                     from_user_db=False,
+                                                     spell_checking=True)
+                        in self.engine._candidates)
+        self.assertTrue(itb_util.PredictionCandidate(phrase='kissaa',
+                                                     user_freq=-1,
+                                                     comment='',
+                                                     from_user_db=False,
+                                                     spell_checking=True)
+                        in self.engine._candidates)
+        self.assertTrue(itb_util.PredictionCandidate(phrase='kisassa',
+                                                     user_freq=-1,
+                                                     comment='',
+                                                     from_user_db=False,
+                                                     spell_checking=True)
+                        in self.engine._candidates)
+        self.assertTrue(itb_util.PredictionCandidate(phrase='kisussa',
+                                                     user_freq=-1,
+                                                     comment='',
+                                                     from_user_db=False,
+                                                     spell_checking=True)
+                        in self.engine._candidates)
 
     def test_control_alpha(self) -> None:
         '''Test case for
@@ -3705,7 +3752,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual('discrepânci', self.engine.mock_preedit_text)
         self.assertEqual('discrepância ', self.engine.mock_committed_text)
         self.assertEqual('discrepância',
-                         self.engine._candidates[0][0])
+                         self.engine._candidates[0].phrase)
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_comma, 0, 0)
         self.assertEqual(
@@ -3797,7 +3844,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
         self.assertEqual(len(self.engine._candidates), 1)
-        self.assertEqual(self.engine._candidates[0][0], '/:')
+        self.assertEqual(self.engine._candidates[0].phrase, '/:')
         self.assertEqual(self.engine._typed_string, ['a', '/', ':'])
         self.assertEqual(self.engine.mock_preedit_text, 'a/:')
         self.assertEqual(self.engine.mock_committed_text, '')
@@ -3855,9 +3902,9 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine._typed_string, ['a', '/', ':', ')'])
         self.assertEqual(self.engine.mock_preedit_text, 'a☺\uFE0F')
         self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb ')
-        self.assertEqual(self.engine._candidates[0][0], '☺\uFE0F')
-        self.assertEqual(self.engine._candidates[1][0], '😃')
-        self.assertEqual(self.engine._candidates[5][0], '😇')
+        self.assertEqual(self.engine._candidates[0].phrase, '☺\uFE0F')
+        self.assertEqual(self.engine._candidates[1].phrase, '😃')
+        self.assertEqual(self.engine._candidates[5].phrase, '😇')
         self.engine.do_process_key_event(IBus.KEY_F6, 0, 0)
         # F6 commits the 6th candidate to preedit and typed string:
         self.assertEqual(self.engine._typed_string, ['a', '😇'])
@@ -3873,9 +3920,9 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine._typed_string, ['a', '😇', 'a', '/', ':', ')'])
         self.assertEqual(self.engine.mock_preedit_text, 'a😇a☺\uFE0F')
         self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb ')
-        self.assertEqual(self.engine._candidates[0][0], '☺\uFE0F')
-        self.assertEqual(self.engine._candidates[1][0], '😃')
-        self.assertEqual(self.engine._candidates[5][0], '😇')
+        self.assertEqual(self.engine._candidates[0].phrase, '☺\uFE0F')
+        self.assertEqual(self.engine._candidates[1].phrase, '😃')
+        self.assertEqual(self.engine._candidates[5].phrase, '😇')
         # Escape to cancel the **automatic** selection of the first candidate
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
         # Candidates should still be there:
@@ -3905,7 +3952,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_slash, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(len(self.engine._candidates), 1)
-        self.assertEqual(self.engine._candidates[0][0], '\u200C')
+        self.assertEqual(self.engine._candidates[0].phrase, '\u200C')
         self.assertEqual(self.engine._typed_string, ['/', ' '])
         self.assertEqual(self.engine.mock_preedit_text, '\u200C')
         self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb a😇a☺\uFE0Fb ')
@@ -3921,7 +3968,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_slash, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(len(self.engine._candidates), 1)
-        self.assertEqual(self.engine._candidates[0][0], '\u200C')
+        self.assertEqual(self.engine._candidates[0].phrase, '\u200C')
         self.assertEqual(self.engine._typed_string, ['a', '/', ' '])
         self.assertEqual(self.engine.mock_preedit_text, 'a\u200C')
         self.assertEqual(self.engine.mock_committed_text, 'a☺\uFE0Fb a😇a☺\uFE0Fb \u200C ')
@@ -3949,45 +3996,45 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_x, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(len(self.engine._candidates), 8)
-        self.assertEqual(self.engine._candidates[0][0], '啊')
-        self.assertEqual(self.engine._candidates[1][0], '呵')
+        self.assertEqual(self.engine._candidates[0].phrase, '啊')
+        self.assertEqual(self.engine._candidates[1].phrase, '呵')
         self.assertEqual(self.engine._typed_string, ['x', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, 'x啊')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.assertEqual(len(self.engine._candidates), 97)
-        self.assertEqual(self.engine._candidates[0][0], '爱')
-        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._candidates[0].phrase, '爱')
+        self.assertEqual(self.engine._candidates[1].phrase, '愛')
         self.assertEqual(self.engine._typed_string, ['x', 'a', 'i'])
         self.assertEqual(self.engine.mock_preedit_text, 'x爱')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
         self.assertEqual(len(self.engine._candidates), 8)
-        self.assertEqual(self.engine._candidates[0][0], '啊')
-        self.assertEqual(self.engine._candidates[1][0], '呵')
+        self.assertEqual(self.engine._candidates[0].phrase, '啊')
+        self.assertEqual(self.engine._candidates[1].phrase, '呵')
         self.assertEqual(self.engine._typed_string, ['x', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, 'x啊')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.assertEqual(len(self.engine._candidates), 97)
-        self.assertEqual(self.engine._candidates[0][0], '爱')
-        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._candidates[0].phrase, '爱')
+        self.assertEqual(self.engine._candidates[1].phrase, '愛')
         self.assertEqual(self.engine._typed_string, ['x', 'a', 'i'])
         self.assertEqual(self.engine.mock_preedit_text, 'x爱')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.assertEqual(len(self.engine._candidates), 97)
-        self.assertEqual(self.engine._candidates[0][0], '爱')
-        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._candidates[0].phrase, '爱')
+        self.assertEqual(self.engine._candidates[1].phrase, '愛')
         self.assertEqual(self.engine._typed_string, ['x', 'a', 'i', 'a', 'i'])
         self.assertEqual(self.engine.mock_preedit_text, 'x爱爱')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
         self.assertEqual(len(self.engine._candidates), 97)
-        self.assertEqual(self.engine._candidates[0][0], '爱')
-        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._candidates[0].phrase, '爱')
+        self.assertEqual(self.engine._candidates[1].phrase, '愛')
         self.assertEqual(self.engine._typed_string, ['x', 'a', 'i'])
         self.assertEqual(self.engine.mock_preedit_text, 'x爱')
         self.assertEqual(self.engine.mock_committed_text, '')
@@ -4006,8 +4053,8 @@ class ItbTestCase(unittest.TestCase):
         # I.e. this does **not** preserve the typed string, which is
         # intentional!
         self.assertEqual(len(self.engine._candidates), 8)
-        self.assertEqual(self.engine._candidates[0][0], '啊')
-        self.assertEqual(self.engine._candidates[1][0], '呵')
+        self.assertEqual(self.engine._candidates[0].phrase, '啊')
+        self.assertEqual(self.engine._candidates[1].phrase, '呵')
         self.assertEqual(self.engine._typed_string, ['x', '爱', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, 'x爱啊')
         self.assertEqual(self.engine.mock_committed_text, '')
@@ -4030,54 +4077,54 @@ class ItbTestCase(unittest.TestCase):
             ['zh-tonepy', 'NoIME'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(len(self.engine._candidates), 1)
-        self.assertEqual(self.engine._candidates[0][0], 'a')
+        self.assertEqual(self.engine._candidates[0].phrase, 'a')
         self.assertEqual(self.engine._typed_string, ['a'])
         self.assertEqual(self.engine.mock_preedit_text, 'a')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
         self.assertEqual(len(self.engine._candidates), 1)
-        self.assertEqual(self.engine._candidates[0][0], '嗄')
+        self.assertEqual(self.engine._candidates[0].phrase, '嗄')
         self.assertEqual(self.engine._typed_string, ['a', '2'])
         self.assertEqual(self.engine.mock_preedit_text, '嗄')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
         self.assertEqual(len(self.engine._candidates), 1)
-        self.assertEqual(self.engine._candidates[0][0], 'a')
+        self.assertEqual(self.engine._candidates[0].phrase, 'a')
         self.assertEqual(self.engine._typed_string, ['a'])
         self.assertEqual(self.engine.mock_preedit_text, 'a')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.assertEqual(len(self.engine._candidates), 1)
-        self.assertEqual(self.engine._candidates[0][0], 'ai')
+        self.assertEqual(self.engine._candidates[0].phrase, 'ai')
         self.assertEqual(self.engine._typed_string, ['a', 'i'])
         self.assertEqual(self.engine.mock_preedit_text, 'ai')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_4, 0, 0)
         self.assertEqual(len(self.engine._candidates), 53)
-        self.assertEqual(self.engine._candidates[0][0], '爱')
-        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._candidates[0].phrase, '爱')
+        self.assertEqual(self.engine._candidates[1].phrase, '愛')
         self.assertEqual(self.engine._typed_string, ['a', 'i', '4'])
         self.assertEqual(self.engine.mock_preedit_text, '爱')
         self.assertEqual(self.engine.mock_committed_text, '')
         # Select second candiate with Tab
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
         self.assertEqual(len(self.engine._candidates), 53)
-        self.assertEqual(self.engine._candidates[0][0], '爱')
-        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._candidates[0].phrase, '爱')
+        self.assertEqual(self.engine._candidates[1].phrase, '愛')
         self.assertEqual(self.engine._typed_string, ['a', 'i', '4'])
         self.assertEqual(self.engine.mock_preedit_text, '爱') # Unchanged!
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(len(self.engine._candidates), 1)
-        self.assertEqual(self.engine._candidates[0][0], 'a')
+        self.assertEqual(self.engine._candidates[0].phrase, 'a')
         self.assertEqual(self.engine._typed_string, ['愛', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, '愛a')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_4, 0, 0)
         self.assertEqual(len(self.engine._candidates), 53)
-        self.assertEqual(self.engine._candidates[0][0], '爱')
-        self.assertEqual(self.engine._candidates[1][0], '愛')
+        self.assertEqual(self.engine._candidates[0].phrase, '爱')
+        self.assertEqual(self.engine._candidates[1].phrase, '愛')
         self.assertEqual(self.engine._typed_string, ['愛', 'a', 'i', '4'])
         self.assertEqual(self.engine.mock_preedit_text, '愛爱')
         self.assertEqual(self.engine.mock_committed_text, '')
@@ -4100,76 +4147,76 @@ class ItbTestCase(unittest.TestCase):
             ['zh-cangjie', 'NoIME'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(len(self.engine._candidates), 2)
-        self.assertEqual(self.engine._candidates[0][0], '日')
-        self.assertEqual(self.engine._candidates[1][0], '曰')
+        self.assertEqual(self.engine._candidates[0].phrase, '日')
+        self.assertEqual(self.engine._candidates[1].phrase, '曰')
         self.assertEqual(self.engine._typed_string, ['a'])
         self.assertEqual(self.engine.mock_preedit_text, '日')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(len(self.engine._candidates), 2)
-        self.assertEqual(self.engine._candidates[0][0], '昌')
-        self.assertEqual(self.engine._candidates[1][0], '昍')
+        self.assertEqual(self.engine._candidates[0].phrase, '昌')
+        self.assertEqual(self.engine._candidates[1].phrase, '昍')
         self.assertEqual(self.engine._typed_string, ['a', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, '昌')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
         self.assertEqual(len(self.engine._candidates), 2)
-        self.assertEqual(self.engine._candidates[0][0], '昌')
-        self.assertEqual(self.engine._candidates[1][0], '昍')
+        self.assertEqual(self.engine._candidates[0].phrase, '昌')
+        self.assertEqual(self.engine._candidates[1].phrase, '昍')
         self.assertEqual(self.engine._typed_string, ['a', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, '昌')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(len(self.engine._candidates), 2)
-        self.assertEqual(self.engine._candidates[0][0], '日')
-        self.assertEqual(self.engine._candidates[1][0], '曰')
+        self.assertEqual(self.engine._candidates[0].phrase, '日')
+        self.assertEqual(self.engine._candidates[1].phrase, '曰')
         self.assertEqual(self.engine._typed_string, ['昍', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, '昍日')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(len(self.engine._candidates), 2)
-        self.assertEqual(self.engine._candidates[0][0], '昌')
-        self.assertEqual(self.engine._candidates[1][0], '昍')
+        self.assertEqual(self.engine._candidates[0].phrase, '昌')
+        self.assertEqual(self.engine._candidates[1].phrase, '昍')
         self.assertEqual(self.engine._typed_string, ['昍', 'a', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, '昍昌')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(len(self.engine._candidates), 1)
-        self.assertEqual(self.engine._candidates[0][0], '晶')
+        self.assertEqual(self.engine._candidates[0].phrase, '晶')
         self.assertEqual(self.engine._typed_string, ['昍', 'a', 'a', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, '昍晶')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(len(self.engine._candidates), 2)
-        self.assertEqual(self.engine._candidates[0][0], '𣊫')
-        self.assertEqual(self.engine._candidates[1][0], '𣊭')
+        self.assertEqual(self.engine._candidates[0].phrase, '𣊫')
+        self.assertEqual(self.engine._candidates[1].phrase, '𣊭')
         self.assertEqual(self.engine._typed_string, ['昍', 'a', 'a', 'a', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, '昍𣊫')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_BackSpace, 0, 0)
         self.assertEqual(len(self.engine._candidates), 1)
-        self.assertEqual(self.engine._candidates[0][0], '晶')
+        self.assertEqual(self.engine._candidates[0].phrase, '晶')
         self.assertEqual(self.engine._typed_string, ['昍', 'a', 'a', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, '昍晶')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(len(self.engine._candidates), 2)
-        self.assertEqual(self.engine._candidates[0][0], '𣊫')
-        self.assertEqual(self.engine._candidates[1][0], '𣊭')
+        self.assertEqual(self.engine._candidates[0].phrase, '𣊫')
+        self.assertEqual(self.engine._candidates[1].phrase, '𣊭')
         self.assertEqual(self.engine._typed_string, ['昍', 'a', 'a', 'a', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, '昍𣊫')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
         self.assertEqual(len(self.engine._candidates), 2)
-        self.assertEqual(self.engine._candidates[0][0], '𣊫')
-        self.assertEqual(self.engine._candidates[1][0], '𣊭')
+        self.assertEqual(self.engine._candidates[0].phrase, '𣊫')
+        self.assertEqual(self.engine._candidates[1].phrase, '𣊭')
         self.assertEqual(self.engine._typed_string, ['昍', 'a', 'a', 'a', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, '昍𣊫')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(len(self.engine._candidates), 2)
-        self.assertEqual(self.engine._candidates[0][0], '日')
-        self.assertEqual(self.engine._candidates[1][0], '曰')
+        self.assertEqual(self.engine._candidates[0].phrase, '日')
+        self.assertEqual(self.engine._candidates[1].phrase, '曰')
         self.assertEqual(self.engine._typed_string, ['昍', '𣊭', 'a'])
         self.assertEqual(self.engine.mock_preedit_text, '昍𣊭日')
         self.assertEqual(self.engine.mock_committed_text, '')
@@ -4215,8 +4262,8 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '秋')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertTrue(len(self.engine._candidates) > 5)
-        self.assertEqual(self.engine._candidates[0][0], '秋')
-        self.assertEqual(self.engine._candidates[1][0], '空き')
+        self.assertEqual(self.engine._candidates[0].phrase, '秋')
+        self.assertEqual(self.engine._candidates[1].phrase, '空き')
         # Commit to preedit with Return
         self.engine.do_process_key_event(IBus.KEY_Return, 0, 0)
         self.assertEqual(self.engine._typed_string, ['秋'])
@@ -4237,8 +4284,8 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '秋秋')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertTrue(len(self.engine._candidates) > 5)
-        self.assertEqual(self.engine._candidates[0][0], '秋')
-        self.assertEqual(self.engine._candidates[1][0], '空き')
+        self.assertEqual(self.engine._candidates[0].phrase, '秋')
+        self.assertEqual(self.engine._candidates[1].phrase, '空き')
         # No commit, continue typing
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
@@ -4255,15 +4302,15 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '秋秋秋')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertTrue(len(self.engine._candidates) > 5)
-        self.assertEqual(self.engine._candidates[0][0], '秋')
-        self.assertEqual(self.engine._candidates[1][0], '空き')
+        self.assertEqual(self.engine._candidates[0].phrase, '秋')
+        self.assertEqual(self.engine._candidates[1].phrase, '空き')
         # Select second candidate manually:
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '秋秋秋') # unchanged!
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertTrue(len(self.engine._candidates) > 5)
-        self.assertEqual(self.engine._candidates[0][0], '秋')
-        self.assertEqual(self.engine._candidates[1][0], '空き')
+        self.assertEqual(self.engine._candidates[0].phrase, '秋')
+        self.assertEqual(self.engine._candidates[1].phrase, '空き')
         # Continue typing
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_k, 0, 0)
@@ -4281,8 +4328,8 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '秋秋空き秋')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertTrue(len(self.engine._candidates) > 5)
-        self.assertEqual(self.engine._candidates[0][0], '秋')
-        self.assertEqual(self.engine._candidates[1][0], '空き')
+        self.assertEqual(self.engine._candidates[0].phrase, '秋')
+        self.assertEqual(self.engine._candidates[1].phrase, '空き')
         # Commit to Preedit with Return:
         self.engine.do_process_key_event(IBus.KEY_Return, 0, 0)
         self.assertEqual(
@@ -4373,9 +4420,9 @@ class ItbTestCase(unittest.TestCase):
         # When doing henkan on such a wide input, there are not many
         # choices:
         self.assertEqual(len(self.engine._candidates), 3)
-        self.assertEqual(self.engine._candidates[0][0], '睡眠不足')
-        self.assertEqual(self.engine._candidates[1][0], 'すいみんぶそく')
-        self.assertEqual(self.engine._candidates[2][0], 'スイミンブソク')
+        self.assertEqual(self.engine._candidates[0].phrase, '睡眠不足')
+        self.assertEqual(self.engine._candidates[1].phrase, 'すいみんぶそく')
+        self.assertEqual(self.engine._candidates[2].phrase, 'スイミンブソク')
         self.engine.do_process_key_event(IBus.KEY_Return, 0, 0)
         self.assertEqual(len(self.engine._candidates), 0)
         self.assertEqual(self.engine.mock_preedit_text, '睡眠不足')
