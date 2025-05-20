@@ -34,6 +34,8 @@ TESTS = \
 	test_tabsqlitedb.py \
 	$(NULL)
 
+TEST_MIM_FILES = *.mim
+
 check_SCRIPTS = run_tests
 
 LOG_COMPILER = $(builddir)/run_tests
@@ -56,8 +58,7 @@ test_exec_SCRIPTS = \
 	run_tests \
 	chant_d_automne.txt \
 	the_road_not_taken.txt \
-	test-issue-707.mim \
-	test-issue-704.mim \
+	$(TEST_MIM_FILES) \
 	$(NULL)
 test_execdir = $(libexecdir)/installed-tests/ibus-typing-booster
 
@@ -84,8 +85,7 @@ EXTRA_DIST = \
 	run_tests.in \
 	chant_d_automne.txt \
 	the_road_not_taken.txt \
-	test-issue-707.mim \
-	test-issue-704.mim \
+	$(TEST_MIM_FILES) \
 	$(TESTS) \
 	$(NULL)
 
