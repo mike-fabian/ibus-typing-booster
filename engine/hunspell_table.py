@@ -8759,8 +8759,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                           or key.mod1 # mod1: Usually Alt
                           or key.mod4 # mod4: Usually Super, Hyper
                           or key.super or key.hyper or key.meta))
-                 or (len(key.msymbol) in (3, 5, 7)
-                     and key.msymbol[:2] in ('A-', 'C-', 'G-')
+                 or (re.match(r'^([SCMAGsH]-)+[a-zA-Z0-9]+$', key.msymbol)
                      and not self._has_transliteration([key.msymbol])))):
                 # See:
                 # https://bugzilla.redhat.com/show_bug.cgi?id=1351748

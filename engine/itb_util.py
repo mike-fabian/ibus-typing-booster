@@ -5911,12 +5911,22 @@ class KeyEvent:
         # MODIFIER_MASK: Modifier mask for the all the masks above
         self.modifier = self.state & IBus.ModifierType.MODIFIER_MASK != 0
         if is_ascii(self.msymbol):
-            if self.control:
-                self.msymbol = 'C-' + self.msymbol
-            if self.mod1:
-                self.msymbol = 'A-' + self.msymbol
+            # The prefixes *must* be added in this order:
+            # 'S-C-M-A-G-s-H-', see:
+            # https://www.nongnu.org/m17n/manual-en/group__m17nInputMethodWin.html
+            # I don’t know how to properly support 'M-' and 'H-' at the moment.
+            if self.mod4:
+                # When typing Super+something:
+                # Xorg (Gnome, XFCE, i3, …): self.mod4 == True, self.super == True
+                # Wayland (Gnome):           self.mod4 == True, self.super == False
+                # Is it a bug that self.super == False on Gnome Wayland??
+                self.msymbol = 's-' + self.msymbol
             if self.mod5:
                 self.msymbol = 'G-' + self.msymbol
+            if self.mod1:
+                self.msymbol = 'A-' + self.msymbol
+            if self.control:
+                self.msymbol = 'C-' + self.msymbol
             if (self.shift
                 and (self.unicode.isspace()
                      or not self.unicode.isprintable()
