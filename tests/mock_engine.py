@@ -47,6 +47,8 @@ class MockEngine:
         self.mock_preedit_focus_mode = IBus.PreeditFocusMode.COMMIT
         self.mock_committed_text = ''
         self.mock_committed_text_cursor_pos = 0
+        self.mock_committed_text_codes: List[int] = []
+        self.mock_committed_text_states: List[int] = []
         self.client_capabilities = (
             IBus.Capabilite.PREEDIT_TEXT
             | IBus.Capabilite.AUXILIARY_TEXT
@@ -68,9 +70,21 @@ class MockEngine:
             + text.text
             + self.mock_committed_text[
                 self.mock_committed_text_cursor_pos:])
+        self.mock_committed_text_codes = (
+            self.mock_committed_text_codes[
+                :self.mock_committed_text_cursor_pos]
+            + [-1 for char in text.text] # -1 indicates commit, not forward
+            + self.mock_committed_text_codes[
+                self.mock_committed_text_cursor_pos:])
+        self.mock_committed_text_states = (
+            self.mock_committed_text_states[
+                :self.mock_committed_text_cursor_pos]
+            + [-1 for char in text.text] # -1 indicates commit, not forward
+            + self.mock_committed_text_states[
+                self.mock_committed_text_cursor_pos:])
         self.mock_committed_text_cursor_pos += len(text.text)
 
-    def forward_key_event(self, val: int, _code: int, _state: int) -> None:
+    def forward_key_event(self, val: int, code: int, state: int) -> None:
         if (val == IBus.KEY_Left
             and self.mock_committed_text_cursor_pos > 0):
             self.mock_committed_text_cursor_pos -= 1
@@ -83,6 +97,18 @@ class MockEngine:
             + unicode
             + self.mock_committed_text[
                 self.mock_committed_text_cursor_pos:])
+            self.mock_committed_text_codes = (
+                self.mock_committed_text_codes[
+                    :self.mock_committed_text_cursor_pos]
+                + [code]
+                + self.mock_committed_text_codes[
+                    self.mock_committed_text_cursor_pos:])
+            self.mock_committed_text_states = (
+                self.mock_committed_text_states[
+                    :self.mock_committed_text_cursor_pos]
+                + [state]
+                + self.mock_committed_text_states[
+                    self.mock_committed_text_cursor_pos:])
             self.mock_committed_text_cursor_pos += len(unicode)
 
     def update_lookup_table(

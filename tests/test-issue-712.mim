@@ -1,0 +1,20 @@
+(input-method t test-issue-712)
+
+(map
+  (map
+    ((C-x) "control-x")
+    ((A-x) "alt-x")
+    ((M-x) "meta-x")
+    ((s-x) "super-x")
+    ((s-e) "super-e")
+    ((S-C-A-G-s-F12) "😭")
+    ((S-C-M-A-G-s-H-F12) "☺")
+    ("foo" "bar")
+    )
+  )
+
+(state
+  (init
+    (map)
+    )
+  )

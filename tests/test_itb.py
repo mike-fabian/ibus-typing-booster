@@ -4463,7 +4463,100 @@ class ItbTestCase(unittest.TestCase):
         self.assertFalse(self.engine._temporary_emoji_predictions)
         self.assertFalse(self.engine._temporary_word_predictions)
 
-    def test_issuse_707_mim(self) -> None:
+    def test_issue_712_mim(self) -> None:
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/712 '''
+        dummy_trans = self.get_transliterator_or_skip('t-test-issue-712')
+        self.engine.set_current_imes(
+            ['t-test-issue-712'], update_gsettings=False)
+        # C-x has a transliteration:
+        self.engine.do_process_key_event(
+            IBus.KEY_x, 0, IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'control-x')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        # C-c has no transliteration and triggers a commit:
+        self.engine.do_process_key_event(
+            IBus.KEY_c, 0, IBus.ModifierType.CONTROL_MASK)
+        # If doing this in a “real” program, usually no 'c' will
+        # appear in the text of the application because the Control-c
+        # is interpreted as a keyboard shortcut. But here in the test
+        # we get a 'c' committed (with the control bit in the “states”
+        # list).
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'control-xc')
+        self.assertEqual(self.engine.mock_committed_text_states[-1],
+                         IBus.ModifierType.CONTROL_MASK)
+        # A-x has a transliteration:
+        self.engine.do_process_key_event(
+            IBus.KEY_x, 0, IBus.ModifierType.MOD1_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'alt-x')
+        self.assertEqual(self.engine.mock_committed_text, 'control-xc')
+        # A-c has no transliteration and triggers a commit:
+        self.engine.do_process_key_event(
+            IBus.KEY_c, 0, IBus.ModifierType.MOD1_MASK)
+        # If doing this in a “real” program, usually no 'c' will
+        # appear in the text of the application because the Alt-c is
+        # interpreted as a keyboard shortcut. But here in the test we
+        # get a 'c' committed (with the MOD1 bit in the “states”
+        # list).
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'control-xcalt-xc')
+        self.assertEqual(self.engine.mock_committed_text_states[-1],
+                         IBus.ModifierType.MOD1_MASK)
+        # s-x has a transliteration:
+        self.engine.do_process_key_event(
+            IBus.KEY_x, 0,
+            IBus.ModifierType.SUPER_MASK
+            | IBus.ModifierType.MOD4_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'super-x')
+        self.assertEqual(self.engine.mock_committed_text, 'control-xcalt-xc')
+        # s-e has a transliteration:
+        self.engine.do_process_key_event(
+            IBus.KEY_e, 0,
+            IBus.ModifierType.SUPER_MASK
+            | IBus.ModifierType.MOD4_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'super-xsuper-e')
+        self.assertEqual(self.engine.mock_committed_text, 'control-xcalt-xc')
+        # s-c has no transliteration and triggers a commit:
+        self.engine.do_process_key_event(
+            IBus.KEY_c, 0,
+            IBus.ModifierType.SUPER_MASK
+            | IBus.ModifierType.MOD4_MASK)
+        # If doing this in a “real” program, usually a 'c' will
+        # appear in the text of the application as well.
+        # At least when typing into gedit in a Gnome Wayland session
+        # on Fedora 42, typing `Super+c` will insert a 'c' into gedit.
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'control-xcalt-xcsuper-xsuper-ec')
+        self.assertEqual(self.engine.mock_committed_text_states[-1],
+            IBus.ModifierType.SUPER_MASK
+            | IBus.ModifierType.MOD4_MASK)
+        # ((S-C-A-G-s-F12) "😭")
+        self.engine.do_process_key_event(
+            IBus.KEY_F12, 0,
+            IBus.ModifierType.SHIFT_MASK
+            | IBus.ModifierType.CONTROL_MASK
+            | IBus.ModifierType.MOD1_MASK
+            | IBus.ModifierType.MOD5_MASK
+            | IBus.ModifierType.MOD4_MASK
+            | IBus.ModifierType.SUPER_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, '😭')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'control-xcalt-xcsuper-xsuper-ec')
+        # S-C-A-G-s-F13 is not transliterated and triggers a commit:
+        self.engine.do_process_key_event(
+            IBus.KEY_F13, 0,
+            IBus.ModifierType.SHIFT_MASK
+            | IBus.ModifierType.CONTROL_MASK
+            | IBus.ModifierType.MOD1_MASK
+            | IBus.ModifierType.MOD5_MASK
+            | IBus.ModifierType.MOD4_MASK
+            | IBus.ModifierType.SUPER_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'control-xcalt-xcsuper-xsuper-ec😭')
+
+    def test_issue_707_mim(self) -> None:
         ''' https://github.com/mike-fabian/ibus-typing-booster/issues/707 '''
         dummy_trans = self.get_transliterator_or_skip('t-test-issue-707')
         self.engine.set_current_imes(

@@ -127,6 +127,23 @@ class M17nTranslitTestCase(unittest.TestCase):
             # Something unexpected happened:
             self.assertTrue(False) # pylint: disable=redundant-unittest-assert
 
+    def test_issue_712_mim(self) -> None:
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/712 '''
+        trans = self.get_transliterator_or_skip('t-test-issue-712')
+        self.assertEqual(trans.transliterate(['C-x']), 'control-x')
+        self.assertEqual(trans.transliterate(['A-x']), 'alt-x')
+        self.assertEqual(trans.transliterate(['M-x']), 'meta-x')
+        self.assertEqual(trans.transliterate(['s-x']), 'super-x')
+        self.assertEqual(trans.transliterate(['s-e']), 'super-e')
+        # https://www.nongnu.org/m17n/manual-en/group__m17nInputMethodWin.html
+        # minput_event_to_key(): If event still has modifiers, the
+        # name is preceded by "S-" (Shift), "C-" (Control), "M-"
+        # (Meta), "A-" (Alt), "G-" (AltGr), "s-" (Super), and "H-"
+        # (Hyper) in this order.
+        self.assertEqual(trans.transliterate(['S-C-A-G-s-F12']), '😭')
+        self.assertEqual(trans.transliterate(['S-C-M-A-G-s-H-F12']), '☺')
+        self.assertEqual(trans.transliterate(list('foo')), 'bar')
+
     def test_issue_707_mim(self) -> None:
         ''' https://github.com/mike-fabian/ibus-typing-booster/issues/707 '''
         trans = self.get_transliterator_or_skip('t-test-issue-707')
