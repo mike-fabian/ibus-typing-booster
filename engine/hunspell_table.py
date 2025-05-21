@@ -8749,8 +8749,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         # These keys may trigger a commit:
         if (key.msymbol not in ('G- ', 'G-_')
-            and not (key.msymbol in ('S- ')
-                 and self._has_transliteration([key.msymbol]))
             and ((key.val in self._commit_trigger_keys
                   # https://github.com/mike-fabian/ibus-typing-booster/issues/709
                   and not self._has_transliteration([key.msymbol]))
@@ -8759,7 +8757,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                           or key.mod1 # mod1: Usually Alt
                           or key.mod4 # mod4: Usually Super, Hyper
                           or key.super or key.hyper or key.meta))
-                 or (re.match(r'^([SCMAGsH]-)+[a-zA-Z0-9]+$', key.msymbol)
+                 or (itb_util.msymbol_triggers_commit(key.msymbol)
                      and not self._has_transliteration([key.msymbol])))):
                 # See:
                 # https://bugzilla.redhat.com/show_bug.cgi?id=1351748

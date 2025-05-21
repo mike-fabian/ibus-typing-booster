@@ -3103,6 +3103,55 @@ def color_string_to_argb(color_string: str) -> int:
             + ((int(gdk_rgba.green * 0xff) & 0xff) << 8)
             + (int(gdk_rgba.blue * 0xff) & 0xff))
 
+MSYMBOL_TRIGGERS_COMMIT_PREFIX_PATTERN = re.compile(
+    r'^[SCMAGsH]-')
+MSYMBOL_TRIGGERS_COMMIT_FORBIDDEN_POSTFIX_PATTERN = re.compile(
+    r'''
+    (^|-)
+    (
+        Shift_[LR]
+        |Control_[LR]
+        |Alt_[LR]
+        |Meta_[LR]
+        |Super_[LR]
+        |Hyper_[LR]
+        |ISO_Level3_Shift
+    )
+    $
+    ''', re.VERBOSE)
+
+def msymbol_triggers_commit(msymbol: str) -> bool:
+    '''Check if an msymbol should trigger a commit
+
+    Examples:
+
+    >>> msymbol_triggers_commit('S- ')
+    True
+    >>> msymbol_triggers_commit('S-H-Escape')
+    True
+    >>> msymbol_triggers_commit('S-C-Return')
+    True
+    >>> msymbol_triggers_commit('C-s-Home')
+    True
+    >>> msymbol_triggers_commit('C-M-Super_R-x')
+    True
+    >>> msymbol_triggers_commit('M-A-Control_L-OK')
+    True
+    >>> msymbol_triggers_commit('M-A-ISO_Level_42_Shift_L')
+    True
+    >>> msymbol_triggers_commit('S-NotShift_L')
+    True
+    >>> msymbol_triggers_commit('S-C-Alt_R')
+    False
+    >>> msymbol_triggers_commit('G-Alt_L')
+    False
+    '''
+    if not re.search(MSYMBOL_TRIGGERS_COMMIT_PREFIX_PATTERN, msymbol):
+        return False
+    if re.search(MSYMBOL_TRIGGERS_COMMIT_FORBIDDEN_POSTFIX_PATTERN, msymbol):
+        return False
+    return True
+
 def elide_middle(text: str, max_length: int = 80, ellipsis: str = '…') -> str:
     '''Elides a string in the middle if it is too long
 
