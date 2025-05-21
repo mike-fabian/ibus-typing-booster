@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 21 May 2025 Release 2.27.59
+* Make Super prefix ('s-') work when using an m17n input method using that prefix (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/712)
+* Update emoji-data.txt, emoji-sequences.txt, emoji-test.txt, emoji-variation-sequences.txt, emoji-zwj-sequences.txt to the Unicode 17.0.0 draft as of 2025-05-14
+* Update UnicodeData.txt, DerivedAge.txt, NameAliases.txt to the Unicode 17.0.0 draft as of 2025-05-14
+* Update emoji annotations from CLDR
+* When _command_show_selection_info() can not get a selection, use the grapheme cluster directly left of the cursor as a fallback (Related: https://github.com/mike-fabian/ibus-typing-booster/issues/733)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 19 May 2025 Release 2.27.56
 * Use the order of spellchecking suggestions coming from enchant for the score of the spellchecking candidates (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/739)
 * Use @dataclass for PredictionCandidate instead of NamedTuple for Python 3.7+, fall back to the NamedTuple for Python < 3.7.
