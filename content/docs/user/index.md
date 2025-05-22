@@ -32,6 +32,7 @@ date: 2021-09-30
     * [Customizing key bindings](#customizing-key-bindings)
         * [Customizing key bindings using digits](#customizing-key-bindings-using-digits)
         * [Key bindings for temporary emoji and word predictions](#key-bindings-temporary-predictions)
+        * [Display Character or Selection Information](#command-show-selection-info)
 * [Multilingual input](#multilingual-input)
     * [Example using Hindi and English at the same time](#example-hindi-english)
     * [Example using Spanish and English at the same time](#example-spanish-english)
@@ -1788,6 +1789,73 @@ word you type. After that word is completed, predictions turn off
 automatically. This differs from `toggle_emoji_prediction`, which
 enables emoji and Unicode predictions _indefinitely_—requiring manual
 disabling later.
+
+### Display Character or Selection Information {#command-show-selection-info}
+
+{{< video label="Display Character or Selection Information" mp4="/videos/user-docs/command-show-selection-info.mp4" >}}
+
+
+The `show_selection_info` command provides detailed information about either:
+
+- The currently selected text, **or** The character immediately to the
+- left of the cursor (if no text is selected or if selection retrieval
+  fails, such as on Wayland).
+
+#### Example
+
+If the cursor is positioned after `🧙🏽‍♀️|` (where `|` marks the cursor), executing the command displays a candidate list like this:
+
+
+```
+(1/8)🔗
+1 🧙🏽‍♀️ woman mage 
+2 ├─ 🧙 U+1F9D9 mage
+3 ├─ 🏽 U+1F3FD emoji modifier fitzpatrick type-4
+4 ├─ U+200D zero width joiner
+5 ├─ ♀ U+2640 female sign
+6 └─ U+FE0F variation selector-16
+7 U+1F9D9 U+1F3FD U+200D U+2640 U+FE0F
+8 🧙 U+1F9D9 mage 🏽 U…riation selector-16
+```
+
+#### Usage
+
+- Press `Escape` to close the list.
+- Select a candidate to insert its information at the cursor position
+  (useful for explaining Unicode characters or sequences).
+
+#### Special Candidates
+
+- The **second-to-last** **candidate** lists all code points in the analyzed text.
+- The **last candidate** provides a full breakdown of each code point with names.
+
+⚠️ **Limitations on Wayland**:
+
+This feature works reliably on **Xorg**, but **Wayland** currently has some unresoved issues:
+
+- **Selection Content Unavailable**
+
+  🔗 [GitHub Issue #2760](https://github.com/ibus/ibus/issues/2760):
+  Typing Booster cannot retrieve selected text on Wayland. As a result:
+
+  - If you execute `show_selection_info` with text selected, the command
+    will **fall back** to showing information about the character to the
+    **left of the cursor** instead.
+
+- **Cursor Position Not Updated After Mouse Movement**
+
+  🔗 [GitHub Issue #2765](https://github.com/ibus/ibus/issues/2765)
+  When you move the cursor **using the mouse** in GNOME/Wayland:
+
+  - The surrounding text does not update the cursor position.
+  - Executing `show_selection_info` will show information for the character
+    at the **previous cursor position** (before mouse movement).
+
+  **Workaround:**
+
+  After moving the cursor with the mouse, press ← then → (left/right
+  arrow keys) to force a position update. The command will then work
+  as expected.
 
 # Multilingual input {#multilingual-input}
 
