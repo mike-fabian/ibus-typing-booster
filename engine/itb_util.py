@@ -4460,6 +4460,14 @@ class ComposeSequences:
             IBus.KEY_dead_O: 'お',
             IBus.KEY_dead_small_schwa: 'ə',
             IBus.KEY_dead_capital_schwa: 'Ə',
+            # Special deadkeys used by the "French (BEPO, AFNOR)" layout
+            # in /usr/share/X11/xkb/symbols/fr.
+            # See also: https://bepo.fr/wiki/Version_1.1rc2
+            # https://www.afnor.org/actualites/clavier-francais-norme-volontaire-ecriture-francais/
+            0x0100FDD4: 'ß', # U+00DF LATIN SMALL LETTER SHARP S
+            0x0100FDD5: 'ᵉ', # U+1D49 MODIFIER LETTER SMALL E
+            0x0100FDD7: '∞', # U+221E INFINITY
+            0x0100FDD8: '―', # U+2015 HORIZONTAL BAR
         }
         # Extra dead elements for German T3 layout: (in
         # /usr/include/X11/keysymdef.h but they don’t exist in
