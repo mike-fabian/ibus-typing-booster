@@ -296,6 +296,9 @@ class ComposeSequencesTestCase(unittest.TestCase):
 
         This is used in the fr(bepo_afnor) keyboard layout, see also:
 
+        Layout: https://bepo.fr/wiki/Version_1.1rc2
+        Normalization: https://normalisation.afnor.org/actualites/faq-clavier-francais/
+
         https://github.com/ibus/ibus/issues/2748
         https://gitlab.gnome.org/GNOME/gtk/-/issues/7386
         https://raw.githubusercontent.com/andrewathalye/bepo-xcompose-fix/main/XCompose
@@ -312,20 +315,39 @@ class ComposeSequencesTestCase(unittest.TestCase):
         # pylint: enable=protected-access
         self.assertEqual(
             self._compose_sequences.preedit_representation(
+                [0x0100fdd4]),
+            'ß' # U+00DF LATIN SMALL LETTER SHARP S
+        )
+        self.assertEqual(
+            self._compose_sequences.preedit_representation(
                 [0x0100fdd5]),
-            '·')
+            'ᵉ' # U+1D49 MODIFIER LETTER SMALL E
+        )
         self.assertEqual(
             self._compose_sequences.preedit_representation(
                 [0x0100fdd7]),
-            '·')
+            '∞' # U+221E INFINITY
+        )
+        self.assertEqual(
+            self._compose_sequences.preedit_representation(
+                [0x0100fdd8]),
+            '―' # U+2015 HORIZONTAL BAR
+        )
         self.assertEqual(
             self._compose_sequences.preedit_representation(
                 [0x0100fdd5, 0x0100fdd7]),
-            '·')
+            'ᵉ∞' # U+1D49 MODIFIER LETTER SMALL E U+221E INFINITY
+        )
         self.assertEqual(
             self._compose_sequences.preedit_representation(
                 [IBus.KEY_Multi_key, 0x0100fdd5, 0x0100fdd7]),
-            '··')
+            'ᵉ∞' # U+1D49 MODIFIER LETTER SMALL E U+221E INFINITY
+        )
+        self.assertEqual(
+            self._compose_sequences.preedit_representation(
+                [IBus.KEY_Multi_key, 0x0100fdd5, 0x0100fdd7, IBus.KEY_Multi_key]),
+            'ᵉ∞·' # U+1D49 MODIFIER LETTER SMALL E U+221E INFINITY U+00B7 MIDDLE DOT
+        )
 
     def test_preedit_representations(self) -> None:
         self.assertEqual(
