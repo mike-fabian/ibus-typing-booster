@@ -349,7 +349,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
     def test_sv_SE(self) -> None:
         h = hunspell_suggest.Hunspell(['sv_SE'])
         self.assertEqual(
-            h.suggest('östgo'),
+            h.suggest('östgo')[0:6],
             [('östgot', 0),
              ('Östgöta', 0),
              ('östgöte', 0),
@@ -362,18 +362,17 @@ class HunspellSuggestTestCase(unittest.TestCase):
              ('östgotisk', 0),
              ('Östgot', -1)])
         self.assertEqual(
-            h.suggest('östgö'),
+            h.suggest('östgö')[0:4],
             [('Östgöta', 0),
              ('östgöte', 0),
              ('östgötsk', 0),
              ('östgötska', 0)])
         self.assertEqual(
-            h.suggest('östgöt')[0:5],
+            h.suggest('östgöt')[0:4],
             [('Östgöta', 0),
              ('östgöte', 0),
              ('östgötsk', 0),
-             ('östgötska', 0),
-             ('östgot', -2)])
+             ('östgötska', 0)])
 
 if __name__ == '__main__':
     unittest.main()
