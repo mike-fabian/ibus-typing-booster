@@ -4781,11 +4781,21 @@ class ComposeSequences:
         last_compose_sequences[last_keyval] = result
 
     def _xorg_locale_path(self) -> str: # pylint: disable=no-self-use
-        '''Returns the name of the system directory for compose files.
+        '''Returns the system directory for compose files
 
-        Usually this is “/usr/share/X11/locale”.
+        Checks common locations and defaults to
+        /usr/share/X11/locale if none exist.
         '''
-        return '/usr/share/X11/locale'
+        xorg_locale_paths = (
+            '/usr/share/X11/locale',        # Standard Linux path
+            '/usr/local/lib/X11/locale',    # FreeBSD
+            '/usr/local/share/X11/locale',  # Some BSD variants
+            '/usr/lib/X11/locale',          # Legacy systems
+        )
+        return next(
+            (path for path in xorg_locale_paths if os.path.isdir(path)),
+            '/usr/share/X11/locale'  # Fallback default
+        )
 
     def _locale_compose_file(self) -> str:
         '''Returns the full path of the default compose file for the current
