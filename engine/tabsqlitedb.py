@@ -512,22 +512,21 @@ class TabSqliteDb:
 
         # To quote a string to be used as a parameter when assembling
         # an sqlite statement with Python string operations, remove
-        # all NUL characters, replace " with "" and wrap the whole
-        # string in double quotes. Assembling sqlite statements using
+        # all NUL characters, replace ' with '' and wrap the whole
+        # string in single quotes. Assembling sqlite statements using
         # parameters containing user input with python string operations
         # is not recommended because of the risk of SQL injection attacks
         # if the quoting is not done the right way. So it is better to use
         # the parameter substitution of the sqlite3 python interface.
         # But unfortunately that does not work when creating views,
         # (“OperationalError: parameters are not allowed in views”).
-        quoted_input_phrase = ''
-        quoted_input_phrase = input_phrase.replace(
-            '\x00', '').replace('"', '""')
+        sql_escaped_input_phrase = input_phrase.replace(
+            '\x00', '').replace("'", "''")
         self.database.execute('DROP VIEW IF EXISTS like_input_phrase_view;')
         sqlstr = f'''
         CREATE TEMPORARY VIEW IF NOT EXISTS like_input_phrase_view AS
         SELECT * FROM user_db.phrases
-        WHERE input_phrase LIKE "{quoted_input_phrase}%%"
+        WHERE input_phrase LIKE '{sql_escaped_input_phrase}%'
         ;'''
         try:
             self.database.execute(sqlstr)
@@ -685,15 +684,15 @@ class TabSqliteDb:
         '''
         try:
             sqlstring = ('CREATE TABLE IF NOT EXISTS user_db.desc '
-                         + '(name PRIMARY KEY, value);')
+                         '(name PRIMARY KEY, value);')
             self.database.executescript(sqlstring)
             sqlstring = 'INSERT OR IGNORE INTO user_db.desc  VALUES (?, ?);'
             self.database.execute(
                 sqlstring, ('version', USER_DATABASE_VERSION))
             sqlstring = (
-                'INSERT OR IGNORE INTO user_db.desc '
-                + 'VALUES (?, DATETIME("now", "localtime"));')
-            self.database.execute(sqlstring, ("create-time", ))
+                "INSERT OR IGNORE INTO user_db.desc "
+                "VALUES ('create-time', DATETIME('now', 'localtime'));")
+            self.database.execute(sqlstring)
             self.database.commit()
         except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
