@@ -1659,7 +1659,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.debug('Removing phrase with original case mode “%s”',
                              case_mode_orig_phrase)
                 self.database.remove_phrase(
-                    phrase=case_mode_orig_phrase, commit=True)
+                    phrase=case_mode_orig_phrase)
         for _, case_mode_value in self._case_modes.items():
             # delete all case modes of the displayed candidate:
             phrase = case_mode_value['function'](displayed_phrase)
@@ -1681,8 +1681,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if stripped_phrase:
                 if self._debug_level > 1:
                     LOGGER.debug('Removing “%s”', stripped_phrase)
-                self.database.remove_phrase(phrase=stripped_phrase,
-                                            commit=True)
+                self.database.remove_phrase(phrase=stripped_phrase)
             # Try to remove the whole candidate as well from the database.
             # Probably this won’t do anything, just to make sure that it
             # is really removed even if the prefix also ended up in the
@@ -1691,7 +1690,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # an older release of ibus-typing-booster).
             if self._debug_level > 1:
                 LOGGER.debug('Removing “%s”', phrase)
-            self.database.remove_phrase(phrase=phrase, commit=True)
+            self.database.remove_phrase(phrase=phrase)
         return True
 
     def get_cursor_pos(self) -> int:
