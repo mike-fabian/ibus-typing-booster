@@ -6,3 +6,4 @@ Icon=ibus-typing-booster
 NoDisplay=true
 Type=Application
 StartupNotify=true
+Categories=Settings;
