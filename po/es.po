@@ -17,8 +17,7 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2025-05-21 18:12+0200\n"
 "PO-Revision-Date: 2025-05-31 11:14+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"Last-Translator: \"Fco. Javier F. Serrador\" <fserrador@gmail.com>\n"
 "Language-Team: Spanish <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/es/>\n"
 "Language: es\n"
@@ -712,10 +711,8 @@ msgstr ""
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
 #: setup/main.py:666
-#, fuzzy
-#| msgid "Off the record mode"
 msgid "Record mode"
-msgstr "Modo confidencial"
+msgstr "Modo grabación"
 
 #: setup/main.py:668
 msgid ""
@@ -1384,38 +1381,27 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the m17n preedit.
 #: setup/main.py:1903
-#, fuzzy
-#| msgid "Use color for compose preview"
 msgid "Use color for m17n preedit"
-msgstr "Utiliza color para composición previa"
+msgstr "Utiliza color para pre-edición m17n"
 
 #: setup/main.py:1905
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for the compose "
-#| "preview."
 msgid ""
 "Here you can choose whether a custom color is used for the m17n preedit."
 msgstr ""
-"Aquí puede elegir si debe utilizarse un color personalizado para la "
-"composición anterior."
+"Aquí puede elegir si debe utilizarse un color personalizado para la pre-"
+"edición m17n."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the m17n preedit.
 #: setup/main.py:1929
-#, fuzzy
-#| msgid "Choose color for compose preview"
 msgid "Choose color for m17n preedit"
-msgstr "Elija el color de vista previa de composición"
+msgstr "Elija color de pre-edición para m17n"
 
 #: setup/main.py:1931
-#, fuzzy
-#| msgid "Here you can specify which color to use for the compose preview."
 msgid "Here you can specify which color to use for the m17n preedit."
 msgstr ""
-"Aquí puede especificar cual color a utilizar para la vista previa de la "
-"composición."
+"Aquí puede especificar cual color a utilizar para la pre-edición de m17n."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
