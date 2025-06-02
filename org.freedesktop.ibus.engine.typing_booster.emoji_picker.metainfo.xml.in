@@ -41,6 +41,58 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.63" date="2025-06-02" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.63</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Make non-ASCII input work in m17n_translit.py also for the
+            more exotic prefixes (Resolves: github-issues#745)
+          </li>
+          <li>
+            Make database code more robust (Should fix some problems on FreeBSD)
+          </li>
+          <li>
+            Fix quoting for sqlite3 (Should fix some problems on FreeBSD)
+          </li>
+          <li>
+            Improve _xorg_locale_path() to find the path as well on FreeBSD
+          </li>
+          <li>
+            Add `Categories=Settings;` to the
+            ibus-setup-typing-booster.desktop file (from the FreeBSD
+            port)
+          </li>
+          <li>
+            Add preedit representations for the special dead keys used
+            in the "French (BEPO, AFNOR) layout (Related:
+            github-ibus-pull#2763)
+          </li>
+          <li>
+            Improve regexp for msymbol patterns triggering commits
+            (Related: github-issues#712)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Translation update from Weblate (es 100%, it 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/745">
+          github-issues#745
+        </issue>
+        <issue url="https://github.com/ibus/ibus/pull/2763">
+          github-ibus-pull#2763
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/712">
+          github-issues#712
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.59" date="2025-05-21" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.59</url>
       <description>

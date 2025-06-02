@@ -1,4 +1,17 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 02 Jun 2025 Release 2.27.63
+* Make non-ASCII input work in m17n_translit.py also for the more exotic prefixes (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/745)
+* Make database code more robust (Should fix some problems on FreeBSD)
+* Fix quoting for sqlite3 (Should fix some problems on FreeBSD)
+* Improve _xorg_locale_path() to find the path as well on FreeBSD
+* Add `Categories=Settings;` to the ibus-setup-typing-booster.desktop file (from the FreeBSD port)
+* Fix HunspellSuggestTestCase.test_sv_SE to work with sv_SE.dic as on Fedora 42 **and** on FreeBSD
+* Add preedit representations for the special dead keys used in the "French (BEPO, AFNOR) layout (Related: https://github.com/ibus/ibus/pull/2763)
+* Improve regexp for msymbol patterns triggering commits (Related: https://github.com/mike-fabian/ibus-typing-booster/issues/712)
+* Update emoji annotations from CLDR
+* Translation update from Weblate (es 100%, it 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 21 May 2025 Release 2.27.59
 * Make Super prefix ('s-') work when using an m17n input method using that prefix (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/712)
 * Update emoji-data.txt, emoji-sequences.txt, emoji-test.txt, emoji-variation-sequences.txt, emoji-zwj-sequences.txt to the Unicode 17.0.0 draft as of 2025-05-14
