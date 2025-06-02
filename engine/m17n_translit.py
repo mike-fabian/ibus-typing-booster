@@ -27,6 +27,7 @@ from typing import NamedTuple
 from typing import Iterable
 from typing import Any
 import sys
+import re
 import ctypes
 import logging
 from gi import require_version # type: ignore
@@ -991,6 +992,8 @@ class Transliterator:
             return
         self._language = ime.split('-')[0]
         self._name = '-'.join(ime.split('-')[1:])
+        self._msymbol_single_char_with_prefix_pattern = re.compile(
+            r'^(?P<prefix>([SCMAGsH]-)*)(?P<unicode>.)$')
         self._im = libm17n__minput_open_im( # type: ignore
             libm17n__msymbol(ctypes.c_char_p(self._language.encode('utf-8'))), # type: ignore
             libm17n__msymbol(ctypes.c_char_p(self._name.encode('utf-8'))), # type: ignore
@@ -1004,6 +1007,19 @@ class Transliterator:
             _ic_contents = self._ic.contents
         except ValueError as error: # NULL pointer access
             raise ValueError('minput_create_ic() failed') from error
+
+    def _convert_non_ascii_msymbol(self, msymbol: str) -> str:
+        # Python >= 3.7 has a str.isascii(), I could use that instead
+        # of my own is_ascii(), but that does not work on older
+        # distributions like openSUSE 15.6.
+        if itb_util.is_ascii(msymbol):
+            return msymbol
+        match = re.search(
+            self._msymbol_single_char_with_prefix_pattern, msymbol)
+        if not match:
+            return msymbol
+        name = IBus.keyval_name(IBus.unicode_to_keyval(match.group('unicode')))
+        return f'{match.group("prefix")}{name}'
 
     def transliterate_parts(
             self,
@@ -1435,13 +1451,7 @@ class Transliterator:
         preedit = ''
         candidates: List[str] = []
         for index, symbol in enumerate(msymbol_list):
-            if len(symbol) == 1 and not itb_util.is_ascii(symbol):
-                symbol = IBus.keyval_name(IBus.unicode_to_keyval(symbol))
-            elif (len(symbol) == 3 and symbol[1] == '-'
-                and symbol[0] in ('G', 'C', 'A')
-                and not itb_util.is_ascii(symbol[2])):
-                symbol = symbol[:2] + IBus.keyval_name(
-                    IBus.unicode_to_keyval(symbol[2]))
+            symbol = self._convert_non_ascii_msymbol(symbol)
             _symbol = libm17n__msymbol(symbol.encode('utf-8')) # type: ignore
             retval = libm17n__minput_filter( # type: ignore
                 self._ic, _symbol, ctypes.c_void_p(None))

@@ -160,6 +160,23 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(['F12']), 'F12\n')
         self.assertEqual(trans.transliterate(['BackSpace']), 'BackSpace\n')
 
+    def test_issue_745_mim(self) -> None:
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/745 '''
+        trans = self.get_transliterator_or_skip('t-test-issue-745')
+        self.assertEqual(trans.transliterate(['C-á']), 'control-aacute')
+        self.assertEqual(trans.transliterate(['C-aacute']), 'control-aacute')
+        self.assertEqual(trans.transliterate(['M-á']), 'meta-aacute')
+        self.assertEqual(trans.transliterate(['A-á']), 'alt-aacute')
+        self.assertEqual(trans.transliterate(['G-á']), 'altgr-aacute')
+        self.assertEqual(trans.transliterate(['s-á']), 'super-aacute')
+        self.assertEqual(trans.transliterate(['H-á']), 'hyper-aacute')
+        self.assertEqual(trans.transliterate(
+            ['C-M-A-G-s-H-á']), 'control-meta-alt-altgr-super-hyper-aacute')
+        self.assertEqual(trans.transliterate(
+            ['C-M-A-G-s-H-aacute']), 'control-meta-alt-altgr-super-hyper-aacute')
+        self.assertEqual(trans.transliterate(['C--M-á']), 'C--M-á')
+        self.assertEqual(trans.transliterate(['C-M-foobar']), 'C-M-foobar')
+
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 8),
         'Skipping because m17n-db is too old')

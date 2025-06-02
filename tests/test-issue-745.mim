@@ -1,0 +1,19 @@
+(input-method t test-issue-745)
+
+(map
+  (map
+    ((C-aacute) "control-aacute")
+    ((M-aacute) "meta-aacute")
+    ((A-aacute) "alt-aacute")
+    ((G-aacute) "altgr-aacute")
+    ((s-aacute) "super-aacute")
+    ((H-aacute) "hyper-aacute")
+    ((C-M-A-G-s-H-aacute) "control-meta-alt-altgr-super-hyper-aacute")
+    )
+  )
+
+(state
+  (init
+    (map)
+    )
+  )
