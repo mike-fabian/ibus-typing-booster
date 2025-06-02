@@ -3914,6 +3914,26 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="₽" type="tts">E13-112</annotation>
 		<annotation cp="₿">E13.1-189</annotation>
 		<annotation cp="₿" type="tts">E13.1-189</annotation>
+		<annotation cp="0⃣">E17-100</annotation>
+		<annotation cp="0⃣" type="tts">E17-100</annotation>
+		<annotation cp="1⃣">E17-101</annotation>
+		<annotation cp="1⃣" type="tts">E17-101</annotation>
+		<annotation cp="2⃣">E17-102</annotation>
+		<annotation cp="2⃣" type="tts">E17-102</annotation>
+		<annotation cp="3⃣">E17-103</annotation>
+		<annotation cp="3⃣" type="tts">E17-103</annotation>
+		<annotation cp="4⃣">E17-104</annotation>
+		<annotation cp="4⃣" type="tts">E17-104</annotation>
+		<annotation cp="5⃣">E17-105</annotation>
+		<annotation cp="5⃣" type="tts">E17-105</annotation>
+		<annotation cp="6⃣">E17-106</annotation>
+		<annotation cp="6⃣" type="tts">E17-106</annotation>
+		<annotation cp="7⃣">E17-107</annotation>
+		<annotation cp="7⃣" type="tts">E17-107</annotation>
+		<annotation cp="8⃣">E17-108</annotation>
+		<annotation cp="8⃣" type="tts">E17-108</annotation>
+		<annotation cp="9⃣">E17-109</annotation>
+		<annotation cp="9⃣" type="tts">E17-109</annotation>
 		<annotation cp="¹">E13-135</annotation>
 		<annotation cp="¹" type="tts">E13-135</annotation>
 		<annotation cp="²">E13-136</annotation>
