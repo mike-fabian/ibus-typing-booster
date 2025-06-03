@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-05-21 18:12+0200\n"
+"POT-Creation-Date: 2025-06-02 17:00+0200\n"
 "PO-Revision-Date: 2025-05-12 06:01+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
@@ -203,58 +203,58 @@ msgstr "Пропозиці для символів Unicode та емодзі"
 msgid "Off the record mode"
 msgstr "Режим без запису"
 
-#: engine/hunspell_table.py:2039
+#: engine/hunspell_table.py:2038
 msgid "Highest priority dictionary"
 msgstr "Словник із найвищою пріоритетністю"
 
-#: engine/hunspell_table.py:2040
+#: engine/hunspell_table.py:2039
 msgid "Choose highest priority dictionary"
 msgstr "Виберіть словник із найвищою пріоритетністю"
 
-#: engine/hunspell_table.py:2069
+#: engine/hunspell_table.py:2068
 msgid "Preedit input method"
 msgstr "Спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:2070
+#: engine/hunspell_table.py:2069
 msgid "Switch preedit input method"
 msgstr "Перемкнути спосіб введення попереднього редагування"
 
-#: engine/hunspell_table.py:2415
+#: engine/hunspell_table.py:2414
 msgid "Setup"
 msgstr "Налаштовування"
 
-#: engine/hunspell_table.py:2418 setup/main.py:146
+#: engine/hunspell_table.py:2417 setup/main.py:146
 msgid "Preferences for ibus-typing-booster"
 msgstr "Параметри для ibus-typing-booster"
 
-#: engine/hunspell_table.py:6344
+#: engine/hunspell_table.py:6343
 msgid "Failed to import Google speech-to-text."
 msgstr "Не вдалося імпортувати систему перетворення звуку на текст Google."
 
-#: engine/hunspell_table.py:6347
+#: engine/hunspell_table.py:6346
 msgid "Failed to import pyaudio."
 msgstr "Не вдалося імпортувати pyaudio."
 
-#: engine/hunspell_table.py:6350
+#: engine/hunspell_table.py:6349
 msgid "Failed to import queue."
 msgstr "Не вдалося імпортувати чергу."
 
-#: engine/hunspell_table.py:6355
+#: engine/hunspell_table.py:6354
 msgid "No supported language for speech recognition."
 msgstr "Немає підтримуваної мови для розпізнавання мовлення."
 
-#: engine/hunspell_table.py:6359
+#: engine/hunspell_table.py:6358
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Не знайдено файла «Реєстраційні дані програми Google» «%s»."
 
-#: engine/hunspell_table.py:6372
+#: engine/hunspell_table.py:6371
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Не вдалося започаткувати роботу системи перетворення мовлення на текст "
 "Google. Див. debug.log."
 
-#: engine/hunspell_table.py:6480
+#: engine/hunspell_table.py:6479
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Помилка системи перетворення мовлення на текст Google. Див. debug.log."
 
@@ -343,27 +343,27 @@ msgstr "регіональні"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Інші, Різні, Різноманітні, Нетипові"
 
-#: engine/itb_util.py:4769 engine/itb_util.py:5506
+#: engine/itb_util.py:4836 engine/itb_util.py:5573
 msgid "File not found"
 msgstr "Файл не знайдено"
 
-#: engine/itb_util.py:4773 engine/itb_util.py:5510
+#: engine/itb_util.py:4840 engine/itb_util.py:5577
 msgid "Permission error"
 msgstr "Помилка доступу"
 
-#: engine/itb_util.py:4777 engine/itb_util.py:5514
+#: engine/itb_util.py:4844 engine/itb_util.py:5581
 msgid "Unicode decoding error"
 msgstr "Помилка декодування Unicode"
 
-#: engine/itb_util.py:4781 engine/itb_util.py:5518
+#: engine/itb_util.py:4848 engine/itb_util.py:5585
 msgid "Unknown error"
 msgstr "Невідома помилка"
 
-#: engine/itb_util.py:5484
+#: engine/itb_util.py:5551
 msgid "Native Keyboard"
 msgstr "Природна клавіатура"
 
-#: engine/itb_util.py:5486
+#: engine/itb_util.py:5553
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -377,11 +377,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6207
+#: engine/itb_util.py:6274
 msgid "Key input"
 msgstr "Введення з клавіатури"
 
-#: engine/itb_util.py:6213
+#: engine/itb_util.py:6280
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -389,29 +389,29 @@ msgstr "Скасувати"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6220
+#: engine/itb_util.py:6287
 msgid "Please press a key (or a key combination)"
 msgstr "Будь ласка, натисніть клавішу (або комбінацію клавіш)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6225
+#: engine/itb_util.py:6292
 msgid "The dialog will be closed when the key is released"
 msgstr "Вікно буде закрито, коли ви відпустите клавіші"
 
-#: engine/itb_util.py:6264
+#: engine/itb_util.py:6331
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Спосіб введення із автоматичним доповненням, який пришвидшує введення "
 "текстів."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6273
+#: engine/itb_util.py:6340
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>"
 
-#: engine/itb_util.py:6281
+#: engine/itb_util.py:6348
 msgid "Online documentation:"
 msgstr "Документація у інтернеті:"
 
