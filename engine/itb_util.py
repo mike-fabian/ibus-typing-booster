@@ -4921,14 +4921,19 @@ class ComposeSequences:
         # pylint: enable=line-too-long
         representation = ''
         for keyval in keyvals:
-            if keyval in self._preedit_representations:
+            compose_with_25cc = self.compose([keyval, 0x010025CC])
+            compose_with_space = self.compose([keyval, IBus.KEY_space])
+            if compose_with_25cc:
+                representation += compose_with_25cc
+            elif compose_with_space:
+                representation += compose_with_space
+            elif keyval in self._preedit_representations:
                 representation += self._preedit_representations[keyval]
             else:
                 ibus_keyval_to_unicode = IBus.keyval_to_unicode(keyval)
                 if ibus_keyval_to_unicode:
                     if unicodedata.name(ibus_keyval_to_unicode, None) is None:
-                        representation += self._preedit_representations[
-                            IBus.KEY_Multi_key]
+                        representation += '·' # U+00B7 MIDDLE DOT
                     else:
                         representation += ibus_keyval_to_unicode
                 else:
@@ -4936,7 +4941,7 @@ class ComposeSequences:
         if (len(representation) > 1
             and
             representation[0]
-            == self._preedit_representations[IBus.KEY_Multi_key]):
+            == self.preedit_representation([IBus.KEY_Multi_key])):
             # Suppress the representation of the Multi_key at the
             # start of a sequence but only if more characters have
             # already been added to the sequence:
