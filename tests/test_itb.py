@@ -2867,7 +2867,12 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_dead_diaeresis, 0, 0)
-        self.assertEqual(self.engine.mock_preedit_text, 'Tränen¨')
+        # /usr/share/X11/locale/en_US.UTF-8/Compose contains:
+        # <dead_diaeresis> <space> : "\""  quotedbl # QUOTATION MARK
+        # That defines the preedit representation changes to be
+        # " U+0022 QUOTATION MARK instead of the
+        # ¨ U+00A8 DIAERESIS hardcoded in Typing Booster.
+        self.assertEqual(self.engine.mock_preedit_text, 'Tränen"')
         self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'Tränenü')
         self.engine.do_process_key_event(IBus.KEY_b, 0, 0)
