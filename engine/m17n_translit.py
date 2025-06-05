@@ -1021,10 +1021,41 @@ class Transliterator:
         name = IBus.keyval_name(IBus.unicode_to_keyval(match.group('unicode')))
         return f'{match.group("prefix")}{name}'
 
+    def reset_ic(self) -> None:
+        '''Resets the input context
+
+        Can be used to reset the internal state of the input method to
+        the default.  For example, if zh-py is in fullwidth-mode (to
+        input fullwidth Latin), calling reset_ic() switches to the
+        default mode to input Chinese characters.
+        '''
+        if self._dummy:
+            return
+        libm17n__minput_reset_ic(self._ic) # type: ignore
+        # From the m17n-lib documentation:
+        #
+        # The minput_reset_ic () function resets input context $IC by
+        # calling a callback function corresponding to @b
+        # Minput_reset.  It resets the status of $IC to its initial
+        # one.  As the current preedit text is deleted without
+        # commitment, if necessary, call minput_filter () with the arg
+        # @b key #Mnil to force the input method to commit the preedit
+        # in advance.
+        #
+        # Looks like we need to do this here, i.e. call minput_filter
+        # with a final 'nil' msymbol to commit the preedit in the
+        # input context to make the next call to minput_reset_ic()
+        # work reliably.  Without that minput_reset_ic() sometimes
+        # segfaults.
+        _symbol = libm17n__msymbol(b'nil') # type: ignore
+        _retval = libm17n__minput_filter( # type: ignore
+            self._ic, _symbol, ctypes.c_void_p(None))
+
     def transliterate_parts(
             self,
             msymbol_list: Iterable[str],
-            ascii_digits: bool = False) -> TransliterationParts:
+            ascii_digits: bool = False,
+            reset: bool = False) -> TransliterationParts:
         # pylint: disable=line-too-long
         '''Transliterate a list of Msymbol names
 
@@ -1445,7 +1476,8 @@ class Transliterator:
         if self._dummy:
             return TransliterationParts(committed=''.join(msymbol_list),
                                        committed_index=len(msymbol_list))
-        libm17n__minput_reset_ic(self._ic) # type: ignore
+        if reset:
+            libm17n__minput_reset_ic(self._ic) # type: ignore
         committed = ''
         committed_index = 0
         preedit = ''
@@ -1535,6 +1567,22 @@ class Transliterator:
         # contents.  But apparently that final 'nil' is necessary to
         # make it work reliably. We can do this here because above we
         # read the preedit already and don’t need it anymore.
+        #
+        # It is not only necessary to make the next call to
+        # minput_reset_ic() work reliably, it is also necessary to
+        # commit any remaining preedit to avoid that the next
+        # transliteration starts with a non-empty preedit remaining
+        # from the previous transliteration.
+        #
+        # Unfortunately that makes state changing switches which
+        # affect only the next character not survive until the next
+        # transliteration.  For example when switching to
+        # single-fullwidth-mode by typing `Z` (see cjk-util.mim) with
+        # early commits (i.e. with the `tb:zh:py`), `aZ` will commit
+        # `啊`. The `Z` causes the commit but the state change done by
+        # the `Z` does not survive, typing `aZaZ` commits `啊啊`.
+        # With empty input one can type `Za` to get a single `ａ`
+        # FULLWIDTH LATIN SMALL LETTER A though.
         _symbol = libm17n__msymbol(b'nil') # type: ignore
         _retval = libm17n__minput_filter( # type: ignore
             self._ic, _symbol, ctypes.c_void_p(None))
@@ -1644,7 +1692,11 @@ class Transliterator:
             candidate_to=candidate_to,
             candidate_show=candidate_show)
 
-    def transliterate(self, msymbol_list: Iterable[str], ascii_digits: bool = False) -> str:
+    def transliterate(
+            self,
+            msymbol_list: Iterable[str],
+            ascii_digits: bool = False,
+            reset: bool = False) -> str:
         '''Transliterate a list of Msymbol names
 
         :param msymbol_list: A list of strings which are interpreted
@@ -1727,7 +1779,7 @@ class Transliterator:
         'ඩනිෂ්ක නවීන් '
         '''
         transliteration_parts = self.transliterate_parts(
-            msymbol_list, ascii_digits)
+            msymbol_list, ascii_digits, reset)
         return transliteration_parts.committed + transliteration_parts.preedit
 
     def get_variables(self) -> List[Tuple[str, str, str]]:

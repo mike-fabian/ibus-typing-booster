@@ -1158,7 +1158,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('k')), 'ක')
         self.assertEqual(trans.transliterate(list('ka')), 'කා')
         self.assertEqual(trans.transliterate(list('K')), 'ඛ')
-        self.assertEqual(trans.transliterate(list('H')), 'හ')
+        self.assertEqual(trans.transliterate(list('H'), reset=True), 'හ')
         # FIXME agrees with ibus-sayura, but: https://www.sayura.net/im/sayura.pdf
         self.assertEqual(trans.transliterate(list('kf')), 'කෆ')
         self.assertEqual(trans.transliterate(list('kH')), 'ඛ')
@@ -1166,7 +1166,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('f')), 'ෆ')
         self.assertEqual(trans.transliterate(list('g')), 'ග')
         # FIXME agrees with ibus-sayura, but: https://www.sayura.net/im/sayura.pdf
-        self.assertEqual(trans.transliterate(list('gf')), 'ගෆ')
+        self.assertEqual(trans.transliterate(list('gf'), reset=True), 'ගෆ')
         self.assertEqual(trans.transliterate(list('gH')), 'ඝ')
         self.assertEqual(trans.transliterate(list('X')), 'ඞ')
         self.assertEqual(trans.transliterate(list('c')), 'ච')
@@ -1248,14 +1248,14 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('kx')), 'කං')
         # FIXME agrees with ibus-sayura, but: https://www.sayura.net/im/sayura.pdf
         self.assertEqual(trans.transliterate(list('kQ')), 'කQ')
-        self.assertEqual(trans.transliterate(list('W')), '\u200c')
+        self.assertEqual(trans.transliterate(list('W'), reset=True), '\u200c')
         self.assertEqual(trans.transliterate(list('kWsH')), 'ක්‍ෂ')
         self.assertEqual(trans.transliterate(list('nWd')), 'න්‍ද')
         self.assertEqual(trans.transliterate(list('nWdu')), 'න්‍දු')
         self.assertEqual(trans.transliterate(list('inWdRiy')), 'ඉන්‍ද්‍රිය')
         self.assertEqual(trans.transliterate(list('rWk')), 'ර්‍ක')
-        self.assertEqual(trans.transliterate(list('R')), 'ර')
-        self.assertEqual(trans.transliterate(list('Y')), 'ය')
+        self.assertEqual(trans.transliterate(list('R'), reset=True), 'ර')
+        self.assertEqual(trans.transliterate(list('Y'), reset=True), 'ය')
         self.assertEqual(trans.transliterate(list('kR')), 'ක්‍ර')
         self.assertEqual(trans.transliterate(list('kY')), 'ක්‍ය')
         self.assertEqual(trans.transliterate(list('E')), 'එ')
@@ -2060,9 +2060,9 @@ class M17nTranslitTestCase(unittest.TestCase):
             ' (variable\n'
             '  (use-automatic-vowel-forming nil 0)))\n'
             )
-        # Changing the variable has an immediate effect on the already existing
+        # Changing the variable does not have an immediate effect on the already existing
         # trans object:
-        self.assertEqual(trans.transliterate(['a']), 'ৃ')  # U+09C3 BENGALI VOWEL SIGN VOCALIC R
+        self.assertEqual(trans.transliterate(['a']), 'ঋ')  # U+098B BENGALI LETTER VOCALIC R
         # reinitialize m17n_translit:
         m17n_translit.fini()
         m17n_translit.init()
@@ -2082,8 +2082,8 @@ class M17nTranslitTestCase(unittest.TestCase):
             config_file_contents,
             ';; -*- mode:lisp; coding:utf-8 -*-\n'
             )
-        # Again the change has an immediate effect of the existing trans object:
-        self.assertEqual(trans.transliterate(['a']), 'ঋ')  # U+098B BENGALI LETTER VOCALIC R
+        # Again the change has no immediate effect of the existing trans object:
+        self.assertEqual(trans.transliterate(['a']), 'ৃ')  # U+09C3 BENGALI VOWEL SIGN VOCALIC R
         # reinitialize m17n_translit:
         m17n_translit.fini()
         m17n_translit.init()

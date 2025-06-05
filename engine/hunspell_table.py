@@ -986,7 +986,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         return bool(not self.is_empty()
                     and len(self._current_imes) == 1
                     and not self._typed_compose_sequence
-                    and not self._m17n_trans_parts.candidates
                     and not self._word_predictions
                     and not self._temporary_word_predictions
                     and not self._emoji_predictions
@@ -1124,12 +1123,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         transliterated_string_up_to_cursor = (
             self._transliterators[preedit_ime].transliterate(
                 typed_string, ascii_digits=self._ascii_digits))
-        if preedit_ime in ['ko-romaja', 'ko-han2']:
-            transliterated_string_up_to_cursor = unicodedata.normalize(
-                'NFKD', transliterated_string_up_to_cursor)
-        transliterated_string_up_to_cursor =  (
-            itb_util.normalize_nfc_and_composition_exclusions(
-                transliterated_string_up_to_cursor))
         if (extra_msymbol and not self._typed_compose_sequence
             and transliterated_string_up_to_cursor.endswith(extra_msymbol)):
             transliterated_string_up_to_cursor = (
@@ -2627,7 +2620,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             length_before + length_inner_preedit))
         return True
 
-    def _get_normalized_preedit_string_with_case_mode_applied(self) -> str:
+    def _get_preedit_string_with_case_mode_applied(self) -> str:
         '''Apply the current case mode and normalization only to the
         parts of the preedit which do not belong to an “inner” preedit.
 
@@ -2636,8 +2629,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         ime = self.get_current_imes()[0]
         trans = self._transliterators[ime]
-        text = itb_util.normalize_nfc_and_composition_exclusions(
-            self._transliterated_strings[ime])
+        text = self._transliterated_strings[ime]
         if self._typed_compose_sequence:
             before = self._transliterated_strings_before_compose[ime]
             inner_preedit = self._transliterated_strings_compose_part
@@ -2653,17 +2645,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         cm_func = self._case_modes[self._current_case_mode]['function']
         before = cm_func(before)
         after = cm_func(after)
-        # I think everything should be normalized here, otherwise the
-        # get_caret() which also uses normalization to NFC might give a
-        # wrong result:
-        return itb_util.normalize_nfc_and_composition_exclusions(
-            before + inner_preedit + after)
+        return before + inner_preedit + after
 
     def _update_preedit(self) -> None:
         '''Update Preedit String in UI'''
         if self._debug_level > 1:
             LOGGER.debug('entering function')
-        _str = self._get_normalized_preedit_string_with_case_mode_applied()
+        _str = self._get_preedit_string_with_case_mode_applied()
         if self._debug_level > 2:
             LOGGER.debug('_str=“%s”', _str)
         if self._hide_input:
@@ -7957,13 +7945,27 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.debug(
                     'OLD: self._typed_string=%s, self._typed_string_cursor=%s',
                     self._typed_string, self._typed_string_cursor)
-            self._typed_string = (
-                self._typed_string[:self._m17n_trans_parts.committed_index]
-                + list(m17n_preedit_replacement)
-                + self._typed_string[self._typed_string_cursor:])
-            self._typed_string_cursor = (
-                self._m17n_trans_parts.committed_index
-                + len(list(m17n_preedit_replacement)))
+            if self._try_early_commit():
+                if self._debug_level > 1:
+                    LOGGER.debug(
+                        'Early commit %r',
+                        self._m17n_trans_parts.committed
+                        + m17n_preedit_replacement)
+                self._typed_string = (
+                    self._typed_string[self._typed_string_cursor:])
+                self._typed_string_cursor = 0
+                super().commit_text(
+                    IBus.Text.new_from_string(
+                        self._m17n_trans_parts.committed
+                        + m17n_preedit_replacement))
+            else:
+                self._typed_string = (
+                    self._typed_string[:self._m17n_trans_parts.committed_index]
+                    + list(m17n_preedit_replacement)
+                    + self._typed_string[self._typed_string_cursor:])
+                self._typed_string_cursor = (
+                    self._m17n_trans_parts.committed_index
+                    + len(list(m17n_preedit_replacement)))
             if self._debug_level > 1:
                 LOGGER.debug(
                     'NEW:self._typed_string=%s, self._typed_string_cursor=%s',
@@ -8039,13 +8041,24 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.debug(
                     'OLD: self._typed_string=%s, self._typed_string_cursor=%s',
                     self._typed_string, self._typed_string_cursor)
-            self._typed_string = (
-                self._typed_string[:self._m17n_trans_parts.committed_index]
-                + list(phrase)
-                + self._typed_string[self._typed_string_cursor:])
-            self._typed_string_cursor = (
-                self._m17n_trans_parts.committed_index
-                + len(list(phrase)))
+            if self._try_early_commit():
+                if self._debug_level > 1:
+                    LOGGER.debug('Early commit %r',
+                                self._m17n_trans_parts.committed + phrase)
+                self._typed_string = (
+                    self._typed_string[self._typed_string_cursor:])
+                self._typed_string_cursor = 0
+                super().commit_text(
+                    IBus.Text.new_from_string(
+                        self._m17n_trans_parts.committed + phrase))
+            else:
+                self._typed_string = (
+                    self._typed_string[:self._m17n_trans_parts.committed_index]
+                    + list(phrase)
+                    + self._typed_string[self._typed_string_cursor:])
+                self._typed_string_cursor = (
+                    self._m17n_trans_parts.committed_index
+                    + len(phrase))
             if self._debug_level > 1:
                 LOGGER.debug(
                     'NEW:self._typed_string=%s, self._typed_string_cursor=%s',
@@ -8151,10 +8164,30 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                  typed_string_up_to_cursor, ascii_digits=self._ascii_digits)
         if self._debug_level > 1:
             LOGGER.debug('After processing key: '
-                         'typed_string_up_to_cursor=%s '
-                         '-> transliterated_parts=%s',
-                         repr(typed_string_up_to_cursor),
-                         repr(transliterated_parts))
+                         'typed_string_up_to_cursor=%r '
+                         '-> transliterated_parts=%r',
+                         typed_string_up_to_cursor,
+                         transliterated_parts)
+        if self._try_early_commit():
+            if self._debug_level > 1:
+                LOGGER.debug('Maybe commit early.')
+            if (transliterated_parts.candidates
+                and transliterated_parts.committed
+                and transliterated_parts.committed_index):
+                if self._debug_level > 1:
+                    LOGGER.debug('Commit %r early.',
+                                 transliterated_parts.committed)
+                typed_string_up_to_cursor = typed_string_up_to_cursor[
+                    transliterated_parts.committed_index:]
+                super().commit_text(
+                    IBus.Text.new_from_string(
+                        transliterated_parts.committed))
+                transliterated_parts = self._transliterators[
+                    self._current_imes[0]].transliterate_parts(
+                        typed_string_up_to_cursor,
+                        ascii_digits=self._ascii_digits)
+            elif self._debug_level > 1:
+                LOGGER.debug('Nothing to commit early.')
         if not transliterated_parts.candidates:
             if self._m17n_trans_parts.candidates:
                 if self._debug_level > 1:
@@ -8180,6 +8213,46 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self.is_lookup_table_enabled_by_tab = False
                 self._lookup_table_shows_m17n_candidates = False
             self._m17n_trans_parts = m17n_translit.TransliterationParts()
+            if (transliterated_parts.committed == ''
+                and transliterated_parts.committed_index == 0
+                and transliterated_parts.preedit == ''
+                and transliterated_parts.cursor_pos == 0
+                and not (key.unicode == 'Z'
+                         and self._current_imes[0] in (
+                             'ko-romaja',
+                             'vi-han',
+                             'vi-nomtelex',
+                             'vi-nomvi',
+                             'zh-cangjie',
+                             'zh-quick',
+                             'zh-tonepy',
+                             'zh-zhuyin',
+                             'zh-py'))):
+                # The `Z` in input methods which include cjk-util.mim switches
+                # to single-fullwidth-mode which affects only the next character.
+                # It should not be removed here, it must still be there when the next
+                # character is actually typed otherwise the Mnil finalizing each
+                # transliteration in m17n_translit.Transliterator
+                if self._debug_level > 1:
+                    LOGGER.debug(
+                        'Removing input which changed only m17n-lib state %r',
+                        typed_string_up_to_cursor)
+                self._typed_string = self._typed_string[self._typed_string_cursor:]
+                self._typed_string_cursor = 0
+                self._update_transliterated_strings()
+                # If input up to the cursor produces not output at all
+                # it must have changed only the internal m17n-lib
+                # state For example `>>` for `zh-py` changes to
+                # full-width ASCII mode but produces no output. This
+                # should be removed from the input here (which is
+                # directly after the very first transliteration pass
+                # in the processing of the key) to avoid displaying
+                # the keys which changed the mode after further
+                # transliteration passes or changing mode again in
+                # further transliteration passes if it is not a one
+                # way state switch but a toogle.
+                self._update_ui()
+                return True
             if self._debug_level > 1:
                 LOGGER.debug('No m17n candidates.')
             return False
@@ -8703,7 +8776,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # starting with a control character:
                 self._update_ui_empty_input()
                 return False
-            if key.val == IBus.KEY_space and not key.mod5 and not key.shift:
+            if (key.val == IBus.KEY_space
+                and not key.mod5
+                and not key.shift
+                and not self._has_transliteration([key.msymbol])):
                 # if the first character is a space, just pass it
                 # through it makes not sense trying to complete (“not
                 # key.mod5” is checked here because AltGr+Space is the
@@ -9010,6 +9086,20 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                     self.get_string_from_lookup_table_cursor_pos()))
                             self._clear_input_and_update_ui()
                             return False
+                    elif (key.msymbol == ' '
+                          and self._typed_string == ['Z']
+                          and input_phrase == '\u3000'):
+                        # All m17n input methods which include
+                        # cjk-util (e.g. zh-py, ko-romaja, …) can
+                        # produce a fullwidth space by typing
+                        # Z+space. That should not go into preedit if
+                        # it is the first thing typed on empty input.
+                        LOGGER.debug('Fullwidth space typed by typing Z+space '
+                                     'on empty input. Commit it, clear input, '
+                                     'and update UI.')
+                        super().commit_text(IBus.Text.new_from_string('\u3000'))
+                        self._clear_input_and_update_ui()
+                        return True
                     else:
                         # The commit key has been absorbed by the
                         # transliteration.  Add the key to the input
@@ -9232,19 +9322,20 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 if self._debug_level > 1:
                     LOGGER.debug(
                         'Maybe commit early: '
-                        'committed=“%s” committed_index=%s preedit=%s'
-                        'self._typed_string=%s '
-                        'self._typed_string_cursor=%s',
-                        transliterated_parts.committed,
-                        transliterated_parts.committed_index,
-                        transliterated_parts.preedit,
-                        self._typed_string, self._typed_string_cursor)
+                        'self._typed_string=%r '
+                        'self._typed_string_cursor=%s '
+                        '-> transliterated_parts=%r',
+                        self._typed_string, self._typed_string_cursor,
+                        transliterated_parts)
                 if (transliterated_parts.committed
                     and transliterated_parts.committed_index):
                     self._typed_string = self._typed_string[
                         transliterated_parts.committed_index:]
                     self._typed_string_cursor = len(self._typed_string)
                     self._update_transliterated_strings()
+                    # The might be m17n candidates, empty candidate list to
+                    # remove them:
+                    self._candidates = []
                     if (not self._prefer_commit
                         and transliterated_parts.committed_index == 1
                         and transliterated_parts.committed == key.unicode
@@ -9523,6 +9614,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.clear_context()
         self._clear_input_and_update_ui()
         self._revert_autosettings()
+        for ime in self._current_imes:
+            # ibus-m17n also calls minput_reset_ic() on focus out.
+            # This is necessary if one wants to reset the input
+            # methods to their default states. For example, if zh-py
+            # is in fullwidth-mode (to input fullwidth Latin), calling
+            # reset_ic() switches to the default mode to input Chinese
+            # characters.
+            self._transliterators[ime].reset_ic()
 
     def _revert_autosettings(self) -> None:
         '''Revert automatic setting changes which were done on focus in'''
@@ -9554,6 +9653,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                          repr(self._typed_compose_sequence),
                          self._compose_sequences.preedit_representation(
                              self._typed_compose_sequence))
+        for ime in self._current_imes:
+            # ibus-m17n also calls minput_reset_ic() on focus out.
+            # This is necessary if one wants to reset the input
+            # methods to their default states. For example, if zh-py
+            # is in fullwidth-mode (to input fullwidth Latin), calling
+            # reset_ic() switches to the default mode to input Chinese
+            # characters.
+            self._transliterators[ime].reset_ic()
         if not self._current_preedit_text:
             if self._debug_level > 1:
                 LOGGER.debug('Current preedit is empty: '

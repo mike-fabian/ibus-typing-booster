@@ -1361,9 +1361,9 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
-        # The preedit text is still normalized for display:
-        self.assertEqual(self.engine.mock_preedit_text, 'Alpengl\u00fchen')
-        # But the transliterated string which will be committed is in NFD:
+        # The preedit text also contains the NFD:
+        self.assertEqual(self.engine.mock_preedit_text, 'Alpenglu\u0308hen')
+        # And the transliterated string which will be committed is in NFD:
         self.assertEqual(self.engine._transliterated_strings['NoIME'],
                          'Alpenglu\u0308hen')
         self.assertEqual(self.engine.mock_committed_text, 'Alpengl\u00fchen ')

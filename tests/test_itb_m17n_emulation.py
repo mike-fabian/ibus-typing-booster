@@ -433,6 +433,306 @@ class ItbM17nEmuTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'ä å ñ')
         self.assertEqual(self.engine.mock_committed_text_cursor_pos, 4)
 
+    def test_tb_zh_py(self) -> None:
+        self.init_engine(engine_name='tb:zh:py')
+        if self.engine is None:
+            self.skipTest('Failed to init engine.')
+        self.assertEqual(self.engine._engine_name, 'tb:zh:py')
+        self.assertEqual(self.engine._dictionary_names, ['None'])
+        self.assertEqual(self.engine._current_imes, ['zh-py'])
+        self.assertEqual(self.engine._tab_enable, False) # normal default
+        self.assertEqual(self.engine._word_predictions, False)
+        self.assertEqual(self.engine._emoji_predictions, False)
+        self.assertEqual(self.engine._off_the_record, True)
+        self.assertEqual(self.engine._preedit_underline, 0)
+        self.assertEqual(self.engine._keybindings['toggle_input_mode_on_off'], [])
+        self.assertEqual(self.engine._keybindings['enable_lookup'],
+                         ['Tab', 'ISO_Left_Tab']) # normal default
+        self.assertEqual(self.engine._keybindings['commit_and_forward_key'],
+                         ['Left'])
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '爱')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 0)
+        # There should be candidates now
+        self.assertNotEqual([], self.engine._candidates)
+        # One `>` commits:
+        self.engine.do_process_key_event(IBus.KEY_greater, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '>')
+        self.assertEqual(self.engine.mock_committed_text, '爱')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 1)
+        # There should be no candidates now
+        self.assertEqual([], self.engine._candidates)
+        # The single `>` did not switch to fullwidth mode and
+        # it gets early committed in _handle_m17n_candidates()
+        # when the following `a` is typed.
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '啊')
+        self.assertEqual(self.engine.mock_committed_text, '爱>')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 2)
+        # There should be candidates now
+        self.assertNotEqual([], self.engine._candidates)
+        # One `>` commits:
+        self.engine.do_process_key_event(IBus.KEY_greater, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '>')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 3)
+        # There should be no candidates now
+        self.assertEqual([], self.engine._candidates)
+        # The second `>` switches to fullwidth-mode (`>>` should
+        # switch to fullwidth-mode) and because this just did the mode switch
+        # the `>>` should disappear input and not show up in the preedit:
+        self.engine.do_process_key_event(IBus.KEY_greater, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 3)
+        # There should be no candidates now
+        self.assertEqual([], self.engine._candidates)
+        # Fullwidth a:
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊ａ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 4)
+        # There should be no candidates now
+        self.assertEqual([], self.engine._candidates)
+        # Fullwidth space
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊ａ\u3000')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 5)
+        # There should be no candidates now
+        self.assertEqual([], self.engine._candidates)
+        # Fullwidth b:
+        self.engine.do_process_key_event(IBus.KEY_b, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊ａ\u3000ｂ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 6)
+        # There should be no candidates now
+        self.assertEqual([], self.engine._candidates)
+        # One `<` does not exit fullwidth mode, it is shown in fullwidth
+        # in the preedit:
+        self.engine.do_process_key_event(IBus.KEY_less, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '＜')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊ａ\u3000ｂ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 6)
+        # There should be no candidates now
+        self.assertEqual([], self.engine._candidates)
+        # When the following `c` is typed, '＜ｃ' gets
+        # early committed in _process_key_event()
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊ａ\u3000ｂ＜ｃ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 8)
+        # Exit fullwidth mode with `<<`:
+        self.engine.do_process_key_event(IBus.KEY_less, 0, 0)
+        # The first `<` did not switch yet, so it is still shown in
+        # fullwidth in the preedit:
+        self.assertEqual(self.engine.mock_preedit_text, '＜')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊ａ\u3000ｂ＜ｃ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 8)
+        self.engine.do_process_key_event(IBus.KEY_less, 0, 0)
+        # The second `<` does the switch and the preedit becomes empty
+        # because the `<<` did just the mode switch:
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊ａ\u3000ｂ＜ｃ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 8)
+        # There should be no candidates now
+        self.assertEqual([], self.engine._candidates)
+        # a produces a Chinese character again:
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '啊')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊ａ\u3000ｂ＜ｃ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 8)
+        # There should be candidates now
+        self.assertNotEqual([], self.engine._candidates)
+        # `Z` commits:
+        self.engine.do_process_key_event(IBus.KEY_Z, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊ａ\u3000ｂ＜ｃ啊')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 9)
+        # There should be no candidates now
+        self.assertEqual([], self.engine._candidates)
+        # `Za` should switch to single-fullwidth-mode (i.e. fullwidth-mode
+        # just for the next character) That does not work at the moment
+        # because each transliteration in m17n_translit.py is finallized
+        # by appending Mnil, that counts as the next character. So the mode
+        # switch by `Z` does not survive the commit. That is hard to fix
+        # but maybe not so important.
+        # Currently, the `a` produces a Chinese character again:
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '啊')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊ａ\u3000ｂ＜ｃ啊')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 9)
+        # There should be candidates now
+        self.assertNotEqual([], self.engine._candidates)
+        # Commit with a space:
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊ａ\u3000ｂ＜ｃ啊啊')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 10)
+        # There should be no candidates now
+        self.assertEqual([], self.engine._candidates)
+        # `Za` when there is no pending input commits a fullwidth a immediately:
+        self.engine.do_process_key_event(IBus.KEY_Z, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊ａ\u3000ｂ＜ｃ啊啊ａ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 11)
+        # There should be no candidates now
+        self.assertEqual([], self.engine._candidates)
+        # `Z ` when there is no pending input commits a fullwidth space immediately
+        self.engine.do_process_key_event(IBus.KEY_Z, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '爱>啊ａ\u3000ｂ＜ｃ啊啊ａ\u3000')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 12)
+
+    def test_tb_ko_romaja(self) -> None:
+        self.init_engine(engine_name='tb:ko:romaja')
+        if self.engine is None:
+            self.skipTest('Failed to init engine.')
+        self.assertEqual(self.engine._engine_name, 'tb:ko:romaja')
+        self.assertEqual(self.engine._dictionary_names, ['None'])
+        self.assertEqual(self.engine._current_imes, ['ko-romaja'])
+        self.assertEqual(self.engine._tab_enable, False) # normal default
+        self.assertEqual(self.engine._word_predictions, False)
+        self.assertEqual(self.engine._emoji_predictions, False)
+        self.assertEqual(self.engine._off_the_record, True)
+        self.assertEqual(self.engine._preedit_underline, 0)
+        self.assertEqual(self.engine._keybindings['toggle_input_mode_on_off'], [])
+        self.assertEqual(self.engine._keybindings['enable_lookup'],
+                         ['Tab', 'ISO_Left_Tab']) # normal default
+        self.assertEqual(self.engine._keybindings['commit_and_forward_key'],
+                         ['Left'])
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '하')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 0)
+        # `I` commits and switches from normal syllable mode to
+        # isolated jamo mode:
+        self.engine.do_process_key_event(IBus.KEY_I, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 1)
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 2)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'ㅏ')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 2)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 4)
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 5)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'ㅏ')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 5)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 6)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'ㅣ')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 6)
+        # `I` commits and switches from back to normal syllable mode from
+        # isolated jamo mode:
+        self.engine.do_process_key_event(IBus.KEY_I, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 7)
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'ㅎ')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 7)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '하')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 7)
+        self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '해')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 7)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '핸')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 7)
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 8)
+        # `Z Za` inserts a fullwidth space and a fullwidth a:
+        self.engine.do_process_key_event(IBus.KEY_Z, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 8)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺\u3000')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 9)
+        self.engine.do_process_key_event(IBus.KEY_Z, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺\u3000')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 9)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺\u3000ａ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 10)
+        # `>>` switches to fullwidth mode:
+        self.engine.do_process_key_event(IBus.KEY_greater, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '>')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺\u3000ａ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 10)
+        self.engine.do_process_key_event(IBus.KEY_greater, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺\u3000ａ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 10)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_b, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺\u3000ａａ　ｂ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 13)
+        # `<<` switches back to normal mode:
+        self.engine.do_process_key_event(IBus.KEY_less, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '＜') # still in fullwidth mode!
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺\u3000ａａ　ｂ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 13)
+        self.engine.do_process_key_event(IBus.KEY_less, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺\u3000ａａ　ｂ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 13)
+        self.engine.do_process_key_event(IBus.KEY_H, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'ㅎ')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺\u3000ａａ　ｂ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 13)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '하')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺\u3000ａａ　ｂ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 13)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '한')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺\u3000ａａ　ｂ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 13)
+        # `G` starts a new syllable (`g` would add to the syllable)
+        self.engine.do_process_key_event(IBus.KEY_G, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'ㄱ')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺\u3000ａａ　ｂ한')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 14)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '하ㅎㅏ ㅎㅐㅣ핺\u3000ａａ　ｂ한ㄱ ')
+        self.assertEqual(self.engine.mock_committed_text_cursor_pos, 16)
+
 if __name__ == '__main__':
     LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
     LOGGER.setLevel(logging.DEBUG)
