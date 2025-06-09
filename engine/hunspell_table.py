@@ -1769,6 +1769,29 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         self._typed_string,
                         ascii_digits=self._ascii_digits))
             if ime in ['ko-romaja', 'ko-han2']:
+                # The two Korean input methods we have in m17n produce
+                # Jamo from the Hangul compatibility block and not
+                # from the Hangul Jamo area.  For example
+                # transliterating 'h' using
+                # /usr/share/m17n/ko-romaja.mim gives ㅎ U+314E HANGUL
+                # LETTER HIEUH and not ᄒU+1112 HANGUL CHOSEONG HIEUH.
+                # To make matching in the /usr/share/myspell/ko_KR.dic
+                # work we need ᄒU+1112. When matching in the user
+                # database and in hunspell dictionaries the input is
+                # converted to NFD, but that does not convert Jamo
+                # from the Hangul compatibility block:
+                #
+                # >>> f'{ord(unicodedata.normalize('NFD', '\u314e')):X}'
+                # '314E'
+                #
+                # But converting to NFKD does what we need:
+                #
+                # >>> f'{ord(unicodedata.normalize('NFKD', '\u314e')):X}'
+                # '1112'
+                #
+                # And further conversions to NFC, NFKC, NFD, NFKD do
+                # not change this anymore, the result remains in the
+                # Hangul jamo area (U+1112)
                 self._transliterated_strings[ime] = unicodedata.normalize(
                     'NFKD', self._transliterated_strings[ime])
         if self._debug_level > 1:
