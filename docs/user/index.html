@@ -696,8 +696,7 @@ word you type. After that word is completed, predictions turn off
 automatically. This differs from <code>toggle_emoji_prediction</code>, which
 enables emoji and Unicode predictions <em>indefinitely</em>—requiring manual
 disabling later.</p><h3 id=command-show-selection-info>Display Character or Selection Information</h3><video playsinline aria-label="Display Character or Selection Information" style=width:100%;height:auto controls>
-<source src=../../videos/user-docs/command-show-selection-info.mp4 type=video/mp4><p>Your browser does not support video.</p></video><p>The <code>show_selection_info</code> command provides detailed information about either:</p><ul><li>The currently selected text, <strong>or</strong> The character immediately to the</li><li>left of the cursor (if no text is selected or if selection retrieval
-fails, such as on Wayland).</li></ul><h4 id=example>Example</h4><p>If the cursor is positioned after <code>🧙🏽‍♀️|</code> (where <code>|</code> marks the cursor), executing the command displays a candidate list like this:</p><pre><code>(1/8)🔗
+<source src=../../videos/user-docs/command-show-selection-info.mp4 type=video/mp4><p>Your browser does not support video.</p></video><p>The <code>show_selection_info</code> command provides detailed information about either:</p><ul><li>The currently selected text</li></ul><p><strong>or</strong> (if no text is selected or if selection retrieval fails, such as on Wayland):</p><ul><li>The grapheme cluster immediately to the left of the cursor (a grapheme cluster might consist of several Unicode code points)</li></ul><h4 id=example>Example</h4><p>If the cursor is positioned after <code>🧙🏽‍♀️|</code> (where <code>|</code> marks the cursor), executing the command displays a candidate list like this:</p><pre><code>(1/8)🔗
 1 🧙🏽‍♀️ woman mage 
 2 ├─ 🧙 U+1F9D9 mage
 3 ├─ 🏽 U+1F3FD emoji modifier fitzpatrick type-4
