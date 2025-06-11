@@ -1797,9 +1797,11 @@ disabling later.
 
 The `show_selection_info` command provides detailed information about either:
 
-- The currently selected text, **or** The character immediately to the
-- left of the cursor (if no text is selected or if selection retrieval
-  fails, such as on Wayland).
+- The currently selected text
+
+**or** (if no text is selected or if selection retrieval fails, such as on Wayland):
+
+- The grapheme cluster immediately to the left of the cursor (a grapheme cluster might consist of several Unicode code points)
 
 #### Example
 
