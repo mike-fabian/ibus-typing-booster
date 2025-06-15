@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-06-02 17:00+0200\n"
+"POT-Creation-Date: 2025-06-11 11:48+0200\n"
 "PO-Revision-Date: 2025-05-12 07:44+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://translate.fedoraproject.org/projects/ibus-"
@@ -200,56 +200,56 @@ msgstr "უნიკოდის სიმბოლოები და ემო
 msgid "Off the record mode"
 msgstr "ჩაწერის რეჟიმის გამორთვა"
 
-#: engine/hunspell_table.py:2038
+#: engine/hunspell_table.py:2054
 msgid "Highest priority dictionary"
 msgstr "უმაღლესი პრიორიტეტის მქონე ლექსიკონი"
 
-#: engine/hunspell_table.py:2039
+#: engine/hunspell_table.py:2055
 msgid "Choose highest priority dictionary"
 msgstr "აირჩეთ უმაღლესი პრიორიტეტის მქონე ლექსიკონი"
 
-#: engine/hunspell_table.py:2068
+#: engine/hunspell_table.py:2084
 msgid "Preedit input method"
 msgstr "წინასწარი ჩასწორების შეტანის მეთოდი"
 
-#: engine/hunspell_table.py:2069
+#: engine/hunspell_table.py:2085
 msgid "Switch preedit input method"
 msgstr "სინასწარი ჩასწორების შეტანის მეთოდის გადართვა"
 
-#: engine/hunspell_table.py:2414
+#: engine/hunspell_table.py:2430
 msgid "Setup"
 msgstr "მორგება"
 
-#: engine/hunspell_table.py:2417 setup/main.py:146
+#: engine/hunspell_table.py:2433 setup/main.py:146
 msgid "Preferences for ibus-typing-booster"
 msgstr "\"ibus-typing-booster\"-ის მორგება"
 
-#: engine/hunspell_table.py:6343
+#: engine/hunspell_table.py:6354
 msgid "Failed to import Google speech-to-text."
 msgstr "Google speech-to-text-ის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:6346
+#: engine/hunspell_table.py:6357
 msgid "Failed to import pyaudio."
 msgstr "Pyaudio-ის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:6349
+#: engine/hunspell_table.py:6360
 msgid "Failed to import queue."
 msgstr "რიგის შემოტანის პრობლემა."
 
-#: engine/hunspell_table.py:6354
+#: engine/hunspell_table.py:6365
 msgid "No supported language for speech recognition."
 msgstr "საუბრის ამოსაცნობად ენა მხარდაუჭერელია."
 
-#: engine/hunspell_table.py:6358
+#: engine/hunspell_table.py:6369
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google -ის აპლიკაციაში შესვლის დეტალების” ფაილი “%s” არ არსებობს."
 
-#: engine/hunspell_table.py:6371
+#: engine/hunspell_table.py:6382
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Google speech-to-text -ის ინიციალიზაციის შეცდომა. იხილეთ debug.log."
 
-#: engine/hunspell_table.py:6479
+#: engine/hunspell_table.py:6490
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google speech-to-text -ის შეცდომა. ხილეთ debug.log."
 

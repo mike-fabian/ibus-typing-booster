@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-06-02 17:00+0200\n"
+"POT-Creation-Date: 2025-06-11 11:48+0200\n"
 "PO-Revision-Date: 2019-12-20 00:16+0000\n"
 "Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/ibus-"
@@ -210,56 +210,56 @@ msgstr "ୟୁନିକୋଡ଼ ଚିହ୍ନ ଏବଂ ଇମୋଜୀ ଭ�
 msgid "Off the record mode"
 msgstr "ଅଭିଲେଖନି ଅବସ୍ଥାକୁ ରଦ୍ଦ କରନ୍ତୁ"
 
-#: engine/hunspell_table.py:2038
+#: engine/hunspell_table.py:2054
 msgid "Highest priority dictionary"
 msgstr "ସର୍ବୋଚ୍ଚ ଅଗ୍ରାଧିକାର ଅଭିଧାନ"
 
-#: engine/hunspell_table.py:2039
+#: engine/hunspell_table.py:2055
 msgid "Choose highest priority dictionary"
 msgstr "ସର୍ବୋଚ୍ଚ ଅଗ୍ରାଧିକାର ଅଭିଧାନକୁ ବାଛନ୍ତୁ"
 
-#: engine/hunspell_table.py:2068
+#: engine/hunspell_table.py:2084
 msgid "Preedit input method"
 msgstr "ନିବେଶ ବିଧି ପୂର୍ବସମ୍ପାଦନ"
 
-#: engine/hunspell_table.py:2069
+#: engine/hunspell_table.py:2085
 msgid "Switch preedit input method"
 msgstr "ନିବେଶ ବିଧି ପୂର୍ବସମ୍ପାଦନକୁ ପରିବର୍ତ୍ତନ କରନ୍ତୁ"
 
-#: engine/hunspell_table.py:2414
+#: engine/hunspell_table.py:2430
 msgid "Setup"
 msgstr "ସ୍ଥାପନକରଣି"
 
-#: engine/hunspell_table.py:2417 setup/main.py:146
+#: engine/hunspell_table.py:2433 setup/main.py:146
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster ପାଇଁ ଅଭିରୁଚିମାନ"
 
-#: engine/hunspell_table.py:6343
+#: engine/hunspell_table.py:6354
 msgid "Failed to import Google speech-to-text."
 msgstr "ଗୁଗଲ speech-to-text କୁ ଆମଦାନି କରିବାରେ ବିଫଳ।"
 
-#: engine/hunspell_table.py:6346
+#: engine/hunspell_table.py:6357
 msgid "Failed to import pyaudio."
 msgstr "pyaudio କୁ ଆମଦାନି କରିବାରେ ବିଫଳ।"
 
-#: engine/hunspell_table.py:6349
+#: engine/hunspell_table.py:6360
 msgid "Failed to import queue."
 msgstr "queue କୁ ଆମଦାନି କରିବାରେ ବିଫଳ।"
 
-#: engine/hunspell_table.py:6354
+#: engine/hunspell_table.py:6365
 msgid "No supported language for speech recognition."
 msgstr "ଭାଷଣ ମାନ୍ୟତା ପାଇଁ କୌଣସି ସମର୍ଥିତ ଭାଷା ନାହିଁ।"
 
-#: engine/hunspell_table.py:6358
+#: engine/hunspell_table.py:6369
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“ଗୁଗଲ ଆପ୍ଲିକେସନ କ୍ରେଡ଼େନସିଆଲସ” ଫାଇଲ “%s” ମିଳିଲା ନାହିଁ।"
 
-#: engine/hunspell_table.py:6371
+#: engine/hunspell_table.py:6382
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "ଗୁଗଲ speech-to-text କୁ ପ୍ରାରଭିକରଣରେ ବିଫଳ। debug.log ଦେଖନ୍ତୁ।"
 
-#: engine/hunspell_table.py:6479
+#: engine/hunspell_table.py:6490
 msgid "Google speech-to-text error. See debug.log."
 msgstr "ଗୁଗଲ speech-to-text ତ୍ରୁଟି। debug.log ଦେଖନ୍ତୁ।"
 
