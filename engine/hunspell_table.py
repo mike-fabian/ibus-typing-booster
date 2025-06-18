@@ -150,8 +150,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._engine_name = engine_name
         self._m17n_ime_lang = ''
         self._m17n_ime_name = ''
-        self._input_mode_true_symbol = '🚀'
-        self._input_mode_false_symbol = '🐌'
         schema_path = '/org/freedesktop/ibus/engine/typing-booster/'
         if self._engine_name != 'typing-booster':
             try:
@@ -161,13 +159,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     raise ValueError('Invalid engine name.')
                 self._m17n_ime_lang = match.group('lang')
                 self._m17n_ime_name = match.group('name')
-                symbol = ''
-                for pattern, pattern_symbol in itb_util.M17N_IME_SYMBOLS:
-                    if re.fullmatch(pattern, self._engine_name):
-                        symbol = pattern_symbol
-                        break
-                self._input_mode_true_symbol = symbol
-                self._input_mode_false_symbol = '•' + symbol
                 schema_path = ('/org/freedesktop/ibus/engine/tb/'
                                f'{self._m17n_ime_lang}/{self._m17n_ime_name}/')
             except ValueError as error:
@@ -175,6 +166,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     'Failed to match engine_name %s: %s: %s',
                     engine_name, error.__class__.__name__, error)
                 raise # Re-raise the original exception
+        self._gsettings = Gio.Settings(
+            schema='org.freedesktop.ibus.engine.typing-booster',
+            path=schema_path)
 
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         self._compose_sequences = itb_util.ComposeSequences()
@@ -191,9 +185,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.database = database
         self.emoji_matcher: Optional[itb_emoji.EmojiMatcher] = None
         self._setup_process: Optional[subprocess.Popen[Any]] = None
-        self._gsettings = Gio.Settings(
-            schema='org.freedesktop.ibus.engine.typing-booster',
-            path=schema_path)
         self._settings_dict = self._init_settings_dict()
 
         self._prop_dict: Dict[str, IBus.Property] = {}
@@ -551,12 +542,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.input_mode_properties = {
             'InputMode.Off': {
                 'number': 0,
-                'symbol': self._input_mode_false_symbol,
+                'symbol': self._settings_dict['inputmodefalsesymbol']['user'],
                 'label': _('Off'),
             },
             'InputMode.On': {
                 'number': 1,
-                'symbol': self._input_mode_true_symbol,
+                'symbol': self._settings_dict['inputmodetruesymbol']['user'],
                 'label': _('On'),
             }
         }
@@ -864,6 +855,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'labelbusystring': {
                 'set': self.set_label_busy_string,
                 'get': self.get_label_busy_string},
+            'inputmodetruesymbol': {
+                'set': self.set_input_mode_true_symbol,
+                'get': self.get_input_mode_true_symbol},
+            'inputmodefalsesymbol': {
+                'set': self.set_input_mode_false_symbol,
+                'get': self.get_input_mode_false_symbol},
             'keybindings': {
                 'set': self.set_keybindings,
                 'get': self.get_keybindings},
@@ -887,6 +884,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'offtherecord': True,
             'preeditunderline': 0,
         }
+        if self._engine_name != 'typing-booster':
+            symbol = ''
+            for pattern, pattern_symbol in itb_util.M17N_IME_SYMBOLS:
+                if re.fullmatch(pattern, self._engine_name):
+                    symbol = pattern_symbol
+                    break
+            if symbol:
+                special_defaults['inputmodetruesymbol'] = symbol
+                special_defaults['inputmodefalsesymbol'] = f'•{symbol}'
         for key in schema.list_keys():
             if key == 'keybindings': # keybindings are special!
                 default_value = itb_util.variant_to_value(
@@ -2643,8 +2649,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             inner_preedit = transliterated_parts.preedit
         after = text[len(before) + len(inner_preedit):]
         cm_func = self._case_modes[self._current_case_mode]['function']
-        before = cm_func(before)
-        after = cm_func(after)
+        before = str(cm_func(before))
+        after = str(cm_func(after))
         return before + inner_preedit + after
 
     def _update_preedit(self) -> None:
@@ -4580,6 +4586,52 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
     def get_input_mode(self) -> bool:
         '''Returns the current value of the input mode'''
         return self._input_mode
+
+    def set_input_mode_true_symbol(
+            self, symbol: str, update_gsettings: bool = True) ->  None:
+        '''Sets the symbol used for input mode true
+
+        :param symbol: Which symbol to  use for input mode true
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug('(%s)', symbol)
+        if symbol == self.get_input_mode_true_symbol():
+            return
+        self.input_mode_properties['InputMode.On']['symbol'] = symbol
+        if self._prop_dict and self.input_mode_menu:
+            self._init_or_update_property_menu(
+                self.input_mode_menu, 1)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'inputmodetruesymbol',
+                GLib.Variant.new_boolean(symbol))
+
+    def get_input_mode_true_symbol(self) -> str:
+        '''Returns the current value of the symbol used for input mode true'''
+        return str(self.input_mode_properties['InputMode.On']['symbol'])
+
+    def set_input_mode_false_symbol(
+            self, symbol: str, update_gsettings: bool = True) ->  None:
+        '''Sets the symbol used for input mode false
+
+        :param symbol: Which symbol to  use for input mode false
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug('(%s)', symbol)
+        if symbol == self.get_input_mode_false_symbol():
+            return
+        self.input_mode_properties['InputMode.Off']['symbol'] = symbol
+        if self._prop_dict and self.input_mode_menu:
+            self._init_or_update_property_menu(
+                self.input_mode_menu, 0)
+        if update_gsettings:
+            self._gsettings.set_value(
+                'inputmodefalsesymbol',
+                GLib.Variant.new_boolean(symbol))
+
+    def get_input_mode_false_symbol(self) -> str:
+        '''Returns the current value of the symbol used for input mode false'''
+        return str(self.input_mode_properties['InputMode.Off']['symbol'])
 
     def set_word_prediction_mode(
             self, mode: bool, update_gsettings: bool = True) -> None:

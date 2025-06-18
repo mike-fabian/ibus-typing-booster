@@ -31,6 +31,7 @@ from typing import Optional
 from types import FrameType
 import sys
 import os
+import re
 import html
 import signal
 import argparse
@@ -2246,6 +2247,58 @@ class SetupUI(Gtk.Window): # type: ignore
         self._appearance_grid.attach(
             self._label_busy_entry, 1, _appearance_grid_row, 1, 1)
 
+        self._input_mode_true_label = Gtk.Label()
+        self._input_mode_true_label.set_text(
+            _('Symbol for "enabled" mode'))
+        self._input_mode_true_label.set_tooltip_text(
+            _('The symbol displayed when Typing Booster is active '
+              '(transliterating input, suggesting completions, '
+              'spellchecking, etc.).'))
+        self._input_mode_true_label.set_xalign(0)
+        self._input_mode_true_entry = Gtk.Entry()
+        self._input_mode_true_entry.set_tooltip_text(
+            _('The symbol displayed when Typing Booster is active '
+              '(transliterating input, suggesting completions, '
+              'spellchecking, etc.).'))
+        self._input_mode_true_entry.set_visible(True)
+        self._input_mode_true_entry.set_can_focus(True)
+        self._input_mode_true_entry.set_hexpand(True)
+        self._input_mode_true_entry.set_vexpand(True)
+        self._input_mode_true_entry.set_text(
+            self._settings_dict['inputmodetruesymbol']['user'])
+        self._input_mode_true_entry.connect(
+            'notify::text', self._on_input_mode_true_entry)
+        _appearance_grid_row += 1
+        self._appearance_grid.attach(
+            self._input_mode_true_label, 0, _appearance_grid_row, 1, 1)
+        self._appearance_grid.attach(
+            self._input_mode_true_entry, 1, _appearance_grid_row, 1, 1)
+
+        self._input_mode_false_label = Gtk.Label()
+        self._input_mode_false_label.set_text(
+            _('Symbol for "disabled" (Direct Input) mode'))
+        self._input_mode_false_label.set_tooltip_text(
+            _('The symbol displayed when Typing Booster is disabled '
+              '(input is passed through directly without processing).'))
+        self._input_mode_false_label.set_xalign(0)
+        self._input_mode_false_entry = Gtk.Entry()
+        self._input_mode_false_entry.set_tooltip_text(
+            _('The symbol displayed when Typing Booster is disabled '
+              '(input is passed through directly without processing).'))
+        self._input_mode_false_entry.set_visible(True)
+        self._input_mode_false_entry.set_can_focus(True)
+        self._input_mode_false_entry.set_hexpand(True)
+        self._input_mode_false_entry.set_vexpand(True)
+        self._input_mode_false_entry.set_text(
+            self._settings_dict['inputmodefalsesymbol']['user'])
+        self._input_mode_false_entry.connect(
+            'notify::text', self._on_input_mode_false_entry)
+        _appearance_grid_row += 1
+        self._appearance_grid.attach(
+            self._input_mode_false_label, 0, _appearance_grid_row, 1, 1)
+        self._appearance_grid.attach(
+            self._input_mode_false_entry, 1, _appearance_grid_row, 1, 1)
+
         self._google_application_credentials_label = Gtk.Label()
         self._google_application_credentials_label.set_text(
             # Translators:
@@ -2471,6 +2524,8 @@ class SetupUI(Gtk.Window): # type: ignore
             'flagdictionary': self.set_flag_dictionary,
             'labelbusy': self.set_label_busy,
             'labelbusystring': self.set_label_busy_string,
+            'inputmodetruesymbol': self.set_input_mode_true_symbol,
+            'inputmodefalsesymbol': self.set_input_mode_false_symbol,
             'inputmethod': self.set_current_imes,
             'dictionary': self.set_dictionary_names,
             'keybindings': self.set_keybindings,
@@ -2492,6 +2547,15 @@ class SetupUI(Gtk.Window): # type: ignore
             'offtherecord': True,
             'preeditunderline': 0,
         }
+        if self._engine_name != 'typing-booster':
+            symbol = ''
+            for pattern, pattern_symbol in itb_util.M17N_IME_SYMBOLS:
+                if re.fullmatch(pattern, self._engine_name):
+                    symbol = pattern_symbol
+                    break
+            if symbol:
+                special_defaults['inputmodetruesymbol'] = symbol
+                special_defaults['inputmodefalsesymbol'] = f'•{symbol}'
         for key in schema.list_keys():
             if key == 'keybindings': # keybindings are special!
                 default_value = itb_util.variant_to_value(
@@ -3191,6 +3255,18 @@ class SetupUI(Gtk.Window): # type: ignore
         The label to indicate when ibus-typing-booster is busy
         '''
         self.set_label_busy_string(
+            widget.get_text(), update_gsettings=True)
+
+    def _on_input_mode_true_entry(
+            self, widget: Gtk.Entry, _property_spec: Any) -> None:
+        '''Symbol for "enabled" mode'''
+        self.set_input_mode_true_symbol(
+            widget.get_text(), update_gsettings=True)
+
+    def _on_input_mode_false_entry(
+            self, widget: Gtk.Entry, _property_spec: Any) -> None:
+        '''Symbol for "disabled" (Direct Input) mode'''
+        self.set_input_mode_false_symbol(
             widget.get_text(), update_gsettings=True)
 
     def _on_tab_enable_checkbutton(self, widget: Gtk.CheckButton) -> None:
@@ -6122,6 +6198,58 @@ class SetupUI(Gtk.Window): # type: ignore
                 GLib.Variant.new_string(label_string))
         else:
             self._label_busy_entry.set_text(label_string)
+
+    def set_input_mode_true_symbol(
+            self,
+            symbol: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the symbol used for input mode true
+
+        :param label_string: Which symbol to  use for input mode true
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', symbol, update_gsettings)
+        if not isinstance(symbol, str):
+            return
+        symbol = symbol.strip()
+        self._settings_dict['inputmodetruesymbol']['user'] = symbol
+        if update_gsettings:
+            self._gsettings.set_value(
+                'inputmodetruesymbol',
+                GLib.Variant.new_string(symbol))
+        else:
+            self._input_mode_true_entry.set_text(symbol)
+
+    def set_input_mode_false_symbol(
+            self,
+            symbol: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the symbol used for input mode false
+
+        :param label_string: Which symbol to  use for input mode false
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', symbol, update_gsettings)
+        if not isinstance(symbol, str):
+            return
+        symbol = symbol.strip()
+        self._settings_dict['inputmodefalsesymbol']['user'] = symbol
+        if update_gsettings:
+            self._gsettings.set_value(
+                'inputmodefalsesymbol',
+                GLib.Variant.new_string(symbol))
+        else:
+            self._input_mode_false_entry.set_text(symbol)
 
     def set_tab_enable(
             self,
