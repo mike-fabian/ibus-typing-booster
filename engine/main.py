@@ -33,6 +33,8 @@ from signal import signal, SIGTERM, SIGINT
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
+require_version('Gio', '2.0')
+from gi.repository import Gio
 require_version('GLib', '2.0')
 from gi.repository import GLib
 # pylint: enable=wrong-import-position
@@ -362,9 +364,12 @@ def write_xml() -> None:
         setup = SETUP_TOOL
         icon_prop_key = 'InputMode'
         rank = 0
+        schema_path = '/org/freedesktop/ibus/engine/typing-booster/'
         if ime != 'typing-booster':
             m17n_lang, m17n_name = ime.split('-', maxsplit=1)
             name = f'tb:{m17n_lang}:{m17n_name}'
+            schema_path = ('/org/freedesktop/ibus/engine/tb/'
+                           f'{m17n_lang}/{m17n_name}/')
             rank = 0
             for pattern, pattern_rank in rank_patterns:
                 if re.fullmatch(pattern, name):
@@ -391,6 +396,13 @@ def write_xml() -> None:
             icon =  m17n_db_info.get_icon(ime)
             description = m17n_db_info.get_description(ime)
             setup = SETUP_TOOL + f' --engine-name {name}'
+        gsettings = Gio.Settings(
+            schema='org.freedesktop.ibus.engine.typing-booster',
+            path=schema_path)
+        user_symbol = itb_util.variant_to_value(
+            gsettings.get_user_value('inputmodetruesymbol'))
+        if user_symbol is not None:
+            symbol = user_symbol
 
         _name = SubElement(_engine, 'name')
         _name.text = name

@@ -205,6 +205,22 @@
         enabled.
       </description>
     </key>
+    <key name="inputmodetruesymbol" type="s">
+      <default>'🚀'</default>
+      <summary>Symbol for "enabled" mode</summary>
+      <description>
+        The symbol displayed when Typing Booster is active
+        (transliterating input, suggesting completions, spellchecking, etc.).
+      </description>
+    </key>
+    <key name="inputmodefalsesymbol" type="s">
+      <default>'🐌'</default>
+      <summary>Symbol for "disabled" (Direct Input) mode</summary>
+      <description>
+        The symbol displayed when Typing Booster is disabled
+        (input is passed through directly without processing).
+      </description>
+    </key>
     <key name="avoidforwardkeyevent" type="b">
       <default>false</default>
       <summary>Avoid using the forward_key_event() function</summary>
