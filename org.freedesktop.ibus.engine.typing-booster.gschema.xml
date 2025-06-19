@@ -200,9 +200,7 @@
       <summary>Choose label to indicate busy state</summary>
       <description>
         Here you can specify which label is used to indicate when
-        ibus-typing-booster is busy. This setting only has an effect
-        if the use of a label for candidates from a dictionary is
-        enabled.
+        ibus-typing-booster is busy.
       </description>
     </key>
     <key name="inputmodetruesymbol" type="s">
