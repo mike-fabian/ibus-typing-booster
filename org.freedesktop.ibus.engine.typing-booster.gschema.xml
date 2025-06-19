@@ -474,7 +474,7 @@
       <summary>The ibus keymap to use</summary>
       <description>
         The ibus keymap to use when forcing an IBus keymap while
-        Typing Booster is active is enabled.
+        Typing Booster is active.
       </description>
     </key>
     <key name="errorsound" type="b">
