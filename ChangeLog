@@ -1,4 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 19 Jun 2025 Release 2.27.65
+* Make the command `show-selection-info` work always, not only when “Minimum number of chars for completion” is 0 (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/757)
+* Make default symbols black and white when running on Gnome and gnome-shell ≥ 49.0 (See: https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/3753)
+* Enable translations for 5 more tooltips, use same texts as in the gsettings schema file
+* Make the symbols for active input mode and direct input mode configurable (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/749)
+* Make compose preedit representations configurable by changing the Compose file(s) (See: https://github.com/ibus/ibus/issues/2748#issuecomment-2944388273)
+* Translation update from Weblate (de 100%, ja 99.6%, ka 100%, pl 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 11 Jun 2025 Release 2.27.64
 * Do not start each transliteration with `minput_reset_ic()` to keep the m17n-lib state between commits (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/746)
 * Update emoji annotations from CLDR
