@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-06-19 12:55+0200\n"
+"POT-Creation-Date: 2025-06-19 15:51+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/ibus-"
@@ -162,7 +162,7 @@ msgid "Lookup on emojipedia"
 msgstr "ইমোজিপিডিয়া খুঁজে দেখুন"
 
 #: engine/emoji_picker.py:2290 engine/emoji_picker.py:2291
-#: engine/emoji_picker.py:2292 setup/main.py:1623
+#: engine/emoji_picker.py:2292 setup/main.py:1627
 msgid "System default"
 msgstr "সিস্টেম ডিফল্ট"
 
@@ -437,7 +437,7 @@ msgstr "পছন্দসমূহ"
 msgid "Restore all defaults"
 msgstr "সমস্ত ডিফল্ট পুনরুদ্ধার করুন"
 
-#: setup/main.py:255 setup/main.py:7058
+#: setup/main.py:255 setup/main.py:7061
 msgid "_Close"
 msgstr "_বন্ধ"
 
@@ -473,7 +473,7 @@ msgstr "কাস্টম শর্টকাট"
 #. use to move to the next completion candidate etc...
 #. Translators: Column heading of the table listing the
 #. existing key bindings
-#: setup/main.py:328 setup/main.py:1476
+#: setup/main.py:328 setup/main.py:1480
 msgid "Key bindings"
 msgstr "কী বন্ধনগুলো"
 
@@ -493,7 +493,7 @@ msgstr "চেহারা"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:366 setup/main.py:2634
+#: setup/main.py:366 setup/main.py:2637
 msgid "Speech recognition"
 msgstr "বক্তৃতা সনান্তকরণ"
 
@@ -504,7 +504,7 @@ msgstr "বক্তৃতা সনান্তকরণ"
 #. Translators: This is the header of the list of settings
 #. changed automatically depending on the which window has
 #. focus:
-#: setup/main.py:382 setup/main.py:2339
+#: setup/main.py:382 setup/main.py:2342
 msgid "Autosettings"
 msgstr "স্বয়ংক্রিয় সেটিংস"
 
@@ -853,14 +853,18 @@ msgstr ""
 msgid "Use IBus keymap"
 msgstr ""
 
-#: setup/main.py:815
+#. Translators: This is a tooltip for a checkbox with the
+#. label 'Use IBus keymap'
+#: setup/main.py:817
 msgid ""
 "Whether the use of an IBus keymap is forced while Typing Booster is active. "
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
 
-#: setup/main.py:827
+#. Translators: This is a tooltip for a combobox to choose
+#. a keymap
+#: setup/main.py:831
 msgid ""
 "The ibus keymap to use when forcing an IBus keymap while Typing Booster is "
 "active."
@@ -873,18 +877,18 @@ msgstr ""
 #. like “(IN)”, “(JP)”, “(KR)”, “(US)” (untranslated)
 #. which indicates the particular variant if the IBus
 #. “English” keymap used.
-#: setup/main.py:839
+#: setup/main.py:843
 msgid "English"
 msgstr ""
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
 #. “Unicode symbols and emoji predictions” is off.
-#: setup/main.py:861
+#: setup/main.py:865
 msgid "Emoji trigger characters:"
 msgstr "ইমোজি ট্রিগার অক্ষরগুলো:"
 
-#: setup/main.py:863
+#: setup/main.py:867
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
@@ -904,11 +908,11 @@ msgstr ""
 #. prevent you from typing “.s” to get “ṡ”. You can also
 #. disable this feature completely by making the list empty
 #. (which is the default).
-#: setup/main.py:892
+#: setup/main.py:896
 msgid "Auto commit characters:"
 msgstr "স্বয়ংক্রিয়ভাবে নির্বাচন হবে এমন অক্ষরগুলো:"
 
-#: setup/main.py:894
+#: setup/main.py:898
 msgid ""
 "The characters in this list cause the preedit to be committed automatically, "
 "followed by a space.  For example, if “.” is an auto commit character, this "
@@ -932,22 +936,22 @@ msgstr ""
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
-#: setup/main.py:924
+#: setup/main.py:928
 msgid "Minimum number of chars for completion:"
 msgstr "সম্পূর্ণ করার জন্য সর্বনিম্ন অক্ষর সংখ্যা:"
 
-#: setup/main.py:926
+#: setup/main.py:930
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
 msgstr "উক্ত সংখ্যার কম অক্ষর টাইপ করা হলে কোন পরামর্শ দেখানো হবে না।"
 
 #. Translators: A checkbox where one can choose whether a
 #. sound is played on error
-#: setup/main.py:951
+#: setup/main.py:955
 msgid "Play sound file on error"
 msgstr "ত্রুটি অবস্থায় শব্দ নথি চালনা করুণ"
 
-#: setup/main.py:953
+#: setup/main.py:957
 #, fuzzy
 #| msgid ""
 #| "Here you can choose whether a custom color is used for a suggestion shown "
@@ -960,11 +964,11 @@ msgstr ""
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
 #. debug information may also be shown graphically.
-#: setup/main.py:988
+#: setup/main.py:992
 msgid "Debug level:"
 msgstr "ডিবাগ স্তর:"
 
-#: setup/main.py:990
+#: setup/main.py:994
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
@@ -975,21 +979,21 @@ msgstr ""
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
 #. reading that text file.
-#: setup/main.py:1014
+#: setup/main.py:1018
 msgid "Learn from text file"
 msgstr "টেক্সট নথি থেকে শিখবে"
 
-#: setup/main.py:1016
+#: setup/main.py:1020
 msgid "Learn your style by reading a text file"
 msgstr "একটি টেক্সট নথি পড়ে আপনার লেখার ধরণ শিখবে"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
-#: setup/main.py:1028
+#: setup/main.py:1032
 msgid "Delete learned data"
 msgstr "আপনার লেখার ধরণ শেখার তথ্যগুলো মুছে ফেলুন"
 
-#: setup/main.py:1030
+#: setup/main.py:1034
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr "আপনি যা টাইপ করেছেন বা নথি পড়ে শেখা আপনার সমস্ত ব্যক্তিগত ভাষার তথ্য মুছুন"
@@ -997,77 +1001,77 @@ msgstr "আপনি যা টাইপ করেছেন বা নথি প
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
 #. ibus-typing-booster.
-#: setup/main.py:1044
+#: setup/main.py:1048
 msgid "Use dictionaries for the following languages:"
 msgstr "নিম্নলিখিত ভাষার জন্য অভিধান ব্যবহার করুন:"
 
-#: setup/main.py:1073
+#: setup/main.py:1077
 msgid "Add a dictionary"
 msgstr "একটি অভিধান যোগ করুন"
 
-#: setup/main.py:1084
+#: setup/main.py:1088
 msgid "Remove a dictionary"
 msgstr "একটি অভিধান সরান"
 
-#: setup/main.py:1095
+#: setup/main.py:1099
 msgid "Move dictionary up"
 msgstr "অভিধান উপরে উঠান"
 
-#: setup/main.py:1107
+#: setup/main.py:1111
 msgid "Move dictionary down"
 msgstr "অভিধান নিচে নামান"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
-#: setup/main.py:1114
+#: setup/main.py:1118
 msgid "Install missing dictionaries"
 msgstr "অনুপস্থিত অভিধান ইনস্টল করুন"
 
-#: setup/main.py:1116
+#: setup/main.py:1120
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "যে অভিধানগুলো এখানে সেটআপ করা আছে কিন্তু ইনস্টল করা হয়নি সেগুলো ইনস্টল করুন"
 
-#: setup/main.py:1123 setup/main.py:1268 setup/main.py:1510 setup/main.py:5202
+#: setup/main.py:1127 setup/main.py:1272 setup/main.py:1514 setup/main.py:5205
 msgid "Set to default"
 msgstr "ডিফল্টে সেট করুন"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
-#: setup/main.py:1129
+#: setup/main.py:1133
 msgid "Set dictionaries to the default for the current locale."
 msgstr "বর্তমান আঞ্চলিকের জন্য ডিফল্টে অভিধান সেট করুন।"
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
-#: setup/main.py:1170
+#: setup/main.py:1174
 msgid "Use the following input methods:"
 msgstr "নিম্ন লিখিত ইনপুট পদ্ধতি ব্যবহার করুন:"
 
-#: setup/main.py:1199
+#: setup/main.py:1203
 msgid "Add an input method"
 msgstr "একটি ইনপুট পদ্ধতি যোগ করুন"
 
-#: setup/main.py:1211
+#: setup/main.py:1215
 msgid "Remove an input method"
 msgstr "একটি ইনপুট পদ্ধতি সরান"
 
-#: setup/main.py:1223
+#: setup/main.py:1227
 msgid "Move input method up"
 msgstr "ইনপুট পদ্ধতি উপরের দিকে উঠান"
 
-#: setup/main.py:1235
+#: setup/main.py:1239
 msgid "Move input method down"
 msgstr "ইনপুট পদ্ধতি নিচের দিকে নামান"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
-#: setup/main.py:1243
+#: setup/main.py:1247
 msgid "Input Method Help"
 msgstr "ইনপুট পদ্ধতি সাহায্য"
 
-#: setup/main.py:1245
+#: setup/main.py:1249
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
 "উপরের নির্বাচিত ইনপুট পদ্ধতি কিভাবে ব্যবহার করতে হবে তা দেখার জন্য কিছু সাহায্য "
@@ -1076,86 +1080,86 @@ msgstr ""
 #. Translators: Tooltip for a button to set some advanced
 #. options for the input method currently selected in the
 #. list of input methods.
-#: setup/main.py:1261
+#: setup/main.py:1265
 msgid "Options for the input method selected above."
 msgstr "উপরে নির্বাচিত ইনপুট পদ্ধতির জন্য বিকল্প।"
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
-#: setup/main.py:1274
+#: setup/main.py:1278
 msgid "Set input methods to the default for the current locale."
 msgstr "বর্তমান আঞ্চলিকের জন্য ডিফল্ট ইনপুট পদ্ধতি সেট করুন।"
 
-#: setup/main.py:1314
+#: setup/main.py:1318
 msgid "Enter shortcut here:"
 msgstr "এখানে শর্টকাট লিখুন:"
 
-#: setup/main.py:1336
+#: setup/main.py:1340
 msgid "Enter shortcut expansion here:"
 msgstr "এখানে শর্টকাট সম্প্রসারণ লিখুন:"
 
-#: setup/main.py:1366
+#: setup/main.py:1370
 msgid "Clear input"
 msgstr "ইনপুট পরিষ্কার করুন"
 
-#: setup/main.py:1377
+#: setup/main.py:1381
 msgid "Delete shortcut"
 msgstr "শর্টকাট মুছুন"
 
-#: setup/main.py:1388
+#: setup/main.py:1392
 msgid "Add shortcut"
 msgstr "শর্টকাট যুক্ত করুণ"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
-#: setup/main.py:1422
+#: setup/main.py:1426
 msgid "Shortcut"
 msgstr "শর্টকাট"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
-#: setup/main.py:1430
+#: setup/main.py:1434
 msgid "Shortcut expansion"
 msgstr "শর্টকাট সম্প্রসারণ"
 
-#: setup/main.py:1444
+#: setup/main.py:1448
 msgid "Current key bindings:"
 msgstr "বর্তমান কী বন্ধনগুলো:"
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
-#: setup/main.py:1468
+#: setup/main.py:1472
 msgid "Command"
 msgstr "নির্দেশ"
 
-#: setup/main.py:1499
+#: setup/main.py:1503
 msgid "Edit"
 msgstr "সম্পাদনা"
 
-#: setup/main.py:1503
+#: setup/main.py:1507
 msgid "Edit the key bindings for the selected command"
 msgstr "নির্বাচিত কমান্ডের জন্য কী বন্ধনগুলো সম্পাদনা করুন"
 
-#: setup/main.py:1514 setup/main.py:5207
+#: setup/main.py:1518 setup/main.py:5210
 msgid "Set default key bindings for the selected command"
 msgstr "নির্বাচিত নির্দেশের জন্য ডিফল্ট কী বন্ধনগুলো নির্ধারণ করুন"
 
-#: setup/main.py:1521
+#: setup/main.py:1525
 msgid "Set all to default"
 msgstr "সবকিছু ডিফল্ট হিসেবে নির্ধারণ করুণ"
 
-#: setup/main.py:1525
+#: setup/main.py:1529
 msgid "Set default key bindings for all commands"
 msgstr "সমস্ত নির্দেশনার জন্য ডিফল্ট কী বন্ধনগুলো নির্ধারণ করুণ"
 
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
 #. top of the list of candidates.
-#: setup/main.py:1547
+#: setup/main.py:1551
 msgid "Display total number of candidates"
 msgstr "শব্দ পরামর্শের উইন্ডোতে মোট শব্দ সংখ্যা প্রদর্শন করুন"
 
-#: setup/main.py:1549
+#: setup/main.py:1553
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
@@ -1169,11 +1173,11 @@ msgstr ""
 #. method is currently used for the preedit. The auxiliary
 #. text is an optional line of text displayed above the
 #. candidate list.
-#: setup/main.py:1563
+#: setup/main.py:1567
 msgid "Show status info in auxiliary text"
 msgstr "সহায়ক পাঠ্যে স্থিতির তথ্য দেখান"
 
-#: setup/main.py:1565
+#: setup/main.py:1569
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
@@ -1187,38 +1191,38 @@ msgstr ""
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
-#: setup/main.py:1587
+#: setup/main.py:1591
 msgid "Candidate window page size:"
 msgstr "শব্দ পরামর্শ তালিকার উইন্ডো পৃষ্ঠার আকার:"
 
-#: setup/main.py:1589
+#: setup/main.py:1593
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr "শব্দ পরামর্শ তালিকার এক পৃষ্ঠায় কতগুলো শব্দ পরামর্শ দেখানো হবে।"
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
-#: setup/main.py:1611
+#: setup/main.py:1615
 msgid "Candidate window orientation"
 msgstr "শব্দ পরামর্শ উইন্ডো অভিযোজন"
 
-#: setup/main.py:1613
+#: setup/main.py:1617
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
 msgstr "শব্দ পরামর্শ উইন্ডোটি অনুভূমিকভাবে বা উল্লম্বভাবে দেখাবে।"
 
-#: setup/main.py:1619
+#: setup/main.py:1623
 msgid "Horizontal"
 msgstr "অনুভূমিক"
 
-#: setup/main.py:1621
+#: setup/main.py:1625
 msgid "Vertical"
 msgstr "উল্লম্ব"
 
 #. Translators: Here one can choose how many milliseconds
 #. the system needs to be idle after pressing a key before
 #. candidates are displayed
-#: setup/main.py:1650
+#: setup/main.py:1654
 #, fuzzy
 #| msgid "Candidate window page size:"
 msgid "Candidate window delay in milliseconds:"
@@ -1226,42 +1230,42 @@ msgstr "শব্দ পরামর্শ তালিকার উইন্ড
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
-#: setup/main.py:1654
+#: setup/main.py:1658
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
 msgstr ""
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
-#: setup/main.py:1681
+#: setup/main.py:1685
 msgid "Preedit underline"
 msgstr "প্রিডিট (প্রাক সম্পাদনা) আন্ডারলাইন"
 
-#: setup/main.py:1683
+#: setup/main.py:1687
 msgid "Which style of underlining to use for the preedit."
 msgstr "প্রিডিটের (প্রাক সম্পাদনা) জন্য আন্ডারলাইন করার কোন স্টাইল ব্যবহার করতে হবে।"
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
-#: setup/main.py:1690
+#: setup/main.py:1694
 msgid "None"
 msgstr "একটিও নয়"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
-#: setup/main.py:1694
+#: setup/main.py:1698
 msgid "Single"
 msgstr "একক"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
-#: setup/main.py:1698
+#: setup/main.py:1702
 msgid "Double"
 msgstr "দ্বিগুণ"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
-#: setup/main.py:1702
+#: setup/main.py:1706
 msgid "Low"
 msgstr "কম"
 
@@ -1271,11 +1275,11 @@ msgstr "কম"
 #. option to enable lookup only when a key is pressed or
 #. because one uses the option to require a minimum number
 #. of characters before a lookup is done.
-#: setup/main.py:1729
+#: setup/main.py:1733
 msgid "Use preedit style only if lookup is enabled"
 msgstr "খুঁজে দেখা সক্ষম হলেই প্রিডিট (প্রাক সম্পাদনা) শৈলী ব্যবহার করুন"
 
-#: setup/main.py:1731
+#: setup/main.py:1735
 msgid ""
 "If this option is on, a preedit style like underlining will only be used if "
 "lookup is enabled. The lookup can be disabled because one uses the option to "
@@ -1291,11 +1295,11 @@ msgstr ""
 #. spellchecking is done on the contents of the preedit and
 #. a custom color is used to indicate when the preedit
 #. might contain a spelling error.
-#: setup/main.py:1751
+#: setup/main.py:1755
 msgid "Preedit spellchecking"
 msgstr "প্রিডিট (প্রাক সম্পাদনা) বানান পরীক্ষা"
 
-#: setup/main.py:1753
+#: setup/main.py:1757
 msgid ""
 "Here you can choose whether spellchecking is done on the contents of the "
 "preedit and a custom color is used to indicate when the preedit might "
@@ -1308,11 +1312,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
-#: setup/main.py:1779
+#: setup/main.py:1783
 msgid "Choose color for preedit spellchecking"
 msgstr "প্রিডিট (প্রাক সম্পাদনা) বানান পরীক্ষা করার জন্য রঙ চয়ন করুন"
 
-#: setup/main.py:1781
+#: setup/main.py:1785
 msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
@@ -1324,11 +1328,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
-#: setup/main.py:1804
+#: setup/main.py:1808
 msgid "Use color for inline completion"
 msgstr "ইনলাইন সমাপ্তির জন্য রঙ ব্যবহার করুন"
 
-#: setup/main.py:1806
+#: setup/main.py:1810
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
@@ -1339,11 +1343,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
-#: setup/main.py:1830
+#: setup/main.py:1834
 msgid "Choose color for inline completion"
 msgstr "ইনলাইন সমাপ্তির জন্য রঙ চয়ন করুন"
 
-#: setup/main.py:1832
+#: setup/main.py:1836
 msgid ""
 "Here you can specify which color to use for inline completion. This setting "
 "only has an effect if the use of color for inline completion is enabled and "
@@ -1355,11 +1359,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
-#: setup/main.py:1855
+#: setup/main.py:1859
 msgid "Use color for compose preview"
 msgstr "কম্পোজ পূর্বরূপের জন্য রঙ ব্যবহার করুন"
 
-#: setup/main.py:1857
+#: setup/main.py:1861
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
@@ -1369,24 +1373,24 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
-#: setup/main.py:1881
+#: setup/main.py:1885
 msgid "Choose color for compose preview"
 msgstr "কম্পোজ পূর্বরূপের জন্য রঙ চয়ন করুন"
 
-#: setup/main.py:1883
+#: setup/main.py:1887
 msgid "Here you can specify which color to use for the compose preview."
 msgstr ""
 "এখানে আপনি কম্পোজ পূর্বরূপের জন্য কোন রঙ ব্যবহার করবেন তা নির্দিষ্ট করতে পারেন।"
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the m17n preedit.
-#: setup/main.py:1904
+#: setup/main.py:1908
 #, fuzzy
 #| msgid "Use color for compose preview"
 msgid "Use color for m17n preedit"
 msgstr "কম্পোজ পূর্বরূপের জন্য রঙ ব্যবহার করুন"
 
-#: setup/main.py:1906
+#: setup/main.py:1910
 #, fuzzy
 #| msgid ""
 #| "Here you can choose whether a custom color is used for the compose "
@@ -1400,13 +1404,13 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the m17n preedit.
-#: setup/main.py:1930
+#: setup/main.py:1934
 #, fuzzy
 #| msgid "Choose color for compose preview"
 msgid "Choose color for m17n preedit"
 msgstr "কম্পোজ পূর্বরূপের জন্য রঙ চয়ন করুন"
 
-#: setup/main.py:1932
+#: setup/main.py:1936
 #, fuzzy
 #| msgid "Here you can specify which color to use for the compose preview."
 msgid "Here you can specify which color to use for the m17n preedit."
@@ -1416,11 +1420,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
-#: setup/main.py:1954
+#: setup/main.py:1958
 msgid "Use color for user database suggestions"
 msgstr "ব্যবহারকারীর ডাটাবেসের পরামর্শের জন্য রঙ ব্যবহার করুন"
 
-#: setup/main.py:1956
+#: setup/main.py:1960
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
@@ -1431,11 +1435,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
-#: setup/main.py:1977
+#: setup/main.py:1981
 msgid "Choose color for user database suggestions"
 msgstr "ব্যবহারকারী ডাটাবেস পরামর্শের জন্য রঙ চয়ন করুন"
 
-#: setup/main.py:1979
+#: setup/main.py:1983
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
@@ -1447,11 +1451,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
-#: setup/main.py:2000
+#: setup/main.py:2004
 msgid "Use color for spellchecking suggestions"
 msgstr "বানান পরীক্ষা পরামর্শের জন্য রঙ ব্যবহার করুন"
 
-#: setup/main.py:2002
+#: setup/main.py:2006
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
@@ -1462,11 +1466,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
-#: setup/main.py:2023
+#: setup/main.py:2027
 msgid "Choose color for spellchecking suggestions"
 msgstr "বানান পরীক্ষা পরামর্শের জন্য রঙ চয়ন করুন"
 
-#: setup/main.py:2025
+#: setup/main.py:2029
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
@@ -1479,11 +1483,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
-#: setup/main.py:2049
+#: setup/main.py:2053
 msgid "Use color for dictionary suggestions"
 msgstr "অভিধান পরামর্শের জন্য রঙ ব্যবহার করুন"
 
-#: setup/main.py:2051
+#: setup/main.py:2055
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
@@ -1494,11 +1498,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
-#: setup/main.py:2072
+#: setup/main.py:2076
 msgid "Choose color for dictionary suggestions"
 msgstr "অভিধান পরামর্শের জন্য রঙ চয়ন করুন"
 
-#: setup/main.py:2074
+#: setup/main.py:2078
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
@@ -1511,11 +1515,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
-#: setup/main.py:2098
+#: setup/main.py:2102
 msgid "Use label for user database suggestions"
 msgstr "ব্যবহারকারী ডাটাবেস পরামর্শের জন্য প্রতীক ব্যবহার করুন"
 
-#: setup/main.py:2100
+#: setup/main.py:2104
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
@@ -1523,7 +1527,7 @@ msgstr ""
 "এখানে আপনি ব্যবহারকারী ডাটাবেস থেকে আসা খুঁজে দেখুন (লুকআপ) টেবিলে শব্দ তালিকার "
 "জন্য একটি প্রতীক ব্যবহার করা হবে কিনা তা চয়ন করতে পারেন।"
 
-#: setup/main.py:2111
+#: setup/main.py:2115
 #, fuzzy
 #| msgid ""
 #| "Here you can specify which color to use for candidates in the lookup "
@@ -1541,11 +1545,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
-#: setup/main.py:2133
+#: setup/main.py:2137
 msgid "Use label for spellchecking suggestions"
 msgstr "বানান পরীক্ষা পরামর্শের জন্য প্রতীক ব্যবহার করুন"
 
-#: setup/main.py:2135
+#: setup/main.py:2139
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
@@ -1553,7 +1557,7 @@ msgstr ""
 "এখানে আপনি বানান পরীক্ষা থেকে আসা শব্দ তালিকার জন্য একটি লেবেল ব্যবহার করা হবে "
 "কিনা তা চয়ন করতে পারেন।"
 
-#: setup/main.py:2146
+#: setup/main.py:2150
 #, fuzzy
 #| msgid ""
 #| "Here you can specify which color to use for candidates in the lookup "
@@ -1571,11 +1575,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
-#: setup/main.py:2168
+#: setup/main.py:2172
 msgid "Use label for dictionary suggestions"
 msgstr "অভিধান পরামর্শের জন্য প্রতীক ব্যবহার করুন"
 
-#: setup/main.py:2170
+#: setup/main.py:2174
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
@@ -1583,7 +1587,7 @@ msgstr ""
 "এখানে আপনি একটি অভিধান থেকে আসা অনুসন্ধান সারণীতে শব্দ তালিকার জন্য একটি প্রতীক "
 "ব্যবহার করা হবে কিনা তা চয়ন করতে পারেন৷"
 
-#: setup/main.py:2181
+#: setup/main.py:2185
 #, fuzzy
 #| msgid ""
 #| "Here you can specify which color to use for candidates in the lookup "
@@ -1601,11 +1605,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
-#: setup/main.py:2203
+#: setup/main.py:2207
 msgid "Use flags for dictionary suggestions"
 msgstr "অভিধান পরামর্শের জন্য পতাকা ব্যবহার করুন"
 
-#: setup/main.py:2205
+#: setup/main.py:2209
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
@@ -1615,11 +1619,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
-#: setup/main.py:2220
+#: setup/main.py:2224
 msgid "Use a label to indicate busy state"
 msgstr "ব্যস্ত অবস্থা নির্দেশ করতে একটি লেবেল ব্যবহার করুন"
 
-#: setup/main.py:2222
+#: setup/main.py:2226
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
@@ -1627,51 +1631,49 @@ msgstr ""
 "আইবাস-টাইপিং-বুস্টার ব্যস্ত থাকাকালীন ইঙ্গিত করার জন্য একটি প্রতীক ব্যবহার করা হবে "
 "কিনা তা এখানে আপনি চয়ন করতে পারেন।"
 
-#: setup/main.py:2232
+#. Translators: Tooltip for an entry
+#: setup/main.py:2237
 #, fuzzy
 #| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from a dictionary. This setting only has an effect if "
-#| "the use of color for candidates from a dictionary is enabled."
+#| "Here you can choose whether a label is used to indicate when ibus-typing-"
+#| "booster is busy."
 msgid ""
 "Here you can specify which label is used to indicate when ibus-typing-"
-"booster is busy. This setting only has an effect if the use of a label for "
-"candidates from a dictionary is enabled."
+"booster is busy."
 msgstr ""
-"এখানে আপনি একটি অভিধান থেকে আসা অনুসন্ধান সারণীতে শব্দ তালিকার জন্য কোন রঙ "
-"ব্যবহার করতে হবে তা উল্লেখ করতে পারেন। এই সেটিংটি শুধুমাত্র তখনই প্রভাব ফেলবে যখন "
-"একটি অভিধান থেকে শব্দ তালিকার জন্য রঙের ব্যবহার সক্ষম করা থাকে।"
+"আইবাস-টাইপিং-বুস্টার ব্যস্ত থাকাকালীন ইঙ্গিত করার জন্য একটি প্রতীক ব্যবহার করা হবে "
+"কিনা তা এখানে আপনি চয়ন করতে পারেন।"
 
-#: setup/main.py:2252
+#: setup/main.py:2255
 msgid "Symbol for \"enabled\" mode"
 msgstr ""
 
-#: setup/main.py:2254 setup/main.py:2260
+#: setup/main.py:2257 setup/main.py:2263
 msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
 msgstr ""
 
-#: setup/main.py:2279
+#: setup/main.py:2282
 msgid "Symbol for \"disabled\" (Direct Input) mode"
 msgstr ""
 
-#: setup/main.py:2281 setup/main.py:2286
+#: setup/main.py:2284 setup/main.py:2289
 msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
 msgstr ""
 
 #. Translators:
-#: setup/main.py:2305 setup/main.py:3483
+#: setup/main.py:2308 setup/main.py:3486
 msgid "Set “Google application credentials” .json file:"
 msgstr "\"গুগল অ্যাপ্লিকেশন শংসাপত্র\" .json ফাইল সেট করুন:"
 
-#: setup/main.py:2307
+#: setup/main.py:2310
 msgid "Full path of the “Google application credentials” .json file."
 msgstr "\"গুগল অ্যাপ্লিকেশন শংসাপত্র\" .json ফাইলের সম্পূর্ণ পথ।"
 
-#: setup/main.py:2313
+#: setup/main.py:2316
 msgid "File not yet set."
 msgstr "ফাইল এখনো সেট করা হয়নি।"
 
@@ -1679,7 +1681,7 @@ msgstr "ফাইল এখনো সেট করা হয়নি।"
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2372 setup/main.py:4715
+#: setup/main.py:2375 setup/main.py:4718
 msgid "Add an autosetting"
 msgstr "একটি অটোসেটিং যোগ করুন"
 
@@ -1687,7 +1689,7 @@ msgstr "একটি অটোসেটিং যোগ করুন"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2386
+#: setup/main.py:2389
 msgid "Remove an autosetting"
 msgstr "একটি অটোসেটিং সরান"
 
@@ -1699,7 +1701,7 @@ msgstr "একটি অটোসেটিং সরান"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2404
+#: setup/main.py:2407
 msgid "Move an autosetting up"
 msgstr "একটি অটোসেটিং উপরের দিকে উঠান"
 
@@ -1711,21 +1713,21 @@ msgstr "একটি অটোসেটিং উপরের দিকে উ�
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2422
+#: setup/main.py:2425
 msgid "Move an autosetting down"
 msgstr "একটি অটোসেটিং নিচের দিকে নামান"
 
-#: setup/main.py:2611
+#: setup/main.py:2614
 msgid "Spell checking"
 msgstr "বানান যাচাই করা"
 
-#: setup/main.py:2627
+#: setup/main.py:2630
 msgid "Emoji"
 msgstr "ইমোজি"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2806
+#: setup/main.py:2809
 msgid "Setting"
 msgstr "বিন্যাস"
 
@@ -1733,67 +1735,67 @@ msgstr "বিন্যাস"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2815 setup/main.py:4288
+#: setup/main.py:2818 setup/main.py:4291
 msgid "Value"
 msgstr "মান"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2839
+#: setup/main.py:2842
 msgid "Regular expression"
 msgstr "নিয়মিত অভিব্যক্তি"
 
-#: setup/main.py:2885
+#: setup/main.py:2888
 msgid "Are you sure?"
 msgstr "তুমি কি নিশ্চিত?"
 
-#: setup/main.py:2887 setup/main.py:3486 setup/main.py:3571 setup/main.py:5273
+#: setup/main.py:2890 setup/main.py:3489 setup/main.py:3574 setup/main.py:5276
 msgid "_Cancel"
 msgstr "_বাতিল"
 
-#: setup/main.py:2888 setup/main.py:3487 setup/main.py:3572 setup/main.py:5274
+#: setup/main.py:2891 setup/main.py:3490 setup/main.py:3575 setup/main.py:5277
 msgid "_OK"
 msgstr "_ঠিক আছে"
 
-#: setup/main.py:2918
+#: setup/main.py:2921
 msgid "Another instance of this app is already running."
 msgstr "এই অ্যাপটির আরেকটি উদাহরণ ইতিমধ্যেই চলছে৷"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3021
+#: setup/main.py:3024
 msgid "Do you really want to restore all default settings?"
 msgstr "আপনি কি সত্যিই সমস্ত ডিফল্ট সেটিংস পুনরুদ্ধার করতে চান?"
 
-#: setup/main.py:3568
+#: setup/main.py:3571
 msgid "Select .wav sound file:"
 msgstr ".wav সাউন্ড ফাইল নির্বাচন করুন:"
 
-#: setup/main.py:3755
+#: setup/main.py:3758
 msgid "Add dictionary"
 msgstr "একটি অভিধান যোগ করুন"
 
-#: setup/main.py:4098
+#: setup/main.py:4101
 msgid "Add input method"
 msgstr "একটি ইনপুট পদ্ধতি যোগ করুন"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4279
+#: setup/main.py:4282
 msgid "Variable"
 msgstr "চলক"
 
-#: setup/main.py:5155
+#: setup/main.py:5158
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "\"%s\" কমান্ডের জন্য কী বন্ধন সম্পাদনা করুন"
 
-#: setup/main.py:5183
+#: setup/main.py:5186
 msgid "Add a key binding"
 msgstr "একটি কী বন্ধন যোগ করুন"
 
-#: setup/main.py:5195
+#: setup/main.py:5198
 msgid "Remove selected key binding"
 msgstr "নির্বাচিত কী বন্ধন সরান"
 
@@ -1802,22 +1804,22 @@ msgstr "নির্বাচিত কী বন্ধন সরান"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5255
+#: setup/main.py:5258
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "আপনি কি সত্যিই সমস্ত কমান্ডের জন্য তাদের ডিফল্টে কী বন্ধন সেট করতে চান?"
 
-#: setup/main.py:5270
+#: setup/main.py:5273
 msgid "Open File ..."
 msgstr "খোলা ফাইল ..."
 
-#: setup/main.py:5287
+#: setup/main.py:5290
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "ফাইল %(filename)s থেকে সফলভাবে শিখেছি।"
 
-#: setup/main.py:5296
+#: setup/main.py:5299
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "ফাইল %(filename)s থেকে শেখা ব্যর্থ হয়েছে৷"
@@ -1832,13 +1834,13 @@ msgstr "ফাইল %(filename)s থেকে শেখা ব্যর্থ �
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5319
+#: setup/main.py:5322
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr "আপনি কি সত্যিই টাইপিং অথবা নথি পড়ে শেখা সমস্ত ভাষা সম্পর্কৃত ডেটা মুছতে চান?"
 
-#: setup/main.py:7134
+#: setup/main.py:7137
 msgid "ibus is not running."
 msgstr "আইবাস চলছে না।"
 
@@ -1866,6 +1868,20 @@ msgstr ""
 "ইনপুটের উপর ভিত্তি করে সম্পূর্ণ শব্দের পূর্বাভাস দেয়। ব্যবহারকারী শব্দ পরামর্শের তালিকা "
 "থেকে পছন্দসই শব্দটি নির্বাচন করতে পারে এবং ব্যবহারকারীর টাইপিং গতি এবং বানান "
 "উন্নত করতে পারে।"
+
+#, fuzzy
+#~| msgid ""
+#~| "Here you can specify which color to use for candidates in the lookup "
+#~| "table which come from a dictionary. This setting only has an effect if "
+#~| "the use of color for candidates from a dictionary is enabled."
+#~ msgid ""
+#~ "Here you can specify which label is used to indicate when ibus-typing-"
+#~ "booster is busy. This setting only has an effect if the use of a label "
+#~ "for candidates from a dictionary is enabled."
+#~ msgstr ""
+#~ "এখানে আপনি একটি অভিধান থেকে আসা অনুসন্ধান সারণীতে শব্দ তালিকার জন্য কোন রঙ "
+#~ "ব্যবহার করতে হবে তা উল্লেখ করতে পারেন। এই সেটিংটি শুধুমাত্র তখনই প্রভাব ফেলবে "
+#~ "যখন একটি অভিধান থেকে শব্দ তালিকার জন্য রঙের ব্যবহার সক্ষম করা থাকে।"
 
 #, fuzzy
 #~| msgid "Emoji"
