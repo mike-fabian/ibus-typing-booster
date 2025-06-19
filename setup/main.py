@@ -812,6 +812,8 @@ class SetupUI(Gtk.Window): # type: ignore
             # forced while Typing Booster is active
             label=_('Use IBus keymap'))
         self._use_ibus_keymap_checkbutton.set_tooltip_text(
+            # Translators: This is a tooltip for a checkbox with the
+            # label 'Use IBus keymap'
             _('Whether the use of an IBus keymap is forced '
               'while Typing Booster is active. '
               'For most users not using an IBus keymap is recommended. '
@@ -824,6 +826,8 @@ class SetupUI(Gtk.Window): # type: ignore
             self._settings_dict['useibuskeymap']['user'])
         self._ibus_keymap_combobox = Gtk.ComboBox()
         self._ibus_keymap_combobox.set_tooltip_text(
+            # Translators: This is a tooltip for a combobox to choose
+            # a keymap
             _('The ibus keymap to use when forcing an IBus keymap while '
               'Typing Booster is active.'))
         self._ibus_keymap_store = Gtk.ListStore(str, str)
@@ -2229,10 +2233,9 @@ class SetupUI(Gtk.Window): # type: ignore
             'clicked', self._on_label_busy_checkbutton)
         self._label_busy_entry = Gtk.Entry()
         self._label_busy_entry.set_tooltip_text(
+            # Translators: Tooltip for an entry
             _('Here you can specify which label is used to indicate when '
-              'ibus-typing-booster is busy. This setting only has an effect '
-              'if the use of a label for candidates from a dictionary is '
-              'enabled.'))
+              'ibus-typing-booster is busy.'))
         self._label_busy_entry.set_visible(True)
         self._label_busy_entry.set_can_focus(True)
         self._label_busy_entry.set_hexpand(False)
@@ -2251,12 +2254,14 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_mode_true_label.set_text(
             _('Symbol for "enabled" mode'))
         self._input_mode_true_label.set_tooltip_text(
+            # Translators: Tooltip for 'Symbol for "enabled" mode'
             _('The symbol displayed when Typing Booster is active '
               '(transliterating input, suggesting completions, '
               'spellchecking, etc.).'))
         self._input_mode_true_label.set_xalign(0)
         self._input_mode_true_entry = Gtk.Entry()
         self._input_mode_true_entry.set_tooltip_text(
+            # Translators: Tooltip for 'Symbol for "enabled" mode'
             _('The symbol displayed when Typing Booster is active '
               '(transliterating input, suggesting completions, '
               'spellchecking, etc.).'))
@@ -2278,11 +2283,15 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_mode_false_label.set_text(
             _('Symbol for "disabled" (Direct Input) mode'))
         self._input_mode_false_label.set_tooltip_text(
+            # Translators: Tooltip for 'Symbol for "disabled" (Direct
+            # Input) mode'
             _('The symbol displayed when Typing Booster is disabled '
               '(input is passed through directly without processing).'))
         self._input_mode_false_label.set_xalign(0)
         self._input_mode_false_entry = Gtk.Entry()
         self._input_mode_false_entry.set_tooltip_text(
+            # Translators: Tooltip for 'Symbol for "disabled" (Direct
+            # Input) mode'
             _('The symbol displayed when Typing Booster is disabled '
               '(input is passed through directly without processing).'))
         self._input_mode_false_entry.set_visible(True)
