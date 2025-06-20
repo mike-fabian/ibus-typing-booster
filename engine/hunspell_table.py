@@ -632,7 +632,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             IBus.KEY_Return, IBus.KEY_KP_Enter,
             IBus.KEY_Delete, IBus.KEY_KP_Delete,
             IBus.KEY_BackSpace, IBus.KEY_Escape)
-        self.connect('set-surrounding-text', self.on_set_surrounding_text)
+        self.connect('set-surrounding-text', self._on_set_surrounding_text)
         self._set_surrounding_text_text: Optional[str] = None
         self._set_surrounding_text_cursor_pos: Optional[int] = None
         self._set_surrounding_text_anchor_pos: Optional[int] = None
@@ -641,7 +641,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._surrounding_text_old: Optional[Tuple[IBus.Text, int, int]] = None
         self._is_context_from_surrounding_text = False
 
-        self._gsettings.connect('changed', self.on_gsettings_value_changed)
+        self._gsettings.connect('changed', self._on_gsettings_value_changed)
 
         self._clear_input_and_update_ui()
 
@@ -9909,7 +9909,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._clear_input_and_update_ui()
     # pylint: enable=unused-argument
 
-    def on_set_surrounding_text(self,
+    def _on_set_surrounding_text(self,
                                 _engine: IBus.Engine,
                                 text: IBus.Text,
                                 cursor_pos: int,
@@ -9943,7 +9943,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._set_surrounding_text_event.set()
         self._surrounding_text_event_happened_after_focus_in = True
 
-    def on_gsettings_value_changed(
+    def _on_gsettings_value_changed(
             self, _settings: Gio.Settings, key: str) -> None:
         '''
         Called when a value in the settings has been changed.
