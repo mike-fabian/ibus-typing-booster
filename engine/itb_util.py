@@ -5772,6 +5772,39 @@ def xdg_save_data_path(*resource: str) -> str:
         os.makedirs(path, exist_ok=True)
     return path
 
+def is_desktop(name: str) -> bool:
+    '''Checks whether a desktop named “name” is used
+
+    :return: True if such a desktop is used,
+             False if not.
+
+    Example: is_desktop('gnome'), is_desktop('i3')
+    '''
+    name = name.lower()
+    return any(
+        name in os.environ.get(env_var, '').lower()
+        for env_var in
+        ('XDG_CURRENT_DESKTOP', 'XDG_SESSION_DESKTOP', 'DESKTOP_SESSION'))
+
+def get_gnome_shell_version() -> Tuple[int, ...]:
+    '''Returns the gnome-shell version as a tuple
+
+    `gnome-shell --version` prints something like 'GNOME Shell 48.2'
+
+    :return: The version as a tuple (Example (48, 2))
+             or an empty tuple () on failure.
+    '''
+    try:
+        output = subprocess.check_output(
+            ['gnome-shell', '--version'],
+            stderr=subprocess.STDOUT).decode('utf-8').strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return ()
+    match = re.search(r'(\d+(\.\d+)+)', output)
+    if not match:
+        return ()
+    return tuple(int(digits) for digits in match.group(1).split('.'))
+
 class KeyvalsToKeycodes:
     '''Class to convert key values to key codes.
 
