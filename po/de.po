@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-06-19 15:51+0200\n"
-"PO-Revision-Date: 2025-06-19 14:34+0000\n"
+"PO-Revision-Date: 2025-06-20 10:02+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/de/>\n"
@@ -1638,23 +1638,28 @@ msgstr ""
 
 #: setup/main.py:2255
 msgid "Symbol for \"enabled\" mode"
-msgstr ""
+msgstr "Symbol für den „aktiviert“-Modus"
 
 #: setup/main.py:2257 setup/main.py:2263
 msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
 msgstr ""
+"Das Symbol, das angezeigt wird, wenn Typing Booster aktiv ist (z. B. bei "
+"transliterierter Eingabe, Vervollständigungsvorschlägen, Rechtschreibprüfung "
+"etc.)."
 
 #: setup/main.py:2282
 msgid "Symbol for \"disabled\" (Direct Input) mode"
-msgstr ""
+msgstr "Symbol für den „deaktiviert“-Modus (Direkteingabe)"
 
 #: setup/main.py:2284 setup/main.py:2289
 msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
 msgstr ""
+"Das Symbol, das angezeigt wird, wenn Typing Booster deaktiviert ist (Eingabe "
+"wird direkt durchgeleitet, ohne Verarbeitung)."
 
 #. Translators:
 #: setup/main.py:2308 setup/main.py:3486

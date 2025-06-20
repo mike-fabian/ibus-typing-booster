@@ -10,16 +10,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-06-19 15:51+0200\n"
-"PO-Revision-Date: 2025-05-11 21:50+0000\n"
+"PO-Revision-Date: 2025-06-20 10:02+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ja/>\n"
+"Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.11.3\n"
+"X-Generator: Weblate 5.12.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:266
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -848,7 +848,7 @@ msgstr ""
 msgid ""
 "The ibus keymap to use when forcing an IBus keymap while Typing Booster is "
 "active."
-msgstr ""
+msgstr "Typing Boosterが有効な場合に強制使用するIBusキーマップ。"
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -1473,19 +1473,13 @@ msgstr ""
 "ここでは、ユーザーデータベースからの候補に使用するラベルを選択できます。"
 
 #: setup/main.py:2115
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from the user database. This setting only has an effect "
-#| "if the use of color for candidates from the user database is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
 "use of a label for candidates from the user database is enabled."
 msgstr ""
-"ここでは、ユーザーデータベースからの候補に使用する色を指定できます。この設定"
-"は、ユーザーデータベースからの候補に色を使用するオプションが有効な場合のみ効"
-"果があります。"
+"ユーザーデータベース由来の候補に使用するラベルを指定します。この設定は、ユー"
+"ザーデータベースの候補にラベルを使用する設定が有効な場合のみ反映されます。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1501,19 +1495,12 @@ msgid ""
 msgstr "ここでは、スペルチェックからの候補に使用するラベルを選択できます。"
 
 #: setup/main.py:2150
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from spellchecking. This setting only has an effect if "
-#| "the use of color for candidates from spellchecking is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
 "a label for candidates from spellchecking is enabled."
-msgstr ""
-"ここでは、スペルチェックからの候補に使用する色を指定できます。この設定は、ス"
-"ペルチェックからの候補に色を使用するオプションが有効な場合のみ効果がありま"
-"す。"
+msgstr "スペルチェック由来の候補に使用するラベルを指定します。この設定は、スペルチェ"
+"ックの候補にラベルを使用する設定が有効な場合のみ反映されます。"
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
@@ -1529,18 +1516,12 @@ msgid ""
 msgstr "ここでは、辞書からの候補に使用するラベルを選択できます。"
 
 #: setup/main.py:2185
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from a dictionary. This setting only has an effect if "
-#| "the use of color for candidates from a dictionary is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
 "a label for candidates from a dictionary is enabled."
-msgstr ""
-"ここでは、辞書からの候補に使用する色を指定できます。この設定は、辞書からの候"
-"補に色を使用するオプションが有効な場合のみ効果があります。"
+msgstr "辞書由来の候補に使用するラベルを指定します。この設定は、辞書の候補にラベルを"
+"使用する設定が有効な場合のみ反映されます。"
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
@@ -1571,36 +1552,32 @@ msgstr ""
 
 #. Translators: Tooltip for an entry
 #: setup/main.py:2237
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a label is used to indicate when ibus-typing-"
-#| "booster is busy."
 msgid ""
 "Here you can specify which label is used to indicate when ibus-typing-"
 "booster is busy."
-msgstr ""
-"ここでは、ibus-typing-boosterがビジー状態のときに示すラベルを使用するかどうか"
-"を選択できます。"
+msgstr "ibus-typing-boosterが処理中であることを示すラベルを指定します。"
 
 #: setup/main.py:2255
 msgid "Symbol for \"enabled\" mode"
-msgstr ""
+msgstr "「有効」モード時の記号"
 
 #: setup/main.py:2257 setup/main.py:2263
 msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
-msgstr ""
+msgstr "Typing "
+"Boosterが有効時の表示記号（入力の変換、補完候補の表示、スペルチェックなどを実"
+"行中）。"
 
 #: setup/main.py:2282
 msgid "Symbol for \"disabled\" (Direct Input) mode"
-msgstr ""
+msgstr "「無効」モード時の記号（ダイレクト入力）"
 
 #: setup/main.py:2284 setup/main.py:2289
 msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
-msgstr ""
+msgstr "Typing Boosterが無効時の表示記号（入力は処理されず直接通過します）。"
 
 #. Translators:
 #: setup/main.py:2308 setup/main.py:3486
