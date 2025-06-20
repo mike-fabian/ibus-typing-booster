@@ -2565,6 +2565,13 @@ class SetupUI(Gtk.Window): # type: ignore
             if symbol:
                 special_defaults['inputmodetruesymbol'] = symbol
                 special_defaults['inputmodefalsesymbol'] = f'•{symbol}'
+        elif (itb_util.is_desktop('gnome')
+              and itb_util.get_gnome_shell_version() >= (49, 0, 0)):
+            # If running on Gnome and gnome-shell is new enough to contain
+            # https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/3753
+            # make the input mode symbols black and white:
+            special_defaults['inputmodetruesymbol'] = '🚀\uFE0E'
+            special_defaults['inputmodefalsesymbol'] = '🐌\uFE0E'
         for key in schema.list_keys():
             if key == 'keybindings': # keybindings are special!
                 default_value = itb_util.variant_to_value(
@@ -2584,7 +2591,8 @@ class SetupUI(Gtk.Window): # type: ignore
             else:
                 default_value = itb_util.variant_to_value(
                     self._gsettings.get_default_value(key))
-                if self._engine_name != 'typing-booster':
+                if (self._engine_name != 'typing-booster'
+                    or key in ('inputmodetruesymbol', 'inputmodefalsesymbol')):
                     default_value = special_defaults.get(key, default_value)
                 user_value = itb_util.variant_to_value(
                     self._gsettings.get_user_value(key))
