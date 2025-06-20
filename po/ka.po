@@ -10,16 +10,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-06-19 15:51+0200\n"
-"PO-Revision-Date: 2025-05-12 07:44+0000\n"
+"PO-Revision-Date: 2025-06-20 05:34+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
-"Language-Team: Georgian <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ka/>\n"
+"Language-Team: Georgian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ka/>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11.3\n"
+"X-Generator: Weblate 5.12.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:266
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -855,6 +855,8 @@ msgid ""
 "The ibus keymap to use when forcing an IBus keymap while Typing Booster is "
 "active."
 msgstr ""
+"ibus-ის ღილაკების რუკა, რომელიც გამოყენებული იქნება IBus-ის ღილაკების რუკის "
+"ძალით გამოყენებისას, როცა კრეფის ამაჩქარებელი აქტიურია."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -1511,20 +1513,15 @@ msgstr ""
 "საძებნ ცხრილში, რომელიც მომხმარებლის ბაზიდან მოდის."
 
 #: setup/main.py:2115
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from the user database. This setting only has an effect "
-#| "if the use of color for candidates from the user database is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
 "use of a label for candidates from the user database is enabled."
 msgstr ""
-"აქ შეგიძლიათ მიუთითოთ, რომელი ფერი იქნება გამოყენებული კანდიდატებისთვის, "
+"აქ შეგიძლიათ მიუთითოთ, რომელი ჭდე იქნება გამოყენებული კანდიდატებისთვის, "
 "რომლის საძებნი ცხრილიც მომხმარებლის ბაზიდან მოდის. ამ პარამეტრს ეფექტი "
-"მხოლოდ მაშინ აქვს, როცა მომხმარებლის ცხრილიდან მოსული კანდიდატების "
-"გაფერადება ჩართულია."
+"მხოლოდ მაშინ აქვს, როცა მომხმარებლის ცხრილიდან მოსული კანდიდატების ჭდეები "
+"ჩართულია."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1542,19 +1539,14 @@ msgstr ""
 "საძებნ ცხრილში, რომელიც მართლწერიდან მოდის."
 
 #: setup/main.py:2150
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from spellchecking. This setting only has an effect if "
-#| "the use of color for candidates from spellchecking is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
 "a label for candidates from spellchecking is enabled."
 msgstr ""
-"აქ შეგიძლიათ მიუთითოთ, რომელი ფერი იქნება გამოყენებული კანდიდატებისთვის, "
+"აქ შეგიძლიათ მიუთითოთ, რომელი ჭდე იქნება გამოყენებული კანდიდატებისთვის, "
 "რომლის საძებნი ცხრილიც მართლწერიდან მოდის. ამ პარამეტრს ძალა მხოლოდ მაშინ "
-"აქვს, როცა მართლწერიდან მოსული კანდიდატების გაფერადება ჩართულია."
+"აქვს, როცა მართლწერიდან მოსული კანდიდატების ჭდეები ჩართულია."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
@@ -1572,19 +1564,14 @@ msgstr ""
 "ცხრილში, რომელიც ლექსიკონიდან მოდის."
 
 #: setup/main.py:2185
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from a dictionary. This setting only has an effect if "
-#| "the use of color for candidates from a dictionary is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
 "a label for candidates from a dictionary is enabled."
 msgstr ""
-"აქ შეგიძლიათ მიუთითოთ, რომელი ფერი იქნება გამოყენებული კანდიდატებისთვის, "
+"აქ შეგიძლიათ მიუთითოთ, რომელი ჭდე იქნება გამოყენებული კანდიდატებისთვის, "
 "რომლის საძებნი ცხრილიც ლექსიკონიდან მოდის. ამ პარამეტრს ძალა მხოლოდ მაშინ "
-"აქვს, როცა ლექსიკონიდან მოსული კანდიდატების გაფერადება ჩართულია."
+"აქვს, როცა ლექსიკონიდან მოსული კანდიდატების ჭდეები ჩართულია."
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
@@ -1617,36 +1604,36 @@ msgstr ""
 
 #. Translators: Tooltip for an entry
 #: setup/main.py:2237
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a label is used to indicate when ibus-typing-"
-#| "booster is busy."
 msgid ""
 "Here you can specify which label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
-"აქ შეგიძლიათ აირჩიოთ, იქნება თუ არა ჭდე გამოყენებული იმის საჩვენებლად, როცა "
+"აქ შეგიძლიათ მიუთითოთ, რომელი ჭდე იქნება გამოყენებული იმის საჩვენებლად, რომ "
 "ibus-typing-booster დაკავებულია."
 
 #: setup/main.py:2255
 msgid "Symbol for \"enabled\" mode"
-msgstr ""
+msgstr "სიმბოლო რეჟიმისთვის \"ჩართულია\""
 
 #: setup/main.py:2257 setup/main.py:2263
 msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
 msgstr ""
+"სიმბოლო, რომელიც გამოჩნდება, როცა კრეფის ამაჩქარებელი აქტიურია (შეყვანის "
+"ტრანსლიტერაცია, დასრულებების რჩევები, მართლწერის შექმოწმება და ა.შ.)."
 
 #: setup/main.py:2282
 msgid "Symbol for \"disabled\" (Direct Input) mode"
-msgstr ""
+msgstr "სიმბოლო რეჟიმისთვის \"გამორთულია\" (პირდაპირ შეყვანა)"
 
 #: setup/main.py:2284 setup/main.py:2289
 msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
 msgstr ""
+"სიმბოლო, რომელიც ნაჩვენებია, როცა კრეფის ამაჩქარებელი გამორთულია (შეყვანილი "
+"სიმბოლოები გამჭოლად, დამუშავების გარეშე იქნება გადაცემული)."
 
 #. Translators:
 #: setup/main.py:2308 setup/main.py:3486
