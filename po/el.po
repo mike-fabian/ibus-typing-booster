@@ -10,8 +10,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-06-19 15:51+0200\n"
-"PO-Revision-Date: 2025-06-22 09:56+0000\n"
-"Last-Translator: Jim Spentzos <jimspentzos2000@gmail.com>\n"
+"PO-Revision-Date: 2025-06-22 11:26+0000\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Greek <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/el/>\n"
 "Language: el\n"
@@ -1546,7 +1547,7 @@ msgstr "Ρύθμιση"
 #. for the currently selected input method
 #: setup/main.py:2818 setup/main.py:4291
 msgid "Value"
-msgstr ""
+msgstr "Τιμή"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1560,7 +1561,7 @@ msgstr ""
 
 #: setup/main.py:2890 setup/main.py:3489 setup/main.py:3574 setup/main.py:5276
 msgid "_Cancel"
-msgstr ""
+msgstr "_Ακύρωση"
 
 #: setup/main.py:2891 setup/main.py:3490 setup/main.py:3575 setup/main.py:5277
 msgid "_OK"
@@ -1621,7 +1622,7 @@ msgstr ""
 
 #: setup/main.py:5273
 msgid "Open File ..."
-msgstr ""
+msgstr "Άνοιγμα αρχείου"
 
 #: setup/main.py:5290
 #, python-format
@@ -1651,7 +1652,7 @@ msgstr ""
 
 #: setup/main.py:7137
 msgid "ibus is not running."
-msgstr ""
+msgstr "Το ibus δεν εκτελείται."
 
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:9
 msgid ""
