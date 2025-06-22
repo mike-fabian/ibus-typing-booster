@@ -2,50 +2,49 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Giannis Antypas <gianni.antypas@gmail.com>, 2024.
+# Jim Spentzos <jimspentzos2000@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-06-19 15:51+0200\n"
-"PO-Revision-Date: 2024-10-31 02:50+0000\n"
-"Last-Translator: Giannis Antypas <gianni.antypas@gmail.com>\n"
-"Language-Team: Greek <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/el/>\n"
+"PO-Revision-Date: 2025-06-22 09:45+0000\n"
+"Last-Translator: Jim Spentzos <jimspentzos2000@gmail.com>\n"
+"Language-Team: Greek <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.7.2\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:266
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
-msgstr ""
+msgstr "Επιλογή Emoji"
 
 #: engine/emoji-picker.desktop.in.in:3
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:7
-#, fuzzy
-#| msgid "Emoji Version:"
 msgid "Emoji browsing tool"
-msgstr "Έκδοση Emoji:"
+msgstr "Εργαλείο αναζήτησης emoji"
 
 #: engine/emoji_picker.py:377
 msgid "Clear recently used"
-msgstr ""
+msgstr "Απαλοιφή πρόσφατων"
 
 #: engine/emoji_picker.py:383 setup/main.py:235
 msgid "About"
-msgstr ""
+msgstr "Πληροφορίες"
 
 #: engine/emoji_picker.py:387
 msgid "Quit"
-msgstr ""
+msgstr "Έξοδος"
 
 #: engine/emoji_picker.py:396
 msgid "Search for emoji"
-msgstr ""
+msgstr "Αναζήτηση emoji"
 
 #: engine/emoji_picker.py:408
 msgid "Set the font to display emoji"
@@ -87,7 +86,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:705
 msgid "Keywords"
-msgstr "Λέξεις κλειδιά"
+msgstr "Λέξεις-κλειδιά"
 
 #: engine/emoji_picker.py:723
 msgid "Fonts used to render this emoji:"
@@ -99,14 +98,14 @@ msgstr "Έκδοση Unicode:"
 
 #: engine/emoji_picker.py:785
 msgid "Emoji Version:"
-msgstr "Έκδοση Emoji:"
+msgstr "Έκδοση emoji:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:792
 msgid "Emoji properties:"
-msgstr "Ιδιότητες Emoji:"
+msgstr "Ιδιότητες emoji:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
@@ -145,11 +144,11 @@ msgstr ""
 
 #: engine/emoji_picker.py:1690 engine/emoji_picker.py:1817
 msgid "Copied to clipboard!"
-msgstr ""
+msgstr "Αντιγράφηκε στο πρόχειρο!"
 
 #: engine/emoji_picker.py:2144
 msgid "Lookup on emojipedia"
-msgstr ""
+msgstr "Εύρεση στο emojipedia"
 
 #: engine/emoji_picker.py:2290 engine/emoji_picker.py:2291
 #: engine/emoji_picker.py:2292 setup/main.py:1627
@@ -218,7 +217,7 @@ msgstr ""
 
 #: engine/hunspell_table.py:2436
 msgid "Setup"
-msgstr "Διαρρύθμιση"
+msgstr "Ρύθμιση"
 
 #: engine/hunspell_table.py:2439 setup/main.py:147
 msgid "Preferences for ibus-typing-booster"
@@ -258,7 +257,7 @@ msgstr ""
 #: engine/itb_emoji.py:1205 engine/itb_emoji.py:1206 engine/itb_emoji.py:1207
 #: engine/itb_emoji.py:1413
 msgid "people"
-msgstr ""
+msgstr "άνθρωποι"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
