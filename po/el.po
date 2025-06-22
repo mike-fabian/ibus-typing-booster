@@ -10,9 +10,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-06-19 15:51+0200\n"
-"PO-Revision-Date: 2025-06-22 09:53+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"PO-Revision-Date: 2025-06-22 09:56+0000\n"
+"Last-Translator: Jim Spentzos <jimspentzos2000@gmail.com>\n"
 "Language-Team: Greek <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/el/>\n"
 "Language: el\n"
@@ -169,7 +168,7 @@ msgstr "Ανενεργή"
 #: engine/hunspell_table.py:551 engine/hunspell_table.py:585
 #: engine/hunspell_table.py:606
 msgid "On"
-msgstr "Ενεργό"
+msgstr "Ενεργή"
 
 #: engine/hunspell_table.py:570
 msgid "Input mode"
@@ -1529,17 +1528,17 @@ msgstr ""
 
 #: setup/main.py:2614
 msgid "Spell checking"
-msgstr ""
+msgstr "Ορθογραφικός έλεγχος"
 
 #: setup/main.py:2630
 msgid "Emoji"
-msgstr ""
+msgstr "Emoji"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
 #: setup/main.py:2809
 msgid "Setting"
-msgstr ""
+msgstr "Ρύθμιση"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1565,7 +1564,7 @@ msgstr ""
 
 #: setup/main.py:2891 setup/main.py:3490 setup/main.py:3575 setup/main.py:5277
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: setup/main.py:2921
 msgid "Another instance of this app is already running."
@@ -1584,7 +1583,7 @@ msgstr ""
 
 #: setup/main.py:3758
 msgid "Add dictionary"
-msgstr ""
+msgstr "Προσθήκη λεξικού"
 
 #: setup/main.py:4101
 msgid "Add input method"
@@ -1594,7 +1593,7 @@ msgstr ""
 #. for the currently selected input method
 #: setup/main.py:4282
 msgid "Variable"
-msgstr ""
+msgstr "Μεταβλητή"
 
 #: setup/main.py:5158
 #, python-format
