@@ -2812,6 +2812,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # is zero!
         if ((self.is_empty()
              and self._min_char_complete != 0
+             and not self._lookup_table_shows_related_candidates
              and not self._typed_compose_sequence)
             or self._hide_input
             or self.get_lookup_table().get_number_of_candidates() == 0
