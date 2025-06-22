@@ -11,7 +11,8 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2025-06-19 15:51+0200\n"
 "PO-Revision-Date: 2025-06-22 09:53+0000\n"
-"Last-Translator: Jim Spentzos <jimspentzos2000@gmail.com>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Greek <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/el/>\n"
 "Language: el\n"
@@ -168,7 +169,7 @@ msgstr "Ανενεργή"
 #: engine/hunspell_table.py:551 engine/hunspell_table.py:585
 #: engine/hunspell_table.py:606
 msgid "On"
-msgstr ""
+msgstr "Ενεργό"
 
 #: engine/hunspell_table.py:570
 msgid "Input mode"
@@ -531,7 +532,7 @@ msgstr ""
 
 #: setup/main.py:454 setup/main.py:515
 msgid "No"
-msgstr ""
+msgstr "Όχι"
 
 #: setup/main.py:456
 msgid "Yes, with fallback to popup"
@@ -1017,7 +1018,7 @@ msgstr "Προσθήκη συντόμευσης"
 #. existing shortcuts
 #: setup/main.py:1426
 msgid "Shortcut"
-msgstr ""
+msgstr "Συντόμευση"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -1033,11 +1034,11 @@ msgstr ""
 #. existing key bindings
 #: setup/main.py:1472
 msgid "Command"
-msgstr ""
+msgstr "Εντολή"
 
 #: setup/main.py:1503
 msgid "Edit"
-msgstr ""
+msgstr "Επεξεργασία"
 
 #: setup/main.py:1507
 msgid "Edit the key bindings for the selected command"
