@@ -129,11 +129,13 @@ class ItbTestCase(unittest.TestCase):
     ibus_lookup_table = IBus.LookupTable
     ibus_property = IBus.Property
     ibus_prop_list = IBus.PropList
+
     _tempdir: Optional[tempfile.TemporaryDirectory] = None # type: ignore[type-arg]
     # Python 3.12+: _tempdir: Optional[tempfile.TemporaryDirectory[str]] = None
     _orig_m17ndir: Optional[str] = None
     _m17ndir: Optional[str] = None
     _m17n_config_file: Optional[str] = None
+    _orig_xcomposefile: Optional[str] = None
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -144,6 +146,11 @@ class ItbTestCase(unittest.TestCase):
         # Copy test input methods into M17NDIR
         for mim_path in glob.glob(os.path.join(os.path.dirname(__file__), '*.mim')):
             shutil.copy(mim_path, cls._m17ndir)
+        # Avoid failing test cases because of stuff in the users '~/.XCompose' file.
+        cls._orig_xcomposefile = os.environ.pop('XCOMPOSEFILE', None)
+        os.environ['XCOMPOSEFILE'] = os.path.join(cls._tempdir.name, 'XCompose')
+        shutil.copy('XCompose', cls._tempdir.name)
+        # List contents of Temporary directory used for m17n files and XCompose:
         m17n_dir_files = [os.path.join(cls._m17ndir, name)
                           for name in os.listdir(cls._m17ndir)]
         for path in m17n_dir_files:
@@ -155,6 +162,10 @@ class ItbTestCase(unittest.TestCase):
             os.environ['M17NDIR'] = cls._orig_m17ndir
         else:
             _value = os.environ.pop('M17NDIR', None)
+        if cls._orig_xcomposefile is not None:
+            os.environ['XCOMPOSEFILE'] = cls._orig_xcomposefile
+        else:
+            _value = os.environ.pop('XCOMPOSEFILE', None)
         if cls._tempdir is not None:
             cls._tempdir.cleanup()
 

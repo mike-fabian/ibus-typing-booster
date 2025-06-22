@@ -59,6 +59,7 @@ test_exec_SCRIPTS = \
 	chant_d_automne.txt \
 	the_road_not_taken.txt \
 	$(TEST_MIM_FILES) \
+	XCompose \
 	$(NULL)
 test_execdir = $(libexecdir)/installed-tests/ibus-typing-booster
 
@@ -86,6 +87,7 @@ EXTRA_DIST = \
 	chant_d_automne.txt \
 	the_road_not_taken.txt \
 	$(TEST_MIM_FILES) \
+	XCompose \
 	$(TESTS) \
 	$(NULL)
 

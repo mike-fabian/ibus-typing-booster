@@ -1,0 +1,11 @@
+# Special XCOMPOSEFILE to use when running test cases to avoid that an
+# ~/.XCompose file in the home directory of the user running the test
+# cases influences the test results.
+
+# %H  expands to the user's home directory (the $HOME environment variable)
+# %L  expands to the name of the locale specific Compose file (i.e.,
+#     "/usr/share/X11/locale/<localename>/Compose")
+# %S  expands to the name of the system directory for Compose files (i.e.,
+#     "/usr/share/X11/locale")
+
+include "%L"

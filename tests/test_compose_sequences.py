@@ -21,7 +21,11 @@
 This file implements test cases for compose sequences.
 '''
 
+from typing import Optional
 import sys
+import os
+import shutil
+import tempfile
 import logging
 import locale
 import unittest
@@ -44,6 +48,31 @@ import testutils # pylint: disable=import-error
 # pylint: disable=missing-class-docstring
 
 class ComposeSequencesTestCase(unittest.TestCase):
+    _tempdir: Optional[tempfile.TemporaryDirectory] = None # type: ignore[type-arg]
+    # Python 3.12+: _tempdir: Optional[tempfile.TemporaryDirectory[str]] = None
+    _orig_xcomposefile: Optional[str] = None
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        # Avoid failing test cases because of stuff in the users '~/.XCompose' file.
+        cls._tempdir = tempfile.TemporaryDirectory() # pylint: disable=consider-using-with
+        cls._orig_xcomposefile = os.environ.pop('XCOMPOSEFILE', None)
+        os.environ['XCOMPOSEFILE'] = os.path.join(cls._tempdir.name, 'XCompose')
+        shutil.copy('XCompose', cls._tempdir.name)
+        tempdir_files = [os.path.join(cls._tempdir.name, basename)
+                         for basename in os.listdir(cls._tempdir.name)]
+        for path in tempdir_files:
+            LOGGER.info('Temporary directory content: %r', path)
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        if cls._orig_xcomposefile is not None:
+            os.environ['XCOMPOSEFILE'] = cls._orig_xcomposefile
+        else:
+            _value = os.environ.pop('XCOMPOSEFILE', None)
+        if cls._tempdir is not None:
+            cls._tempdir.cleanup()
+
     def setUp(self) -> None:
         locale.setlocale(locale.LC_CTYPE, 'en_US.UTF-8')
         self._compose_sequences = itb_util.ComposeSequences()
