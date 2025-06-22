@@ -10,8 +10,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-06-19 15:51+0200\n"
-"PO-Revision-Date: 2025-06-22 09:46+0000\n"
-"Last-Translator: Jim Spentzos <jimspentzos2000@gmail.com>\n"
+"PO-Revision-Date: 2025-06-22 09:48+0000\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Greek <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/el/>\n"
 "Language: el\n"
@@ -289,7 +290,7 @@ msgstr "αντικείμενα"
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1213 engine/itb_emoji.py:1417
 msgid "symbols"
-msgstr ""
+msgstr "Σύμβολα"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1214 engine/itb_emoji.py:1403
@@ -352,7 +353,7 @@ msgstr ""
 
 #: engine/itb_util.py:4848 engine/itb_util.py:5590
 msgid "Unknown error"
-msgstr ""
+msgstr "Άγνωστο σφάλμα"
 
 #: engine/itb_util.py:5556
 msgid "Native Keyboard"
@@ -374,7 +375,7 @@ msgstr ""
 
 #: engine/itb_util.py:6285
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. pylint: disable=consider-using-f-string
 #. Translators: This is from the dialog to enter a key or a
@@ -414,7 +415,7 @@ msgstr ""
 
 #: setup/main.py:153
 msgid "Preferences"
-msgstr ""
+msgstr "Προτιμήσεις"
 
 #: setup/main.py:244
 msgid "Restore all defaults"
@@ -422,7 +423,7 @@ msgstr ""
 
 #: setup/main.py:255 setup/main.py:7061
 msgid "_Close"
-msgstr ""
+msgstr "_Κλείσιμο"
 
 #. Translators: This is the label of a tab in the setup
 #. tool. Here the user can setup the dictionaries for the
@@ -438,7 +439,7 @@ msgstr ""
 #. behaviour of ibus-typing-booster.
 #: setup/main.py:296
 msgid "Options"
-msgstr ""
+msgstr "_Επιλογές"
 
 #. Translators: This is a label of a tab in the setup tool.
 #. Here the user can create custom shortcuts. For example if
