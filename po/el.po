@@ -10,9 +10,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-06-19 15:51+0200\n"
-"PO-Revision-Date: 2025-06-22 09:48+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"PO-Revision-Date: 2025-06-22 09:53+0000\n"
+"Last-Translator: Jim Spentzos <jimspentzos2000@gmail.com>\n"
 "Language-Team: Greek <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/el/>\n"
 "Language: el\n"
@@ -84,7 +83,7 @@ msgstr "Κατηγορίες"
 
 #: engine/emoji_picker.py:704
 msgid "Unicode categories"
-msgstr ""
+msgstr "Κατηγορίες Unicode"
 
 #: engine/emoji_picker.py:705
 msgid "Keywords"
@@ -159,12 +158,12 @@ msgstr "Προεπιλογή συστήματος"
 
 #: engine/emoji_picker.py:2426
 msgid "Set Font"
-msgstr ""
+msgstr "Ορισμός γραμματοσειράς"
 
 #: engine/hunspell_table.py:546 engine/hunspell_table.py:580
 #: engine/hunspell_table.py:601
 msgid "Off"
-msgstr ""
+msgstr "Ανενεργή"
 
 #: engine/hunspell_table.py:551 engine/hunspell_table.py:585
 #: engine/hunspell_table.py:606
@@ -290,12 +289,12 @@ msgstr "αντικείμενα"
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1213 engine/itb_emoji.py:1417
 msgid "symbols"
-msgstr "Σύμβολα"
+msgstr "σύμβολα"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1214 engine/itb_emoji.py:1403
 msgid "flags"
-msgstr ""
+msgstr "σημαίες"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
@@ -383,7 +382,7 @@ msgstr "Ακύρωση"
 #. command.
 #: engine/itb_util.py:6292
 msgid "Please press a key (or a key combination)"
-msgstr ""
+msgstr "Πατήστε ένα πλήκτρο (ή έναν συνδυασμό πλήκτρων)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
@@ -419,7 +418,7 @@ msgstr "Προτιμήσεις"
 
 #: setup/main.py:244
 msgid "Restore all defaults"
-msgstr ""
+msgstr "Επαναφορά όλων των προεπιλογών"
 
 #: setup/main.py:255 setup/main.py:7061
 msgid "_Close"
@@ -432,14 +431,14 @@ msgstr "_Κλείσιμο"
 #. in.
 #: setup/main.py:280
 msgid "Dictionaries and input methods"
-msgstr ""
+msgstr "Λεξικά και μέθοδοι εισαγωγής"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence the
 #. behaviour of ibus-typing-booster.
 #: setup/main.py:296
 msgid "Options"
-msgstr "_Επιλογές"
+msgstr "Επιλογές"
 
 #. Translators: This is a label of a tab in the setup tool.
 #. Here the user can create custom shortcuts. For example if
@@ -448,7 +447,7 @@ msgstr "_Επιλογές"
 #. candidate, he can define such a custom shortcut here.
 #: setup/main.py:312
 msgid "Custom shortcuts"
-msgstr ""
+msgstr "Προσαρμοσμένες συντομεύσεις"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can customize the key bindings to execute
@@ -472,14 +471,14 @@ msgstr ""
 #. diffent types of candidates should be marked with labels.
 #: setup/main.py:350
 msgid "Appearance"
-msgstr ""
+msgstr "Εμφάνιση"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
 #: setup/main.py:366 setup/main.py:2637
 msgid "Speech recognition"
-msgstr ""
+msgstr "Αναγνώριση ομιλίας"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up whether some settings should change
@@ -580,7 +579,7 @@ msgstr ""
 
 #: setup/main.py:519
 msgid "Yes, always"
-msgstr ""
+msgstr "Ναι, πάντα"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
@@ -804,7 +803,7 @@ msgstr ""
 #. “English” keymap used.
 #: setup/main.py:843
 msgid "English"
-msgstr ""
+msgstr "Αγγλικά"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
@@ -913,19 +912,19 @@ msgstr ""
 
 #: setup/main.py:1077
 msgid "Add a dictionary"
-msgstr ""
+msgstr "Προσθήκη λεξικού"
 
 #: setup/main.py:1088
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "Κατάργηση λεξικού"
 
 #: setup/main.py:1099
 msgid "Move dictionary up"
-msgstr ""
+msgstr "Μετακίνηση λεξικού προς τα πάνω"
 
 #: setup/main.py:1111
 msgid "Move dictionary down"
-msgstr ""
+msgstr "Μετακίνηση λεξικού προς τα κάτω"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
@@ -1008,11 +1007,11 @@ msgstr ""
 
 #: setup/main.py:1381
 msgid "Delete shortcut"
-msgstr ""
+msgstr "Διαγραφή συντόμευσης"
 
 #: setup/main.py:1392
 msgid "Add shortcut"
-msgstr ""
+msgstr "Προσθήκη συντόμευσης"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -1024,7 +1023,7 @@ msgstr ""
 #. existing shortcuts
 #: setup/main.py:1434
 msgid "Shortcut expansion"
-msgstr ""
+msgstr "Επέκταση συντόμευσης"
 
 #: setup/main.py:1448
 msgid "Current key bindings:"
