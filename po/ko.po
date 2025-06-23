@@ -11,16 +11,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-06-22 19:25+0200\n"
-"PO-Revision-Date: 2025-05-16 09:36+0000\n"
+"PO-Revision-Date: 2025-06-23 11:53+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
-"Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ko/>\n"
+"Language-Team: Korean <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.11.3\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:266
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -846,7 +846,7 @@ msgstr ""
 msgid ""
 "The ibus keymap to use when forcing an IBus keymap while Typing Booster is "
 "active."
-msgstr ""
+msgstr "입력 가속기가 활성화 중일 때에 IBus 키맵을 강제 할 때 사용하는 ibus 키맵."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -1487,19 +1487,15 @@ msgstr ""
 "해 사용되었는지 여부를 선택 할 수 있습니다."
 
 #: setup/main.py:2115
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from the user database. This setting only has an effect "
-#| "if the use of color for candidates from the user database is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
 "use of a label for candidates from the user database is enabled."
 msgstr ""
-"여기에서 당신은 사용자 데이타베이스에서 나온 조회 테이블의 후보를 위해 사용되"
-"도록 지정 할 수 있습니다. 이와 같은 설정은 만약 사용자 데이타베이스에서 후보"
-"를 위한 색상의 사용이 활성화 되었을 때만 효과를 갖습니다."
+"여기에서 당신은 사용자 데이타베이스에서 나온 조회 테이블의 후보를 위해 "
+"사용되도록 라벨을 지정 할 수 있습니다. 이와 같은 설정은 만약 사용자 "
+"데이타베이스에서 후보를 위한 라벨의 사용이 활성화 되었을 때만 효과를 "
+"갖습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1517,19 +1513,14 @@ msgstr ""
 "는지 여부를 선택 할 수 있습니다."
 
 #: setup/main.py:2150
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from spellchecking. This setting only has an effect if "
-#| "the use of color for candidates from spellchecking is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
 "a label for candidates from spellchecking is enabled."
 msgstr ""
-"여기에서 당신은 철자점검에서 나온 조회 테이블의 후보를 위해 사용되는 색상을 "
-"지정 할 수 있습니다. 이와 같은 설정은 만약 철저점검에서 후보를 위한 색상의 사"
-"용이 활성화 되었을 때에만 효과를 갖습니다."
+"여기에서 당신은 철자점검에서 나온 조회 테이블의 후보를 위해 사용되는 라벨을 "
+"지정 할 수 있습니다. 이와 같은 설정은 만약 철저점검에서 후보를 위한 라벨의 "
+"사용이 활성화 되었을 때에만 효과를 갖습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
@@ -1547,19 +1538,14 @@ msgstr ""
 "지 여부를 선택 할 수 있습니다."
 
 #: setup/main.py:2185
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from a dictionary. This setting only has an effect if "
-#| "the use of color for candidates from a dictionary is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
 "a label for candidates from a dictionary is enabled."
 msgstr ""
-"여기에서 당신은 사전에서 나온 조회 테이블의 후보를 위해 사용하려는 색상을 지"
-"정 할 수 있습니다. 이와 같은 설정은 만약 사전에서 후보를 위한 색상의 사용이 "
-"활성화 되었을 때에만 효과가 있습니다."
+"여기에서 당신은 사전에서 나온 조회 테이블의 후보를 위해 사용하려는 라벨을 "
+"지정 할 수 있습니다. 이와 같은 설정은 만약 사전에서 후보를 위한 라벨의 "
+"사용이 활성화 되었을 때에만 효과가 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
@@ -1592,31 +1578,27 @@ msgstr ""
 
 #. Translators: Tooltip for an entry
 #: setup/main.py:2237
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a label is used to indicate when ibus-typing-"
-#| "booster is busy."
 msgid ""
 "Here you can specify which label is used to indicate when ibus-typing-"
 "booster is busy."
-msgstr ""
-"여기에서 당신은 이름표가 ibus-typing-booster가 동작 중일 때에도 사용되는지 여"
-"부를 선택 할 수 있습니다."
+msgstr "여기에서 ibus-typing-booster가 동작 중일 때 표시하도록 사용되는 라벨을 지정 "
+"할 수 있습니다."
 
 #: setup/main.py:2255
 msgid "Symbol for \"enabled\" mode"
-msgstr ""
+msgstr "\"enabled\" 방식을 위한 기호"
 
 #. Translators: Tooltip for 'Symbol for "enabled" mode'
 #: setup/main.py:2258 setup/main.py:2265
 msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
-msgstr ""
+msgstr "기호는 입력 가속기가 활성화 중 일 때에 표시됩니다 (음역 입력, 완성 제안, "
+"철자점검 등.)."
 
 #: setup/main.py:2284
 msgid "Symbol for \"disabled\" (Direct Input) mode"
-msgstr ""
+msgstr "\"disabled\" (직접 입력) 방식을 위한 기호"
 
 #. Translators: Tooltip for 'Symbol for "disabled" (Direct
 #. Input) mode'
@@ -1624,7 +1606,8 @@ msgstr ""
 msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
-msgstr ""
+msgstr "기호는 입력 가속기가 비활성화 되었을 때에 표시됩니다 (입력은 처리 없이 직접 "
+"전달됩니다)."
 
 #. Translators:
 #: setup/main.py:2314 setup/main.py:3500
