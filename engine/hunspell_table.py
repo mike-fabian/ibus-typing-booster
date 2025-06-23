@@ -42,6 +42,7 @@ import logging
 import threading
 import subprocess
 from gettext import dgettext
+from dataclasses import dataclass, field
 # pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
@@ -118,6 +119,46 @@ EMOJI_PREDICTION_MODE_SYMBOL = '🙂'
 OFF_THE_RECORD_MODE_SYMBOL = '🕵'
 
 IBUS_VERSION = (IBus.MAJOR_VERSION, IBus.MINOR_VERSION, IBus.MICRO_VERSION)
+
+@dataclass(frozen=False)
+class SurroundingText:
+    '''
+    A dataclass containing the information about surrounding text
+
+    text: str = ''              The text
+    cursor_pos: int = 0         The cursor position
+    anchor_pos: int = 0         The anchor position. It should be different from
+                                the cursor position if a selection is active.
+    event: threading.event = field(default_factory=threading.Event)
+                                Used to check whether an update of this
+                                surrounding text object happened since
+                                the last trigger requesting an update
+    '''
+    text: str = ''
+    cursor_pos: int = 0
+    anchor_pos: int = 0
+    # Do **not** use `event: threading.Event = threading.Event()`!
+    # That would reuse the same Event instance across all SurroundingText objects!
+    event: threading.Event = field(default_factory=threading.Event)
+
+    def copy(self) -> 'SurroundingText':
+        '''Create a copy of a Surrounding text object
+
+        copy.deepcopy() fails on threading.Event because
+        a threading.Event contains a _thread.lock internally
+        and _thread.lock is not picklable.
+        And copy.deepcopy() relies on pickle under the hood to clone
+        objects with internal state. So Python raises:
+        TypeError: cannot pickle '_thread.lock' object
+        '''
+        new_event = threading.Event()
+        if self.event.is_set():
+            new_event.set()
+        return SurroundingText(
+            text=self.text,
+            cursor_pos=self.cursor_pos,
+            anchor_pos=self.anchor_pos,
+            event=new_event)
 
 class TypingBoosterEngine(IBus.Engine): # type: ignore
     '''The IBus Engine for ibus-typing-booster'''
@@ -473,7 +514,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 GLib.Variant.new_string(','.join(self._current_imes)))
 
         self._commit_happened_after_focus_in = False
-        self._surrounding_text_event_happened_after_focus_in = False
 
         self._prev_key: Optional[itb_util.KeyEvent] = None
         self._translated_key_state = 0
@@ -632,13 +672,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             IBus.KEY_Return, IBus.KEY_KP_Enter,
             IBus.KEY_Delete, IBus.KEY_KP_Delete,
             IBus.KEY_BackSpace, IBus.KEY_Escape)
+        self._surrounding_text = SurroundingText()
+        self._surrounding_text_old = SurroundingText()
         self.connect('set-surrounding-text', self._on_set_surrounding_text)
-        self._set_surrounding_text_text: Optional[str] = None
-        self._set_surrounding_text_cursor_pos: Optional[int] = None
-        self._set_surrounding_text_anchor_pos: Optional[int] = None
-        self._set_surrounding_text_event = threading.Event()
-        self._set_surrounding_text_event.clear()
-        self._surrounding_text_old: Optional[Tuple[IBus.Text, int, int]] = None
         self._is_context_from_surrounding_text = False
 
         self._gsettings.connect('changed', self._on_gsettings_value_changed)
@@ -652,6 +688,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         cleanup_database_thread = threading.Thread(
             target=self.database.cleanup_database)
         cleanup_database_thread.start()
+
+    def _trigger_surrounding_text_update(self) -> None:
+        '''Trigger surrounding text update by calling get_surrounding_text()
+
+        Also clears the event in the self._surrounding_text object
+        which indicates that an update happened since the last
+        trigger. But keeps the rest of the data.
+        '''
+        self._surrounding_text.event.clear()
+        self.get_surrounding_text() # trigger surrounding text update
 
     def _init_settings_dict(self) -> Dict[str, Any]:
         '''Initialize a dictionary with the default and user settings for all
@@ -2967,14 +3013,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return
         if not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
             return
-        surrounding_text = self.get_surrounding_text()
-        if not surrounding_text:
-            LOGGER.debug('Surrounding text object is None. '
-                         'Should never happen.')
-            return
-        LOGGER.debug('surrounding_text = [%r, %s, %s]',
-                     surrounding_text[0].get_text(),
-                     surrounding_text[1], surrounding_text[2])
+        LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
 
     def _update_ui_empty_input(self) -> None:
         '''Update the UI when the input is empty.
@@ -3816,15 +3855,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             pattern_sentence_end = re.compile(
                 r'^[' + re.escape(chars) + r']+[\s]*$')
             if pattern_sentence_end.search(commit_phrase):
-                surrounding_text = self.get_surrounding_text()
-                text = surrounding_text[0].get_text()
-                cursor_pos = surrounding_text[1]
-                anchor_pos = surrounding_text[2]
+                text = self._surrounding_text.text
+                cursor_pos = self._surrounding_text.cursor_pos
                 if self._debug_level > 1:
                     LOGGER.debug(
                         'Checking for whitespace before commit_phrase %r: '
-                        'surrounding_text = [%r, %s, %s]',
-                        commit_phrase, text, cursor_pos, anchor_pos)
+                        'self._surrounding_text=%r',
+                        commit_phrase, self._surrounding_text)
                 # The commit_phrase is *not* yet in the surrounding text,
                 # it will show up there only when the next key event is
                 # processed:
@@ -3853,16 +3890,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     nchars = len(match.group('white_space'))
                     self.delete_surrounding_text(-nchars, nchars)
                     if self._debug_level > 1:
-                        surrounding_text = self.get_surrounding_text()
-                        text = surrounding_text[0].get_text()
-                        cursor_pos = surrounding_text[1]
-                        anchor_pos = surrounding_text[2]
+                        text = self._surrounding_text.text
+                        cursor_pos = self._surrounding_text.cursor_pos
                         LOGGER.debug(
                             'Removed whitespace before commit_phrase %r: '
-                            'surrounding_text = [%r, %s, %s] '
+                            'self._surrounding_text=%r '
                             'Replace with %r',
                             commit_phrase,
-                            text, cursor_pos, anchor_pos, new_whitespace)
+                            self._surrounding_text, new_whitespace)
                     return new_whitespace
         return ''
 
@@ -3951,25 +3986,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.debug('Surrounding text is not supported. '
                              'No way to repopen preedit.')
             return False
-        if not self._commit_happened_after_focus_in:
-            # Before the first commit or cursor movement, the
-            # surrounding text is probably from the previously
-            # focused window (bug!), don’t use it.
-            if self._debug_level > 1:
-                LOGGER.debug('No commit happend yet since focus_in(). '
-                             'The surrounding_text is probably wrong. '
-                             'Do not try to reopen the preedit.')
-            return False
-        if not self._surrounding_text_old:
-            LOGGER.debug(
-                'Old surrounding text object is None. Should never happen.')
-            return False
-        text_old = self._surrounding_text_old[0].get_text()
-        cursor_pos_old = self._surrounding_text_old[1]
-        anchor_pos_old = self._surrounding_text_old[2]
         if self._debug_level > 1:
-            LOGGER.debug('Old surrounding_text = [%r, %s, %s]',
-                         text_old, cursor_pos_old, anchor_pos_old)
+            LOGGER.debug(
+                'self._surrounding_text_old=%r', self._surrounding_text_old)
+        text_old = self._surrounding_text_old.text
+        cursor_pos_old = self._surrounding_text_old.cursor_pos
+        anchor_pos_old = self._surrounding_text_old.anchor_pos
         if not text_old:
             LOGGER.debug(
                 'Old surrounding text is empty. Cannot reopen preedit.')
@@ -3979,25 +4001,19 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                          cursor_pos_old, anchor_pos_old)
             LOGGER.debug('Cannot reopen preedit.')
             return False
-        self._set_surrounding_text_event.wait(timeout=0.1)
-        if not self._set_surrounding_text_event.is_set():
+        self._surrounding_text.event.wait(timeout=0.1)
+        if not self._surrounding_text.event.is_set():
             LOGGER.debug(
                 'Surrounding text has not been set since last key event. '
                 'Something is wrong with the timing. Do not try to reopen '
                 'the preedit.')
             return False
-        surrounding_text = self.get_surrounding_text()
-        if not surrounding_text:
-            LOGGER.debug(
-                'New surrounding text object is None. Should never happen.')
-            return False
-        text = surrounding_text[0].get_text()
-        cursor_pos = surrounding_text[1]
-        anchor_pos = surrounding_text[2]
         if self._debug_level > 1:
-            LOGGER.debug('New surrounding_text = [%r, %s, %s]',
-                         text, cursor_pos, anchor_pos)
-        if not text:
+            LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
+        text = self._surrounding_text.text
+        cursor_pos = self._surrounding_text.cursor_pos
+        anchor_pos = self._surrounding_text.anchor_pos
+        if text == '':
             LOGGER.debug(
                 'New surrounding text is empty. Cannot reopen preedit.')
             return False
@@ -4183,26 +4199,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if self._debug_level > 1:
                 LOGGER.debug('Surrounding text not supported.')
             return
-        surrounding_text = self.get_surrounding_text()
-        if not surrounding_text:
-            LOGGER.debug(
-                'Surrounding text object is None. Should never happen.')
-            return
-        text = surrounding_text[0].get_text()
-        cursor_pos = surrounding_text[1]
-        anchor_pos = surrounding_text[2]
+        text = self._surrounding_text.text
+        cursor_pos = self._surrounding_text.cursor_pos
         if self._debug_level > 1:
-            LOGGER.debug(
-                'Getting context: surrounding_text = '
-                '[text = “%r”, cursor_pos = %s, anchor_pos = %s]',
-                text, cursor_pos, anchor_pos)
-        if not self._commit_happened_after_focus_in:
-            # Before the first commit or cursor movement, the
-            # surrounding text is probably from the previously
-            # focused window (bug!), don’t use it.
+            LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
+        if text == '':
             if self._debug_level > 1:
-                LOGGER.debug(
-                    'Skipping context from surrounding_text, no commit yet.')
+                LOGGER.debug('Surrounding text is empty, cannot get context.')
             return
         tokens = ([
             itb_util.strip_token(token)
@@ -6563,16 +6566,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
                 transcript = transcript[0].upper() + transcript[1:]
             else:
-                surrounding_text = self.get_surrounding_text()
-                text = surrounding_text[0].get_text()
-                cursor_pos = surrounding_text[1]
-                anchor_pos = surrounding_text[2]
+                text = self._surrounding_text.text
+                cursor_pos = self._surrounding_text.cursor_pos
                 text_left = text[:cursor_pos].strip()
                 if self._debug_level > 1:
                     LOGGER.debug(
-                        'surrounding_text = '
-                        '[text = %r, cursor_pos = %s, anchor_pos = %s]',
-                        text, cursor_pos, anchor_pos)
+                        'self._surrounding_text=%r', self._surrounding_text)
                     LOGGER.debug('text_left = %r', text_left)
                 if not text_left or text_left[-1] in '.;:?!':
                     transcript = transcript[0].upper() + transcript[1:]
@@ -6853,16 +6852,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
             LOGGER.info('Surrounding text not supported, cannot get selection')
             return False
-        surrounding_text = self.get_surrounding_text()
-        if not surrounding_text:
-            LOGGER.debug('Surrounding text object is None. '
-                         'Should never happen.')
-            return False
-        text = surrounding_text[0].get_text()
-        cursor_pos = surrounding_text[1]
-        anchor_pos = surrounding_text[2]
-        LOGGER.debug(
-            'surrounding_text = [%r, %s, %s]', text, cursor_pos, anchor_pos)
+        if not self._surrounding_text.event.is_set():
+            LOGGER.warning('Surrounding text not set since last trigger.')
+        LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
+        text = self._surrounding_text.text
+        cursor_pos = self._surrounding_text.cursor_pos
+        anchor_pos = self._surrounding_text.anchor_pos
         selection_start = min(cursor_pos, anchor_pos)
         selection_end = max(cursor_pos, anchor_pos)
         selection_text = text[selection_start:selection_end]
@@ -7170,40 +7165,23 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 'is unfortunately necessary here and to really change '
                 'the line direction, one has to press the keybinding again.')
             return
-        surrounding_text = self.get_surrounding_text()
-        LOGGER.debug('self._surrounding_text_event_happened_after_focus_in=%r '
-                     'self._commit_happened_after_focus_in=%r '
-                     'surrouning text=[%r, %s, %s]',
-                     self._surrounding_text_event_happened_after_focus_in,
+        LOGGER.debug('self._commit_happened_after_focus_in=%r '
+                     'self._surrounding_text=%r',
                      self._commit_happened_after_focus_in,
-                     surrounding_text[0].get_text(),
-                     surrounding_text[1], surrounding_text[2])
-        if (not self._surrounding_text_event_happened_after_focus_in
-            and not self._commit_happened_after_focus_in):
-            # Before the first surrounding text event happened,
-            # surrounding text is probably from the previously
-            # focused window (bug!), don’t use it.
+                     self._surrounding_text)
+        if self._surrounding_text.text == '':
             if self._debug_level > 1:
-                LOGGER.debug('Neither a surrounding text event nor a '
-                             'commit happend since focus in. '
-                             'The surrounding_text might be wrong. '
-                             'Do not try to change line direction.')
+                LOGGER.debug(
+                    'Surrounding text empty. Cannot change line direction.')
             return
-        surrounding_text = self.get_surrounding_text()
-        if not surrounding_text:
-            LOGGER.debug(
-                'New surrounding text object is None. Should never happen.')
-            return
-        text = surrounding_text[0].get_text()
-        cursor_pos = surrounding_text[1]
-        anchor_pos = surrounding_text[2]
-        LOGGER.debug('surrounding_text=[%r, %s, %s]',
-                     list(text), cursor_pos, anchor_pos)
+        text = self._surrounding_text.text
+        cursor_pos = self._surrounding_text.cursor_pos
+        anchor_pos = self._surrounding_text.anchor_pos
+        LOGGER.debug('self._surrounding_text=%r list(text)=%r',
+                     self._surrounding_text, list(text))
         if cursor_pos != anchor_pos:
             LOGGER.debug('cursor_pos != anchor_pos, do nothing.')
             return
-        if not text:
-            LOGGER.debug('surrounding text empty, do nothing.')
         cursor_pos_in_current_line = cursor_pos
         current_line = ''
         for line in text.splitlines(keepends=True):
@@ -7654,8 +7632,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._prev_key = key
         self._prev_key.time = time.time()
         self._prev_key.handled = True
-        self._set_surrounding_text_event.clear()
-        self._surrounding_text_old = self.get_surrounding_text()
+        self._surrounding_text_old = self._surrounding_text.copy()
+        self._trigger_surrounding_text_update()
         return True
 
     def _return_false(self, key: itb_util.KeyEvent) -> bool:
@@ -7757,8 +7735,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._prev_key = key
         self._prev_key.time = time.time()
         self._prev_key.handled = False
-        self._set_surrounding_text_event.clear()
-        self._surrounding_text_old = self.get_surrounding_text()
+        self._surrounding_text_old = self._surrounding_text.copy()
+        self._trigger_surrounding_text_update()
         if not key.code:
             LOGGER.warning(
                 'key.code=0 is not a valid keycode. Probably caused by OSK.')
@@ -8772,6 +8750,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         key = itb_util.KeyEvent(keyval, keycode, state)
         if self._debug_level > 1:
             LOGGER.debug('KeyEvent object: %s', key)
+            LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
+
         if self._use_ibus_keymap:
             key = self._translate_to_ibus_keymap(key)
 
@@ -9501,6 +9481,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.debug(
                 'object_path=%s client=%s self.client_capabilities=%s\n',
                 object_path, client, f'{self.client_capabilities:010b}')
+        self._surrounding_text = SurroundingText()
+        self._surrounding_text_old = SurroundingText()
+        self._trigger_surrounding_text_update()
         (program_name,
          window_title) = itb_active_window.get_active_window()
         if self._debug_level > 1:
@@ -9526,7 +9509,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.register_properties(self.main_prop_list)
         self.clear_context()
         self._commit_happened_after_focus_in = False
-        self._surrounding_text_event_happened_after_focus_in = False
         self._update_ui()
         self._apply_autosettings()
 
@@ -9747,6 +9729,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                          repr(self._typed_compose_sequence),
                          self._compose_sequences.preedit_representation(
                              self._typed_compose_sequence))
+        # The press events of arrow keys like `Left` and `BackSpace`
+        # cause a call to `do_reset()`. If that clears
+        # self._surrounding_text_old() the comparison of
+        # self._surrounding_text with self._surrounding_text.old()
+        # during the release event cannot work anymore. And then
+        # reopening preedits always fails, even in firefox which seems
+        # to be the last place where it currently still works.
+        # So do not clear self._surrounding_text_old here, only
+        # clear self._surrounding_text:
+        self._surrounding_text = SurroundingText()
+        self._trigger_surrounding_text_update()
         for ime in self._current_imes:
             # ibus-m17n also calls minput_reset_ic() on focus out.
             # This is necessary if one wants to reset the input
@@ -9793,19 +9786,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if (self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
             and
             self._input_purpose not in [itb_util.InputPurpose.TERMINAL.value]):
-            surrounding_text = self.get_surrounding_text()
-            text = surrounding_text[0].get_text()
-            cursor_pos = surrounding_text[1]
-            anchor_pos = surrounding_text[2]
+            text = self._surrounding_text.text
+            cursor_pos = self._surrounding_text.cursor_pos
             text_to_cursor = text[:cursor_pos]
-            if surrounding_text:
-                LOGGER.debug(
-                    'surrounding_text = [%r, %s, %s] text_to_cursor=“%s”',
-                    text, cursor_pos, anchor_pos, text_to_cursor)
-            else:
-                LOGGER.debug('Surrounding text object is None. '
-                             'Should never happen.')
-                return
+            LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
             if (self._im_client.startswith('gtk3-im')
                 and not text_to_cursor.endswith(self._current_preedit_text)):
                 # On Wayland this causes problems, as the surrounding text
@@ -9868,9 +9852,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Called when this input engine is enabled'''
         if self._debug_level > 1:
             LOGGER.debug('do_enable()\n')
-        # Tell the input-context that the engine will utilize
-        # surrounding-text:
-        self.get_surrounding_text()
+        self._surrounding_text = SurroundingText()
+        self._surrounding_text_old = SurroundingText()
+        self._trigger_surrounding_text_update()
         self.do_focus_in()
 
     def do_disable(self) -> None: # pylint: disable=arguments-differ
@@ -9960,30 +9944,32 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         Useful especially in debugging for stuff like this:
 
-        self._set_surrounding_text_event.clear()
+        self._surrounding_text.event.clear()
+
+        or get a new object which has the event cleared:
+
+        self._surrounding_text = SurroundingText()
         ... some stuff ...
+
         # Now check whether at  least one set-surrounding-text signal
         # has occured:
-        self._set_surrounding_text_event.is_set()
+        self._set_surrounding_text.event.is_set()
 
         or:
 
-        self._set_surrounding_text_event.clear()
-        ... some stuff ...
         # If at least one set-surrounding-text signal
         # has already occured, continue immediately, else
         # wait for such a signal to occur but continue after
         # a timeout:
-        self._set_surrounding_text_event.wait(timeout=0.1)
+        self._set_surrounding_text.event.wait(timeout=0.1)
         '''
         if self._debug_level > 1:
-            LOGGER.debug('text=“%r” cursor_pos=%s anchor_pos=%s',
+            LOGGER.debug('text=%r cursor_pos=%s anchor_pos=%s',
                          text.get_text(), cursor_pos, anchor_pos)
-        self._set_surrounding_text_text = text.get_text()
-        self._set_surrounding_text_cursor_pos = cursor_pos
-        self._set_surrounding_text_anchor_pos = anchor_pos
-        self._set_surrounding_text_event.set()
-        self._surrounding_text_event_happened_after_focus_in = True
+        self._surrounding_text.text = text.get_text()
+        self._surrounding_text.cursor_pos = cursor_pos
+        self._surrounding_text.anchor_pos = anchor_pos
+        self._surrounding_text.event.set()
 
     def _on_gsettings_value_changed(
             self, _settings: Gio.Settings, key: str) -> None:
