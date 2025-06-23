@@ -8479,15 +8479,48 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.debug('Inside compose sequence, ignoring key %s',
                              IBus.keyval_name(key.val))
             return True
+        ime = self.get_current_imes()[0]
         if key.val in (IBus.KEY_BackSpace,):
             self._typed_compose_sequence.pop()
-        elif not self._input_mode:
+        elif not self._input_mode or ime[:2] in ('ja', 'zh'):
+            # https://github.com/mike-fabian/ibus-typing-booster/issues/760
+            # https://github.com/mike-fabian/ibus-typing-booster/issues/654
+            # If an input method transliterates a single character
+            # into another single character, use the transliterated
+            # result for compose. An example where this makes sense is
+            # `hi-inscript2` and the following compose sequence from
+            # /usr/share/X11/locale/en_US.UTF-8/Compose
+            #
+            # <Multi_key> <U093C> <U0930> : "ऱ" U0931 # DEVANAGARI LETTER RRA
+            #
+            # It is probably also useful for input methods like `fr-azerty`.
+            #
+            # But of course this is not needed when direct input is used.
+            #
+            # And it seems to make no sense for any of the
+            # Chinese and Japanese input methods in m17n-db, there are no
+            # compose sequences in /usr/share/X11/locale/en_US.UTF-8/Compose
+            # which could be typed with any of the Chinese and Japanese input
+            # methods. There are some sequences like
+            #
+            # <dead_voiced_sound> <kana_CHI>: "ヂ" U30C2 # KATAKANA LETTER DI
+            #
+            # but these are impossible to type with the Japanese input methods
+            # in m17n-db.
+            #
+            # I am not sure about Korean (`ko-han2` and `ko-romaja`)
+            # because /usr/share/X11/locale/en_US.UTF-8/Compose
+            # contains for example
+            #
+            # <Multi_key> <U1107> <U110E> : "ᄨ" U1128 # HANGUL CHOSEONG PIEUP-CHIEUCH
+            #
+            # and ko-romaja contains 0x1107 and 0x110E so it might be possible
+            # to produce such a compose sequence with ko-romaja.
             self._typed_compose_sequence.append(key.val)
         else:
             transliterated_msymbol = self._transliterators[
-                        self.get_current_imes()[0]
-            ].transliterate([key.msymbol],
-                              ascii_digits=self._ascii_digits)
+                ime].transliterate([key.msymbol],
+                                   ascii_digits=self._ascii_digits)
             if (transliterated_msymbol != key.msymbol
                 and len(transliterated_msymbol) == 1):
                 new_keyval = IBus.unicode_to_keyval(transliterated_msymbol)
