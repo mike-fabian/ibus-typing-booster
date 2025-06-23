@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 25 Jun 2025 Release 2.27.66
+* Improve show_selection_info command behaviour when getting the surrounding text fails (Return True, not False in that case)
+* Use `SurroundingText` dataclass to track surrounding text state; use `get_surrounding_text()` only to trigger an update
+* Use @dataclass always, also for Python 3.6
+* Don’t use transliterated keys for compose sequences if the first input method is Japanese or Chinese (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/760)
+* Translation update from Weblate (ko 100%, sv 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 19 Jun 2025 Release 2.27.65
 * Make the command `show-selection-info` work always, not only when “Minimum number of chars for completion” is 0 (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/757)
 * Make default symbols black and white when running on Gnome and gnome-shell ≥ 49.0 (See: https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/3753)
