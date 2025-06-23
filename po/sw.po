@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-06-19 15:51+0200\n"
+"POT-Creation-Date: 2025-06-22 19:25+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/ibus-"
@@ -210,59 +210,59 @@ msgstr "Alama za unikodi na emoji zilizotabiriwa"
 msgid "Off the record mode"
 msgstr "Tumia kamusi pekee kuongeza mbio ya kuchapa"
 
-#: engine/hunspell_table.py:2060
+#: engine/hunspell_table.py:2068
 msgid "Highest priority dictionary"
 msgstr "Kamusi yenye kipaumbele"
 
-#: engine/hunspell_table.py:2061
+#: engine/hunspell_table.py:2069
 msgid "Choose highest priority dictionary"
 msgstr "Chagua kamusi yenye kipaumbele"
 
-#: engine/hunspell_table.py:2090
+#: engine/hunspell_table.py:2098
 msgid "Preedit input method"
 msgstr "Jinsi ya kuhariri mbeleni hali ya kuingiza"
 
-#: engine/hunspell_table.py:2091
+#: engine/hunspell_table.py:2099
 msgid "Switch preedit input method"
 msgstr "Badili jinsi ya kuhariri mbeleni hali-tumizi ya ingizo"
 
-#: engine/hunspell_table.py:2436
+#: engine/hunspell_table.py:2444
 msgid "Setup"
 msgstr "Mipangilio"
 
-#: engine/hunspell_table.py:2439 setup/main.py:147
+#: engine/hunspell_table.py:2447 setup/main.py:147
 msgid "Preferences for ibus-typing-booster"
 msgstr "Pendekezo ya msaidizi-wa-kuchapa-mbio-wa-ibus"
 
-#: engine/hunspell_table.py:6406
+#: engine/hunspell_table.py:6415
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 "Haiwezekana kuwezesha programmu ya Google ya utamboaji otomatiki wa usemi."
 
-#: engine/hunspell_table.py:6409
+#: engine/hunspell_table.py:6418
 msgid "Failed to import pyaudio."
 msgstr "Haiwezekana kutumia programmu pyaudio."
 
-#: engine/hunspell_table.py:6412
+#: engine/hunspell_table.py:6421
 msgid "Failed to import queue."
 msgstr "Haiwezekana kuleta foleni."
 
-#: engine/hunspell_table.py:6417
+#: engine/hunspell_table.py:6426
 msgid "No supported language for speech recognition."
 msgstr "Hakuna lugha ina utamboaji wa usemi."
 
-#: engine/hunspell_table.py:6421
+#: engine/hunspell_table.py:6430
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Faili “%s” ya “programmu ya Google ya utambolisho“ haionekana."
 
-#: engine/hunspell_table.py:6434
+#: engine/hunspell_table.py:6443
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Haiwezekana kuanza programmu ya Google ya utamboaji wa usemi. Angalia faili "
 "ya batli ya eua."
 
-#: engine/hunspell_table.py:6542
+#: engine/hunspell_table.py:6551
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Kosa ya Google utambaoji wa usemi. Angalia faili ya batli ya eua."
 
@@ -383,11 +383,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6279
+#: engine/itb_util.py:6312
 msgid "Key input"
 msgstr "Chagua kitufe"
 
-#: engine/itb_util.py:6285
+#: engine/itb_util.py:6318
 msgid "Cancel"
 msgstr "Futa"
 
@@ -395,27 +395,27 @@ msgstr "Futa"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6292
+#: engine/itb_util.py:6325
 msgid "Please press a key (or a key combination)"
 msgstr "Tafadhali bofya kitufe (au mchanganyiko wa vitufe)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6297
+#: engine/itb_util.py:6330
 msgid "The dialog will be closed when the key is released"
 msgstr "Kisanduku hiki kitajifunga baada ya kuachilia kitufe"
 
-#: engine/itb_util.py:6336
+#: engine/itb_util.py:6369
 msgid "A completion input method to speedup typing."
 msgstr "Mbinu ya kuharakisha uingizaji kwa kujaliza."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6345
+#: engine/itb_util.py:6378
 msgid "translator-credits"
 msgstr "watafsiri"
 
-#: engine/itb_util.py:6353
+#: engine/itb_util.py:6386
 msgid "Online documentation:"
 msgstr "Maelezo ya mtandaoni:"
 
@@ -439,7 +439,7 @@ msgstr "Mapendeleo"
 msgid "Restore all defaults"
 msgstr "Rejesha pote chaguo-msingi la mfumo"
 
-#: setup/main.py:255 setup/main.py:7061
+#: setup/main.py:255 setup/main.py:7075
 msgid "_Close"
 msgstr "_Funga"
 
@@ -495,7 +495,7 @@ msgstr "Mwonekano"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:366 setup/main.py:2637
+#: setup/main.py:366 setup/main.py:2651
 msgid "Speech recognition"
 msgstr "Ufahamu wa sauti"
 
@@ -506,7 +506,7 @@ msgstr "Ufahamu wa sauti"
 #. Translators: This is the header of the list of settings
 #. changed automatically depending on the which window has
 #. focus:
-#: setup/main.py:382 setup/main.py:2342
+#: setup/main.py:382 setup/main.py:2348
 msgid "Autosettings"
 msgstr "Mipangilio Otomatiki"
 
@@ -1021,7 +1021,7 @@ msgstr "Sakinisha kamusi zilizokosekana"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Sakinisha kamusi zilizochaguliwa hapa lakini bado hazijasakinishwa"
 
-#: setup/main.py:1127 setup/main.py:1272 setup/main.py:1514 setup/main.py:5205
+#: setup/main.py:1127 setup/main.py:1272 setup/main.py:1514 setup/main.py:5219
 msgid "Set to default"
 msgstr "Weka kama chaguo-msingi"
 
@@ -1129,7 +1129,7 @@ msgstr "Hariri"
 msgid "Edit the key bindings for the selected command"
 msgstr "Hariri vitufe teule vya amri iliyochaguliwa"
 
-#: setup/main.py:1518 setup/main.py:5210
+#: setup/main.py:1518 setup/main.py:5224
 msgid "Set default key bindings for the selected command"
 msgstr "Weka chaguo-msingi la vitufe teule vya amri iliyochaguliwa"
 
@@ -1632,32 +1632,35 @@ msgstr ""
 msgid "Symbol for \"enabled\" mode"
 msgstr ""
 
-#: setup/main.py:2257 setup/main.py:2263
+#. Translators: Tooltip for 'Symbol for "enabled" mode'
+#: setup/main.py:2258 setup/main.py:2265
 msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
 msgstr ""
 
-#: setup/main.py:2282
+#: setup/main.py:2284
 msgid "Symbol for \"disabled\" (Direct Input) mode"
 msgstr ""
 
-#: setup/main.py:2284 setup/main.py:2289
+#. Translators: Tooltip for 'Symbol for "disabled" (Direct
+#. Input) mode'
+#: setup/main.py:2288 setup/main.py:2295
 msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
 msgstr ""
 
 #. Translators:
-#: setup/main.py:2308 setup/main.py:3486
+#: setup/main.py:2314 setup/main.py:3500
 msgid "Set “Google application credentials” .json file:"
 msgstr "Teua faili ya \"nywila za programu ya Google\".json:"
 
-#: setup/main.py:2310
+#: setup/main.py:2316
 msgid "Full path of the “Google application credentials” .json file."
 msgstr "Njia kamili ya faili ya \"nywila za programu ya Google\".json."
 
-#: setup/main.py:2316
+#: setup/main.py:2322
 msgid "File not yet set."
 msgstr "Faili bado haijateuliwa."
 
@@ -1665,7 +1668,7 @@ msgstr "Faili bado haijateuliwa."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2375 setup/main.py:4718
+#: setup/main.py:2381 setup/main.py:4732
 msgid "Add an autosetting"
 msgstr "Ongeza mpangilio otomatiki"
 
@@ -1673,7 +1676,7 @@ msgstr "Ongeza mpangilio otomatiki"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2389
+#: setup/main.py:2395
 msgid "Remove an autosetting"
 msgstr "Ondoa mpangilio otomatiki"
 
@@ -1685,7 +1688,7 @@ msgstr "Ondoa mpangilio otomatiki"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2407
+#: setup/main.py:2413
 msgid "Move an autosetting up"
 msgstr "Songesha juu mpangilio otomatiki"
 
@@ -1697,21 +1700,21 @@ msgstr "Songesha juu mpangilio otomatiki"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2425
+#: setup/main.py:2431
 msgid "Move an autosetting down"
 msgstr "Songesha chini mpangilio otomatiki"
 
-#: setup/main.py:2614
+#: setup/main.py:2628
 msgid "Spell checking"
 msgstr "Ukaguzi wa tahajia"
 
-#: setup/main.py:2630
+#: setup/main.py:2644
 msgid "Emoji"
 msgstr "Emoji"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2809
+#: setup/main.py:2823
 msgid "Setting"
 msgstr "Mpangilio"
 
@@ -1719,67 +1722,67 @@ msgstr "Mpangilio"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2818 setup/main.py:4291
+#: setup/main.py:2832 setup/main.py:4305
 msgid "Value"
 msgstr "Chaguo"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2842
+#: setup/main.py:2856
 msgid "Regular expression"
 msgstr ""
 
-#: setup/main.py:2888
+#: setup/main.py:2902
 msgid "Are you sure?"
 msgstr "Je, una uhahika?"
 
-#: setup/main.py:2890 setup/main.py:3489 setup/main.py:3574 setup/main.py:5276
+#: setup/main.py:2904 setup/main.py:3503 setup/main.py:3588 setup/main.py:5290
 msgid "_Cancel"
 msgstr "_Futa"
 
-#: setup/main.py:2891 setup/main.py:3490 setup/main.py:3575 setup/main.py:5277
+#: setup/main.py:2905 setup/main.py:3504 setup/main.py:3589 setup/main.py:5291
 msgid "_OK"
 msgstr "_NDIO"
 
-#: setup/main.py:2921
+#: setup/main.py:2935
 msgid "Another instance of this app is already running."
 msgstr "Kuna kipindi cha programu hii ambacho kingali kinatumika."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3024
+#: setup/main.py:3038
 msgid "Do you really want to restore all default settings?"
 msgstr "Je, kweli ungependa kurudisha mipangilio yote kwa chaguo-msingi?"
 
-#: setup/main.py:3571
+#: setup/main.py:3585
 msgid "Select .wav sound file:"
 msgstr "Chagua faili ya sauti ya .wav:"
 
-#: setup/main.py:3758
+#: setup/main.py:3772
 msgid "Add dictionary"
 msgstr "Ongeza kamusi"
 
-#: setup/main.py:4101
+#: setup/main.py:4115
 msgid "Add input method"
 msgstr "Ongeza mbinu ya kuingiza"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4282
+#: setup/main.py:4296
 msgid "Variable"
 msgstr "Jina"
 
-#: setup/main.py:5158
+#: setup/main.py:5172
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Hariri vitufe teule vya amri “%s”"
 
-#: setup/main.py:5186
+#: setup/main.py:5200
 msgid "Add a key binding"
 msgstr "Ongeza kitufe teule"
 
-#: setup/main.py:5198
+#: setup/main.py:5212
 msgid "Remove selected key binding"
 msgstr "Ondoa kitufe teule kilichochaguliwa"
 
@@ -1788,23 +1791,23 @@ msgstr "Ondoa kitufe teule kilichochaguliwa"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5258
+#: setup/main.py:5272
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
 "Je, kweli ungependa kurudisha vitufe teule vya amri zote kwa chaguo-msingi?"
 
-#: setup/main.py:5273
+#: setup/main.py:5287
 msgid "Open File ..."
 msgstr "Fungua Faili ..."
 
-#: setup/main.py:5290
+#: setup/main.py:5304
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Imefaulu kujifunza kutokana na faili %(filename)s."
 
-#: setup/main.py:5299
+#: setup/main.py:5313
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Imeshindwa kujifunza kutokana na faili %(filename)s."
@@ -1819,7 +1822,7 @@ msgstr "Imeshindwa kujifunza kutokana na faili %(filename)s."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5322
+#: setup/main.py:5336
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1827,7 +1830,7 @@ msgstr ""
 "Je, kweli ungependa kufuta habari zote za lugha zilizofahamika ulipoandika "
 "au kwa kusoma faili?"
 
-#: setup/main.py:7137
+#: setup/main.py:7151
 msgid "ibus is not running."
 msgstr "ibus haifanyi kazi."
 

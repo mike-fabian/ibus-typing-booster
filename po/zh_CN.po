@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-06-19 15:51+0200\n"
+"POT-Creation-Date: 2025-06-22 19:25+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
@@ -211,56 +211,56 @@ msgstr "Unicode 符号和 Emoji 表情预测"
 msgid "Off the record mode"
 msgstr "停止记录模式"
 
-#: engine/hunspell_table.py:2060
+#: engine/hunspell_table.py:2068
 msgid "Highest priority dictionary"
 msgstr "最高优先级的字典"
 
-#: engine/hunspell_table.py:2061
+#: engine/hunspell_table.py:2069
 msgid "Choose highest priority dictionary"
 msgstr "选择最高优先级的字典"
 
-#: engine/hunspell_table.py:2090
+#: engine/hunspell_table.py:2098
 msgid "Preedit input method"
 msgstr "预编辑输入方式"
 
-#: engine/hunspell_table.py:2091
+#: engine/hunspell_table.py:2099
 msgid "Switch preedit input method"
 msgstr "切换预编辑的输入方式"
 
-#: engine/hunspell_table.py:2436
+#: engine/hunspell_table.py:2444
 msgid "Setup"
 msgstr "设置"
 
-#: engine/hunspell_table.py:2439 setup/main.py:147
+#: engine/hunspell_table.py:2447 setup/main.py:147
 msgid "Preferences for ibus-typing-booster"
 msgstr "Ibus-typing-booster 首选项"
 
-#: engine/hunspell_table.py:6406
+#: engine/hunspell_table.py:6415
 msgid "Failed to import Google speech-to-text."
 msgstr "尝试导入 Google 语音转文本文件失败。"
 
-#: engine/hunspell_table.py:6409
+#: engine/hunspell_table.py:6418
 msgid "Failed to import pyaudio."
 msgstr "导入 pyaudio 失败。"
 
-#: engine/hunspell_table.py:6412
+#: engine/hunspell_table.py:6421
 msgid "Failed to import queue."
 msgstr "导入 queue 失败。"
 
-#: engine/hunspell_table.py:6417
+#: engine/hunspell_table.py:6426
 msgid "No supported language for speech recognition."
 msgstr "未支持语音识别的语言。"
 
-#: engine/hunspell_table.py:6421
+#: engine/hunspell_table.py:6430
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google 应用默认凭据”文件“%s”未找到。"
 
-#: engine/hunspell_table.py:6434
+#: engine/hunspell_table.py:6443
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "初始化 Google 语音转文本服务失败。详情请见 debug.log。"
 
-#: engine/hunspell_table.py:6542
+#: engine/hunspell_table.py:6551
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google 语音转文本出错。详情请见 debug.log。"
 
@@ -381,11 +381,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6279
+#: engine/itb_util.py:6312
 msgid "Key input"
 msgstr "输入的键盘码"
 
-#: engine/itb_util.py:6285
+#: engine/itb_util.py:6318
 msgid "Cancel"
 msgstr "取消"
 
@@ -393,23 +393,23 @@ msgstr "取消"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6292
+#: engine/itb_util.py:6325
 msgid "Please press a key (or a key combination)"
 msgstr "请按下一个键盘按键（或者按键组合）"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6297
+#: engine/itb_util.py:6330
 msgid "The dialog will be closed when the key is released"
 msgstr "当按键被按下，这个对话框将会自动关闭"
 
-#: engine/itb_util.py:6336
+#: engine/itb_util.py:6369
 msgid "A completion input method to speedup typing."
 msgstr "一个用于补全的输入法，它将会提升你的打字速度。"
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6345
+#: engine/itb_util.py:6378
 msgid "translator-credits"
 msgstr ""
 "lexuge <LEXUGEyky@outlook.com>, 2017\n"
@@ -419,7 +419,7 @@ msgstr ""
 "Hankel Bao <hankelbao@outlook.com>, 2020\n"
 "Dingzhong Chen <wsxy162@gmail.com>, 2021"
 
-#: engine/itb_util.py:6353
+#: engine/itb_util.py:6386
 msgid "Online documentation:"
 msgstr "线上文档："
 
@@ -443,7 +443,7 @@ msgstr "首选项"
 msgid "Restore all defaults"
 msgstr "全部恢复为默认"
 
-#: setup/main.py:255 setup/main.py:7061
+#: setup/main.py:255 setup/main.py:7075
 msgid "_Close"
 msgstr "关闭(_C)"
 
@@ -499,7 +499,7 @@ msgstr "外观"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:366 setup/main.py:2637
+#: setup/main.py:366 setup/main.py:2651
 msgid "Speech recognition"
 msgstr "语音识别"
 
@@ -510,7 +510,7 @@ msgstr "语音识别"
 #. Translators: This is the header of the list of settings
 #. changed automatically depending on the which window has
 #. focus:
-#: setup/main.py:382 setup/main.py:2342
+#: setup/main.py:382 setup/main.py:2348
 msgid "Autosettings"
 msgstr ""
 
@@ -1001,7 +1001,7 @@ msgstr "安装缺失的词典"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "安装已设置但未安装的词典"
 
-#: setup/main.py:1127 setup/main.py:1272 setup/main.py:1514 setup/main.py:5205
+#: setup/main.py:1127 setup/main.py:1272 setup/main.py:1514 setup/main.py:5219
 msgid "Set to default"
 msgstr "设为默认"
 
@@ -1111,7 +1111,7 @@ msgstr "编辑"
 msgid "Edit the key bindings for the selected command"
 msgstr "编辑所选命令绑定的快捷键"
 
-#: setup/main.py:1518 setup/main.py:5210
+#: setup/main.py:1518 setup/main.py:5224
 msgid "Set default key bindings for the selected command"
 msgstr "重置所选命令绑定的快捷键为默认"
 
@@ -1593,32 +1593,35 @@ msgstr "选择是否使用标签来指示 ibus-typing-booster 繁忙状态。"
 msgid "Symbol for \"enabled\" mode"
 msgstr ""
 
-#: setup/main.py:2257 setup/main.py:2263
+#. Translators: Tooltip for 'Symbol for "enabled" mode'
+#: setup/main.py:2258 setup/main.py:2265
 msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
 msgstr ""
 
-#: setup/main.py:2282
+#: setup/main.py:2284
 msgid "Symbol for \"disabled\" (Direct Input) mode"
 msgstr ""
 
-#: setup/main.py:2284 setup/main.py:2289
+#. Translators: Tooltip for 'Symbol for "disabled" (Direct
+#. Input) mode'
+#: setup/main.py:2288 setup/main.py:2295
 msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
 msgstr ""
 
 #. Translators:
-#: setup/main.py:2308 setup/main.py:3486
+#: setup/main.py:2314 setup/main.py:3500
 msgid "Set “Google application credentials” .json file:"
 msgstr "设定“Google 应用默认凭据”.json 文件："
 
-#: setup/main.py:2310
+#: setup/main.py:2316
 msgid "Full path of the “Google application credentials” .json file."
 msgstr "“Google 应用默认凭据”.json 文件的完整路径。"
 
-#: setup/main.py:2316
+#: setup/main.py:2322
 msgid "File not yet set."
 msgstr "文件还未设定。"
 
@@ -1626,7 +1629,7 @@ msgstr "文件还未设定。"
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2375 setup/main.py:4718
+#: setup/main.py:2381 setup/main.py:4732
 msgid "Add an autosetting"
 msgstr ""
 
@@ -1634,7 +1637,7 @@ msgstr ""
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2389
+#: setup/main.py:2395
 #, fuzzy
 #| msgid "Remove an input method"
 msgid "Remove an autosetting"
@@ -1648,7 +1651,7 @@ msgstr "移除输入法"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2407
+#: setup/main.py:2413
 #, fuzzy
 #| msgid "Move input method up"
 msgid "Move an autosetting up"
@@ -1662,23 +1665,23 @@ msgstr "上移输入法"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2425
+#: setup/main.py:2431
 #, fuzzy
 #| msgid "Move input method down"
 msgid "Move an autosetting down"
 msgstr "下移输入法"
 
-#: setup/main.py:2614
+#: setup/main.py:2628
 msgid "Spell checking"
 msgstr "拼写检查"
 
-#: setup/main.py:2630
+#: setup/main.py:2644
 msgid "Emoji"
 msgstr "Emoji 表情"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2809
+#: setup/main.py:2823
 msgid "Setting"
 msgstr ""
 
@@ -1686,67 +1689,67 @@ msgstr ""
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2818 setup/main.py:4291
+#: setup/main.py:2832 setup/main.py:4305
 msgid "Value"
 msgstr ""
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2842
+#: setup/main.py:2856
 msgid "Regular expression"
 msgstr ""
 
-#: setup/main.py:2888
+#: setup/main.py:2902
 msgid "Are you sure?"
 msgstr "你确定吗？"
 
-#: setup/main.py:2890 setup/main.py:3489 setup/main.py:3574 setup/main.py:5276
+#: setup/main.py:2904 setup/main.py:3503 setup/main.py:3588 setup/main.py:5290
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: setup/main.py:2891 setup/main.py:3490 setup/main.py:3575 setup/main.py:5277
+#: setup/main.py:2905 setup/main.py:3504 setup/main.py:3589 setup/main.py:5291
 msgid "_OK"
 msgstr "确定(_O)"
 
-#: setup/main.py:2921
+#: setup/main.py:2935
 msgid "Another instance of this app is already running."
 msgstr "此应用已有另一实例在运行中。"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3024
+#: setup/main.py:3038
 msgid "Do you really want to restore all default settings?"
 msgstr "你真的要将所有设置恢复为默认吗？"
 
-#: setup/main.py:3571
+#: setup/main.py:3585
 msgid "Select .wav sound file:"
 msgstr ""
 
-#: setup/main.py:3758
+#: setup/main.py:3772
 msgid "Add dictionary"
 msgstr "添加字典"
 
-#: setup/main.py:4101
+#: setup/main.py:4115
 msgid "Add input method"
 msgstr "添加输入法"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4282
+#: setup/main.py:4296
 msgid "Variable"
 msgstr ""
 
-#: setup/main.py:5158
+#: setup/main.py:5172
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "编辑“%s”命令绑定的快捷键"
 
-#: setup/main.py:5186
+#: setup/main.py:5200
 msgid "Add a key binding"
 msgstr "添加快捷键绑定"
 
-#: setup/main.py:5198
+#: setup/main.py:5212
 msgid "Remove selected key binding"
 msgstr "移除所绑定的快捷键"
 
@@ -1755,22 +1758,22 @@ msgstr "移除所绑定的快捷键"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5258
+#: setup/main.py:5272
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "你真的要将所有命令绑定的快捷键恢复为默认吗？"
 
-#: setup/main.py:5273
+#: setup/main.py:5287
 msgid "Open File ..."
 msgstr "打开文件…"
 
-#: setup/main.py:5290
+#: setup/main.py:5304
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "从文件 %(filename)s 学习成功。"
 
-#: setup/main.py:5299
+#: setup/main.py:5313
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "从文件 %(filename)s 学习失败。"
@@ -1785,13 +1788,13 @@ msgstr "从文件 %(filename)s 学习失败。"
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5322
+#: setup/main.py:5336
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr "真的要删除从你的输入或文件读取中学习的所有语言数据吗？"
 
-#: setup/main.py:7137
+#: setup/main.py:7151
 msgid "ibus is not running."
 msgstr "IBus 没有运行。"
 

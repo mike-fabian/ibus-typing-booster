@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-06-19 15:51+0200\n"
+"POT-Creation-Date: 2025-06-22 19:25+0200\n"
 "PO-Revision-Date: 2025-05-31 11:14+0000\n"
 "Last-Translator: \"Fco. Javier F. Serrador\" <fserrador@gmail.com>\n"
 "Language-Team: Spanish <https://translate.fedoraproject.org/projects/ibus-"
@@ -207,56 +207,56 @@ msgstr "Predicciones de símbolos y emojis de Unicode"
 msgid "Off the record mode"
 msgstr "Modo confidencial"
 
-#: engine/hunspell_table.py:2060
+#: engine/hunspell_table.py:2068
 msgid "Highest priority dictionary"
 msgstr "Diccionario prioritario"
 
-#: engine/hunspell_table.py:2061
+#: engine/hunspell_table.py:2069
 msgid "Choose highest priority dictionary"
 msgstr "Elija el diccionario prioritario"
 
-#: engine/hunspell_table.py:2090
+#: engine/hunspell_table.py:2098
 msgid "Preedit input method"
 msgstr "Método de entrada de preedición"
 
-#: engine/hunspell_table.py:2091
+#: engine/hunspell_table.py:2099
 msgid "Switch preedit input method"
 msgstr "Conmutar método de entrada de preedición"
 
-#: engine/hunspell_table.py:2436
+#: engine/hunspell_table.py:2444
 msgid "Setup"
 msgstr "Configuración"
 
-#: engine/hunspell_table.py:2439 setup/main.py:147
+#: engine/hunspell_table.py:2447 setup/main.py:147
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferencias de ibus-typing-booster"
 
-#: engine/hunspell_table.py:6406
+#: engine/hunspell_table.py:6415
 msgid "Failed to import Google speech-to-text."
 msgstr "Falló la importación de speech-to-text de Google."
 
-#: engine/hunspell_table.py:6409
+#: engine/hunspell_table.py:6418
 msgid "Failed to import pyaudio."
 msgstr "Falló la importación de pyaudio."
 
-#: engine/hunspell_table.py:6412
+#: engine/hunspell_table.py:6421
 msgid "Failed to import queue."
 msgstr "Falló la importación de la cola."
 
-#: engine/hunspell_table.py:6417
+#: engine/hunspell_table.py:6426
 msgid "No supported language for speech recognition."
 msgstr "No se admite ningún idioma para el reconocimiento de voz."
 
-#: engine/hunspell_table.py:6421
+#: engine/hunspell_table.py:6430
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "No se encontró el archivo de “Google application credentials” «%s»."
 
-#: engine/hunspell_table.py:6434
+#: engine/hunspell_table.py:6443
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Falló la inicialización de speech-to-text de Google. Lea debug.log."
 
-#: engine/hunspell_table.py:6542
+#: engine/hunspell_table.py:6551
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Error en speech-to-text de Google. Lea debug.log."
 
@@ -378,11 +378,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6279
+#: engine/itb_util.py:6312
 msgid "Key input"
 msgstr "Entrada de tecla"
 
-#: engine/itb_util.py:6285
+#: engine/itb_util.py:6318
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -390,24 +390,24 @@ msgstr "Cancelar"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6292
+#: engine/itb_util.py:6325
 msgid "Please press a key (or a key combination)"
 msgstr "Oprima una tecla (o combinación de teclas)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6297
+#: engine/itb_util.py:6330
 msgid "The dialog will be closed when the key is released"
 msgstr "El cuadro de diálogo se cerrará cuando se suelte la tecla"
 
-#: engine/itb_util.py:6336
+#: engine/itb_util.py:6369
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Un método de entrada de compleción automática para acelerar la mecanografía."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6345
+#: engine/itb_util.py:6378
 msgid "translator-credits"
 msgstr ""
 "Fco. Javier F. Serrador <serrador@proton.me>, 2025\n"
@@ -416,7 +416,7 @@ msgstr ""
 "Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2018\n"
 "Emilio Herrera <ehespinosa57@gmail.com>, 2017"
 
-#: engine/itb_util.py:6353
+#: engine/itb_util.py:6386
 msgid "Online documentation:"
 msgstr "Documentación en línea:"
 
@@ -436,7 +436,7 @@ msgstr "Preferencias"
 msgid "Restore all defaults"
 msgstr "Restablecer todo a valores predeterminados"
 
-#: setup/main.py:255 setup/main.py:7061
+#: setup/main.py:255 setup/main.py:7075
 msgid "_Close"
 msgstr "_Salir"
 
@@ -492,7 +492,7 @@ msgstr "Apariencia"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:366 setup/main.py:2637
+#: setup/main.py:366 setup/main.py:2651
 msgid "Speech recognition"
 msgstr "Reconocimiento de voz"
 
@@ -503,7 +503,7 @@ msgstr "Reconocimiento de voz"
 #. Translators: This is the header of the list of settings
 #. changed automatically depending on the which window has
 #. focus:
-#: setup/main.py:382 setup/main.py:2342
+#: setup/main.py:382 setup/main.py:2348
 msgid "Autosettings"
 msgstr "Autoselector"
 
@@ -1032,7 +1032,7 @@ msgstr "Instalar los diccionarios que faltan"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Instalar los diccionarios configurados pero que no están instalados"
 
-#: setup/main.py:1127 setup/main.py:1272 setup/main.py:1514 setup/main.py:5205
+#: setup/main.py:1127 setup/main.py:1272 setup/main.py:1514 setup/main.py:5219
 msgid "Set to default"
 msgstr "Establecer a predeterminado"
 
@@ -1142,7 +1142,7 @@ msgstr "Editar"
 msgid "Edit the key bindings for the selected command"
 msgstr "Edite los atajos de teclado de la instrucción seleccionada"
 
-#: setup/main.py:1518 setup/main.py:5210
+#: setup/main.py:1518 setup/main.py:5224
 msgid "Set default key bindings for the selected command"
 msgstr "Fija los vínculos de tecla por defecto para la orden seleccionada"
 
@@ -1647,33 +1647,36 @@ msgstr ""
 msgid "Symbol for \"enabled\" mode"
 msgstr ""
 
-#: setup/main.py:2257 setup/main.py:2263
+#. Translators: Tooltip for 'Symbol for "enabled" mode'
+#: setup/main.py:2258 setup/main.py:2265
 msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
 msgstr ""
 
-#: setup/main.py:2282
+#: setup/main.py:2284
 msgid "Symbol for \"disabled\" (Direct Input) mode"
 msgstr ""
 
-#: setup/main.py:2284 setup/main.py:2289
+#. Translators: Tooltip for 'Symbol for "disabled" (Direct
+#. Input) mode'
+#: setup/main.py:2288 setup/main.py:2295
 msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
 msgstr ""
 
 #. Translators:
-#: setup/main.py:2308 setup/main.py:3486
+#: setup/main.py:2314 setup/main.py:3500
 msgid "Set “Google application credentials” .json file:"
 msgstr "Establezca el archivo .json de «Credenciales de aplicación de Google»:"
 
-#: setup/main.py:2310
+#: setup/main.py:2316
 msgid "Full path of the “Google application credentials” .json file."
 msgstr ""
 "Ruta completa del archivo .json de «Credenciales de aplicación de Google»."
 
-#: setup/main.py:2316
+#: setup/main.py:2322
 msgid "File not yet set."
 msgstr "Aún no se establece el archivo."
 
@@ -1681,7 +1684,7 @@ msgstr "Aún no se establece el archivo."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2375 setup/main.py:4718
+#: setup/main.py:2381 setup/main.py:4732
 msgid "Add an autosetting"
 msgstr "Añade un auto-parámetro"
 
@@ -1689,7 +1692,7 @@ msgstr "Añade un auto-parámetro"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2389
+#: setup/main.py:2395
 msgid "Remove an autosetting"
 msgstr "Retira un auto-parámetro"
 
@@ -1701,7 +1704,7 @@ msgstr "Retira un auto-parámetro"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2407
+#: setup/main.py:2413
 msgid "Move an autosetting up"
 msgstr "Subir auto-parámetro"
 
@@ -1713,21 +1716,21 @@ msgstr "Subir auto-parámetro"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2425
+#: setup/main.py:2431
 msgid "Move an autosetting down"
 msgstr "Bajar un auto-parámetro"
 
-#: setup/main.py:2614
+#: setup/main.py:2628
 msgid "Spell checking"
 msgstr "Revisión ortográfica"
 
-#: setup/main.py:2630
+#: setup/main.py:2644
 msgid "Emoji"
 msgstr "Emoji"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2809
+#: setup/main.py:2823
 msgid "Setting"
 msgstr "Configuración"
 
@@ -1735,67 +1738,67 @@ msgstr "Configuración"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2818 setup/main.py:4291
+#: setup/main.py:2832 setup/main.py:4305
 msgid "Value"
 msgstr "Valor"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2842
+#: setup/main.py:2856
 msgid "Regular expression"
 msgstr "Expresión regular"
 
-#: setup/main.py:2888
+#: setup/main.py:2902
 msgid "Are you sure?"
 msgstr "¿Lo confirma?"
 
-#: setup/main.py:2890 setup/main.py:3489 setup/main.py:3574 setup/main.py:5276
+#: setup/main.py:2904 setup/main.py:3503 setup/main.py:3588 setup/main.py:5290
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: setup/main.py:2891 setup/main.py:3490 setup/main.py:3575 setup/main.py:5277
+#: setup/main.py:2905 setup/main.py:3504 setup/main.py:3589 setup/main.py:5291
 msgid "_OK"
 msgstr "_Aceptar"
 
-#: setup/main.py:2921
+#: setup/main.py:2935
 msgid "Another instance of this app is already running."
 msgstr "Ya está ejecutándose otro ejemplar de la aplicación."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3024
+#: setup/main.py:3038
 msgid "Do you really want to restore all default settings?"
 msgstr "¿Realmente quiere recuperar todos los ajustes predeterminados?"
 
-#: setup/main.py:3571
+#: setup/main.py:3585
 msgid "Select .wav sound file:"
 msgstr "Seleccione un archivo de sonido .wav:"
 
-#: setup/main.py:3758
+#: setup/main.py:3772
 msgid "Add dictionary"
 msgstr "Añadir diccionario"
 
-#: setup/main.py:4101
+#: setup/main.py:4115
 msgid "Add input method"
 msgstr "Añadir método de entrada"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4282
+#: setup/main.py:4296
 msgid "Variable"
 msgstr "Variable"
 
-#: setup/main.py:5158
+#: setup/main.py:5172
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Editar los vínculos de tecla para la orden «%s»"
 
-#: setup/main.py:5186
+#: setup/main.py:5200
 msgid "Add a key binding"
 msgstr "Añadir un vínculo de tecla"
 
-#: setup/main.py:5198
+#: setup/main.py:5212
 msgid "Remove selected key binding"
 msgstr "Quitar vínculo de tecla seleccionado"
 
@@ -1804,7 +1807,7 @@ msgstr "Quitar vínculo de tecla seleccionado"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5258
+#: setup/main.py:5272
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1812,16 +1815,16 @@ msgstr ""
 "¿Confirma que quiere establecer los vínculos de tecla para todos los "
 "comandos a sus predeterminados?"
 
-#: setup/main.py:5273
+#: setup/main.py:5287
 msgid "Open File ..."
 msgstr "Abrir archivo…"
 
-#: setup/main.py:5290
+#: setup/main.py:5304
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Se aprendió correctamente desde el archivo %(filename)s."
 
-#: setup/main.py:5299
+#: setup/main.py:5313
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Ha fallado el aprendizaje desde el archivo %(filename)s."
@@ -1836,7 +1839,7 @@ msgstr "Ha fallado el aprendizaje desde el archivo %(filename)s."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5322
+#: setup/main.py:5336
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1844,7 +1847,7 @@ msgstr ""
 "¿Confirma que quiere borrar todos los datos lingüísticos aprendidos por "
 "tecleo o lectura de archivos?"
 
-#: setup/main.py:7137
+#: setup/main.py:7151
 msgid "ibus is not running."
 msgstr "ibus no está ejecutándose."
 
