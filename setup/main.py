@@ -2878,19 +2878,6 @@ class SetupUI(Gtk.Window): # type: ignore
         self._autosettings_treeview.get_selection().select_path(tree_path)
         self._autosettings_treeview.show()
 
-    @staticmethod
-    def run_message_dialog(
-            message: str,
-            message_type: Gtk.MessageType = Gtk.MessageType.INFO) -> None:
-        '''Run a dialog to show an error or warning message'''
-        dialog = Gtk.MessageDialog(
-            flags=Gtk.DialogFlags.MODAL,
-            message_type=message_type,
-            buttons=Gtk.ButtonsType.OK,
-            message_format=message)
-        dialog.run()
-        dialog.destroy()
-
     def _run_are_you_sure_dialog(self, message: str) -> Any:
         '''
         Run a dialog to show a “Are you sure?” message.
@@ -2931,7 +2918,7 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         if (dbus.SessionBus().request_name("org.ibus.typingbooster")
                 != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER):
-            self.__class__.run_message_dialog(
+            itb_util.run_message_dialog(
                 _("Another instance of this app is already running."),
                 Gtk.MessageType.ERROR)
             sys.exit(1)
@@ -3745,7 +3732,7 @@ class SetupUI(Gtk.Window): # type: ignore
             # Probably it is better not to make this message translatable
             # in order not to create extra work for the translators to
             # translate a message which should never be displayed anyway.
-            self.__class__.run_message_dialog(
+            itb_util.run_message_dialog(
                 'The maximum number of dictionaries '
                 f'is {itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES}.',
                 message_type=Gtk.MessageType.ERROR)
@@ -4088,7 +4075,7 @@ class SetupUI(Gtk.Window): # type: ignore
             # Probably it is better not to make this message translatable
             # in order not to create extra work for the translators to
             # translate a message which should never be displayed anyway.
-            self.__class__.run_message_dialog(
+            itb_util.run_message_dialog(
                 'The maximum number of input methods '
                 f'is {itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS}.',
                 message_type=Gtk.MessageType.ERROR)

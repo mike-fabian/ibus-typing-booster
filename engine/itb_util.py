@@ -6263,6 +6263,18 @@ class HotKeys:
     def __str__(self) -> str:
         return repr(self._hotkeys)
 
+def run_message_dialog(
+        message: str,
+        message_type: Gtk.MessageType = Gtk.MessageType.INFO) -> None:
+    '''Run a dialog to show an error or warning message'''
+    dialog = Gtk.MessageDialog(
+        flags=Gtk.DialogFlags.MODAL,
+        message_type=message_type,
+        buttons=Gtk.ButtonsType.OK,
+        message_format=message)
+    dialog.run()
+    dialog.destroy()
+
 class ItbKeyInputDialog(Gtk.MessageDialog): # type: ignore
     '''
     A dialog to enter a key or a key combination to be used as a
