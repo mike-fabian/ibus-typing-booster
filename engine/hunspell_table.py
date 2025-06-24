@@ -6848,10 +6848,18 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         return False
 
     def _command_show_selection_info(self) -> bool:
-        '''Show info about the currently selected text'''
+        '''Show info about the currently selected text
+
+        The return value should always be True. Even if showing the
+        selection failed, the key which executed the command has been
+        fully handled.  Makes no sense to use it as input just because
+        getting the selection failed.
+        '''
         if not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
             LOGGER.info('Surrounding text not supported, cannot get selection')
-            return False
+            itb_util.run_message_dialog(
+                'Surrounding text not supported, cannot get selection')
+            return True
         if not self._surrounding_text.event.is_set():
             LOGGER.warning('Surrounding text not set since last trigger.')
         LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
@@ -6862,13 +6870,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         selection_end = max(cursor_pos, anchor_pos)
         selection_text = text[selection_start:selection_end]
         LOGGER.debug('selection_text = %r', selection_text)
-        # Make sure we have an EmojiMatcher to be able to get
-        # names for emoji:
-        if (not self.emoji_matcher
-            or self.emoji_matcher.get_languages() != self._dictionary_names):
-            self.emoji_matcher = itb_emoji.EmojiMatcher(
-                languages=self._dictionary_names,
-                unicode_data_all=self._unicode_data_all)
         # If a selection could be fetched from surrounding text use
         # it, if not use the surrounding text up to the cursor.
         grapheme_clusters = text[:cursor_pos]
@@ -6883,7 +6884,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             grapheme_clusters = grapheme_clusters[-1:]
         if not grapheme_clusters:
             LOGGER.debug('No grapheme clusters found in selection or before cursor.')
-            return False
+            itb_util.run_message_dialog(
+                'No grapheme clusters found in selection or before cursor: '
+                f'{self._surrounding_text!r}')
+            return True
+        # Make sure we have an EmojiMatcher to be able to get
+        # names for emoji:
+        if (not self.emoji_matcher
+            or self.emoji_matcher.get_languages() != self._dictionary_names):
+            self.emoji_matcher = itb_emoji.EmojiMatcher(
+                languages=self._dictionary_names,
+                unicode_data_all=self._unicode_data_all)
         candidates = []
         code_point_list_phrase = ''
         full_breakdown_phrase = ''
@@ -6918,7 +6929,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 code_point_list_phrase += f' U+{ord(char):04X}'
         if not candidates:
             LOGGER.debug('No candidates found.')
-            return False
+            return True
         candidates.append(itb_util.PredictionCandidate(
             phrase=selection_text + code_point_list_phrase,
             comment=itb_util.elide_middle(
