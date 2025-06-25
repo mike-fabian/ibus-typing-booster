@@ -10,11 +10,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-06-22 19:25+0200\n"
+"POT-Creation-Date: 2025-06-25 13:42+0200\n"
 "PO-Revision-Date: 2025-06-23 11:53+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
-"Language-Team: Korean <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/ko/>\n"
+"Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -161,21 +161,21 @@ msgstr "시스템 기본값"
 msgid "Set Font"
 msgstr "글꼴 설정"
 
-#: engine/hunspell_table.py:546 engine/hunspell_table.py:580
-#: engine/hunspell_table.py:601
+#: engine/hunspell_table.py:586 engine/hunspell_table.py:620
+#: engine/hunspell_table.py:641
 msgid "Off"
 msgstr "끄기"
 
-#: engine/hunspell_table.py:551 engine/hunspell_table.py:585
-#: engine/hunspell_table.py:606
+#: engine/hunspell_table.py:591 engine/hunspell_table.py:625
+#: engine/hunspell_table.py:646
 msgid "On"
 msgstr "켜기"
 
-#: engine/hunspell_table.py:570
+#: engine/hunspell_table.py:610
 msgid "Input mode"
 msgstr "입력 방식"
 
-#: engine/hunspell_table.py:571
+#: engine/hunspell_table.py:611
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "여기에서 ibus-typing-booster를 켜거나 끌 수 있습니다."
 
@@ -186,7 +186,7 @@ msgstr "여기에서 ibus-typing-booster를 켜거나 끌 수 있습니다."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:590 engine/hunspell_table.py:592 setup/main.py:620
+#: engine/hunspell_table.py:630 engine/hunspell_table.py:632 setup/main.py:620
 msgid "Unicode symbols and emoji predictions"
 msgstr "유니코드 기호 및 이모지 예측"
 
@@ -197,60 +197,60 @@ msgstr "유니코드 기호 및 이모지 예측"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:611 engine/hunspell_table.py:612 setup/main.py:645
+#: engine/hunspell_table.py:651 engine/hunspell_table.py:652 setup/main.py:645
 msgid "Off the record mode"
 msgstr "기록 방식 끄기"
 
-#: engine/hunspell_table.py:2068
+#: engine/hunspell_table.py:2114
 msgid "Highest priority dictionary"
 msgstr "최우선 순위 사전"
 
-#: engine/hunspell_table.py:2069
+#: engine/hunspell_table.py:2115
 msgid "Choose highest priority dictionary"
 msgstr "최우순 순위 사전을 선택합니다"
 
-#: engine/hunspell_table.py:2098
+#: engine/hunspell_table.py:2144
 msgid "Preedit input method"
 msgstr "사전편집 입력 방식"
 
-#: engine/hunspell_table.py:2099
+#: engine/hunspell_table.py:2145
 msgid "Switch preedit input method"
 msgstr "사전편집 입력방식으로 전환합니다"
 
-#: engine/hunspell_table.py:2444
+#: engine/hunspell_table.py:2490
 msgid "Setup"
 msgstr "설정"
 
-#: engine/hunspell_table.py:2447 setup/main.py:147
+#: engine/hunspell_table.py:2493 setup/main.py:147
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster 환경설정"
 
-#: engine/hunspell_table.py:6415
+#: engine/hunspell_table.py:6418
 msgid "Failed to import Google speech-to-text."
 msgstr "구글 텍스트 음성 변환을 가져오는 데 실패함."
 
-#: engine/hunspell_table.py:6418
+#: engine/hunspell_table.py:6421
 msgid "Failed to import pyaudio."
 msgstr "pyaudio를 가져오는 데 실패함."
 
-#: engine/hunspell_table.py:6421
+#: engine/hunspell_table.py:6424
 msgid "Failed to import queue."
 msgstr "대기열을 가져오는 데 실패함."
 
-#: engine/hunspell_table.py:6426
+#: engine/hunspell_table.py:6429
 msgid "No supported language for speech recognition."
 msgstr "음성 인식용 지원 언어가 없습니다."
 
-#: engine/hunspell_table.py:6430
+#: engine/hunspell_table.py:6433
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "\"구글 응용프로그램 자격증명\" 파일 \"%s\"를 찾을 수 없습니다."
 
-#: engine/hunspell_table.py:6443
+#: engine/hunspell_table.py:6446
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "구글 텍스트 음성 변환을 초기화 하는 데 실패함. 결점 기록을 참고하세요."
 
-#: engine/hunspell_table.py:6551
+#: engine/hunspell_table.py:6554
 msgid "Google speech-to-text error. See debug.log."
 msgstr "구글 텍스트 음성 변환 오류. 결점 기록을 참고하세요."
 
@@ -339,27 +339,27 @@ msgstr "지역"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "기타, 잡다한, 다양한, 다양성"
 
-#: engine/itb_util.py:4836 engine/itb_util.py:5578
+#: engine/itb_util.py:4800 engine/itb_util.py:5542
 msgid "File not found"
 msgstr "파일을 찾을 수 없습니다"
 
-#: engine/itb_util.py:4840 engine/itb_util.py:5582
+#: engine/itb_util.py:4804 engine/itb_util.py:5546
 msgid "Permission error"
 msgstr "권한 오류"
 
-#: engine/itb_util.py:4844 engine/itb_util.py:5586
+#: engine/itb_util.py:4808 engine/itb_util.py:5550
 msgid "Unicode decoding error"
 msgstr "유니코드 디코딩 오류"
 
-#: engine/itb_util.py:4848 engine/itb_util.py:5590
+#: engine/itb_util.py:4812 engine/itb_util.py:5554
 msgid "Unknown error"
 msgstr "알 수 없는 오류"
 
-#: engine/itb_util.py:5556
+#: engine/itb_util.py:5520
 msgid "Native Keyboard"
 msgstr "네이티브 키보드"
 
-#: engine/itb_util.py:5558
+#: engine/itb_util.py:5522
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -372,11 +372,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6312
+#: engine/itb_util.py:6288
 msgid "Key input"
 msgstr "키 입력"
 
-#: engine/itb_util.py:6318
+#: engine/itb_util.py:6294
 msgid "Cancel"
 msgstr "취소"
 
@@ -384,27 +384,27 @@ msgstr "취소"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6325
+#: engine/itb_util.py:6301
 msgid "Please press a key (or a key combination)"
 msgstr "키 (또는 키 조합)를 누르세요"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6330
+#: engine/itb_util.py:6306
 msgid "The dialog will be closed when the key is released"
 msgstr "대화상자는 키를 놓으면 닫힐 것입니다"
 
-#: engine/itb_util.py:6369
+#: engine/itb_util.py:6345
 msgid "A completion input method to speedup typing."
 msgstr "입력 속도를 높여주는 완성형 입력 방식."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6378
+#: engine/itb_util.py:6354
 msgid "translator-credits"
 msgstr "김인수 <simmon@nplob.com>"
 
-#: engine/itb_util.py:6386
+#: engine/itb_util.py:6362
 msgid "Online documentation:"
 msgstr "온라인 문서:"
 
@@ -424,7 +424,7 @@ msgstr "환경설정"
 msgid "Restore all defaults"
 msgstr "모든 설정 값을 복구합니다"
 
-#: setup/main.py:255 setup/main.py:7075
+#: setup/main.py:255 setup/main.py:7062
 msgid "_Close"
 msgstr "_닫기"
 
@@ -846,7 +846,8 @@ msgstr ""
 msgid ""
 "The ibus keymap to use when forcing an IBus keymap while Typing Booster is "
 "active."
-msgstr "입력 가속기가 활성화 중일 때에 IBus 키맵을 강제 할 때 사용하는 ibus 키맵."
+msgstr ""
+"입력 가속기가 활성화 중일 때에 IBus 키맵을 강제 할 때 사용하는 ibus 키맵."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -1004,7 +1005,7 @@ msgstr "누락된 사전을 설치합니다"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "여기에 설정되어 있지만 설치되지 않은 사전을 설치합니다"
 
-#: setup/main.py:1127 setup/main.py:1272 setup/main.py:1514 setup/main.py:5219
+#: setup/main.py:1127 setup/main.py:1272 setup/main.py:1514 setup/main.py:5206
 msgid "Set to default"
 msgstr "기본 값으로 설정합니다"
 
@@ -1112,7 +1113,7 @@ msgstr "편집"
 msgid "Edit the key bindings for the selected command"
 msgstr "선택한 명령을 위해 키 할당을 편집합니다"
 
-#: setup/main.py:1518 setup/main.py:5224
+#: setup/main.py:1518 setup/main.py:5211
 msgid "Set default key bindings for the selected command"
 msgstr "선택한 명령을 위해 기본 값 키 할당을 설정합니다"
 
@@ -1492,10 +1493,9 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of a label for candidates from the user database is enabled."
 msgstr ""
-"여기에서 당신은 사용자 데이타베이스에서 나온 조회 테이블의 후보를 위해 "
-"사용되도록 라벨을 지정 할 수 있습니다. 이와 같은 설정은 만약 사용자 "
-"데이타베이스에서 후보를 위한 라벨의 사용이 활성화 되었을 때만 효과를 "
-"갖습니다."
+"여기에서 당신은 사용자 데이타베이스에서 나온 조회 테이블의 후보를 위해 사용되"
+"도록 라벨을 지정 할 수 있습니다. 이와 같은 설정은 만약 사용자 데이타베이스에"
+"서 후보를 위한 라벨의 사용이 활성화 되었을 때만 효과를 갖습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1519,8 +1519,8 @@ msgid ""
 "a label for candidates from spellchecking is enabled."
 msgstr ""
 "여기에서 당신은 철자점검에서 나온 조회 테이블의 후보를 위해 사용되는 라벨을 "
-"지정 할 수 있습니다. 이와 같은 설정은 만약 철저점검에서 후보를 위한 라벨의 "
-"사용이 활성화 되었을 때에만 효과를 갖습니다."
+"지정 할 수 있습니다. 이와 같은 설정은 만약 철저점검에서 후보를 위한 라벨의 사"
+"용이 활성화 되었을 때에만 효과를 갖습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
@@ -1543,9 +1543,9 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "a label for candidates from a dictionary is enabled."
 msgstr ""
-"여기에서 당신은 사전에서 나온 조회 테이블의 후보를 위해 사용하려는 라벨을 "
-"지정 할 수 있습니다. 이와 같은 설정은 만약 사전에서 후보를 위한 라벨의 "
-"사용이 활성화 되었을 때에만 효과가 있습니다."
+"여기에서 당신은 사전에서 나온 조회 테이블의 후보를 위해 사용하려는 라벨을 지"
+"정 할 수 있습니다. 이와 같은 설정은 만약 사전에서 후보를 위한 라벨의 사용이 "
+"활성화 되었을 때에만 효과가 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
@@ -1581,7 +1581,8 @@ msgstr ""
 msgid ""
 "Here you can specify which label is used to indicate when ibus-typing-"
 "booster is busy."
-msgstr "여기에서 ibus-typing-booster가 동작 중일 때 표시하도록 사용되는 라벨을 지정 "
+msgstr ""
+"여기에서 ibus-typing-booster가 동작 중일 때 표시하도록 사용되는 라벨을 지정 "
 "할 수 있습니다."
 
 #: setup/main.py:2255
@@ -1593,8 +1594,9 @@ msgstr "\"enabled\" 방식을 위한 기호"
 msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
-msgstr "기호는 입력 가속기가 활성화 중 일 때에 표시됩니다 (음역 입력, 완성 제안, "
-"철자점검 등.)."
+msgstr ""
+"기호는 입력 가속기가 활성화 중 일 때에 표시됩니다 (음역 입력, 완성 제안, 철자"
+"점검 등.)."
 
 #: setup/main.py:2284
 msgid "Symbol for \"disabled\" (Direct Input) mode"
@@ -1606,11 +1608,12 @@ msgstr "\"disabled\" (직접 입력) 방식을 위한 기호"
 msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
-msgstr "기호는 입력 가속기가 비활성화 되었을 때에 표시됩니다 (입력은 처리 없이 직접 "
+msgstr ""
+"기호는 입력 가속기가 비활성화 되었을 때에 표시됩니다 (입력은 처리 없이 직접 "
 "전달됩니다)."
 
 #. Translators:
-#: setup/main.py:2314 setup/main.py:3500
+#: setup/main.py:2314 setup/main.py:3487
 msgid "Set “Google application credentials” .json file:"
 msgstr "“구글 응용프로그램 인증서” .json 파일 설정:"
 
@@ -1626,7 +1629,7 @@ msgstr "파일이 아직 설정되지 않았습니다."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2381 setup/main.py:4732
+#: setup/main.py:2381 setup/main.py:4719
 msgid "Add an autosetting"
 msgstr "자동설정 추가"
 
@@ -1680,7 +1683,7 @@ msgstr "설정"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2832 setup/main.py:4305
+#: setup/main.py:2832 setup/main.py:4292
 msgid "Value"
 msgstr "값"
 
@@ -1690,57 +1693,57 @@ msgstr "값"
 msgid "Regular expression"
 msgstr "정규 표현"
 
-#: setup/main.py:2902
+#: setup/main.py:2889
 msgid "Are you sure?"
 msgstr "확실한가요?"
 
-#: setup/main.py:2904 setup/main.py:3503 setup/main.py:3588 setup/main.py:5290
+#: setup/main.py:2891 setup/main.py:3490 setup/main.py:3575 setup/main.py:5277
 msgid "_Cancel"
 msgstr "취소(_C)"
 
-#: setup/main.py:2905 setup/main.py:3504 setup/main.py:3589 setup/main.py:5291
+#: setup/main.py:2892 setup/main.py:3491 setup/main.py:3576 setup/main.py:5278
 msgid "_OK"
 msgstr "좋음(_O)"
 
-#: setup/main.py:2935
+#: setup/main.py:2922
 msgid "Another instance of this app is already running."
 msgstr "이 앱의 다른 예시가 이미 동작 중입니다."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3038
+#: setup/main.py:3025
 msgid "Do you really want to restore all default settings?"
 msgstr "정말로 모든 기본값 설정으로 복구할까요?"
 
-#: setup/main.py:3585
+#: setup/main.py:3572
 msgid "Select .wav sound file:"
 msgstr ".wav 소리 파일을 선택합니다:"
 
-#: setup/main.py:3772
+#: setup/main.py:3759
 msgid "Add dictionary"
 msgstr "사전 추가"
 
-#: setup/main.py:4115
+#: setup/main.py:4102
 msgid "Add input method"
 msgstr "입력 방식 추가"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4296
+#: setup/main.py:4283
 msgid "Variable"
 msgstr "변수"
 
-#: setup/main.py:5172
+#: setup/main.py:5159
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "명령 “%s” 를 위한 키 할당 편집"
 
-#: setup/main.py:5200
+#: setup/main.py:5187
 msgid "Add a key binding"
 msgstr "키 할당을 추가합니다"
 
-#: setup/main.py:5212
+#: setup/main.py:5199
 msgid "Remove selected key binding"
 msgstr "선택된 키 할당을 제거합니다"
 
@@ -1749,22 +1752,22 @@ msgstr "선택된 키 할당을 제거합니다"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5272
+#: setup/main.py:5259
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "정말로 모든 명령에 대한 키 할당을 기본 값으로 설정할까요?"
 
-#: setup/main.py:5287
+#: setup/main.py:5274
 msgid "Open File ..."
 msgstr "파일 열기..."
 
-#: setup/main.py:5304
+#: setup/main.py:5291
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "파일 %(filename)s에서 성공적으로 학습되었습니다."
 
-#: setup/main.py:5313
+#: setup/main.py:5300
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "파일 %(filename)s에서 학습이 실패함."
@@ -1779,13 +1782,13 @@ msgstr "파일 %(filename)s에서 학습이 실패함."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5336
+#: setup/main.py:5323
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr "입력하거나 파일 읽기에서 학습된 모든 언어 자료를 삭제할까요?"
 
-#: setup/main.py:7151
+#: setup/main.py:7138
 msgid "ibus is not running."
 msgstr "ibus가 동작하지 않습니다."
 
