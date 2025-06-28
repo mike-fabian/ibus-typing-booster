@@ -8008,6 +8008,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     IBus.Text.new_from_string(
                         self._m17n_trans_parts.committed
                         + m17n_preedit_replacement))
+                # The next thing might be a commit of a space which
+                # triggered this commit, expecially on wayland two
+                # commits immediately after each other may cause
+                # problems, unfortunately a sleep maybe be needed
+                # otherwise this is racy, without the sleeps it works
+                # unreliably.
+                time.sleep(self._ibus_event_sleep_seconds)
             else:
                 self._typed_string = (
                     self._typed_string[:self._m17n_trans_parts.committed_index]
@@ -8101,6 +8108,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 super().commit_text(
                     IBus.Text.new_from_string(
                         self._m17n_trans_parts.committed + phrase))
+                # The next thing might be a commit of a space which
+                # triggered this commit, expecially on wayland two
+                # commits immediately after each other may cause
+                # problems, unfortunately a sleep maybe be needed
+                # otherwise this is racy, without the sleeps it works
+                # unreliably.
+                time.sleep(self._ibus_event_sleep_seconds)
             else:
                 self._typed_string = (
                     self._typed_string[:self._m17n_trans_parts.committed_index]
