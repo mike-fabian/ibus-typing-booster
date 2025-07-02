@@ -10,10 +10,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-06-25 13:42+0200\n"
-"PO-Revision-Date: 2025-06-22 11:26+0000\n"
+"PO-Revision-Date: 2025-07-02 00:29+0000\n"
 "Last-Translator: Jim Spentzos <jimspentzos2000@gmail.com>\n"
-"Language-Team: Greek <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/el/>\n"
+"Language-Team: Greek <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -75,7 +75,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:523
 msgid "Recently used"
-msgstr ""
+msgstr "Πρόσφατη χρήση"
 
 #: engine/emoji_picker.py:703
 msgid "Categories"
@@ -141,7 +141,7 @@ msgstr "Αποτελέσματα αναζήτησης"
 
 #: engine/emoji_picker.py:1376
 msgid "Search produced empty result."
-msgstr ""
+msgstr "Η αναζήτηση επέστρεψε κενό αποτέλεσμα."
 
 #: engine/emoji_picker.py:1690 engine/emoji_picker.py:1817
 msgid "Copied to clipboard!"
@@ -340,15 +340,15 @@ msgstr ""
 
 #: engine/itb_util.py:4800 engine/itb_util.py:5542
 msgid "File not found"
-msgstr ""
+msgstr "Το αρχείο δεν βρέθηκε"
 
 #: engine/itb_util.py:4804 engine/itb_util.py:5546
 msgid "Permission error"
-msgstr ""
+msgstr "Σφάλμα δικαιώματος"
 
 #: engine/itb_util.py:4808 engine/itb_util.py:5550
 msgid "Unicode decoding error"
-msgstr ""
+msgstr "Σφάλμα αποκωδικοποίησης Unicode"
 
 #: engine/itb_util.py:4812 engine/itb_util.py:5554
 msgid "Unknown error"
@@ -402,11 +402,11 @@ msgstr ""
 
 #: engine/itb_util.py:6362
 msgid "Online documentation:"
-msgstr ""
+msgstr "Διαδικτυακή τεκμηρίωση:"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:2
 msgid "Typing Booster Preferences"
-msgstr ""
+msgstr "Προτιμήσεις επιτάχυνσης πληκτρολόγησης"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:3
 msgid "Set Typing Booster Options"
@@ -545,11 +545,11 @@ msgstr ""
 #. punctuation.
 #: setup/main.py:480
 msgid "Auto capitalize"
-msgstr ""
+msgstr "Αυτόματη κεφαλαιοποίηση"
 
 #: setup/main.py:482
 msgid "Automatically capitalize after punctuation."
-msgstr ""
+msgstr "Αυτόματη κεφαλαιοποίηση μετά από σημείο στίξης."
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
@@ -832,7 +832,7 @@ msgstr ""
 #. (which is the default).
 #: setup/main.py:896
 msgid "Auto commit characters:"
-msgstr ""
+msgstr "Χαρακτήρες αυτόματης υποβολής:"
 
 #: setup/main.py:898
 msgid ""
@@ -862,7 +862,7 @@ msgstr ""
 #. sound is played on error
 #: setup/main.py:955
 msgid "Play sound file on error"
-msgstr ""
+msgstr "Αναπαραγωγή αρχείου ήχου για σφάλματα"
 
 #: setup/main.py:957
 msgid "Here you can choose whether a sound file is played if an error occurs."
@@ -1555,7 +1555,7 @@ msgstr "Τιμή"
 #. the automatic settings
 #: setup/main.py:2856
 msgid "Regular expression"
-msgstr ""
+msgstr "Κανονική έκφραση"
 
 #: setup/main.py:2889
 msgid "Are you sure?"
@@ -1578,11 +1578,11 @@ msgstr ""
 #. really sure to restore all default settings.
 #: setup/main.py:3025
 msgid "Do you really want to restore all default settings?"
-msgstr ""
+msgstr "Θέλετε σίγουρα να επαναφέρετε όλες τις προεπιλεγμένες ρυθμίσεις;"
 
 #: setup/main.py:3572
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "Επιλογή αρχείου ήχου .wav:"
 
 #: setup/main.py:3759
 msgid "Add dictionary"
@@ -1664,11 +1664,11 @@ msgstr ""
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
-msgstr ""
+msgstr "Επιτάχυνση πληκτρολόγησης"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:7
 msgid "Predictive input method"
-msgstr ""
+msgstr "Προβλεπτική μέθοδος εισαγωγής"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:9
 msgid ""
