@@ -1679,13 +1679,6 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._emoji_selected_popover = Gtk.Popover()
         self._emoji_selected_popover.set_relative_to(event_box)
         self._emoji_selected_popover.set_position(Gtk.PositionType.TOP)
-        if name:
-            rectangle = Gdk.Rectangle()
-            rectangle.x = 0
-            rectangle.y = 0
-            rectangle.width = self._fontsize * 1.5
-            rectangle.height = self._fontsize * 1.5
-            self._emoji_selected_popover.set_pointing_to(rectangle)
         label = Gtk.Label()
         label.set_text(_('Copied to clipboard!'))
         self._emoji_selected_popover.add(label)
@@ -1975,13 +1968,6 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._skin_tone_popover.set_position(Gtk.PositionType.TOP)
         self._skin_tone_popover.set_vexpand(False)
         self._skin_tone_popover.set_hexpand(False)
-        if name:
-            rectangle = Gdk.Rectangle()
-            rectangle.x = 0
-            rectangle.y = 0
-            rectangle.width = self._fontsize * 1.5
-            rectangle.height = self._fontsize * 1.5
-            self._skin_tone_popover.set_pointing_to(rectangle)
         skin_tone_popover_grid = Gtk.Grid()
         margin = 1
         skin_tone_popover_grid.set_margin_start(margin)
@@ -2080,16 +2066,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._emoji_info_popover.set_constrain_to(
             Gtk.PopoverConstraint.WINDOW)
         self._emoji_info_popover.set_relative_to(event_box)
-        self._emoji_info_popover.set_position(Gtk.PositionType.RIGHT)
+        self._emoji_info_popover.set_position(Gtk.PositionType.BOTTOM)
         self._emoji_info_popover.set_vexpand(False)
         self._emoji_info_popover.set_hexpand(False)
-        if name:
-            rectangle = Gdk.Rectangle()
-            rectangle.x = 0
-            rectangle.y = 0
-            rectangle.width = self._fontsize * 1.5
-            rectangle.height = self._fontsize * 1.5
-            self._emoji_info_popover.set_pointing_to(rectangle)
         emoji_info_popover_vbox = Gtk.Box()
         emoji_info_popover_vbox.set_orientation(Gtk.Orientation.VERTICAL)
         emoji_info_popover_vbox.set_vexpand(False)
