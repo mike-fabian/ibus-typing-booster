@@ -9,11 +9,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-06-25 13:42+0200\n"
+"POT-Creation-Date: 2025-07-07 19:20+0200\n"
 "PO-Revision-Date: 2025-07-02 00:29+0000\n"
 "Last-Translator: Jim Spentzos <jimspentzos2000@gmail.com>\n"
-"Language-Team: Greek <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/el/>\n"
+"Language-Team: Greek <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -123,7 +123,7 @@ msgstr "Κατηγορία Unicode:"
 msgid "Unicode block:"
 msgstr "Έκδοση Unicode:"
 
-#: engine/emoji_picker.py:824 engine/emoji_picker.py:2031
+#: engine/emoji_picker.py:824 engine/emoji_picker.py:2017
 msgid "Left click to copy"
 msgstr "Αριστερό κλικ για αντιγραφή"
 
@@ -143,20 +143,20 @@ msgstr "Αποτελέσματα αναζήτησης"
 msgid "Search produced empty result."
 msgstr "Η αναζήτηση επέστρεψε κενό αποτέλεσμα."
 
-#: engine/emoji_picker.py:1690 engine/emoji_picker.py:1817
+#: engine/emoji_picker.py:1683 engine/emoji_picker.py:1810
 msgid "Copied to clipboard!"
 msgstr "Αντιγράφηκε στο πρόχειρο!"
 
-#: engine/emoji_picker.py:2144
+#: engine/emoji_picker.py:2123
 msgid "Lookup on emojipedia"
 msgstr "Εύρεση στο emojipedia"
 
-#: engine/emoji_picker.py:2290 engine/emoji_picker.py:2291
-#: engine/emoji_picker.py:2292 setup/main.py:1627
+#: engine/emoji_picker.py:2269 engine/emoji_picker.py:2270
+#: engine/emoji_picker.py:2271 setup/main.py:1627
 msgid "System default"
 msgstr "Προεπιλογή συστήματος"
 
-#: engine/emoji_picker.py:2426
+#: engine/emoji_picker.py:2405
 msgid "Set Font"
 msgstr "Ορισμός γραμματοσειράς"
 

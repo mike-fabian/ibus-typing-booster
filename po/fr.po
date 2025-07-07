@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-06-25 13:42+0200\n"
+"POT-Creation-Date: 2025-07-07 19:20+0200\n"
 "PO-Revision-Date: 2025-05-11 21:50+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: French <https://translate.fedoraproject.org/projects/ibus-"
@@ -128,7 +128,7 @@ msgstr "Catégorie Unicode :"
 msgid "Unicode block:"
 msgstr "Bloc Unicode :"
 
-#: engine/emoji_picker.py:824 engine/emoji_picker.py:2031
+#: engine/emoji_picker.py:824 engine/emoji_picker.py:2017
 msgid "Left click to copy"
 msgstr "Clic gauche pour copier"
 
@@ -148,20 +148,20 @@ msgstr "Résultats de la recherche"
 msgid "Search produced empty result."
 msgstr "Recherche infructueuse."
 
-#: engine/emoji_picker.py:1690 engine/emoji_picker.py:1817
+#: engine/emoji_picker.py:1683 engine/emoji_picker.py:1810
 msgid "Copied to clipboard!"
 msgstr "Copié vers le presse-papier !"
 
-#: engine/emoji_picker.py:2144
+#: engine/emoji_picker.py:2123
 msgid "Lookup on emojipedia"
 msgstr "Interrogation d’Emojipedia"
 
-#: engine/emoji_picker.py:2290 engine/emoji_picker.py:2291
-#: engine/emoji_picker.py:2292 setup/main.py:1627
+#: engine/emoji_picker.py:2269 engine/emoji_picker.py:2270
+#: engine/emoji_picker.py:2271 setup/main.py:1627
 msgid "System default"
 msgstr "Par défaut pour le système"
 
-#: engine/emoji_picker.py:2426
+#: engine/emoji_picker.py:2405
 msgid "Set Font"
 msgstr "Choix de police"
 

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-06-25 13:42+0200\n"
+"POT-Creation-Date: 2025-07-07 19:20+0200\n"
 "PO-Revision-Date: 2025-06-23 11:53+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
@@ -124,7 +124,7 @@ msgstr "유니코드 항목:"
 msgid "Unicode block:"
 msgstr "유니코드 블록:"
 
-#: engine/emoji_picker.py:824 engine/emoji_picker.py:2031
+#: engine/emoji_picker.py:824 engine/emoji_picker.py:2017
 msgid "Left click to copy"
 msgstr "복사하려면 왼쪽을 눌러주세요"
 
@@ -144,20 +144,20 @@ msgstr "검색 결과"
 msgid "Search produced empty result."
 msgstr "검색은 비어 있는 결과가 나타났습니다."
 
-#: engine/emoji_picker.py:1690 engine/emoji_picker.py:1817
+#: engine/emoji_picker.py:1683 engine/emoji_picker.py:1810
 msgid "Copied to clipboard!"
 msgstr "클립보드에 복사됨!"
 
-#: engine/emoji_picker.py:2144
+#: engine/emoji_picker.py:2123
 msgid "Lookup on emojipedia"
 msgstr "이모지피디아에서 검색"
 
-#: engine/emoji_picker.py:2290 engine/emoji_picker.py:2291
-#: engine/emoji_picker.py:2292 setup/main.py:1627
+#: engine/emoji_picker.py:2269 engine/emoji_picker.py:2270
+#: engine/emoji_picker.py:2271 setup/main.py:1627
 msgid "System default"
 msgstr "시스템 기본값"
 
-#: engine/emoji_picker.py:2426
+#: engine/emoji_picker.py:2405
 msgid "Set Font"
 msgstr "글꼴 설정"
 

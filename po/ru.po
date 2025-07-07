@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-06-25 13:42+0200\n"
+"POT-Creation-Date: 2025-07-07 19:20+0200\n"
 "PO-Revision-Date: 2024-07-28 17:22+0000\n"
 "Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
 "memory@weblate.org>\n"
@@ -134,7 +134,7 @@ msgstr "Категории Юникода"
 msgid "Unicode block:"
 msgstr "Версия Юникода:"
 
-#: engine/emoji_picker.py:824 engine/emoji_picker.py:2031
+#: engine/emoji_picker.py:824 engine/emoji_picker.py:2017
 msgid "Left click to copy"
 msgstr "Нажмите левую кнопку мыши, чтобы скопировать"
 
@@ -154,20 +154,20 @@ msgstr "Результаты поиска"
 msgid "Search produced empty result."
 msgstr "Поиск не дал никаких результатов."
 
-#: engine/emoji_picker.py:1690 engine/emoji_picker.py:1817
+#: engine/emoji_picker.py:1683 engine/emoji_picker.py:1810
 msgid "Copied to clipboard!"
 msgstr "Скопировано в буфер обмена!"
 
-#: engine/emoji_picker.py:2144
+#: engine/emoji_picker.py:2123
 msgid "Lookup on emojipedia"
 msgstr "Искать в emojipedia"
 
-#: engine/emoji_picker.py:2290 engine/emoji_picker.py:2291
-#: engine/emoji_picker.py:2292 setup/main.py:1627
+#: engine/emoji_picker.py:2269 engine/emoji_picker.py:2270
+#: engine/emoji_picker.py:2271 setup/main.py:1627
 msgid "System default"
 msgstr "Системные по умолчанию"
 
-#: engine/emoji_picker.py:2426
+#: engine/emoji_picker.py:2405
 msgid "Set Font"
 msgstr "Установить шрифт"
 

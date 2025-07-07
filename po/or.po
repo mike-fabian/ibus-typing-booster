@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-06-25 13:42+0200\n"
+"POT-Creation-Date: 2025-07-07 19:20+0200\n"
 "PO-Revision-Date: 2019-12-20 00:16+0000\n"
 "Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/ibus-"
@@ -133,7 +133,7 @@ msgstr "ୟୁନିକୋଡ଼ ଶ୍ରେଣୀଭୁକ୍ତମାନ"
 msgid "Unicode block:"
 msgstr "ୟୁନିକୋଡ଼ ପ୍ରକାରାନ୍ତର:"
 
-#: engine/emoji_picker.py:824 engine/emoji_picker.py:2031
+#: engine/emoji_picker.py:824 engine/emoji_picker.py:2017
 msgid "Left click to copy"
 msgstr "ନକଲ କରିବା ପାଇଁ ବାମକୁ ଚିପନ୍ତୁ"
 
@@ -153,20 +153,20 @@ msgstr "ଅନୁସନ୍ଧାନ ଫଳମାନ"
 msgid "Search produced empty result."
 msgstr "ଅନୁସନ୍ଧାନ ଶୂନ୍ୟ ଫଳ ପ୍ରକାଶ କରିଛି।"
 
-#: engine/emoji_picker.py:1690 engine/emoji_picker.py:1817
+#: engine/emoji_picker.py:1683 engine/emoji_picker.py:1810
 msgid "Copied to clipboard!"
 msgstr "କ୍ଲିପିବୋର୍ଡ଼କୁ ପ୍ରତିଲିପି କରଣ ସମାପ୍ତ !"
 
-#: engine/emoji_picker.py:2144
+#: engine/emoji_picker.py:2123
 msgid "Lookup on emojipedia"
 msgstr "ଇମୋଜୀପିଡ଼ିଆରେ ଅନୁସନ୍ଧାନ କରନ୍ତୁ"
 
-#: engine/emoji_picker.py:2290 engine/emoji_picker.py:2291
-#: engine/emoji_picker.py:2292 setup/main.py:1627
+#: engine/emoji_picker.py:2269 engine/emoji_picker.py:2270
+#: engine/emoji_picker.py:2271 setup/main.py:1627
 msgid "System default"
 msgstr "ତନ୍ତ୍ର ପୂର୍ବନିଦ୍ଧାରିତ"
 
-#: engine/emoji_picker.py:2426
+#: engine/emoji_picker.py:2405
 msgid "Set Font"
 msgstr "ଅକ୍ଷର ଶୈଳୀ ଧାର୍ଯ୍ୟ କରନ୍ତୁ"
 
