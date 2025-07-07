@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 07 Jul 2025 Release 2.27.68
+* Do not try to point the popovers on search results directly to the emoji (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/766)
+* Translation update from Weblate (el 31.3%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 28 Jun 2025 Release 2.27.67
 * Add time.sleep(self._ibus_event_sleep_seconds) after early commits of an m17n candidates (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/764)
 * Translation update from Weblate (es 100%)

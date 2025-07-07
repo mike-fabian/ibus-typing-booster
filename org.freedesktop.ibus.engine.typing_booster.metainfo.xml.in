@@ -47,6 +47,26 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.68" date="2025-07-07" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.68</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Do not try to point the popovers on search results
+            directly to the emoji (Resolves: github-issues#766)
+          </li>
+          <li>
+            Translation update from Weblate (el 31.3%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/766">
+          github-issues#766
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.67" date="2025-06-28" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.67</url>
       <description>
