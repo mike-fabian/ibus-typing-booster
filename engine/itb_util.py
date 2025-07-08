@@ -3675,6 +3675,71 @@ def variant_to_value(variant: GLib.Variant) -> Any:
     LOGGER.error('unknown variant type: %s', type_string)
     return variant
 
+def get_primary_selection_text() -> str:
+    '''Get the primary selection text'''
+    if os.environ['XDG_SESSION_TYPE'].lower() == 'x11':
+        xclip_binary = shutil.which('xclip')
+        if xclip_binary:
+            try:
+                result = subprocess.run(
+                    [xclip_binary,
+                     '-out', '-selection', 'primary', '-target', 'UTF8_STRING'],
+                    capture_output=True,
+                    text=True,
+                    check=True)
+                if result.stdout.strip():
+                    LOGGER.info('Got primary selection with xclip.')
+                    return result.stdout.strip()
+            except Exception as xclip_error: # pylint: disable=broad-except
+                LOGGER.exception('xclip failed: %s', xclip_error)
+                return ''
+        xsel_binary = shutil.which('xsel')
+        if xsel_binary:
+            try:
+                result = subprocess.run(
+                    [xsel_binary, '-p', '-o'],
+                    capture_output=True,
+                    text=True,
+                    check=True)
+                if result.stdout.strip():
+                    LOGGER.info('Got primary selection with xsel.')
+                    return result.stdout.strip()
+            except Exception as xsel_error: # pylint: disable=broad-except
+                LOGGER.exception('xsel failed: %s', xsel_error)
+                return ''
+    if os.environ['XDG_SESSION_TYPE'].lower() == 'wayland':
+        wl_paste_binary = shutil.which('wl-paste')
+        if wl_paste_binary:
+            try:
+                result = subprocess.run(
+                    [wl_paste_binary, '-p'],
+                    capture_output=True,
+                    text=True,
+                    check=True)
+                if result.stdout.strip():
+                    LOGGER.info('Got primary selection with wl-paste.')
+                    return result.stdout.strip()
+            except Exception as wl_paste_error: # pylint: disable=broad-except
+                LOGGER.exception('wl-paste failed: %s', wl_paste_error)
+                return ''
+    # Run python helper script using Gtk4 to get the selection.
+    python_binary = shutil.which('python3')
+    if python_binary:
+        try:
+            result = subprocess.run(
+                [python_binary,
+                 os.path.join(os.path.dirname(__file__), 'get_clipboard_gtk4.py')],
+                capture_output=True,
+                text=True,
+                check=True,
+                timeout=1.0)
+            if result.stdout.strip():
+                LOGGER.info('Got primary selection with Gtk4.')
+                return result.stdout.strip()
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.exception('Primary selection helper failed: %s', error)
+    return ''
+
 def dict_update_existing_keys(
         pdict: Dict[Any, Any], other_pdict: Dict[Any, Any]) -> None:
     '''Update values of existing keys in a Python dict from another Python dict

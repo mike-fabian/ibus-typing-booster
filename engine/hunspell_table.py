@@ -6855,39 +6855,72 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         fully handled.  Makes no sense to use it as input just because
         getting the selection failed.
         '''
-        if not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
-            LOGGER.info('Surrounding text not supported, cannot get selection')
-            itb_util.run_message_dialog(
-                'Surrounding text not supported, cannot get selection')
-            return True
-        if not self._surrounding_text.event.is_set():
-            LOGGER.warning('Surrounding text not set since last trigger.')
-        LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
-        text = self._surrounding_text.text
-        cursor_pos = self._surrounding_text.cursor_pos
-        anchor_pos = self._surrounding_text.anchor_pos
-        selection_start = min(cursor_pos, anchor_pos)
-        selection_end = max(cursor_pos, anchor_pos)
-        selection_text = text[selection_start:selection_end]
-        LOGGER.debug('selection_text = %r', selection_text)
-        # If a selection could be fetched from surrounding text use
-        # it, if not use the surrounding text up to the cursor.
-        grapheme_clusters = text[:cursor_pos]
-        if selection_text != '':
-            grapheme_clusters = selection_text
+        GLib.idle_add(self._show_selection_info_get_selection)
+        return True
+
+    def _show_selection_info_get_selection(self) -> bool:
+        '''Get the primary selection
+
+        If possible use surrounding text, if that is not supported
+        or fails, get it using the clipboard.
+
+        :return: *Must* always return False to avoid that this callback
+                 called by GLib.idle_add() runs again.
+        '''
+        selection_text = ''
+        text_to_analyze = ''
+        if self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
+            if not self._surrounding_text.event.is_set():
+                LOGGER.warning('Surrounding text not set since last trigger.')
+            LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
+            text = self._surrounding_text.text
+            cursor_pos = self._surrounding_text.cursor_pos
+            anchor_pos = self._surrounding_text.anchor_pos
+            selection_start = min(cursor_pos, anchor_pos)
+            selection_end = max(cursor_pos, anchor_pos)
+            selection_text = text[selection_start:selection_end]
+            # If a selection could be fetched from surrounding text use
+            # it, if not use the surrounding text up to the cursor.
+            text_to_analyze = text[:cursor_pos]
+            if selection_text != '':
+                text_to_analyze = selection_text
+            LOGGER.debug('selection_text=%r text_to_analyze=%r',
+                         selection_text, text_to_analyze)
+        if text_to_analyze != '':
+            self._show_selection_info_show_candidates(
+                selection_text, text_to_analyze)
+            return False
+        LOGGER.debug('Surrounding text not supported or failed. '
+                     'Fallback to primary selection.')
+        text_to_analyze = itb_util.get_primary_selection_text()
+        # Calling self._show_selection_info_show_candidates() after
+        # itb_util.get_primary_selection_text() needs GLib.idle_add(),
+        # without that no lookup table pops up!
+        if text_to_analyze != '':
+            GLib.idle_add(lambda:
+                self._show_selection_info_show_candidates(
+                text_to_analyze, text_to_analyze))
+        return False
+
+    def _show_selection_info_show_candidates(
+            self, selection_text: str, text_to_analyze: str) -> bool:
+        '''Show info about grapheme clusters in text_to_analyze
+
+        :return: *Must* always return False to avoid that this callback
+                 called by GLib.idle_add() runs again.
+        '''
+        LOGGER.debug('selection_text=%r text_to_analyze=%r',
+                     selection_text, text_to_analyze)
+        if text_to_analyze == '':
+            return False
+        grapheme_clusters = list(text_to_analyze)
         if IMPORT_REGEX_SUCCESFUL:
-            grapheme_clusters = regex.findall(r'\X', grapheme_clusters)
+            grapheme_clusters = regex.findall(r'\X', text_to_analyze)
         # If a selection text was found, use all grapheme clusters in
         # that selection. If no selection was found, use only the
         # grapheme cluster directly to the left of the cursor.
         if selection_text == '':
             grapheme_clusters = grapheme_clusters[-1:]
-        if not grapheme_clusters:
-            LOGGER.debug('No grapheme clusters found in selection or before cursor.')
-            itb_util.run_message_dialog(
-                'No grapheme clusters found in selection or before cursor: '
-                f'{self._surrounding_text!r}')
-            return True
         # Make sure we have an EmojiMatcher to be able to get
         # names for emoji:
         if (not self.emoji_matcher
@@ -6929,7 +6962,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 code_point_list_phrase += f' U+{ord(char):04X}'
         if not candidates:
             LOGGER.debug('No candidates found.')
-            return True
+            return False
         candidates.append(itb_util.PredictionCandidate(
             phrase=selection_text + code_point_list_phrase,
             comment=itb_util.elide_middle(
@@ -6949,7 +6982,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # never an inline completion:
         self._lookup_table_shows_related_candidates = True
         self._update_lookup_table_and_aux()
-        return True
+        return False
 
     def _command_next_input_method(self) -> bool:
         '''Handle hotkey for the command “next_input_method”
