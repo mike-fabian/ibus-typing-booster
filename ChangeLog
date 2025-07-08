@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 09 Jul 2025 Release 2.27.69
+* In the show-selection-info command: if using surrounding text fails, fall back to the primary selection. Makes it work in google-chrome, terminals, ... (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/768)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 07 Jul 2025 Release 2.27.68
 * Do not try to point the popovers on search results directly to the emoji (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/766)
 * Translation update from Weblate (el 31.3%)

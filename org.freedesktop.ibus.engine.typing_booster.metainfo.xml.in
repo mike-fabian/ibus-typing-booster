@@ -47,6 +47,24 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.69" date="2025-07-09" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.69</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            In the show-selection-info command: if using surrounding
+            text fails, fall back to the primary selection. Makes it
+            work in google-chrome, terminals, ... (Resolves: github-issues#768)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/768">
+          github-issues#768
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.68" date="2025-07-07" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.68</url>
       <description>
