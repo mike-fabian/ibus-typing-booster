@@ -40,6 +40,7 @@
   <url type="help">https://mike-fabian.github.io/ibus-typing-booster/docs/user/</url>
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
+  <releases>
     <release version="2.27.68" date="2025-07-07" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.68</url>
       <description>
@@ -60,7 +61,6 @@
         </issue>
       </issues>
     </release>
-  <releases>
     <release version="2.27.67" date="2025-06-28" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.67</url>
       <description>
