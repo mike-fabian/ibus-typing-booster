@@ -4067,7 +4067,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # text is deleted at the beginning of a line, WhatsApp
                 # seems to sometimes enable a selection. When the
                 # preedit is then reopened, it may appear like
-                # selected text and behave strange or even vanish
+                # selected text and behave strangely or even vanish
                 # immediately.  See:
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/617
                 # We try to cancel that selection here by sending
@@ -4151,7 +4151,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # at the beginning of a line, WhatsApp seems to
                 # sometimes enable a selection. When the preedit is
                 # then reopened, it may appear like selected text and
-                # behave strange or even vanish immediately.  See:
+                # behave strangely or even vanish immediately.  See:
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/617
                 # We try to cancel that selection here by sending
                 # Control+c (copies the selection) followed by
@@ -6845,6 +6845,113 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # do not wait for the next keypress:
             self._update_ui()
             return True
+        return False
+
+    def _command_selection_to_preedit(self) -> bool:
+        '''Put the selection into preedit
+
+        The return value should always be True. Even if putting the
+        selection into preedit failed, the key which executed the
+        command has been fully handled.  Makes no sense to use it as
+        input just because getting the selection failed.
+        '''
+        GLib.idle_add(self._selection_to_preedit_get_selection)
+        return True
+
+    def _selection_to_preedit_get_selection(self) -> bool:
+        '''Get the primary selection
+
+        If possible use surrounding text, if that is not supported
+        or fails, get it using the clipboard.
+
+        :return: *Must* always return False to avoid that this callback
+                 called by GLib.idle_add() runs again.
+        '''
+        selection_text = ''
+        if self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
+            if not self._surrounding_text.event.is_set():
+                LOGGER.warning('Surrounding text not set since last trigger.')
+            LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
+            text = self._surrounding_text.text
+            cursor_pos = self._surrounding_text.cursor_pos
+            anchor_pos = self._surrounding_text.anchor_pos
+            selection_start = min(cursor_pos, anchor_pos)
+            selection_end = max(cursor_pos, anchor_pos)
+            selection_text = text[selection_start:selection_end]
+            LOGGER.debug('selection_text=%r', selection_text)
+        if selection_text != '':
+            if cursor_pos > anchor_pos:
+                self.delete_surrounding_text(
+                    -len(selection_text), len(selection_text))
+            else:
+                self.delete_surrounding_text(0, len(selection_text))
+            # https://github.com/mike-fabian/ibus-typing-booster/issues/474#issuecomment-1872148410
+            # In very rare cases, like in the editor of
+            # https://meta.stackexchange.com/ the
+            # delete_surrounding_text() does not seem to remove
+            # the text from the editor until something is
+            # committed or the preedit is set to an empty string:
+            super().update_preedit_text_with_mode(
+                IBus.Text.new_from_string(''), 0, True,
+                IBus.PreeditFocusMode.COMMIT)
+            self._current_preedit_text = ''
+            if (re.search(r'^[^:]*:[^:]*:WhatsApp', self._im_client)
+                and not text[:cursor_pos].strip()):
+                # Workaround for WhatsApp in firefox (google-chrome
+                # does not support surrounding text so we don't get
+                # here anyway):
+                #
+                # If reaching a word in WhatsApp from the left **and**
+                # there is only whitespace in the surrounding text up
+                # to the cursor_pos then it is possible that after
+                # deleting the surrounding text the cursor is at the
+                # beginning of a line. If surrounding text is deleted
+                # at the beginning of a line, WhatsApp seems to
+                # sometimes enable a selection. When the preedit is
+                # then reopened, it may appear like selected text and
+                # behave strangely or even vanish immediately.  See:
+                # https://github.com/mike-fabian/ibus-typing-booster/issues/617
+                # We try to cancel that selection here by sending
+                # Control+c (copies the selection) followed by
+                # Control+v (replaces the selection with its copy):
+                LOGGER.debug(
+                    'Apply WhatsApp workaround for reopening preedit '
+                    'at the beginning of a line.')
+                time.sleep(self._ibus_event_sleep_seconds)
+                self._forward_generated_key_event(
+                    IBus.KEY_c, keystate=IBus.ModifierType.CONTROL_MASK)
+                self._forward_generated_key_event(
+                    IBus.KEY_c, keystate=
+                    IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.RELEASE_MASK)
+                self._forward_generated_key_event(
+                    IBus.KEY_v, keystate=IBus.ModifierType.CONTROL_MASK)
+                self._forward_generated_key_event(
+                    IBus.KEY_v, keystate=
+                    IBus.ModifierType.CONTROL_MASK|IBus.ModifierType.RELEASE_MASK)
+                time.sleep(self._ibus_event_sleep_seconds)
+            self._selection_to_preedit_open_preedit(selection_text)
+            return False
+        LOGGER.debug('Surrounding text not supported or failed. '
+                     'Fallback to primary selection.')
+        selection_text = itb_util.get_primary_selection_text()
+        LOGGER.debug('selection_text=%r', selection_text)
+        # Calling self._selection_to_preedit_open_preedit() after
+        # itb_util.get_primary_selection_text() needs GLib.idle_add(),
+        # without that no lookup table pops up!
+        if selection_text != '':
+            GLib.idle_add(lambda:
+                self._selection_to_preedit_open_preedit(selection_text))
+        return False
+
+    def _selection_to_preedit_open_preedit(self, selection_text: str) -> bool:
+        '''Put selection text into preedit
+
+        :return: *Must* always return False to avoid that this callback
+                 called by GLib.idle_add() runs again.
+        '''
+        self.get_context()
+        self._insert_string_at_cursor(list(selection_text))
+        self._update_ui()
         return False
 
     def _command_show_selection_info(self) -> bool:
