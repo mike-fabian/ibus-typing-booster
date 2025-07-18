@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 18 Jul 2025 Release 2.27.70
+* Add selection-to-preedit command (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/769)
+* Translation update from Weblate (fi 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 09 Jul 2025 Release 2.27.69
 * In the show-selection-info command: if using surrounding text fails, fall back to the primary selection. Makes it work in google-chrome, terminals, ... (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/768)
 

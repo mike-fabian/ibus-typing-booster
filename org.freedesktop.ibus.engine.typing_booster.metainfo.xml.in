@@ -47,6 +47,25 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.70" date="2025-07-18" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.70</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Add selection-to-preedit command (Resolves: github-issues#769)
+          </li>
+          <li>
+            Translation update from Weblate (fi 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/769">
+          github-issues#769
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.69" date="2025-07-09" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.69</url>
       <description>
