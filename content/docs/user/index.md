@@ -84,26 +84,28 @@ package managers on the command line:
 * openSUSE:
     * `sudo zypper install ibus-typing-booster` (includes emoji-picker already! 😁)
 
-If your distribution has no binary packages or you are want to have
-the bleeding edge version and install from source, see the [Developer
-Documentation](/docs/dev/). There you can also find information on how
-to report bugs or translate the user interface into your language.
+If your distribution has no binary packages, or you want the bleeding
+edge version and prefer to install from source, please refer to the
+[Developer Documentation](/docs/dev/). There, you can also find
+information on how to report bugs or translate the user interface into
+your language.
 
 Some distributions also have graphical tools to install software
-(“Gnome Software”, “Ubuntu Software”, ...). The following video shows
-how one can install ibus-typing-booster and emoji-picker on Ubuntu
-21.04 using “Ubuntu Software”. “Ubuntu Software” shows
-ibus-typing-booster and emoji-picker as two entries, but after
-installing ibus-typing-booster, emoji-picker has been installed as
-well already, although “Ubuntu Software” does not appear to know that
-and still lets me click on “Install” for emoji-picker. But as it was actually
-already installed, it finishes immediately 😀.
+(“Gnome Software”, “Ubuntu Software”, ...). The following video
+demonstrates how to install ibus-typing-booster and emoji-picker on
+Ubuntu 21.04 using “Ubuntu Software”. While “Ubuntu Software” lists
+ibus-typing-booster and emoji-picker as separate entries, installing
+ibus-typing-booster also installs emoji-picker. “Ubuntu Software” may
+not recognize this, still allowing you to click “Install” for
+emoji-picker, but since it’s already present, the installation
+completes immediately 😀.
 
-**Note**: when using Gnome, don’t forget to log out of your desktop
-and log in again after installing!  On most other desktops one can
-often avoid that by calling `ibus restart` from the command line but
-on Gnome one has to log out and log in again, otherwise one will not
-find ibus-typing-booster when trying to [add it in the desktop
+**Note**: when using Gnome, remember to log out of your desktop and
+log in again after installation!  On most desktops (including newer
+Gnome desktops) one can avoid this by calling `ibus restart` from the
+command line, but on older Gnome desktops, a full logout and login are
+necessary; otherwise, ibus-typing-booster will not appear when you try
+to [add it in the desktop
 settings](#adding-ibus-typing-booster-to-your-desktop).
 
 {{< video label="Installing using “Ubuntu Software” on Ubuntu 21.04" mp4="/videos/user-docs/installing-using-ubuntu-software-on-ubuntu-21.04.mp4" >}}
