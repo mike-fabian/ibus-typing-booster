@@ -1687,6 +1687,48 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text,
                          'test test. Test test . Test , hello ')
+        self.engine.do_process_key_event(IBus.KEY_semicolon, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text,
+                         'test test. Test test . Test , hello ; ')
+        self.assertEqual(self.engine._candidates, [])
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'hello')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'test test. Test test . Test , hello ; ')
+        self.assertEqual(self.engine._candidates[0].phrase, 'hello')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'test test. Test test . Test , hello ; hello ')
+        # https://github.com/mike-fabian/ibus-typing-booster/issues/773
+        # in Greek, ';' is used as the question mark, therefore capitalization
+        # is used after ';' in Greek:
+        self.engine.set_dictionary_names(
+            ['el_GR', 'en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_semicolon, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'test test. Test test . Test , hello ; hello ; ')
+        self.assertEqual(self.engine._candidates, [])
+        self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_l, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'Hello')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'test test. Test test . Test , hello ; hello ; ')
+        self.assertEqual(self.engine._candidates[0].phrase, 'Hello')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text,
+                         'test test. Test test . Test , hello ; hello ; Hello ')
 
     @unittest.skipUnless(
         testutils.get_hunspell_dictionary_length('en_US') >= 10000,

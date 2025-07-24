@@ -3546,7 +3546,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # If commit_phrase contains only white space
             # leave self._new_sentence as it is!
             self._new_sentence = False
-            if itb_util.text_ends_a_sentence(commit_phrase):
+            names = self.get_dictionary_names()
+            name = names[0] if names else ''
+            if itb_util.text_ends_a_sentence(commit_phrase, language=name):
                 self._new_sentence = True
         if fix_sentence_end:
             commit_phrase = (

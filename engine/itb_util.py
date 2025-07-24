@@ -181,10 +181,6 @@ FIX_WHITESPACE_CHARACTERS['fr_BE'] = FIX_WHITESPACE_CHARACTERS['fr_FR']
 FIX_WHITESPACE_CHARACTERS['fr_LU'] = FIX_WHITESPACE_CHARACTERS['fr_FR']
 FIX_WHITESPACE_CHARACTERS['fr_CH'] = FIX_WHITESPACE_CHARACTERS['fr_FR']
 
-# If a commit ends with one of these characters and auto-capitalization is
-# activated, capitalize the next word:
-AUTO_CAPITALIZE_CHARACTERS = '.;:?!)'
-
 CATEGORIES_TO_STRIP_FROM_TOKENS = (
     'Po', # Punctuation Other
     'Pi', # Punctuation Initial quote
@@ -2940,9 +2936,11 @@ def locale_language_description( # pylint: disable=invalid-name
             language_description[0].upper() + language_description[1:])
     return language_description
 
-def text_ends_a_sentence(text: str = '') -> bool:
-    '''
-    Checks whether text ends a sentence
+def text_ends_a_sentence(text: str = '', language: str = '') -> bool:
+    '''Checks whether text ends a sentence
+
+    Used to check whether the next word after a commit should be
+    capitalized if auto-capitalization is enabled.
 
     :param text: The text to check
     :return: True if text ends a sentence, False if not.
@@ -2959,11 +2957,19 @@ def text_ends_a_sentence(text: str = '') -> bool:
     True
     >>> text_ends_a_sentence(' . ')
     True
+    >>> text_ends_a_sentence('; ')
+    False
+    >>> text_ends_a_sentence('; ', language='el_GR')
+    True
     '''
     if text.isspace():
         return False
+    auto_capitalize_characters = '.?!'
+    if language.startswith('el'):
+        # In Greek, ';' is used as a question mark:
+        auto_capitalize_characters += ';'
     pattern_new_sentence = re.compile(
-        r'[' + re.escape(AUTO_CAPITALIZE_CHARACTERS) + r']+[\s]*$')
+        r'[' + re.escape(auto_capitalize_characters) + r']+[\s]*$')
     if pattern_new_sentence.search(text):
         return True
     return False
