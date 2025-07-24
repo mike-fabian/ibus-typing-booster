@@ -583,6 +583,25 @@ class EmojiMatcher():
         self._match_function = _match_classic
         return
 
+    def set_variation_selector(self, variation_selector: str= 'emoji') -> None:
+        '''Set the emoji variation selector
+
+        :param variation_selector:
+                                emoji' means to use fully qualified
+                                sequences in “Emoji style” (which
+                                usually means to prefer color). 'text'
+                                means to use fully qualified emoji
+                                sequences in “Text style” (which
+                                usually means to prefer black and
+                                white).  Other values than 'emoji' and
+                                'text' mean to use unqualified emoji
+                                sequences.
+
+        Changing the variation selector clears the candidate cache.
+        '''
+        self._candidate_cache = {}
+        self._variation_selector = variation_selector
+
     def get_languages(self) -> List[str]:
         # pylint: disable=line-too-long
         '''Returns a copy of the list of languages of this EmojiMatcher

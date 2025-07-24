@@ -217,9 +217,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._input_purpose: int = 0
         self._input_hints: int = 0
         self._lookup_table_hidden = False
+        self._lookup_table_shows_selection_info = False
         self._lookup_table_shows_related_candidates = False
         self._lookup_table_shows_compose_completions = False
         self._lookup_table_shows_m17n_candidates = False
+        self._lookup_table_related_candidates_phrase = ''
         self._current_auxiliary_text = ''
         self._current_preedit_text = ''
         self._bus = bus
@@ -341,6 +343,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         self._emoji_trigger_characters: str = self._settings_dict[
             'emojitriggercharacters']['user']
+
+        self._emoji_style: str = self._settings_dict[
+            'emojistyle']['user']
 
         self._auto_commit_characters: str = self._settings_dict[
             'autocommitcharacters']['user']
@@ -497,7 +502,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                              self._dictionary_names)
             self.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages=self._dictionary_names,
-                unicode_data_all=self._unicode_data_all)
+                unicode_data_all=self._unicode_data_all,
+                variation_selector=self._emoji_style)
             if self._debug_level > 1:
                 LOGGER.debug('EmojiMatcher() instantiated.')
         else:
@@ -763,6 +769,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'emojitriggercharacters': {
                 'set': self.set_emoji_trigger_characters,
                 'get': self.get_emoji_trigger_characters},
+            'emojistyle': {
+                'set': self.set_emoji_style,
+                'get': self.get_emoji_style},
             'autocommitcharacters': {
                 'set': self.set_auto_commit_characters,
                 'get': self.get_auto_commit_characters},
@@ -1078,9 +1087,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.is_lookup_table_enabled_by_min_char_complete = False
         self._timeout_source_id = 0
         self._lookup_table_hidden = False
+        self._lookup_table_shows_selection_info = False
         self._lookup_table_shows_related_candidates = False
         self._lookup_table_shows_compose_completions = False
         self._lookup_table_shows_m17n_candidates = False
+        self._lookup_table_related_candidates_phrase = ''
         self._temporary_word_predictions = False
         self._temporary_emoji_predictions = False
 
@@ -1497,7 +1508,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 != self._dictionary_names):
                 self.emoji_matcher = itb_emoji.EmojiMatcher(
                     languages=self._dictionary_names,
-                    unicode_data_all=self._unicode_data_all)
+                    unicode_data_all=self._unicode_data_all,
+                    variation_selector=self._emoji_style)
             emoji_scores: Dict[str, Tuple[float, str]] = {}
             emoji_max_score: float = 0.0
             for ime in self._current_imes:
@@ -1942,7 +1954,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     != dictionary_names):
                 self.emoji_matcher = itb_emoji.EmojiMatcher(
                     languages=dictionary_names,
-                    unicode_data_all=self._unicode_data_all)
+                    unicode_data_all=self._unicode_data_all,
+                    variation_selector=self._emoji_style)
         if not self.is_empty():
             self._update_ui()
         if update_gsettings:
@@ -2777,6 +2790,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 aux_string += '⎄ '
             elif self._lookup_table_shows_related_candidates:
                 aux_string += '🔗 '
+            elif self._lookup_table_shows_selection_info:
+                aux_string += '🔬 '
             elif self._lookup_table_shows_m17n_candidates:
                 aux_string += f'🦜 {self._m17n_trans_parts.status} '
             else:
@@ -2859,6 +2874,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if ((self.is_empty()
              and self._min_char_complete != 0
              and not self._lookup_table_shows_related_candidates
+             and not self._lookup_table_shows_selection_info
              and not self._typed_compose_sequence)
             or self._hide_input
             or self.get_lookup_table().get_number_of_candidates() == 0
@@ -2872,6 +2888,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             or self._typed_compose_sequence
             or self._lookup_table_shows_m17n_candidates
             or self._lookup_table_shows_related_candidates
+            or self._lookup_table_shows_selection_info
             or self.get_lookup_table().get_cursor_pos() != 0):
             # Show standard lookup table:
             self.update_lookup_table(self.get_lookup_table(), True)
@@ -3033,6 +3050,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._lookup_table_hidden = True
         self.is_lookup_table_enabled_by_tab = False
         self._lookup_table_shows_related_candidates = False
+        self._lookup_table_shows_selection_info = False
+        self._lookup_table_shows_m17n_candidates = False
+        self._lookup_table_shows_compose_completions = False
+        self._lookup_table_related_candidates_phrase = ''
         self._current_auxiliary_text = IBus.Text.new_from_string('')
         super().update_auxiliary_text(
             self._current_auxiliary_text, False)
@@ -3058,6 +3079,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return
         self.is_lookup_table_enabled_by_tab = False
         self._lookup_table_shows_related_candidates = False
+        self._lookup_table_shows_selection_info = False
+        self._lookup_table_shows_compose_completions = False
+        self._lookup_table_shows_m17n_candidates = False
+        self._lookup_table_related_candidates_phrase = ''
         phrase_candidates = self.database.select_words(
             '', p_phrase=self.get_p_phrase(), pp_phrase=self.get_pp_phrase())
         if self._debug_level > 2:
@@ -3136,6 +3161,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._update_preedit()
             return
         self._lookup_table_shows_related_candidates = False
+        self._lookup_table_shows_selection_info = False
+        self._lookup_table_shows_compose_completions = False
+        self._lookup_table_shows_m17n_candidates = False
+        self._lookup_table_related_candidates_phrase = ''
         # See: https://github.com/mike-fabian/ibus-typing-booster/issues/474
         # Nevertheless update the preedit unconditionally here, even though
         # it is updated again in _update_lookup_table(). Because when
@@ -3161,7 +3190,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._timeout_source_id = GLib.timeout_add(
             delay, self._update_candidates_and_lookup_table_and_aux)
 
-    def _lookup_related_candidates(self) -> bool:
+    def _lookup_related_candidates(self, phrase: str ='') -> bool:
         '''Lookup related (similar) emoji or related words (synonyms,
         hyponyms, hypernyms).
 
@@ -3182,13 +3211,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # enable the lookup table:
         if self._tab_enable and not self.is_lookup_table_enabled_by_tab:
             self.is_lookup_table_enabled_by_tab = True
-        phrase = ''
-        if (self.get_lookup_table().get_number_of_candidates()
-            and  self.get_lookup_table().cursor_visible):
-            phrase = self.get_string_from_lookup_table_cursor_pos()
-        else:
-            phrase = self._transliterated_strings[
-                self.get_current_imes()[0]]
+        if phrase == '':
+            if (self.get_lookup_table().get_number_of_candidates()
+                and  self.get_lookup_table().cursor_visible):
+                phrase = self.get_string_from_lookup_table_cursor_pos()
+            else:
+                phrase = self._transliterated_strings[
+                    self.get_current_imes()[0]]
         if not phrase:
             return False
         # Hide lookup table and show an hourglass with moving sand in
@@ -3226,7 +3255,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             != self._dictionary_names):
             self.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages=self._dictionary_names,
-                unicode_data_all=self._unicode_data_all)
+                unicode_data_all=self._unicode_data_all,
+                variation_selector=self._emoji_style)
         if self._debug_level > 0:
             related_candidates = self.emoji_matcher.similar(
                 phrase)
@@ -3282,6 +3312,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._append_candidate_to_lookup_table(
                 phrase=cand.phrase, user_freq=cand.user_freq, comment=cand.comment)
         self._lookup_table_shows_related_candidates = True
+        self._lookup_table_related_candidates_phrase = phrase
         self._update_lookup_table_and_aux()
         return True
 
@@ -4713,7 +4744,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                  != self._dictionary_names)):
             self.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages=self._dictionary_names,
-                unicode_data_all=self._unicode_data_all)
+                unicode_data_all=self._unicode_data_all,
+                variation_selector=self._emoji_style)
         self._update_ui()
         if update_gsettings:
             self._gsettings.set_value(
@@ -4761,7 +4793,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.debug('Updating EmojiMatcher')
             self.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages=self._dictionary_names,
-                unicode_data_all=self._unicode_data_all)
+                unicode_data_all=self._unicode_data_all,
+                variation_selector=self._emoji_style)
         self._update_ui()
         if update_gsettings:
             self._gsettings.set_value(
@@ -4862,6 +4895,62 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
     def get_emoji_trigger_characters(self) -> str:
         '''Returns the current emoji trigger characters'''
         return self._emoji_trigger_characters
+
+    def set_emoji_style(
+            self,
+            style: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the emoji style
+
+        :param style: 'emoji' uses colorful emoji (emoji style).
+                      'text' uses monochrome emoji (text style).
+                      Any other value uses unqualified emoji sequences.
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%r, update_gsettings = %s)',
+                style, update_gsettings)
+        if style == self._emoji_style:
+            return
+        self._emoji_style = style
+        if self.emoji_matcher:
+            if self._debug_level > 1:
+                LOGGER.debug('Updating EmojiMatcher')
+            self.emoji_matcher.set_variation_selector(
+                self._emoji_style)
+        if self._lookup_table_shows_related_candidates:
+            # If there is a lookup table showing related candidates
+            # it might show Emoji and needs to be regenerated to
+            # display the Emoji in the new style:
+            self._lookup_related_candidates(
+                self._lookup_table_related_candidates_phrase)
+        elif not (self._lookup_table_shows_m17n_candidates
+                  or self._lookup_table_shows_compose_completions):
+            # It there is a “normal” lookup table, update to UI to regenerated
+            # it to display the Emoji in the new style:
+            self._update_ui()
+        if update_gsettings:
+            self._gsettings.set_value(
+                'emojistyle',
+                GLib.Variant.new_string(style))
+
+    def toggle_emoji_style(
+            self, update_gsettings: bool = True) -> None:
+        '''Toggles through the values of the emoji style'''
+        next_style = {'emoji': 'text', 'text': '', '': 'emoji'}
+        self.set_emoji_style(
+            next_style.get(self._emoji_style, 'emoji'),
+            update_gsettings)
+
+    def get_emoji_style(self) -> str:
+        '''Returns the current emoji style'''
+        return self._emoji_style
 
     def set_auto_commit_characters(
             self,
@@ -6606,6 +6695,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         if (self._lookup_table_shows_m17n_candidates
             or self._lookup_table_shows_compose_completions
+            or self._lookup_table_shows_selection_info
             or self._lookup_table_shows_related_candidates):
             return False
         self._case_mode_change(mode='next')
@@ -6619,6 +6709,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         if (self._lookup_table_shows_m17n_candidates
             or self._lookup_table_shows_compose_completions
+            or self._lookup_table_shows_selection_info
             or self._lookup_table_shows_related_candidates):
             return False
         self._case_mode_change(mode='previous')
@@ -6631,7 +6722,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :return: True if the key was completely handled, False if not.
         '''
         if (self.is_empty()
-            and not self._typed_compose_sequence):
+            and not self._typed_compose_sequence
+            and not self._lookup_table_shows_selection_info):
             if (self.get_lookup_table().get_number_of_candidates()
                 or self._temporary_word_predictions
                 or self._temporary_emoji_predictions):
@@ -7036,7 +7128,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             or self.emoji_matcher.get_languages() != self._dictionary_names):
             self.emoji_matcher = itb_emoji.EmojiMatcher(
                 languages=self._dictionary_names,
-                unicode_data_all=self._unicode_data_all)
+                unicode_data_all=self._unicode_data_all,
+                variation_selector=self._emoji_style)
         candidates = []
         code_point_list_phrase = ''
         full_breakdown_phrase = ''
@@ -7086,10 +7179,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         for candidate in self._candidates:
             self._append_candidate_to_lookup_table(
                 phrase='', comment=candidate.comment)
-        # Setting self._lookup_table_shows_related_candidates = True
-        # is needed to make sure a standard lookup table is shown,
-        # never an inline completion:
-        self._lookup_table_shows_related_candidates = True
+        self._lookup_table_shows_selection_info = True
         self._update_lookup_table_and_aux()
         return False
 
@@ -7224,6 +7314,14 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :return: True if the key was completely handled, False if not.
         '''
         self.toggle_emoji_prediction_mode()
+        return True
+
+    def _command_toggle_emoji_style(self) -> bool:
+        '''Handle hotkey for the command “toggle_emoji_style”
+
+        :return: True if the key was completely handled, False if not.
+        '''
+        self.toggle_emoji_style()
         return True
 
     def _command_trigger_emoji_predictions(self) -> bool:
@@ -9937,6 +10035,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._lookup_table_shows_m17n_candidates = False
             self._lookup_table_shows_compose_completions = False
             self._lookup_table_shows_related_candidates = False
+            self._lookup_table_shows_selection_info = False
+            self._lookup_table_related_candidates_phrase = ''
             if (self._prev_key
                 and
                 self._prev_key.val in (

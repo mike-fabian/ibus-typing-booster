@@ -115,6 +115,7 @@ class ItbM17nEmuTestCase(unittest.TestCase):
     orig_off_the_record_mode = False
     orig_record_mode = 0
     orig_emoji_trigger_characters = '_'
+    orig_emoji_style = 'emoji'
     orig_auto_commit_characters = ''
     orig_tab_enable = False
     orig_inline_completion = 0
@@ -234,6 +235,8 @@ class ItbM17nEmuTestCase(unittest.TestCase):
             self.engine.get_record_mode())
         self.orig_emoji_trigger_characters = (
             self.engine.get_emoji_trigger_characters())
+        self.orig_emoji_style = (
+            self.engine.get_emoji_style())
         self.orig_auto_commit_characters = (
             self.engine.get_auto_commit_characters())
         self.orig_tab_enable = (
@@ -297,6 +300,9 @@ class ItbM17nEmuTestCase(unittest.TestCase):
             update_gsettings=False)
         self.engine.set_emoji_trigger_characters(
             self.orig_emoji_trigger_characters,
+            update_gsettings=False)
+        self.engine.set_emoji_style(
+            self.orig_emoji_style,
             update_gsettings=False)
         self.engine.set_auto_commit_characters(
             self.orig_auto_commit_characters,

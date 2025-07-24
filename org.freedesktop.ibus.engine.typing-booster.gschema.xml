@@ -307,6 +307,14 @@
         in the user database.
       </description>
     </key>
+    <key name="emojistyle" type="s">
+      <default>'emoji'</default>
+      <summary>Emoji style</summary>
+      <description>
+        To select between colorful emoji (emoji style), monochrome
+        emoji (text style), or no style preference.
+      </description>
+    </key>
     <key name="emojitriggercharacters" type="s">
       <default>'_'</default>
       <summary>Emoji trigger characters</summary>
@@ -630,6 +638,7 @@
         'show_selection_info': &lt;@as []&gt;,
         'speech_recognition': &lt;@as []&gt;,
         'toggle_emoji_prediction': &lt;['Mod5+F6']&gt;,
+        'toggle_emoji_style': &lt;@as []&gt;,
         'toggle_off_the_record': &lt;['Mod5+F9']&gt;,
         'toggle_ascii_digits': &lt;@as []&gt;,
         'toggle_hide_input': &lt;['Shift+Control+Escape']&gt;,

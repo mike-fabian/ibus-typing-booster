@@ -632,6 +632,51 @@ class SetupUI(Gtk.Window): # type: ignore
         self._options_grid.attach(
             self._emoji_predictions_checkbutton, 0, _options_grid_row, 2, 1)
 
+        self._emoji_style_label = Gtk.Label()
+        self._emoji_style_label.set_text(
+            # Translators: A combo box to select which emoji style
+            # should be used.
+            _('Emoji style'))
+        emoji_style_combobox_tooltip = (
+            # Translators: A tooltip for the combobox to select which
+            # emoji style should be used.
+            _('To select between colorful emoji (emoji style), monochrome '
+              'emoji (text style), or no style preference.'))
+        self._emoji_style_label.set_tooltip_text(
+            emoji_style_combobox_tooltip)
+        self._emoji_style_label.set_xalign(0)
+        self._emoji_style_combobox = Gtk.ComboBox()
+        self._emoji_style_combobox.set_tooltip_text(
+            emoji_style_combobox_tooltip)
+        self._emoji_style_store = Gtk.ListStore(str, str)
+        # Translators: This option is to use fully-qualified emoji
+        # sequences to request “Emoji style”, i.e.  typically colored.
+        self._emoji_style_store.append([_('Emoji'), 'emoji'])
+        # Translators: This option is to use fully-qualified emoji
+        # sequences to request “Text style”, i.e.  typically
+        # monochrome.
+        self._emoji_style_store.append([_('Text'), 'text'])
+        # Translators: This option is to use unqualified emoji
+        # sequences. When this style is used, some emoji may display
+        # in color, some monochrome, depending on the properties of
+        # the emoji in the Unicode emoji data files.
+        self._emoji_style_store.append([_('No style'), ''])
+        self._emoji_style_combobox.set_model(self._emoji_style_store)
+        renderer_text = Gtk.CellRendererText()
+        self._emoji_style_combobox.pack_start(renderer_text, True)
+        self._emoji_style_combobox.add_attribute(renderer_text, 'text', 0)
+        self._emoji_style = self._settings_dict['emojistyle']['user']
+        for i, item in enumerate(self._emoji_style_store):
+            if self._emoji_style == item[1]:
+                self._emoji_style_combobox.set_active(i)
+                self._emoji_style_combobox.connect(
+                    'changed', self._on_emoji_style_combobox_changed)
+                _options_grid_row += 1
+                self._options_grid.attach(
+                    self._emoji_style_label, 0, _options_grid_row, 1, 1)
+                self._options_grid.attach(
+                    self._emoji_style_combobox, 1, _options_grid_row, 1, 1)
+
         self._off_the_record_checkbutton = Gtk.CheckButton(
             # Translators: While “Off the record” mode is on, learning
             # from user input is disabled. If learned user input is
@@ -2480,6 +2525,7 @@ class SetupUI(Gtk.Window): # type: ignore
             'offtherecord': self.set_off_the_record_mode,
             'recordmode': self.set_record_mode,
             'emojitriggercharacters': self.set_emoji_trigger_characters,
+            'emojistyle': self.set_emoji_style,
             'autocommitcharacters': self.set_auto_commit_characters,
             'googleapplicationcredentials':
             self.set_google_application_credentials,
@@ -3435,7 +3481,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self, widget: Gtk.ComboBox) -> None:
         '''
         A change of the IBus keymap has been requested
-        with the  combobox
+        with the combobox
         '''
         tree_iter = widget.get_active_iter()
         if tree_iter is not None:
@@ -3443,6 +3489,19 @@ class SetupUI(Gtk.Window): # type: ignore
             keymap = model[tree_iter][1]
             self.set_ibus_keymap(
                 keymap, update_gsettings=True)
+
+    def _on_emoji_style_combobox_changed(
+            self, widget: Gtk.ComboBox) -> None:
+        '''
+        A change of the emoji style has been requested
+        with the combobox
+        '''
+        tree_iter = widget.get_active_iter()
+        if tree_iter is not None:
+            model = widget.get_model()
+            style = model[tree_iter][1]
+            self.set_emoji_style(
+                style, update_gsettings=True)
 
     def _on_emoji_trigger_characters_entry(
             self, widget: Gtk.Entry, _property_spec: Any) -> None:
@@ -6592,6 +6651,40 @@ class SetupUI(Gtk.Window): # type: ignore
             for i, item in enumerate(self._ibus_keymap_store):
                 if keymap == item[1]:
                     self._ibus_keymap_combobox.set_active(i)
+
+    def set_emoji_style(
+            self,
+            style: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the emoji style
+
+        :param style: 'emoji' uses colorful emoji (emoji style).
+                      'text' uses monochrome emoji (text style).
+                      Any other value uses unqualified emoji sequences.
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%r, update_gsettings = %s)', style, update_gsettings)
+        if not isinstance(style, str):
+            return
+        if style not in ('emoji', 'text', ''):
+            LOGGER.warning(
+                'style %r not in %r',
+                style, repr(('emoji', 'text', '')))
+        self._settings_dict['emojistyle']['user'] = style
+        if update_gsettings:
+            self._gsettings.set_value(
+                'emojistyle',
+                GLib.Variant.new_string(style))
+        else:
+            self._emoji_style_combobox.set_active(-1)
+            for i, item in enumerate(self._emoji_style_store):
+                if style == item[1]:
+                    self._emoji_style_combobox.set_active(i)
 
     def set_error_sound(
             self,
