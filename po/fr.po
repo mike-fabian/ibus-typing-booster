@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-07-25 15:25+0200\n"
+"POT-Creation-Date: 2025-07-25 16:02+0200\n"
 "PO-Revision-Date: 2025-05-11 21:50+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: French <https://translate.fedoraproject.org/projects/ibus-"
@@ -437,7 +437,7 @@ msgstr "Préférences"
 msgid "Restore all defaults"
 msgstr "Restaurer les valeurs par défaut"
 
-#: setup/main.py:255 setup/main.py:7155
+#: setup/main.py:255 setup/main.py:7142
 msgid "_Close"
 msgstr "_Fermer"
 
@@ -709,7 +709,7 @@ msgstr "Emoji"
 #: setup/main.py:645
 msgid ""
 "To select between colorful emoji (emoji style), monochrome emoji (text "
-"style), or no style preference"
+"style), or no style preference."
 msgstr ""
 
 #. Translators: This option is to use fully-qualified emoji
@@ -1077,7 +1077,7 @@ msgstr "Installer les dictionnaires manquants"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Installe les dictionnaires configurés mais non installés"
 
-#: setup/main.py:1172 setup/main.py:1317 setup/main.py:1559 setup/main.py:5265
+#: setup/main.py:1172 setup/main.py:1317 setup/main.py:1559 setup/main.py:5252
 msgid "Set to default"
 msgstr "Réinitialiser"
 
@@ -1186,7 +1186,7 @@ msgstr "Modifier"
 msgid "Edit the key bindings for the selected command"
 msgstr "Modifier les raccourcis clavier pour la commande sélectionnée"
 
-#: setup/main.py:1563 setup/main.py:5270
+#: setup/main.py:1563 setup/main.py:5257
 msgid "Set default key bindings for the selected command"
 msgstr ""
 "Remettre le raccourcis clavier par défaut pour la commande sélectionnée"
@@ -1725,7 +1725,7 @@ msgid ""
 msgstr ""
 
 #. Translators:
-#: setup/main.py:2359 setup/main.py:3546
+#: setup/main.py:2359 setup/main.py:3533
 msgid "Set “Google application credentials” .json file:"
 msgstr "Renseignez le fichier .json « Google application credentials » :"
 
@@ -1741,7 +1741,7 @@ msgstr "Fichier non défini."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2426 setup/main.py:4778
+#: setup/main.py:2426 setup/main.py:4765
 msgid "Add an autosetting"
 msgstr "Ajouter un paramètre automatique"
 
@@ -1791,7 +1791,7 @@ msgstr "Paramètre"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2878 setup/main.py:4351
+#: setup/main.py:2878 setup/main.py:4338
 msgid "Value"
 msgstr "Valeur"
 
@@ -1805,53 +1805,49 @@ msgstr "Expression régulière"
 msgid "Are you sure?"
 msgstr "Confirmez-vous ?"
 
-#: setup/main.py:2937 setup/main.py:3549 setup/main.py:3634 setup/main.py:5336
+#: setup/main.py:2937 setup/main.py:3536 setup/main.py:3621 setup/main.py:5323
 msgid "_Cancel"
 msgstr "A_nnuler"
 
-#: setup/main.py:2938 setup/main.py:3550 setup/main.py:3635 setup/main.py:5337
+#: setup/main.py:2938 setup/main.py:3537 setup/main.py:3622 setup/main.py:5324
 msgid "_OK"
 msgstr "_Valider"
-
-#: setup/main.py:2968
-msgid "Another instance of this app is already running."
-msgstr "Une autre instance de cette application est déjà en cours d’exécution."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3071
+#: setup/main.py:3058
 msgid "Do you really want to restore all default settings?"
 msgstr "Souhaitez-vous vraiment rétablir tous les paramètres par défaut ?"
 
-#: setup/main.py:3631
+#: setup/main.py:3618
 msgid "Select .wav sound file:"
 msgstr "Sélectionnez le fichier son .wav :"
 
-#: setup/main.py:3818
+#: setup/main.py:3805
 msgid "Add dictionary"
 msgstr "Ajouter un dictionnaire"
 
-#: setup/main.py:4161
+#: setup/main.py:4148
 msgid "Add input method"
 msgstr "Ajouter une méthode de saisie"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4342
+#: setup/main.py:4329
 msgid "Variable"
 msgstr "Variable"
 
-#: setup/main.py:5218
+#: setup/main.py:5205
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Modifier le raccourcis clavier pour la commande \"%s\""
 
-#: setup/main.py:5246
+#: setup/main.py:5233
 msgid "Add a key binding"
 msgstr "Ajouter un raccourcis claviers"
 
-#: setup/main.py:5258
+#: setup/main.py:5245
 msgid "Remove selected key binding"
 msgstr "Supprimer le raccourcis clavier sélectionné"
 
@@ -1860,7 +1856,7 @@ msgstr "Supprimer le raccourcis clavier sélectionné"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5318
+#: setup/main.py:5305
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1868,16 +1864,16 @@ msgstr ""
 "Voulez-vous vraiment redéfinir les raccourcis claviers pour toutes les "
 "commandes ?"
 
-#: setup/main.py:5333
+#: setup/main.py:5320
 msgid "Open File ..."
 msgstr "Ouvrir le fichier…"
 
-#: setup/main.py:5350
+#: setup/main.py:5337
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Apprentissage réussi depuis le fichier %(filename)s."
 
-#: setup/main.py:5359
+#: setup/main.py:5346
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Échec de l’apprentissage depuis le fichier %(filename)s."
@@ -1892,7 +1888,7 @@ msgstr "Échec de l’apprentissage depuis le fichier %(filename)s."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5382
+#: setup/main.py:5369
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1900,7 +1896,7 @@ msgstr ""
 "Voulez-vous vraiment supprimer toutes les données linguistiques apprises par "
 "saisie au clavier ou lecture de fichiers ?"
 
-#: setup/main.py:7231
+#: setup/main.py:7218
 msgid "ibus is not running."
 msgstr "Ibus n’est pas lancé."
 
@@ -1930,6 +1926,10 @@ msgstr ""
 "qui prédit des mots complets à partir du contexte et de la saisie partielle. "
 "On peut ainsi améliorer sa vitesse d’écriture et son orthographe en "
 "sélectionnant simplement le mot désiré dans une liste de suggestions."
+
+#~ msgid "Another instance of this app is already running."
+#~ msgstr ""
+#~ "Une autre instance de cette application est déjà en cours d’exécution."
 
 #, fuzzy
 #~| msgid ""

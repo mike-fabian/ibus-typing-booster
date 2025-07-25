@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-07-25 15:25+0200\n"
+"POT-Creation-Date: 2025-07-25 16:02+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/ibus-"
@@ -437,7 +437,7 @@ msgstr "পছন্দসমূহ"
 msgid "Restore all defaults"
 msgstr "সমস্ত ডিফল্ট পুনরুদ্ধার করুন"
 
-#: setup/main.py:255 setup/main.py:7155
+#: setup/main.py:255 setup/main.py:7142
 msgid "_Close"
 msgstr "_বন্ধ"
 
@@ -711,7 +711,7 @@ msgstr "ইমোজি"
 #: setup/main.py:645
 msgid ""
 "To select between colorful emoji (emoji style), monochrome emoji (text "
-"style), or no style preference"
+"style), or no style preference."
 msgstr ""
 
 #. Translators: This option is to use fully-qualified emoji
@@ -1068,7 +1068,7 @@ msgstr "অনুপস্থিত অভিধান ইনস্টল কর
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "যে অভিধানগুলো এখানে সেটআপ করা আছে কিন্তু ইনস্টল করা হয়নি সেগুলো ইনস্টল করুন"
 
-#: setup/main.py:1172 setup/main.py:1317 setup/main.py:1559 setup/main.py:5265
+#: setup/main.py:1172 setup/main.py:1317 setup/main.py:1559 setup/main.py:5252
 msgid "Set to default"
 msgstr "ডিফল্টে সেট করুন"
 
@@ -1177,7 +1177,7 @@ msgstr "সম্পাদনা"
 msgid "Edit the key bindings for the selected command"
 msgstr "নির্বাচিত কমান্ডের জন্য কী বন্ধনগুলো সম্পাদনা করুন"
 
-#: setup/main.py:1563 setup/main.py:5270
+#: setup/main.py:1563 setup/main.py:5257
 msgid "Set default key bindings for the selected command"
 msgstr "নির্বাচিত নির্দেশের জন্য ডিফল্ট কী বন্ধনগুলো নির্ধারণ করুন"
 
@@ -1705,7 +1705,7 @@ msgid ""
 msgstr ""
 
 #. Translators:
-#: setup/main.py:2359 setup/main.py:3546
+#: setup/main.py:2359 setup/main.py:3533
 msgid "Set “Google application credentials” .json file:"
 msgstr "\"গুগল অ্যাপ্লিকেশন শংসাপত্র\" .json ফাইল সেট করুন:"
 
@@ -1721,7 +1721,7 @@ msgstr "ফাইল এখনো সেট করা হয়নি।"
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2426 setup/main.py:4778
+#: setup/main.py:2426 setup/main.py:4765
 msgid "Add an autosetting"
 msgstr "একটি অটোসেটিং যোগ করুন"
 
@@ -1771,7 +1771,7 @@ msgstr "বিন্যাস"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2878 setup/main.py:4351
+#: setup/main.py:2878 setup/main.py:4338
 msgid "Value"
 msgstr "মান"
 
@@ -1785,53 +1785,49 @@ msgstr "নিয়মিত অভিব্যক্তি"
 msgid "Are you sure?"
 msgstr "তুমি কি নিশ্চিত?"
 
-#: setup/main.py:2937 setup/main.py:3549 setup/main.py:3634 setup/main.py:5336
+#: setup/main.py:2937 setup/main.py:3536 setup/main.py:3621 setup/main.py:5323
 msgid "_Cancel"
 msgstr "_বাতিল"
 
-#: setup/main.py:2938 setup/main.py:3550 setup/main.py:3635 setup/main.py:5337
+#: setup/main.py:2938 setup/main.py:3537 setup/main.py:3622 setup/main.py:5324
 msgid "_OK"
 msgstr "_ঠিক আছে"
-
-#: setup/main.py:2968
-msgid "Another instance of this app is already running."
-msgstr "এই অ্যাপটির আরেকটি উদাহরণ ইতিমধ্যেই চলছে৷"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3071
+#: setup/main.py:3058
 msgid "Do you really want to restore all default settings?"
 msgstr "আপনি কি সত্যিই সমস্ত ডিফল্ট সেটিংস পুনরুদ্ধার করতে চান?"
 
-#: setup/main.py:3631
+#: setup/main.py:3618
 msgid "Select .wav sound file:"
 msgstr ".wav সাউন্ড ফাইল নির্বাচন করুন:"
 
-#: setup/main.py:3818
+#: setup/main.py:3805
 msgid "Add dictionary"
 msgstr "একটি অভিধান যোগ করুন"
 
-#: setup/main.py:4161
+#: setup/main.py:4148
 msgid "Add input method"
 msgstr "একটি ইনপুট পদ্ধতি যোগ করুন"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4342
+#: setup/main.py:4329
 msgid "Variable"
 msgstr "চলক"
 
-#: setup/main.py:5218
+#: setup/main.py:5205
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "\"%s\" কমান্ডের জন্য কী বন্ধন সম্পাদনা করুন"
 
-#: setup/main.py:5246
+#: setup/main.py:5233
 msgid "Add a key binding"
 msgstr "একটি কী বন্ধন যোগ করুন"
 
-#: setup/main.py:5258
+#: setup/main.py:5245
 msgid "Remove selected key binding"
 msgstr "নির্বাচিত কী বন্ধন সরান"
 
@@ -1840,22 +1836,22 @@ msgstr "নির্বাচিত কী বন্ধন সরান"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5318
+#: setup/main.py:5305
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "আপনি কি সত্যিই সমস্ত কমান্ডের জন্য তাদের ডিফল্টে কী বন্ধন সেট করতে চান?"
 
-#: setup/main.py:5333
+#: setup/main.py:5320
 msgid "Open File ..."
 msgstr "খোলা ফাইল ..."
 
-#: setup/main.py:5350
+#: setup/main.py:5337
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "ফাইল %(filename)s থেকে সফলভাবে শিখেছি।"
 
-#: setup/main.py:5359
+#: setup/main.py:5346
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "ফাইল %(filename)s থেকে শেখা ব্যর্থ হয়েছে৷"
@@ -1870,13 +1866,13 @@ msgstr "ফাইল %(filename)s থেকে শেখা ব্যর্থ �
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5382
+#: setup/main.py:5369
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr "আপনি কি সত্যিই টাইপিং অথবা নথি পড়ে শেখা সমস্ত ভাষা সম্পর্কৃত ডেটা মুছতে চান?"
 
-#: setup/main.py:7231
+#: setup/main.py:7218
 msgid "ibus is not running."
 msgstr "আইবাস চলছে না।"
 
@@ -1904,6 +1900,9 @@ msgstr ""
 "ইনপুটের উপর ভিত্তি করে সম্পূর্ণ শব্দের পূর্বাভাস দেয়। ব্যবহারকারী শব্দ পরামর্শের তালিকা "
 "থেকে পছন্দসই শব্দটি নির্বাচন করতে পারে এবং ব্যবহারকারীর টাইপিং গতি এবং বানান "
 "উন্নত করতে পারে।"
+
+#~ msgid "Another instance of this app is already running."
+#~ msgstr "এই অ্যাপটির আরেকটি উদাহরণ ইতিমধ্যেই চলছে৷"
 
 #, fuzzy
 #~| msgid ""

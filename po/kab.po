@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-07-25 15:25+0200\n"
+"POT-Creation-Date: 2025-07-25 16:02+0200\n"
 "PO-Revision-Date: 2025-05-17 13:41+0000\n"
 "Last-Translator: Moonshadow <starlight@users.noreply.translate.fedoraproject."
 "org>\n"
@@ -421,7 +421,7 @@ msgstr "Ismenyafen"
 msgid "Restore all defaults"
 msgstr "Err-d akk imezwer"
 
-#: setup/main.py:255 setup/main.py:7155
+#: setup/main.py:255 setup/main.py:7142
 msgid "_Close"
 msgstr "Mdel (_C)"
 
@@ -660,7 +660,7 @@ msgstr "Imujit"
 #: setup/main.py:645
 msgid ""
 "To select between colorful emoji (emoji style), monochrome emoji (text "
-"style), or no style preference"
+"style), or no style preference."
 msgstr ""
 
 #. Translators: This option is to use fully-qualified emoji
@@ -980,7 +980,7 @@ msgstr "Sbedd imawalen i ixuṣṣen"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "Sbedd imawalen i yettusbadun dagi maca ur ttusbedden ara"
 
-#: setup/main.py:1172 setup/main.py:1317 setup/main.py:1559 setup/main.py:5265
+#: setup/main.py:1172 setup/main.py:1317 setup/main.py:1559 setup/main.py:5252
 msgid "Set to default"
 msgstr "Sbadu ɣer umezwer"
 
@@ -1087,7 +1087,7 @@ msgstr "Ẓreg"
 msgid "Edit the key bindings for the selected command"
 msgstr ""
 
-#: setup/main.py:1563 setup/main.py:5270
+#: setup/main.py:1563 setup/main.py:5257
 msgid "Set default key bindings for the selected command"
 msgstr ""
 
@@ -1543,7 +1543,7 @@ msgid ""
 msgstr ""
 
 #. Translators:
-#: setup/main.py:2359 setup/main.py:3546
+#: setup/main.py:2359 setup/main.py:3533
 msgid "Set “Google application credentials” .json file:"
 msgstr "Sbadu afaylu .json “Inekcam n usnas n Google”:"
 
@@ -1559,7 +1559,7 @@ msgstr "Afaylu-a mazal ur yettusbadu ara."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2426 setup/main.py:4778
+#: setup/main.py:2426 setup/main.py:4765
 msgid "Add an autosetting"
 msgstr "Rnu aɣewwar awurman"
 
@@ -1609,7 +1609,7 @@ msgstr "Aɣewwar"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2878 setup/main.py:4351
+#: setup/main.py:2878 setup/main.py:4338
 msgid "Value"
 msgstr "Azal"
 
@@ -1623,53 +1623,49 @@ msgstr "Tanfalit talugant"
 msgid "Are you sure?"
 msgstr "D tidet?"
 
-#: setup/main.py:2937 setup/main.py:3549 setup/main.py:3634 setup/main.py:5336
+#: setup/main.py:2937 setup/main.py:3536 setup/main.py:3621 setup/main.py:5323
 msgid "_Cancel"
 msgstr "Sefsex (C)"
 
-#: setup/main.py:2938 setup/main.py:3550 setup/main.py:3635 setup/main.py:5337
+#: setup/main.py:2938 setup/main.py:3537 setup/main.py:3622 setup/main.py:5324
 msgid "_OK"
 msgstr "IH (_O)"
-
-#: setup/main.py:2968
-msgid "Another instance of this app is already running."
-msgstr "Tummant niḍen n usnas-a la tettwaselkam yakan."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3071
+#: setup/main.py:3058
 msgid "Do you really want to restore all default settings?"
 msgstr "D tidet tebɣiḍ ad d-terreḍ akk iɣewwaren imezwer?"
 
-#: setup/main.py:3631
+#: setup/main.py:3618
 msgid "Select .wav sound file:"
 msgstr "Fren afaylu n yimesli .wav:"
 
-#: setup/main.py:3818
+#: setup/main.py:3805
 msgid "Add dictionary"
 msgstr "Rnu amawal"
 
-#: setup/main.py:4161
+#: setup/main.py:4148
 msgid "Add input method"
 msgstr "Rnu tarrayt n unekcum"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4342
+#: setup/main.py:4329
 msgid "Variable"
 msgstr "Ameskil"
 
-#: setup/main.py:5218
+#: setup/main.py:5205
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Ẓreg tuqqna n tsura i tladna “%s”"
 
-#: setup/main.py:5246
+#: setup/main.py:5233
 msgid "Add a key binding"
 msgstr "Rnu tuqqna n tsura"
 
-#: setup/main.py:5258
+#: setup/main.py:5245
 msgid "Remove selected key binding"
 msgstr "Kkes tuqqna n tsura i yettwafernen"
 
@@ -1678,7 +1674,7 @@ msgstr "Kkes tuqqna n tsura i yettwafernen"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5318
+#: setup/main.py:5305
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1686,16 +1682,16 @@ msgstr ""
 "D tidet tebɣiḍ ad tesbaduḍ tuqqniwin n tsura i meṛṛa tiludna ɣer yimezwer-"
 "nsent?"
 
-#: setup/main.py:5333
+#: setup/main.py:5320
 msgid "Open File ..."
 msgstr "Ldi afaylu ..."
 
-#: setup/main.py:5350
+#: setup/main.py:5337
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Almud yedda akken iwata seg ufaylu %(filename)s."
 
-#: setup/main.py:5359
+#: setup/main.py:5346
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Almud seg ufaylu %(filename)s yecceḍ."
@@ -1710,7 +1706,7 @@ msgstr "Almud seg ufaylu %(filename)s yecceḍ."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5382
+#: setup/main.py:5369
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1718,7 +1714,7 @@ msgstr ""
 "D tidet tebɣiḍ ad tekkseḍ akk isefka n tutlayt yettwalemden seg yifuyla n "
 "tira akked tɣuri?"
 
-#: setup/main.py:7231
+#: setup/main.py:7218
 msgid "ibus is not running."
 msgstr "ibus ur iteddu ara."
 
@@ -1742,6 +1738,9 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+
+#~ msgid "Another instance of this app is already running."
+#~ msgstr "Tummant niḍen n usnas-a la tettwaselkam yakan."
 
 #, fuzzy
 #~| msgid "Emoji"

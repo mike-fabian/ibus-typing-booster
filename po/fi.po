@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-07-25 15:25+0200\n"
+"POT-Creation-Date: 2025-07-25 16:02+0200\n"
 "PO-Revision-Date: 2025-07-18 17:47+0000\n"
 "Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
 "Language-Team: Finnish <https://translate.fedoraproject.org/projects/ibus-"
@@ -422,7 +422,7 @@ msgstr "Asetukset"
 msgid "Restore all defaults"
 msgstr "Palauta kaikki oletusarvot"
 
-#: setup/main.py:255 setup/main.py:7155
+#: setup/main.py:255 setup/main.py:7142
 msgid "_Close"
 msgstr "_Sulje"
 
@@ -691,7 +691,7 @@ msgstr "Emoji"
 #: setup/main.py:645
 msgid ""
 "To select between colorful emoji (emoji style), monochrome emoji (text "
-"style), or no style preference"
+"style), or no style preference."
 msgstr ""
 
 #. Translators: This option is to use fully-qualified emoji
@@ -1054,7 +1054,7 @@ msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
 "Asenna sanakirjat, jotka on asetettu täällä, mutta joita ei ole asennettu"
 
-#: setup/main.py:1172 setup/main.py:1317 setup/main.py:1559 setup/main.py:5265
+#: setup/main.py:1172 setup/main.py:1317 setup/main.py:1559 setup/main.py:5252
 msgid "Set to default"
 msgstr "Aseta oletukseksi"
 
@@ -1161,7 +1161,7 @@ msgstr "Muokkaa"
 msgid "Edit the key bindings for the selected command"
 msgstr "Muokkaa valitun komennon näppäinsidoksia"
 
-#: setup/main.py:1563 setup/main.py:5270
+#: setup/main.py:1563 setup/main.py:5257
 msgid "Set default key bindings for the selected command"
 msgstr "Aseta valitun komennon oletusnäppäinsidokset"
 
@@ -1660,7 +1660,7 @@ msgstr ""
 "välitetään suoraan ilman käsittelyä)."
 
 #. Translators:
-#: setup/main.py:2359 setup/main.py:3546
+#: setup/main.py:2359 setup/main.py:3533
 msgid "Set “Google application credentials” .json file:"
 msgstr "Aseta \"Google-sovelluksen valtuustiedot\".json -tiedosto:"
 
@@ -1676,7 +1676,7 @@ msgstr "Tiedostoa ei ole vielä asetettu."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2426 setup/main.py:4778
+#: setup/main.py:2426 setup/main.py:4765
 msgid "Add an autosetting"
 msgstr "Lisää automaattinen asetus"
 
@@ -1726,7 +1726,7 @@ msgstr "Asetus"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2878 setup/main.py:4351
+#: setup/main.py:2878 setup/main.py:4338
 msgid "Value"
 msgstr "Arvo"
 
@@ -1740,53 +1740,49 @@ msgstr "Säännöllinen lauseke"
 msgid "Are you sure?"
 msgstr "Oletko varma?"
 
-#: setup/main.py:2937 setup/main.py:3549 setup/main.py:3634 setup/main.py:5336
+#: setup/main.py:2937 setup/main.py:3536 setup/main.py:3621 setup/main.py:5323
 msgid "_Cancel"
 msgstr "_Peru"
 
-#: setup/main.py:2938 setup/main.py:3550 setup/main.py:3635 setup/main.py:5337
+#: setup/main.py:2938 setup/main.py:3537 setup/main.py:3622 setup/main.py:5324
 msgid "_OK"
 msgstr "_Hyvä on"
-
-#: setup/main.py:2968
-msgid "Another instance of this app is already running."
-msgstr "Toinen tämän sovelluksen esiintymä on jo käynnissä."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3071
+#: setup/main.py:3058
 msgid "Do you really want to restore all default settings?"
 msgstr "Haluatko todella palauttaa kaikki oletusasetukset?"
 
-#: setup/main.py:3631
+#: setup/main.py:3618
 msgid "Select .wav sound file:"
 msgstr "Valitse .wav-äänitiedosto:"
 
-#: setup/main.py:3818
+#: setup/main.py:3805
 msgid "Add dictionary"
 msgstr "Lisää sanakirja"
 
-#: setup/main.py:4161
+#: setup/main.py:4148
 msgid "Add input method"
 msgstr "Lisää syöttömenetelmä"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4342
+#: setup/main.py:4329
 msgid "Variable"
 msgstr "Muuttuja"
 
-#: setup/main.py:5218
+#: setup/main.py:5205
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Muokkaa näppäinsidoksia komennolle \"%s\""
 
-#: setup/main.py:5246
+#: setup/main.py:5233
 msgid "Add a key binding"
 msgstr "Lisää näppäinsidonta"
 
-#: setup/main.py:5258
+#: setup/main.py:5245
 msgid "Remove selected key binding"
 msgstr "Poista valittu näppäinsidonta"
 
@@ -1795,7 +1791,7 @@ msgstr "Poista valittu näppäinsidonta"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5318
+#: setup/main.py:5305
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1803,16 +1799,16 @@ msgstr ""
 "Haluatko todella asettaa kaikkien komentojen näppäinsidokset "
 "oletusarvoihinsa?"
 
-#: setup/main.py:5333
+#: setup/main.py:5320
 msgid "Open File ..."
 msgstr "Avaa tiedosto ..."
 
-#: setup/main.py:5350
+#: setup/main.py:5337
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Oppittu onnistuneesti tiedostosta %(filename)s."
 
-#: setup/main.py:5359
+#: setup/main.py:5346
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Oppiminen tiedostosta %(filename)s epäonnistui."
@@ -1827,7 +1823,7 @@ msgstr "Oppiminen tiedostosta %(filename)s epäonnistui."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5382
+#: setup/main.py:5369
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1835,7 +1831,7 @@ msgstr ""
 "Haluatko todella poistaa kaikki kirjoittamisesta tai tiedostojen lukemisesta "
 "opitut kielitiedot?"
 
-#: setup/main.py:7231
+#: setup/main.py:7218
 msgid "ibus is not running."
 msgstr "ibus ei ole käynnissä."
 
@@ -1865,6 +1861,9 @@ msgstr ""
 "sanoja kontekstin ja osittaisen syötteen perusteella. Tämän jälkeen voi "
 "yksinkertaisesti valita haluamasi sanan ehdotusluettelosta ja parantaa "
 "kirjoitusnopeutta ja oikolukua."
+
+#~ msgid "Another instance of this app is already running."
+#~ msgstr "Toinen tämän sovelluksen esiintymä on jo käynnissä."
 
 #, fuzzy
 #~| msgid ""

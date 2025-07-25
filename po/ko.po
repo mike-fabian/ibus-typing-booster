@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-07-25 15:25+0200\n"
+"POT-Creation-Date: 2025-07-25 16:02+0200\n"
 "PO-Revision-Date: 2025-06-23 11:53+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
@@ -424,7 +424,7 @@ msgstr "환경설정"
 msgid "Restore all defaults"
 msgstr "모든 설정 값을 복구합니다"
 
-#: setup/main.py:255 setup/main.py:7155
+#: setup/main.py:255 setup/main.py:7142
 msgid "_Close"
 msgstr "_닫기"
 
@@ -688,7 +688,7 @@ msgstr "이모지"
 #: setup/main.py:645
 msgid ""
 "To select between colorful emoji (emoji style), monochrome emoji (text "
-"style), or no style preference"
+"style), or no style preference."
 msgstr ""
 
 #. Translators: This option is to use fully-qualified emoji
@@ -1042,7 +1042,7 @@ msgstr "누락된 사전을 설치합니다"
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "여기에 설정되어 있지만 설치되지 않은 사전을 설치합니다"
 
-#: setup/main.py:1172 setup/main.py:1317 setup/main.py:1559 setup/main.py:5265
+#: setup/main.py:1172 setup/main.py:1317 setup/main.py:1559 setup/main.py:5252
 msgid "Set to default"
 msgstr "기본 값으로 설정합니다"
 
@@ -1150,7 +1150,7 @@ msgstr "편집"
 msgid "Edit the key bindings for the selected command"
 msgstr "선택한 명령을 위해 키 할당을 편집합니다"
 
-#: setup/main.py:1563 setup/main.py:5270
+#: setup/main.py:1563 setup/main.py:5257
 msgid "Set default key bindings for the selected command"
 msgstr "선택한 명령을 위해 기본 값 키 할당을 설정합니다"
 
@@ -1650,7 +1650,7 @@ msgstr ""
 "전달됩니다)."
 
 #. Translators:
-#: setup/main.py:2359 setup/main.py:3546
+#: setup/main.py:2359 setup/main.py:3533
 msgid "Set “Google application credentials” .json file:"
 msgstr "“구글 응용프로그램 인증서” .json 파일 설정:"
 
@@ -1666,7 +1666,7 @@ msgstr "파일이 아직 설정되지 않았습니다."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2426 setup/main.py:4778
+#: setup/main.py:2426 setup/main.py:4765
 msgid "Add an autosetting"
 msgstr "자동설정 추가"
 
@@ -1716,7 +1716,7 @@ msgstr "설정"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2878 setup/main.py:4351
+#: setup/main.py:2878 setup/main.py:4338
 msgid "Value"
 msgstr "값"
 
@@ -1730,53 +1730,49 @@ msgstr "정규 표현"
 msgid "Are you sure?"
 msgstr "확실한가요?"
 
-#: setup/main.py:2937 setup/main.py:3549 setup/main.py:3634 setup/main.py:5336
+#: setup/main.py:2937 setup/main.py:3536 setup/main.py:3621 setup/main.py:5323
 msgid "_Cancel"
 msgstr "취소(_C)"
 
-#: setup/main.py:2938 setup/main.py:3550 setup/main.py:3635 setup/main.py:5337
+#: setup/main.py:2938 setup/main.py:3537 setup/main.py:3622 setup/main.py:5324
 msgid "_OK"
 msgstr "좋음(_O)"
-
-#: setup/main.py:2968
-msgid "Another instance of this app is already running."
-msgstr "이 앱의 다른 예시가 이미 동작 중입니다."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3071
+#: setup/main.py:3058
 msgid "Do you really want to restore all default settings?"
 msgstr "정말로 모든 기본값 설정으로 복구할까요?"
 
-#: setup/main.py:3631
+#: setup/main.py:3618
 msgid "Select .wav sound file:"
 msgstr ".wav 소리 파일을 선택합니다:"
 
-#: setup/main.py:3818
+#: setup/main.py:3805
 msgid "Add dictionary"
 msgstr "사전 추가"
 
-#: setup/main.py:4161
+#: setup/main.py:4148
 msgid "Add input method"
 msgstr "입력 방식 추가"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4342
+#: setup/main.py:4329
 msgid "Variable"
 msgstr "변수"
 
-#: setup/main.py:5218
+#: setup/main.py:5205
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "명령 “%s” 를 위한 키 할당 편집"
 
-#: setup/main.py:5246
+#: setup/main.py:5233
 msgid "Add a key binding"
 msgstr "키 할당을 추가합니다"
 
-#: setup/main.py:5258
+#: setup/main.py:5245
 msgid "Remove selected key binding"
 msgstr "선택된 키 할당을 제거합니다"
 
@@ -1785,22 +1781,22 @@ msgstr "선택된 키 할당을 제거합니다"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5318
+#: setup/main.py:5305
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "정말로 모든 명령에 대한 키 할당을 기본 값으로 설정할까요?"
 
-#: setup/main.py:5333
+#: setup/main.py:5320
 msgid "Open File ..."
 msgstr "파일 열기..."
 
-#: setup/main.py:5350
+#: setup/main.py:5337
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "파일 %(filename)s에서 성공적으로 학습되었습니다."
 
-#: setup/main.py:5359
+#: setup/main.py:5346
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "파일 %(filename)s에서 학습이 실패함."
@@ -1815,13 +1811,13 @@ msgstr "파일 %(filename)s에서 학습이 실패함."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5382
+#: setup/main.py:5369
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr "입력하거나 파일 읽기에서 학습된 모든 언어 자료를 삭제할까요?"
 
-#: setup/main.py:7231
+#: setup/main.py:7218
 msgid "ibus is not running."
 msgstr "ibus가 동작하지 않습니다."
 
@@ -1850,6 +1846,9 @@ msgstr ""
 "Ibus-typing-booster는 예측 입력 방식이고 문맥 및 부분 입력에 토대를 완전한 단"
 "어를 예측합니다. 그 다음에 간단히 제안 목록에서 원하는 단어를 선택하고 입력 "
 "속도와 철자를 개선 시킬 수 있습니다."
+
+#~ msgid "Another instance of this app is already running."
+#~ msgstr "이 앱의 다른 예시가 이미 동작 중입니다."
 
 #, fuzzy
 #~| msgid ""
