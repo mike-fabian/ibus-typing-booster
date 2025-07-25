@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-07-25 14:51+0200\n"
+"POT-Creation-Date: 2025-07-25 15:25+0200\n"
 "PO-Revision-Date: 2025-06-23 11:53+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
@@ -153,7 +153,7 @@ msgid "Lookup on emojipedia"
 msgstr "이모지피디아에서 검색"
 
 #: engine/emoji_picker.py:2269 engine/emoji_picker.py:2270
-#: engine/emoji_picker.py:2271 setup/main.py:1673
+#: engine/emoji_picker.py:2271 setup/main.py:1672
 msgid "System default"
 msgstr "시스템 기본값"
 
@@ -197,7 +197,7 @@ msgstr "유니코드 기호 및 이모지 예측"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:657 engine/hunspell_table.py:658 setup/main.py:691
+#: engine/hunspell_table.py:657 engine/hunspell_table.py:658 setup/main.py:690
 msgid "Off the record mode"
 msgstr "기록 방식 끄기"
 
@@ -424,7 +424,7 @@ msgstr "환경설정"
 msgid "Restore all defaults"
 msgstr "모든 설정 값을 복구합니다"
 
-#: setup/main.py:255 setup/main.py:7156
+#: setup/main.py:255 setup/main.py:7155
 msgid "_Close"
 msgstr "_닫기"
 
@@ -460,7 +460,7 @@ msgstr "사용자 정의 바로가기"
 #. use to move to the next completion candidate etc...
 #. Translators: Column heading of the table listing the
 #. existing key bindings
-#: setup/main.py:328 setup/main.py:1526
+#: setup/main.py:328 setup/main.py:1525
 msgid "Key bindings"
 msgstr "키 조합"
 
@@ -480,7 +480,7 @@ msgstr "표시형식"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:366 setup/main.py:2698
+#: setup/main.py:366 setup/main.py:2697
 msgid "Speech recognition"
 msgstr "음성 인식"
 
@@ -491,7 +491,7 @@ msgstr "음성 인식"
 #. Translators: This is the header of the list of settings
 #. changed automatically depending on the which window has
 #. focus:
-#: setup/main.py:382 setup/main.py:2394
+#: setup/main.py:382 setup/main.py:2393
 msgid "Autosettings"
 msgstr "자동설정"
 
@@ -687,20 +687,20 @@ msgstr "이모지"
 #. emoji style should be used.
 #: setup/main.py:645
 msgid ""
-"'emoji' – Colorful emoji (emoji style). 'text' – Monochrome emoji (text "
-"style). 'no style'  –  No style preference."
+"To select between colorful emoji (emoji style), monochrome emoji (text "
+"style), or no style preference"
 msgstr ""
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Emoji style”, i.e.  typically colored.
-#: setup/main.py:657 setup/main.py:2691
+#: setup/main.py:656 setup/main.py:2690
 msgid "Emoji"
 msgstr "이모지"
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Text style”, i.e.  typically
 #. monochrome.
-#: setup/main.py:661
+#: setup/main.py:660
 msgid "Text"
 msgstr ""
 
@@ -708,11 +708,11 @@ msgstr ""
 #. sequences. When this style is used, some emoji may display
 #. in color, some monochrome, depending on the properties of
 #. the emoji in the Unicode emoji data files.
-#: setup/main.py:666
+#: setup/main.py:665
 msgid "No style"
 msgstr ""
 
-#: setup/main.py:693
+#: setup/main.py:692
 msgid ""
 "While “Off the record” mode is on, learning from user input is disabled. If "
 "learned user input is available, predictions are usually much better than "
@@ -728,11 +728,11 @@ msgstr ""
 
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
-#: setup/main.py:713
+#: setup/main.py:712
 msgid "Record mode"
 msgstr "기록 방식"
 
-#: setup/main.py:715
+#: setup/main.py:714
 msgid ""
 "Selects which kind of input should be recorded in the user database: "
 "“Everything”: Every typed word is added to the user database or its "
@@ -753,19 +753,19 @@ msgstr ""
 "횟수가 데이타베이스에 최신화됩니다.  “없음”: 사용자데이타베이스에 어떤 입력"
 "도 기록하지 않습니다."
 
-#: setup/main.py:730
+#: setup/main.py:729
 msgid "Everything"
 msgstr "전체"
 
-#: setup/main.py:732
+#: setup/main.py:731
 msgid "Correctly spelled or previously recorded"
 msgstr "올바로 표기되거나 앞서 기록됨"
 
-#: setup/main.py:734
+#: setup/main.py:733
 msgid "Correctly spelled"
 msgstr "올바로 표기되었습니다"
 
-#: setup/main.py:736
+#: setup/main.py:735
 msgid "Nothing"
 msgstr "없음"
 
@@ -782,7 +782,7 @@ msgstr "없음"
 #. “forward_key_event()” is the name of a function in the
 #. ibus API and should probably not be translated, therefore
 #. I didn’t put it into the translatable string but used %s.
-#: setup/main.py:770
+#: setup/main.py:769
 #, python-format
 msgid "Avoid using the %s function"
 msgstr "%s 함수 사용을 회피합니다"
@@ -803,7 +803,7 @@ msgstr "%s 함수 사용을 회피합니다"
 #.
 #. This is a tooltip shown when the mouse hovers over that
 #. option.
-#: setup/main.py:789
+#: setup/main.py:788
 #, python-format
 msgid ""
 "Use a workaround if the %s function is broken. Enable this option only if "
@@ -817,11 +817,11 @@ msgstr ""
 #. when the cursor reaches a word boundary after moving it.
 #. Enabling this option is useful to correct already
 #. committed words.
-#: setup/main.py:807
+#: setup/main.py:806
 msgid "Enable reopening preedits"
 msgstr "재개장 사전편집 활성화"
 
-#: setup/main.py:809
+#: setup/main.py:808
 msgid ""
 "Whether it is allowed to put a word back into a preedit when the cursor "
 "moves to the end or the beginning of a word. Enabling this option is useful "
@@ -833,21 +833,21 @@ msgstr ""
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
-#: setup/main.py:825
+#: setup/main.py:824
 msgid "Disable in terminals"
 msgstr "터미널에서 비활성"
 
-#: setup/main.py:827
+#: setup/main.py:826
 msgid "Whether ibus-typing-booster should be disabled in terminals."
 msgstr "ibus-typing-booster가 터미널에서 비활성화 되는지 여부."
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
-#: setup/main.py:840
+#: setup/main.py:839
 msgid "Convert language specific digits to ASCII digits"
 msgstr "언어 지정 숫자를 ASCII 숫자로 변환"
 
-#: setup/main.py:842
+#: setup/main.py:841
 msgid ""
 "Some input methods produce language specific digits by default. If one never "
 "wants to use such language specific digits but prefers western (ASCII) "
@@ -861,13 +861,13 @@ msgstr ""
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
-#: setup/main.py:859
+#: setup/main.py:858
 msgid "Use IBus keymap"
 msgstr "IBus 키맵 사용"
 
 #. Translators: This is a tooltip for a checkbox with the
 #. label 'Use IBus keymap'
-#: setup/main.py:863
+#: setup/main.py:862
 msgid ""
 "Whether the use of an IBus keymap is forced while Typing Booster is active. "
 "For most users not using an IBus keymap is recommended. In that case, the "
@@ -879,7 +879,7 @@ msgstr ""
 
 #. Translators: This is a tooltip for a combobox to choose
 #. a keymap
-#: setup/main.py:877
+#: setup/main.py:876
 msgid ""
 "The ibus keymap to use when forcing an IBus keymap while Typing Booster is "
 "active."
@@ -893,18 +893,18 @@ msgstr ""
 #. like “(IN)”, “(JP)”, “(KR)”, “(US)” (untranslated)
 #. which indicates the particular variant if the IBus
 #. “English” keymap used.
-#: setup/main.py:889
+#: setup/main.py:888
 msgid "English"
 msgstr "영어"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
 #. “Unicode symbols and emoji predictions” is off.
-#: setup/main.py:911
+#: setup/main.py:910
 msgid "Emoji trigger characters:"
 msgstr "이모지 트리거 문자:"
 
-#: setup/main.py:913
+#: setup/main.py:912
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
@@ -924,11 +924,11 @@ msgstr ""
 #. prevent you from typing “.s” to get “ṡ”. You can also
 #. disable this feature completely by making the list empty
 #. (which is the default).
-#: setup/main.py:942
+#: setup/main.py:941
 msgid "Auto commit characters:"
 msgstr "자동 수행 문자:"
 
-#: setup/main.py:944
+#: setup/main.py:943
 msgid ""
 "The characters in this list cause the preedit to be committed automatically, "
 "followed by a space.  For example, if “.” is an auto commit character, this "
@@ -951,22 +951,22 @@ msgstr ""
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
-#: setup/main.py:974
+#: setup/main.py:973
 msgid "Minimum number of chars for completion:"
 msgstr "완성을 위한 최소 문자 수:"
 
-#: setup/main.py:976
+#: setup/main.py:975
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
 msgstr "문자의 해당 수보다 적게 입력되었을 경우에 제안을 표시하지 않습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. sound is played on error
-#: setup/main.py:1001
+#: setup/main.py:1000
 msgid "Play sound file on error"
 msgstr "오류 발생시에 소리 파일을 재생합니다"
 
-#: setup/main.py:1003
+#: setup/main.py:1002
 msgid "Here you can choose whether a sound file is played if an error occurs."
 msgstr ""
 "여기에서 당신은 만약 오류가 발생하면 소리 파일을 재생하도록 하는 여부를 선택 "
@@ -975,11 +975,11 @@ msgstr ""
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
 #. debug information may also be shown graphically.
-#: setup/main.py:1038
+#: setup/main.py:1037
 msgid "Debug level:"
 msgstr "디버그 단계:"
 
-#: setup/main.py:1040
+#: setup/main.py:1039
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
@@ -990,21 +990,21 @@ msgstr ""
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
 #. reading that text file.
-#: setup/main.py:1064
+#: setup/main.py:1063
 msgid "Learn from text file"
 msgstr "텍스트 파일에서 학습"
 
-#: setup/main.py:1066
+#: setup/main.py:1065
 msgid "Learn your style by reading a text file"
 msgstr "텍스트 파일 읽기에서 자신의 유형을 학습합니다"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
-#: setup/main.py:1078
+#: setup/main.py:1077
 msgid "Delete learned data"
 msgstr "학습된 자료를 삭제"
 
-#: setup/main.py:1080
+#: setup/main.py:1079
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr "입력하거나 읽어온 파일에서 학습된 모든 개인 언어 자료를 삭제합니다"
@@ -1012,77 +1012,77 @@ msgstr "입력하거나 읽어온 파일에서 학습된 모든 개인 언어 �
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
 #. ibus-typing-booster.
-#: setup/main.py:1094
+#: setup/main.py:1093
 msgid "Use dictionaries for the following languages:"
 msgstr "다음 언어를 위해 사전을 사용합니다:"
 
-#: setup/main.py:1123
+#: setup/main.py:1122
 msgid "Add a dictionary"
 msgstr "사전 추가"
 
-#: setup/main.py:1134
+#: setup/main.py:1133
 msgid "Remove a dictionary"
 msgstr "사전 제거"
 
-#: setup/main.py:1145
+#: setup/main.py:1144
 msgid "Move dictionary up"
 msgstr "사전 위로 이동"
 
-#: setup/main.py:1157
+#: setup/main.py:1156
 msgid "Move dictionary down"
 msgstr "사전 아래로 이동"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
-#: setup/main.py:1164
+#: setup/main.py:1163
 msgid "Install missing dictionaries"
 msgstr "누락된 사전을 설치합니다"
 
-#: setup/main.py:1166
+#: setup/main.py:1165
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr "여기에 설정되어 있지만 설치되지 않은 사전을 설치합니다"
 
-#: setup/main.py:1173 setup/main.py:1318 setup/main.py:1560 setup/main.py:5266
+#: setup/main.py:1172 setup/main.py:1317 setup/main.py:1559 setup/main.py:5265
 msgid "Set to default"
 msgstr "기본 값으로 설정합니다"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
-#: setup/main.py:1179
+#: setup/main.py:1178
 msgid "Set dictionaries to the default for the current locale."
 msgstr "사전을 현재 지역용 기본 값으로 설정합니다."
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
-#: setup/main.py:1220
+#: setup/main.py:1219
 msgid "Use the following input methods:"
 msgstr "다음 입력 방식을 사용합니다:"
 
-#: setup/main.py:1249
+#: setup/main.py:1248
 msgid "Add an input method"
 msgstr "입력 방식을 추가합니다"
 
-#: setup/main.py:1261
+#: setup/main.py:1260
 msgid "Remove an input method"
 msgstr "입력 방식을 제거합니다"
 
-#: setup/main.py:1273
+#: setup/main.py:1272
 msgid "Move input method up"
 msgstr "입력 방식을 위로 이동합니다"
 
-#: setup/main.py:1285
+#: setup/main.py:1284
 msgid "Move input method down"
 msgstr "입력 방식을 아래로 이동합니다"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
-#: setup/main.py:1293
+#: setup/main.py:1292
 msgid "Input Method Help"
 msgstr "입력 방식 도움말"
 
-#: setup/main.py:1295
+#: setup/main.py:1294
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
 "위에 선택한 입력 방식을 사용하는 방법을 표시하는 약간의 도움말을 표시합니다."
@@ -1090,86 +1090,86 @@ msgstr ""
 #. Translators: Tooltip for a button to set some advanced
 #. options for the input method currently selected in the
 #. list of input methods.
-#: setup/main.py:1311
+#: setup/main.py:1310
 msgid "Options for the input method selected above."
 msgstr "위에 선택한 입력 방식을 위한 옵션."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
-#: setup/main.py:1324
+#: setup/main.py:1323
 msgid "Set input methods to the default for the current locale."
 msgstr "현재 지역을 위한 기본 값으로 입력 방식을 설정합니다."
 
-#: setup/main.py:1364
+#: setup/main.py:1363
 msgid "Enter shortcut here:"
 msgstr "여기에 바로가기를 입력합니다:"
 
-#: setup/main.py:1386
+#: setup/main.py:1385
 msgid "Enter shortcut expansion here:"
 msgstr "여기에 바로가기 확장을 입력합니다:"
 
-#: setup/main.py:1416
+#: setup/main.py:1415
 msgid "Clear input"
 msgstr "입력 정리"
 
-#: setup/main.py:1427
+#: setup/main.py:1426
 msgid "Delete shortcut"
 msgstr "바로가기 삭제"
 
-#: setup/main.py:1438
+#: setup/main.py:1437
 msgid "Add shortcut"
 msgstr "바로가기 추가"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
-#: setup/main.py:1472
+#: setup/main.py:1471
 msgid "Shortcut"
 msgstr "바로가기"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
-#: setup/main.py:1480
+#: setup/main.py:1479
 msgid "Shortcut expansion"
 msgstr "바로가기 확장"
 
-#: setup/main.py:1494
+#: setup/main.py:1493
 msgid "Current key bindings:"
 msgstr "현재 키 조합:"
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
-#: setup/main.py:1518
+#: setup/main.py:1517
 msgid "Command"
 msgstr "명령"
 
-#: setup/main.py:1549
+#: setup/main.py:1548
 msgid "Edit"
 msgstr "편집"
 
-#: setup/main.py:1553
+#: setup/main.py:1552
 msgid "Edit the key bindings for the selected command"
 msgstr "선택한 명령을 위해 키 할당을 편집합니다"
 
-#: setup/main.py:1564 setup/main.py:5271
+#: setup/main.py:1563 setup/main.py:5270
 msgid "Set default key bindings for the selected command"
 msgstr "선택한 명령을 위해 기본 값 키 할당을 설정합니다"
 
-#: setup/main.py:1571
+#: setup/main.py:1570
 msgid "Set all to default"
 msgstr "모두 기본 값으로 설정합니다"
 
-#: setup/main.py:1575
+#: setup/main.py:1574
 msgid "Set default key bindings for all commands"
 msgstr "모든 명령을 위한 기본 키 할당을 설정합니다"
 
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
 #. top of the list of candidates.
-#: setup/main.py:1597
+#: setup/main.py:1596
 msgid "Display total number of candidates"
 msgstr "총 후보의 수를 표시합니다"
 
-#: setup/main.py:1599
+#: setup/main.py:1598
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
@@ -1183,11 +1183,11 @@ msgstr ""
 #. method is currently used for the preedit. The auxiliary
 #. text is an optional line of text displayed above the
 #. candidate list.
-#: setup/main.py:1613
+#: setup/main.py:1612
 msgid "Show status info in auxiliary text"
 msgstr "보조 텍스트에서 상태 정보를 표시"
 
-#: setup/main.py:1615
+#: setup/main.py:1614
 msgid ""
 "Show in the auxiliary text whether “Emoji prediction”  mode and “Off the "
 "record”  mode are on or off and show which input method is currently used "
@@ -1200,79 +1200,79 @@ msgstr ""
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
-#: setup/main.py:1637
+#: setup/main.py:1636
 msgid "Candidate window page size:"
 msgstr "후보 창 화면 부분 크기:"
 
-#: setup/main.py:1639
+#: setup/main.py:1638
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr "후보 목록의 한 부분에서 얼마나 많은 제안 후보를 표시해야 하는가."
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
-#: setup/main.py:1661
+#: setup/main.py:1660
 msgid "Candidate window orientation"
 msgstr "후보 창 방향"
 
-#: setup/main.py:1663
+#: setup/main.py:1662
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
 msgstr "후보 창이 수평이거나 수직으로 그려지는지 여부."
 
-#: setup/main.py:1669
+#: setup/main.py:1668
 msgid "Horizontal"
 msgstr "가로"
 
-#: setup/main.py:1671
+#: setup/main.py:1670
 msgid "Vertical"
 msgstr "세로"
 
 #. Translators: Here one can choose how many milliseconds
 #. the system needs to be idle after pressing a key before
 #. candidates are displayed
-#: setup/main.py:1700
+#: setup/main.py:1699
 msgid "Candidate window delay in milliseconds:"
 msgstr "후보 창 지연 (ms):"
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
-#: setup/main.py:1704
+#: setup/main.py:1703
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
 msgstr "마지막 키를 누른 후에 후보가 표시되기 전에 얼마나 기다려야 하는지."
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
-#: setup/main.py:1731
+#: setup/main.py:1730
 msgid "Preedit underline"
 msgstr "사전편집 밑줄"
 
-#: setup/main.py:1733
+#: setup/main.py:1732
 msgid "Which style of underlining to use for the preedit."
 msgstr "사전편집용으로 어떤 유형의 밑줄을 사용하는가."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
-#: setup/main.py:1740
+#: setup/main.py:1739
 msgid "None"
 msgstr "없음"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
-#: setup/main.py:1744
+#: setup/main.py:1743
 msgid "Single"
 msgstr "단일"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
-#: setup/main.py:1748
+#: setup/main.py:1747
 msgid "Double"
 msgstr "이중"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
-#: setup/main.py:1752
+#: setup/main.py:1751
 msgid "Low"
 msgstr "아래"
 
@@ -1282,11 +1282,11 @@ msgstr "아래"
 #. option to enable lookup only when a key is pressed or
 #. because one uses the option to require a minimum number
 #. of characters before a lookup is done.
-#: setup/main.py:1779
+#: setup/main.py:1778
 msgid "Use preedit style only if lookup is enabled"
 msgstr "조회가 활성화 되었을 때만 사전편집 유형을 사용합니다"
 
-#: setup/main.py:1781
+#: setup/main.py:1780
 msgid ""
 "If this option is on, a preedit style like underlining will only be used if "
 "lookup is enabled. The lookup can be disabled because one uses the option to "
@@ -1302,11 +1302,11 @@ msgstr ""
 #. spellchecking is done on the contents of the preedit and
 #. a custom color is used to indicate when the preedit
 #. might contain a spelling error.
-#: setup/main.py:1801
+#: setup/main.py:1800
 msgid "Preedit spellchecking"
 msgstr "사전편집 오타점검"
 
-#: setup/main.py:1803
+#: setup/main.py:1802
 msgid ""
 "Here you can choose whether spellchecking is done on the contents of the "
 "preedit and a custom color is used to indicate when the preedit might "
@@ -1319,11 +1319,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
-#: setup/main.py:1829
+#: setup/main.py:1828
 msgid "Choose color for preedit spellchecking"
 msgstr "사전편집 오타점검을 위해 색상을 선택합니다"
 
-#: setup/main.py:1831
+#: setup/main.py:1830
 msgid ""
 "Here you can specify which color to use for the preedit when the preedit "
 "might contain a spelling error. This setting only has an effect if the "
@@ -1335,11 +1335,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
-#: setup/main.py:1854
+#: setup/main.py:1853
 msgid "Use color for inline completion"
 msgstr "행안 완성을 위해 색상을 사용합니다"
 
-#: setup/main.py:1856
+#: setup/main.py:1855
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
@@ -1350,11 +1350,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
-#: setup/main.py:1880
+#: setup/main.py:1879
 msgid "Choose color for inline completion"
 msgstr "행안 완성을 위해 색상을 선택합니다"
 
-#: setup/main.py:1882
+#: setup/main.py:1881
 msgid ""
 "Here you can specify which color to use for inline completion. This setting "
 "only has an effect if the use of color for inline completion is enabled and "
@@ -1366,11 +1366,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
-#: setup/main.py:1905
+#: setup/main.py:1904
 msgid "Use color for compose preview"
 msgstr "작성 미리보기를 위해 색상을 사용합니다"
 
-#: setup/main.py:1907
+#: setup/main.py:1906
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
@@ -1380,22 +1380,22 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
-#: setup/main.py:1931
+#: setup/main.py:1930
 msgid "Choose color for compose preview"
 msgstr "작성 미리보기를 위해 색상을 선택합니다"
 
-#: setup/main.py:1933
+#: setup/main.py:1932
 msgid "Here you can specify which color to use for the compose preview."
 msgstr ""
 "여기에서 당신은 작성 미리보기를 위해 사용하려는 색상을 지정 할 수 있습니다."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the m17n preedit.
-#: setup/main.py:1954
+#: setup/main.py:1953
 msgid "Use color for m17n preedit"
 msgstr "m17n 사전편집을 위해 색상을 사용합니다"
 
-#: setup/main.py:1956
+#: setup/main.py:1955
 msgid ""
 "Here you can choose whether a custom color is used for the m17n preedit."
 msgstr ""
@@ -1405,11 +1405,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the m17n preedit.
-#: setup/main.py:1980
+#: setup/main.py:1979
 msgid "Choose color for m17n preedit"
 msgstr "m17n 사전편집을 위해 색상을 선택합니다"
 
-#: setup/main.py:1982
+#: setup/main.py:1981
 msgid "Here you can specify which color to use for the m17n preedit."
 msgstr ""
 "여기에서 당신은 m17n 사전편집을 위해 사용하려는 색상을 지정 할 수 있습니다."
@@ -1417,11 +1417,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
-#: setup/main.py:2004
+#: setup/main.py:2003
 msgid "Use color for user database suggestions"
 msgstr "사용자 데이타베이스 제안을 위해 색상을 사용합니다"
 
-#: setup/main.py:2006
+#: setup/main.py:2005
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
@@ -1432,11 +1432,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
-#: setup/main.py:2027
+#: setup/main.py:2026
 msgid "Choose color for user database suggestions"
 msgstr "사용자 데이타베이스 제안을 위해 색상을 사용합니다"
 
-#: setup/main.py:2029
+#: setup/main.py:2028
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
@@ -1448,11 +1448,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
-#: setup/main.py:2050
+#: setup/main.py:2049
 msgid "Use color for spellchecking suggestions"
 msgstr "오타점검 제안을 위해 색상을 사용합니다"
 
-#: setup/main.py:2052
+#: setup/main.py:2051
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
@@ -1463,11 +1463,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
-#: setup/main.py:2073
+#: setup/main.py:2072
 msgid "Choose color for spellchecking suggestions"
 msgstr "오타점검 제안을 위해 색상을 선택합니다"
 
-#: setup/main.py:2075
+#: setup/main.py:2074
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
@@ -1480,11 +1480,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
-#: setup/main.py:2099
+#: setup/main.py:2098
 msgid "Use color for dictionary suggestions"
 msgstr "사전 제안을 위해 색상을 사용합니다"
 
-#: setup/main.py:2101
+#: setup/main.py:2100
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
@@ -1495,11 +1495,11 @@ msgstr ""
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
-#: setup/main.py:2122
+#: setup/main.py:2121
 msgid "Choose color for dictionary suggestions"
 msgstr "사전 제안을 위해 색상을 선택합니다"
 
-#: setup/main.py:2124
+#: setup/main.py:2123
 msgid ""
 "Here you can specify which color to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
@@ -1512,11 +1512,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
-#: setup/main.py:2148
+#: setup/main.py:2147
 msgid "Use label for user database suggestions"
 msgstr "사용자 데이타베이스 제안을 위해 이름표를 사용합니다"
 
-#: setup/main.py:2150
+#: setup/main.py:2149
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
@@ -1524,7 +1524,7 @@ msgstr ""
 "여기에서 당신은 이름표가 사용자 데이타베이스에서 나온 조회 테이블의 후보를 위"
 "해 사용되었는지 여부를 선택 할 수 있습니다."
 
-#: setup/main.py:2161
+#: setup/main.py:2160
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
@@ -1537,11 +1537,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
-#: setup/main.py:2183
+#: setup/main.py:2182
 msgid "Use label for spellchecking suggestions"
 msgstr "오타점검 제안을 위해 이름표를 사용합니다"
 
-#: setup/main.py:2185
+#: setup/main.py:2184
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
@@ -1549,7 +1549,7 @@ msgstr ""
 "여기에서 당신은 이름표가 철자점검에서 나온 조회 테이블의 후보를 위해 사용되었"
 "는지 여부를 선택 할 수 있습니다."
 
-#: setup/main.py:2196
+#: setup/main.py:2195
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
@@ -1562,11 +1562,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
-#: setup/main.py:2218
+#: setup/main.py:2217
 msgid "Use label for dictionary suggestions"
 msgstr "사전 제안을 위해 이름표를 사용합니다"
 
-#: setup/main.py:2220
+#: setup/main.py:2219
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
@@ -1574,7 +1574,7 @@ msgstr ""
 "여기에서 당신은 이름표가 사전에서 가져온 조회 테이블의 후보를 위해 사용되는"
 "지 여부를 선택 할 수 있습니다."
 
-#: setup/main.py:2231
+#: setup/main.py:2230
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
@@ -1587,11 +1587,11 @@ msgstr ""
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
-#: setup/main.py:2253
+#: setup/main.py:2252
 msgid "Use flags for dictionary suggestions"
 msgstr "사전 제안을 위해 깃발을 사용합니다"
 
-#: setup/main.py:2255
+#: setup/main.py:2254
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
@@ -1601,11 +1601,11 @@ msgstr ""
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
-#: setup/main.py:2270
+#: setup/main.py:2269
 msgid "Use a label to indicate busy state"
 msgstr "동작 상태를 표시하는 데 이름표를 사용합니다"
 
-#: setup/main.py:2272
+#: setup/main.py:2271
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
@@ -1614,7 +1614,7 @@ msgstr ""
 "부를 선택 할 수 있습니다."
 
 #. Translators: Tooltip for an entry
-#: setup/main.py:2283
+#: setup/main.py:2282
 msgid ""
 "Here you can specify which label is used to indicate when ibus-typing-"
 "booster is busy."
@@ -1622,12 +1622,12 @@ msgstr ""
 "여기에서 ibus-typing-booster가 동작 중일 때 표시하도록 사용되는 라벨을 지정 "
 "할 수 있습니다."
 
-#: setup/main.py:2301
+#: setup/main.py:2300
 msgid "Symbol for \"enabled\" mode"
 msgstr "\"enabled\" 방식을 위한 기호"
 
 #. Translators: Tooltip for 'Symbol for "enabled" mode'
-#: setup/main.py:2304 setup/main.py:2311
+#: setup/main.py:2303 setup/main.py:2310
 msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
@@ -1635,13 +1635,13 @@ msgstr ""
 "기호는 입력 가속기가 활성화 중 일 때에 표시됩니다 (음역 입력, 완성 제안, 철자"
 "점검 등.)."
 
-#: setup/main.py:2330
+#: setup/main.py:2329
 msgid "Symbol for \"disabled\" (Direct Input) mode"
 msgstr "\"disabled\" (직접 입력) 방식을 위한 기호"
 
 #. Translators: Tooltip for 'Symbol for "disabled" (Direct
 #. Input) mode'
-#: setup/main.py:2334 setup/main.py:2341
+#: setup/main.py:2333 setup/main.py:2340
 msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
@@ -1650,15 +1650,15 @@ msgstr ""
 "전달됩니다)."
 
 #. Translators:
-#: setup/main.py:2360 setup/main.py:3547
+#: setup/main.py:2359 setup/main.py:3546
 msgid "Set “Google application credentials” .json file:"
 msgstr "“구글 응용프로그램 인증서” .json 파일 설정:"
 
-#: setup/main.py:2362
+#: setup/main.py:2361
 msgid "Full path of the “Google application credentials” .json file."
 msgstr "\"구글 응용프로그램 인증서\" .json 파일의 전체 경로."
 
-#: setup/main.py:2368
+#: setup/main.py:2367
 msgid "File not yet set."
 msgstr "파일이 아직 설정되지 않았습니다."
 
@@ -1666,7 +1666,7 @@ msgstr "파일이 아직 설정되지 않았습니다."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2427 setup/main.py:4779
+#: setup/main.py:2426 setup/main.py:4778
 msgid "Add an autosetting"
 msgstr "자동설정 추가"
 
@@ -1674,7 +1674,7 @@ msgstr "자동설정 추가"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2441
+#: setup/main.py:2440
 msgid "Remove an autosetting"
 msgstr "자동설정 제거"
 
@@ -1686,7 +1686,7 @@ msgstr "자동설정 제거"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2459
+#: setup/main.py:2458
 msgid "Move an autosetting up"
 msgstr "자동설정 위로 이동"
 
@@ -1698,17 +1698,17 @@ msgstr "자동설정 위로 이동"
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2477
+#: setup/main.py:2476
 msgid "Move an autosetting down"
 msgstr "자동설정 아래로 이동"
 
-#: setup/main.py:2675
+#: setup/main.py:2674
 msgid "Spell checking"
 msgstr "맞춤법 검사"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2870
+#: setup/main.py:2869
 msgid "Setting"
 msgstr "설정"
 
@@ -1716,67 +1716,67 @@ msgstr "설정"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:2879 setup/main.py:4352
+#: setup/main.py:2878 setup/main.py:4351
 msgid "Value"
 msgstr "값"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:2903
+#: setup/main.py:2902
 msgid "Regular expression"
 msgstr "정규 표현"
 
-#: setup/main.py:2936
+#: setup/main.py:2935
 msgid "Are you sure?"
 msgstr "확실한가요?"
 
-#: setup/main.py:2938 setup/main.py:3550 setup/main.py:3635 setup/main.py:5337
+#: setup/main.py:2937 setup/main.py:3549 setup/main.py:3634 setup/main.py:5336
 msgid "_Cancel"
 msgstr "취소(_C)"
 
-#: setup/main.py:2939 setup/main.py:3551 setup/main.py:3636 setup/main.py:5338
+#: setup/main.py:2938 setup/main.py:3550 setup/main.py:3635 setup/main.py:5337
 msgid "_OK"
 msgstr "좋음(_O)"
 
-#: setup/main.py:2969
+#: setup/main.py:2968
 msgid "Another instance of this app is already running."
 msgstr "이 앱의 다른 예시가 이미 동작 중입니다."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3072
+#: setup/main.py:3071
 msgid "Do you really want to restore all default settings?"
 msgstr "정말로 모든 기본값 설정으로 복구할까요?"
 
-#: setup/main.py:3632
+#: setup/main.py:3631
 msgid "Select .wav sound file:"
 msgstr ".wav 소리 파일을 선택합니다:"
 
-#: setup/main.py:3819
+#: setup/main.py:3818
 msgid "Add dictionary"
 msgstr "사전 추가"
 
-#: setup/main.py:4162
+#: setup/main.py:4161
 msgid "Add input method"
 msgstr "입력 방식 추가"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4343
+#: setup/main.py:4342
 msgid "Variable"
 msgstr "변수"
 
-#: setup/main.py:5219
+#: setup/main.py:5218
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "명령 “%s” 를 위한 키 할당 편집"
 
-#: setup/main.py:5247
+#: setup/main.py:5246
 msgid "Add a key binding"
 msgstr "키 할당을 추가합니다"
 
-#: setup/main.py:5259
+#: setup/main.py:5258
 msgid "Remove selected key binding"
 msgstr "선택된 키 할당을 제거합니다"
 
@@ -1785,22 +1785,22 @@ msgstr "선택된 키 할당을 제거합니다"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5319
+#: setup/main.py:5318
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "정말로 모든 명령에 대한 키 할당을 기본 값으로 설정할까요?"
 
-#: setup/main.py:5334
+#: setup/main.py:5333
 msgid "Open File ..."
 msgstr "파일 열기..."
 
-#: setup/main.py:5351
+#: setup/main.py:5350
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "파일 %(filename)s에서 성공적으로 학습되었습니다."
 
-#: setup/main.py:5360
+#: setup/main.py:5359
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "파일 %(filename)s에서 학습이 실패함."
@@ -1815,13 +1815,13 @@ msgstr "파일 %(filename)s에서 학습이 실패함."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5383
+#: setup/main.py:5382
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr "입력하거나 파일 읽기에서 학습된 모든 언어 자료를 삭제할까요?"
 
-#: setup/main.py:7232
+#: setup/main.py:7231
 msgid "ibus is not running."
 msgstr "ibus가 동작하지 않습니다."
 
