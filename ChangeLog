@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 25 Jul 2025 Release 2.27.77
+* Add a new gsettings option `emojistyle` and make it changeable with a `toggle_emoji_style` command (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/774)
+* Fix list of sentence ending characters to avoid incorrect auto-capitalization (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/773)
+* Update emoji annotations from CLDR
+* Translation update from Weblate (de 100%, es 99.2 %, it 98.5%, ja 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 18 Jul 2025 Release 2.27.70
 * Add selection-to-preedit command (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/769)
 * Translation update from Weblate (fi 100%)

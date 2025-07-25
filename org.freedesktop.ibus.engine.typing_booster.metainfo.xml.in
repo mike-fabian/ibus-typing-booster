@@ -47,6 +47,37 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.71" date="2025-07-25" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.71</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Add a new gsettings option `emojistyle` and make it
+            changeable with a `toggle_emoji_style` command (Resolves:
+            github-issues#774)
+          </li>
+          <li>
+            Fix list of sentence ending characters to avoid incorrect
+            auto-capitalization (Resolves: github-issues#773)
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Translation update from Weblate (de 100%, es 99.2 %, it 98.5%, ja 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/774">
+          github-issues#774
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/773">
+          github-issues#773
+        </issue>
+      </issues>
+    </release>
     <release version="2.27.70" date="2025-07-18" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.70</url>
       <description>
