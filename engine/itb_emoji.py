@@ -2366,27 +2366,27 @@ class EmojiMatcher():
         >>> matches[0].user_freq
         8.0
         >>> matches[1].phrase
-        '🤩'
+        '😊'
         >>> matches[1].comment
-        'colpo di fulmine [faccina, felice]'
+        'faccina con occhi sorridenti [faccina, felice]'
         >>> matches[1].user_freq
         2.0
         >>> matches[2].phrase
-        '😊'
+        '🙂'
         >>> matches[2].comment
-        'faccina con occhi sorridenti [faccina, felice]'
+        'faccina con sorriso accennato [faccina, felice]'
         >>> matches[2].user_freq
         2.0
         >>> matches[3].phrase
-        '🙂'
+        '😂'
         >>> matches[3].comment
-        'faccina con sorriso accennato [faccina, felice]'
+        'faccina con lacrime di gioia [faccina, felice]'
         >>> matches[3].user_freq
         2.0
         >>> matches[4].phrase
-        '😂'
+        '😃'
         >>> matches[4].comment
-        'faccina con lacrime di gioia [faccina, felice]'
+        'faccina con sorriso e occhi spalancati [felice, sorridente]'
         >>> matches[4].user_freq
         2.0
 
