@@ -3,7 +3,7 @@
 # Mike FABIAN <mfabian@redhat.com>, 2019. #zanata, 2020, 2021, 2022, 2023, 2024, 2025.
 # Anonymous <noreply@weblate.org>, 2019, 2020.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
-# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024.
+# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -11,7 +11,8 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2025-07-25 16:02+0200\n"
 "PO-Revision-Date: 2025-07-25 14:28+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ja/>\n"
 "Language: ja\n"
@@ -701,7 +702,7 @@ msgstr "絵文字"
 #. monochrome.
 #: setup/main.py:660
 msgid "Text"
-msgstr ""
+msgstr "テキスト"
 
 #. Translators: This option is to use unqualified emoji
 #. sequences. When this style is used, some emoji may display
