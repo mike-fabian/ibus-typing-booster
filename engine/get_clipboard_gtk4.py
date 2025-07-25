@@ -26,19 +26,22 @@ same process. Therefore, this helper runs as a separate subprocess to
 retrieve the primary selection text using GTK 4, even when the main program
 is using GTK 3.
 '''
+from typing import Optional
 import sys
+# pylint: disable=wrong-import-position
 import gi # type: ignore
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk, Gdk, Gio, GLib # type: ignore
-from typing import Optional
+# pylint: enable=wrong-import-position
 
 class ClipboardApp(Gtk.Application): # type: ignore[misc]
+    '''Class used to read the clipboard'''
     def __init__(self) -> None:
         super().__init__(application_id="org.freedesktop.ibus.engine.typing_booster.GetSelection")
         self.window: Optional[Gtk.ApplicationWindow] = None
         self.display: Gdk.Display = Gdk.Display.get_default()
 
-    def do_activate(self) -> None:
+    def do_activate(self) -> None: # pylint: disable=arguments-differ
         if 'wayland' in self.display.get_name().lower():
             # A window is needed so that zwp_primary_selection_v1
             # (mouse selection) works on Wayland. When there is no
@@ -55,6 +58,7 @@ class ClipboardApp(Gtk.Application): # type: ignore[misc]
             self.try_read_clipboard()
 
     def try_read_clipboard(self) -> bool:
+        '''Method to read the clipboard and print the result'''
         clipboard: Gdk.Clipboard = self.display.get_primary_clipboard()
 
         def on_text_received(
@@ -66,7 +70,7 @@ class ClipboardApp(Gtk.Application): # type: ignore[misc]
             except GLib.Error as error:
                 print(f'Error reading primary selection: {error}',
                       file=sys.stderr)
-            app.quit()
+            app.quit() # pylint: disable=possibly-used-before-assignment
 
         clipboard.read_text_async(None, on_text_received)
         return False # Do not repeat timeout

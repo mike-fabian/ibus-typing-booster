@@ -1667,7 +1667,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         text = event_box.get_child().get_label()
         if _ARGS.debug:
             LOGGER.debug('text = %s\n', text)
-        (emoji, name) = self._parse_emoji_and_name_from_text(text)
+        (emoji, _name) = self._parse_emoji_and_name_from_text(text)
         if not emoji:
             # Gdk.EVENT_PROPAGATE is defined as False
             return bool(Gdk.EVENT_PROPAGATE)
@@ -1941,7 +1941,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                           The popover will be relative to this event box.
         '''
         text = event_box.get_child().get_label()
-        (emoji, name) = self._parse_emoji_and_name_from_text(text)
+        (emoji, _name) = self._parse_emoji_and_name_from_text(text)
         if not emoji:
             return
         skin_tone_variants = []
@@ -2051,7 +2051,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                           The popover will be relative to this event box.
         '''
         text = event_box.get_child().get_label()
-        (emoji, name) = self._parse_emoji_and_name_from_text(text)
+        (emoji, _name) = self._parse_emoji_and_name_from_text(text)
         if not emoji:
             return
         self._emoji_info_popover = Gtk.Popover()
