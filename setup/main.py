@@ -40,8 +40,6 @@ import copy
 import logging
 import logging.handlers
 from time import strftime
-import dbus # type: ignore
-import dbus.service # type: ignore
 
 # pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
@@ -2911,19 +2909,6 @@ class SetupUI(Gtk.Window): # type: ignore
         response = confirm_question.run()
         confirm_question.destroy()
         return response
-
-    def check_instance(self) -> bool:
-        '''
-        Check whether another instance of the setup tool is running already
-        '''
-        if (dbus.SessionBus().request_name("org.ibus.typingbooster")
-                != dbus.bus.REQUEST_NAME_REPLY_PRIMARY_OWNER):
-            itb_util.run_message_dialog(
-                _("Another instance of this app is already running."),
-                Gtk.MessageType.ERROR)
-            sys.exit(1)
-        else:
-            return False
 
     @staticmethod
     def _on_delete_event(*_args: Any) -> None:
