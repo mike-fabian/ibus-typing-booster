@@ -14,10 +14,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-07-25 16:02+0200\n"
-"PO-Revision-Date: 2025-07-25 13:29+0000\n"
+"PO-Revision-Date: 2025-07-25 14:11+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -699,13 +699,12 @@ msgstr "Emojistil"
 #. Translators: A tooltip for the combobox to select which
 #. emoji style should be used.
 #: setup/main.py:645
-#, fuzzy
 msgid ""
 "To select between colorful emoji (emoji style), monochrome emoji (text "
 "style), or no style preference."
 msgstr ""
-"'Emoji' – Farbige Emojis (Emojistil). 'Text' – Schwarzweiße Emojis "
-"(Textstil). 'no style' – Kein bevorzugter Stil."
+"Zum Auswählen zwischen farbigen Emoji (Emoji-Stil), einfarbigen Emoji "
+"(Textstil) oder keiner Stilpräferenz."
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Emoji style”, i.e.  typically colored.
