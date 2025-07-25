@@ -10,16 +10,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-07-25 16:02+0200\n"
-"PO-Revision-Date: 2025-06-20 10:02+0000\n"
+"PO-Revision-Date: 2025-07-25 14:28+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ja/>\n"
+"Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.1\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:266
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -404,7 +404,7 @@ msgstr "入力を高速化するための補完入力方式。"
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:6425
 msgid "translator-credits"
-msgstr ""
+msgstr "Mike FABIAN <mfabian@redhat.com>, 2020-2025"
 
 #: engine/itb_util.py:6433
 msgid "Online documentation:"
@@ -678,10 +678,8 @@ msgstr ""
 #. Translators: A combo box to select which emoji style
 #. should be used.
 #: setup/main.py:641
-#, fuzzy
-#| msgid "Emoji"
 msgid "Emoji style"
-msgstr "絵文字"
+msgstr "絵文字スタイル"
 
 #. Translators: A tooltip for the combobox to select which
 #. emoji style should be used.
@@ -689,7 +687,8 @@ msgstr "絵文字"
 msgid ""
 "To select between colorful emoji (emoji style), monochrome emoji (text "
 "style), or no style preference."
-msgstr ""
+msgstr "カラフルな絵文字（絵文字スタイル）、白黒の絵文字（テキストスタイル）、または"
+"スタイルを指定しない場合を選択します。"
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Emoji style”, i.e.  typically colored.
@@ -710,7 +709,7 @@ msgstr ""
 #. the emoji in the Unicode emoji data files.
 #: setup/main.py:665
 msgid "No style"
-msgstr ""
+msgstr "スタイル未指定"
 
 #: setup/main.py:692
 msgid ""

@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-07-25 16:02+0200\n"
-"PO-Revision-Date: 2025-07-25 14:11+0000\n"
+"PO-Revision-Date: 2025-07-25 14:28+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: German <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/de/>\n"
@@ -406,7 +406,7 @@ msgstr "Eine vervollständigende Inputmethode zum schnelleren Tippen."
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:6425
 msgid "translator-credits"
-msgstr "Mike FABIAN <mfabian@redhat.com>, 2018"
+msgstr "Mike FABIAN <mfabian@redhat.com>, 2018-2025"
 
 #: engine/itb_util.py:6433
 msgid "Online documentation:"
@@ -694,7 +694,7 @@ msgstr ""
 #. should be used.
 #: setup/main.py:641
 msgid "Emoji style"
-msgstr "Emojistil"
+msgstr "Emoji-Still"
 
 #. Translators: A tooltip for the combobox to select which
 #. emoji style should be used.
