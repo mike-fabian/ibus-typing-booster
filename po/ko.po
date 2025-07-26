@@ -11,9 +11,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-07-25 19:32+0200\n"
-"PO-Revision-Date: 2025-07-26 07:59+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"PO-Revision-Date: 2025-07-26 10:58+0000\n"
+"Last-Translator: 김인수 <simmon@nplob.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ko/>\n"
 "Language: ko\n"
@@ -710,7 +709,7 @@ msgstr "텍스트"
 #. the emoji in the Unicode emoji data files.
 #: setup/main.py:663
 msgid "No style"
-msgstr ""
+msgstr "유형 없음"
 
 #: setup/main.py:690
 msgid ""
