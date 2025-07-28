@@ -1,5 +1,13 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
-* 25 Jul 2025 Release 2.27.77
+* 28 Jul 2025 Release 2.27.72
+* Toogle the emoji style only between 'emoji' and 'text' in the toogle_emoji_style() function
+* Better parsing of gnome-shell versions (handle also `alpha`, `beta`, and `rc`)
+* Make input mode symbols black and white already for gnome-shell >= 48.3 instead of for gnome-shell >= 49.0
+* Update emoji annotations from CLDR
+* Translation update from Weblate (ka 100%, ko 100%, pl 100%, sv 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
+* 25 Jul 2025 Release 2.27.71
 * Add a new gsettings option `emojistyle` and make it changeable with a `toggle_emoji_style` command (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/774)
 * Fix list of sentence ending characters to avoid incorrect auto-capitalization (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/773)
 * Update emoji annotations from CLDR

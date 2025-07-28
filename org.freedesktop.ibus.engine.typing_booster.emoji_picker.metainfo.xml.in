@@ -41,6 +41,32 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.72" date="2025-07-28" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.72</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Toogle the emoji style only between 'emoji' and 'text' in
+            the toogle_emoji_style() function
+          </li>
+          <li>
+            Better parsing of gnome-shell versions (handle also
+            `alpha`, `beta`, and `rc`)
+          </li>
+          <li>
+            Make input mode symbols black and white already for
+            gnome-shell ≥ 48.3 instead of for gnome-shell ≥ 49.0
+          </li>
+          <li>
+            Update emoji annotations from CLDR
+          </li>
+          <li>
+            Translation update from Weblate (ka 100%, ko 100%, pl 100%, sv 100%)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.27.71" date="2025-07-25" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.71</url>
       <description>
