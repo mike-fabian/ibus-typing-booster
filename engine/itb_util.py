@@ -5826,8 +5826,14 @@ def get_gnome_shell_version() -> Tuple[int, ...]:
 
     `gnome-shell --version` prints something like 'GNOME Shell 48.2'
 
-    :return: The version as a tuple (Example (48, 2))
-             or an empty tuple () on failure.
+    Pre-releases are mapped as:
+      alpha → -3, beta → -2, rc → -1
+
+    Examples:
+      '48.3' → (48, 3)
+      '49.alpha.1' → (49, -3, 1)
+
+    :return: A tuple or empty tuple () on failure.
     '''
     try:
         output = subprocess.check_output(
@@ -5835,10 +5841,26 @@ def get_gnome_shell_version() -> Tuple[int, ...]:
             stderr=subprocess.STDOUT).decode('utf-8').strip()
     except (subprocess.CalledProcessError, FileNotFoundError):
         return ()
-    match = re.search(r'(\d+(\.\d+)+)', output)
+    pre_release_map = {
+        'alpha': -3,
+        'beta': -2,
+        'rc': -1}
+    match = re.search(r'(\d+(?:\.(?:\d+|alpha|beta|rc))+)',
+                      output, re.IGNORECASE)
     if not match:
         return ()
-    return tuple(int(digits) for digits in match.group(1).split('.'))
+    parts = match.group(1).split('.')
+    version = []
+    for part in parts:
+        lower = part.lower()
+        if lower in pre_release_map:
+            version.append(pre_release_map[lower])
+        else:
+            try:
+                version.append(int(part))
+            except ValueError:
+                return () # Unknown non-numeric segment
+    return tuple(version)
 
 class KeyvalsToKeycodes:
     '''Class to convert key values to key codes.
