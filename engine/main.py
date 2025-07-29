@@ -362,7 +362,7 @@ def write_xml() -> None:
         description = 'A completion input method to speedup typing.'
         symbol = '🚀'
         if (itb_util.is_desktop('gnome')
-            and itb_util.get_gnome_shell_version() >= (49, 0, 0)):
+            and itb_util.get_gnome_shell_version() >= (48, 3)):
             # If running on Gnome and gnome-shell is new enough to contain
             # https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/3753
             # make the symbol black and white:

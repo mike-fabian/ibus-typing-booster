@@ -2610,7 +2610,7 @@ class SetupUI(Gtk.Window): # type: ignore
                 special_defaults['inputmodetruesymbol'] = symbol
                 special_defaults['inputmodefalsesymbol'] = f'•{symbol}'
         elif (itb_util.is_desktop('gnome')
-              and itb_util.get_gnome_shell_version() >= (49, 0, 0)):
+              and itb_util.get_gnome_shell_version() >= (48, 3)):
             # If running on Gnome and gnome-shell is new enough to contain
             # https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/3753
             # make the input mode symbols black and white:
