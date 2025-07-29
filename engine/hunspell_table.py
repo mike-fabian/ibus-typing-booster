@@ -4942,8 +4942,19 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
     def toggle_emoji_style(
             self, update_gsettings: bool = True) -> None:
-        '''Toggles through the values of the emoji style'''
-        next_style = {'emoji': 'text', 'text': '', '': 'emoji'}
+        '''Toggles through the values of the emoji style
+
+        Does not toggle through all 3 styles on purpose, toggles only
+        between 'emoji' and 'text'. If any other style is set, it toggles to 'emoji'.
+
+        It is possible to set 'No style' in the setup tool to get
+        unqualified emoji sequences, but that is useful only in very
+        rare circumstances. If that is desired, use the setup tool.
+        This command toggles only between 'emoji' and 'text', I found
+        that toggling through the 3rd state as well was more confusing
+        then helpful.
+        '''
+        next_style = {'emoji': 'text', 'text': 'emoji'}
         self.set_emoji_style(
             next_style.get(self._emoji_style, 'emoji'),
             update_gsettings)
