@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-07-25 19:32+0200\n"
+"POT-Creation-Date: 2025-07-29 16:03+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
@@ -376,11 +376,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6359
+#: engine/itb_util.py:6381
 msgid "Key input"
 msgstr "Tuş girişi"
 
-#: engine/itb_util.py:6365
+#: engine/itb_util.py:6387
 msgid "Cancel"
 msgstr "İptal"
 
@@ -388,27 +388,27 @@ msgstr "İptal"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6372
+#: engine/itb_util.py:6394
 msgid "Please press a key (or a key combination)"
 msgstr "Lütfen bir tuşa (veya bir tuş dizisine) basın"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6377
+#: engine/itb_util.py:6399
 msgid "The dialog will be closed when the key is released"
 msgstr "Tuş bırakıldığında iletişim penceresi kapatılacaktır"
 
-#: engine/itb_util.py:6416
+#: engine/itb_util.py:6438
 msgid "A completion input method to speedup typing."
 msgstr "Yazmayı hızlandırmak için bir tamamlama giriş yöntemi."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6425
+#: engine/itb_util.py:6447
 msgid "translator-credits"
 msgstr "Oğuz Ersen <oguz@ersen.moe>"
 
-#: engine/itb_util.py:6433
+#: engine/itb_util.py:6455
 msgid "Online documentation:"
 msgstr "Çevrim içi belgeler:"
 

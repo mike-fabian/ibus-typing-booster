@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-07-25 19:32+0200\n"
+"POT-Creation-Date: 2025-07-29 16:03+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Portuguese <https://translate.fedoraproject.org/projects/ibus-"
@@ -380,11 +380,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6359
+#: engine/itb_util.py:6381
 msgid "Key input"
 msgstr "Input de teclado"
 
-#: engine/itb_util.py:6365
+#: engine/itb_util.py:6387
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -392,30 +392,30 @@ msgstr "Cancelar"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6372
+#: engine/itb_util.py:6394
 msgid "Please press a key (or a key combination)"
 msgstr "Por favor prima uma tecla (ou uma combinação de teclas)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6377
+#: engine/itb_util.py:6399
 msgid "The dialog will be closed when the key is released"
 msgstr "A caixa de diálogo será fechada quando a tecla for solta"
 
-#: engine/itb_util.py:6416
+#: engine/itb_util.py:6438
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Um método de introdução de dados de completamento para acelerar a digitação."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6425
+#: engine/itb_util.py:6447
 msgid "translator-credits"
 msgstr ""
 "Manuela Silva\n"
 "Paul S <psads.g@gmail.com>, 2022"
 
-#: engine/itb_util.py:6433
+#: engine/itb_util.py:6455
 msgid "Online documentation:"
 msgstr "Documentação on-line:"
 
