@@ -116,7 +116,6 @@ class SimpleGtkTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls._flag = False
-        IBus.init()
         cls._gsettings = Gio.Settings(
             schema='org.freedesktop.ibus.engine.typing-booster',
             path='/org/freedesktop/ibus/engine/typing-booster/')
