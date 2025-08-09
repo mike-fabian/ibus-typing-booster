@@ -22,6 +22,9 @@ Main program of ibus-typing-booster
 '''
 from typing import Any
 from typing import Union
+from typing import Type
+from typing import Optional
+import types
 import os
 import sys
 import argparse
@@ -43,6 +46,22 @@ import itb_util
 import itb_version
 
 LOGGER = logging.getLogger('ibus-typing-booster')
+
+def log_unhandled_exception(
+    exc_type: Type[BaseException],
+    exc_value: BaseException,
+    exc_traceback: Optional[types.TracebackType]
+) -> None:
+    '''Log any unhandled exception.'''
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
+    LOGGER.error(
+        'Unhandled exception',
+        exc_info=(exc_type, exc_value, exc_traceback)
+    )
+
+sys.excepthook = log_unhandled_exception
 
 DEBUG_LEVEL = int(0)
 try:
