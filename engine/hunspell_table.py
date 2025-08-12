@@ -30,9 +30,15 @@ from typing import Union
 from typing import Optional
 from typing import Iterable
 from typing import Callable
-import os
 import sys
+# pylint: disable=wrong-import-position
+if sys.version_info >= (3, 8):
+    from typing import Literal
+else:
+    from typing_extensions import Literal
+# pylint: enable=wrong-import-position
 import unicodedata
+import os
 import re
 import fnmatch
 import ast
@@ -41,6 +47,7 @@ import copy
 import logging
 import threading
 import subprocess
+import textwrap
 from gettext import dgettext
 from dataclasses import dataclass, field
 # pylint: disable=wrong-import-position
@@ -92,6 +99,14 @@ try:
     IMPORT_BIDI_ALGORITHM_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_BIDI_ALGORITHM_SUCCESSFUL = False
+
+IMPORT_OLLAMA_SUCCESSFUL = False
+try:
+    import ollama
+    import itb_ollama
+    IMPORT_OLLAMA_SUCCESSFUL = True
+except (ImportError,):
+    IMPORT_OLLAMA_SUCCESSFUL = False
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -297,6 +312,28 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._im_client: str = ''
 
         self._current_imes: List[str] = []
+
+        self._ai_system_message: str = self._settings_dict[
+            'aisystemmessage']['user']
+        self._ollama_model: str = self._settings_dict[
+            'ollamamodel']['user']
+        self._ollama_max_context: int = self._settings_dict[
+            'ollamamaxcontext']['user']
+        self._ollama_response_style: Literal['preedit', 'aux'] = 'aux'
+        self._ollama_messages: List[Dict[str, str]] = []
+        self._ollama_selection_text = ''
+        self._ollama_prompt: Dict[str, str] = {}
+        self._ollama_response = ''
+        self._ollama_chat_query_thread: Optional[threading.Thread] = None
+        self._ollama_chat_query_error = False
+        self._ollama_stop_event: threading.Event = threading.Event()
+        self._ollama_aux_wrapper: textwrap.TextWrapper = textwrap.TextWrapper(
+            width=80,
+            expand_tabs=True,
+            replace_whitespace=True,
+            drop_whitespace=True,
+            break_long_words=True,
+            break_on_hyphens=True)
 
         self._timeout_source_id: int = 0
         self._candidates_delay_milliseconds: int = self._settings_dict[
@@ -969,6 +1006,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'labelbusystring': {
                 'set': self.set_label_busy_string,
                 'get': self.get_label_busy_string},
+            'aisystemmessage': {
+                'set': self.set_ai_system_message,
+                'get': self.get_ai_system_message},
+            'ollamamodel': {
+                'set': self.set_ollama_model,
+                'get': self.get_ollama_model},
+            'ollamamaxcontext': {
+                'set': self.set_ollama_max_context,
+                'get': self.get_ollama_max_context},
             'inputmodetruesymbol': {
                 'set': self.set_input_mode_true_symbol,
                 'get': self.get_input_mode_true_symbol},
@@ -5741,6 +5787,90 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Returns the current value of the “label busy” string'''
         return self._label_busy_string
 
+    def set_ai_system_message(
+            self,
+            ai_system_message: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the system message to start AI chats with
+
+        :param ai_system_message: The system message to start AI chats with
+        :param update_gsettings:  Whether to write the change to Gsettings.
+                                  Set this to False if this method is
+                                  called because the Gsettings key changed
+                                  to avoid endless loops when the Gsettings
+                                  key is changed twice in a short time.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', ai_system_message, update_gsettings)
+        if ai_system_message == self._ai_system_message:
+            return
+        self._ai_system_message = ai_system_message
+        if update_gsettings:
+            self._gsettings.set_value(
+                'aisystemmessage',
+                GLib.Variant.new_string(ai_system_message))
+
+    def get_ai_system_message(self) -> str:
+        '''Returns the current system message to start AI chats with'''
+        return self._ai_system_message
+
+    def set_ollama_model(
+            self,
+            ollama_model: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the model to use for ollama
+
+        :param ollama_model:     The model to use for ollama
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', ollama_model, update_gsettings)
+        if ollama_model == self._ollama_model:
+            return
+        self._ollama_model = ollama_model
+        if update_gsettings:
+            self._gsettings.set_value(
+                'ollamamodel',
+                GLib.Variant.new_string(ollama_model))
+
+    def get_ollama_model(self) -> str:
+        '''Returns the current value of the ollama model'''
+        return self._ollama_model
+
+    def set_ollama_max_context(
+            self,
+            max_context: Union[int, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the maximum number of ollama messages to keep as context
+        when continuing a chat
+
+        :param max_context:      Maximum number of messages to keep as context.
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.debug(
+            '(%s, update_gsettings = %s)', max_context, update_gsettings)
+        if max_context == self._ollama_max_context:
+            return
+        self._ollama_max_context = max_context
+        if update_gsettings:
+            self._gsettings.set_value(
+                'ollamamaxcontext',
+                GLib.Variant.new_uint32(max_context))
+
+    def get_ollama_max_context(self) -> int:
+        '''Returns the maximum number of ollama messages to keep as context'''
+        return self._ollama_max_context
+
     def set_google_application_credentials(
             self,
             path: Union[str, Any],
@@ -6765,6 +6895,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :return: True if the key was completely handled, False if not.
         '''
+        if self._ollama_chat_query_thread:
+            self._ollama_chat_query_cancel(commit_selection=True)
+            return True
         if (self.is_empty()
             and not self._typed_compose_sequence
             and not self._lookup_table_shows_selection_info):
@@ -7251,6 +7384,433 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 phrase='', comment=candidate.comment)
         self._lookup_table_shows_selection_info = True
         self._update_lookup_table_and_aux()
+        return False
+
+    def _command_ai_chat_start_new(self) -> bool:
+        '''Start a new chat with an AI chat bot forgetting
+        previous interactions adding the current selection as
+        the initial input.
+
+        The return value should always be True. Even something fails
+        the key which executed the command has been fully handled and
+        it makes no sense to use it as input.
+        '''
+        self._ollama_messages = []
+        self._ai_chat()
+        return True
+
+    def _command_ai_chat_continue(self) -> bool:
+        '''Continue a chat with an AI chat bot adding the
+        current selection as additional input.
+
+        The return value should always be True. Even something fails
+        the key which executed the command has been fully handled and
+        it makes no sense to use it as input.
+        '''
+        self._ai_chat()
+        return True
+
+    def _ai_chat(self) -> None:
+        '''Continue or start a chat with an AI chat bot using
+        the current selection, as additional input. If nothing
+        is selected but surrounding text works, use the current
+        line up to the cursor as additional input.
+        '''
+        if not IMPORT_OLLAMA_SUCCESSFUL:
+            LOGGER.error('“import ollama” did not work')
+            return
+        if self._ollama_model == '':
+            LOGGER.error('ollama model is not set.')
+            return
+        if not itb_ollama.is_model_pulled(self._ollama_model):
+            if self._label_busy and self._label_busy_string.strip():
+                # Show a label in the auxiliary text to indicate that the
+                # model is pulled (by default an hourglass
+                # with moving sand):
+                self._current_auxiliary_text = (
+                    f'{self._label_busy_string.strip()}{self._ollama_model}')
+                super().update_auxiliary_text(
+                    IBus.Text.new_from_string(self._current_auxiliary_text),
+                    True)
+            else:
+                self._current_auxiliary_text = ''
+                super().update_auxiliary_text(
+                    IBus.Text.new_from_string(''), False)
+            success = itb_ollama.pull_model(
+                self._ollama_model, self._ollama_pull_model_progress)
+            if not success:
+                LOGGER.error('Failed to pull model %r', self._ollama_model)
+                time.sleep(1)
+                self._current_auxiliary_text = IBus.Text.new_from_string('')
+                super().update_auxiliary_text(
+                    self._current_auxiliary_text, False)
+                return
+            self._current_auxiliary_text = IBus.Text.new_from_string('')
+            super().update_auxiliary_text(
+                self._current_auxiliary_text, False)
+        GLib.idle_add(self._ai_chat_get_prompt)
+
+    def _ollama_pull_model_progress(self, progress: Dict[str, Any]) -> None:
+        error = progress.get('error', None)
+        total = progress.get('total', None)
+        completed = progress.get('completed', None)
+        status = progress.get('status', None)
+        if error is not None:
+            LOGGER.error('Error pulling %s: %s', self._ollama_model, error)
+            super().update_auxiliary_text(
+                IBus.Text.new_from_string(
+                    f'{self._current_auxiliary_text}: {error}'),
+                True)
+            return
+        if total is not None and completed is not None:
+            percentage = (completed / total) * 100 if total > 0 else 0
+            status_text = f'{status}:' if status is not None else ''
+            total_text = f'{total} B'
+            if total > 1024**3:
+                total_text = f'{total / 1024**3:.1f} GB'
+            elif total > 1024**2:
+                total_text = f'{total / 1024**2:.1f} MB'
+            elif total > 1024:
+                total_text = f'{total / 1024:.1f} kB'
+            LOGGER.info('%s: %s (%.1f%%)',
+                status_text, total_text, percentage)
+            super().update_auxiliary_text(
+                IBus.Text.new_from_string(
+                    f'{self._current_auxiliary_text}: '
+                    f'{status_text}: {total_text} ({percentage:.1f}%)'),
+                True)
+        elif status is not None:
+            LOGGER.info('%s', status)
+            super().update_auxiliary_text(
+                IBus.Text.new_from_string(
+                    f'{self._current_auxiliary_text}: {status}'),
+                True)
+
+    def _ai_chat_get_prompt(self) -> bool:
+        '''Get the prompt from the primary selection or surrounding text
+
+        Try these methods to get a prompt and use the first which works:
+
+        - use surrounding text to get the selection
+        - get the primary selection
+        - get the current line up to the cursor from surrounding text
+
+        :return: *Must* always return False to avoid that this callback
+                 called by GLib.idle_add() runs again.
+        '''
+        selection_text = ''
+        if self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
+            if self._debug_level > 1:
+                LOGGER.debug('self._surrounding_text=%r',
+                             self._surrounding_text)
+            text = self._surrounding_text.text
+            cursor_pos = self._surrounding_text.cursor_pos
+            anchor_pos = self._surrounding_text.anchor_pos
+            selection_start = min(cursor_pos, anchor_pos)
+            selection_end = max(cursor_pos, anchor_pos)
+            selection_text = text[selection_start:selection_end]
+        if selection_text != '':
+            # If there was a preedit, it has been committed by
+            # selecting. Don’t commit anything here because it would
+            # replace the selection. If the selection was done using
+            # the mouse, a lookup table might still be shown. Any
+            # remaining input is useless as well in that case, clear
+            # it:
+            self._clear_input()
+            self.hide_lookup_table()
+            self._lookup_table_hidden = True
+            self._current_preedit_text = ''
+            GLib.idle_add(lambda:
+                          self._ai_chat_query(
+                              selection_text, selection_text))
+            return False
+        if self._debug_level > 1:
+            LOGGER.debug(
+                'Surrounding text not supported or '
+                'failed to get a selection. '
+                'Fallback to primary selection.')
+        selection_text = itb_util.get_primary_selection_text()
+        delay = 30 # milliseconds
+        if selection_text != '':
+            # If there was a preedit, it has been committed by
+            # selecting. Don’t commit anything here because it would
+            # replace the selection. If the selection was done using
+            # the mouse, a lookup table might still be shown. Any
+            # remaining input is useless as well in that case, clear
+            # it:
+            self._clear_input()
+            self.hide_lookup_table()
+            self._lookup_table_hidden = True
+            self._current_preedit_text = ''
+            # `wl-paste -p` might have been used to get the primary
+            # selection.  If `wl-paste` (with or without `-p`) is used, it
+            # causes a focus out, a focus in to `self._im_client=fake`,
+            # then a focus out and a focus in to where the focus
+            # originally was.  This might close the candidate if it was
+            # already shown or prevent it from appearing. So instead of
+            # using GLib.idle_add use GLib.timeout_add to add a delay to
+            # give the focus events time to happen before continuing.
+            GLib.timeout_add(delay,
+                             lambda:
+                             self._ai_chat_query(
+                                 selection_text, selection_text))
+            return False
+        if self._debug_level > 1:
+            LOGGER.debug('Could not get a selection by any method.')
+        if not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
+            LOGGER.error(
+                'Surrounding text not supported, giving up to get a prompt.')
+            return False
+        if self._debug_level > 1:
+            LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
+        prompt = self._surrounding_text.text[
+            :self._surrounding_text.cursor_pos].split('\n')[-1]
+        if self._current_preedit_text != '':
+            if not prompt.endswith(self._current_preedit_text):
+                prompt += self._current_preedit_text
+            self._commit_current_input()
+        GLib.timeout_add(delay, lambda: self._ai_chat_query('', prompt))
+        return False
+
+    def _ai_chat_query(self, selection_text: str, prompt: str) -> bool:
+        '''Do something with AI on the selected text
+
+        :return: *Must* always return False to avoid that this callback
+                 called by GLib.idle_add() runs again.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug('selection_text=%r prompt=%r', selection_text, prompt)
+        if self._label_busy and self._label_busy_string.strip():
+            # Show a label in the auxiliary text to indicate busy
+            # state (by default an hourglass with moving sand):
+            self._current_auxiliary_text = (
+                f'{self._label_busy_string.strip()}'
+                f'[{len(self._ollama_messages)}] {self._ollama_model}\n'
+                f'{prompt}')
+            super().update_auxiliary_text(
+                IBus.Text.new_from_string(self._current_auxiliary_text),
+                True)
+        else:
+            self._current_auxiliary_text = ''
+            super().update_auxiliary_text(
+                IBus.Text.new_from_string(''), False)
+        if prompt == '':
+            # Keep auxilary text for a second to show that getting a
+            # prompt failed.
+            time.sleep(1)
+            super().update_auxiliary_text(IBus.Text.new_from_string(''), False)
+            self._current_auxiliary_text = ''
+            return False
+        self._ollama_messages = (
+            [] if self._ollama_max_context == 0
+            else self._ollama_messages[-self._ollama_max_context * 2 :])
+        self._ollama_selection_text = selection_text
+        self._ollama_prompt = {'role': 'user', 'content': prompt}
+        if self._ollama_stop_event:
+            self._ollama_stop_event.clear()
+        self._ollama_chat_query_thread = threading.Thread(
+            daemon=True,
+            target=self._ollama_chat_query_thread_function,
+            args=([{'role': 'system', 'content': self._ai_system_message}]
+                  + copy.deepcopy(self._ollama_messages)
+                  + [self._ollama_prompt],
+                  self._ollama_stop_event))
+        self._ollama_chat_query_thread.start()
+        return False
+
+    def _ollama_chat_query_thread_function(
+            self,
+            messages: List[Dict[str, str]],
+            stop_event: threading.Event) -> None:
+        '''Thread to stream an ollama chat response'''
+        if self._debug_level > 1:
+            LOGGER.debug('Starting ollama chat stream %r', messages)
+        self._ollama_response = ''
+        try:
+            stream = ollama.chat(
+                self._ollama_model, messages=messages, stream=True)
+            LOGGER.info('Ollama chat stream started.')
+            for chunk in stream:
+                if stop_event.is_set():
+                    LOGGER.info('Ollama chat stream stopped by event.')
+                    break
+                self._ollama_response += chunk['message']['content']
+                GLib.idle_add(self._ollama_chat_query_update_response)
+            self._ollama_response = self._ollama_response.strip()
+            GLib.idle_add(self._ollama_chat_query_update_response)
+            GLib.idle_add(self._ollama_chat_query_finalize_chat)
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.error('Error in ollama chat stream: %s', error)
+            GLib.idle_add(self._ollama_chat_query_handle_error, str(error))
+
+    def _ollama_chat_query_update_response(self) -> bool:
+        '''Update ollama preedit text from main thread
+
+        :return: *Must* always return False to avoid that this callback
+                 called by GLib.idle_add() runs again.
+        '''
+        if self._ollama_response_style == 'preedit':
+            attrs = IBus.AttrList()
+            self._current_preedit_text = self._ollama_response
+            attrs.append(IBus.attr_underline_new(
+                self._preedit_underline, 0, len(self._current_preedit_text)))
+            ibus_text = IBus.Text.new_from_string(self._current_preedit_text)
+            ibus_text.set_attributes(attrs)
+            super().update_preedit_text_with_mode(
+                ibus_text, len(self._current_preedit_text), True,
+                IBus.PreeditFocusMode.CLEAR)
+            return False
+        if self._ollama_response_style == 'aux':
+            aux_prefix = ''
+            if self._label_busy and self._label_busy_string.strip():
+                aux_prefix = (
+                    f'{self._label_busy_string.strip()}'
+                    f'[{len(self._ollama_messages)}] {self._ollama_model}\n')
+            aux_lines = '\n'.join([self._ollama_aux_wrapper.fill(line)
+                 for line in self._ollama_response.splitlines()])
+            max_aux_lines_stream = 10
+            aux_lines_split = aux_lines.splitlines()
+            if len(aux_lines_split) > max_aux_lines_stream:
+                aux_lines = '\n'.join(
+                    ['[…]'] + aux_lines_split[-max_aux_lines_stream:])
+            self._current_auxiliary_text = aux_prefix + aux_lines
+            super().update_auxiliary_text(
+                IBus.Text.new_from_string(self._current_auxiliary_text),
+                True)
+            return False
+        LOGGER.error('Invalid self._ollama_response_style = %r',
+                     self._ollama_response_style)
+        return False
+
+    def _ollama_chat_query_finalize_chat(self) -> bool:
+        '''Finalize the chat from main thread
+
+        :return: *Must* always return False to avoid that this callback
+                 called by GLib.idle_add() runs again.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug('self._ollama_response=%r', self._ollama_response)
+        if self._ollama_response_style == 'preedit':
+            super().update_auxiliary_text(IBus.Text.new_from_string(''), False)
+            self._current_auxiliary_text = ''
+            return False
+        if self._ollama_response_style == 'aux':
+            if self._ollama_model.startswith('deepseek'):
+                self._ollama_response = re.sub(
+                    r'<think>.*?</think>', '',
+                    self._ollama_response, flags=re.DOTALL).strip()
+            self._current_auxiliary_text = '\n'.join(
+                [self._ollama_aux_wrapper.fill(line)
+                 for line in self._ollama_response.splitlines()])
+            super().update_auxiliary_text(
+                IBus.Text.new_from_string(self._current_auxiliary_text),
+                True)
+            return False
+        LOGGER.error('Invalid self._ollama_response_style = %r',
+                     self._ollama_response_style)
+        return False
+
+    def _ollama_chat_query_handle_error(self, error_message: str) -> bool:
+        '''Handle chat errors from main thread
+
+        :return: *Must* always return False to avoid that this callback
+                 called by GLib.idle_add() runs again.
+        '''
+        LOGGER.error('Ollama chat error: %s', error_message)
+        self._ollama_chat_query_error = True
+        super().commit_text(IBus.Text.new_from_string(
+            f'{self._ollama_selection_text}'))
+        super().update_preedit_text_with_mode(
+            IBus.Text.new_from_string(''), 0, True,
+            IBus.PreeditFocusMode.COMMIT)
+        super().update_auxiliary_text(IBus.Text.new_from_string(''), False)
+        self._current_preedit_text = self._current_auxiliary_text = ''
+        return False
+
+    def _ollama_chat_query_cancel(
+            self, commit_selection: bool = True) -> None:
+        '''Cancel an ollama chat query, if it already finished,
+        discard the result.
+        '''
+        LOGGER.info('Ollama chat cancel.')
+        if not self._ollama_chat_query_thread:
+            return
+        if not self._ollama_stop_event:
+            return
+        if self._ollama_chat_query_thread.is_alive():
+            self._ollama_stop_event.set()
+            self._ollama_chat_query_thread.join()
+            self._ollama_stop_event.clear()
+        self._ollama_chat_query_thread = None
+        if commit_selection:
+            super().commit_text(IBus.Text.new_from_string(
+                f'{self._ollama_selection_text}'))
+        GLib.idle_add(self._ollama_chat_query_cancel_hide_ui)
+
+    def _ollama_chat_query_cancel_hide_ui(self) -> bool:
+        '''Hide the preedit text and the auxiliary text
+
+        :return: *Must* always return False to avoid that this callback
+                 called by GLib.idle_add() runs again.
+        '''
+        super().update_preedit_text_with_mode(
+            IBus.Text.new_from_string(''), 0, True,
+            IBus.PreeditFocusMode.COMMIT)
+        super().update_auxiliary_text(IBus.Text.new_from_string(''), False)
+        self._current_preedit_text = self._current_auxiliary_text = ''
+        return False
+
+    def _ollama_chat_query_process_key(self, key: itb_util.KeyEvent) -> bool:
+        '''Process a key event while an ollama chat query is ongoing
+
+        :return: True if the key event has been completely handled by
+                 ibus-typing-booster and should not be passed through anymore.
+                 False if the key event has not been handled completely
+                 and is passed through.
+        '''
+        if not self._ollama_chat_query_thread: # Should never happen
+            return False
+        (match, return_value) = self._handle_hotkeys(key, commands=['cancel'])
+        if match:
+            return return_value
+        if self._ollama_chat_query_thread.is_alive():
+            # Ignore all keys except those cancelling until the query
+            # is finished:
+            return True
+        if (key.val in (IBus.KEY_Shift_R,
+                        IBus.KEY_Shift_L,
+                        IBus.KEY_ISO_Level3_Shift,
+                        IBus.KEY_Control_L,
+                        IBus.KEY_Control_R,
+                        IBus.KEY_Alt_L,
+                        IBus.KEY_Alt_R,
+                        IBus.KEY_Meta_L,
+                        IBus.KEY_Meta_R,
+                        IBus.KEY_Super_L,
+                        IBus.KEY_Super_R)):
+            # Ignore all pure modifier keys
+            return True
+        self._ollama_chat_query_thread = None
+        if self._ollama_chat_query_error:
+            self._ollama_chat_query_error = False
+            return True
+        self._ollama_messages.append(self._ollama_prompt)
+        self._ollama_messages.append(
+            {"role": "assistant", "content": self._ollama_response})
+        if key.control:
+            super().commit_text(IBus.Text.new_from_string(
+                f'{self._ollama_response}'))
+        elif key.mod1: # Usually Alt
+            super().commit_text(IBus.Text.new_from_string(
+                f'{self._ollama_selection_text}'))
+        else:
+            super().commit_text(IBus.Text.new_from_string(
+                f'{self._ollama_selection_text}\n{self._ollama_response}'))
+        super().update_preedit_text_with_mode(
+            IBus.Text.new_from_string(''), 0, True,
+            IBus.PreeditFocusMode.COMMIT)
+        super().update_auxiliary_text(IBus.Text.new_from_string(''), False)
+        self._current_preedit_text = self._current_auxiliary_text = ''
         return False
 
     def _command_next_input_method(self) -> bool:
@@ -9091,6 +9651,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._use_ibus_keymap:
             key = self._translate_to_ibus_keymap(key)
 
+        if self._ollama_chat_query_thread:
+            if self._ollama_chat_query_process_key(key):
+                return self._return_true(key)
+            return self._return_false(key)
+
         disabled = False
         if not self._input_mode:
             if self._debug_level > 0:
@@ -10011,6 +10576,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         if self._debug_level > 1:
             LOGGER.debug('object_path=%s\n', object_path)
+        if self._ollama_chat_query_thread:
+            self._ollama_chat_query_cancel(commit_selection=False)
         # Do not do self._input_purpose = 0 here, see
         # https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/5966#note_1576732
         # if the input purpose is set correctly on focus in, then it

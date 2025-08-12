@@ -45,6 +45,7 @@ engine_table_PYTHON = \
 	itb_emoji.py \
 	itb_nltk.py \
 	itb_pango.py \
+	itb_ollama.py \
 	itb_active_window.py \
 	itb_sound.py \
 	m17n_translit.py \

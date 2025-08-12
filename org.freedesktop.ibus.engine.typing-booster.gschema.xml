@@ -549,6 +549,28 @@
         “cancel” command which will deselect all candidates.
       </description>
     </key>
+    <key name="aisystemmessage" type="s">
+      <default>'You are a large language model living in an input method and a helpful assistant. Respond concisely.'</default>
+      <summary>AI system message</summary>
+      <description>
+        The message to start AI chats with.
+      </description>
+    </key>
+    <key name="ollamamodel" type="s">
+      <default>''</default>
+      <summary>Ollama model</summary>
+      <description>
+        The model to use for ollama.
+      </description>
+    </key>
+    <key name="ollamamaxcontext" type="u">
+      <default>99</default>
+      <summary>Ollama maximum context</summary>
+      <description>
+        The maximum number of ollama messages to keep as context when
+        continuing a chat.
+      </description>
+    </key>
     <key name="inputmethod" type="s">
       <default>''</default>
       <summary>A list of inputmethods to use</summary>
@@ -636,6 +658,8 @@
         'setup': &lt;['Mod5+F10']&gt;,
         'selection_to_preedit': &lt;@as []&gt;,
         'show_selection_info': &lt;@as []&gt;,
+        'ai_chat_start_new': &lt;@as []&gt;,
+        'ai_chat_continue': &lt;@as []&gt;,
         'speech_recognition': &lt;@as []&gt;,
         'toggle_emoji_prediction': &lt;['Mod5+F6']&gt;,
         'toggle_emoji_style': &lt;@as []&gt;,
