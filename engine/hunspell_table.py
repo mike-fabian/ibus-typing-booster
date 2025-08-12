@@ -2858,7 +2858,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             or not aux_string):
             visible = False
         super().update_auxiliary_text(text, visible)
-        self._current_auxiliary_text = text
+        self._current_auxiliary_text = aux_string
 
     def _update_lookup_table(self) -> None:
         '''Update the lookup table
@@ -3054,9 +3054,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._lookup_table_shows_m17n_candidates = False
         self._lookup_table_shows_compose_completions = False
         self._lookup_table_related_candidates_phrase = ''
-        self._current_auxiliary_text = IBus.Text.new_from_string('')
+        self._current_auxiliary_text = ''
         super().update_auxiliary_text(
-            self._current_auxiliary_text, False)
+            IBus.Text.new_from_string(''), False)
 
     def _update_ui_empty_input_try_completion(self) -> None:
         '''
@@ -3155,9 +3155,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self.get_lookup_table().set_cursor_visible(False)
             self.hide_lookup_table()
             self._lookup_table_hidden = True
-            self._current_auxiliary_text = IBus.Text.new_from_string('')
+            self._current_auxiliary_text = ''
             super().update_auxiliary_text(
-                self._current_auxiliary_text, False)
+                IBus.Text.new_from_string(''), False)
             self._update_preedit()
             return
         self._lookup_table_shows_related_candidates = False
@@ -3290,7 +3290,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # and original auxiliary text again:
             if self._current_auxiliary_text:
                 super().update_auxiliary_text(
-                    self._current_auxiliary_text, True)
+                    IBus.Text.new_from_string(self._current_auxiliary_text),
+                    True)
             else:
                 super().update_auxiliary_text(
                     IBus.Text.new_from_string(''), False)
@@ -8522,9 +8523,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self.get_lookup_table().set_cursor_visible(False)
                 self.hide_lookup_table()
                 self._lookup_table_hidden = True
-                self._current_auxiliary_text = IBus.Text.new_from_string('')
+                self._current_auxiliary_text = ''
                 super().update_auxiliary_text(
-                    self._current_auxiliary_text, False)
+                    IBus.Text.new_from_string(''), False)
                 self.is_lookup_table_enabled_by_tab = False
                 self._lookup_table_shows_m17n_candidates = False
             self._m17n_trans_parts = m17n_translit.TransliterationParts()
@@ -8584,9 +8585,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.get_lookup_table().set_cursor_visible(False)
         self.hide_lookup_table()
         self._lookup_table_hidden = True
-        self._current_auxiliary_text = IBus.Text.new_from_string('')
+        self._current_auxiliary_text = ''
         super().update_auxiliary_text(
-            self._current_auxiliary_text, False)
+            IBus.Text.new_from_string(''), False)
         for candidate in self._m17n_trans_parts.candidates:
             if candidate:
                 prediction_candidate = itb_util.PredictionCandidate(
@@ -8612,9 +8613,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self.get_lookup_table().set_cursor_visible(False)
             self.hide_lookup_table()
             self._lookup_table_hidden = True
-            self._current_auxiliary_text = IBus.Text.new_from_string('')
+            self._current_auxiliary_text = ''
             super().update_auxiliary_text(
-                    self._current_auxiliary_text, False)
+                    IBus.Text.new_from_string(''), False)
             self.is_lookup_table_enabled_by_tab = False
             self._lookup_table_shows_m17n_candidates = False
             self._m17n_trans_parts = m17n_translit.TransliterationParts()
@@ -8863,9 +8864,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.get_lookup_table().set_cursor_visible(False)
         self.hide_lookup_table()
         self._lookup_table_hidden = True
-        self._current_auxiliary_text = IBus.Text.new_from_string('')
+        self._current_auxiliary_text = ''
         super().update_auxiliary_text(
-            self._current_auxiliary_text, False)
+            IBus.Text.new_from_string(''), False)
         if not isinstance(compose_result, str):
             # compose sequence is unfinished
             self._update_transliterated_strings()
@@ -10039,9 +10040,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self.get_lookup_table().set_cursor_visible(False)
             self.hide_lookup_table()
             self._lookup_table_hidden = True
-            self._current_auxiliary_text = IBus.Text.new_from_string('')
+            self._current_auxiliary_text = ''
             super().update_auxiliary_text(
-                self._current_auxiliary_text, False)
+                IBus.Text.new_from_string(''), False)
             self.is_lookup_table_enabled_by_tab = False
             self._lookup_table_shows_m17n_candidates = False
             self._lookup_table_shows_compose_completions = False
