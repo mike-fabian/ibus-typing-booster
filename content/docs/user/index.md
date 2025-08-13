@@ -296,7 +296,7 @@ Ibus-typing-booster has a setup tool which allows to adapt the behaviour a lot t
 
 {{< video label="Default settings in Hindi locale" mp4="/videos/user-docs/hindi-locale-default-settings.mp4" >}}
 
-This video shows how to setup languages and input methods in Typing Booster.
+This video shows how to set up languages and input methods in Typing Booster.
 
 The most important setup in Typing booster is to choose **which**
 languages you want to use and **how** to input them.
@@ -305,15 +305,14 @@ ibus-typing-booster works for many languages and it may be necessary
 to change the default dictionaries and input methods to different
 ones.
 
-When one uses ibus-typing-booster is started for the very first time,
-it checks which locale is set in the environment and initialises its
-setup with dictionaries and input methods which are useful for this
-locale.
+When ibus-typing-booster is started for the very first time, it checks
+which locale is set in the environment and initializes its setup with
+dictionaries and input methods which are useful for this locale.
 
-But it is probably a good idea to open the setup tool and look whether
-these defaults are OK for you. You can open the setup tool by
+However, it is probably a good idea to open the setup tool and look whether
+these defaults are okay for you. You can open the setup tool by
 selecting ibus-typing-booster in the input method menu of the panel
-and then clicking on the “Setup” menu item in the panel.
+and then clicking on the “Setup” menu item.
 
 At the beginning, this video shows the default dictionaries and input
 methods for the locale “hi_IN.UTF-8” (Hindi in India).
@@ -324,15 +323,15 @@ en_GB (British English) and the input methods “hi-inscript2” and
 Hindi. “NoIME” means no input method at all, that means the characters
 are used as they come from the current keyboard layout without any
 transliteration. Having the British English dictionary and the “NoIME”
-input method there as well makes it also possible to type English.
+input method there as well also makes it possible to type English.
 
 As English is used quite a lot in India, it is probably a good default
-for the “hi_IN.UTF-8” locale to setup input for both Hindi and British
+for the “hi_IN.UTF-8” locale to set up input for both Hindi and British
 English.
 
 But the defaults guessed from the current locale are not always what a
 user wants. A user might use a “en_US.UTF-8” (American English) locale
-because he prefers the user interface in English but nevertheless
+because they prefer the user interface in English but nevertheless
 might want to type Hindi. And even when running in the “hi_IN.UTF-8”
 locale, the defaults might not be optimal for some
 users. “hi-inscript2” is not the only input method to type Hindi,
@@ -341,7 +340,7 @@ additional other languages and input methods completely unrelated to
 the current locale.
 
 So the video shows how to add or remove dictionaries and input methods
-and move them up or down to increase or lower the priorities.
+and move them up or down to change their priority.
 The video also shows how the “Input Method Help” button pops up
 an explanation what an input method does and how to use it.
 
@@ -349,7 +348,7 @@ Near the end, the video shows how the “Set to default” buttons can
 reset the lists of languages and input methods to the defaults
 for the current locale.
 
-Both lists can hold a maximum of 10 items, i.e. you can have up to 10
+Both lists can hold a maximum of 10 items, you can have up to 10
 dictionaries and 10 input methods. Don’t overdo it though, don’t add
 more than you really need, adding more dictionaries and input methods
 than one really needs slows down the system and reduces the accuracy
@@ -362,7 +361,7 @@ automatically added back because no input at all makes no sense.
 The list of dictionaries can be made empty though. That doesn’t seem
 particularly useful to me, but apparently there are some users who use
 ibus-typing-booster mostly as a convenient input method for emoji or
-special symbols and in that case one doesn’t need a dictionary.
+special symbols and in that case you don’t need a dictionary.
 
 ## More advanced options {#more-advanced-options}
 This chapter explains more advanced options how to adapt the behaviour and the look and feel of ibus-typing-booster to your preferences.
