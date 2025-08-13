@@ -1358,14 +1358,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 len(phrase) - len(str(user_freq)),
                 len(phrase)))
         text = IBus.Text.new_from_string(phrase)
-        i = 0
-        while attrs.get(i) is not None:
-            attr = attrs.get(i)
-            text.append_attribute(attr.get_attr_type(),
-                                  attr.get_value(),
-                                  attr.get_start_index(),
-                                  attr.get_end_index())
-            i += 1
+        text.set_attributes(attrs)
         self._lookup_table.append_candidate(text)
         self._lookup_table.set_cursor_visible(False)
 
@@ -2760,14 +2753,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             attrs.append(IBus.attr_underline_new(
                 IBus.AttrUnderline.NONE, 0, len(_str)))
         text = IBus.Text.new_from_string(_str)
-        i = 0
-        while attrs.get(i) is not None:
-            attr = attrs.get(i)
-            text.append_attribute(attr.get_attr_type(),
-                                  attr.get_value(),
-                                  attr.get_start_index(),
-                                  attr.get_end_index())
-            i += 1
+        text.set_attributes(attrs)
         super().update_preedit_text_with_mode(
             text, self.get_caret(), True, IBus.PreeditFocusMode.COMMIT)
 
@@ -2842,14 +2828,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 len_aux_string_orig,
                 len(aux_string)))
         text = IBus.Text.new_from_string(aux_string)
-        i = 0
-        while attrs.get(i) is not None:
-            attr = attrs.get(i)
-            text.append_attribute(attr.get_attr_type(),
-                                  attr.get_value(),
-                                  attr.get_start_index(),
-                                  attr.get_end_index())
-            i += 1
+        text.set_attributes(attrs)
         visible = True
         if (self.get_lookup_table().get_number_of_candidates() == 0
             or self._hide_input
@@ -2949,14 +2928,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             attrs.append(IBus.attr_underline_new(
                 IBus.AttrUnderline.NONE,
                 len(typed_string), len(typed_string + completion)))
-        i = 0
-        while attrs.get(i) is not None:
-            attr = attrs.get(i)
-            text.append_attribute(attr.get_attr_type(),
-                                  attr.get_value(),
-                                  attr.get_start_index(),
-                                  attr.get_end_index())
-            i += 1
+        text.set_attributes(attrs)
         if (self.get_lookup_table().cursor_visible
             and not self._is_candidate_auto_selected):
             caret = len(first_candidate)
