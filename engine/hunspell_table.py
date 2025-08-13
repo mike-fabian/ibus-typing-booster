@@ -80,8 +80,8 @@ except (ImportError, LookupError, ValueError):
 IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = False
 try:
     from google.cloud import speech # type: ignore
-    from google.cloud.speech import enums # type: ignore
-    from google.cloud.speech import types
+    from google.cloud.speech import enums as speech_enums # type: ignore
+    from google.cloud.speech import types as speech_types
     IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = False
@@ -6549,11 +6549,11 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 _('Failed to init Google speech-to-text. See debug.log.'))
             return
 
-        config = types.RecognitionConfig(
-            encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
+        config = speech_types.RecognitionConfig(
+            encoding=speech_enums.RecognitionConfig.AudioEncoding.LINEAR16,
             sample_rate_hertz=itb_util.AUDIO_RATE,
             language_code=language_code)
-        streaming_config = types.StreamingRecognitionConfig(
+        streaming_config = speech_types.StreamingRecognitionConfig(
             config=config,
             interim_results=True)
 
@@ -6613,7 +6613,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         with itb_util.MicrophoneStream(
                 itb_util.AUDIO_RATE, itb_util.AUDIO_CHUNK) as stream:
             audio_generator = stream.generator()
-            requests = (types.StreamingRecognizeRequest(audio_content=content)
+            requests = (speech_types.StreamingRecognizeRequest(audio_content=content)
                         for content in audio_generator)
             responses = client.streaming_recognize(streaming_config, requests)
             try:
