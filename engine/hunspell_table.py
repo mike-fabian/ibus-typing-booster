@@ -120,6 +120,54 @@ OFF_THE_RECORD_MODE_SYMBOL = '🕵'
 
 IBUS_VERSION = (IBus.MAJOR_VERSION, IBus.MINOR_VERSION, IBus.MICRO_VERSION)
 
+def log_glib_callback_exception(
+        func: Callable[..., Any],
+        args: Tuple[Any, ...],
+        kwargs: Dict[str, Any]) -> None:
+    '''Log exceptions in GLib callbacks'''
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+    assert exc_type is not None
+    assert exc_value is not None
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
+    func_name = getattr(func, '__qualname__', repr(func))
+    LOGGER.error(
+        'Unhandled exception in GLib callback %s(args=%r, kwargs=%r)',
+        func_name, args, kwargs,
+        exc_info=(exc_type, exc_value, exc_traceback))
+
+def _wrap_glib_callback(func: Callable[..., Any]) -> Callable[..., Any]:
+    '''Wrap a GLib callback so that exceptions are logged via
+    log_glib_callback_exception'''
+    def safe_func(*args: Any, **kwargs: Any) -> Any:
+        try:
+            return func(*args, **kwargs)
+        except Exception: # pylint: disable=broad-except
+            log_glib_callback_exception(func, args, kwargs)
+            # Returning False stops the GLib source from being called again
+            return False
+    return safe_func
+
+_real_idle_add = GLib.idle_add
+_real_timeout_add = GLib.timeout_add
+
+def _idle_add_safe(
+        func: Callable[..., Any],
+        *args: Any,
+        **kwargs: Any) -> Any:
+    return _real_idle_add(_wrap_glib_callback(func), *args, **kwargs)
+
+def _timeout_add_safe(
+        interval: int,
+        func: Callable[..., Any],
+        *args: Any,
+        **kwargs: Any) -> Any:
+    return _real_timeout_add(interval, _wrap_glib_callback(func), *args, **kwargs)
+
+GLib.idle_add = _idle_add_safe
+GLib.timeout_add = _timeout_add_safe
+
 @dataclass(frozen=False)
 class SurroundingText:
     '''
