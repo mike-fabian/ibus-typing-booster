@@ -1,5 +1,5 @@
 # DerivedAge-17.0.0.txt
-# Date: 2025-04-25, 16:56:46 GMT
+# Date: 2025-07-30, 23:54:38 GMT
 # © 2025 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use and license, see https://www.unicode.org/terms_of_use.html
@@ -15,7 +15,8 @@
 # - The term 'assigned' means that a previously reserved code point was assigned
 #   to be a character (graphic, format, control, or private-use);
 #   a noncharacter code point; or a surrogate code point.
-#   For more information, see The Unicode Standard Section 2.4
+#   For more information, see the
+#   "General Structure" / "Code Points and Characters" section of the core specification.
 #
 # - Versions are only tracked from 1.1 onwards, since version 1.0
 #   predated changes required by the ISO 10646 merger.
@@ -2066,8 +2067,6 @@ A7DA..A7DC    ; 16.0 #   [3] LATIN CAPITAL LETTER LAMBDA..LATIN CAPITAL LETTER L
 # Newly assigned in Unicode 17.0.0 (September, 2025)
 
 088F          ; 17.0 #       ARABIC LETTER NOON WITH RING ABOVE
-09FF          ; 17.0 #       BENGALI LETTER SANSKRIT BA
-0B53..0B54    ; 17.0 #   [2] ORIYA SIGN DOT ABOVE..ORIYA SIGN DOUBLE DOT ABOVE
 0C5C          ; 17.0 #       TELUGU ARCHAIC SHRII
 0CDC          ; 17.0 #       KANNADA ARCHAIC SHRII
 1ACF..1ADD    ; 17.0 #  [15] COMBINING DOUBLE CARON..COMBINING DOT-AND-RING BELOW
@@ -2088,8 +2087,6 @@ FDC8..FDCE    ; 17.0 #   [7] ARABIC LIGATURE RAHIMAHU ALLAAH TAAALAA..ARABIC LIG
 11B60..11B67  ; 17.0 #   [8] SHARADA VOWEL SIGN OE..SHARADA VOWEL SIGN CANDRA O
 11DB0..11DDB  ; 17.0 #  [44] TOLONG SIKI LETTER I..TOLONG SIKI UNGGA
 11DE0..11DE9  ; 17.0 #  [10] TOLONG SIKI DIGIT ZERO..TOLONG SIKI DIGIT NINE
-16D80..16D9D  ; 17.0 #  [30] CHISOI LETTER A..CHISOI SIGN SISO
-16DA0..16DA9  ; 17.0 #  [10] CHISOI DIGIT ZERO..CHISOI DIGIT NINE
 16EA0..16EB8  ; 17.0 #  [25] BERIA ERFE CAPITAL LETTER ARKAB..BERIA ERFE CAPITAL LETTER AY
 16EBB..16ED3  ; 17.0 #  [25] BERIA ERFE SMALL LETTER ARKAB..BERIA ERFE SMALL LETTER AY
 16FF2..16FF6  ; 17.0 #   [5] CHINESE SMALL SIMPLIFIED ER..YANGQIN SIGN SLOW TWO BEATS
@@ -2110,7 +2107,6 @@ FDC8..FDCE    ; 17.0 #   [7] ARABIC LIGATURE RAHIMAHU ALLAAH TAAALAA..ARABIC LIG
 1FA8E         ; 17.0 #       TREASURE CHEST
 1FAC8         ; 17.0 #       HAIRY CREATURE
 1FACD         ; 17.0 #       ORCA
-1FADD         ; 17.0 #       APPLE CORE
 1FAEA         ; 17.0 #       DISTORTED FACE
 1FAEF         ; 17.0 #       FIGHT CLOUD
 1FBFA         ; 17.0 #       ALARM BELL SYMBOL
@@ -2118,6 +2114,6 @@ FDC8..FDCE    ; 17.0 #   [7] ARABIC LIGATURE RAHIMAHU ALLAAH TAAALAA..ARABIC LIG
 2CEA2..2CEAD  ; 17.0 #  [12] CJK UNIFIED IDEOGRAPH-2CEA2..CJK UNIFIED IDEOGRAPH-2CEAD
 323B0..33479  ; 17.0 # [4298] CJK UNIFIED IDEOGRAPH-323B0..CJK UNIFIED IDEOGRAPH-33479
 
-# Total code points: 4847
+# Total code points: 4803
 
 # EOF
