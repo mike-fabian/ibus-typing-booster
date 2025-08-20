@@ -289,8 +289,7 @@ These instructions are for ibus-typing-booster 1.5.x. For ibus-typing-booster >=
 
 
 # Setup {#setup}
-Ibus-typing-booster has a setup tool which allows to adapt the behaviour a lot to your preferences.
-
+Ibus-typing-booster has a setup tool which allows you to adapt the behaviour a lot to your preferences.
 
 ## Basic setup for your language {#basic-setup-for-your-language}
 
@@ -364,7 +363,9 @@ ibus-typing-booster mostly as a convenient input method for emoji or
 special symbols and in that case you don’t need a dictionary.
 
 ## More advanced options {#more-advanced-options}
-This chapter explains more advanced options how to adapt the behaviour and the look and feel of ibus-typing-booster to your preferences.
+
+This chapter explains more advanced options for adapting the behaviour
+and look and feel of ibus-typing-booster to your preferences.
 
 ### Enable suggestions by a key {#enable-suggestions-by-a-key}
 
