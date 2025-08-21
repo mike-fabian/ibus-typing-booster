@@ -1801,7 +1801,7 @@ The `show_selection_info` command provides detailed information about either:
 
 - The currently selected text
 
-**or** (if no text is selected or if selection retrieval fails, such as on Wayland):
+**or**, if no text is selected or if selection retrieval fails (it often fails on Wayland):
 
 - The grapheme cluster immediately to the left of the cursor (a grapheme cluster might consist of several Unicode code points)
 
@@ -1840,11 +1840,23 @@ This feature works reliably on **Xorg**, but **Wayland** currently has some unre
 - **Selection Content Unavailable**
 
   🔗 [GitHub Issue #2760](https://github.com/ibus/ibus/issues/2760):
-  Typing Booster cannot retrieve selected text on Wayland. As a result:
+  Typing Booster cannot retrieve selected text on Wayland using surrounding text.
 
-  - If you execute `show_selection_info` with text selected, the command
-    will **fall back** to showing information about the character to the
-    **left of the cursor** instead.
+  **Workaround:**
+
+  - Install the `wl-paste` program (On Fedora this is in
+    the `wl-clipboard` package).  If `wl-paste` is available and
+    getting the selection using surrounding text fails, using `wl-paste` to get
+    the primary selection is attempted. This usually works.
+
+  - If getting the selection using `wl-paste` fails as well or
+    `wl-paste` is unavailable getting the primary selection using Gtk4
+    is attempted.
+
+  - If all attempts to get the selection failed (or nothing was
+    selected in the first place) surrouding text is used to get the
+    character to the **left of the cursor** and show information about
+    that character.
 
 - **Cursor Position Not Updated After Mouse Movement**
 
