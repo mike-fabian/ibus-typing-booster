@@ -715,7 +715,7 @@ getting the selection using surrounding text fails, using <code>wl-paste</code> 
 the primary selection is attempted. This usually works.</p></li><li><p>If getting the selection using <code>wl-paste</code> fails as well or
 <code>wl-paste</code> is unavailable getting the primary selection using Gtk4
 is attempted.</p></li><li><p>If all attempts to get the selection failed (or nothing was
-selected in the first place) surrouding text is used to get the
+selected in the first place) surrounding text is used to get the
 character to the <strong>left of the cursor</strong> and show information about
 that character.</p></li></ul></li><li><p><strong>Cursor Position Not Updated After Mouse Movement</strong></p><p>🔗 <a href=https://github.com/ibus/ibus/issues/2765>GitHub Issue #2765</a>
 When you move the cursor <strong>using the mouse</strong> in GNOME/Wayland:</p><ul><li>The surrounding text does not update the cursor position.</li><li>Executing <code>show_selection_info</code> will show information for the character
