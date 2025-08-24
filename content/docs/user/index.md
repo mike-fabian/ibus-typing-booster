@@ -1854,7 +1854,7 @@ This feature works reliably on **Xorg**, but **Wayland** currently has some unre
     is attempted.
 
   - If all attempts to get the selection failed (or nothing was
-    selected in the first place) surrouding text is used to get the
+    selected in the first place) surrounding text is used to get the
     character to the **left of the cursor** and show information about
     that character.
 
