@@ -7101,7 +7101,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                  called by GLib.idle_add() runs again.
         '''
         selection_text = ''
-        text_to_analyze = ''
+        text_left_of_cursor = ''
         if self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
             if not self._surrounding_text.event.is_set():
                 LOGGER.warning('Surrounding text not set since last trigger.')
@@ -7114,25 +7114,29 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             selection_text = text[selection_start:selection_end]
             # If a selection could be fetched from surrounding text use
             # it, if not use the surrounding text up to the cursor.
-            text_to_analyze = text[:cursor_pos]
-            if selection_text != '':
-                text_to_analyze = selection_text
-            LOGGER.debug('selection_text=%r text_to_analyze=%r',
-                         selection_text, text_to_analyze)
-        if text_to_analyze != '':
-            self._show_selection_info_show_candidates(
-                selection_text, text_to_analyze)
+            text_left_of_cursor = text[:cursor_pos]
+            LOGGER.debug('selection_text=%r text_left_of_cursor=%r',
+                         selection_text, text_left_of_cursor)
+        if selection_text != '':
+            GLib.idle_add(lambda:
+                self._show_selection_info_show_candidates(
+                selection_text, selection_text))
             return False
         LOGGER.debug('Surrounding text not supported or failed. '
                      'Fallback to primary selection.')
-        text_to_analyze = itb_util.get_primary_selection_text()
+        selection_text = itb_util.get_primary_selection_text()
         # Calling self._show_selection_info_show_candidates() after
         # itb_util.get_primary_selection_text() needs GLib.idle_add(),
         # without that no lookup table pops up!
-        if text_to_analyze != '':
+        if selection_text != '':
             GLib.idle_add(lambda:
                 self._show_selection_info_show_candidates(
-                text_to_analyze, text_to_analyze))
+                selection_text, selection_text))
+            return False
+        if text_left_of_cursor != '':
+            GLib.idle_add(lambda:
+                self._show_selection_info_show_candidates(
+                '', text_left_of_cursor))
         return False
 
     def _show_selection_info_show_candidates(
