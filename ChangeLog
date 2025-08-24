@@ -1,4 +1,14 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 02 Sep 2025 Release 2.27.73
+* Add `~/.config/dconf/` to `observed-paths` in the component file (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/788)
+* Use GLib.timeout_add() instead of GLib.idle_add() to force a short delay after wl-paste (Related: https://github.com/mike-fabian/ibus-typing-booster/issues/787#issuecomment-3236363564)
+* Update emoji annotations from CLDR
+* Improve fallback mechanism in self._show_selection_info_get_selection() (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/787)
+* Update emoji-data.txt, emoji-sequences.txt, emoji-test.txt, emoji-variation-sequences.txt, emoji-zwj-sequences.txt to the Unicode 17.0.0 draft as of 2025-08-17
+* Update UnicodeData.txt, DerivedAge.txt, Blocks.txt to the Unicode 17.0.0 draft as of 2025-08-17
+* Translation update from Weblate (es 100%, it 100%, kab 73.7%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 28 Jul 2025 Release 2.27.72
 * Toogle the emoji style only between 'emoji' and 'text' in the toogle_emoji_style() function
 * Better parsing of gnome-shell versions (handle also `alpha`, `beta`, and `rc`)
