@@ -7104,8 +7104,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         text_left_of_cursor = ''
         if self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
             if not self._surrounding_text.event.is_set():
-                LOGGER.warning('Surrounding text not set since last trigger.')
-            LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
+                if self._debug_level > 1:
+                    LOGGER.warning(
+                        'Surrounding text not set since last trigger.')
+            if self._debug_level > 1:
+                LOGGER.debug('self._surrounding_text=%r',
+                             self._surrounding_text)
             text = self._surrounding_text.text
             cursor_pos = self._surrounding_text.cursor_pos
             anchor_pos = self._surrounding_text.anchor_pos
@@ -7115,15 +7119,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # If a selection could be fetched from surrounding text use
             # it, if not use the surrounding text up to the cursor.
             text_left_of_cursor = text[:cursor_pos]
-            LOGGER.debug('selection_text=%r text_left_of_cursor=%r',
-                         selection_text, text_left_of_cursor)
+            if self._debug_level > 1:
+                LOGGER.debug('selection_text=%r text_left_of_cursor=%r',
+                             selection_text, text_left_of_cursor)
         if selection_text != '':
             GLib.idle_add(lambda:
                 self._show_selection_info_show_candidates(
                 selection_text, selection_text))
             return False
-        LOGGER.debug('Surrounding text not supported or failed. '
-                     'Fallback to primary selection.')
+        if self._debug_level > 1:
+            LOGGER.debug('Surrounding text not supported or failed. '
+                         'Fallback to primary selection.')
         selection_text = itb_util.get_primary_selection_text()
         # Calling self._show_selection_info_show_candidates() after
         # itb_util.get_primary_selection_text() needs GLib.idle_add(),
@@ -7146,8 +7152,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :return: *Must* always return False to avoid that this callback
                  called by GLib.idle_add() runs again.
         '''
-        LOGGER.debug('selection_text=%r text_to_analyze=%r',
-                     selection_text, text_to_analyze)
+        if self._debug_level > 1:
+            LOGGER.debug('selection_text=%r text_to_analyze=%r',
+                         selection_text, text_to_analyze)
         if text_to_analyze == '':
             return False
         grapheme_clusters = list(text_to_analyze)
@@ -7199,7 +7206,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 full_breakdown_phrase += phrase
                 code_point_list_phrase += f' U+{ord(char):04X}'
         if not candidates:
-            LOGGER.debug('No candidates found.')
+            if self._debug_level > 1:
+                LOGGER.debug('No candidates found.')
             return False
         candidates.append(itb_util.PredictionCandidate(
             phrase=selection_text + code_point_list_phrase,
