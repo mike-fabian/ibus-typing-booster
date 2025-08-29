@@ -3046,7 +3046,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 IBus.Text.new_from_string(''), False)
         self._update_candidates()
         self._update_lookup_table_and_aux()
-        if self._debug_level < 1:
+        if self._debug_level < 2:
             return
         if not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
             return
@@ -6996,8 +6996,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         selection_text = ''
         if self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
             if not self._surrounding_text.event.is_set():
-                LOGGER.warning('Surrounding text not set since last trigger.')
-            LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
+                if self._debug_level > 1:
+                    LOGGER.warning(
+                        'Surrounding text not set since last trigger.')
+            if self._debug_level > 1:
+                LOGGER.debug('self._surrounding_text=%r',
+                             self._surrounding_text)
             text = self._surrounding_text.text
             cursor_pos = self._surrounding_text.cursor_pos
             anchor_pos = self._surrounding_text.anchor_pos
@@ -7057,8 +7061,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 time.sleep(self._ibus_event_sleep_seconds)
             self._selection_to_preedit_open_preedit(selection_text)
             return False
-        LOGGER.debug('Surrounding text not supported or failed. '
-                     'Fallback to primary selection.')
+        if self._debug_level > 1:
+            LOGGER.debug('Surrounding text not supported or failed. '
+                         'Fallback to primary selection.')
         selection_text = itb_util.get_primary_selection_text()
         LOGGER.debug('selection_text=%r', selection_text)
         # Calling self._selection_to_preedit_open_preedit() after
@@ -7472,8 +7477,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         text = self._surrounding_text.text
         cursor_pos = self._surrounding_text.cursor_pos
         anchor_pos = self._surrounding_text.anchor_pos
-        LOGGER.debug('self._surrounding_text=%r list(text)=%r',
-                     self._surrounding_text, list(text))
+        if self._debug_level > 1:
+            LOGGER.debug('self._surrounding_text=%r list(text)=%r',
+                         self._surrounding_text, list(text))
         if cursor_pos != anchor_pos:
             LOGGER.debug('cursor_pos != anchor_pos, do nothing.')
             return
@@ -10100,7 +10106,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             text = self._surrounding_text.text
             cursor_pos = self._surrounding_text.cursor_pos
             text_to_cursor = text[:cursor_pos]
-            LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
+            if self._debug_level > 1:
+                LOGGER.debug('self._surrounding_text=%r',
+                             self._surrounding_text)
             if (self._im_client.startswith('gtk3-im')
                 and not text_to_cursor.endswith(self._current_preedit_text)):
                 # On Wayland this causes problems, as the surrounding text
