@@ -7136,16 +7136,25 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.debug('Surrounding text not supported or failed. '
                          'Fallback to primary selection.')
         selection_text = itb_util.get_primary_selection_text()
-        # Calling self._show_selection_info_show_candidates() after
-        # itb_util.get_primary_selection_text() needs GLib.idle_add(),
-        # without that no lookup table pops up!
+        # `wl-paste -p` might have been used to get the primary
+        # selection.  If `wl-paste` (with or without `-p`) is used, it
+        # causes a focus out, a focus in to `self._im_client=fake`,
+        # then a focus out and a focus in to where the focus
+        # originally was.  This might close the candidate if it was
+        # already shown or prevent it from appearing. So instead of
+        # using GLib.idle_add use GLib.timeout_add to add a delay to
+        # give the focus events time to happen before the candidate
+        # list is shown:
+        delay = 30 # milliseconds
         if selection_text != '':
-            GLib.idle_add(lambda:
+            GLib.timeout_add(delay,
+                lambda:
                 self._show_selection_info_show_candidates(
                 selection_text, selection_text))
             return False
         if text_left_of_cursor != '':
-            GLib.idle_add(lambda:
+            GLib.timeout_add(delay,
+                lambda:
                 self._show_selection_info_show_candidates(
                 '', text_left_of_cursor))
         return False
