@@ -17,6 +17,7 @@
         <path>/usr/local/share/m17n/</path>
         <path>/usr/share/m17n/</path>
         <path>~/.m17n.d/</path>
+        <path>~/.config/dconf/</path>
     </observed-paths>
     <engines exec='${libexecdir}/ibus-engine-typing-booster --xml'/>
 </component>
