@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-07-29 16:03+0200\n"
+"POT-Creation-Date: 2025-08-24 10:45+0200\n"
 "PO-Revision-Date: 2025-07-29 08:23+0000\n"
 "Last-Translator: Luna Jernberg <bittin@reimu.nl>\n"
 "Language-Team: Swedish <https://translate.fedoraproject.org/projects/ibus-"
@@ -162,21 +162,21 @@ msgstr "Systemstandard"
 msgid "Set Font"
 msgstr "Ange teckensnitt"
 
-#: engine/hunspell_table.py:592 engine/hunspell_table.py:626
-#: engine/hunspell_table.py:647
+#: engine/hunspell_table.py:640 engine/hunspell_table.py:674
+#: engine/hunspell_table.py:695
 msgid "Off"
 msgstr "Av"
 
-#: engine/hunspell_table.py:597 engine/hunspell_table.py:631
-#: engine/hunspell_table.py:652
+#: engine/hunspell_table.py:645 engine/hunspell_table.py:679
+#: engine/hunspell_table.py:700
 msgid "On"
 msgstr "På"
 
-#: engine/hunspell_table.py:616
+#: engine/hunspell_table.py:664
 msgid "Input mode"
 msgstr "Indatametod"
 
-#: engine/hunspell_table.py:617
+#: engine/hunspell_table.py:665
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Här kan du slå på eller stänga av ibus-typing-booster."
 
@@ -187,7 +187,7 @@ msgstr "Här kan du slå på eller stänga av ibus-typing-booster."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:636 engine/hunspell_table.py:638 setup/main.py:618
+#: engine/hunspell_table.py:684 engine/hunspell_table.py:686 setup/main.py:618
 msgid "Unicode symbols and emoji predictions"
 msgstr "Unicode-symboler och emoji-förutsägelser"
 
@@ -198,60 +198,60 @@ msgstr "Unicode-symboler och emoji-förutsägelser"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:657 engine/hunspell_table.py:658 setup/main.py:688
+#: engine/hunspell_table.py:705 engine/hunspell_table.py:706 setup/main.py:688
 msgid "Off the record mode"
 msgstr "Inofficiellt läge"
 
-#: engine/hunspell_table.py:2127
+#: engine/hunspell_table.py:2168
 msgid "Highest priority dictionary"
 msgstr "Ordbok med högsta prioritet"
 
-#: engine/hunspell_table.py:2128
+#: engine/hunspell_table.py:2169
 msgid "Choose highest priority dictionary"
 msgstr "Välj ordlista med högsta prioritet"
 
-#: engine/hunspell_table.py:2157
+#: engine/hunspell_table.py:2198
 msgid "Preedit input method"
 msgstr "Preedit inmatningsmetod"
 
-#: engine/hunspell_table.py:2158
+#: engine/hunspell_table.py:2199
 msgid "Switch preedit input method"
 msgstr "Byt preedit inmatningsmetod"
 
-#: engine/hunspell_table.py:2503
+#: engine/hunspell_table.py:2544
 msgid "Setup"
 msgstr "Inställning"
 
-#: engine/hunspell_table.py:2506 setup/main.py:145
+#: engine/hunspell_table.py:2547 setup/main.py:145
 msgid "Preferences for ibus-typing-booster"
 msgstr "Inställningar för ibus-typing-booster"
 
-#: engine/hunspell_table.py:6509
+#: engine/hunspell_table.py:6541
 msgid "Failed to import Google speech-to-text."
 msgstr "Kunde inte importera Googles tal-till-text."
 
-#: engine/hunspell_table.py:6512
+#: engine/hunspell_table.py:6544
 msgid "Failed to import pyaudio."
 msgstr "Kunde inte importera pyaudio."
 
-#: engine/hunspell_table.py:6515
+#: engine/hunspell_table.py:6547
 msgid "Failed to import queue."
 msgstr "Kunde inte importera kö."
 
-#: engine/hunspell_table.py:6520
+#: engine/hunspell_table.py:6552
 msgid "No supported language for speech recognition."
 msgstr "Inget språk som stöds för taligenkänning."
 
-#: engine/hunspell_table.py:6524
+#: engine/hunspell_table.py:6556
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google application credentials” filen “%s” kunde inte hittas."
 
-#: engine/hunspell_table.py:6537
+#: engine/hunspell_table.py:6569
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Kunde inte starta Googles tal-till-text. Se debug.log."
 
-#: engine/hunspell_table.py:6645
+#: engine/hunspell_table.py:6677
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google tal-till-text-fel. Se debug.log."
 

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-07-29 16:03+0200\n"
+"POT-Creation-Date: 2025-08-24 10:45+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Bengali <https://translate.fedoraproject.org/projects/ibus-"
@@ -170,21 +170,21 @@ msgstr "সিস্টেম ডিফল্ট"
 msgid "Set Font"
 msgstr "ফন্ট নির্ধারণ করুন"
 
-#: engine/hunspell_table.py:592 engine/hunspell_table.py:626
-#: engine/hunspell_table.py:647
+#: engine/hunspell_table.py:640 engine/hunspell_table.py:674
+#: engine/hunspell_table.py:695
 msgid "Off"
 msgstr "বন্ধ"
 
-#: engine/hunspell_table.py:597 engine/hunspell_table.py:631
-#: engine/hunspell_table.py:652
+#: engine/hunspell_table.py:645 engine/hunspell_table.py:679
+#: engine/hunspell_table.py:700
 msgid "On"
 msgstr "চালু"
 
-#: engine/hunspell_table.py:616
+#: engine/hunspell_table.py:664
 msgid "Input mode"
 msgstr "ইনপুট মোড"
 
-#: engine/hunspell_table.py:617
+#: engine/hunspell_table.py:665
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "এখানে আপনি আইবাস-টাইপিং-বুস্টার চালু বা বন্ধ করতে পারেন।"
 
@@ -195,7 +195,7 @@ msgstr "এখানে আপনি আইবাস-টাইপিং-বু�
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:636 engine/hunspell_table.py:638 setup/main.py:618
+#: engine/hunspell_table.py:684 engine/hunspell_table.py:686 setup/main.py:618
 msgid "Unicode symbols and emoji predictions"
 msgstr "ইউনিকোড প্রতীক এবং ইমোজি ভবিষ্যদ্বাণী"
 
@@ -206,60 +206,60 @@ msgstr "ইউনিকোড প্রতীক এবং ইমোজি ভ�
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:657 engine/hunspell_table.py:658 setup/main.py:688
+#: engine/hunspell_table.py:705 engine/hunspell_table.py:706 setup/main.py:688
 msgid "Off the record mode"
 msgstr "রেকর্ড মোড বন্ধ করুন"
 
-#: engine/hunspell_table.py:2127
+#: engine/hunspell_table.py:2168
 msgid "Highest priority dictionary"
 msgstr "অভিধানে সর্বোচ্চ অগ্রাধিকার দিন"
 
-#: engine/hunspell_table.py:2128
+#: engine/hunspell_table.py:2169
 msgid "Choose highest priority dictionary"
 msgstr "সর্বোচ্চ অগ্রাধিকার অভিধান বাছাই করুন"
 
-#: engine/hunspell_table.py:2157
+#: engine/hunspell_table.py:2198
 msgid "Preedit input method"
 msgstr "প্রিডিট (প্রাক সম্পাদনা) ইনপুট পদ্ধতি"
 
-#: engine/hunspell_table.py:2158
+#: engine/hunspell_table.py:2199
 msgid "Switch preedit input method"
 msgstr "প্রিডিট (প্রাক সম্পাদনা) ইনপুট পদ্ধতি পরিবর্তন করুন"
 
-#: engine/hunspell_table.py:2503
+#: engine/hunspell_table.py:2544
 msgid "Setup"
 msgstr "সেটআপ"
 
-#: engine/hunspell_table.py:2506 setup/main.py:145
+#: engine/hunspell_table.py:2547 setup/main.py:145
 msgid "Preferences for ibus-typing-booster"
 msgstr "আইবাস-টাইপিং-বুস্টারের জন্য রূপরেখা নির্ধারণ করুন"
 
-#: engine/hunspell_table.py:6509
+#: engine/hunspell_table.py:6541
 msgid "Failed to import Google speech-to-text."
 msgstr "গুগল বক্তৃতা-থেকে-পাঠ্য আমদানি করতে ব্যর্থ হয়েছে।"
 
-#: engine/hunspell_table.py:6512
+#: engine/hunspell_table.py:6544
 msgid "Failed to import pyaudio."
 msgstr "পাইঅডিও আমদানি করতে ব্যর্থ হয়েছে৷"
 
-#: engine/hunspell_table.py:6515
+#: engine/hunspell_table.py:6547
 msgid "Failed to import queue."
 msgstr "সারিবদ্ধ আমদানি করতে ব্যর্থ হয়েছে৷"
 
-#: engine/hunspell_table.py:6520
+#: engine/hunspell_table.py:6552
 msgid "No supported language for speech recognition."
 msgstr "বক্তৃতা বুঝতে পারে এমন কোনো সমর্থিত ভাষা নেই।"
 
-#: engine/hunspell_table.py:6524
+#: engine/hunspell_table.py:6556
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“গুগল আবেদন প্রমাণপত্রাদি” নথি “%s” পাওয়া যায় নি।"
 
-#: engine/hunspell_table.py:6537
+#: engine/hunspell_table.py:6569
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "গুগল বক্তৃতা-থেকে-পাঠ্য শুরু করতে ব্যর্থ হয়েছে। ডিবাগ লগ দেখুন।"
 
-#: engine/hunspell_table.py:6645
+#: engine/hunspell_table.py:6677
 msgid "Google speech-to-text error. See debug.log."
 msgstr "গুগল বক্তৃতা-থেকে-পাঠ্য ত্রুটি। ডিবাগ লগ দেখুন।"
 

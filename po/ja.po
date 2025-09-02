@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-07-29 16:03+0200\n"
+"POT-Creation-Date: 2025-08-24 10:45+0200\n"
 "PO-Revision-Date: 2025-07-25 14:28+0000\n"
 "Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
 "memory@weblate.org>\n"
@@ -161,21 +161,21 @@ msgstr "システムのデフォルト"
 msgid "Set Font"
 msgstr "フォントの選択"
 
-#: engine/hunspell_table.py:592 engine/hunspell_table.py:626
-#: engine/hunspell_table.py:647
+#: engine/hunspell_table.py:640 engine/hunspell_table.py:674
+#: engine/hunspell_table.py:695
 msgid "Off"
 msgstr "オフ"
 
-#: engine/hunspell_table.py:597 engine/hunspell_table.py:631
-#: engine/hunspell_table.py:652
+#: engine/hunspell_table.py:645 engine/hunspell_table.py:679
+#: engine/hunspell_table.py:700
 msgid "On"
 msgstr "オン"
 
-#: engine/hunspell_table.py:616
+#: engine/hunspell_table.py:664
 msgid "Input mode"
 msgstr "入力モード"
 
-#: engine/hunspell_table.py:617
+#: engine/hunspell_table.py:665
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr ""
 "ここでは、ibus-typing-boosterをオンまたはオフに切り替えることができます。"
@@ -187,7 +187,7 @@ msgstr ""
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:636 engine/hunspell_table.py:638 setup/main.py:618
+#: engine/hunspell_table.py:684 engine/hunspell_table.py:686 setup/main.py:618
 msgid "Unicode symbols and emoji predictions"
 msgstr "Unicode 記号と絵文字の予測"
 
@@ -198,62 +198,62 @@ msgstr "Unicode 記号と絵文字の予測"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:657 engine/hunspell_table.py:658 setup/main.py:688
+#: engine/hunspell_table.py:705 engine/hunspell_table.py:706 setup/main.py:688
 msgid "Off the record mode"
 msgstr "オフ・ザ・レコードモード"
 
-#: engine/hunspell_table.py:2127
+#: engine/hunspell_table.py:2168
 msgid "Highest priority dictionary"
 msgstr "最優先辞書"
 
-#: engine/hunspell_table.py:2128
+#: engine/hunspell_table.py:2169
 msgid "Choose highest priority dictionary"
 msgstr "最優先辞書を選択"
 
-#: engine/hunspell_table.py:2157
+#: engine/hunspell_table.py:2198
 msgid "Preedit input method"
 msgstr "プリエディット入力方法"
 
-#: engine/hunspell_table.py:2158
+#: engine/hunspell_table.py:2199
 msgid "Switch preedit input method"
 msgstr "プリエディット入力方法の切り替え"
 
-#: engine/hunspell_table.py:2503
+#: engine/hunspell_table.py:2544
 msgid "Setup"
 msgstr "設定"
 
-#: engine/hunspell_table.py:2506 setup/main.py:145
+#: engine/hunspell_table.py:2547 setup/main.py:145
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster の設定"
 
-#: engine/hunspell_table.py:6509
+#: engine/hunspell_table.py:6541
 msgid "Failed to import Google speech-to-text."
 msgstr "Google音声テキストのインポートに失敗しました。"
 
-#: engine/hunspell_table.py:6512
+#: engine/hunspell_table.py:6544
 msgid "Failed to import pyaudio."
 msgstr "pyaudio のインポートに失敗しました。"
 
-#: engine/hunspell_table.py:6515
+#: engine/hunspell_table.py:6547
 msgid "Failed to import queue."
 msgstr "queue のインポートに失敗しました。"
 
-#: engine/hunspell_table.py:6520
+#: engine/hunspell_table.py:6552
 msgid "No supported language for speech recognition."
 msgstr "音声認識に対応する言語がありません。"
 
-#: engine/hunspell_table.py:6524
+#: engine/hunspell_table.py:6556
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "'Google application credentials' ファイル '%s' が見つかりませんでした。"
 
-#: engine/hunspell_table.py:6537
+#: engine/hunspell_table.py:6569
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Google音声テキストの初期化に失敗しました。debug.logを参照してください。"
 
-#: engine/hunspell_table.py:6645
+#: engine/hunspell_table.py:6677
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google音声テキストエラー。debug.logを参照してください。"
 
