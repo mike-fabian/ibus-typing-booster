@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Jelly Lopster <jellylopster@gmail.com>, 2024.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024, 2025.
+# "Sergey A." <Ser82-png@yandex.ru>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -10,8 +11,7 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2025-08-24 10:45+0200\n"
 "PO-Revision-Date: 2025-09-04 11:53+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"Last-Translator: \"Sergey A.\" <Ser82-png@yandex.ru>\n"
 "Language-Team: Russian <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ru/>\n"
 "Language: ru\n"
@@ -25,14 +25,12 @@ msgstr ""
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:266
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
-msgstr "Подборка эмодзи"
+msgstr "Выбор эмодзи"
 
 #: engine/emoji-picker.desktop.in.in:3
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:7
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji browsing tool"
-msgstr "Версия Юникода:"
+msgstr "Инструмент просмотра эмодзи"
 
 #: engine/emoji_picker.py:377
 msgid "Clear recently used"
@@ -103,36 +101,28 @@ msgid "Unicode Version:"
 msgstr "Версия Юникода:"
 
 #: engine/emoji_picker.py:785
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji Version:"
-msgstr "Версия Юникода:"
+msgstr "Версия эмодзи:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:792
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji properties:"
-msgstr "Версия Юникода:"
+msgstr "Свойства эмодзи:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
 #: engine/emoji_picker.py:798
-#, fuzzy
-#| msgid "Unicode categories"
 msgid "Unicode category:"
-msgstr "Категории Юникода"
+msgstr "Категория Юникода:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
 #: engine/emoji_picker.py:805
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Unicode block:"
-msgstr "Версия Юникода:"
+msgstr "Блок Юникода:"
 
 #: engine/emoji_picker.py:824 engine/emoji_picker.py:2017
 msgid "Left click to copy"
@@ -198,7 +188,7 @@ msgstr "Здесь вы можете включить или выключить 
 #. nevertheless useful symbols.
 #: engine/hunspell_table.py:684 engine/hunspell_table.py:686 setup/main.py:618
 msgid "Unicode symbols and emoji predictions"
-msgstr "Символы Юникода и предсказания эмодзи"
+msgstr "Предположения для символов Юникода и эмодзи"
 
 #. Translators: While “Off the record” mode is on, learning
 #. from user input is disabled. If learned user input is
@@ -347,16 +337,15 @@ msgstr "региональный"
 #. are seperated by punctuation or white space.
 #: engine/itb_util.py:2834
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "Другие, Разные, Разнообразные, Нетипичные"
 
 #: engine/itb_util.py:4871 engine/itb_util.py:5613
 msgid "File not found"
 msgstr "Файл не найден"
 
 #: engine/itb_util.py:4875 engine/itb_util.py:5617
-#, fuzzy
 msgid "Permission error"
-msgstr "Ошибка разрешения"
+msgstr "Ошибка доступа"
 
 #: engine/itb_util.py:4879 engine/itb_util.py:5621
 msgid "Unicode decoding error"
@@ -368,7 +357,7 @@ msgstr "Неизвестная ошибка"
 
 #: engine/itb_util.py:5591
 msgid "Native Keyboard"
-msgstr ""
+msgstr "Встроенная клавиатура"
 
 #: engine/itb_util.py:5593
 msgid ""
@@ -409,7 +398,7 @@ msgstr "Диалоговое окно будет закрыто, когда кл
 
 #: engine/itb_util.py:6438
 msgid "A completion input method to speedup typing."
-msgstr ""
+msgstr "Способ ввода с автоматическим дополнением для ускорения набора текста."
 
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:6447
@@ -665,10 +654,8 @@ msgstr ""
 #. Translators: A combo box to select which emoji style
 #. should be used.
 #: setup/main.py:639
-#, fuzzy
-#| msgid "Emoji Picker"
 msgid "Emoji style"
-msgstr "Подборка эмодзи"
+msgstr "Стиль эмодзи"
 
 #. Translators: A tooltip for the combobox to select which
 #. emoji style should be used.
@@ -1098,7 +1085,7 @@ msgstr "Редактировать привязки клавиш для выбр
 
 #: setup/main.py:1561 setup/main.py:5255
 msgid "Set default key bindings for the selected command"
-msgstr "Установить привязки клавиш по умолчанию для выбранной команды"
+msgstr "Установить привязку клавиш по умолчанию для выбранной команды"
 
 #: setup/main.py:1568
 msgid "Set all to default"
@@ -1203,13 +1190,13 @@ msgstr "Нет"
 #. underline for the preedit.
 #: setup/main.py:1741
 msgid "Single"
-msgstr ""
+msgstr "Одинарное"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
 #: setup/main.py:1745
 msgid "Double"
-msgstr ""
+msgstr "Двойное"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
@@ -1498,6 +1485,8 @@ msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
+"Здесь вы можете выбрать, будет ли использоваться метка для индикации "
+"занятости ibus-typing-booster."
 
 #. Translators: Tooltip for an entry
 #: setup/main.py:2280
@@ -1518,6 +1507,8 @@ msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
 msgstr ""
+"Символ, отображаемый при активации функции «Ускоритель ввода» ("
+"транслитерация, предложение вариантов, проверка орфографии и т. д.)."
 
 #: setup/main.py:2327
 msgid "Symbol for \"disabled\" (Direct Input) mode"
@@ -1530,6 +1521,8 @@ msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
 msgstr ""
+"Символ, отображаемый при отключении функции «Ускоритель ввода» (ввод данных "
+"осуществляется напрямую без обработки)."
 
 #. Translators:
 #: setup/main.py:2357 setup/main.py:3531
@@ -1542,7 +1535,7 @@ msgstr ""
 
 #: setup/main.py:2365
 msgid "File not yet set."
-msgstr ""
+msgstr "Файл ещё не установлен."
 
 #. Translators: This is a button to add an autosetting.
 #. “Autosettings” are settings which may change automatically
@@ -1586,13 +1579,13 @@ msgstr ""
 
 #: setup/main.py:2672
 msgid "Spell checking"
-msgstr ""
+msgstr "Проверка орфографии"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
 #: setup/main.py:2867
 msgid "Setting"
-msgstr ""
+msgstr "Настройки"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1614,7 +1607,7 @@ msgstr "Вы уверены?"
 
 #: setup/main.py:2935 setup/main.py:3534 setup/main.py:3619 setup/main.py:5321
 msgid "_Cancel"
-msgstr ""
+msgstr "_Отменить"
 
 #: setup/main.py:2936 setup/main.py:3535 setup/main.py:3620 setup/main.py:5322
 msgid "_OK"
@@ -1635,17 +1628,17 @@ msgstr "Выбрать звуковой файл .wav:"
 
 #: setup/main.py:3803
 msgid "Add dictionary"
-msgstr ""
+msgstr "Добавить словарь"
 
 #: setup/main.py:4146
 msgid "Add input method"
-msgstr ""
+msgstr "Добавить метод ввода"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
 #: setup/main.py:4327
 msgid "Variable"
-msgstr ""
+msgstr "Переменная"
 
 #: setup/main.py:5203
 #, python-format
@@ -1675,7 +1668,7 @@ msgstr ""
 
 #: setup/main.py:5318
 msgid "Open File ..."
-msgstr ""
+msgstr "Открыть файл ..."
 
 #: setup/main.py:5335
 #, python-format
@@ -1715,7 +1708,7 @@ msgstr ""
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
-msgstr ""
+msgstr "Ускоритель ввода"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:7
 msgid "Predictive input method"
