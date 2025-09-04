@@ -3788,8 +3788,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionaries_add_popover.set_relative_to(
             self._dictionaries_add_button)
         self._dictionaries_add_popover.set_position(Gtk.PositionType.RIGHT)
-        self._dictionaries_add_popover.set_vexpand(True)
-        self._dictionaries_add_popover.set_hexpand(True)
+        self._dictionaries_add_popover.set_vexpand(False)
+        self._dictionaries_add_popover.set_hexpand(False)
         dictionaries_add_popover_vbox = Gtk.Box()
         dictionaries_add_popover_vbox.set_orientation(
             Gtk.Orientation.VERTICAL)
@@ -3826,6 +3826,9 @@ class SetupUI(Gtk.Window): # type: ignore
         dictionaries_add_popover_vbox.add(
             self._dictionaries_add_popover_scroll)
         self._dictionaries_add_popover.add(dictionaries_add_popover_vbox)
+        (window_width, window_height) = self.get_size()
+        self._dictionaries_add_popover.set_size_request(
+            0.5 * window_width, 0.5 * window_height)
         if GTK_VERSION >= (3, 22, 0):
             self._dictionaries_add_popover.popup()
         self._dictionaries_add_popover.show_all()
@@ -4131,8 +4134,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_methods_add_popover.set_relative_to(
             self._input_methods_add_button)
         self._input_methods_add_popover.set_position(Gtk.PositionType.RIGHT)
-        self._input_methods_add_popover.set_vexpand(True)
-        self._input_methods_add_popover.set_hexpand(True)
+        self._input_methods_add_popover.set_vexpand(False)
+        self._input_methods_add_popover.set_hexpand(False)
         input_methods_add_popover_vbox = Gtk.Box()
         input_methods_add_popover_vbox.set_orientation(
             Gtk.Orientation.VERTICAL)
@@ -4169,6 +4172,9 @@ class SetupUI(Gtk.Window): # type: ignore
         input_methods_add_popover_vbox.add(
             self._input_methods_add_popover_scroll)
         self._input_methods_add_popover.add(input_methods_add_popover_vbox)
+        (window_width, window_height) = self.get_size()
+        self._input_methods_add_popover.set_size_request(
+            0.5 * window_width, 0.5 * window_height)
         if GTK_VERSION >= (3, 22, 0):
             self._input_methods_add_popover.popup()
         self._input_methods_add_popover.show_all()
@@ -4748,8 +4754,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._autosettings_add_popover.set_relative_to(
             self._autosettings_add_button)
         self._autosettings_add_popover.set_position(Gtk.PositionType.RIGHT)
-        self._autosettings_add_popover.set_vexpand(True)
-        self._autosettings_add_popover.set_hexpand(True)
+        self._autosettings_add_popover.set_vexpand(False)
+        self._autosettings_add_popover.set_hexpand(False)
         autosettings_add_popover_vbox = Gtk.Box()
         autosettings_add_popover_vbox.set_orientation(
             Gtk.Orientation.VERTICAL)
@@ -4786,6 +4792,9 @@ class SetupUI(Gtk.Window): # type: ignore
         autosettings_add_popover_vbox.add(
             self._autosettings_add_popover_scroll)
         self._autosettings_add_popover.add(autosettings_add_popover_vbox)
+        (window_width, window_height) = self.get_size()
+        self._autosettings_add_popover.set_size_request(
+            0.5 * window_width, 0.5 * window_height)
         if GTK_VERSION >= (3, 22, 0):
             self._autosettings_add_popover.popup()
         self._autosettings_add_popover.show_all()
@@ -5187,8 +5196,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._keybindings_edit_popover.set_relative_to(
             self._keybindings_edit_button)
         self._keybindings_edit_popover.set_position(Gtk.PositionType.RIGHT)
-        self._keybindings_edit_popover.set_vexpand(True)
-        self._keybindings_edit_popover.set_hexpand(True)
+        self._keybindings_edit_popover.set_vexpand(False)
+        self._keybindings_edit_popover.set_hexpand(False)
         keybindings_edit_popover_vbox = Gtk.Box()
         keybindings_edit_popover_vbox.set_orientation(
             Gtk.Orientation.VERTICAL)
@@ -5265,6 +5274,9 @@ class SetupUI(Gtk.Window): # type: ignore
             self._keybindings_edit_popover_default_button)
         self._keybindings_edit_popover.add(keybindings_edit_popover_vbox)
         self._fill_keybindings_edit_popover_listbox()
+        (window_width, window_height) = self.get_size()
+        self._keybindings_edit_popover.set_size_request(
+            0.5 * window_width, 0.5 * window_height)
         if GTK_VERSION >= (3, 22, 0):
             self._keybindings_edit_popover.popup()
         self._keybindings_edit_popover.show_all()
