@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-08-24 10:45+0200\n"
-"PO-Revision-Date: 2025-09-04 11:53+0000\n"
+"PO-Revision-Date: 2025-09-05 06:34+0000\n"
 "Last-Translator: \"Sergey A.\" <Ser82-png@yandex.ru>\n"
 "Language-Team: Russian <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ru/>\n"
@@ -436,7 +436,7 @@ msgstr "_Закрыть"
 #. in.
 #: setup/main.py:278
 msgid "Dictionaries and input methods"
-msgstr ""
+msgstr "Словари и методы ввода"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence the
@@ -483,7 +483,7 @@ msgstr ""
 #. recognition.
 #: setup/main.py:364 setup/main.py:2695
 msgid "Speech recognition"
-msgstr ""
+msgstr "Распознавание речи"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up whether some settings should change
@@ -494,7 +494,7 @@ msgstr ""
 #. focus:
 #: setup/main.py:380 setup/main.py:2391
 msgid "Autosettings"
-msgstr ""
+msgstr "Автонастройки"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -504,7 +504,7 @@ msgstr ""
 #. again until the next key bound to this command is typed.
 #: setup/main.py:413
 msgid "Enable suggestions by key (Default is the Tab key)"
-msgstr ""
+msgstr "Включить варианты по клавише (по умолчанию — клавиша Tab)"
 
 #: setup/main.py:415
 msgid ""
@@ -514,6 +514,11 @@ msgid ""
 "a commit the suggestions are hidden again until the next key bound to this "
 "command is typed."
 msgstr ""
+"Если отмечен этот пункт, то варианты не будут появляться. Для того чтобы "
+"появился список вариантов, вам придется нажать определенную клавишу. Эту "
+"клавишу можно изменить в настройках привязки клавиш к командам. По умолчанию "
+"это клавиша Tab. После выбора варианта список снова будет скрыт, пока вновь "
+"не будет нажата клавиша, связанная с этой командой."
 
 #. Translators: Whether the best completion is first shown
 #. inline in the preedit instead of showing a full
@@ -1035,7 +1040,7 @@ msgstr ""
 
 #: setup/main.py:1361
 msgid "Enter shortcut here:"
-msgstr ""
+msgstr "Введите комбинацию:"
 
 #: setup/main.py:1383
 msgid "Enter shortcut expansion here:"
@@ -1047,17 +1052,17 @@ msgstr ""
 
 #: setup/main.py:1424
 msgid "Delete shortcut"
-msgstr ""
+msgstr "Удалить комбинацию"
 
 #: setup/main.py:1435
 msgid "Add shortcut"
-msgstr ""
+msgstr "Добавить комбинацию"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
 #: setup/main.py:1469
 msgid "Shortcut"
-msgstr ""
+msgstr "Комбинация клавиш"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
@@ -1712,7 +1717,7 @@ msgstr "Ускоритель ввода"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:7
 msgid "Predictive input method"
-msgstr ""
+msgstr "Метод предиктивного ввода"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:9
 msgid ""
@@ -1720,6 +1725,10 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+"Ibus-typing-booster — способ предиктивного ввода, определяющий полную форму "
+"частично введённых слов по контексту. Вы можете просто выбрать желаемое "
+"слово из списка предложений, что бы ускорить ввод текста и улучшить его "
+"качество."
 
 #, fuzzy
 #~| msgid "Emoji Picker"
