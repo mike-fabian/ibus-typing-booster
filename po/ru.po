@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-08-24 10:45+0200\n"
-"PO-Revision-Date: 2025-09-05 06:34+0000\n"
+"PO-Revision-Date: 2025-09-07 12:54+0000\n"
 "Last-Translator: \"Sergey A.\" <Ser82-png@yandex.ru>\n"
 "Language-Team: Russian <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ru/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.13\n"
+"X-Generator: Weblate 5.13.2\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:266
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -452,7 +452,7 @@ msgstr "Параметры"
 #. candidate, he can define such a custom shortcut here.
 #: setup/main.py:310
 msgid "Custom shortcuts"
-msgstr ""
+msgstr "Пользовательские комбинации"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can customize the key bindings to execute
@@ -1495,12 +1495,12 @@ msgstr ""
 
 #. Translators: Tooltip for an entry
 #: setup/main.py:2280
-#, fuzzy
-#| msgid "Here you can switch ibus-typing-booster on or off."
 msgid ""
 "Here you can specify which label is used to indicate when ibus-typing-"
 "booster is busy."
-msgstr "Здесь вы можете включить или выключить ibus-typing-booster."
+msgstr ""
+"Здесь вы можете выбрать, какая метка будет использоваться для индикации "
+"занятости ibus-typing-booster."
 
 #: setup/main.py:2298
 msgid "Symbol for \"enabled\" mode"
@@ -1678,12 +1678,12 @@ msgstr "Открыть файл ..."
 #: setup/main.py:5335
 #, python-format
 msgid "Learned successfully from file %(filename)s."
-msgstr ""
+msgstr "Успешно извлечено из файла %(filename)s."
 
 #: setup/main.py:5344
 #, python-format
 msgid "Learning from file %(filename)s failed."
-msgstr ""
+msgstr "Попытка обучения из файла %(filename)s потерпела неудачу."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1700,6 +1700,8 @@ msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr ""
+"Вы действительно хотите удалить все языковые данные, полученные в результате "
+"набора текста или чтения файлов?"
 
 #: setup/main.py:7216
 msgid "ibus is not running."
