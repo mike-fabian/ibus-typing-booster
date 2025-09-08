@@ -220,6 +220,11 @@ class SetupUI(Gtk.Window): # type: ignore
         self._notebook.set_visible(True)
         self._notebook.set_can_focus(False)
         self._notebook.set_scrollable(True)
+        self._notebook.set_tab_pos(Gtk.PositionType.LEFT)
+        # popup enable is not needed when the tabs are at the left side
+        # unless there are so many tabs that it even needs to scroll
+        # when the tabs are at the left side.
+        # self._notebook.popup_enable()
         self._notebook.set_hexpand(True)
         self._notebook.set_vexpand(True)
         self._main_container.add(self._notebook)
