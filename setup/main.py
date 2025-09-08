@@ -2315,8 +2315,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'spellchecking, etc.).'))
         self._input_mode_true_entry.set_visible(True)
         self._input_mode_true_entry.set_can_focus(True)
-        self._input_mode_true_entry.set_hexpand(True)
-        self._input_mode_true_entry.set_vexpand(True)
+        self._input_mode_true_entry.set_hexpand(False)
+        self._input_mode_true_entry.set_vexpand(False)
         self._input_mode_true_entry.set_text(
             self._settings_dict['inputmodetruesymbol']['user'])
         self._input_mode_true_entry.connect(
@@ -2344,8 +2344,8 @@ class SetupUI(Gtk.Window): # type: ignore
               '(input is passed through directly without processing).'))
         self._input_mode_false_entry.set_visible(True)
         self._input_mode_false_entry.set_can_focus(True)
-        self._input_mode_false_entry.set_hexpand(True)
-        self._input_mode_false_entry.set_vexpand(True)
+        self._input_mode_false_entry.set_hexpand(False)
+        self._input_mode_false_entry.set_vexpand(False)
         self._input_mode_false_entry.set_text(
             self._settings_dict['inputmodefalsesymbol']['user'])
         self._input_mode_false_entry.connect(
