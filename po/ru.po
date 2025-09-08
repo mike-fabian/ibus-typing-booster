@@ -11,8 +11,7 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2025-08-24 10:45+0200\n"
 "PO-Revision-Date: 2025-09-08 08:04+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"Last-Translator: \"Sergey A.\" <Ser82-png@yandex.ru>\n"
 "Language-Team: Russian <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ru/>\n"
 "Language: ru\n"
@@ -404,7 +403,7 @@ msgstr "Способ ввода с автоматическим дополнен
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:6447
 msgid "translator-credits"
-msgstr "Ser82-png <asvmail.as@gmail.com>, 2023"
+msgstr "Ser82-png <asvmail.as@gmail.com>, 2025"
 
 #: engine/itb_util.py:6455
 msgid "Online documentation:"
@@ -542,7 +541,7 @@ msgstr ""
 
 #: setup/main.py:452 setup/main.py:513
 msgid "No"
-msgstr ""
+msgstr "Нет"
 
 #: setup/main.py:454
 msgid "Yes, with fallback to popup"
@@ -561,6 +560,8 @@ msgstr ""
 #: setup/main.py:480
 msgid "Automatically capitalize after punctuation."
 msgstr ""
+"Автоматически начинать с заглавной буквы после соответствующих знаков "
+"препинания."
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
@@ -572,7 +573,7 @@ msgstr ""
 #. command which will deselect all candidates.
 #: setup/main.py:499
 msgid "Automatically select the best candidate"
-msgstr ""
+msgstr "Автоматически выбирать лучший вариант"
 
 #: setup/main.py:501
 msgid ""
@@ -586,24 +587,24 @@ msgstr ""
 
 #: setup/main.py:515
 msgid "Yes, but only when extremely likely"
-msgstr ""
+msgstr "Да, но только если вероятность очень высока"
 
 #: setup/main.py:517
 msgid "Yes, always"
-msgstr ""
+msgstr "Да, всегда"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
 #. with the mouse.
 #: setup/main.py:540
 msgid "Add a space when committing by mouse click"
-msgstr ""
+msgstr "Добавлять пробел при отправке с помощью щелчка мыши"
 
 #: setup/main.py:542
 msgid ""
 "Add a space if a candidate from the candidate list is committed by clicking "
 "it with the mouse."
-msgstr ""
+msgstr "Добавлять пробел, если вариант из списка был отправлен щелчком мыши."
 
 #. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -614,6 +615,8 @@ msgstr ""
 #: setup/main.py:560
 msgid "Remember last used preedit input method"
 msgstr ""
+"Запоминать последний использованный способ ввода предварительного "
+"редактирования"
 
 #: setup/main.py:562
 msgid ""
@@ -670,12 +673,14 @@ msgid ""
 "To select between colorful emoji (emoji style), monochrome emoji (text "
 "style), or no style preference."
 msgstr ""
+"Для выбора между цветными эмодзи (стиль эмодзи), монохромными эмодзи (стиль "
+"текста) или без предпочтения по стилю."
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Emoji style”, i.e.  typically colored.
 #: setup/main.py:654 setup/main.py:2688
 msgid "Emoji"
-msgstr ""
+msgstr "Эмодзи"
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Text style”, i.e.  typically
@@ -690,7 +695,7 @@ msgstr "Текст"
 #. the emoji in the Unicode emoji data files.
 #: setup/main.py:663
 msgid "No style"
-msgstr ""
+msgstr "Без стиля"
 
 #: setup/main.py:690
 msgid ""
@@ -722,19 +727,19 @@ msgstr ""
 
 #: setup/main.py:727
 msgid "Everything"
-msgstr ""
+msgstr "Все"
 
 #: setup/main.py:729
 msgid "Correctly spelled or previously recorded"
-msgstr ""
+msgstr "Правильно написанное или ранее записанное"
 
 #: setup/main.py:731
 msgid "Correctly spelled"
-msgstr ""
+msgstr "Правильно написано"
 
 #: setup/main.py:733
 msgid "Nothing"
-msgstr ""
+msgstr "Ничего"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -752,7 +757,7 @@ msgstr ""
 #: setup/main.py:767
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "Избегайте использования функции %s"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -897,12 +902,13 @@ msgstr ""
 #. number of characters have been typed.
 #: setup/main.py:971
 msgid "Minimum number of chars for completion:"
-msgstr ""
+msgstr "Минимальное количество символов для автозавершения:"
 
 #: setup/main.py:973
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
 msgstr ""
+"Не показывать варианты, если количество введенных символов меньше указанного."
 
 #. Translators: A checkbox where one can choose whether a
 #. sound is played on error
@@ -913,6 +919,8 @@ msgstr "При возникновении ошибки воспроизвест�
 #: setup/main.py:1000
 msgid "Here you can choose whether a sound file is played if an error occurs."
 msgstr ""
+"Здесь можно определить, будет ли программа воспроизводить звуковой файл при "
+"возникновении ошибки."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -926,61 +934,65 @@ msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
 msgstr ""
+"Если значение больше 0, отладочная информация может быть выведена в файл "
+"журнала, а также отображена графически."
 
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
 #. reading that text file.
 #: setup/main.py:1061
 msgid "Learn from text file"
-msgstr ""
+msgstr "Изучить из текстового файла"
 
 #: setup/main.py:1063
 msgid "Learn your style by reading a text file"
-msgstr ""
+msgstr "Выучить ваш стиль путем чтения текстового файла"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
 #: setup/main.py:1075
 msgid "Delete learned data"
-msgstr ""
+msgstr "Удалить полученные данные"
 
 #: setup/main.py:1077
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
+"Удалить все личные языковые данные, полученные при наборе текста или чтении "
+"файлов"
 
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:1091
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "Использовать словари для следующих языков:"
 
 #: setup/main.py:1120
 msgid "Add a dictionary"
-msgstr ""
+msgstr "Добавить словарь"
 
 #: setup/main.py:1131
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "Удалить словарь"
 
 #: setup/main.py:1142
 msgid "Move dictionary up"
-msgstr ""
+msgstr "Переместить словарь выше"
 
 #: setup/main.py:1154
 msgid "Move dictionary down"
-msgstr ""
+msgstr "Переместить словарь ниже"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
 #: setup/main.py:1161
 msgid "Install missing dictionaries"
-msgstr ""
+msgstr "Установить отсутствующие словари"
 
 #: setup/main.py:1163
 msgid "Install the dictionaries which are setup here but not installed"
-msgstr ""
+msgstr "Установить словари, которые настроены здесь, но не установлены"
 
 #: setup/main.py:1170 setup/main.py:1315 setup/main.py:1557 setup/main.py:5250
 msgid "Set to default"
@@ -990,54 +1002,54 @@ msgstr ""
 #. dictionaries to the default for the current locale.
 #: setup/main.py:1176
 msgid "Set dictionaries to the default for the current locale."
-msgstr ""
+msgstr "Установите типовые словари для текущей локали."
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:1217
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "Используйте следующие методы ввода:"
 
 #: setup/main.py:1246
 msgid "Add an input method"
-msgstr ""
+msgstr "Добавить метод ввода"
 
 #: setup/main.py:1258
 msgid "Remove an input method"
-msgstr ""
+msgstr "Удалить метод ввода"
 
 #: setup/main.py:1270
 msgid "Move input method up"
-msgstr ""
+msgstr "Переместить метод ввода выше"
 
 #: setup/main.py:1282
 msgid "Move input method down"
-msgstr ""
+msgstr "Переместить метод ввода ниже"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
 #: setup/main.py:1290
 msgid "Input Method Help"
-msgstr ""
+msgstr "Справка по методу ввода"
 
 #: setup/main.py:1292
 msgid "Display some help showing how to use the input method selected above."
-msgstr ""
+msgstr "Показать справку по использованию выбранного метода ввода."
 
 #. Translators: Tooltip for a button to set some advanced
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1308
 msgid "Options for the input method selected above."
-msgstr ""
+msgstr "Параметры выбранного выше способа ввода."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
 #: setup/main.py:1321
 msgid "Set input methods to the default for the current locale."
-msgstr ""
+msgstr "Установить типовые методы ввода для текущей локали."
 
 #: setup/main.py:1361
 msgid "Enter shortcut here:"
@@ -1049,7 +1061,7 @@ msgstr ""
 
 #: setup/main.py:1413
 msgid "Clear input"
-msgstr ""
+msgstr "Очистить ввод"
 
 #: setup/main.py:1424
 msgid "Delete shortcut"
@@ -1190,7 +1202,7 @@ msgstr ""
 #. at all for the preedit.
 #: setup/main.py:1737
 msgid "None"
-msgstr "Нет"
+msgstr "Отсутствует"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
