@@ -6288,6 +6288,7 @@ class SetupUI(Gtk.Window): # type: ignore
             return
         symbol = symbol.strip()
         self._settings_dict['inputmodetruesymbol']['user'] = symbol
+        itb_util.ibus_write_cache()
         if update_gsettings:
             self._gsettings.set_value(
                 'inputmodetruesymbol',

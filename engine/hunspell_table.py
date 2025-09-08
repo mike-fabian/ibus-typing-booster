@@ -633,6 +633,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         self._lookup_table = self._get_new_lookup_table()
 
+        cached_input_mode_true_symbol = itb_util.ibus_read_cache().get(
+            self._engine_name, {}).get('symbol', '')
+        LOGGER.info('Cached symbol: %r Current symbol: %r',
+                    cached_input_mode_true_symbol,
+                    self._settings_dict['inputmodetruesymbol']['user'])
+        if (cached_input_mode_true_symbol
+            != self._settings_dict['inputmodetruesymbol']['user']):
+            LOGGER.info(
+                'Cached symbol is outdated, call `ibus write-cache`.')
+            itb_util.ibus_write_cache()
+
         self.input_mode_properties = {
             'InputMode.Off': {
                 'number': 0,
@@ -4667,6 +4678,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._prop_dict and self.input_mode_menu:
             self._init_or_update_property_menu(
                 self.input_mode_menu, 1)
+        itb_util.ibus_write_cache()
         if update_gsettings:
             self._gsettings.set_value(
                 'inputmodetruesymbol',

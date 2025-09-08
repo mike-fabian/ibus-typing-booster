@@ -47,6 +47,7 @@ import shutil
 import subprocess
 import glob
 import gettext
+import xml.etree.ElementTree
 from dataclasses import dataclass
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
@@ -3680,6 +3681,77 @@ def variant_to_value(variant: GLib.Variant) -> Any:
         return variant.unpack()
     LOGGER.error('unknown variant type: %s', type_string)
     return variant
+
+def ibus_write_cache() -> bool:
+    '''Call `ibus write-cache`
+
+    :return: True on success, False on failure.
+    '''
+    ibus_binary = shutil.which('ibus')
+    if not ibus_binary:
+        return False
+    try:
+        _result = subprocess.run(
+            [ibus_binary, 'write-cache'],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding='utf-8',
+            check=True,
+            timeout=30)
+        return True
+    except subprocess.TimeoutExpired as error:
+        LOGGER.error('ibus write-cache command timed out: %s', error)
+    except subprocess.CalledProcessError as error:
+        LOGGER.exception(
+            'Exception when calling %s: %s stderr: %s',
+            ibus_binary, error, error.stderr)
+    except Exception as error: # pylint: disable=broad-except
+        LOGGER.exception(
+            'Exception when calling %s: %s', ibus_binary, error)
+    return False
+
+def ibus_read_cache() -> Dict[str, Dict[str, str]]:
+    '''Call `ibus read-cache` and parse engine information
+
+    :return: Dictionary containing information like this:
+             {'engine name 1': {'symbol': '1', 'icon': '1.png'},
+              'engine name 2': {'symbol': '2', 'icon': '2.png'},
+               ...}
+    '''
+    ibus_binary = shutil.which('ibus')
+    if not ibus_binary:
+        return {}
+    try:
+        result = subprocess.run(
+            [ibus_binary, 'read-cache'],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding='utf-8', check=True)
+        result_dict = {}
+        root = xml.etree.ElementTree.fromstring(result.stdout)
+        for engine in root.findall('.//engine'):
+            name_elem = engine.find('name')
+            symbol_elem = engine.find('symbol')
+            icon_elem = engine.find('icon')
+            if (name_elem is not None and name_elem.text
+                and symbol_elem is not None and symbol_elem.text
+                and icon_elem is not None and icon_elem.text):
+                result_dict[name_elem.text] = {
+                    'symbol': symbol_elem.text, 'icon': icon_elem.text}
+        return result_dict
+    except subprocess.TimeoutExpired as error:
+        LOGGER.error('ibus read-cache command timed out: %s', error)
+    except subprocess.CalledProcessError as error:
+        LOGGER.exception(
+            'Exception when calling %s: %s stderr: %s',
+            ibus_binary, error, error.stderr)
+    except xml.etree.ElementTree.ParseError as error:
+        LOGGER.exception(
+            'Failed to parse XML output: %s', error)
+    except Exception as error: # pylint: disable=broad-except
+        LOGGER.exception(
+            'Exception when calling %s: %s', ibus_binary, error)
+    return {}
 
 def get_primary_selection_text() -> str:
     '''Get the primary selection text'''
