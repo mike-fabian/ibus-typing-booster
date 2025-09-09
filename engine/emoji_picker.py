@@ -213,6 +213,7 @@ def parse_args() -> Any:
         ('20220913', '15.0'),
         ('20230912', '15.1'),
         ('20240910', '16.0'),
+        ('20250909', '17.0'),
     )
     current_date = time.strftime('%Y%m%d')
     current_unicode_version = '16.0'
