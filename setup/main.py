@@ -215,6 +215,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._main_container = Gtk.Box()
         self._main_container.set_orientation(Gtk.Orientation.VERTICAL)
         self._main_container.set_spacing(0)
+        self._main_container.set_hexpand(True)
+        self._main_container.set_vexpand(True)
         self.add(self._main_container) # pylint: disable=no-member
         self._notebook = Gtk.Notebook()
         self._notebook.set_visible(True)
@@ -234,12 +236,14 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dialog_action_area.set_can_focus(False)
         self._dialog_action_area.set_hexpand(True)
         self._dialog_action_area.set_vexpand(False)
+        self._dialog_action_area.set_spacing(0)
         self._main_container.add(self._dialog_action_area)
         self._about_button = Gtk.Button(label=_('About'))
         self._about_button.connect('clicked', self.__class__._on_about_button_clicked)
         self._dialog_action_area.add(self._about_button)
         empty_hexpanding_label = Gtk.Label()
         empty_hexpanding_label.set_hexpand(True)
+        empty_hexpanding_label.set_vexpand(False)
         self._dialog_action_area.add(empty_hexpanding_label)
         self._restore_all_defaults_button = Gtk.Button()
         self._restore_all_defaults_button_label = Gtk.Label()
@@ -252,6 +256,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dialog_action_area.add(self._restore_all_defaults_button)
         empty_hexpanding_label = Gtk.Label()
         empty_hexpanding_label.set_hexpand(True)
+        empty_hexpanding_label.set_vexpand(False)
         self._dialog_action_area.add(empty_hexpanding_label)
         self._close_button = Gtk.Button()
         self._close_button_label = Gtk.Label()
@@ -260,8 +265,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._close_button.connect('clicked', self.__class__._on_close_clicked)
         self._dialog_action_area.add(self._close_button)
 
-        grid_border_width = 10
-        grid_row_spacing = 1
+        grid_border_width = 5
+        grid_row_spacing = 0
         grid_column_spacing = 10
 
         self._dictionaries_and_input_methods_vbox = Gtk.Box()
