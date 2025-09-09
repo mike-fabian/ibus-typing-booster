@@ -871,11 +871,6 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'U+1B')
 
     def test_candidates_de_DE_versus_de_CH_classic(self) -> None: # pylint: disable=invalid-name
-        # pylint: disable=fixme
-        # FIXME: This doesn’t work perfectly, when de_CH is the main
-        # language, “Reissverschluss” should be preferred in the
-        # results.
-        # pylint: enable=fixme
         mq = itb_emoji.EmojiMatcher(
             languages = ['de_DE'],
             match_algorithm = 'classic')
@@ -893,23 +888,18 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             match_algorithm = 'classic')
         first_match = mq.candidates('Reissverschluss')[0]
         self.assertEqual(first_match.phrase, '🤐')
-        self.assertEqual(first_match.comment, 'Gesicht mit Reißverschlussmund')
+        self.assertEqual(first_match.comment, 'Gesicht mit Reissverschlussmund')
         first_match = mq.candidates('Reißverschluss')[0]
         self.assertEqual(first_match.phrase, '🤐')
-        self.assertEqual(first_match.comment, 'Gesicht mit Reißverschlussmund')
+        self.assertEqual(first_match.comment, 'Gesicht mit Reissverschlussmund')
         first_match = mq.candidates('Reißverschluß')[0]
         self.assertEqual(first_match.phrase, '🤐')
-        self.assertEqual(first_match.comment, 'Gesicht mit Reißverschlussmund')
+        self.assertEqual(first_match.comment, 'Gesicht mit Reissverschlussmund')
 
     @unittest.skipUnless(
         itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_de_DE_versus_de_CH_rapidfuzz(self) -> None: # pylint: disable=invalid-name
-        # pylint: disable=fixme
-        # FIXME: This doesn’t work perfectly, when de_CH is the main
-        # language, “Reissverschluss” should be preferred in the
-        # results.
-        # pylint: enable=fixme
         mq = itb_emoji.EmojiMatcher(
             languages = ['de_DE'],
             match_algorithm = 'rapidfuzz')
@@ -927,13 +917,13 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             match_algorithm = 'rapidfuzz')
         first_match = mq.candidates('Reissverschluss')[0]
         self.assertEqual(first_match.phrase, '🤐')
-        self.assertEqual(first_match.comment, 'Smiley mit Reissverschlussmund')
+        self.assertEqual(first_match.comment, 'Gesicht mit Reissverschlussmund')
         first_match = mq.candidates('Reißverschluss')[0]
         self.assertEqual(first_match.phrase, '🤐')
-        self.assertEqual(first_match.comment, 'Smiley mit Reissverschlussmund')
+        self.assertEqual(first_match.comment, 'Gesicht mit Reissverschlussmund')
         first_match = mq.candidates('Reißverschluß')[0]
         self.assertEqual(first_match.phrase, '🤐')
-        self.assertEqual(first_match.comment, 'Smiley mit Reissverschlussmund')
+        self.assertEqual(first_match.comment, 'Gesicht mit Reissverschlussmund')
 
     @unittest.skipIf(
         itb_emoji.IMPORT_PINYIN_SUCCESSFUL,

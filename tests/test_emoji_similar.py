@@ -258,14 +258,14 @@ class EmojiSimilarTestCase(unittest.TestCase):
             languages = ['de_CH'])
         matches = mq.similar('🤐', match_limit = 3)
         self.assertEqual(matches[0].phrase, '🤐')
-        self.assertEqual(matches[0].comment, 'Smiley mit Reissverschlussmund [🤐, Geheimnis, Gesicht, halten, Mund, Reissverschluss, schweigen, Smiley, wahren]')
+        self.assertEqual(matches[0].comment, 'Gesicht mit Reissverschlussmund [🤐, Geheimnis, Gesicht, halten, Mund, Reissverschluss, schweigen, Smiley, wahren]')
         self.assertEqual(matches[0].user_freq, 9.0)
-        self.assertEqual(matches[1].phrase, '🤪')
-        self.assertEqual(matches[1].comment, 'irres Gesicht [Gesicht, Smiley]')
-        self.assertEqual(matches[1].user_freq, 2.0)
-        self.assertEqual(matches[2].phrase, '🥵')
-        self.assertEqual(matches[2].comment, 'schwitzendes Gesicht [Gesicht, Smiley]')
-        self.assertEqual(matches[2].user_freq, 2.0)
+        self.assertEqual(matches[1].phrase, '😅')
+        self.assertEqual(matches[1].comment, 'grinsendes Gesicht mit Schweisstropfen [Gesicht, Mund, Smiley]')
+        self.assertEqual(matches[1].user_freq, 3.0)
+        self.assertEqual(matches[2].phrase, '😃')
+        self.assertEqual(matches[2].comment, 'grinsendes Gesicht mit grossen Augen [Gesicht, Mund, Smiley]')
+        self.assertEqual(matches[2].user_freq, 3.0)
 
     def test_similar_show_keywords_option_en_US(self) -> None:
         mq = itb_emoji.EmojiMatcher(
