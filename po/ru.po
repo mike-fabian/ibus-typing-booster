@@ -4,16 +4,17 @@
 # Jelly Lopster <jellylopster@gmail.com>, 2024.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024, 2025.
 # "Sergey A." <Ser82-png@yandex.ru>, 2025.
+# mikhail m <poshta82@mail.ru>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-09-09 17:38+0200\n"
-"PO-Revision-Date: 2025-09-08 08:04+0000\n"
-"Last-Translator: \"Sergey A.\" <Ser82-png@yandex.ru>\n"
-"Language-Team: Russian <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ru/>\n"
+"PO-Revision-Date: 2025-09-10 09:02+0000\n"
+"Last-Translator: mikhail m <poshta82@mail.ru>\n"
+"Language-Team: Russian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -411,11 +412,11 @@ msgstr "Онлайн-документация:"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:2
 msgid "Typing Booster Preferences"
-msgstr ""
+msgstr "Настройки Typing Booster"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:3
 msgid "Set Typing Booster Options"
-msgstr ""
+msgstr "Установите параметры Typing Booster"
 
 #: setup/main.py:151
 msgid "Preferences"
@@ -528,7 +529,7 @@ msgstr ""
 #. the next candidate and opens the full candidate list.
 #: setup/main.py:449
 msgid "Use inline completion"
-msgstr ""
+msgstr "Использовать встроенное завершение"
 
 #: setup/main.py:451
 msgid ""
@@ -538,6 +539,11 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
+"Сначала в предварительном редактировании отображается наилучшее завершение, "
+"а не показывается полный список кандидатов. Встроенного кандидата можно "
+"выбрать с помощью клавиши Tab, а затем зафиксировать, как обычно, например, "
+"нажав Пробел или Ctrl+Пробел. Повторное нажатие Tab перемещает вас к "
+"следующему кандидату и открывает полный список кандидатов."
 
 #: setup/main.py:462 setup/main.py:523
 msgid "No"
@@ -545,17 +551,17 @@ msgstr "Нет"
 
 #: setup/main.py:464
 msgid "Yes, with fallback to popup"
-msgstr ""
+msgstr "Да, с возможностью возврата к всплывающему окну"
 
 #: setup/main.py:466
 msgid "Yes, without fallback to popup"
-msgstr ""
+msgstr "Да, без возможности появления запасного варианта"
 
 #. Translators: Whether to automatically capitalize after
 #. punctuation.
 #: setup/main.py:488
 msgid "Auto capitalize"
-msgstr ""
+msgstr "Автоматически с заглавной буквы"
 
 #: setup/main.py:490
 msgid "Automatically capitalize after punctuation."
@@ -584,6 +590,12 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
+"То, что вы вводите, будет автоматически скорректировано на наилучшего "
+"кандидата путем автоматического выбора наилучшего кандидата. Если эта опция "
+"отключена, вы можете выбрать кандидата вручную, используя привязку клавиш "
+"для выбора следующего кандидата. Если эта опция включена и вы не хотите "
+"использовать автоматически выбранного кандидата, вы можете использовать "
+"привязку клавиши для команды «отмена», которая отменит выбор всех кандидатов."
 
 #: setup/main.py:525
 msgid "Yes, but only when extremely likely"
@@ -625,6 +637,11 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
+"Если одновременно используется более одного метода ввода, один из них "
+"используется для предварительного редактирования. Метод ввода, используемый "
+"для предварительного редактирования, можно изменить через меню или с помощью "
+"горячих клавиш. Если эта опция включена, такое изменение запоминается даже "
+"после перезапуска сеанса."
 
 #. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -641,15 +658,17 @@ msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"Если эта опция включена, последний использованный режим ввода (вкл./выкл.) "
+"запоминается даже после перезапуска сеанса."
 
 #. Translators: Whether ibus-typing-booster should show word predictions.
 #: setup/main.py:609
 msgid "Word predictions"
-msgstr ""
+msgstr "Предсказания слов"
 
 #: setup/main.py:611
 msgid "Whether ibus-typing-booster should show word predictions."
-msgstr ""
+msgstr "Должен ли ibus-typing-booster показывать предсказания слов."
 
 #: setup/main.py:630
 msgid ""
@@ -659,6 +678,11 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
+"Следует ли включать символы Юникода и эмодзи в список предложений. Эмодзи — "
+"это пиктограммы, такие как ☺♨⛵…. Символы Юникода — это другие символы, "
+"такие как математические символы (∀∑∯…), стрелки (←↑↔…), символы валют (€₹₺…)"
+", шрифт Брайля (⠥⠩…) и многие другие символы. Технически это не эмодзи, но "
+"тем не менее полезные символы."
 
 #. Translators: A combo box to select which emoji style
 #. should be used.
@@ -705,12 +729,18 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
+"Когда включен режим \"Без записи\", обучение на основе ввода пользователя "
+"отключено. Если доступны данные, полученные в результате обучения, "
+"предсказания обычно намного лучше, чем предсказания, основанные только на "
+"словарях. Поэтому следует использовать эту опцию экономно. Использовать эту "
+"опцию временно имеет смысл только в том случае, если вы хотите избежать "
+"сохранения конфиденциального пользовательского ввода на диск."
 
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
 #: setup/main.py:720
 msgid "Record mode"
-msgstr ""
+msgstr "Режим записи"
 
 #: setup/main.py:722
 msgid ""
@@ -724,6 +754,16 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"Выбирает, какой тип ввода должен записываться в пользовательскую базу данных:"
+" «Все»: каждое введенное слово добавляется в пользовательскую базу данных "
+"или обновляется его частота, если оно там уже есть. «Правильно написанное "
+"или ранее записанное»: введенное слово добавляется в пользовательскую базу "
+"данных только в том случае, если оно, скорее всего, написано правильно. Если "
+"слово уже есть в пользовательской базе данных, его частота обновляется "
+"независимо от того, как оно написано. «Правильно написано»: введенное слово "
+"добавляется в базу данных или обновляется его частота в базе данных только в "
+"том случае, если оно, скорее всего, написано правильно. «Ничего»: вообще не "
+"записывать никакой ввод в пользовательскую базу данных."
 
 #: setup/main.py:737
 msgid "Everything"
@@ -782,6 +822,9 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
+"Используйте обходной путь, если функция %s не работает. Включайте эту опцию "
+"только в случае крайней необходимости, так как она может вызвать проблемы, "
+"особенно при использовании XIM."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -789,7 +832,7 @@ msgstr ""
 #. committed words.
 #: setup/main.py:814
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "Разрешить повторное открытие предредактирования"
 
 #: setup/main.py:816
 msgid ""
@@ -797,22 +840,25 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
+"Разрешить возвращение слова в предварительное редактирование, когда курсор "
+"перемещается в конец или начало слова. Включение этой опции полезно для "
+"исправления уже зафиксированных слов."
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:832
 msgid "Disable in terminals"
-msgstr ""
+msgstr "Отключить в терминалах"
 
 #: setup/main.py:834
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "Отключить ли ibus-typing-booster в терминалах."
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
 #: setup/main.py:847
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "Преобразовывать специфичные для языка цифры в цифры ASCII"
 
 #: setup/main.py:849
 msgid ""
@@ -821,12 +867,17 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"Некоторые методы ввода по умолчанию создают специфичные для языка цифры. "
+"Если вы никогда не хотите использовать такие специфичные для языка цифры, а "
+"всегда предпочитаете западные (ASCII) цифры, вы можете установить эту опцию "
+"для преобразования специфичных для языка цифр, создаваемых методами ввода, "
+"всегда в цифры ASCII."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
 #: setup/main.py:866
 msgid "Use IBus keymap"
-msgstr ""
+msgstr "Использовать раскладку IBus"
 
 #. Translators: This is a tooltip for a checkbox with the
 #. label 'Use IBus keymap'
@@ -836,6 +887,10 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"Принудительно ли использовать раскладку IBus, пока активен Typing Booster. "
+"Для большинства пользователей рекомендуется не использовать раскладку IBus. "
+"В этом случае используется раскладка клавиатуры, которая была активна до "
+"переключения на Typing Booster."
 
 #. Translators: This is a tooltip for a combobox to choose
 #. a keymap
@@ -844,6 +899,8 @@ msgid ""
 "The ibus keymap to use when forcing an IBus keymap while Typing Booster is "
 "active."
 msgstr ""
+"Раскладка IBus, которая будет использоваться при принудительном "
+"использовании раскладки IBus во время работы Typing Booster."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -861,13 +918,15 @@ msgstr "Английский"
 #. “Unicode symbols and emoji predictions” is off.
 #: setup/main.py:918
 msgid "Emoji trigger characters:"
-msgstr ""
+msgstr "Символы-триггеры эмодзи:"
 
 #: setup/main.py:920
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
 msgstr ""
+"Символы в этом списке запускают поиск эмодзи и символов Юникода, даже если "
+"опция «Предположения для символов Юникода и эмодзи» отключена."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -883,7 +942,7 @@ msgstr ""
 #. (which is the default).
 #: setup/main.py:949
 msgid "Auto commit characters:"
-msgstr ""
+msgstr "Символы автоматической фиксации:"
 
 #: setup/main.py:951
 msgid ""
@@ -897,6 +956,16 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
+"Символы в этом списке приводят к автоматической фиксации предварительного "
+"редактирования с последующим пробелом. Например, если «.» является символом "
+"автоматической фиксации, это избавляет вас от необходимости вручную вводить "
+"пробел после конца предложения. Вы можете свободно редактировать этот "
+"список, разумным значением может быть «.,;:?!)». Вы не должны добавлять в "
+"этот список символы, необходимые вашему методу ввода, например, если вы "
+"используете Latin-Pre (t-latn-pre), было бы плохой идеей добавлять «.» в "
+"этот список, так как это помешает вам ввести «.s», чтобы получить «ṡ». Вы "
+"также можете полностью отключить эту функцию, сделав список пустым (что "
+"является значением по умолчанию)."
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
@@ -996,7 +1065,7 @@ msgstr "Установить словари, которые настроены �
 
 #: setup/main.py:1180 setup/main.py:1325 setup/main.py:1567 setup/main.py:5269
 msgid "Set to default"
-msgstr ""
+msgstr "Установить по умолчанию"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
@@ -1057,7 +1126,7 @@ msgstr "Введите комбинацию:"
 
 #: setup/main.py:1393
 msgid "Enter shortcut expansion here:"
-msgstr ""
+msgstr "Введите расширение комбинации:"
 
 #: setup/main.py:1423
 msgid "Clear input"
@@ -1081,7 +1150,7 @@ msgstr "Комбинация клавиш"
 #. existing shortcuts
 #: setup/main.py:1487
 msgid "Shortcut expansion"
-msgstr ""
+msgstr "Расширение комбинации"
 
 #: setup/main.py:1501
 msgid "Current key bindings:"
@@ -1107,24 +1176,26 @@ msgstr "Установить привязку клавиш по умолчани
 
 #: setup/main.py:1578
 msgid "Set all to default"
-msgstr ""
+msgstr "Установить все по умолчанию"
 
 #: setup/main.py:1582
 msgid "Set default key bindings for all commands"
-msgstr ""
+msgstr "Установить привязки клавиш по умолчанию для всех команд"
 
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
 #. top of the list of candidates.
 #: setup/main.py:1604
 msgid "Display total number of candidates"
-msgstr ""
+msgstr "Показывать общее количество кандидатов"
 
 #: setup/main.py:1606
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
 msgstr ""
+"Показывать, сколько всего кандидатов и какой из них выбран, над списком "
+"кандидатов."
 
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
@@ -1134,7 +1205,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1620
 msgid "Show status info in auxiliary text"
-msgstr ""
+msgstr "Показывать информацию о состоянии во вспомогательном тексте"
 
 #: setup/main.py:1622
 msgid ""
@@ -1143,28 +1214,35 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
+"Показывать во вспомогательном тексте, включен или выключен режим «"
+"Предсказание эмодзи» и режим «Без записи», а также показывать, какой метод "
+"ввода в данный момент используется для предварительного редактирования. "
+"Вспомогательный текст — это дополнительная строка текста, отображаемая над "
+"списком кандидатов."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
 #: setup/main.py:1644
 msgid "Candidate window page size:"
-msgstr ""
+msgstr "Размер страницы окна кандидатов:"
 
 #: setup/main.py:1646
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr ""
+"Сколько предложенных кандидатов показывать на одной странице списка "
+"кандидатов."
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
 #: setup/main.py:1668
 msgid "Candidate window orientation"
-msgstr ""
+msgstr "Ориентация окна кандидатов"
 
 #: setup/main.py:1670
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
-msgstr ""
+msgstr "Должно ли окно кандидатов отображаться горизонтально или вертикально."
 
 #: setup/main.py:1676
 msgid "Horizontal"
@@ -1179,7 +1257,7 @@ msgstr "Вертикальная"
 #. candidates are displayed
 #: setup/main.py:1707
 msgid "Candidate window delay in milliseconds:"
-msgstr ""
+msgstr "Задержка окна кандидатов в миллисекундах:"
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
@@ -1187,16 +1265,19 @@ msgstr ""
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
 msgstr ""
+"Сколько ждать после последнего нажатия клавиши, прежде чем отображать "
+"кандидатов."
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
 #: setup/main.py:1738
 msgid "Preedit underline"
-msgstr ""
+msgstr "Подчеркивание предредактирования"
 
 #: setup/main.py:1740
 msgid "Which style of underlining to use for the preedit."
 msgstr ""
+"Какой стиль подчеркивания использовать для предварительного редактирования."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
@@ -1220,7 +1301,7 @@ msgstr "Двойное"
 #. underline for the preedit.
 #: setup/main.py:1759
 msgid "Low"
-msgstr ""
+msgstr "Нижнее"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is
@@ -1230,7 +1311,7 @@ msgstr ""
 #. of characters before a lookup is done.
 #: setup/main.py:1786
 msgid "Use preedit style only if lookup is enabled"
-msgstr ""
+msgstr "Использовать стиль предредактирования только если поиск включен"
 
 #: setup/main.py:1788
 msgid ""
@@ -1239,6 +1320,11 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
+"Если эта опция включена, стиль предварительного редактирования, например "
+"подчеркивание, будет использоваться только если включен поиск. Поиск может "
+"быть отключен, потому что используется опция включения поиска только при "
+"нажатии клавиши или потому что используется опция требования минимального "
+"количества символов перед выполнением поиска."
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -1246,7 +1332,7 @@ msgstr ""
 #. might contain a spelling error.
 #: setup/main.py:1808
 msgid "Preedit spellchecking"
-msgstr ""
+msgstr "Проверка орфографии в предредактировании"
 
 #: setup/main.py:1810
 msgid ""
@@ -1254,13 +1340,17 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"Здесь вы можете выбрать, следует ли выполнять проверку орфографии "
+"содержимого предварительного редактирования и использовать пользовательский "
+"цвет для обозначения того, что предварительное редактирование может "
+"содержать орфографическую ошибку."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1836
 msgid "Choose color for preedit spellchecking"
-msgstr ""
+msgstr "Выбрать цвет для проверки орфографии в предредактировании"
 
 #: setup/main.py:1838
 msgid ""
@@ -1268,25 +1358,31 @@ msgid ""
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
+"Здесь вы можете указать, какой цвет использовать для предварительного "
+"редактирования, когда оно может содержать орфографическую ошибку. Этот "
+"параметр действует только в том случае, если включена проверка орфографии в "
+"предварительном редактировании."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
 #: setup/main.py:1861
 msgid "Use color for inline completion"
-msgstr ""
+msgstr "Использовать цвет для встроенного завершения"
 
 #: setup/main.py:1863
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
 msgstr ""
+"Здесь вы можете выбрать, следует ли использовать пользовательский цвет для "
+"предложения, показанного в строке."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
 #: setup/main.py:1887
 msgid "Choose color for inline completion"
-msgstr ""
+msgstr "Выбрать цвет для встроенного завершения"
 
 #: setup/main.py:1889
 msgid ""
@@ -1294,70 +1390,84 @@ msgid ""
 "only has an effect if the use of color for inline completion is enabled and "
 "inline completion is enabled."
 msgstr ""
+"Здесь вы можете указать, какой цвет использовать для встроенного завершения. "
+"Этот параметр действует только в том случае, если включено использование "
+"цвета для встроенного завершения и само встроенное завершение включено."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
 #: setup/main.py:1912
 msgid "Use color for compose preview"
-msgstr ""
+msgstr "Использовать цвет для предпросмотра композиции"
 
 #: setup/main.py:1914
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
+"Здесь вы можете выбрать, следует ли использовать пользовательский цвет для "
+"предварительного просмотра композиции."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:1938
 msgid "Choose color for compose preview"
-msgstr ""
+msgstr "Выбрать цвет для предпросмотра композиции"
 
 #: setup/main.py:1940
 msgid "Here you can specify which color to use for the compose preview."
 msgstr ""
+"Здесь вы можете указать, какой цвет использовать для предварительного "
+"просмотра композиции."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the m17n preedit.
 #: setup/main.py:1961
 msgid "Use color for m17n preedit"
-msgstr ""
+msgstr "Использовать цвет для предредактирования m17n"
 
 #: setup/main.py:1963
 msgid ""
 "Here you can choose whether a custom color is used for the m17n preedit."
 msgstr ""
+"Здесь вы можете выбрать, следует ли использовать пользовательский цвет для "
+"предварительного редактирования m17n."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the m17n preedit.
 #: setup/main.py:1987
 msgid "Choose color for m17n preedit"
-msgstr ""
+msgstr "Выберите цвет для предредактирования m17n"
 
 #: setup/main.py:1989
 msgid "Here you can specify which color to use for the m17n preedit."
 msgstr ""
+"Здесь вы можете указать, какой цвет использовать для предварительного "
+"редактирования m17n."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
 #: setup/main.py:2011
 msgid "Use color for user database suggestions"
-msgstr ""
+msgstr "Использовать цвет для предложений из пользовательской базы данных"
 
 #: setup/main.py:2013
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
 msgstr ""
+"Здесь вы можете выбрать, следует ли использовать пользовательский цвет для "
+"кандидатов в таблице поиска, которые поступают из пользовательской базы "
+"данных."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
 #: setup/main.py:2034
 msgid "Choose color for user database suggestions"
-msgstr ""
+msgstr "Выбрать цвет для предложений из пользовательской базы данных"
 
 #: setup/main.py:2036
 msgid ""
@@ -1365,25 +1475,31 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
 msgstr ""
+"Здесь вы можете указать, какой цвет использовать для кандидатов в таблице "
+"поиска, которые поступают из пользовательской базы данных. Этот параметр "
+"действует только в том случае, если включено использование цвета для "
+"кандидатов из пользовательской базы данных."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
 #: setup/main.py:2057
 msgid "Use color for spellchecking suggestions"
-msgstr ""
+msgstr "Используйте цвет для подсказок по проверке орфографии"
 
 #: setup/main.py:2059
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
 msgstr ""
+"Здесь вы можете выбрать, будет ли использоваться пользовательский цвет для "
+"кандидатов в таблице поиска, полученной в результате проверки орфографии."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
 #: setup/main.py:2080
 msgid "Choose color for spellchecking suggestions"
-msgstr ""
+msgstr "Выберите цвет для подсказок по правописанию"
 
 #: setup/main.py:2082
 msgid ""
@@ -1391,26 +1507,32 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
 msgstr ""
+"Здесь вы можете указать, какой цвет использовать для кандидатов в таблице "
+"поиска, полученных в результате проверки орфографии. Эта настройка действует "
+"только в том случае, если включена функция использования цвета для "
+"кандидатов в результате проверки орфографии."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
 #: setup/main.py:2106
 msgid "Use color for dictionary suggestions"
-msgstr ""
+msgstr "Используйте цвет для указания словаря"
 
 #: setup/main.py:2108
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
 msgstr ""
+"Здесь вы можете выбрать, будет ли использоваться пользовательский цвет для "
+"кандидатов в таблице поиска, которые взяты из словаря."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
 #: setup/main.py:2129
 msgid "Choose color for dictionary suggestions"
-msgstr ""
+msgstr "Выберите цвет для предложений по словарю"
 
 #: setup/main.py:2131
 msgid ""
@@ -1418,19 +1540,24 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
 msgstr ""
+"Здесь вы можете указать, какой цвет использовать для кандидатов в таблице "
+"поиска, которые поступают из словаря. Этот параметр действует только в том "
+"случае, если включено использование цвета для кандидатов из словаря."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
 #: setup/main.py:2155
 msgid "Use label for user database suggestions"
-msgstr ""
+msgstr "Использовать метку для предложений из пользовательской базы данных"
 
 #: setup/main.py:2157
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
 msgstr ""
+"Здесь вы можете выбрать, следует ли использовать метку для кандидатов в "
+"таблице поиска, которые поступают из пользовательской базы данных."
 
 #: setup/main.py:2168
 msgid ""
@@ -1438,19 +1565,25 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of a label for candidates from the user database is enabled."
 msgstr ""
+"Здесь вы можете указать, какую метку использовать для кандидатов в таблице "
+"поиска, которые поступают из пользовательской базы данных. Этот параметр "
+"действуеттолько в том случае, если включено использование метки для "
+"кандидатов из пользовательской базы данных."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
 #: setup/main.py:2190
 msgid "Use label for spellchecking suggestions"
-msgstr ""
+msgstr "Использовать метку для предложений проверки орфографии"
 
 #: setup/main.py:2192
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
 msgstr ""
+"Здесь вы можете выбрать, будет ли использоваться метка для кандидатов в "
+"таблице поиска, полученных в результате проверки орфографии."
 
 #: setup/main.py:2203
 msgid ""
@@ -1458,19 +1591,25 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "a label for candidates from spellchecking is enabled."
 msgstr ""
+"Здесь вы можете указать, какую метку использовать для кандидатов в таблице "
+"поиска, которые поступают из проверки орфографии. Этот параметр действует "
+"только в том случае, если включено использование метки для кандидатов из "
+"проверки орфографии."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2225
 msgid "Use label for dictionary suggestions"
-msgstr ""
+msgstr "Использовать метку для предложений из словаря"
 
 #: setup/main.py:2227
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
+"Здесь вы можете выбрать, следует ли использовать метку для кандидатов в "
+"таблице поиска, которые поступают из словаря."
 
 #: setup/main.py:2238
 msgid ""
@@ -1478,25 +1617,30 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "a label for candidates from a dictionary is enabled."
 msgstr ""
+"Здесь вы можете указать, какую метку использовать для кандидатов в таблице "
+"поиска, которые поступают из словаря. Этот параметр действует только в том "
+"случае, если включено использование метки для кандидатов из словаря."
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2260
 msgid "Use flags for dictionary suggestions"
-msgstr ""
+msgstr "Использовать флаги для предложений из словаря"
 
 #: setup/main.py:2262
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
+"Здесь вы можете выбрать, следует ли использовать флаги для кандидатов в "
+"таблице поиска, которые поступают из словаря."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
 #: setup/main.py:2277
 msgid "Use a label to indicate busy state"
-msgstr ""
+msgstr "Использовать метку для индикации занятости"
 
 #: setup/main.py:2279
 msgid ""
@@ -1517,7 +1661,7 @@ msgstr ""
 
 #: setup/main.py:2308
 msgid "Symbol for \"enabled\" mode"
-msgstr ""
+msgstr "Символ для режима \"включено\""
 
 #. Translators: Tooltip for 'Symbol for "enabled" mode'
 #: setup/main.py:2311 setup/main.py:2318
@@ -1530,7 +1674,7 @@ msgstr ""
 
 #: setup/main.py:2337
 msgid "Symbol for \"disabled\" (Direct Input) mode"
-msgstr ""
+msgstr "Символ для режима \"выключено\" (прямой ввод)"
 
 #. Translators: Tooltip for 'Symbol for "disabled" (Direct
 #. Input) mode'
@@ -1545,11 +1689,11 @@ msgstr ""
 #. Translators:
 #: setup/main.py:2367 setup/main.py:3541
 msgid "Set “Google application credentials” .json file:"
-msgstr ""
+msgstr "Указать файл .json «Учетные данные приложения Google»:"
 
 #: setup/main.py:2369
 msgid "Full path of the “Google application credentials” .json file."
-msgstr ""
+msgstr "Полный путь к файлу .json «Учетные данные приложения Google»."
 
 #: setup/main.py:2375
 msgid "File not yet set."
@@ -1561,7 +1705,7 @@ msgstr "Файл ещё не установлен."
 #. browser tab) gets the focus.
 #: setup/main.py:2434 setup/main.py:4779
 msgid "Add an autosetting"
-msgstr ""
+msgstr "Добавить автонастройку"
 
 #. Translators: This is a button to remove an autosetting.
 #. “Autosettings” are settings which may change automatically
@@ -1569,7 +1713,7 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2448
 msgid "Remove an autosetting"
-msgstr ""
+msgstr "Удалить автонастройку"
 
 #. Translators: This is a button to move an autosetting up in the
 #. order the autosettings are applied. “Up” means it is applied
@@ -1581,7 +1725,7 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2466
 msgid "Move an autosetting up"
-msgstr ""
+msgstr "Переместить автонастройку вверх"
 
 #. Translators: This is a button to move an autosetting down in the
 #. order the autosettings are applied. “Down” means it is applied
@@ -1593,7 +1737,7 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2484
 msgid "Move an autosetting down"
-msgstr ""
+msgstr "Переместить автонастройку вниз"
 
 #: setup/main.py:2682
 msgid "Spell checking"
@@ -1725,6 +1869,8 @@ msgid ""
 "Emoji Picker is an emoji browsing tool which uses the emoji matching code "
 "from Ibus-typing-booster."
 msgstr ""
+"Выбор эмодзи — это инструмент для просмотра эмодзи, который использует код "
+"сопоставления эмодзи из Ibus-typing-booster."
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
