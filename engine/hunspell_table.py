@@ -66,6 +66,13 @@ import itb_sound
 import itb_emoji
 import itb_version
 
+IMPORT_ITB_OLLAMA_ERROR = None
+try:
+    import itb_ollama
+    IMPORT_ITB_OLLAMA_ERROR = None
+except (ImportError,) as error:
+    IMPORT_ITB_OLLAMA_ERROR = error
+
 IMPORT_REGEX_SUCCESFUL = False
 try:
     import regex # type: ignore
@@ -99,14 +106,6 @@ try:
     IMPORT_BIDI_ALGORITHM_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_BIDI_ALGORITHM_SUCCESSFUL = False
-
-IMPORT_OLLAMA_SUCCESSFUL = False
-try:
-    import ollama
-    import itb_ollama
-    IMPORT_OLLAMA_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_OLLAMA_SUCCESSFUL = False
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -315,6 +314,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         self._ai_system_message: str = self._settings_dict[
             'aisystemmessage']['user']
+        self._ollama_client: Optional[itb_ollama.ItbOllamaClient] = None
+        self._ollama_host: str = 'http://localhost:11434'
         self._ollama_model: str = self._settings_dict[
             'ollamamodel']['user']
         self._ollama_max_context: int = self._settings_dict[
@@ -7416,13 +7417,21 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         is selected but surrounding text works, use the current
         line up to the cursor as additional input.
         '''
-        if not IMPORT_OLLAMA_SUCCESSFUL:
-            LOGGER.error('“import ollama” did not work')
+        if IMPORT_ITB_OLLAMA_ERROR:
+            LOGGER.error(
+                '“import itb_ollama” failed: %r', IMPORT_ITB_OLLAMA_ERROR)
             return
         if self._ollama_model == '':
             LOGGER.error('ollama model is not set.')
             return
-        if not itb_ollama.is_model_pulled(self._ollama_model):
+        if self._ollama_client is None:
+            self._ollama_client = itb_ollama.ItbOllamaClient(
+                self._ollama_host)
+            if not self._ollama_client.is_connected():
+                self._ollama_client = None
+                LOGGER.error('Failed to connect ollama client.')
+                return
+        if not self._ollama_client.is_available(self._ollama_model):
             if self._label_busy and self._label_busy_string.strip():
                 # Show a label in the auxiliary text to indicate that the
                 # model is pulled (by default an hourglass
@@ -7436,7 +7445,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._current_auxiliary_text = ''
                 super().update_auxiliary_text(
                     IBus.Text.new_from_string(''), False)
-            success = itb_ollama.pull_model(
+            success = self._ollama_client.pull(
                 self._ollama_model, self._ollama_pull_model_progress)
             if not success:
                 LOGGER.error('Failed to pull model %r', self._ollama_model)
@@ -7625,16 +7634,22 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Thread to stream an ollama chat response'''
         if self._debug_level > 1:
             LOGGER.debug('Starting ollama chat stream %r', messages)
+        if self._ollama_client is None:
+            LOGGER.error('Ollama client not connected.')
+            return
         self._ollama_response = ''
         try:
-            stream = ollama.chat(
+            stream = self._ollama_client.chat(
                 self._ollama_model, messages=messages, stream=True)
             LOGGER.info('Ollama chat stream started.')
             for chunk in stream:
                 if stop_event.is_set():
                     LOGGER.info('Ollama chat stream stopped by event.')
                     break
-                self._ollama_response += chunk['message']['content']
+                if isinstance(chunk, dict) and 'message' in chunk:
+                    message = chunk.get('message')
+                    if isinstance(message, dict) and 'content' in message:
+                        self._ollama_response += message['content']
                 GLib.idle_add(self._ollama_chat_query_update_response)
             self._ollama_response = self._ollama_response.strip()
             GLib.idle_add(self._ollama_chat_query_update_response)
