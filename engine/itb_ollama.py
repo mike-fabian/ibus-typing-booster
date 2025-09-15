@@ -31,6 +31,7 @@ from typing import Any
 from typing import cast
 import sys
 import json
+import threading
 import logging
 import httpx
 
@@ -81,6 +82,7 @@ class ItbOllamaClient:
         self,
         model: str,
         progress_callback: Optional[Callable[[Dict[str, Any]], None]] = None,
+        stop_event: Optional[threading.Event] = None,
     ) -> bool:
         '''Pull a model with optional progress callback (streaming).'''
         if self._client is None:
@@ -90,12 +92,17 @@ class ItbOllamaClient:
             with client.stream('POST', '/api/pull', json={'name': model}) as resp:
                 resp.raise_for_status()
                 for line in resp.iter_lines():
+                    if stop_event is not None and stop_event.is_set():
+                        LOGGER.info('Ollama pull stopped by event.')
+                        return False
                     if not line.strip():
                         continue
                     try:
                         data = json.loads(line)
                     except json.JSONDecodeError:
-                        data = {'raw': line}
+                        data = {'raw': line,
+                                'status': 'error',
+                                'error': 'JSONDecodeError'}
                     if progress_callback:
                         progress_callback(data)
                     if 'error' in data:

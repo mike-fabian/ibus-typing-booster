@@ -53,6 +53,7 @@ engine_table_PYTHON = \
 	itb_version.py \
 	tabstatistics.py \
 	get_clipboard_gtk4.py \
+	ollama_pull.py \
 	$(NULL)
 engine_table_DATA = \
 	$(NULL)
