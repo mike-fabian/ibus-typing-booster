@@ -7432,68 +7432,24 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.error('Failed to connect ollama client.')
                 return
         if not self._ollama_client.is_available(self._ollama_model):
-            if self._label_busy and self._label_busy_string.strip():
-                # Show a label in the auxiliary text to indicate that the
-                # model is pulled (by default an hourglass
-                # with moving sand):
-                self._current_auxiliary_text = (
-                    f'{self._label_busy_string.strip()}{self._ollama_model}')
-                super().update_auxiliary_text(
-                    IBus.Text.new_from_string(self._current_auxiliary_text),
-                    True)
-            else:
-                self._current_auxiliary_text = ''
-                super().update_auxiliary_text(
-                    IBus.Text.new_from_string(''), False)
-            success = self._ollama_client.pull(
-                self._ollama_model, self._ollama_pull_model_progress)
-            if not success:
-                LOGGER.error('Failed to pull model %r', self._ollama_model)
-                time.sleep(1)
-                self._current_auxiliary_text = IBus.Text.new_from_string('')
-                super().update_auxiliary_text(
-                    self._current_auxiliary_text, False)
-                return
-            self._current_auxiliary_text = IBus.Text.new_from_string('')
-            super().update_auxiliary_text(
-                self._current_auxiliary_text, False)
-        GLib.idle_add(self._ai_chat_get_prompt)
-
-    def _ollama_pull_model_progress(self, progress: Dict[str, Any]) -> None:
-        error = progress.get('error', None)
-        total = progress.get('total', None)
-        completed = progress.get('completed', None)
-        status = progress.get('status', None)
-        if error is not None:
-            LOGGER.error('Error pulling %s: %s', self._ollama_model, error)
-            super().update_auxiliary_text(
-                IBus.Text.new_from_string(
-                    f'{self._current_auxiliary_text}: {error}'),
-                True)
+            command = [sys.executable,
+                       os.path.join(
+                           os.path.dirname(__file__), 'ollama_pull.py'),
+                       '--model', f'{self._ollama_model}']
+            try:
+                with open(os.devnull, 'wb') as devnull:
+                    _ = subprocess.Popen( # pylint: disable=consider-using-with
+                        command,
+                        stdout=devnull,
+                        stderr=devnull,
+                        stdin=devnull,
+                        # keep running, even when Typing Booster exits:
+                        start_new_session=True)
+            except Exception as error: # pylint: disable=broad-except
+                LOGGER.exception(
+                    'Exception when calling %r: %s', command, error)
             return
-        if total is not None and completed is not None:
-            percentage = (completed / total) * 100 if total > 0 else 0
-            status_text = f'{status}:' if status is not None else ''
-            total_text = f'{total} B'
-            if total > 1024**3:
-                total_text = f'{total / 1024**3:.1f} GB'
-            elif total > 1024**2:
-                total_text = f'{total / 1024**2:.1f} MB'
-            elif total > 1024:
-                total_text = f'{total / 1024:.1f} kB'
-            LOGGER.info('%s: %s (%.1f%%)',
-                status_text, total_text, percentage)
-            super().update_auxiliary_text(
-                IBus.Text.new_from_string(
-                    f'{self._current_auxiliary_text}: '
-                    f'{status_text}: {total_text} ({percentage:.1f}%)'),
-                True)
-        elif status is not None:
-            LOGGER.info('%s', status)
-            super().update_auxiliary_text(
-                IBus.Text.new_from_string(
-                    f'{self._current_auxiliary_text}: {status}'),
-                True)
+        GLib.idle_add(self._ai_chat_get_prompt)
 
     def _ai_chat_get_prompt(self) -> bool:
         '''Get the prompt from the primary selection or surrounding text
