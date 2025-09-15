@@ -2484,6 +2484,18 @@ class SignalHandler:
         :return: bool: True to keep the handler alive,
                        False to remove it.
         '''
+        LOGGER.info('SIGINT')
+        with self._lock:
+            self._interrupt_requested = True
+        return True
+
+    def handle_sigterm(self, *_args: Any) -> bool:
+        ''' Callback for Ctrl+C (SIGTERM).
+
+        :return: bool: True to keep the handler alive,
+                       False to remove it.
+        '''
+        LOGGER.info('SIGTERM')
         with self._lock:
             self._interrupt_requested = True
         return True
@@ -2555,12 +2567,12 @@ if __name__ == '__main__':
     GLIB_MAIN_LOOP = GLib.MainLoop()
     signal.signal(signal.SIGTERM, quit_glib_main_loop) # kill <pid>
     # Ctrl+C (optional, can also use try/except KeyboardInterrupt)
-    # signal.signal(signal.SIGINT, quit_glib_main_loop)
-    GLib.unix_signal_add(
-        GLib.PRIORITY_DEFAULT,
-        signal.SIGINT,
-        SIGNAL_HANDLER.handle_sigint,
-        None)
+    signal.signal(signal.SIGINT, quit_glib_main_loop)
+    # GLib.unix_signal_add(
+    #     GLib.PRIORITY_DEFAULT,
+    #     signal.SIGINT,
+    #     SIGNAL_HANDLER.handle_sigint,
+    #     None)
     try:
         GLIB_MAIN_LOOP.run()
     except KeyboardInterrupt:
