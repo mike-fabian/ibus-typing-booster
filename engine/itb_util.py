@@ -3801,21 +3801,19 @@ def get_primary_selection_text() -> str:
                 LOGGER.exception('wl-paste failed: %s', wl_paste_error)
                 return ''
     # Run python helper script using Gtk4 to get the selection.
-    python_binary = shutil.which('python3')
-    if python_binary:
-        try:
-            result = subprocess.run(
-                [python_binary,
-                 os.path.join(os.path.dirname(__file__), 'get_clipboard_gtk4.py')],
-                capture_output=True,
-                text=True,
-                check=True,
-                timeout=1.0)
-            if result.stdout.strip():
-                LOGGER.info('Got primary selection with Gtk4.')
-                return result.stdout.strip()
-        except Exception as error: # pylint: disable=broad-except
-            LOGGER.exception('Primary selection helper failed: %s', error)
+    try:
+        result = subprocess.run(
+            [sys.executable,
+             os.path.join(os.path.dirname(__file__), 'get_clipboard_gtk4.py')],
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=1.0)
+        if result.stdout.strip():
+            LOGGER.info('Got primary selection with Gtk4.')
+            return result.stdout.strip()
+    except Exception as error: # pylint: disable=broad-except
+        LOGGER.exception('Primary selection helper failed: %s', error)
     return ''
 
 def dict_update_existing_keys(
