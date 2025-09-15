@@ -1,4 +1,12 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 159 Sep 2025 Release 2.27.75
+* do_reset() needs to cancel an ollama chat, just like do_focus_out_id() does
+* Use ollama_pull.py in hunspell_table.py
+* Add simple Gtk program “ollama_pull.py” to pull an ollama model
+* Rewrite the ollama client interface to use the REST API instead of the ollama python module
+* emoji-picker could not be stopped with Control+C, fix that
+* Translation update from Weblate (ru 100%)
+
 * 09 Sep 2025 Release 2.27.74
 * Experimental support for ollama chat
 * Call `ibus write-cache` when the inputmodetruesymbol is changed or cache is out of date (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/788)

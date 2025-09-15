@@ -47,6 +47,33 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.27.75" date="2025-09-15" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.75</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            do_reset() needs to cancel an ollama chat, just like do_focus_out_id() does
+          </li>
+          <li>
+            Use ollama_pull.py in hunspell_table.py
+          </li>
+          <li>
+            Add simple Gtk program “ollama_pull.py” to pull an ollama model
+          </li>
+          <li>
+            Rewrite the ollama client interface to use the REST API
+            instead of the ollama python module
+          </li>
+          <li>
+            emoji-picker could not be stopped with Control+C, fix that
+          </li>
+          <li>
+            Translation update from Weblate (ru 100%)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.27.74" date="2025-09-09" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.27.74</url>
       <description>
