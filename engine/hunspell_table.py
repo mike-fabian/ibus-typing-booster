@@ -10603,6 +10603,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                          repr(self._typed_compose_sequence),
                          self._compose_sequences.preedit_representation(
                              self._typed_compose_sequence))
+        if self._ollama_chat_query_thread:
+            self._ollama_chat_query_cancel(commit_selection=False)
+            return
         # The press events of arrow keys like `Left` and `BackSpace`
         # cause a call to `do_reset()`. If that clears
         # self._surrounding_text_old() the comparison of
