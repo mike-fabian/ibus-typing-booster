@@ -315,7 +315,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._ai_system_message: str = self._settings_dict[
             'aisystemmessage']['user']
         self._ollama_client: Optional[itb_ollama.ItbOllamaClient] = None
-        self._ollama_host: str = 'http://localhost:11434'
         self._ollama_model: str = self._settings_dict[
             'ollamamodel']['user']
         self._ollama_max_context: int = self._settings_dict[
@@ -7425,8 +7424,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             LOGGER.error('ollama model is not set.')
             return
         if self._ollama_client is None:
-            self._ollama_client = itb_ollama.ItbOllamaClient(
-                self._ollama_host)
+            self._ollama_client = itb_ollama.ItbOllamaClient()
             if not self._ollama_client.is_connected():
                 self._ollama_client = None
                 LOGGER.error('Failed to connect ollama client.')
