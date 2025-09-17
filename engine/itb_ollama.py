@@ -29,6 +29,7 @@ from typing import Set
 from typing import Union
 from typing import Any
 from typing import cast
+import os
 import sys
 import json
 import threading
@@ -41,14 +42,13 @@ class ItbOllamaClient:
     '''A class to provide a simple interface to Ollama.'''
     def __init__(
         self,
-        host: str = 'http://localhost:11434',
         timeout: float = 60.0,
     ) -> None:
         '''Initialize the ItbOllamaClient class'''
-        self._host = host
+        host = os.environ.get('OLLAMA_HOST') or 'http://localhost:11434'
         self._client: Optional[httpx.Client] = None
         try:
-            self._client = httpx.Client(base_url=self._host, timeout=timeout)
+            self._client = httpx.Client(base_url=host, timeout=timeout)
         except Exception as error: # pylint: disable=broad-except
             LOGGER.exception('Failed to create ollama client: %s', error)
             self._client = None
