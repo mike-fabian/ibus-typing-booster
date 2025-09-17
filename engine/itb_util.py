@@ -3755,7 +3755,7 @@ def ibus_read_cache() -> Dict[str, Dict[str, str]]:
 
 def get_primary_selection_text() -> str:
     '''Get the primary selection text'''
-    if os.environ['XDG_SESSION_TYPE'].lower() == 'x11':
+    if os.environ.get('XDG_SESSION_TYPE', '').lower() == 'x11':
         xclip_binary = shutil.which('xclip')
         if xclip_binary:
             try:
@@ -3785,7 +3785,7 @@ def get_primary_selection_text() -> str:
             except Exception as xsel_error: # pylint: disable=broad-except
                 LOGGER.exception('xsel failed: %s', xsel_error)
                 return ''
-    if os.environ['XDG_SESSION_TYPE'].lower() == 'wayland':
+    if os.environ.get('XDG_SESSION_TYPE', '').lower() == 'wayland':
         wl_paste_binary = shutil.which('wl-paste')
         if wl_paste_binary:
             try:
