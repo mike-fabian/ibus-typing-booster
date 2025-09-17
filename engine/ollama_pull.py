@@ -197,6 +197,8 @@ class OllamaPullUI(Gtk.Window): # type: ignore
             self._progress_grid.attach(
                 error_label, 0, self._row, 1, 1)
             error_label.show()
+            self._cancel_button.hide()
+            self._close_button.show()
             return
         if status is not None and status != self._status:
             self._status = status
