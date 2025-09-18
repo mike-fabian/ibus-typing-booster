@@ -128,15 +128,11 @@ class ItbOllamaClient:
         if self._client is None:
             return {}
         client = self._client # narrow Optional[httpx.Client] → httpx.Client
+        endpoint = '/api/chat'
+        body = {'model': model, 'messages': messages, 'stream': stream}
         if stream:
             def event_stream() -> Generator[Dict[str, Any], None, None]:
-                with client.stream(
-                    'POST',
-                    '/api/chat',
-                    json={'model': model,
-                          'messages': messages,
-                          'stream': True},
-                ) as resp:
+                with client.stream('POST', endpoint, json=body) as resp:
                     resp.raise_for_status()
                     for line in resp.iter_lines():
                         if not line.strip():
@@ -150,9 +146,7 @@ class ItbOllamaClient:
                         except json.JSONDecodeError:
                             yield {'raw': line}
             return event_stream()
-        resp = client.post(
-            '/api/chat',
-            json={'model': model, 'messages': messages, 'stream': False})
+        resp = client.post(endpoint, json=body)
         resp.raise_for_status()
         return cast(Dict[str, Any], resp.json())
 
