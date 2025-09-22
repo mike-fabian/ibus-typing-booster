@@ -315,6 +315,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._ai_system_message: str = self._settings_dict[
             'aisystemmessage']['user']
         self._ollama_client: Optional[itb_ollama.ItbOllamaClient] = None
+        self._ollama_server_label = '🦙'
         self._ollama_model: str = self._settings_dict[
             'ollamamodel']['user']
         self._ollama_max_context: int = self._settings_dict[
@@ -7423,12 +7424,15 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._ollama_model == '':
             LOGGER.error('ollama model is not set.')
             return
-        if self._ollama_client is None:
-            self._ollama_client = itb_ollama.ItbOllamaClient()
-            if not self._ollama_client.is_connected():
-                self._ollama_client = None
-                LOGGER.error('Failed to connect ollama client.')
-                return
+        self._ollama_client = itb_ollama.ItbOllamaClient()
+        if self._ollama_client.get_server() not in ('ollama', 'ramalama'):
+            self._ollama_client = None
+            LOGGER.error('Failed to connect to ollama server.')
+            return
+        if self._ollama_client.get_server() == 'ollama':
+            self._ollama_server_label = '🦙🔵'
+        if self._ollama_client.get_server() == 'ramalama':
+            self._ollama_server_label = '🦙🔴'
         if not self._ollama_client.is_available(self._ollama_model):
             command = [sys.executable,
                        os.path.join(
@@ -7548,6 +7552,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # state (by default an hourglass with moving sand):
             self._current_auxiliary_text = (
                 f'{self._label_busy_string.strip()}'
+                f'{self._ollama_server_label}'
                 f'[{len(self._ollama_messages)}] {self._ollama_model}\n'
                 f'{prompt}')
             super().update_auxiliary_text(
@@ -7600,10 +7605,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 if stop_event.is_set():
                     LOGGER.info('Ollama chat stream stopped by event.')
                     break
-                if isinstance(chunk, dict) and 'message' in chunk:
-                    message = chunk.get('message')
-                    if isinstance(message, dict) and 'content' in message:
-                        self._ollama_response += message['content']
+                if isinstance(chunk, dict) and 'choices' in chunk:
+                    choices = chunk.get('choices')
+                    if isinstance(choices, list) and len(choices) > 0:
+                        choice0 = choices[0]
+                        if isinstance(choice0, dict) and 'delta' in choice0:
+                            delta = choice0['delta']
+                            if isinstance(delta, dict) and 'content' in delta:
+                                content = delta['content']
+                                if content is not None:
+                                    self._ollama_response += delta['content']
                 GLib.idle_add(self._ollama_chat_query_update_response)
             self._ollama_response = self._ollama_response.strip()
             GLib.idle_add(self._ollama_chat_query_update_response)
@@ -7634,6 +7645,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if self._label_busy and self._label_busy_string.strip():
                 aux_prefix = (
                     f'{self._label_busy_string.strip()}'
+                    f'{self._ollama_server_label}'
                     f'[{len(self._ollama_messages)}] {self._ollama_model}\n')
             aux_lines = '\n'.join([self._ollama_aux_wrapper.fill(line)
                  for line in self._ollama_response.splitlines()])
