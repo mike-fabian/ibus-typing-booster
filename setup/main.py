@@ -679,13 +679,13 @@ class SetupUI(Gtk.Window): # type: ignore
         for i, item in enumerate(self._emoji_style_store):
             if self._emoji_style == item[1]:
                 self._emoji_style_combobox.set_active(i)
-                self._emoji_style_combobox.connect(
-                    'changed', self._on_emoji_style_combobox_changed)
-                _options_grid_row += 1
-                self._options_grid.attach(
-                    self._emoji_style_label, 0, _options_grid_row, 1, 1)
-                self._options_grid.attach(
-                    self._emoji_style_combobox, 1, _options_grid_row, 1, 1)
+        self._emoji_style_combobox.connect(
+            'changed', self._on_emoji_style_combobox_changed)
+        _options_grid_row += 1
+        self._options_grid.attach(
+            self._emoji_style_label, 0, _options_grid_row, 1, 1)
+        self._options_grid.attach(
+            self._emoji_style_combobox, 1, _options_grid_row, 1, 1)
 
         self._off_the_record_checkbutton = Gtk.CheckButton(
             # Translators: While “Off the record” mode is on, learning
