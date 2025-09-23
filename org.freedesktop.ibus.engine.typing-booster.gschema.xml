@@ -549,6 +549,14 @@
         “cancel” command which will deselect all candidates.
       </description>
     </key>
+    <key name="aichatenable" type="b">
+      <default>true</default>
+      <summary>Enable AI chat</summary>
+      <description>
+        Enable or disable AI chat globally.
+        When disabled, all AI chat related features and keybindings are turned off.
+      </description>
+    </key>
     <key name="aisystemmessage" type="s">
       <default>'You are a large language model living in an input method and a helpful assistant. Respond concisely.'</default>
       <summary>AI system message</summary>
