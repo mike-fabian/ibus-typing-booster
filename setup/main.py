@@ -88,6 +88,13 @@ import itb_version
 from pkginstall import InstallPackages
 from i18n import _, init as i18n_init
 
+IMPORT_ITB_OLLAMA_ERROR = None
+try:
+    import itb_ollama
+    IMPORT_ITB_OLLAMA_ERROR = None
+except (ImportError,) as error:
+    IMPORT_ITB_OLLAMA_ERROR = error
+
 LOGGER = logging.getLogger('ibus-typing-booster')
 
 GLIB_MAIN_LOOP: Optional[GLib.MainLoop] = None
@@ -180,6 +187,8 @@ class SetupUI(Gtk.Window): # type: ignore
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
         self.tabsqlitedb = tabsqlitedb.TabSqliteDb(user_db_file=user_db_file)
+
+        self._ollama_client: Optional[itb_ollama.ItbOllamaClient] = None
 
         self._gsettings = Gio.Settings(
             schema='org.freedesktop.ibus.engine.typing-booster',
@@ -280,13 +289,14 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionaries_and_input_methods_vbox.set_margin_top(margin)
         self._dictionaries_and_input_methods_vbox.set_margin_bottom(margin)
         self._dictionaries_and_input_methods_label = Gtk.Label()
+        self._dictionaries_and_input_methods_label.set_xalign(0)
         self._dictionaries_and_input_methods_label.set_text(
             # Translators: This is the label of a tab in the setup
             # tool. Here the user can setup the dictionaries for the
             # languages he wants to use and the input methods to use
             # to be able to type all the languages he is interested
             # in.
-            _('Dictionaries and input methods'))
+            '📖 ' +_('Dictionaries and input methods'))
 
         self._options_grid = Gtk.Grid()
         self._options_grid.set_visible(True)
@@ -299,10 +309,11 @@ class SetupUI(Gtk.Window): # type: ignore
         self._options_grid.set_hexpand(True)
         self._options_grid.set_vexpand(False)
         self._options_label = Gtk.Label()
+        self._options_label.set_xalign(0)
         # Translators: This is the label of a tab in the setup tool.
         # Here the user can set up some options which influence the
         # behaviour of ibus-typing-booster.
-        self._options_label.set_text(_('Options'))
+        self._options_label.set_text('⚙️ '+ _('Options'))
 
         self._custom_shortcuts_grid = Gtk.Grid()
         self._custom_shortcuts_grid.set_visible(True)
@@ -313,12 +324,13 @@ class SetupUI(Gtk.Window): # type: ignore
         self._custom_shortcuts_grid.set_row_homogeneous(False)
         self._custom_shortcuts_grid.set_column_homogeneous(True)
         self._custom_shortcuts_label = Gtk.Label()
+        self._custom_shortcuts_label.set_xalign(0)
         # Translators: This is a label of a tab in the setup tool.
         # Here the user can create custom shortcuts. For example if
         # the user wants that whenever he types “rotfl” that “rolling
         # on the floor laughing” is shown as a high priority
         # candidate, he can define such a custom shortcut here.
-        self._custom_shortcuts_label.set_text(_('Custom shortcuts'))
+        self._custom_shortcuts_label.set_text('📜 ' + _('Custom shortcuts'))
 
         self._keybindings_vbox = Gtk.Box()
         self._keybindings_vbox.set_orientation(Gtk.Orientation.VERTICAL)
@@ -329,12 +341,13 @@ class SetupUI(Gtk.Window): # type: ignore
         self._keybindings_vbox.set_margin_top(margin)
         self._keybindings_vbox.set_margin_bottom(margin)
         self._keybindings_label = Gtk.Label()
+        self._keybindings_label.set_xalign(0)
         # Translators: This is the label of a tab in the setup tool.
         # Here the user can customize the key bindings to execute
         # certain commands of ibus-typing-booster. For example
         # which key to use to request completion, which key to
         # use to move to the next completion candidate etc...
-        self._keybindings_label.set_text(_('Key bindings'))
+        self._keybindings_label.set_text('⌨️ '+ _('Key bindings'))
 
         self._appearance_grid = Gtk.Grid()
         self._appearance_grid.set_visible(True)
@@ -347,6 +360,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._appearance_grid.set_hexpand(True)
         self._appearance_grid.set_vexpand(False)
         self._appearance_label = Gtk.Label()
+        self._appearance_label.set_xalign(0)
         # Translators: This is the label of a tab in the setup tool.
         # Here the user can set up some options which influence how
         # ibus-typing-booster looks like, i.e. something like whether
@@ -356,7 +370,26 @@ class SetupUI(Gtk.Window): # type: ignore
         # types of candidates (candidates from the user database, from
         # dictionaries, or from spellchecking) and/or whether
         # diffent types of candidates should be marked with labels.
-        self._appearance_label.set_text(_('Appearance'))
+        self._appearance_label.set_text('🎨 ' + _('Appearance'))
+
+        self._ai_grid = Gtk.Grid()
+        self._ai_grid.set_visible(True)
+        self._ai_grid.set_can_focus(False)
+        self._ai_grid.set_border_width(grid_border_width)
+        # give the AI grid a higher row_spacing, there are
+        # not so many options yet, no need to cramp everything in:
+        self._ai_grid.set_row_spacing(10)
+        self._ai_grid.set_column_spacing(grid_column_spacing)
+        self._ai_grid.set_row_homogeneous(False)
+        self._ai_grid.set_column_homogeneous(False)
+        self._ai_grid.set_hexpand(True)
+        self._ai_grid.set_vexpand(False)
+        self._ai_label = Gtk.Label()
+        self._ai_label.set_xalign(0)
+        # Translators: This is the label of a tab in the setup tool.
+        # Here the user can set up some options related to AI
+        # (Artificial Intelligence).
+        self._ai_label.set_text('🧠 ' + _('AI'))
 
         self._speech_recognition_grid = Gtk.Grid()
         self._speech_recognition_grid.set_visible(True)
@@ -369,10 +402,11 @@ class SetupUI(Gtk.Window): # type: ignore
         self._speech_recognition_grid.set_hexpand(True)
         self._speech_recognition_grid.set_vexpand(False)
         self._speech_recognition_label = Gtk.Label()
+        self._speech_recognition_label.set_xalign(0)
         # Translators: This is the label of a tab in the setup tool.
         # Here the user can set up some options related to speech
         # recognition.
-        self._speech_recognition_label.set_text(_('Speech recognition'))
+        self._speech_recognition_label.set_text('🎤 ' + _('Speech recognition'))
 
         self._autosettings_vbox = Gtk.Box()
         self._autosettings_vbox.set_orientation(
@@ -384,11 +418,12 @@ class SetupUI(Gtk.Window): # type: ignore
         self._autosettings_vbox.set_margin_top(margin)
         self._autosettings_vbox.set_margin_bottom(margin)
         self._autosettings_label = Gtk.Label()
+        self._autosettings_label.set_xalign(0)
         # Translators: This is the label of a tab in the setup tool.
         # Here the user can set up whether some settings should change
         # automatically to specific values depending on which window
         # (or which browser tab) gets the focus.
-        self._autosettings_label.set_text(_('Autosettings'))
+        self._autosettings_label.set_text('🔄 ' + _('Autosettings'))
 
         self._notebook.append_page(
             self._dictionaries_and_input_methods_vbox,
@@ -405,6 +440,9 @@ class SetupUI(Gtk.Window): # type: ignore
         self._notebook.append_page(
             self._appearance_grid,
             self._appearance_label)
+        self._notebook.append_page(
+            self._ai_grid,
+            self._ai_label)
         self._notebook.append_page(
             self._speech_recognition_grid,
             self._speech_recognition_label)
@@ -2362,6 +2400,166 @@ class SetupUI(Gtk.Window): # type: ignore
         self._appearance_grid.attach(
             self._input_mode_false_entry, 1, _appearance_grid_row, 1, 1)
 
+        _ai_grid_row = -1
+        ai_documentation = Gtk.LinkButton(
+            label='⚠️🚧🏗️ ' + _('Online documentation:')
+            + 'http://mike-fabian.github.io/ibus-typing-booster',
+            uri='https://mike-fabian.github.io/ibus-typing-booster/docs/user/#ai-chat')
+        ai_documentation.set_halign(Gtk.Align.START)
+        _ai_grid_row += 1
+        self._ai_grid.attach(
+            ai_documentation, 0, _ai_grid_row, 2, 1)
+        if IMPORT_ITB_OLLAMA_ERROR is not None:
+            import_error_label = Gtk.Label()
+            import_error_label.set_text(
+                '❌️ Python import error: '
+                f'<span color="red">{str(IMPORT_ITB_OLLAMA_ERROR)}</span>')
+            import_error_label.set_xalign(0)
+            import_error_label.set_use_markup(True)
+            _ai_grid_row += 1
+            self._ai_grid.attach(
+                import_error_label, 0, _ai_grid_row, 2, 1)
+        self._ai_chat_enable_checkbutton = Gtk.CheckButton(
+            # Translators: Checkbox to enable the AI (Artificial
+            # Intelligence) chat feature using ollama or ramalama
+            # servers.
+            label=_('Enable AI chat'))
+        self._ai_chat_enable_checkbutton.set_tooltip_text(
+            # Translators: Tooltip for “Enable AI chat”.
+            _('Enable or disable AI chat globally. '
+              'When disabled, all AI chat related '
+              'features and keybindings are turned off.'))
+        self._ai_chat_enable_checkbutton.connect(
+            'clicked', self._on_ai_chat_enable_checkbutton)
+        _ai_grid_row += 1
+        self._ai_grid.attach(
+            self._ai_chat_enable_checkbutton, 0, _ai_grid_row, 2, 1)
+        label_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=3)
+        label = Gtk.Label()
+        # Translators: The ollama or ramalama server to use for AI
+        # (Artificial Intelligence).
+        label.set_text('<b>' + _('AI server:') + '</b>')
+        label.set_use_markup(True)
+        info_icon = Gtk.Label()
+        info_icon.set_text('ℹ️')
+        info_icon.set_tooltip_text(
+            # Translators: The connection status to the ollama or
+            # ramalama server used for AI (Artificial Intelligence).
+            _('Connection status to the AI server.'))
+        label_box.pack_start(label, False, False, 0)
+        label_box.pack_start(info_icon, False, False, 0)
+        self._ai_server_info_label = Gtk.Label()
+        self._ai_server_info_label.set_sensitive(
+            self._settings_dict['aichatenable']['user'])
+        self._ai_server_info_label.set_xalign(0)
+        _ai_grid_row += 1
+        self._ai_grid.attach(
+            label_box, 0, _ai_grid_row, 1, 1)
+        self._ai_grid.attach(
+            self._ai_server_info_label, 1, _ai_grid_row, 1, 1)
+        ai_model_label = Gtk.Label()
+        # Translators: “Model:” specifies the LLM (Large Language
+        # Model) to be used with ollama or ramalama.
+        ai_model_label.set_text(_('Model:'))
+        ai_model_label.set_xalign(0)
+        self._ai_model_combobox = Gtk.ComboBox()
+        self._ai_model_combobox.set_sensitive(
+            self._settings_dict['aichatenable']['user'])
+        self._ai_model_combobox.set_tooltip_text(
+            # Translators: tooltip for the combobox to select the AI
+            # LLM (Large Language Model) to be used with ollama or
+            # ramalama.
+            'Select the AI model to use. ✔️ = Available, '
+            '❌ = Not available on the server.')
+        self._ai_model_store = Gtk.ListStore(str, str, bool)
+        self._ai_model_combobox.set_model(self._ai_model_store)
+        renderer_text = Gtk.CellRendererText()
+        self._ai_model_combobox.pack_start(renderer_text, True)
+        self._ai_model_combobox.add_attribute(renderer_text, 'text', 0)
+        self._ai_model_combobox_changed_id = self._ai_model_combobox.connect(
+            'changed', self._on_ai_model_combobox_changed)
+        _ai_grid_row += 1
+        self._ai_grid.attach(
+            ai_model_label, 0, _ai_grid_row, 1, 1)
+        self._ai_grid.attach(
+            self._ai_model_combobox, 1, _ai_grid_row, 1, 1)
+        ai_max_context_label = Gtk.Label()
+        # Translators: The limit of how many past messages are
+        # sent to the AI for context.
+        ai_max_context_label.set_text(_('Message history limit:'))
+        ai_max_context_label.set_xalign(0)
+        self._ai_max_context_adjustment = Gtk.SpinButton()
+        self._ai_max_context_adjustment.set_tooltip_text(
+            'Limits how many past messages are sent to the AI. '
+            'Longer messages may still exceed the server’s token limits.')
+        self._ai_max_context_adjustment.set_visible(True)
+        self._ai_max_context_adjustment.set_can_focus(True)
+        self._ai_max_context_adjustment.set_sensitive(
+            self._settings_dict['aichatenable']['user'])
+        self._ai_max_context_adjustment.set_increments(1.0, 1.0)
+        self._ai_max_context_adjustment.set_range(0.0, 5000.0)
+        self._ai_max_context_adjustment.set_value(
+            int(self._settings_dict['ollamamaxcontext']['user']))
+        self._ai_max_context_adjustment.connect(
+            'value-changed', self._on_ai_max_context_adjustment_value_changed)
+        _ai_grid_row += 1
+        self._ai_grid.attach(
+            ai_max_context_label, 0, _ai_grid_row, 1, 1)
+        self._ai_grid.attach(
+            self._ai_max_context_adjustment, 1, _ai_grid_row, 1, 1)
+        label_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=3)
+        label = Gtk.Label()
+        label.set_text(
+            # Translators: This is the AI system message field to set
+            # the implicit context for AI chats. For example it could
+            # be something like: “You are a large language model
+            # living in an input method and a helpful
+            # assistant. Respond concisely.”
+            '<b>' + _('AI system message:') +'</b>')
+        label.set_use_markup(True)
+        info_icon = Gtk.Label()
+        info_icon.set_text('ℹ️')
+        info_icon.set_tooltip_text(
+            # Translators: Tooltip explaining the AI system message
+            # field to set the implicit context for AI chats. For
+            # example it could be something like: “You are a large
+            # language model living in an input method and a helpful
+            # assistant. Respond concisely.”
+            _('System prompt that guides how the AI responds.'))
+        label_box.pack_start(label, False, False, 0)
+        label_box.pack_start(info_icon, False, False, 0)
+        _ai_grid_row += 1
+        self._ai_grid.attach(
+            label_box, 0, _ai_grid_row, 2, 1)
+        ai_system_message_scroll = Gtk.ScrolledWindow()
+        ai_system_message_scroll.set_can_focus(False)
+        ai_system_message_scroll.set_hexpand(True)
+        ai_system_message_scroll.set_vexpand(True)
+        ai_system_message_scroll.set_shadow_type(Gtk.ShadowType.IN)
+        self._ai_system_message_textview_buffer = Gtk.TextBuffer()
+        self._ai_system_message_textview_buffer.set_text(
+            self._settings_dict['aisystemmessage']['user'])
+        self._ai_system_message_textview = Gtk.TextView()
+        self._ai_system_message_textview.set_wrap_mode(Gtk.WrapMode.WORD)
+        self._ai_system_message_textview.set_buffer(
+            self._ai_system_message_textview_buffer)
+        self._ai_system_message_textview.set_visible(True)
+        self._ai_system_message_textview.set_can_focus(True)
+        self._ai_system_message_textview.set_sensitive(
+            self._settings_dict['aichatenable']['user'])
+        self._ai_system_message_textview.set_hexpand(False)
+        self._ai_system_message_textview.set_vexpand(False)
+        ai_system_message_scroll.add(self._ai_system_message_textview)
+        _ai_grid_row += 1
+        self._ai_grid.attach(
+            ai_system_message_scroll, 0, _ai_grid_row, 2, 3)
+        self._ai_system_message_textview_buffer.connect(
+            'changed', self._on_ai_system_message_textview_buffer)
+        self._check_ai_server_timeout_source_id: int = 0
+        self.set_ai_chat_enable(
+            self._settings_dict['aichatenable']['user'],
+            update_gsettings=False)
+
         self._google_application_credentials_label = Gtk.Label()
         self._google_application_credentials_label.set_text(
             # Translators:
@@ -2588,6 +2786,10 @@ class SetupUI(Gtk.Window): # type: ignore
             'flagdictionary': self.set_flag_dictionary,
             'labelbusy': self.set_label_busy,
             'labelbusystring': self.set_label_busy_string,
+            'aichatenable': self.set_ai_chat_enable,
+            'aisystemmessage': self.set_ai_system_message,
+            'ollamamodel': self.set_ollama_model,
+            'ollamamaxcontext': self.set_ollama_max_context,
             'inputmodetruesymbol': self.set_input_mode_true_symbol,
             'inputmodefalsesymbol': self.set_input_mode_false_symbol,
             'inputmethod': self.set_current_imes,
@@ -2659,6 +2861,60 @@ class SetupUI(Gtk.Window): # type: ignore
                     'user': user_value,
                     'set_function': set_functions[key]}
         return settings_dict
+
+    def _check_ai_server(self) -> bool:
+        '''Update the connection status to the AI server and the
+        combobox listing the served models.
+        '''
+        if not self._settings_dict['aichatenable']['user']:
+            server_info = '❌️'
+            self._ai_server_info_label.set_text(server_info)
+            self._ai_server_info_label.set_use_markup(True)
+            self._ai_server_info_label.set_sensitive(False)
+            selected_ollama_model = self._settings_dict['ollamamodel']['user']
+            self._ai_model_combobox.handler_block(self._ai_model_combobox_changed_id)
+            self._ai_model_store.clear()
+            self._ai_model_store.append(
+                [f'{selected_ollama_model} ❌️', selected_ollama_model, False])
+            self._ai_model_combobox.set_active(0)
+            self._ai_model_combobox.handler_unblock(self._ai_model_combobox_changed_id)
+            return False # stop running,  GLib.timeout_add()
+        self._ollama_client = itb_ollama.ItbOllamaClient()
+        if self._ollama_client.get_server() not in ('ollama', 'ramalama'):
+            server_info = (
+                f'{self._ollama_client.get_host()} : '
+                f'<span color="red">{self._ollama_client.get_error()}</span> '
+                '❌️')
+        else:
+            server_info = (
+                f'{self._ollama_client.get_host()} : '
+                f'{self._ollama_client.get_server()} '
+                f'{self._ollama_client.get_version()} ✔️')
+        self._ai_server_info_label.set_text(server_info)
+        self._ai_server_info_label.set_use_markup(True)
+        selected_ollama_model_short = self._ollama_client.short_name(
+            self._settings_dict['ollamamodel']['user'])
+        selected_ollama_model_short_available = False
+        self._ai_model_combobox.handler_block(self._ai_model_combobox_changed_id)
+        self._ai_model_store.clear()
+        for model_id in sorted(self._ollama_client.model_ids()):
+            model_id_short = self._ollama_client.short_name(model_id)
+            if model_id_short == selected_ollama_model_short:
+                selected_ollama_model_short_available = True
+            long_id = ''
+            if model_id_short != model_id:
+                long_id = f'({model_id.split("/")[-1]})'
+            self._ai_model_store.append(
+                [f'{model_id_short} ✔️ {long_id}', model_id_short, True])
+        if not selected_ollama_model_short_available:
+            self._ai_model_store.append(
+                [f'{selected_ollama_model_short} ❌️',
+                 selected_ollama_model_short, False])
+        for i, item in enumerate(self._ai_model_store):
+            if selected_ollama_model_short == item[1]:
+                self._ai_model_combobox.set_active(i)
+        self._ai_model_combobox.handler_unblock(self._ai_model_combobox_changed_id)
+        return True # keep running, GLib.timeout_add()
 
     def _fill_dictionaries_listbox_row(self, name: str) -> Tuple[str, bool]:
         '''
@@ -3349,6 +3605,26 @@ class SetupUI(Gtk.Window): # type: ignore
             self.set_record_mode(
                 mode, update_gsettings=True)
 
+    def _on_ai_model_combobox_changed(
+            self, widget: Gtk.ComboBox) -> None:
+        '''
+        A change of the AI model has been requested
+        with the combobox.
+        '''
+        tree_iter = widget.get_active_iter()
+        if tree_iter is not None:
+            model = widget.get_model()
+            ollama_model = model[tree_iter][1]
+            self.set_ollama_model(
+                ollama_model, update_gsettings=True)
+
+    def _on_ai_chat_enable_checkbutton(self, widget: Gtk.CheckButton) -> None:
+        '''
+        The checkbutton whether to enable the AI chat feature
+        '''
+        self.set_ai_chat_enable(
+            widget.get_active(), update_gsettings=True)
+
     def _on_auto_capitalize_checkbutton(self, widget: Gtk.CheckButton) -> None:
         '''
         The checkbutton whether to automatically capitalize after punctation.
@@ -3562,6 +3838,14 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         self.set_page_size(
             self._page_size_adjustment.get_value(), update_gsettings=True)
+
+    def _on_ai_max_context_adjustment_value_changed(
+            self, _widget: Gtk.SpinButton) -> None:
+        '''
+        The maxium ai context has been changed.
+        '''
+        self.set_ollama_max_context(
+            self._ai_max_context_adjustment.get_value(), update_gsettings=True)
 
     def _on_candidates_delay_milliseconds_adjustment_value_changed(
             self, _widget: Gtk.SpinButton) -> None:
@@ -4877,6 +5161,13 @@ class SetupUI(Gtk.Window): # type: ignore
         # button state:
         self._autosettings_selected_index = index + 1
         self._fill_autosettings_treeview()
+
+    def _on_ai_system_message_textview_buffer(
+            self, buffer: Gtk.TextBuffer) -> None:
+        '''The contents of the buffer of the ai system message have changed.'''
+        message = buffer.get_text(
+            buffer.get_start_iter(), buffer.get_end_iter(), False).strip()
+        self.set_ai_system_message(message, update_gsettings=True)
 
     def _set_shortcut_button_sensitivity(self) -> None:
         '''Adjust the sensitivity values of the “Clear”, “Delete”, and “Add”
@@ -6269,6 +6560,129 @@ class SetupUI(Gtk.Window): # type: ignore
                 GLib.Variant.new_string(label_string))
         else:
             self._label_busy_entry.set_text(label_string)
+
+    def set_ai_chat_enable(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the “Enable AI chat” mode
+
+        :param mode: Whether to enable AI chat or not
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
+        mode = bool(mode)
+        self._settings_dict['aichatenable']['user'] = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'aichatenable',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._ai_chat_enable_checkbutton.set_active(mode)
+            self._ai_model_combobox.set_sensitive(mode)
+            self._ai_max_context_adjustment.set_sensitive(mode)
+            self._ai_system_message_textview.set_sensitive(mode)
+            self._ai_server_info_label.set_sensitive(mode)
+        if IMPORT_ITB_OLLAMA_ERROR is not None:
+            return
+        self._check_ai_server()
+        if mode and not self._check_ai_server_timeout_source_id:
+            self._check_ai_server_timeout_source_id = GLib.timeout_add(
+                5000, self._check_ai_server)
+            return
+        if not mode and self._check_ai_server_timeout_source_id:
+            GLib.source_remove(self._check_ai_server_timeout_source_id)
+            self._check_ai_server_timeout_source_id = 0
+
+    def set_ai_system_message(
+            self,
+            ai_system_message: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the system message to start AI chats with
+
+        :param ai_system_message: The system message to start AI chats with
+        :param update_gsettings:  Whether to write the change to Gsettings.
+                                  Set this to False if this method is
+                                  called because the Gsettings key changed
+                                  to avoid endless loops when the Gsettings
+                                  key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', ai_system_message, update_gsettings)
+        if not isinstance(ai_system_message, str):
+            return
+        if self._settings_dict['aisystemmessage']['user'] == ai_system_message:
+            return # important to avoid loop
+        self._settings_dict['aisystemmessage']['user'] = ai_system_message
+        if update_gsettings:
+            self._gsettings.set_value(
+                'aisystemmessage',
+                GLib.Variant.new_string(ai_system_message))
+        else:
+            self._ai_system_message_textview_buffer.set_text(ai_system_message)
+
+    def set_ollama_model(
+            self,
+            ollama_model: Union[str, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the model to use for ollama
+
+        :param ollama_model:     The model to use for ollama
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', ollama_model, update_gsettings)
+        if not isinstance(ollama_model, str):
+            return
+        if self._ollama_client is None:
+            LOGGER.info('self._ollama_client is None')
+            return
+        ollama_model = self._ollama_client.short_name(ollama_model)
+        self._settings_dict['ollamamodel']['user'] = ollama_model
+        if update_gsettings:
+            self._gsettings.set_value(
+                'ollamamodel',
+                GLib.Variant.new_string(ollama_model))
+        else:
+            self._ai_model_combobox.set_active(-1)
+            for i, item in enumerate(self._ai_model_store):
+                if ollama_model == item[1]:
+                    self._ai_model_combobox.set_active(i)
+
+    def set_ollama_max_context(
+            self,
+            max_context: Union[int, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the maximum number of ollama messages to keep as context
+        when continuing a chat
+
+        :param max_context:      Maximum number of messages to keep as context.
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', max_context, update_gsettings)
+        max_context = int(max_context)
+        self._settings_dict['ollamamaxcontext']['user'] = max_context
+        if update_gsettings:
+            self._gsettings.set_value(
+                'ollamamaxcontext',
+                GLib.Variant.new_uint32(max_context))
+        else:
+            self._ai_max_context_adjustment.set_value(
+                int(max_context))
 
     def set_input_mode_true_symbol(
             self,

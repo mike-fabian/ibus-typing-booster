@@ -315,6 +315,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         self._current_imes: List[str] = []
 
+        self._ai_chat_enable: bool = self._settings_dict[
+            'aichatenable']['user']
         self._ai_system_message: str = self._settings_dict[
             'aisystemmessage']['user']
         self._ollama_client: Optional[itb_ollama.ItbOllamaClient] = None
@@ -1010,6 +1012,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             'labelbusystring': {
                 'set': self.set_label_busy_string,
                 'get': self.get_label_busy_string},
+            'aichatenable': {
+                'set': self.set_ai_chat_enable,
+                'get': self.get_ai_chat_enable},
             'aisystemmessage': {
                 'set': self.set_ai_system_message,
                 'get': self.get_ai_system_message},
@@ -5791,6 +5796,36 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''Returns the current value of the “label busy” string'''
         return self._label_busy_string
 
+    def set_ai_chat_enable(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets whether to enable AI chat or not
+
+        :param mode: Whether to enable AI chat or not
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._ai_chat_enable:
+            return
+        self._ai_chat_enable = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'aichatenable',
+                GLib.Variant.new_boolean(mode))
+
+    def get_ai_chat_enable(self) -> bool:
+        '''Returns the current value of the flag whether
+        to enable AI chat or not
+        '''
+        return self._ai_chat_enable
+
     def set_ai_system_message(
             self,
             ai_system_message: Union[str, Any],
@@ -7399,6 +7434,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         the key which executed the command has been fully handled and
         it makes no sense to use it as input.
         '''
+        if not self._ai_chat_enable:
+            return False
         self._ollama_messages = []
         self._ai_chat()
         return True
@@ -7411,6 +7448,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         the key which executed the command has been fully handled and
         it makes no sense to use it as input.
         '''
+        if not self._ai_chat_enable:
+            return False
         self._ai_chat()
         return True
 
