@@ -67,6 +67,7 @@ date: 2021-09-30
 * [The Gnome on-screen keyboard, enabling and using it](#gnome-osk)
 * [Using NLTK to find related words](#nltk-related-words)
 * [Speech recognition](#speech-recognition)
+* [⚠️🚧🏗️ AI chat using ollama or ramalama](#ai-chat)
 ---------
 
 # Installing ibus-typing-booster {#installing-ibus-typing-booster}
@@ -3747,3 +3748,8 @@ what Google Speech-to-Text recognizes appears in that popup which then
 may look like “🎙en_GB 🇬🇧: This is the text I have spoken”. When a
 pause is detected in the voice recording, the speech recognition is
 finalized and the result is inserted at the writing position.
+
+# ⚠️🚧🏗️ AI chat using ollama or ramalama {#ai-chat}
+
+⚠️🚧🏗️ New feature, still experimental, documentation coming soon ...
+
