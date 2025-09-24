@@ -1,5 +1,16 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
-* 159 Sep 2025 Release 2.27.75
+* 30 Sep 2025 Release 2.28.0
+* Add setup UI for the chat with ollama or ramalama
+* Add a ibus-setup-tb.desktop file (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/807)
+* Suggest suffixed word forms as well (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/799)
+* Update emoji annotations from CLDR
+* itb_ollama.py: better error handling when getting model list
+* itb_ollama.py: Add support for ramalama
+* Support OLLAMA_HOST environment variable
+* Translation update from Weblate (de 100%, fr 95.4%, ja 100%, ka 100%, kab 74.8%, ko 100%, pl 100%, ru 100%, sv 100%, uk 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
+* 15 Sep 2025 Release 2.27.75
 * do_reset() needs to cancel an ollama chat, just like do_focus_out_id() does
 * Use ollama_pull.py in hunspell_table.py
 * Add simple Gtk program “ollama_pull.py” to pull an ollama model
