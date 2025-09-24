@@ -15,10 +15,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-09-25 00:12+0200\n"
-"PO-Revision-Date: 2025-09-24 21:57+0000\n"
+"PO-Revision-Date: 2025-09-24 22:23+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: French <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/fr/>\n"
+"Language-Team: French <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1777,10 +1777,8 @@ msgstr "Limite de l’historique des messages :"
 #. living in an input method and a helpful
 #. assistant. Respond concisely.”
 #: setup/main.py:2512
-#, fuzzy
-#| msgid "AI system message"
 msgid "AI system message:"
-msgstr "Message système de l'IA"
+msgstr "Message système de l'IA :"
 
 #. Translators: Tooltip explaining the AI system message
 #. field to set the implicit context for AI chats. For
