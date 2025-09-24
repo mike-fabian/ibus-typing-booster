@@ -15,16 +15,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-09-24 22:36+0200\n"
-"PO-Revision-Date: 2025-05-11 21:50+0000\n"
+"PO-Revision-Date: 2025-09-24 21:57+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: French <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/fr/>\n"
+"Language-Team: French <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.11.3\n"
+"X-Generator: Weblate 5.13.3\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:267
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -495,7 +495,7 @@ msgstr "Apparence"
 #. (Artificial Intelligence).
 #: setup/main.py:391
 msgid "AI"
-msgstr ""
+msgstr "IA"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
@@ -1735,20 +1735,20 @@ msgstr ""
 #. (Artificial Intelligence).
 #: setup/main.py:2417
 msgid "AI server:"
-msgstr ""
+msgstr "Serveur IA :"
 
 #. Translators: The connection status to the ollama or
 #. ramalama server used for AI (Artificial Intelligence).
 #: setup/main.py:2424
 msgid "Connection status to the AI server."
-msgstr ""
+msgstr "État de la connexion au serveur IA."
 
 #. Translators: Checkbox to enable the AI (Artificial
 #. Intelligence) chat feature using ollama or ramalama
 #. servers.
 #: setup/main.py:2440
 msgid "Enable AI chat"
-msgstr ""
+msgstr "Activer le chat IA"
 
 #. Translators: Tooltip for “Enable AI chat”.
 #: setup/main.py:2443
@@ -1756,18 +1756,20 @@ msgid ""
 "Enable or disable AI chat globally. When disabled, all AI chat related "
 "features and keybindings are turned off."
 msgstr ""
+"Active ou désactive le chat IA globalement. Lorsqu’il est désactivé, toutes "
+"les fonctionnalités et raccourcis clavier liés au chat IA sont désactivés."
 
 #. Translators: “Model:” specifies the LLM (Large Language
 #. Model) to be used with ollama or ramalama.
 #: setup/main.py:2456
 msgid "Model:"
-msgstr ""
+msgstr "Modèle :"
 
 #. Translators: The limit of how many past messages are
 #. sent to the AI for context.
 #: setup/main.py:2483
 msgid "Message history limit:"
-msgstr ""
+msgstr "Limite de l’historique des messages :"
 
 #. Translators: This is the AI system message field to set
 #. the implicit context for AI chats. For example it could
@@ -1776,7 +1778,7 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2512
 msgid "AI system message"
-msgstr ""
+msgstr "Message système de l'IA"
 
 #. Translators: Tooltip explaining the AI system message
 #. field to set the implicit context for AI chats. For
@@ -1785,7 +1787,7 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2522
 msgid "System prompt that guides how the AI responds."
-msgstr ""
+msgstr "Invite système qui guide la manière dont l'IA répond."
 
 #. Translators:
 #: setup/main.py:2556 setup/main.py:3795
