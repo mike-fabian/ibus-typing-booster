@@ -8,6 +8,7 @@
 # Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
 # Mike FABIAN <mfabian@redhat.com>, 2019. #zanata, 2020, 2021, 2022, 2023, 2024, 2025.
+# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -15,7 +16,8 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2025-09-24 22:36+0200\n"
 "PO-Revision-Date: 2025-09-24 21:57+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: German <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/de/>\n"
 "Language: de\n"
@@ -1740,7 +1742,7 @@ msgstr ""
 #. Model) to be used with ollama or ramalama.
 #: setup/main.py:2456
 msgid "Model:"
-msgstr ""
+msgstr "Modell:"
 
 #. Translators: The limit of how many past messages are
 #. sent to the AI for context.
