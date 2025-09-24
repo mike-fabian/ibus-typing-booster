@@ -9,11 +9,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-09-24 22:36+0200\n"
+"POT-Creation-Date: 2025-09-25 00:12+0200\n"
 "PO-Revision-Date: 2025-09-24 21:57+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/ja/>\n"
+"Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1652,8 +1652,9 @@ msgstr "AI チャットを有効化"
 msgid ""
 "Enable or disable AI chat globally. When disabled, all AI chat related "
 "features and keybindings are turned off."
-msgstr "AI チャットをグローバルに有効または無効にします。無効にすると、AI "
-"チャットに関連するすべての機能とキーバインドがオフになります。"
+msgstr ""
+"AI チャットをグローバルに有効または無効にします。無効にすると、AI チャットに"
+"関連するすべての機能とキーバインドがオフになります。"
 
 #. Translators: “Model:” specifies the LLM (Large Language
 #. Model) to be used with ollama or ramalama.
@@ -1673,7 +1674,9 @@ msgstr "メッセージ履歴の制限："
 #. living in an input method and a helpful
 #. assistant. Respond concisely.”
 #: setup/main.py:2512
-msgid "AI system message"
+#, fuzzy
+#| msgid "AI system message"
+msgid "AI system message:"
 msgstr "AI システムメッセージ"
 
 #. Translators: Tooltip explaining the AI system message

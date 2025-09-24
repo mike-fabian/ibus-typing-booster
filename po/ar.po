@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-09-24 22:36+0200\n"
+"POT-Creation-Date: 2025-09-25 00:12+0200\n"
 "PO-Revision-Date: 2025-04-25 17:40+0000\n"
 "Last-Translator: joo es <johndevand@tutanota.com>\n"
 "Language-Team: Arabic <https://translate.fedoraproject.org/projects/ibus-"
@@ -1703,7 +1703,7 @@ msgstr ""
 #. living in an input method and a helpful
 #. assistant. Respond concisely.”
 #: setup/main.py:2512
-msgid "AI system message"
+msgid "AI system message:"
 msgstr ""
 
 #. Translators: Tooltip explaining the AI system message
