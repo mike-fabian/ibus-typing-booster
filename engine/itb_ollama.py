@@ -118,8 +118,15 @@ class ItbOllamaClient:
         '''(Verbosely) list models available on the server.'''
         if self._client is None or self._server == '':
             return {}
-        resp = self._client.get('/v1/models')
-        resp.raise_for_status()
+        try:
+            resp = self._client.get('/v1/models')
+        except httpx.ConnectError as error:
+            LOGGER.error('get /v1/models failed: %s', error)
+            return {}
+        if resp.status_code != httpx.codes.OK:
+            LOGGER.error(
+                'get /v1/models failed: status_code=%s', resp.status_code)
+            return {}
         return cast(Dict[str, Any], resp.json())
 
     def model_ids(self) -> Set[str]:
