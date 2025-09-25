@@ -12,17 +12,17 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-09-25 00:12+0200\n"
-"PO-Revision-Date: 2025-05-12 06:01+0000\n"
+"PO-Revision-Date: 2025-09-25 09:38+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/uk/>\n"
+"Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.11.3\n"
+"X-Generator: Weblate 5.13.3\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:267
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -489,7 +489,7 @@ msgstr "Вигляд"
 #. (Artificial Intelligence).
 #: setup/main.py:391
 msgid "AI"
-msgstr ""
+msgstr "ШІ"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
@@ -705,10 +705,8 @@ msgstr ""
 #. Translators: A combo box to select which emoji style
 #. should be used.
 #: setup/main.py:688
-#, fuzzy
-#| msgid "Emoji"
 msgid "Emoji style"
-msgstr "Емодзі"
+msgstr "Стиль емодзі"
 
 #. Translators: A tooltip for the combobox to select which
 #. emoji style should be used.
@@ -717,6 +715,8 @@ msgid ""
 "To select between colorful emoji (emoji style), monochrome emoji (text "
 "style), or no style preference."
 msgstr ""
+"Вибір між кольоровими емоційками (стиль емодзі), чорно-білими емоційками ("
+"текстовий стиль) або без переваги певного стилю."
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Emoji style”, i.e.  typically colored.
@@ -729,7 +729,7 @@ msgstr "Емодзі"
 #. monochrome.
 #: setup/main.py:707
 msgid "Text"
-msgstr ""
+msgstr "Текстовий"
 
 #. Translators: This option is to use unqualified emoji
 #. sequences. When this style is used, some emoji may display
@@ -737,7 +737,7 @@ msgstr ""
 #. the emoji in the Unicode emoji data files.
 #: setup/main.py:712
 msgid "No style"
-msgstr ""
+msgstr "Без стилю"
 
 #: setup/main.py:739
 msgid ""
@@ -918,6 +918,8 @@ msgid ""
 "The ibus keymap to use when forcing an IBus keymap while Typing Booster is "
 "active."
 msgstr ""
+"Карта клавіш ibus, якою слід скористатися при примусовому визначені карти "
+"клаві IBus, доки активним є Typing Booster."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -1575,20 +1577,15 @@ msgstr ""
 "користувача."
 
 #: setup/main.py:2207
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from the user database. This setting only has an effect "
-#| "if the use of color for candidates from the user database is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
 "use of a label for candidates from the user database is enabled."
 msgstr ""
-"Тут ви можете вказати, який колір буде використано у таблиці пошуку для "
+"Тут ви можете вказати, яку мітку буде використано у таблиці пошуку для "
 "варіантів, які походитимуть із бази даних користувача. Цей параметр "
-"працюватиме, лише якщо увімкнено використання нетипового кольору для "
-"варіантів доповнення, які походять із бази даних користувача."
+"працюватиме, лише якщо увімкнено використання мітки для варіантів "
+"доповнення, які походять із бази даних користувача."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1607,20 +1604,15 @@ msgstr ""
 "перевірки правопису."
 
 #: setup/main.py:2242
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from spellchecking. This setting only has an effect if "
-#| "the use of color for candidates from spellchecking is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
 "a label for candidates from spellchecking is enabled."
 msgstr ""
-"Тут ви можете вказати, який колір буде використано у таблиці пошуку для "
+"Тут ви можете вказати, яку мітку буде використано у таблиці пошуку для "
 "варіантів, які походитимуть від засобу перевірки правопису. Цей параметр "
-"працюватиме, лише якщо увімкнено використання нетипового кольору для "
-"варіантів доповнення, які походять від засобу перевірки правопису."
+"працюватиме, лише якщо увімкнено використання мітки для варіантів "
+"доповнення, які походять від засобу перевірки правопису."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
@@ -1638,20 +1630,15 @@ msgstr ""
 "таблиці пошуку варіантів продовження слова, які походять зі словника."
 
 #: setup/main.py:2277
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from a dictionary. This setting only has an effect if "
-#| "the use of color for candidates from a dictionary is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
 "a label for candidates from a dictionary is enabled."
 msgstr ""
-"Тут ви можете вказати, який колір буде використано у таблиці пошуку для "
+"Тут ви можете вказати, яку мітку буде використано у таблиці пошуку для "
 "варіантів, які походитимуть зі словника. Цей параметр працюватиме, лише якщо "
-"увімкнено використання нетипового кольору для варіантів доповнення, які "
-"походять зі словника."
+"увімкнено використання мітки для варіантів доповнення, які походять зі "
+"словника."
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
@@ -1684,20 +1671,16 @@ msgstr ""
 
 #. Translators: Tooltip for an entry
 #: setup/main.py:2329
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a label is used to indicate when ibus-typing-"
-#| "booster is busy."
 msgid ""
 "Here you can specify which label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
-"Тут ви можете визначити, чи використовуватиметься мітка для позначення стану "
+"Тут ви можете визначити, яку мітку буде використано для позначення стану "
 "зайнятості обробкою програми ibus-typing-booster."
 
 #: setup/main.py:2347
 msgid "Symbol for \"enabled\" mode"
-msgstr ""
+msgstr "Символ для режиму «увімкнено»"
 
 #. Translators: Tooltip for 'Symbol for "enabled" mode'
 #: setup/main.py:2350 setup/main.py:2357
@@ -1705,10 +1688,12 @@ msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
 msgstr ""
+"Символ, якиу буде показано, якщо Typing Booster є активним (транслітерація "
+"введеного, пропонування варіантів, перевірка правопису тощо)."
 
 #: setup/main.py:2376
 msgid "Symbol for \"disabled\" (Direct Input) mode"
-msgstr ""
+msgstr "Символ для режиму «вимкнено» (безпосереднє введення)"
 
 #. Translators: Tooltip for 'Symbol for "disabled" (Direct
 #. Input) mode'
@@ -1717,25 +1702,27 @@ msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
 msgstr ""
+"Символ, який буде показано, якщо Typing Booster вимкнено (введене "
+"надсилається безпосередньо, без обробки)."
 
 #. Translators: The ollama or ramalama server to use for AI
 #. (Artificial Intelligence).
 #: setup/main.py:2417
 msgid "AI server:"
-msgstr ""
+msgstr "Сервер ШІ:"
 
 #. Translators: The connection status to the ollama or
 #. ramalama server used for AI (Artificial Intelligence).
 #: setup/main.py:2424
 msgid "Connection status to the AI server."
-msgstr ""
+msgstr "Стан з'єднання з сервером ШІ."
 
 #. Translators: Checkbox to enable the AI (Artificial
 #. Intelligence) chat feature using ollama or ramalama
 #. servers.
 #: setup/main.py:2440
 msgid "Enable AI chat"
-msgstr ""
+msgstr "Увімкнути спілкування з ШІ"
 
 #. Translators: Tooltip for “Enable AI chat”.
 #: setup/main.py:2443
@@ -1743,18 +1730,21 @@ msgid ""
 "Enable or disable AI chat globally. When disabled, all AI chat related "
 "features and keybindings are turned off."
 msgstr ""
+"Увімкнути або вимкнути спілкування з ШІ на загальному рівні. Якщо вимкнено, "
+"усі пов'язані із спілкуванням з ШІ можливості і клавіатурні прив'язки буде "
+"вимкнено."
 
 #. Translators: “Model:” specifies the LLM (Large Language
 #. Model) to be used with ollama or ramalama.
 #: setup/main.py:2456
 msgid "Model:"
-msgstr ""
+msgstr "Модель:"
 
 #. Translators: The limit of how many past messages are
 #. sent to the AI for context.
 #: setup/main.py:2483
 msgid "Message history limit:"
-msgstr ""
+msgstr "Обмеження журналу повідомлень:"
 
 #. Translators: This is the AI system message field to set
 #. the implicit context for AI chats. For example it could
@@ -1763,7 +1753,7 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2512
 msgid "AI system message:"
-msgstr ""
+msgstr "Повідомлення системи ШІ:"
 
 #. Translators: Tooltip explaining the AI system message
 #. field to set the implicit context for AI chats. For
@@ -1772,7 +1762,7 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2522
 msgid "System prompt that guides how the AI responds."
-msgstr ""
+msgstr "Запит системи, які містить настанови щодо того, як відповідає ШІ."
 
 #. Translators:
 #: setup/main.py:2556 setup/main.py:3795
