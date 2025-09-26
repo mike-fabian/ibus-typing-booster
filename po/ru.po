@@ -12,7 +12,8 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2025-09-25 00:12+0200\n"
 "PO-Revision-Date: 2025-09-26 16:17+0000\n"
-"Last-Translator: \"Sergey A.\" <Ser82-png@yandex.ru>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Russian <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ru/>\n"
 "Language: ru\n"
@@ -1726,7 +1727,7 @@ msgstr ""
 #. Model) to be used with ollama or ramalama.
 #: setup/main.py:2456
 msgid "Model:"
-msgstr ""
+msgstr "Модель:"
 
 #. Translators: The limit of how many past messages are
 #. sent to the AI for context.
