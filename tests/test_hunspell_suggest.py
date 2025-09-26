@@ -99,10 +99,13 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(
             h.suggest('Alpengluhen')[0],
             ('Alpenglu\u0308hen', 0))
+        print('FIXME', h.suggest('filosofictejsi'))
         self.assertEqual(
-            h.suggest('filosofictejsi'),
-            [('filosofic\u030Cte\u030Cjs\u030Ci\u0301', 0),
-             ('filosofic\u030Cte\u030Cji', -1)])
+            h.suggest('filosofictejsi'), [
+                ('filosofic\u030Cte\u030Cjs\u030Ci\u0301', 0),
+                ('filosofic\u030Cte\u030Cjs\u030Ci\u0301m', 0),
+                ('filosofic\u030Cte\u030Cji', -1),
+            ])
         self.assertEqual(
             h.suggest('filosofictejs')[0],
             ('filosofic\u030Cte\u030Cjs\u030Ci\u0301', 0))
@@ -197,8 +200,8 @@ class HunspellSuggestTestCase(unittest.TestCase):
     def test_en_US(self) -> None:
         h = hunspell_suggest.Hunspell(['en_US'])
         normal_suggestions = set((
-            'Camel', 'camel', 'Camelot', 'camellia', 'camelhair', 'Camelopardalis'))
-        spellcheck_suggestions = set(('came', 'cameo', 'camels'))
+            'Camel', 'camel', 'camels', 'Camelot', 'camellia', 'camelhair', 'Camelopardalis'))
+        spellcheck_suggestions = set(('came', 'cameo'))
         for word, freq in h.suggest('camel'):
             if word in normal_suggestions and freq == 0:
                 normal_suggestions.remove(word)
@@ -345,34 +348,38 @@ class HunspellSuggestTestCase(unittest.TestCase):
 
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('sv_SE')[0],
-        "Skipping because no Swedisch dictionary could be found. ")
+        "Skipping because no Swedish dictionary could be found. ")
     def test_sv_SE(self) -> None:
         h = hunspell_suggest.Hunspell(['sv_SE'])
         self.assertEqual(
-            h.suggest('östgo')[0:6],
-            [('östgot', 0),
-             ('Östgöta', 0),
-             ('östgöte', 0),
-             ('östgotisk', 0),
-             ('östgötsk', 0),
-             ('östgötska', 0)])
+            h.suggest('östgo')[0:6], [
+                ('östgot', 0),
+                ('Östgöta', 0),
+                ('östgöte', 0),
+                ('Östgötar', 0),
+                ('östgotisk', 0),
+                ('östgötsk', 0),
+            ])
         self.assertEqual(
-            h.suggest('östgot'),
-            [('östgot', 0),
-             ('östgotisk', 0),
-             ('Östgot', -1)])
+            h.suggest('östgot'), [
+                ('östgot', 0),
+                ('östgotisk', 0),
+                ('Östgot', -1),
+            ])
         self.assertEqual(
-            h.suggest('östgö')[0:4],
-            [('Östgöta', 0),
-             ('östgöte', 0),
-             ('östgötsk', 0),
-             ('östgötska', 0)])
+            h.suggest('östgö')[0:4], [
+                ('Östgöta', 0),
+                ('östgöte', 0),
+                ('Östgötar', 0),
+                ('östgötsk', 0),
+            ])
         self.assertEqual(
-            h.suggest('östgöt')[0:4],
-            [('Östgöta', 0),
-             ('östgöte', 0),
-             ('östgötsk', 0),
-             ('östgötska', 0)])
+            h.suggest('östgöt')[0:4], [
+                ('Östgöta', 0),
+                ('östgöte', 0),
+                ('Östgötar', 0),
+                ('östgötsk', 0),
+            ])
 
 if __name__ == '__main__':
     unittest.main()

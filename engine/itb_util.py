@@ -24,6 +24,7 @@ from typing import Any
 from typing import Tuple
 from typing import List
 from typing import Dict
+from typing import DefaultDict
 from typing import Set
 from typing import Optional
 from typing import Union
@@ -49,6 +50,7 @@ import glob
 import gettext
 import xml.etree.ElementTree
 from dataclasses import dataclass
+from collections import defaultdict
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
@@ -3815,6 +3817,39 @@ def get_primary_selection_text() -> str:
     except Exception as error: # pylint: disable=broad-except
         LOGGER.exception('Primary selection helper failed: %s', error)
     return ''
+
+def merge_dicts_max(*dicts: Dict[str, int]) -> Dict[str, int]:
+    '''Merges multiple dictionaries, keeping the maximum value for each key.
+
+    :param *dicts: Variable number of dictionaries with string keys and
+                   integer values.
+    :return:       A new dictionary where each key from the input
+                   dictionaries maps to the maximum value found across
+                   all inputs.  If a key appears in only one
+                   dictionary, its value is preserved.
+
+    Examples:
+        >>> a = {'a': 0, 'b': -1, 'c': 0, 'f': -5}
+        >>> b = {'d': 0, 'b': 2, 'f': -2}
+        >>> c = {'a': 5, 'e': 3, 'f': 1}
+        >>> result = merge_dicts_max(a, b, c)
+        >>> all(result[k] == v for k, v in
+        ...     {'a':5, 'b':2, 'c':0, 'd':0, 'e':3, 'f':1}.items())
+        True
+
+        >>> merge_dicts_max({'x': 1}, {'x': 2, 'y': 3})
+        {'x': 2, 'y': 3}
+
+        >>> merge_dicts_max()  # No input dictionaries
+        {}
+
+    '''
+    max_values: DefaultDict[str, int] = defaultdict(lambda: -sys.maxsize - 1)
+    for d in dicts:
+        for key, value in d.items():
+            if value > max_values[key]:
+                max_values[key] = value
+    return dict(max_values)
 
 def dict_update_existing_keys(
         pdict: Dict[Any, Any], other_pdict: Dict[Any, Any]) -> None:

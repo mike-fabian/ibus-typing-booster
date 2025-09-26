@@ -655,6 +655,10 @@ class Hunspell:
         >>> h = Hunspell(['None', 'en_US'])
         >>> ('Camelot', 0) in h.suggest('camel') # Should work with aspell and hunspell
         True
+
+        >>> h = Hunspell(['en_US'])
+        >>> all((x, 0) in h.suggest('tree') for x in ('trees', 'treetop', 'treetops'))
+        True
         '''
         # pylint: enable=line-too-long
         if input_phrase in self._suggest_cache:
@@ -681,8 +685,10 @@ class Hunspell:
         input_phrase = unicodedata.normalize(
             itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
 
-        suggested_words: Dict[str, int] = {}
+        suggested_words: Dict[str, Dict[str, int]] = {}
         for dictionary in self._dictionaries:
+            name = dictionary.name
+            suggested_words[name] = {}
             if dictionary.words:
                 if dictionary.word_pairs:
                     input_phrase_no_accents = itb_util.remove_accents(
@@ -697,7 +703,7 @@ class Hunspell:
                             regex_pattern = regex.compile(
                                 regex.escape(input_phrase_no_accents),
                                 regex.IGNORECASE)
-                            suggested_words.update([
+                            suggested_words[name].update([
                                 (x[0], 0)
                                 for x in dictionary.word_pairs
                                 if regex_pattern.match(x[1])])
@@ -705,7 +711,7 @@ class Hunspell:
                             re_pattern = re.compile( # pylint: disable=used-before-assignment
                                 re.escape(input_phrase_no_accents),
                                 re.IGNORECASE)
-                            suggested_words.update([
+                            suggested_words[name].update([
                                 (x[0], 0)
                                 for x in dictionary.word_pairs
                                 if re_pattern.match(x[1])])
@@ -714,7 +720,7 @@ class Hunspell:
                             regex_pattern = regex.compile(
                                 regex.escape(input_phrase),
                                 regex.IGNORECASE)
-                            suggested_words.update([
+                            suggested_words[name].update([
                                 (x, 0)
                                 for x in dictionary.words
                                 if regex_pattern.match(x)])
@@ -722,7 +728,7 @@ class Hunspell:
                             re_pattern = re.compile(
                                 re.escape(input_phrase),
                                 re.IGNORECASE)
-                            suggested_words.update([
+                            suggested_words[name].update([
                                 (x, 0)
                                 for x in dictionary.words
                                 if re_pattern.match(x)])
@@ -737,7 +743,16 @@ class Hunspell:
                         # knows about this, if the spell checker
                         # thinks it is a correct word, it must be
                         # counted as a match of course:
-                        suggested_words[input_phrase] = 0
+                        suggested_words[name][input_phrase] = 0
+                    # Add suffixes:
+                    # See: https://github.com/mike-fabian/ibus-typing-booster/issues/799
+                    suffixed_suggestions = {
+                        x: 0
+                        for suggestion in suggested_words[name]
+                        for x in dictionary.spellcheck_suggest(suggestion)
+                        if x.startswith(suggestion)
+                    }
+                    suggested_words[name].update(suffixed_suggestions)
                     extra_suggestions = [
                         unicodedata.normalize(
                             itb_util.NORMALIZATION_FORM_INTERNAL, x)
@@ -745,7 +760,7 @@ class Hunspell:
                         dictionary.spellcheck_suggest(input_phrase)
                     ]
                     for index, suggestion in enumerate(extra_suggestions):
-                        if suggestion not in suggested_words:
+                        if suggestion not in suggested_words[name]:
                             if (dictionary.word_pairs
                                 and
                                 itb_util.remove_accents(
@@ -753,11 +768,13 @@ class Hunspell:
                                     keep=itb_util.ACCENT_LANGUAGES[
                                         dictionary.language])
                                 == input_phrase_no_accents):
-                                suggested_words[suggestion] = 0
+                                suggested_words[name][suggestion] = 0
                             else:
-                                suggested_words[suggestion] = -(index + 1)
+                                suggested_words[name][suggestion] = -(index + 1)
+        suggested_words_total = itb_util.merge_dicts_max(
+            *suggested_words.values())
         sorted_suggestions = sorted(
-            suggested_words.items(),
+            suggested_words_total.items(),
             key=lambda x: (
                 - x[1],    # 0: in dictionary, negative: spellcheck
                 len(x[0]), # length of word ascending
