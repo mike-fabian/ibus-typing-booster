@@ -35,20 +35,6 @@ import functools
 import logging
 import itb_util
 
-USING_REGEX = False
-try:
-    # Enable new improved regex engine instead of backwards compatible
-    # v0.  regex.match('ß', 'SS', regex.IGNORECASE) matches only with
-    # the improved version!  See also: https://pypi.org/project/regex/
-    import regex # type: ignore
-    regex.DEFAULT_VERSION = regex.VERSION1
-    re = regex
-    USING_REGEX = True
-except ImportError:
-    # Use standard “re” module as a fallback:
-    import re
-    USING_REGEX = False
-
 LOGGER = logging.getLogger('ibus-typing-booster')
 
 DEBUG_LEVEL = int(0)
@@ -727,21 +713,15 @@ class Hunspell:
                 # complete it, it just wastes time then.
                 if len(input_phrase) <= dictionary.max_word_len:
                     if dictionary.word_pairs:
-                        pattern = re.compile(
-                            re.escape(input_phrase_no_accents),
-                            re.IGNORECASE)
-                        suggested_words[name].update([
-                            (x[0], 0)
-                            for x in dictionary.word_pairs
-                            if pattern.match(x[1])])
+                        query = input_phrase_no_accents.casefold()
+                        for word, stripped in dictionary.word_pairs:
+                            if stripped.casefold().startswith(query):
+                                suggested_words[name][word] = 0
                     else:
-                        pattern = re.compile(
-                            re.escape(input_phrase),
-                            re.IGNORECASE)
-                        suggested_words[name].update([
-                            (x, 0)
-                            for x in dictionary.words
-                            if pattern.match(x)])
+                        query = input_phrase.casefold()
+                        for word in dictionary.words:
+                            if word.casefold().startswith(query):
+                                suggested_words[name][word] = 0
                 if len(input_phrase) >= 4:
                     if dictionary.spellcheck(input_phrase):
                         # This is a valid word in this dictionary.
