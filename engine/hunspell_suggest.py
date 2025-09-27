@@ -753,12 +753,12 @@ class Hunspell:
                         if x.startswith(suggestion)
                     }
                     suggested_words[name].update(suffixed_suggestions)
-                    extra_suggestions = [
+                    extra_suggestions = (
                         unicodedata.normalize(
                             itb_util.NORMALIZATION_FORM_INTERNAL, x)
                         for x in
                         dictionary.spellcheck_suggest(input_phrase)
-                    ]
+                    )
                     for index, suggestion in enumerate(extra_suggestions):
                         if suggestion not in suggested_words[name]:
                             if (dictionary.word_pairs
