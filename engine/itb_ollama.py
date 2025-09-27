@@ -89,11 +89,12 @@ class ItbOllamaClient:
         resp = self._client.get('/v1/models')
         if resp.status_code == httpx.codes.OK:
             data = resp.json().get('data', [])
-            for model_dict in data:
-                if model_dict.get('owned_by', '') == 'library':
-                    self._server = 'ollama'
-                if model_dict.get('owned_by', '') == 'llamacpp':
-                    self._server = 'ramalama'
+            if data is not None:
+                for model_dict in data:
+                    if model_dict.get('owned_by', '') == 'library':
+                        self._server = 'ollama'
+                    if model_dict.get('owned_by', '') == 'llamacpp':
+                        self._server = 'ramalama'
         if self._server == 'ramalama':
             self._ramalama_shortnames = get_ramalama_shortnames()
             self._version = get_ramalama_version()
@@ -126,6 +127,8 @@ class ItbOllamaClient:
         if resp.status_code != httpx.codes.OK:
             LOGGER.error(
                 'get /v1/models failed: status_code=%s', resp.status_code)
+            return {}
+        if resp.json().get('data', []) is None:
             return {}
         return cast(Dict[str, Any], resp.json())
 
