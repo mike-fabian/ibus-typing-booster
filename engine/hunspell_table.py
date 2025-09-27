@@ -73,16 +73,19 @@ try:
 except (ImportError,) as error:
     IMPORT_ITB_OLLAMA_ERROR = error
 
-IMPORT_REGEX_SUCCESFUL = False
+USING_REGEX = False
 try:
-    import regex # type: ignore
-    IMPORT_REGEX_SUCCESFUL = True
     # Enable new improved regex engine instead of backwards compatible
     # v0.  regex.match('ß', 'SS', regex.IGNORECASE) matches only with
     # the improved version!  See also: https://pypi.org/project/regex/
-    regex.DEFAULT_VERSION = regex.VERSION1 # pylint: disable=no-member
-except (ImportError,):
-    IMPORT_REGEX_SUCCESFUL = False
+    import regex # type: ignore
+    regex.DEFAULT_VERSION = regex.VERSION1
+    re = regex
+    USING_REGEX = True
+except ImportError:
+    # Use standard “re” module as a fallback:
+    import re
+    USING_REGEX = False
 
 IMPORT_ITB_NLTK_SUCCESSFUL = False
 try:
@@ -7318,8 +7321,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if text_to_analyze == '':
             return False
         grapheme_clusters = list(text_to_analyze)
-        if IMPORT_REGEX_SUCCESFUL:
-            grapheme_clusters = regex.findall(r'\X', text_to_analyze)
+        if USING_REGEX:
+            grapheme_clusters = re.findall(r'\X', text_to_analyze)
         # If a selection text was found, use all grapheme clusters in
         # that selection. If no selection was found, use only the
         # grapheme cluster directly to the left of the cursor.

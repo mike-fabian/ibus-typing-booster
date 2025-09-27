@@ -34,17 +34,19 @@ import unicodedata
 import logging
 import itb_util
 
-IMPORT_REGEX_SUCCESFUL = False
+USING_REGEX = False
 try:
-    import regex # type: ignore
-    IMPORT_REGEX_SUCCESFUL = True
     # Enable new improved regex engine instead of backwards compatible
     # v0.  regex.match('ß', 'SS', regex.IGNORECASE) matches only with
     # the improved version!  See also: https://pypi.org/project/regex/
-    regex.DEFAULT_VERSION = regex.VERSION1 # pylint: disable=no-member
-except (ImportError,):
+    import regex # type: ignore
+    regex.DEFAULT_VERSION = regex.VERSION1
+    re = regex
+    USING_REGEX = True
+except ImportError:
     # Use standard “re” module as a fallback:
     import re
+    USING_REGEX = False
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -699,39 +701,21 @@ class Hunspell:
                 # complete it, it just wastes time then.
                 if len(input_phrase) <= dictionary.max_word_len:
                     if dictionary.word_pairs:
-                        if IMPORT_REGEX_SUCCESFUL:
-                            regex_pattern = regex.compile(
-                                regex.escape(input_phrase_no_accents),
-                                regex.IGNORECASE)
-                            suggested_words[name].update([
-                                (x[0], 0)
-                                for x in dictionary.word_pairs
-                                if regex_pattern.match(x[1])])
-                        else:
-                            re_pattern = re.compile( # pylint: disable=used-before-assignment
-                                re.escape(input_phrase_no_accents),
-                                re.IGNORECASE)
-                            suggested_words[name].update([
-                                (x[0], 0)
-                                for x in dictionary.word_pairs
-                                if re_pattern.match(x[1])])
+                        pattern = re.compile(
+                            re.escape(input_phrase_no_accents),
+                            re.IGNORECASE)
+                        suggested_words[name].update([
+                            (x[0], 0)
+                            for x in dictionary.word_pairs
+                            if pattern.match(x[1])])
                     else:
-                        if IMPORT_REGEX_SUCCESFUL:
-                            regex_pattern = regex.compile(
-                                regex.escape(input_phrase),
-                                regex.IGNORECASE)
-                            suggested_words[name].update([
-                                (x, 0)
-                                for x in dictionary.words
-                                if regex_pattern.match(x)])
-                        else:
-                            re_pattern = re.compile(
-                                re.escape(input_phrase),
-                                re.IGNORECASE)
-                            suggested_words[name].update([
-                                (x, 0)
-                                for x in dictionary.words
-                                if re_pattern.match(x)])
+                        pattern = re.compile(
+                            re.escape(input_phrase),
+                            re.IGNORECASE)
+                        suggested_words[name].update([
+                            (x, 0)
+                            for x in dictionary.words
+                            if pattern.match(x)])
                 if len(input_phrase) >= 4:
                     if dictionary.spellcheck(input_phrase):
                         # This is a valid word in this dictionary.
