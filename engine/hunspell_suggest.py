@@ -31,6 +31,7 @@ from typing import Any
 import os
 import sys
 import unicodedata
+import functools
 import logging
 import itb_util
 
@@ -333,6 +334,20 @@ class Dictionary():
             self.voikko.suggest(unicodedata.normalize('NFC', word))
             ]
 
+    # Don’t use @lru_cache(maxsize=None) here, that has a high risk of
+    # memory leaks.  It caches forever — and it keeps strong
+    # references to all function arguments and results. If the method
+    # is on a class instance (self), and the cache calls involving
+    # self, then self gets kept alive — even if no other code
+    # references it! That is a high risk of memory leaks when
+    # instantiated class objects go out of scope.  With a bounded
+    # cache, Python will evict the oldest cache entries automatically
+    # when the cache grows beyond 500,000 entries. That is much safer
+    # The self reference can still stay around as long as there are
+    # still entries in the cache for that instance. But if all entries
+    # referring to a self are evicted, then self can be garbage
+    # collected properly.
+    @functools.lru_cache(maxsize=500_000)
     def spellcheck_suggest(self, word: str) -> List[str]:
         '''Return spellchecking suggestions for word using enchant,
         pyhunspell or voikko
@@ -402,7 +417,7 @@ class Hunspell:
             else:
                 LOGGER.debug(
                     'Hunspell.init_dictionaries() dictionary_names=()\n')
-        self._suggest_cache = {}
+        self.suggest.cache_clear()
         self._dictionaries = []
         for dictionary_name in self._dictionary_names:
             self._dictionaries.append(Dictionary(name=dictionary_name))
@@ -592,6 +607,20 @@ class Hunspell:
                 dictionary_names.append(dictionary.name)
         return sorted(dictionary_names)
 
+    # Don’t use @lru_cache(maxsize=None) here, that has a high risk of
+    # memory leaks.  It caches forever — and it keeps strong
+    # references to all function arguments and results. If the method
+    # is on a class instance (self), and the cache calls involving
+    # self, then self gets kept alive — even if no other code
+    # references it! That is a high risk of memory leaks when
+    # instantiated class objects go out of scope.  With a bounded
+    # cache, Python will evict the oldest cache entries automatically
+    # when the cache grows beyond 500,000 entries. That is much safer
+    # The self reference can still stay around as long as there are
+    # still entries in the cache for that instance. But if all entries
+    # referring to a self are evicted, then self can be garbage
+    # collected properly.
+    @functools.lru_cache(maxsize=500_000)
     def suggest(self, input_phrase: str) -> List[Tuple[str, int]]:
         # pylint: disable=line-too-long
         '''Return completions or corrections for the input phrase
@@ -663,8 +692,6 @@ class Hunspell:
         True
         '''
         # pylint: enable=line-too-long
-        if input_phrase in self._suggest_cache:
-            return self._suggest_cache[input_phrase]
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 "Hunspell.suggest() input_phrase=%(ip)s\n",
@@ -680,8 +707,7 @@ class Hunspell:
         # I.e. if '/' is already contained in the input, it cannot
         # match a word in the dictionary and we return an empty list
         # immediately:
-        if '/' in input_phrase:
-            self._suggest_cache[input_phrase] = []
+        if not input_phrase or '/' in input_phrase:
             return []
         # make sure input_phrase is in the internal normalization form (NFD):
         input_phrase = unicodedata.normalize(
@@ -764,7 +790,6 @@ class Hunspell:
                 len(x[0]), # length of word ascending
                 x[0],      # alphabetical
             ))[0:MAX_WORDS]
-        self._suggest_cache[input_phrase] = sorted_suggestions
         return sorted_suggestions
 
 BENCHMARK = True
