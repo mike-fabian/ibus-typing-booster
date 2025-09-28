@@ -674,8 +674,13 @@ class Hunspell:
         True
 
         >>> h = Hunspell(['en_US'])
-        >>> all((x, 0) in h.suggest('tree') for x in ('trees', 'treetop', 'treetops'))
+        >>> all((x, 0) in h.suggest('tree') for x in ('trees', 'treed', "tree's"))
         True
+
+        For benchmarking:
+
+        >>> result = [h.suggest(c) for c in 'abcdefghijklmnopqrstuvwxyz']
+        >>> result = [h.suggest(word) for word in ('infl', 'mess', 'tree', 'temp', 'wood', 'gard', 'came', 'wind', 'wate', 'succ', 'dict', 'load', 'enco', 'spell', 'word', 'auto', 'mode', 'bicy', 'moun', 'batt', 'tabl', 'star', 'moon', 'univ')]
         '''
         # pylint: enable=line-too-long
         if DEBUG_LEVEL > 1:
@@ -738,7 +743,7 @@ class Hunspell:
                     # See: https://github.com/mike-fabian/ibus-typing-booster/issues/799
                     suffixed_suggestions = {
                         x: 0
-                        for suggestion in suggested_words[name]
+                        for suggestion in sorted(suggested_words[name])[0:4]
                         for x in dictionary.spellcheck_suggest(suggestion)
                         if x.startswith(suggestion)
                     }
