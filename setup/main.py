@@ -163,6 +163,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self.set_title(title)
         self.set_name('TypingBoosterPreferences')
         self.set_modal(True)
+        self.set_icon_name('ibus-typing-booster')
         style_provider = Gtk.CssProvider()
         style_provider.load_from_data(
             b'''
