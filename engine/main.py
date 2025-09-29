@@ -386,7 +386,6 @@ def write_xml() -> None:
             # https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/3753
             # make the symbol black and white:
             symbol = '🚀\uFE0E'
-        setup = SETUP_TOOL
         icon_prop_key = 'InputMode'
         rank = 0
         schema_path = '/org/freedesktop/ibus/engine/typing-booster/'
@@ -420,7 +419,7 @@ def write_xml() -> None:
             language = m17n_lang
             icon =  m17n_db_info.get_icon(ime)
             description = m17n_db_info.get_description(ime)
-            setup = SETUP_TOOL + f' --engine-name {name}'
+        setup = SETUP_TOOL + f' --engine-name {name}'
         gsettings = Gio.Settings(
             schema='org.freedesktop.ibus.engine.typing-booster',
             path=schema_path)

@@ -98,7 +98,7 @@ GTK_VERSION = (Gtk.get_major_version(),
 
 M17N_DB_INFO = None
 
-def parse_args() -> Any:
+def parser() -> Any:
     '''
     Parse the command line arguments.
     '''
@@ -109,13 +109,18 @@ def parse_args() -> Any:
         action='store',
         type=str,
         dest='engine_name',
-        default='typing-booster',
+        default='',
         help=('Set the name of the engine, for example “typing-booster” '
               'for the regular multilingual typing booster or '
               '“tb:<language>:<name>” for special typing booster '
-              'engines defaulting to emulating ibus-m17n a specific '
+              'engines defaulting to emulating ibus-m17n for a specific '
               'm17n input method. For example “tb:hi:itrans” would be '
-              'a special typing-booster engine emulating “m17n:hi:itrans”.'))
+              'a special typing-booster engine emulating “m17n:hi:itrans”. '
+              'Default: “%(default)s”. '
+              'If this option is not used, the value of the environment '
+              'variable IBUS_ENGINE_NAME is tried instead. '
+              'If the variable IBUS_ENGINE_NAME is also not set or empty, '
+              'this help is printed.'))
     parser.add_argument(
         '-q', '--no-debug',
         action='store_true',
@@ -123,15 +128,10 @@ def parse_args() -> Any:
         help=('Do not write log file '
               '~/.local/share/ibus-typing-booster/setup-debug.log, '
               'default: %(default)s'))
-    engine_name = parser.parse_args().engine_name
-    if (engine_name != 'typing-booster'
-        and not itb_util.M17N_ENGINE_NAME_PATTERN.search(engine_name)):
-        print('Invalid engine name.\n')
-        parser.print_help()
-        sys.exit(1)
-    return parser.parse_args()
+    return parser
 
-_ARGS = parse_args()
+PARSER = parser()
+_ARGS = PARSER.parse_args()
 
 class SetupUI(Gtk.Window): # type: ignore
     '''
@@ -7242,8 +7242,14 @@ if __name__ == '__main__':
         sys.exit(1)
     M17N_DB_INFO = itb_util.M17nDbInfo()
     ENGINE_NAME = _ARGS.engine_name
-    LOGGER.info('engine name “%s”', ENGINE_NAME)
-    SETUP_UI = SetupUI(engine_name=_ARGS.engine_name)
+    if not ENGINE_NAME and 'IBUS_ENGINE_NAME' in os.environ:
+        ENGINE_NAME = os.environ['IBUS_ENGINE_NAME']
+    LOGGER.info('ENGINE_NAME=%r', ENGINE_NAME)
+    if (ENGINE_NAME != 'typing-booster'
+        and not itb_util.M17N_ENGINE_NAME_PATTERN.search(ENGINE_NAME)):
+        print('Invalid engine name.')
+        PARSER.print_help()
+    SETUP_UI = SetupUI(engine_name=ENGINE_NAME)
     GLIB_MAIN_LOOP = GLib.MainLoop()
     signal.signal(signal.SIGTERM, quit_glib_main_loop) # kill <pid>
     # Ctrl+C (optional, can also use try/except KeyboardInterrupt)

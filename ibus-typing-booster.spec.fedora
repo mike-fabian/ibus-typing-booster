@@ -1,5 +1,5 @@
 Name:       ibus-typing-booster
-Version:    2.27.75
+Version:    2.27.79
 Release:    %autorelease
 Summary:    A completion input method
 License:    GPL-3.0-or-later AND Apache-2.0
@@ -228,6 +228,7 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/ibus-typing-booster.svg
 %{_libexecdir}/ibus-engine-typing-booster
 %{_libexecdir}/ibus-setup-typing-booster
+%{_datadir}/applications/ibus-setup-tb.desktop
 %{_datadir}/applications/ibus-setup-typing-booster.desktop
 %{_datadir}/glib-2.0/schemas/org.freedesktop.ibus.engine.typing-booster.gschema.xml
 

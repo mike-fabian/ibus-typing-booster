@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Typing Booster Preferences
+Comment=Set Typing Booster Options
+Exec=${LIBEXECDIR}/ibus-setup-typing-booster
+Icon=ibus-typing-booster
+NoDisplay=true
+Type=Application
+StartupNotify=true
+Categories=Settings;

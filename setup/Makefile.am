@@ -18,7 +18,7 @@
 
 libexec_SCRIPTS = ibus-setup-typing-booster
 
-desktop_in_in_files = ibus-setup-typing-booster.desktop.in.in
+desktop_in_in_files = ibus-setup-typing-booster.desktop.in.in ibus-setup-tb.desktop.in.in
 desktop_in_files = $(desktop_in_in_files:.in.in=.in)
 
 $(desktop_in_files): %.desktop.in: %.desktop.in.in Makefile
