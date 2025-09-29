@@ -11,9 +11,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-09-25 00:12+0200\n"
-"PO-Revision-Date: 2025-09-26 16:17+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"PO-Revision-Date: 2025-09-29 15:15+0000\n"
+"Last-Translator: mikhail m <poshta82@mail.ru>\n"
 "Language-Team: Russian <https://translate.fedoraproject.org/projects/"
 "ibus-typing-booster/app/ru/>\n"
 "Language: ru\n"
@@ -1742,7 +1741,7 @@ msgstr "Ограничение журнала сообщений:"
 #. assistant. Respond concisely.”
 #: setup/main.py:2512
 msgid "AI system message:"
-msgstr "Сообщения системы ИИ:"
+msgstr "Системное сообщение ИИ:"
 
 #. Translators: Tooltip explaining the AI system message
 #. field to set the implicit context for AI chats. For
