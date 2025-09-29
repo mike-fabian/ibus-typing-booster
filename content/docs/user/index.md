@@ -68,8 +68,8 @@ date: 2021-09-30
 * [Using NLTK to find related words](#nltk-related-words)
 * [Speech recognition](#speech-recognition)
 * [⚠️🚧🏗️ AI chat using ollama or ramalama](#ai-chat)
-    * [Ollama server](#ollama-server)
-    * [Ramalama server](#ramalama-server)
+    * [Ollama server setup](#ollama-server)
+    * [Ramalama server setup](#ramalama-server)
 ---------
 
 # Installing ibus-typing-booster {#installing-ibus-typing-booster}
