@@ -68,6 +68,8 @@ date: 2021-09-30
 * [Using NLTK to find related words](#nltk-related-words)
 * [Speech recognition](#speech-recognition)
 * [⚠️🚧🏗️ AI chat using ollama or ramalama](#ai-chat)
+    * [Ollama server](#ollama-server)
+    * [Ramalama server](#ramalama-server)
 ---------
 
 # Installing ibus-typing-booster {#installing-ibus-typing-booster}
@@ -3751,5 +3753,138 @@ finalized and the result is inserted at the writing position.
 
 # ⚠️🚧🏗️ AI chat using ollama or ramalama {#ai-chat}
 
-⚠️🚧🏗️ New feature, still experimental, documentation coming soon ...
+## ⚠️🚧🏗️ Experimental Feature: AI Chat (Beta)
 
+### To use the AI chat feature, you need:
+
+- A running [ollama server](#ollama-server) or [ramalama
+  server](#ramalama-server).
+
+- Keybindings for `ai_chat_start_new` and
+  `ai_chat_continue` (configure these in the _Keybindings_ tab of the
+  setup tool).
+
+### How it works
+
+- **Select text** to use as your question for the AI.
+- **Press your assigned keybinding** to send it.
+
+#### Commands
+
+| Command | Behaviour |
+| --- | --- |
+| `ai_chat_start_new` | Starts a fresh chat using the selected text as the first question. _Discards any prior history._ |
+| `ai_chat_continue`  | Sends the selected text as a follow-up question. _Retains message history_ (**RAM-only**). |
+
+> ⚠️ History is cleared after:
+> - Using `ai_chat_start_new`
+> - Restarting Typing Booster
+
+### AI response handling
+
+The AI’s answer streams into the auxiliary text. *To interrupt streaming:*
+
+- Press `Escape` (default for `cancel`)
+- Switch  focus to another window or move the cursor with the mouse.
+
+#### After the answer completes
+
+| Action | Effect |
+| --- | --- |
+| `Escape` (`cancel`)         | Discards the answer _and_ the question (no history recorded). |
+| _Any other key_             | Inserts a newline, adds the answer, inserts the keypress, and records the Q&A in history. |
+| `Control` + _any other key_ | Replaces the question with the answer, inserts the keypress, and records history.
+| `Alt` + _any other key_     | Discards the answer but keeps the Q&A in history (useful for refining follow-up questions). |
+
+## Ollama server setup {#ollama-server}
+
+**Minimum required version:** 0.9.6.
+
+#### Installation notes
+
+- **Fedora 42**: Packaged version (0.4.4) is outdated.
+- **Fedora 43**: Packaged version (0.9.4) is still too old for most models.
+
+If your distro lacks ollama ≥ 0.9.6 install upstream:
+
+[🔗 Official Linux Installation Guide](https://github.com/ollama/ollama/blob/main/docs/linux.md)
+
+#### Steps
+
+**Start the server:**
+
+```
+ollama serve
+```
+
+(or use `systemctl` for auto-start: [🔗 Instructions](https://github.com/ollama/ollama/blob/main/docs/linux.md#adding-ollama-as-a-startup-service-recommended))
+
+**Verify installation:**
+
+```
+ollama -v
+```
+
+**Pull a model** (e.g., `gemma3`):
+
+```
+ollama pull gemma3
+```
+
+**Configure Typing Booster:**
+
+In the _AI_ tab of the setup tool of Typing Booster you should see:
+
+| ☑️ Enable AI chat          |                                          |
+| --- | --- |
+| AI server: ℹ️              | http://localhost:11434 : ollama 0.9.6 ✔️ |
+| Model:                     | [ gemma3 ✔️ (gemma3:latest) ]            | 
+| Message history limit:     | [ 99 ][ ➕ ][ ➖ ]                           |
+
+If everything checks out, proceed to [AI chat usage](#ai-chat).
+
+## Ramalama server setup {#ramalama-server}
+
+**Fedora 42/43:** The packaged `ramalama` (0.12.2) is sufficient.
+
+#### Steps
+
+**Install**:
+
+```
+sudo dnf install ramalama
+```
+
+**Pull a model** (e.g., `gemma3`):
+
+```
+ramalama pull gemma3
+```
+
+**Start the server:**
+
+```
+ramalama serve --network=host -p 11434 gemma3
+```
+
+- `--network=host`: Ensures the OpenAI REST API is accessible (required for Typing Booster).
+
+- `-p 11434`: Matches Ollama’s default port. Omit to use port 8080, but then set:
+
+```
+export OLLAMA_HOST=http://localhost:8080
+```
+
+(_Add to `~/.profile` and restart your session._)
+
+**Configure Typing Booster:**
+
+In the _AI_ tab of the setup tool of Typing Booster you should see:
+
+| ☑️ Enable AI chat          |                                          |
+| --- | --- |
+| AI server: ℹ️              | http://localhost:11434 : ramalama 0.12.2 ✔️ |
+| Model:                     | [ gemma3 ✔️ (gemma-3-4b-it-GGUF) ]           | 
+| Message history limit:     | [ 99 ][ ➕ ][ ➖ ]                           |
+
+If everything checks out, proceed to [AI chat usage](#ai-chat).
