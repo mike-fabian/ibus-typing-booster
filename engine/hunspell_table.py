@@ -39,7 +39,6 @@ else:
 # pylint: enable=wrong-import-position
 import unicodedata
 import os
-import re
 import fnmatch
 import ast
 import time
