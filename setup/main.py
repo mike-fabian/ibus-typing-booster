@@ -142,13 +142,13 @@ class SetupUI(Gtk.Window): # type: ignore
         self._engine_name = engine_name
         if not self._engine_name:
             self._engine_name = 'typing-booster'
-        title = '🚀 ' + _('Preferences for ibus-typing-booster')
+        title = _('Preferences for ibus-typing-booster') + ' 🚀'
         user_db_file = 'user.db'
         schema_path = '/org/freedesktop/ibus/engine/typing-booster/'
         self._m17n_ime_lang = ''
         self._m17n_ime_name = ''
         if self._engine_name != 'typing-booster':
-            title = '🚀 ' + self._engine_name + ' ' + _('Preferences')
+            title = self._engine_name + ' ' + _('Preferences') + ' 🚀'
             match = itb_util.M17N_ENGINE_NAME_PATTERN.search(self._engine_name)
             if not match:
                 raise ValueError('Invalid engine name.')
