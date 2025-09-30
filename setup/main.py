@@ -105,7 +105,7 @@ GTK_VERSION = (Gtk.get_major_version(),
 
 M17N_DB_INFO = None
 
-def parser() -> Any:
+def arg_parser() -> Any:
     '''
     Parse the command line arguments.
     '''
@@ -137,7 +137,7 @@ def parser() -> Any:
               'default: %(default)s'))
     return parser
 
-PARSER = parser()
+PARSER = arg_parser()
 _ARGS = PARSER.parse_args()
 
 class SetupUI(Gtk.Window): # type: ignore
