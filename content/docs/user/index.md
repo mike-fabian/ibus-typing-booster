@@ -3755,6 +3755,8 @@ finalized and the result is inserted at the writing position.
 
 ## ⚠️🚧🏗️ Experimental Feature: AI Chat (Beta)
 
+{{< video label="AI chat using ramalama" mp4="/videos/user-docs/ai-chat-ramalama.mp4" >}}
+
 ### To use the AI chat feature, you need:
 
 - A running [ollama server](#ollama-server) or [ramalama
