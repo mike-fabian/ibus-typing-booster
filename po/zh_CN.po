@@ -5,15 +5,15 @@
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 # Boyuan Yang <073plan@gmail.com>, 2020.
 # Han Bao <hankelbao@outlook.com>, 2020.
-# Dingzhong Chen <wsxy162@gmail.com>, 2021.
+# Dingzhong Chen <wsxy162@gmail.com>, 2021, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-09-27 21:56+0200\n"
-"PO-Revision-Date: 2025-04-02 07:48+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"PO-Revision-Date: 2025-10-05 16:54+0000\n"
+"Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_CN/>\n"
 "Language: zh_CN\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.13.3\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:267
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -30,10 +30,8 @@ msgstr "Emoji 选择器"
 
 #: engine/emoji-picker.desktop.in.in:3
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:7
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji browsing tool"
-msgstr "Unicode 版本："
+msgstr "Emoji 浏览工具"
 
 #: engine/emoji_picker.py:378
 msgid "Clear recently used"
@@ -103,10 +101,8 @@ msgid "Unicode Version:"
 msgstr "Unicode 版本："
 
 #: engine/emoji_picker.py:786
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji Version:"
-msgstr "Unicode 版本："
+msgstr "Emoji 版本："
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
