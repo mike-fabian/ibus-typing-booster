@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-09-27 21:56+0200\n"
-"PO-Revision-Date: 2025-10-05 16:54+0000\n"
+"PO-Revision-Date: 2025-10-07 08:00+0000\n"
 "Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_CN/>\n"
@@ -125,10 +125,8 @@ msgstr "Unicode 分类"
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
 #: engine/emoji_picker.py:806
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Unicode block:"
-msgstr "Unicode 版本："
+msgstr "Unicode 区块："
 
 #: engine/emoji_picker.py:825 engine/emoji_picker.py:2018
 msgid "Left click to copy"
@@ -343,7 +341,7 @@ msgstr "地区"
 #. are seperated by punctuation or white space.
 #: engine/itb_util.py:2837
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "其它 杂项 别类"
 
 #: engine/itb_util.py:4976 engine/itb_util.py:5718
 msgid "File not found"
@@ -420,16 +418,12 @@ msgid "Online documentation:"
 msgstr "线上文档："
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:2
-#, fuzzy
-#| msgid "Typing Booster"
 msgid "Typing Booster Preferences"
-msgstr "打字加速器"
+msgstr "打字加速器首选项"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:3
-#, fuzzy
-#| msgid "Typing Booster"
 msgid "Set Typing Booster Options"
-msgstr "打字加速器"
+msgstr "设定打字加速器选项"
 
 #: setup/main.py:158
 msgid "Preferences"
@@ -497,7 +491,7 @@ msgstr "外观"
 #. (Artificial Intelligence).
 #: setup/main.py:391
 msgid "AI"
-msgstr ""
+msgstr "人工智能"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
@@ -515,7 +509,7 @@ msgstr "语音识别"
 #. focus:
 #: setup/main.py:425 setup/main.py:2599
 msgid "Autosettings"
-msgstr ""
+msgstr "自动设定"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
