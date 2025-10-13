@@ -796,6 +796,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             target=self.database.cleanup_database)
         cleanup_database_thread.start()
 
+    @property
+    def has_osk(self) -> bool:
+        '''Return True if OSK capability flag is set.'''
+        return bool(self.client_capabilities & itb_util.Capabilite.OSK)
+
+    @property
+    def has_surrounding_text(self) -> bool:
+        '''Return True if SURROUNDING_TEXT capability flag is set.'''
+        return bool(
+            self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT)
+
     def _trigger_surrounding_text_update(self) -> None:
         '''Trigger surrounding text update by calling get_surrounding_text()
 
@@ -1462,8 +1473,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 '\r', '␍').replace( # ␍ U+240D SYMBOL FOR CARRIAGE RETURN
                     '\u2028', repr('\u2028')).replace(
                         '\u2029', repr('\u2029'))
-        if (self._debug_level > 1
-            and not self.client_capabilities & itb_util.Capabilite.OSK):
+        if self._debug_level > 1 and not self.has_osk:
             # Show frequency information for debugging
             phrase += f' {str(user_freq)}'
             attrs.append(IBus.attr_foreground_new(
@@ -1599,8 +1609,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         phrase_frequencies[cand.phrase] = cand.user_freq
                 phrase_candidates = itb_util.best_candidates(
                     phrase_frequencies)
-        if ((self._emoji_predictions
-             and not self.client_capabilities & itb_util.Capabilite.OSK)
+        if ((self._emoji_predictions and not self.has_osk)
             or self._temporary_emoji_predictions
             or self._typed_string[0] in self._emoji_trigger_characters
             or self._typed_string[-1] in self._emoji_trigger_characters):
@@ -2976,7 +2985,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._update_preedit()
             return
         if (not self._inline_completion
-            or (self.client_capabilities & itb_util.Capabilite.OSK)
+            or self.has_osk
             or self._typed_compose_sequence
             or self._lookup_table_shows_m17n_candidates
             or self._lookup_table_shows_related_candidates
@@ -3113,7 +3122,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self._update_lookup_table_and_aux()
         if self._debug_level < 2:
             return
-        if not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
+        if not self.has_surrounding_text:
             return
         LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
 
@@ -3215,7 +3224,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._update_lookup_table_and_aux()
             return
         delay = self._candidates_delay_milliseconds
-        if self.client_capabilities & itb_util.Capabilite.OSK:
+        if self.has_osk:
             delay = 0
         self._timeout_source_id = GLib.timeout_add(
             delay, self._update_lookup_table_and_aux)
@@ -3270,7 +3279,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._update_candidates_and_lookup_table_and_aux()
             return
         delay = self._candidates_delay_milliseconds
-        if self.client_capabilities & itb_util.Capabilite.OSK:
+        if self.has_osk:
             delay = 0
         self._timeout_source_id = GLib.timeout_add(
             delay, self._update_candidates_and_lookup_table_and_aux)
@@ -3515,7 +3524,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         :param extra_text: Additional text append to the commit,
                            usually a space
         '''
-        if self.client_capabilities & itb_util.Capabilite.OSK:
+        if self.has_osk:
             LOGGER.info(
                 'OSK is visible: do not commit candidate by index %s', index)
             return False
@@ -3948,7 +3957,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         make the result “word! ”.
 
         '''
-        if (not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
+        if (not self.has_surrounding_text
             or
             self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
             return ''
@@ -4099,7 +4108,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 LOGGER.debug(
                     'Not reopening the preedit because a modifier is set.')
             return False
-        if (not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
+        if (not self.has_surrounding_text
             or self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
             if self._debug_level > 1:
                 LOGGER.debug('Surrounding text is not supported. '
@@ -4310,7 +4319,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         '''
         self._is_context_from_surrounding_text = False
-        if (not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
+        if (not self.has_surrounding_text
             or self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
             # If getting the surrounding text is not supported, leave
             # the context as it is, i.e. rely on remembering what was
@@ -6863,8 +6872,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # or if the text left of the cursor is empty.
             # If surrounding text cannot be used, uppercase the
             # first letter unconditionally:
-            if (not
-                self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
+            if (not self.has_surrounding_text
                 or
                 self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
                 transcript = transcript[0].upper() + transcript[1:]
@@ -7177,7 +7185,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                  called by GLib.idle_add() runs again.
         '''
         selection_text = ''
-        if self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
+        if self.has_surrounding_text:
             if not self._surrounding_text.event.is_set():
                 if self._debug_level > 1:
                     LOGGER.warning(
@@ -7290,7 +7298,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         selection_text = ''
         text_left_of_cursor = ''
-        if self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
+        if self.has_surrounding_text:
             if not self._surrounding_text.event.is_set():
                 if self._debug_level > 1:
                     LOGGER.warning(
@@ -7507,7 +7515,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                  called by GLib.idle_add() runs again.
         '''
         selection_text = ''
-        if self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
+        if self.has_surrounding_text:
             if self._debug_level > 1:
                 LOGGER.debug('self._surrounding_text=%r',
                              self._surrounding_text)
@@ -7565,7 +7573,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return False
         if self._debug_level > 1:
             LOGGER.debug('Could not get a selection by any method.')
-        if not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT:
+        if not self.has_surrounding_text:
             LOGGER.error(
                 'Surrounding text not supported, giving up to get a prompt.')
             return False
@@ -8043,7 +8051,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         LOGGER.debug('Trying to change line direction to %r'
                      'self._im_client=%s',
                      direction, self._im_client)
-        if (not self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
+        if (not self.has_surrounding_text
             or
             self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
             LOGGER.debug(
@@ -9690,7 +9698,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     'Terminal detected and the option '
                     'to disable in terminals is set.')
             disabled = True
-        elif (self.client_capabilities & itb_util.Capabilite.OSK
+        elif (self.has_osk
               and
               (self._input_purpose in [itb_util.InputPurpose.TERMINAL.value])):
             if self._debug_level > 0:
@@ -10519,7 +10527,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             if self._candidates:
                 first_candidate = self._candidates[0].phrase
             if (not self._inline_completion
-                or (self.client_capabilities & itb_util.Capabilite.OSK)
+                or self.has_osk
                 or self.get_lookup_table().get_cursor_pos() != 0
                 or not first_candidate
                 or not first_candidate.startswith(typed_string)
@@ -10713,7 +10721,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                              'remembered context might be wrong')
             self.clear_context()
             return
-        if (self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT
+        if (self.has_surrounding_text
             and
             self._input_purpose not in [itb_util.InputPurpose.TERMINAL.value]):
             text = self._surrounding_text.text
