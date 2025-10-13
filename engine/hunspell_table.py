@@ -1539,11 +1539,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         stripped_transliterated_string = unicodedata.normalize(
                             'NFKD', stripped_transliterated_string)
                     if (stripped_transliterated_string
-                            and (len(stripped_transliterated_string)
-                                  >= self._min_char_complete)):
+                        and (len(stripped_transliterated_string)
+                             >= self._min_char_complete)):
                         self.is_lookup_table_enabled_by_min_char_complete = True
                     if (self.is_lookup_table_enabled_by_min_char_complete
-                            or self.is_lookup_table_enabled_by_tab):
+                        or self.is_lookup_table_enabled_by_tab
+                        or self.has_osk):
                         prefix_length = (
                             len(self._transliterated_strings[ime])
                             - len(stripped_transliterated_string))
@@ -1629,9 +1630,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             emoji_max_score: float = 0.0
             for ime in self._current_imes:
                 if (self._transliterated_strings[ime]
-                        and ((len(self._transliterated_strings[ime])
-                              >= self._min_char_complete)
-                             or self._tab_enable)):
+                    and (len(self._transliterated_strings[ime])
+                         >= self._min_char_complete
+                         or self.has_osk
+                         or self._tab_enable)):
                     emoji_matcher_candidates = self.emoji_matcher.candidates(
                         self._transliterated_strings[ime],
                         match_limit=self._emoji_match_limit,
@@ -2955,6 +2957,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if (self.get_lookup_table().get_number_of_candidates() == 0
             or self._hide_input
             or (self._tab_enable
+                and not self.has_osk
                 and not self.is_lookup_table_enabled_by_tab)
             or not aux_string):
             visible = False
@@ -2973,13 +2976,16 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # an empty suggestion popup if the number of candidates
         # is zero!
         if ((self.is_empty()
+             and not self.has_osk
              and self._min_char_complete != 0
              and not self._lookup_table_shows_related_candidates
              and not self._lookup_table_shows_selection_info
              and not self._typed_compose_sequence)
             or self._hide_input
             or self.get_lookup_table().get_number_of_candidates() == 0
-            or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
+            or (self._tab_enable
+                and not self.has_osk
+                and not self.is_lookup_table_enabled_by_tab)):
             self.hide_lookup_table()
             self._lookup_table_hidden = True
             self._update_preedit()
@@ -3153,18 +3159,29 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             IBus.Text.new_from_string(''), False)
 
     def _update_ui_empty_input_try_completion(self) -> None:
-        '''
-        Update the UI when the input is empty and try a completion.
-        '''
+        '''Update the UI when the input is empty and try a completion.'''
         if self._debug_level > 1:
             LOGGER.debug('entering function')
         if not self.is_empty():
             self._update_preedit()
             return
-        if (self._min_char_complete != 0
+        self.get_context()
+        if (not self._unit_test
+            and
+            (not self._surrounding_text.event.is_set()
+             or not self._is_context_from_surrounding_text)):
+            if self._debug_level > 1:
+                LOGGER.debug(
+                    'Failed to get context from surrounding text. '
+                    'Do not try to complete on empty input.')
+            self._update_ui_empty_input()
+            return
+        if ((self._min_char_complete != 0 and not self.has_osk)
             or self._hide_input
             or not self._word_predictions
-            or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
+            or (self._tab_enable
+                and not self.has_osk
+                and not self.is_lookup_table_enabled_by_tab)):
             # If the lookup table would be hidden anyway, there is no
             # point in updating the candidates, save some time by making
             # sure the lookup table and the auxiliary text are really
@@ -3240,7 +3257,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if (self.is_empty()
             or self._hide_input
             or not self._show_prediction_candidates()
-            or (self._tab_enable and not self.is_lookup_table_enabled_by_tab)):
+            or (self._tab_enable
+                and not self.has_osk
+                and not self.is_lookup_table_enabled_by_tab)):
             # If the lookup table would be hidden anyway, there is no
             # point in updating the candidates, save some time by making
             # sure the lookup table and the auxiliary text are really
@@ -3303,7 +3322,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # shortcut key explicitly requests looking up related
         # candidates, so it should have the same effect as Tab and
         # enable the lookup table:
-        if self._tab_enable and not self.is_lookup_table_enabled_by_tab:
+        if (self._tab_enable
+            and not self.has_osk
+            and not self.is_lookup_table_enabled_by_tab):
             self.is_lookup_table_enabled_by_tab = True
         if phrase == '':
             if (self.get_lookup_table().get_number_of_candidates()
@@ -3611,7 +3632,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._commit_string(selected_candidate + extra_text)
         self._clear_input()
         if extra_text == ' ':
-            self._update_ui_empty_input_try_completion()
+            if self._unit_test:
+                self._update_ui_empty_input_try_completion()
+            else:
+                self._trigger_surrounding_text_update()
+                # Tiny delay to give the surrounding text a chance to
+                # update:
+                GLib.timeout_add(5, self._update_ui_empty_input_try_completion)
         else:
             self._update_ui_empty_input()
         return True
@@ -3653,6 +3680,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._debug_level > 1:
             LOGGER.debug('commit_phrase=“%s” input_phrase=“%s”',
                          repr(commit_phrase), repr(input_phrase))
+        if not commit_phrase:
+            return
         # If the suggestions are only enabled by Tab key, i.e. the
         # lookup table is not shown until Tab has been typed, hide
         # the lookup table again after each commit. That means
@@ -3668,6 +3697,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if not input_phrase:
             input_phrase = self._transliterated_strings[
                 self.get_current_imes()[0]]
+        if not input_phrase:
+            input_phrase = commit_phrase
         if not commit_phrase.isspace():
             # If commit_phrase contains only white space
             # leave self._new_sentence as it is!
@@ -3866,8 +3897,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             or self._input_hints & itb_util.InputHints.PRIVATE):
             if self._debug_level > 1:
                 LOGGER.debug('Privacy: NOT recording and pushing context.')
-            return
-        if not commit_phrase or not input_phrase:
             return
         stripped_commit_phrase = itb_util.strip_token(commit_phrase)
         if self._debug_level > 1:
@@ -6681,7 +6710,17 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 if self._add_space_on_commit:
                     phrase += ' '
                 self._commit_string(phrase)
-                self._clear_input_and_update_ui()
+                if self._add_space_on_commit or self.has_osk:
+                    self._clear_input()
+                    if self._unit_test:
+                        self._update_ui_empty_input_try_completion()
+                    else:
+                        self._trigger_surrounding_text_update()
+                        # Tiny delay to give the surrounding
+                        # text a chance to update:
+                        GLib.timeout_add(5, self._update_ui_empty_input_try_completion)
+                else:
+                    self._clear_input_and_update_ui()
             return
         if (button == 3
             and (state & IBus.ModifierType.MOD1_MASK)
@@ -7050,8 +7089,9 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._update_ui()
             return True
         if ((self._tab_enable or self._min_char_complete > 1)
-                and self.is_lookup_table_enabled_by_tab
-                and self.get_lookup_table().get_number_of_candidates()):
+            and not self.has_osk
+            and self.is_lookup_table_enabled_by_tab
+            and self.get_lookup_table().get_number_of_candidates()):
             # If lookup table was enabled by typing Tab, and it is
             # not empty, close it again but keep the preëdit:
             self.is_lookup_table_enabled_by_tab = False
@@ -7071,6 +7111,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         :return: True if the key was completely handled, False if not.
         '''
+        if self.has_osk:
+            LOGGER.info('enable_lookup command ignored because OSK is used.')
+            return False
+
         if self._typed_compose_sequence:
             if self._lookup_table_shows_compose_completions:
                 return False
@@ -9277,7 +9321,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             GLib.source_remove(self._timeout_source_id)
             self._timeout_source_id = 0
         self.is_lookup_table_enabled_by_tab = False
-        if self._tab_enable:
+        if self._tab_enable and not self.has_osk:
             if self._debug_level > 1:
                 LOGGER.debug('Tab enable set, just update preedit')
             self._update_preedit()
@@ -9797,6 +9841,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 return False
             if (key.val >= 32 and not key.control
                 and not self._tab_enable
+                and not self.has_osk
                 and key.msymbol
                 in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
                 # if key.msymbol is for example 'G-4', then for
@@ -9826,7 +9871,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     # is only shown when explicitely requested by Tab.
                     # Therefore, in that case digits can be typed
                     # normally as well until the candidate list is
-                    # opened.  Putting a digit into the candidate list
+                    # opened. If OSK is used, committing by index is
+                    # never possible, therefore digits can be put
+                    # into the preedit always.
+                    # Putting a digit into the candidate list
                     # is better in that case, one may be able to get a
                     # reasonable completion that way.
                     if self.get_current_imes()[0] == 'NoIME':
@@ -10087,8 +10135,31 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                 and self.get_lookup_table().cursor_visible):
                                 # something is selected in the lookup
                                 # table, commit the selected phrase
-                                super().commit_text(IBus.Text.new_from_string(
-                                    self.get_string_from_lookup_table_cursor_pos()))
+                                input_phrase = commit_string = (
+                                    self.get_string_from_lookup_table_cursor_pos())
+                                self._commit_string(
+                                    commit_string, input_phrase=input_phrase)
+                                # Sleep between the commit and the forward key event:
+                                time.sleep(self._ibus_event_sleep_seconds)
+                                if (key.val in (IBus.KEY_space, IBus.KEY_Tab)
+                                    and not (key.control
+                                             or key.mod1
+                                             or key.super
+                                             or key.hyper
+                                             or key.meta)):
+                                    self._clear_input()
+                                    if self._unit_test:
+                                        self._update_ui_empty_input_try_completion()
+                                    else:
+                                        self._trigger_surrounding_text_update()
+                                        # Tiny delay to give the
+                                        # surrounding text a chance to
+                                        # update:
+                                        GLib.timeout_add(
+                                            5, self._update_ui_empty_input_try_completion)
+                                else:
+                                    self._clear_input_and_update_ui()
+                                return False
                             self._clear_input_and_update_ui()
                             return False
                     elif (key.msymbol == ' '
@@ -10232,7 +10303,13 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                          or key.hyper
                          or key.meta)):
                 self._clear_input()
-                self._update_ui_empty_input_try_completion()
+                if self._unit_test:
+                    self._update_ui_empty_input_try_completion()
+                else:
+                    self._trigger_surrounding_text_update()
+                    # Tiny delay of to give the surrounding text a
+                    # chance to update:
+                    GLib.timeout_add(5, self._update_ui_empty_input_try_completion)
             else:
                 self._clear_input_and_update_ui()
             # In Japanese input methods, a Return commits, in Chinese
