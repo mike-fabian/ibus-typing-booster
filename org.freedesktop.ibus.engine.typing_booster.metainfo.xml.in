@@ -47,6 +47,29 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.28.1" date="2025-10-14" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.28.1</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Ignore “Enable suggestions by key” and “Minimum number of chars for completion“ options when OSK is used (Resolves:
+            github-issues#813, Resolves: github-issues#814)
+          </li>
+          <li>
+            Translation update from Weblate (es 100%, tr 100%, zh_CN 73.1%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/814">
+          github-issues#814
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/813">
+          github-issues#813
+        </issue>
+      </issues>
+    </release>
     <release version="2.28.0" date="2025-09-30" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.28.0</url>
       <description>
