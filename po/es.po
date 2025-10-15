@@ -16,16 +16,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-09-27 21:56+0200\n"
-"PO-Revision-Date: 2025-08-21 00:25+0000\n"
+"PO-Revision-Date: 2025-10-15 08:35+0000\n"
 "Last-Translator: \"Fco. Javier F. Serrador\" <fserrador@gmail.com>\n"
-"Language-Team: Spanish <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/es/>\n"
+"Language-Team: Spanish <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13\n"
+"X-Generator: Weblate 5.13.3\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:267
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -494,7 +494,7 @@ msgstr "Apariencia"
 #. (Artificial Intelligence).
 #: setup/main.py:391
 msgid "AI"
-msgstr ""
+msgstr "IA"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
@@ -1703,7 +1703,7 @@ msgstr ""
 #. servers.
 #: setup/main.py:2425
 msgid "Enable AI chat"
-msgstr ""
+msgstr "Habilitar charla de IA"
 
 #. Translators: Tooltip for “Enable AI chat”.
 #: setup/main.py:2428
@@ -1711,30 +1711,32 @@ msgid ""
 "Enable or disable AI chat globally. When disabled, all AI chat related "
 "features and keybindings are turned off."
 msgstr ""
+"Habilitar o Inhabilitar carla IA globalmente. Cuando inhabilitado, todas las "
+"características y vínculos de teclas de la charla IA están apagadas."
 
 #. Translators: The ollama or ramalama server to use for AI
 #. (Artificial Intelligence).
 #: setup/main.py:2440
 msgid "AI server:"
-msgstr ""
+msgstr "Servidor de IA:"
 
 #. Translators: The connection status to the ollama or
 #. ramalama server used for AI (Artificial Intelligence).
 #: setup/main.py:2447
 msgid "Connection status to the AI server."
-msgstr ""
+msgstr "Estado de conexión para el servidor IA."
 
 #. Translators: “Model:” specifies the LLM (Large Language
 #. Model) to be used with ollama or ramalama.
 #: setup/main.py:2462
 msgid "Model:"
-msgstr ""
+msgstr "Modelo:"
 
 #. Translators: The limit of how many past messages are
 #. sent to the AI for context.
 #: setup/main.py:2488
 msgid "Message history limit:"
-msgstr ""
+msgstr "Límite del historial de mensajería:"
 
 #. Translators: This is the AI system message field to set
 #. the implicit context for AI chats. For example it could
@@ -1743,7 +1745,7 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2517
 msgid "AI system message:"
-msgstr ""
+msgstr "Mensaje del sistema IA:"
 
 #. Translators: Tooltip explaining the AI system message
 #. field to set the implicit context for AI chats. For
@@ -1752,7 +1754,7 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2527
 msgid "System prompt that guides how the AI responds."
-msgstr ""
+msgstr "Aviso del sistema que guía como responde la IA."
 
 #. Translators:
 #: setup/main.py:2565 setup/main.py:3814
