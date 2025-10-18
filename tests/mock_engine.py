@@ -20,11 +20,29 @@
 
 from typing import Any
 from typing import List
+from typing import Callable
 # pylint: disable=wrong-import-position
 from gi import require_version # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
 # pylint: enable=wrong-import-position
+
+def mock_glib_idle_add(
+        func: Callable[..., Any],
+        *args: Any,
+        **kwargs: Any) -> Any:
+    '''When unit testing, call the function immediately'''
+    func(*args, **kwargs)
+    return 0  # GLib.idle_add returns a source ID
+
+def mock_glib_timeout_add(
+        _interval: int,
+        func: Callable[..., Any],
+        *args: Any,
+        **kwargs: Any) -> Any:
+    '''When unit testing, call the function immediately'''
+    func(*args, **kwargs)
+    return 0  # GLib.timeout_add returns a source ID
 
 # pylint: disable=missing-function-docstring
 # pylint: disable=too-few-public-methods

@@ -3237,9 +3237,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._timeout_source_id:
             GLib.source_remove(self._timeout_source_id)
             self._timeout_source_id = 0
-        if self._unit_test:
-            self._update_lookup_table_and_aux()
-            return
         delay = self._candidates_delay_milliseconds
         if self.has_osk:
             delay = 0
@@ -3294,9 +3291,6 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if self._timeout_source_id:
             GLib.source_remove(self._timeout_source_id)
             self._timeout_source_id = 0
-        if self._unit_test:
-            self._update_candidates_and_lookup_table_and_aux()
-            return
         delay = self._candidates_delay_milliseconds
         if self.has_osk:
             delay = 0
@@ -3632,13 +3626,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._commit_string(selected_candidate + extra_text)
         self._clear_input()
         if extra_text == ' ':
-            if self._unit_test:
-                self._update_ui_empty_input_try_completion()
-            else:
-                self._trigger_surrounding_text_update()
-                # Tiny delay to give the surrounding text a chance to
-                # update:
-                GLib.timeout_add(5, self._update_ui_empty_input_try_completion)
+            self._trigger_surrounding_text_update()
+            # Tiny delay to give the surrounding text a chance to
+            # update:
+            GLib.timeout_add(5, self._update_ui_empty_input_try_completion)
         else:
             self._update_ui_empty_input()
         return True
@@ -6712,13 +6703,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._commit_string(phrase)
                 if self._add_space_on_commit or self.has_osk:
                     self._clear_input()
-                    if self._unit_test:
-                        self._update_ui_empty_input_try_completion()
-                    else:
-                        self._trigger_surrounding_text_update()
-                        # Tiny delay to give the surrounding
-                        # text a chance to update:
-                        GLib.timeout_add(5, self._update_ui_empty_input_try_completion)
+                    self._trigger_surrounding_text_update()
+                    # Tiny delay to give the surrounding text a chance
+                    # to update:
+                    GLib.timeout_add(5, self._update_ui_empty_input_try_completion)
                 else:
                     self._clear_input_and_update_ui()
             return
@@ -10148,15 +10136,12 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                              or key.hyper
                                              or key.meta)):
                                     self._clear_input()
-                                    if self._unit_test:
-                                        self._update_ui_empty_input_try_completion()
-                                    else:
-                                        self._trigger_surrounding_text_update()
-                                        # Tiny delay to give the
-                                        # surrounding text a chance to
-                                        # update:
-                                        GLib.timeout_add(
-                                            5, self._update_ui_empty_input_try_completion)
+                                    self._trigger_surrounding_text_update()
+                                    # Tiny delay to give the
+                                    # surrounding text a chance to
+                                    # update:
+                                    GLib.timeout_add(
+                                        5, self._update_ui_empty_input_try_completion)
                                 else:
                                     self._clear_input_and_update_ui()
                                 return False
@@ -10303,13 +10288,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                          or key.hyper
                          or key.meta)):
                 self._clear_input()
-                if self._unit_test:
-                    self._update_ui_empty_input_try_completion()
-                else:
-                    self._trigger_surrounding_text_update()
-                    # Tiny delay of to give the surrounding text a
-                    # chance to update:
-                    GLib.timeout_add(5, self._update_ui_empty_input_try_completion)
+                self._trigger_surrounding_text_update()
+                # Tiny delay of to give the surrounding text a chance
+                # to update:
+                GLib.timeout_add(5, self._update_ui_empty_input_try_completion)
             else:
                 self._clear_input_and_update_ui()
             # In Japanese input methods, a Return commits, in Chinese

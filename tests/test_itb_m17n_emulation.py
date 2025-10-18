@@ -43,6 +43,8 @@ require_version('IBus', '1.0')
 from gi.repository import IBus # type: ignore
 require_version('Gdk', '3.0')
 from gi.repository import Gdk
+require_version('GLib', '2.0')
+from gi.repository import GLib
 # pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')
@@ -55,6 +57,8 @@ from mock_engine import MockEngine
 from mock_engine import MockLookupTable
 from mock_engine import MockProperty
 from mock_engine import MockPropList
+from mock_engine import mock_glib_idle_add
+from mock_engine import mock_glib_timeout_add
 # pylint: enable=import-error
 
 import testutils # pylint: disable=import-error
@@ -95,10 +99,16 @@ class ItbM17nEmuTestCase(unittest.TestCase):
         IBus, 'Property', new=MockProperty)
     prop_list_patcher = mock.patch.object(
         IBus, 'PropList', new=MockPropList)
+    glib_idle_add_patcher = mock.patch.object(
+        GLib, 'idle_add', new=mock_glib_idle_add)
+    glib_timeout_add_patcher = mock.patch.object(
+        GLib, 'timeout_add', new=mock_glib_timeout_add)
     ibus_engine = IBus.Engine
     ibus_lookup_table = IBus.LookupTable
     ibus_property = IBus.Property
     ibus_prop_list = IBus.PropList
+    glib_idle_add = GLib.idle_add
+    glib_timeout_add = GLib.timeout_add
 
     _tempdir: Optional[tempfile.TemporaryDirectory] = None # type: ignore[type-arg]
     # Python 3.12+: _tempdir: Optional[tempfile.TemporaryDirectory[str]] = None
@@ -178,14 +188,20 @@ class ItbM17nEmuTestCase(unittest.TestCase):
         self.__class__.lookup_table_patcher.start()
         self.__class__.property_patcher.start()
         self.__class__.prop_list_patcher.start()
-        assert IBus.Engine is not self.ibus_engine
+        self.__class__.glib_idle_add_patcher.start()
+        self.__class__.glib_timeout_add_patcher.start()
+        assert IBus.Engine is not self.__class__.ibus_engine
         assert IBus.Engine is MockEngine
-        assert IBus.LookupTable is not self.ibus_lookup_table
+        assert IBus.LookupTable is not self.__class__.ibus_lookup_table
         assert IBus.LookupTable is MockLookupTable
-        assert IBus.Property is not self.ibus_property
+        assert IBus.Property is not self.__class__.ibus_property
         assert IBus.Property is MockProperty
-        assert IBus.PropList is not self.ibus_prop_list
+        assert IBus.PropList is not self.__class__.ibus_prop_list
         assert IBus.PropList is MockPropList
+        assert GLib.idle_add is not self.__class__.glib_idle_add
+        assert GLib.idle_add is mock_glib_idle_add
+        assert GLib.timeout_add is not self.__class__.glib_timeout_add
+        assert GLib.timeout_add is mock_glib_timeout_add
         # Reload the hunspell_table module so that the patches
         # are applied to TypingBoosterEngine:
         sys.path.insert(0, "../engine")
@@ -203,18 +219,24 @@ class ItbM17nEmuTestCase(unittest.TestCase):
             self.database.database.close()
         self.database = None
         # Remove the patches from the IBus stuff:
-        self.engine_patcher.stop()
-        self.lookup_table_patcher.stop()
-        self.property_patcher.stop()
-        self.prop_list_patcher.stop()
-        assert IBus.Engine is self.ibus_engine
+        self.__class__.engine_patcher.stop()
+        self.__class__.lookup_table_patcher.stop()
+        self.__class__.property_patcher.stop()
+        self.__class__.prop_list_patcher.stop()
+        self.__class__.glib_idle_add_patcher.stop()
+        self.__class__.glib_timeout_add_patcher.stop()
+        assert IBus.Engine is self.__class__.ibus_engine
         assert IBus.Engine is not MockEngine
-        assert IBus.LookupTable is self.ibus_lookup_table
+        assert IBus.LookupTable is self.__class__.ibus_lookup_table
         assert IBus.LookupTable is not MockLookupTable
-        assert IBus.Property is self.ibus_property
+        assert IBus.Property is self.__class__.ibus_property
         assert IBus.Property is not MockProperty
-        assert IBus.PropList is self.ibus_prop_list
+        assert IBus.PropList is self.__class__.ibus_prop_list
         assert IBus.PropList is not MockPropList
+        assert GLib.idle_add is self.__class__.glib_idle_add
+        assert GLib.idle_add is not mock_glib_idle_add
+        assert GLib.timeout_add is self.__class__.glib_timeout_add
+        assert GLib.timeout_add is not mock_glib_timeout_add
 
     def backup_original_settings(self) -> None:
         if self.engine is None:
