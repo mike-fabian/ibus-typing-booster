@@ -1772,7 +1772,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_inline_completion(2, update_gsettings=False)
         self.assertEqual(2, self.engine.get_inline_completion())
         self.engine.do_process_key_event(IBus.KEY_A, 0, 0)
-        self.assertEqual(True, self.engine._lookup_table_hidden)
+        self.assertEqual(True, self.engine._lookup_table.hidden)
         self.assertEqual(self.engine._candidates[0].phrase, 'A')
         self.assertEqual(True, len(self.engine._candidates) >= 3)
         # No commit by index should be possible now because the lookup
@@ -1787,7 +1787,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
-        self.assertEqual(True, self.engine._lookup_table_hidden)
+        self.assertEqual(True, self.engine._lookup_table.hidden)
         self.assertEqual(self.engine._candidates[0].phrase, 'winter')
         self.assertEqual(True, len(self.engine._candidates) >= 3)
         # No commit by index should be possible now because the lookup
@@ -1803,7 +1803,7 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_t, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_u, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
-        self.assertEqual(True, self.engine._lookup_table_hidden)
+        self.assertEqual(True, self.engine._lookup_table.hidden)
         self.assertEqual(self.engine._candidates[0].phrase, 'Autumn')
         self.assertEqual(True, len(self.engine._candidates) >= 3)
         self.assertEqual(self.engine.mock_committed_text, 'A4 wint1 ')
@@ -1815,10 +1815,10 @@ class ItbTestCase(unittest.TestCase):
         # Preedit text contents unchanged, only colour may change:
         self.assertEqual(self.engine.mock_preedit_text, 'Autumn')
         # Lookup table is still hidden:
-        self.assertEqual(True, self.engine._lookup_table_hidden)
+        self.assertEqual(True, self.engine._lookup_table.hidden)
         # Show lookup table by typing Tab again:
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
-        self.assertEqual(False, self.engine._lookup_table_hidden)
+        self.assertEqual(False, self.engine._lookup_table.hidden)
         self.assertEqual(self.engine.mock_committed_text, 'A4 wint1 ')
         # Preedit text is shortened to “Autum” again because the
         # lookup table is shown now and the second candidate, which is
@@ -2723,18 +2723,21 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
         self.assertEqual(self.engine._m17n_trans_parts.candidates, ['o', 'ó', 'ò', 'ỏ', 'õ', 'ọ'])
         self.assertEqual(self.engine._m17n_trans_parts.candidate_show, 0)
-        self.assertFalse(self.engine._lookup_table_shows_m17n_candidates)
+        self.assertFalse(self.engine._lookup_table.state
+                         == hunspell_table.LookupTableState.M17N_CANDIDATES)
         # self._lookup_table_hidden is probably False here
         # because there will probably be candidates from the
         # vi_VN dictionary.
         self.engine.do_process_key_event(IBus.KEY_o, 0, 0)
         self.assertEqual(self.engine._m17n_trans_parts.candidates, ['ô', 'ố', 'ồ', 'ổ', 'ỗ', 'ộ'])
         self.assertEqual(self.engine._m17n_trans_parts.candidate_show, 0)
-        self.assertFalse(self.engine._lookup_table_shows_m17n_candidates)
+        self.assertFalse(self.engine._lookup_table.state
+                         == hunspell_table.LookupTableState.M17N_CANDIDATES)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.assertEqual(self.engine._m17n_trans_parts.candidates, [])
         self.assertEqual(self.engine._m17n_trans_parts.candidate_show, 0)
-        self.assertFalse(self.engine._lookup_table_shows_m17n_candidates)
+        self.assertFalse(self.engine._lookup_table.state
+                         == hunspell_table.LookupTableState.M17N_CANDIDATES)
         self.engine.do_process_key_event(IBus.KEY_g, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'Không')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)

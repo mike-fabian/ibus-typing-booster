@@ -542,7 +542,7 @@ ignored-checks-for-mixins=no-member,
 # List of class names for which member attributes should not be checked (useful
 # for classes with dynamically set attributes). This supports the use of
 # qualified names.
-ignored-classes=optparse.Values,thread._local,_thread._local,argparse.Namespace, Box, SQLObject, Popover, ScrolledWindow, ListBox, FlowBox, Grid, SearchBar, HeaderBar, SearchEntry, Window, IconSize, Button, StyleContext, Label, FileChooserDialog, HelpWindow, MessageDialog, Dialog
+ignored-classes=optparse.Values,thread._local,_thread._local,argparse.Namespace, Box, SQLObject, Popover, ScrolledWindow, ListBox, FlowBox, Grid, SearchBar, HeaderBar, SearchEntry, Window, IconSize, Button, StyleContext, Label, FileChooserDialog, HelpWindow, MessageDialog, Dialog, LookupTable
 
 # Show a hint with possible names when a member name was not found. The aspect
 # of finding the hint is based on edit distance.
