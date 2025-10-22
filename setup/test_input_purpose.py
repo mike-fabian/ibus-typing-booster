@@ -31,11 +31,11 @@ import logging
 import logging.handlers
 
 # pylint: disable=wrong-import-position
-from gi import require_version # type: ignore
+from gi import require_version
 require_version('GLib', '2.0')
 from gi.repository import GLib # type: ignore
 require_version('Gtk', '3.0')
-from gi.repository import Gtk
+from gi.repository import Gtk # type: ignore
 # pylint: enable=wrong-import-position
 
 # pylint: disable=import-error

@@ -38,13 +38,13 @@ import importlib
 from unittest import mock
 
 # pylint: disable=wrong-import-position
-from gi import require_version # type: ignore
+from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
+from gi.repository import IBus
 require_version('Gdk', '3.0')
-from gi.repository import Gdk
+from gi.repository import Gdk # type: ignore
 require_version('GLib', '2.0')
-from gi.repository import GLib
+from gi.repository import GLib # type: ignore
 # pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')
@@ -191,13 +191,13 @@ class ItbM17nEmuTestCase(unittest.TestCase):
         self.__class__.glib_idle_add_patcher.start()
         self.__class__.glib_timeout_add_patcher.start()
         assert IBus.Engine is not self.__class__.ibus_engine
-        assert IBus.Engine is MockEngine
+        assert IBus.Engine is MockEngine # type: ignore[comparison-overlap]
         assert IBus.LookupTable is not self.__class__.ibus_lookup_table
-        assert IBus.LookupTable is MockLookupTable
+        assert IBus.LookupTable is MockLookupTable # type: ignore[comparison-overlap]
         assert IBus.Property is not self.__class__.ibus_property
-        assert IBus.Property is MockProperty
+        assert IBus.Property is MockProperty # type: ignore[comparison-overlap]
         assert IBus.PropList is not self.__class__.ibus_prop_list
-        assert IBus.PropList is MockPropList
+        assert IBus.PropList is MockPropList # type: ignore[comparison-overlap]
         assert GLib.idle_add is not self.__class__.glib_idle_add
         assert GLib.idle_add is mock_glib_idle_add
         assert GLib.timeout_add is not self.__class__.glib_timeout_add
@@ -226,13 +226,13 @@ class ItbM17nEmuTestCase(unittest.TestCase):
         self.__class__.glib_idle_add_patcher.stop()
         self.__class__.glib_timeout_add_patcher.stop()
         assert IBus.Engine is self.__class__.ibus_engine
-        assert IBus.Engine is not MockEngine
+        assert IBus.Engine is not MockEngine # type: ignore[comparison-overlap]
         assert IBus.LookupTable is self.__class__.ibus_lookup_table
-        assert IBus.LookupTable is not MockLookupTable
+        assert IBus.LookupTable is not MockLookupTable # type: ignore[comparison-overlap]
         assert IBus.Property is self.__class__.ibus_property
-        assert IBus.Property is not MockProperty
+        assert IBus.Property is not MockProperty # type: ignore[comparison-overlap]
         assert IBus.PropList is self.__class__.ibus_prop_list
-        assert IBus.PropList is not MockPropList
+        assert IBus.PropList is not MockPropList # type: ignore[comparison-overlap]
         assert GLib.idle_add is self.__class__.glib_idle_add
         assert GLib.idle_add is not mock_glib_idle_add
         assert GLib.timeout_add is self.__class__.glib_timeout_add

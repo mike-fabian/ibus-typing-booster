@@ -30,12 +30,12 @@ import subprocess
 import shutil
 import functools
 import logging
-from gi import require_version # type: ignore
+from gi import require_version
 # pylint: disable=wrong-import-position
 require_version('Gtk', '3.0')
 from gi.repository import Gtk # type: ignore
 require_version('Pango', '1.0')
-from gi.repository import Pango
+from gi.repository import Pango # type: ignore
 # pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')

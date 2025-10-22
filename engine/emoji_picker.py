@@ -45,7 +45,7 @@ import html
 import logging
 import logging.handlers
 
-from gi import require_version # type: ignore
+from gi import require_version
 # pylint: disable=wrong-import-position
 require_version('GLib', '2.0')
 from gi.repository import GLib # type: ignore
@@ -59,10 +59,10 @@ GLib.set_prgname('emoji-picker')
 
 # pylint: disable=wrong-import-position
 require_version('Gdk', '3.0')
-from gi.repository import Gdk
+from gi.repository import Gdk # type: ignore
 require_version('Gtk', '3.0')
-from gi.repository import Gtk
-from gi.repository import GObject
+from gi.repository import Gtk # type: ignore
+from gi.repository import GObject # type: ignore
 # pylint: enable=wrong-import-position
 import itb_emoji
 import itb_util

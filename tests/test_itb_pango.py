@@ -27,7 +27,7 @@ import logging
 import unittest
 
 # pylint: disable=wrong-import-position
-from gi import require_version as gi_require_version # type: ignore
+from gi import require_version as gi_require_version
 gi_require_version('Gdk', '3.0')
 from gi.repository import Gdk # type: ignore
 # pylint: enable=wrong-import-position

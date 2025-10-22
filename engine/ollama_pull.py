@@ -36,7 +36,7 @@ import threading
 import gettext
 import logging
 
-from gi import require_version # type: ignore
+from gi import require_version
 # pylint: disable=wrong-import-position
 require_version('GLib', '2.0')
 from gi.repository import GLib # type: ignore
@@ -48,7 +48,7 @@ GLib.set_application_name('Ollama Pull')
 
 # pylint: disable=wrong-import-position
 require_version('Gtk', '3.0')
-from gi.repository import Gtk
+from gi.repository import Gtk # type: ignore
 # pylint: enable=wrong-import-position
 
 import itb_ollama

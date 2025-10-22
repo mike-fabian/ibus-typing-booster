@@ -51,15 +51,15 @@ import gettext
 import xml.etree.ElementTree
 from dataclasses import dataclass
 from collections import defaultdict
-from gi import require_version # type: ignore
+from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
+from gi.repository import IBus
 require_version('GLib', '2.0')
-from gi.repository import GLib
+from gi.repository import GLib # type: ignore
 require_version('Gdk', '3.0')
-from gi.repository import Gdk
+from gi.repository import Gdk # type: ignore
 require_version('Gtk', '3.0')
-from gi.repository import Gtk
+from gi.repository import Gtk # type: ignore
 # pylint: enable=wrong-import-position
 
 import itb_version

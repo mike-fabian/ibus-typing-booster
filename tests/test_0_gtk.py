@@ -35,16 +35,16 @@ import sys
 import unittest
 
 # pylint: disable=wrong-import-position
-from gi import require_version as gi_require_version # type: ignore
+from gi import require_version as gi_require_version
 gi_require_version('GLib', '2.0')
 gi_require_version('Gdk', '3.0')
 gi_require_version('Gio', '2.0')
 gi_require_version('Gtk', '3.0')
 gi_require_version('IBus', '1.0')
 from gi.repository import GLib # type: ignore
-from gi.repository import Gdk
-from gi.repository import Gio
-from gi.repository import Gtk
+from gi.repository import Gdk # type: ignore
+from gi.repository import Gio # type: ignore
+from gi.repository import Gtk # type: ignore
 from gi.repository import IBus
 # pylint: enable=wrong-import-position
 

@@ -23,11 +23,11 @@ Module to install packages using the Packagekit daemon (packagekitd)
 from typing import Set
 from typing import Optional
 # pylint: disable=wrong-import-position
-from gi import require_version # type: ignore
+from gi import require_version
 require_version('Gio', '2.0')
 from gi.repository import Gio # type: ignore
 require_version('GLib', '2.0')
-from gi.repository import GLib
+from gi.repository import GLib # type: ignore
 # pylint: enable=wrong-import-position
 
 class InstallPackages(): # pylint: disable=too-few-public-methods

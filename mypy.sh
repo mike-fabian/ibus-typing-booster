@@ -8,6 +8,7 @@ RETVAL=0
 
 echo "running $SCRIPT_DIR/mypy.sh"
 
+export MYPYPATH=${SCRIPT_DIR}/stubs
 MYPY="mypy --strict --show-error-codes --pretty"
 
 echo cd $SCRIPT_DIR/engine

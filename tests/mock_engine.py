@@ -20,11 +20,12 @@
 
 from typing import Any
 from typing import List
+from typing import Optional
 from typing import Callable
 # pylint: disable=wrong-import-position
-from gi import require_version # type: ignore
+from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
+from gi.repository import IBus
 # pylint: enable=wrong-import-position
 
 def mock_glib_idle_add(
@@ -156,7 +157,7 @@ class MockEngine:
     def register_properties(self, property_list: List[IBus.Property]) -> None:
         pass
 
-    def update_property(self, _property: IBus.Property) -> None:
+    def update_property(self, _prop: IBus.Property) -> None:
         pass
 
     def hide_lookup_table(self) -> None:
@@ -193,7 +194,6 @@ class MockLookupTable:
         self.mock_page_size = page_size
         self.mock_cursor_pos = cursor_pos
         self.mock_cursor_visible = cursor_visible
-        self.cursor_visible = cursor_visible
         self.mock_wrap_around = wrap_around
         self.mock_candidates: List[str] = []
         self.mock_orientation = 0
@@ -225,7 +225,9 @@ class MockLookupTable:
 
     def set_cursor_visible(self, visible: bool) -> None:
         self.mock_cursor_visible = visible
-        self.cursor_visible = visible
+
+    def is_cursor_visible(self) -> bool:
+        return self.mock_cursor_visible
 
     def cursor_down(self) -> None:
         if self.mock_candidates:
@@ -255,8 +257,16 @@ class MockLookupTable:
         return self.mock_candidates[index]
 
 class MockPropList:
-    def append(self, _property: IBus.Property) -> None:
-        pass
+    def __init__(self) -> None:
+        self.mock_prop_list: List[IBus.Property] = []
+
+    def append(self, prop: IBus.Property) -> None:
+        self.mock_prop_list.append(prop)
+
+    def get(self, index: int) -> Optional[IBus.Property]:
+        if len(self.mock_prop_list) < index + 1:
+            return None
+        return self.mock_prop_list[index]
 
 class MockProperty:
     def __init__(self, *args: Any, **kwargs: Any) -> None:

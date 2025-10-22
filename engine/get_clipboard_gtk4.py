@@ -29,7 +29,7 @@ is using GTK 3.
 from typing import Optional
 import sys
 # pylint: disable=wrong-import-position
-import gi # type: ignore
+import gi
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk, Gdk, Gio, GLib # type: ignore
 # pylint: enable=wrong-import-position

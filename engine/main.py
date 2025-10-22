@@ -33,13 +33,13 @@ import logging
 import logging.handlers
 from signal import signal, SIGTERM, SIGINT
 # pylint: disable=wrong-import-position
-from gi import require_version # type: ignore
+from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
+from gi.repository import IBus
 require_version('Gio', '2.0')
-from gi.repository import Gio
+from gi.repository import Gio # type: ignore
 require_version('GLib', '2.0')
-from gi.repository import GLib
+from gi.repository import GLib # type: ignore
 # pylint: enable=wrong-import-position
 
 import itb_util

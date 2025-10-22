@@ -31,9 +31,9 @@ import locale
 import unittest
 
 # pylint: disable=wrong-import-position
-from gi import require_version # type: ignore
+from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
+from gi.repository import IBus
 # pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')

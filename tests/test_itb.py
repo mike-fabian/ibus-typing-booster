@@ -36,13 +36,13 @@ import importlib
 from unittest import mock
 
 # pylint: disable=wrong-import-position
-from gi import require_version # type: ignore
+from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
+from gi.repository import IBus
 require_version('Gdk', '3.0')
-from gi.repository import Gdk
+from gi.repository import Gdk # type: ignore
 require_version('GLib', '2.0')
-from gi.repository import GLib
+from gi.repository import GLib # type: ignore
 # pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')
@@ -193,13 +193,13 @@ class ItbTestCase(unittest.TestCase):
         self.__class__.glib_idle_add_patcher.start()
         self.__class__.glib_timeout_add_patcher.start()
         assert IBus.Engine is not self.__class__.ibus_engine
-        assert IBus.Engine is MockEngine
+        assert IBus.Engine is MockEngine # type: ignore[comparison-overlap]
         assert IBus.LookupTable is not self.__class__.ibus_lookup_table
-        assert IBus.LookupTable is MockLookupTable
+        assert IBus.LookupTable is MockLookupTable # type: ignore[comparison-overlap]
         assert IBus.Property is not self.__class__.ibus_property
-        assert IBus.Property is MockProperty
+        assert IBus.Property is MockProperty # type: ignore[comparison-overlap]
         assert IBus.PropList is not self.__class__.ibus_prop_list
-        assert IBus.PropList is MockPropList
+        assert IBus.PropList is MockPropList # type: ignore[comparison-overlap]
         assert GLib.idle_add is not self.__class__.glib_idle_add
         assert GLib.idle_add is mock_glib_idle_add
         assert GLib.timeout_add is not self.__class__.glib_timeout_add
@@ -233,13 +233,13 @@ class ItbTestCase(unittest.TestCase):
         self.__class__.glib_idle_add_patcher.stop()
         self.__class__.glib_timeout_add_patcher.stop()
         assert IBus.Engine is self.__class__.ibus_engine
-        assert IBus.Engine is not MockEngine
+        assert IBus.Engine is not MockEngine # type: ignore[comparison-overlap]
         assert IBus.LookupTable is self.__class__.ibus_lookup_table
-        assert IBus.LookupTable is not MockLookupTable
+        assert IBus.LookupTable is not MockLookupTable # type: ignore[comparison-overlap]
         assert IBus.Property is self.__class__.ibus_property
-        assert IBus.Property is not MockProperty
+        assert IBus.Property is not MockProperty # type: ignore[comparison-overlap]
         assert IBus.PropList is self.__class__.ibus_prop_list
-        assert IBus.PropList is not MockPropList
+        assert IBus.PropList is not MockPropList # type: ignore[comparison-overlap]
         assert GLib.idle_add is self.__class__.glib_idle_add
         assert GLib.idle_add is not mock_glib_idle_add
         assert GLib.timeout_add is self.__class__.glib_timeout_add
@@ -617,12 +617,12 @@ class ItbTestCase(unittest.TestCase):
         self.engine.set_page_size(
             3, update_gsettings=False)
         self.assertEqual(
-            self.engine.get_lookup_table().mock_page_size,
+            self.engine.get_lookup_table().get_page_size(),
             3)
         self.engine.set_page_size(
             5, update_gsettings=False)
         self.assertEqual(
-            self.engine.get_lookup_table().mock_page_size,
+            self.engine.get_lookup_table().get_page_size(),
             5)
 
     @unittest.skipUnless(
@@ -1217,22 +1217,22 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine._candidates[0].phrase, '🐫')
         self.assertEqual(self.engine._candidates[1].phrase, '🐪')
         self.assertEqual(
-            self.engine.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().is_cursor_visible(),
             False)
         self.engine.do_process_key_event(IBus.KEY_Down, 0, 0)
         self.assertEqual(
-            self.engine.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().is_cursor_visible(),
             True)
         self.engine.do_process_key_event(IBus.KEY_Down, 0, 0)
         self.assertEqual(
-            self.engine.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().is_cursor_visible(),
             True)
         self.assertEqual(
             self.engine.get_string_from_lookup_table_cursor_pos(),
             '🐪')
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
         self.assertEqual(
-            self.engine.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().is_cursor_visible(),
             False)
         self.assertEqual(
             self.engine.get_lookup_table().get_cursor_pos(),
@@ -1242,7 +1242,7 @@ class ItbTestCase(unittest.TestCase):
             '🐫')
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
         self.assertEqual(
-            self.engine.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().is_cursor_visible(),
             False)
         self.assertEqual(
             self.engine.get_lookup_table().get_cursor_pos(),
@@ -1253,14 +1253,14 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine._candidates[5].comment, 'bactrian camel')
         self.engine.do_process_key_event(IBus.KEY_Down, 0, 0)
         self.assertEqual(
-            self.engine.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().is_cursor_visible(),
             True)
         self.assertEqual(
             self.engine.get_string_from_lookup_table_cursor_pos(),
             'Camel')
         self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
         self.assertEqual(
-            self.engine.get_lookup_table().cursor_visible,
+            self.engine.get_lookup_table().is_cursor_visible(),
             False)
         self.assertEqual(
             self.engine.get_lookup_table().get_cursor_pos(),
@@ -3031,20 +3031,20 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_g, 0, 0)
-        self.assertFalse(self.engine.get_lookup_table().cursor_visible)
+        self.assertFalse(self.engine.get_lookup_table().is_cursor_visible())
         self.assertEqual('testing', self.engine.mock_preedit_text)
         self.assertEqual(7, self.engine.mock_preedit_text_cursor_pos)
         self.assertEqual('', self.engine.mock_committed_text)
         self.assertEqual(0, self.engine.mock_committed_text_cursor_pos)
         self.engine.do_process_key_event(IBus.KEY_Left, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_Left, 0, 0)
-        self.assertFalse(self.engine.get_lookup_table().cursor_visible)
+        self.assertFalse(self.engine.get_lookup_table().is_cursor_visible())
         self.assertEqual('testing', self.engine.mock_preedit_text)
         self.assertEqual(5, self.engine.mock_preedit_text_cursor_pos)
         self.assertEqual('', self.engine.mock_committed_text)
         self.assertEqual(0, self.engine.mock_committed_text_cursor_pos)
         self.engine.do_process_key_event(IBus.KEY_Left, 0, IBus.ModifierType.SHIFT_MASK)
-        self.assertFalse(self.engine.get_lookup_table().cursor_visible)
+        self.assertFalse(self.engine.get_lookup_table().is_cursor_visible())
         self.assertEqual('', self.engine.mock_preedit_text)
         self.assertEqual(0, self.engine.mock_preedit_text_cursor_pos)
         self.assertEqual('testing', self.engine.mock_committed_text)

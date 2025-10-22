@@ -50,13 +50,13 @@ import textwrap
 from gettext import dgettext
 from dataclasses import dataclass, field
 # pylint: disable=wrong-import-position
-from gi import require_version # type: ignore
+from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus # type: ignore
+from gi.repository import IBus
 require_version('Gio', '2.0')
-from gi.repository import Gio
+from gi.repository import Gio # type: ignore
 require_version('GLib', '2.0')
-from gi.repository import GLib
+from gi.repository import GLib # type: ignore
 # pylint: enable=wrong-import-position
 import m17n_translit
 import itb_util
@@ -224,7 +224,7 @@ class SurroundingText:
             anchor_pos=self.anchor_pos,
             event=new_event)
 
-class TypingBoosterEngine(IBus.Engine): # type: ignore
+class TypingBoosterEngine(IBus.Engine):
     '''The IBus Engine for ibus-typing-booster'''
 
     def __init__(
@@ -296,7 +296,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
 
         self._prop_dict: Dict[str, IBus.Property] = {}
         self._sub_props_dict: Dict[str, IBus.PropList] = {}
-        self.main_prop_list: List[IBus.Property] = []
+        self.main_prop_list: IBus.PropList = IBus.PropList()
         self.emoji_prediction_mode_menu: Dict[str, Any] = {}
         self.emoji_prediction_mode_properties: Dict[str, Any]= {}
         self.off_the_record_mode_menu: Dict[str, Any] = {}
@@ -305,10 +305,10 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         self.input_mode_properties: Dict[str, Any] = {}
         self.dictionary_menu: Dict[str, Any] = {}
         self.dictionary_properties: Dict[str, Any] = {}
-        self.dictionary_sub_properties_prop_list: IBus.PropList = []
+        self.dictionary_sub_properties_prop_list: IBus.PropList = IBus.PropList()
         self.preedit_ime_menu: Dict[str, Any] = {}
         self.preedit_ime_properties: Dict[str, Any] = {}
-        self.preedit_ime_sub_properties_prop_list: IBus.PropList = []
+        self.preedit_ime_sub_properties_prop_list: IBus.PropList = IBus.PropList()
 
         self._im_client: str = ''
 
@@ -1737,7 +1737,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
     def _arrow_down(self) -> bool:
         '''Process Arrow Down Key Event
         Move Lookup Table cursor down'''
-        if not self._lookup_table.cursor_visible:
+        if not self._lookup_table.is_cursor_visible():
             self._lookup_table.set_cursor_visible(True)
             return True
         if self._lookup_table.cursor_down():
@@ -2377,7 +2377,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         Initialize or update the sub-properties of the property menu
         for the highest priority dictionary.
         '''
-        if not self.dictionary_sub_properties_prop_list:
+        if self.dictionary_sub_properties_prop_list.get(0) is None:
             update = False
             self.dictionary_sub_properties_prop_list = IBus.PropList()
         else:
@@ -2424,7 +2424,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         Initialize or update the sub-properties of the property menu
         for the preëdit input method.
         '''
-        if not self.preedit_ime_sub_properties_prop_list:
+        if self.preedit_ime_sub_properties_prop_list.get(0) is None:
             update = False
             self.preedit_ime_sub_properties_prop_list = IBus.PropList()
         else:
@@ -2568,8 +2568,8 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         self._prop_dict = {}
         self._sub_props_dict = {}
-        self.preedit_ime_sub_properties_prop_list = []
-        self.dictionary_sub_properties_prop_list = []
+        self.preedit_ime_sub_properties_prop_list = IBus.PropList()
+        self.dictionary_sub_properties_prop_list = IBus.PropList()
         self.main_prop_list = IBus.PropList()
 
         if self._engine_name != 'typing-booster':
@@ -3016,7 +3016,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # typed string. Trying to show that inline gets very
             # confusing.  Don’t do that, show standard lookup table:
             if (self._inline_completion < 2
-                or self.get_lookup_table().cursor_visible):
+                or self.get_lookup_table().is_cursor_visible()):
                 # Show standard lookup table as a fallback:
                 self.update_lookup_table(self.get_lookup_table(), True)
                 self._lookup_table_hidden = False
@@ -3041,7 +3041,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         attrs = IBus.AttrList()
         attrs.append(IBus.attr_underline_new(
             self._preedit_underline, 0, len(typed_string)))
-        if self.get_lookup_table().cursor_visible:
+        if self.get_lookup_table().is_cursor_visible():
             attrs.append(IBus.attr_underline_new(
                 self._preedit_underline,
                 len(typed_string), len(typed_string + completion)))
@@ -3057,7 +3057,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 IBus.AttrUnderline.NONE,
                 len(typed_string), len(typed_string + completion)))
         text.set_attributes(attrs)
-        if (self.get_lookup_table().cursor_visible
+        if (self.get_lookup_table().is_cursor_visible()
             and not self._is_candidate_auto_selected):
             caret = len(first_candidate)
         else:
@@ -3078,7 +3078,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # self._auto_select_candidate is on:
         self._is_candidate_auto_selected = False
         if (self.get_lookup_table().get_number_of_candidates()
-            and not self._lookup_table.cursor_visible):
+            and not self._lookup_table.is_cursor_visible()):
             if self._auto_select_candidate == 2:
                 # auto select: Yes, always
                 self._lookup_table.set_cursor_visible(True)
@@ -3322,7 +3322,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self.is_lookup_table_enabled_by_tab = True
         if phrase == '':
             if (self.get_lookup_table().get_number_of_candidates()
-                and  self.get_lookup_table().cursor_visible):
+                and  self.get_lookup_table().is_cursor_visible()):
                 phrase = self.get_string_from_lookup_table_cursor_pos()
             else:
                 phrase = self._transliterated_strings[
@@ -3475,7 +3475,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     from_user_db=cand.from_user_db,
                     spell_checking=cand.spell_checking))
         self._candidates = new_candidates
-        cursor_visible = self.get_lookup_table().cursor_visible
+        cursor_visible = self.get_lookup_table().is_cursor_visible()
         cursor_pos = self.get_lookup_table().get_cursor_pos()
         self.get_lookup_table().clear()
         for cand in self._candidates:
@@ -4666,7 +4666,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         '''
         if (self._typed_compose_sequence
             and self._lookup_table_shows_compose_completions
-            and self.get_lookup_table().cursor_visible):
+            and self.get_lookup_table().is_cursor_visible()):
             # something is manually selected in the compose lookup table
             self._lookup_table_shows_compose_completions = False
             compose_result = self.get_string_from_lookup_table_cursor_pos()
@@ -4682,7 +4682,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         input_phrase = self._case_modes[
             self._current_case_mode]['function'](input_phrase)
         if (self.get_lookup_table().get_number_of_candidates()
-            and self.get_lookup_table().cursor_visible):
+            and self.get_lookup_table().is_cursor_visible()):
             # something is selected in the lookup table, commit
             # the selected phrase
             commit_string = self.get_string_from_lookup_table_cursor_pos()
@@ -4701,7 +4701,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         # caret is now because after self._commit_string() this
         # information is gone:
         candidate_was_selected = False
-        if self.get_lookup_table().cursor_visible:
+        if self.get_lookup_table().is_cursor_visible():
             candidate_was_selected = True
         caret_was = self.get_caret()
         self._commit_string(commit_string, input_phrase=input_phrase)
@@ -6990,7 +6990,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return False
         if self._typed_compose_sequence:
             if self._lookup_table_shows_compose_completions:
-                if self.get_lookup_table().cursor_visible:
+                if self.get_lookup_table().is_cursor_visible():
                     # A candidate is selected in the lookup table.
                     # Deselect it and show the first page of the candidate
                     # list:
@@ -7016,7 +7016,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             return True
         if (self._m17n_trans_parts.candidates
             and self._lookup_table_shows_m17n_candidates):
-            if self.get_lookup_table().cursor_visible:
+            if self.get_lookup_table().is_cursor_visible():
                 # A candidate is selected in the lookup table.
                 # Deselect it and show the first page of the candidate
                 # list:
@@ -7062,7 +7062,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             self._m17n_trans_parts = m17n_translit.TransliterationParts()
             self._update_ui()
             return True
-        if self.get_lookup_table().cursor_visible:
+        if self.get_lookup_table().is_cursor_visible():
             # A candidate is selected in the lookup table.
             # Deselect it and show the first page of the candidate
             # list:
@@ -8804,7 +8804,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if (not self._m17n_trans_parts.candidates
             and not self._is_candidate_auto_selected
             and self.get_lookup_table().get_number_of_candidates()
-            and self.get_lookup_table().cursor_visible):
+            and self.get_lookup_table().is_cursor_visible()):
             if self._debug_level > 1:
                 LOGGER.debug('Manual selection in lookup table. '
                              'Do not interfere with that.')
@@ -8887,7 +8887,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                     LOGGER.debug('hotkey matched %s %s', match, return_value)
                 return return_value
         if (self._lookup_table_shows_m17n_candidates
-            and self.get_lookup_table().cursor_visible
+            and self.get_lookup_table().is_cursor_visible()
             and not self._is_candidate_auto_selected
             and not key.val in (IBus.KEY_BackSpace,)):
             if self._debug_level > 1:
@@ -9384,7 +9384,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             and not self._m17n_trans_parts.candidates
             and not self._is_candidate_auto_selected
             and self.get_lookup_table().get_number_of_candidates()
-            and self.get_lookup_table().cursor_visible):
+            and self.get_lookup_table().is_cursor_visible()):
             # A new compose sequence has just started *and*
             # something is *manually* selected in the lookup
             # table, replace the typed string with the selection
@@ -9520,7 +9520,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
         if match:
             return return_value
         if (self._lookup_table_shows_compose_completions
-            and self.get_lookup_table().cursor_visible):
+            and self.get_lookup_table().is_cursor_visible()):
             # something is manually selected in the compose lookup table
             self._lookup_table_shows_compose_completions = False
             compose_result = self.get_string_from_lookup_table_cursor_pos()
@@ -9800,7 +9800,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 return True
             return False
 
-        if self.is_empty() and not self._lookup_table.cursor_visible:
+        if self.is_empty() and not self._lookup_table.is_cursor_visible():
             if self._debug_level > 1:
                 LOGGER.debug(
                     'self.is_empty(): KeyEvent object: %s', key)
@@ -9954,7 +9954,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 # 'S- ' (Shift-space) should not trigger a commit if
                 # it has a transliteration, see:
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/524
-            if self.is_empty() and not self._lookup_table.cursor_visible:
+            if self.is_empty() and not self._lookup_table.is_cursor_visible():
                 self._update_ui_empty_input()
                 return False
             preedit_ime = self._current_imes[0]
@@ -9971,7 +9971,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 self._insert_string_at_cursor([key.msymbol])
                 self._update_ui()
                 return True
-            if (not key.shift and (not self.get_lookup_table().cursor_visible
+            if (not key.shift and (not self.get_lookup_table().is_cursor_visible()
                                    or self._is_candidate_auto_selected)):
                 # Nothing is *manually* selected in the lookup table,
                 # the edit keys like space, Tab, Right, Left, BackSpace, and
@@ -10029,7 +10029,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         self._current_case_mode = 'orig'
                     self._update_ui()
                     return True
-            if (not key.shift and (self.get_lookup_table().cursor_visible
+            if (not key.shift and (self.get_lookup_table().is_cursor_visible()
                                    and not self._is_candidate_auto_selected)):
                 # something is manually selected in the lookup table
                 # and Shift is not used (When Shift is used, continue
@@ -10120,7 +10120,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                                     'Then call clear input and update UI to remove'
                                     'any remaining preedit or lookup table.')
                             if (self.get_lookup_table().get_number_of_candidates()
-                                and self.get_lookup_table().cursor_visible):
+                                and self.get_lookup_table().is_cursor_visible()):
                                 # something is selected in the lookup
                                 # table, commit the selected phrase
                                 input_phrase = commit_string = (
@@ -10173,7 +10173,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                         self._update_ui()
                         return True
             if (self.get_lookup_table().get_number_of_candidates()
-                and self.get_lookup_table().cursor_visible):
+                and self.get_lookup_table().is_cursor_visible()):
                 # something is selected in the lookup table, commit
                 # the selected phrase
                 commit_string = self.get_string_from_lookup_table_cursor_pos()
@@ -10275,7 +10275,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
             # caret is now because after self._commit_string() this
             # information is gone:
             candidate_was_selected = False
-            if self.get_lookup_table().cursor_visible:
+            if self.get_lookup_table().is_cursor_visible():
                 candidate_was_selected = True
             caret_was = self.get_caret(extra_msymbol=key.msymbol)
             if not input_phrase:
@@ -10346,7 +10346,7 @@ class TypingBoosterEngine(IBus.Engine): # type: ignore
                 insert_msymbol = key.msymbol
             if (not self._is_candidate_auto_selected
                 and self.get_lookup_table().get_number_of_candidates()
-                and self.get_lookup_table().cursor_visible):
+                and self.get_lookup_table().is_cursor_visible()):
                 # something is *manually* selected in the lookup
                 # table, replace the typed string with the selection
                 # and move the cursor to the end:

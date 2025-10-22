@@ -42,11 +42,11 @@ import logging.handlers
 from time import strftime
 
 # pylint: disable=wrong-import-position
-from gi import require_version # type: ignore
+from gi import require_version
 require_version('Gio', '2.0')
 from gi.repository import Gio # type: ignore
 require_version('GLib', '2.0')
-from gi.repository import GLib
+from gi.repository import GLib # type: ignore
 
 # set_prgname before importing other modules to show the name in warning
 # messages when import modules are failed. E.g. Gtk.
@@ -55,13 +55,13 @@ GLib.set_application_name('Typing Booster Preferences')
 GLib.set_prgname('ibus-setup-typing-booster')
 
 require_version('Gdk', '3.0')
-from gi.repository import Gdk
+from gi.repository import Gdk # type: ignore
 require_version('GdkPixbuf', '2.0')
-from gi.repository import GdkPixbuf
+from gi.repository import GdkPixbuf # type: ignore
 require_version('Gtk', '3.0')
-from gi.repository import Gtk
+from gi.repository import Gtk # type: ignore
 require_version('Pango', '1.0')
-from gi.repository import Pango
+from gi.repository import Pango # type: ignore
 require_version('IBus', '1.0')
 from gi.repository import IBus
 # pylint: enable=wrong-import-position
