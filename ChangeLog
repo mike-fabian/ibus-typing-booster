@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 30 Okt 2025 Release 2.28.2
+* Translation update from Weblate (fi 100%, it 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 14 Okt 2025 Release 2.28.1
 * Ignore “Enable suggestions by key” and “Minimum number of chars for completion“ options when OSK is used (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/813 Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/814)
 * Translation update from Weblate (es 100%, tr 100%, zh_CN 73.1%)
