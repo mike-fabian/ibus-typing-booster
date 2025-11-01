@@ -3929,6 +3929,36 @@ def distro_id() -> str:
         return str(distro.id())
     return ''
 
+def hunspell_dirnames() -> List[str]:
+    '''
+    Return a list of directories where hunspell dictionaries
+    should be searched.
+    '''
+    dirnames: List[str] = []
+    datadir = os.path.join(os.path.dirname(__file__), '../data')
+    user_datadir = xdg_save_data_path('ibus-typing-booster/data')
+    dicpaths = []
+    dicpath_string = os.environ.get('DICPATH')
+    if dicpath_string:
+        dicpaths = [os.path.expanduser(path)
+                    for path in dicpath_string.split(':') if path]
+    dirnames.append(user_datadir)
+    # By default, enchant2 also looks for dictionaries in
+    # ~/.config/enchant/<provider_name>
+    dirnames.append(os.path.expanduser('~/.config/enchant/nuspell'))
+    dirnames.append(os.path.expanduser('~/.config/enchant/hunspell'))
+    dirnames.append(datadir)
+    dirnames.extend(dicpaths)
+    dirnames.extend([
+        '/usr/share/hunspell',
+        '/usr/share/myspell',
+        '/usr/share/myspell/dicts',
+        '/usr/local/share/hunspell', # On FreeBSD the dictionaries are here
+        '/usr/local/share/myspell',
+        '/usr/local/share/myspell/dicts',
+    ])
+    return dirnames
+
 def find_hunspell_dictionary(language: str) -> Tuple[str, str]:
     '''
     Find the hunspell dictionary file for a language
@@ -3941,25 +3971,9 @@ def find_hunspell_dictionary(language: str) -> Tuple[str, str]:
     If no dictionary can be found for the requested language,
     the return value is ('', '').
     '''
-    datadir = os.path.join(os.path.dirname(__file__), '../data')
-    user_datadir = xdg_save_data_path('ibus-typing-booster/data')
-    dicpaths = []
-    dicpath_string = os.environ.get('DICPATH')
-    if dicpath_string:
-        dicpaths = [os.path.expanduser(path)
-                    for path in dicpath_string.split(':') if path]
-    dirnames = [user_datadir, datadir]
-    dirnames += dicpaths
-    dirnames += [
-        '/usr/share/hunspell',
-        '/usr/share/myspell',
-        '/usr/share/myspell/dicts',
-        '/usr/local/share/hunspell', # On FreeBSD the dictionaries are here
-        '/usr/local/share/myspell',
-        '/usr/local/share/myspell/dicts',
-    ]
     dic_path = ''
     aff_path = ''
+    dirnames: List[str] = hunspell_dirnames()
     for lang in expand_languages([language]):
         for dirname in dirnames:
             if os.path.isfile(os.path.join(dirname, lang + '.dic')):
