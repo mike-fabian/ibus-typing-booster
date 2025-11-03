@@ -996,6 +996,10 @@ class TypingBoosterEngine(IBus.Engine):
             target=self.database.cleanup_database)
         cleanup_database_thread.start()
 
+    def show_lookup_table(self) -> None: # pylint: disable=arguments-differ
+        super().show_lookup_table()
+        self._lookup_table.hidden = False
+
     def hide_lookup_table(self) -> None: # pylint: disable=arguments-differ
         super().hide_lookup_table()
         self._lookup_table.hidden = True
