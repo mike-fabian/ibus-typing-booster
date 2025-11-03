@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-10-15 17:38+0200\n"
+"POT-Creation-Date: 2025-10-30 15:12+0100\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
@@ -169,21 +169,21 @@ msgstr "Systeemstandaard"
 msgid "Set Font"
 msgstr "Lettertype instellen"
 
-#: engine/hunspell_table.py:693 engine/hunspell_table.py:727
-#: engine/hunspell_table.py:748
+#: engine/hunspell_table.py:893 engine/hunspell_table.py:927
+#: engine/hunspell_table.py:948
 msgid "Off"
 msgstr "Uit"
 
-#: engine/hunspell_table.py:698 engine/hunspell_table.py:732
-#: engine/hunspell_table.py:753
+#: engine/hunspell_table.py:898 engine/hunspell_table.py:932
+#: engine/hunspell_table.py:953
 msgid "On"
 msgstr "Aan"
 
-#: engine/hunspell_table.py:717
+#: engine/hunspell_table.py:917
 msgid "Input mode"
 msgstr "Invoermethode"
 
-#: engine/hunspell_table.py:718
+#: engine/hunspell_table.py:918
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Hier kun je ibus-typing-booster aan- of uitzetten."
 
@@ -194,7 +194,7 @@ msgstr "Hier kun je ibus-typing-booster aan- of uitzetten."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:737 engine/hunspell_table.py:739 setup/main.py:667
+#: engine/hunspell_table.py:937 engine/hunspell_table.py:939 setup/main.py:667
 msgid "Unicode symbols and emoji predictions"
 msgstr "Unicode-symbolen en emoji-voorspellingen"
 
@@ -205,64 +205,64 @@ msgstr "Unicode-symbolen en emoji-voorspellingen"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:758 engine/hunspell_table.py:759 setup/main.py:737
+#: engine/hunspell_table.py:958 engine/hunspell_table.py:959 setup/main.py:737
 msgid "Off the record mode"
 msgstr "Strikte modus"
 
-#: engine/hunspell_table.py:2244
+#: engine/hunspell_table.py:2433
 msgid "Highest priority dictionary"
 msgstr "Woordenboek met hoogste prioriteit"
 
-#: engine/hunspell_table.py:2245
+#: engine/hunspell_table.py:2434
 msgid "Choose highest priority dictionary"
 msgstr "Kies het woordenboek dat de hoogste prioriteit moet krijgen"
 
-#: engine/hunspell_table.py:2274
+#: engine/hunspell_table.py:2463
 msgid "Preedit input method"
 msgstr "Bewerken alvorens in te voegen"
 
-#: engine/hunspell_table.py:2275
+#: engine/hunspell_table.py:2464
 msgid "Switch preedit input method"
 msgstr "Bewerkmethode kiezen"
 
-#: engine/hunspell_table.py:2620
+#: engine/hunspell_table.py:2809
 msgid "Setup"
 msgstr "Instellen"
 
-#: engine/hunspell_table.py:2623 setup/main.py:152
+#: engine/hunspell_table.py:2812 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr "Voorkeuren van ibus-typing-booster"
 
-#: engine/hunspell_table.py:6769
+#: engine/hunspell_table.py:6924
 msgid "Failed to import Google speech-to-text."
 msgstr "Het importeren van Google tekst-naar-spraak is mislukt."
 
-#: engine/hunspell_table.py:6772
+#: engine/hunspell_table.py:6927
 msgid "Failed to import pyaudio."
 msgstr "Het importeren van pyaudio is mislukt."
 
-#: engine/hunspell_table.py:6775
+#: engine/hunspell_table.py:6930
 msgid "Failed to import queue."
 msgstr "Het importeren van de wachtrij is mislukt."
 
-#: engine/hunspell_table.py:6780
+#: engine/hunspell_table.py:6935
 msgid "No supported language for speech recognition."
 msgstr "Geen ondersteunde taal aangetroffen voor spraakherkenning."
 
-#: engine/hunspell_table.py:6784
+#: engine/hunspell_table.py:6939
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "Het bestand '%s', wat nodig is voor je Google-inloggegevens, is niet "
 "aangetroffen."
 
-#: engine/hunspell_table.py:6797
+#: engine/hunspell_table.py:6952
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Het starten van Google tekst-naar-spraak is mislukt. Bekijk het bestand "
 "'debug.log'."
 
-#: engine/hunspell_table.py:6905
+#: engine/hunspell_table.py:7060
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google tekst-naar-spraak-fout. Bekijk het bestand 'debug.log'."
 

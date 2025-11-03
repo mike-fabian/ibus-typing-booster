@@ -9,10 +9,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-10-15 17:38+0200\n"
+"POT-Creation-Date: 2025-10-30 15:12+0100\n"
 "PO-Revision-Date: 2025-09-21 20:53+0000\n"
-"Last-Translator: ButterflyOfFire <butterflyoffire@users.noreply.translate."
-"fedoraproject.org>\n"
+"Last-Translator: ButterflyOfFire "
+"<butterflyoffire@users.noreply.translate.fedoraproject.org>\n"
 "Language-Team: Kabyle <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/kab/>\n"
 "Language: kab\n"
@@ -159,21 +159,21 @@ msgstr "Anagraw amezwer"
 msgid "Set Font"
 msgstr "Sbadu tasefsit"
 
-#: engine/hunspell_table.py:693 engine/hunspell_table.py:727
-#: engine/hunspell_table.py:748
+#: engine/hunspell_table.py:893 engine/hunspell_table.py:927
+#: engine/hunspell_table.py:948
 msgid "Off"
 msgstr "Yensa"
 
-#: engine/hunspell_table.py:698 engine/hunspell_table.py:732
-#: engine/hunspell_table.py:753
+#: engine/hunspell_table.py:898 engine/hunspell_table.py:932
+#: engine/hunspell_table.py:953
 msgid "On"
 msgstr "Yermed"
 
-#: engine/hunspell_table.py:717
+#: engine/hunspell_table.py:917
 msgid "Input mode"
 msgstr "Askar n unekcum"
 
-#: engine/hunspell_table.py:718
+#: engine/hunspell_table.py:918
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Dagi tzemreḍ ad tremdeḍ neɣ ad tsenseḍ ibus-typing-booster."
 
@@ -184,7 +184,7 @@ msgstr "Dagi tzemreḍ ad tremdeḍ neɣ ad tsenseḍ ibus-typing-booster."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:737 engine/hunspell_table.py:739 setup/main.py:667
+#: engine/hunspell_table.py:937 engine/hunspell_table.py:939 setup/main.py:667
 msgid "Unicode symbols and emoji predictions"
 msgstr "Izamulen n Unicode akked wayen d-yemmalen imujiten"
 
@@ -195,64 +195,64 @@ msgstr "Izamulen n Unicode akked wayen d-yemmalen imujiten"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:758 engine/hunspell_table.py:759 setup/main.py:737
+#: engine/hunspell_table.py:958 engine/hunspell_table.py:959 setup/main.py:737
 msgid "Off the record mode"
 msgstr "Yensa uskar n usekles"
 
-#: engine/hunspell_table.py:2244
+#: engine/hunspell_table.py:2433
 msgid "Highest priority dictionary"
 msgstr "Amawal yesɛan azal d amezwaru"
 
-#: engine/hunspell_table.py:2245
+#: engine/hunspell_table.py:2434
 msgid "Choose highest priority dictionary"
 msgstr "Fren amawal yesɛan azal d amezwaru"
 
-#: engine/hunspell_table.py:2274
+#: engine/hunspell_table.py:2463
 msgid "Preedit input method"
 msgstr "Tarrayt n unekcum n uẓrag uzwir"
 
-#: engine/hunspell_table.py:2275
+#: engine/hunspell_table.py:2464
 msgid "Switch preedit input method"
 msgstr "Senfel tarrayt n unekcum n uẓrag uzwir"
 
-#: engine/hunspell_table.py:2620
+#: engine/hunspell_table.py:2809
 msgid "Setup"
 msgstr "Iɣewwaṛen"
 
-#: engine/hunspell_table.py:2623 setup/main.py:152
+#: engine/hunspell_table.py:2812 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr "Ismenyafen i ibus-typing-booster"
 
-#: engine/hunspell_table.py:6769
+#: engine/hunspell_table.py:6924
 msgid "Failed to import Google speech-to-text."
 msgstr "Aktar Google n tririt n yinaw ɣer yeḍrisen yecceḍ."
 
-#: engine/hunspell_table.py:6772
+#: engine/hunspell_table.py:6927
 msgid "Failed to import pyaudio."
 msgstr "Yecceḍ uktar n pyaudio."
 
-#: engine/hunspell_table.py:6775
+#: engine/hunspell_table.py:6930
 msgid "Failed to import queue."
 msgstr "Yecceḍ uktar n queue."
 
-#: engine/hunspell_table.py:6780
+#: engine/hunspell_table.py:6935
 msgid "No supported language for speech recognition."
 msgstr "Ulac tutlayt yettusefraken i uɛqal n taɣuct."
 
-#: engine/hunspell_table.py:6784
+#: engine/hunspell_table.py:6939
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Afaylu n \"yinekcam n usnas Google\" “%s” ur yettwaf ara."
 
-#: engine/hunspell_table.py:6797
+#: engine/hunspell_table.py:6952
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 
-#: engine/hunspell_table.py:6905
+#: engine/hunspell_table.py:7060
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
-"Tella-d tuccḍa deg usenfel n taɣuct ɣer uḍris deg usnas Google. Wali debug."
-"log."
+"Tella-d tuccḍa deg usenfel n taɣuct ɣer uḍris deg usnas Google. Wali "
+"debug.log."
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji

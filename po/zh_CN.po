@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-10-15 17:38+0200\n"
+"POT-Creation-Date: 2025-10-30 15:12+0100\n"
 "PO-Revision-Date: 2025-10-07 08:00+0000\n"
 "Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
@@ -165,21 +165,21 @@ msgstr "系统默认"
 msgid "Set Font"
 msgstr "设置字体"
 
-#: engine/hunspell_table.py:693 engine/hunspell_table.py:727
-#: engine/hunspell_table.py:748
+#: engine/hunspell_table.py:893 engine/hunspell_table.py:927
+#: engine/hunspell_table.py:948
 msgid "Off"
 msgstr "关闭"
 
-#: engine/hunspell_table.py:698 engine/hunspell_table.py:732
-#: engine/hunspell_table.py:753
+#: engine/hunspell_table.py:898 engine/hunspell_table.py:932
+#: engine/hunspell_table.py:953
 msgid "On"
 msgstr "开启"
 
-#: engine/hunspell_table.py:717
+#: engine/hunspell_table.py:917
 msgid "Input mode"
 msgstr "输入模式"
 
-#: engine/hunspell_table.py:718
+#: engine/hunspell_table.py:918
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "您可以在这里开启或关闭 ibus-typing-booster。"
 
@@ -190,7 +190,7 @@ msgstr "您可以在这里开启或关闭 ibus-typing-booster。"
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:737 engine/hunspell_table.py:739 setup/main.py:667
+#: engine/hunspell_table.py:937 engine/hunspell_table.py:939 setup/main.py:667
 msgid "Unicode symbols and emoji predictions"
 msgstr "Unicode 符号和 Emoji 表情预测"
 
@@ -201,60 +201,60 @@ msgstr "Unicode 符号和 Emoji 表情预测"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:758 engine/hunspell_table.py:759 setup/main.py:737
+#: engine/hunspell_table.py:958 engine/hunspell_table.py:959 setup/main.py:737
 msgid "Off the record mode"
 msgstr "停止记录模式"
 
-#: engine/hunspell_table.py:2244
+#: engine/hunspell_table.py:2433
 msgid "Highest priority dictionary"
 msgstr "最高优先级的字典"
 
-#: engine/hunspell_table.py:2245
+#: engine/hunspell_table.py:2434
 msgid "Choose highest priority dictionary"
 msgstr "选择最高优先级的字典"
 
-#: engine/hunspell_table.py:2274
+#: engine/hunspell_table.py:2463
 msgid "Preedit input method"
 msgstr "预编辑输入方式"
 
-#: engine/hunspell_table.py:2275
+#: engine/hunspell_table.py:2464
 msgid "Switch preedit input method"
 msgstr "切换预编辑的输入方式"
 
-#: engine/hunspell_table.py:2620
+#: engine/hunspell_table.py:2809
 msgid "Setup"
 msgstr "设置"
 
-#: engine/hunspell_table.py:2623 setup/main.py:152
+#: engine/hunspell_table.py:2812 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr "Ibus-typing-booster 首选项"
 
-#: engine/hunspell_table.py:6769
+#: engine/hunspell_table.py:6924
 msgid "Failed to import Google speech-to-text."
 msgstr "尝试导入 Google 语音转文本文件失败。"
 
-#: engine/hunspell_table.py:6772
+#: engine/hunspell_table.py:6927
 msgid "Failed to import pyaudio."
 msgstr "导入 pyaudio 失败。"
 
-#: engine/hunspell_table.py:6775
+#: engine/hunspell_table.py:6930
 msgid "Failed to import queue."
 msgstr "导入 queue 失败。"
 
-#: engine/hunspell_table.py:6780
+#: engine/hunspell_table.py:6935
 msgid "No supported language for speech recognition."
 msgstr "未支持语音识别的语言。"
 
-#: engine/hunspell_table.py:6784
+#: engine/hunspell_table.py:6939
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "“Google 应用默认凭据”文件“%s”未找到。"
 
-#: engine/hunspell_table.py:6797
+#: engine/hunspell_table.py:6952
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "初始化 Google 语音转文本服务失败。详情请见 debug.log。"
 
-#: engine/hunspell_table.py:6905
+#: engine/hunspell_table.py:7060
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google 语音转文本出错。详情请见 debug.log。"
 
@@ -1287,8 +1287,8 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
-"如果启用此选项，只在查找功能启用时使用预编辑样式，如下划线。查找功能会在使"
-"用“以按键启用联想”时禁用，或者用户输入还未“触发补全所需的最小字符数”。"
+"如果启用此选项，只在查找功能启用时使用预编辑样式，如下划线。查找功能会在使用"
+"“以按键启用联想”时禁用，或者用户输入还未“触发补全所需的最小字符数”。"
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and

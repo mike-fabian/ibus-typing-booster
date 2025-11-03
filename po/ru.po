@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-10-15 17:38+0200\n"
+"POT-Creation-Date: 2025-10-30 15:12+0100\n"
 "PO-Revision-Date: 2025-09-29 15:15+0000\n"
 "Last-Translator: mikhail m <poshta82@mail.ru>\n"
 "Language-Team: Russian <https://translate.fedoraproject.org/projects/ibus-"
@@ -162,21 +162,21 @@ msgstr "Системные по умолчанию"
 msgid "Set Font"
 msgstr "Установить шрифт"
 
-#: engine/hunspell_table.py:693 engine/hunspell_table.py:727
-#: engine/hunspell_table.py:748
+#: engine/hunspell_table.py:893 engine/hunspell_table.py:927
+#: engine/hunspell_table.py:948
 msgid "Off"
 msgstr "Выкл."
 
-#: engine/hunspell_table.py:698 engine/hunspell_table.py:732
-#: engine/hunspell_table.py:753
+#: engine/hunspell_table.py:898 engine/hunspell_table.py:932
+#: engine/hunspell_table.py:953
 msgid "On"
 msgstr "Вкл."
 
-#: engine/hunspell_table.py:717
+#: engine/hunspell_table.py:917
 msgid "Input mode"
 msgstr "Режим ввода"
 
-#: engine/hunspell_table.py:718
+#: engine/hunspell_table.py:918
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Здесь вы можете включить или выключить ibus-typing-booster."
 
@@ -187,7 +187,7 @@ msgstr "Здесь вы можете включить или выключить 
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:737 engine/hunspell_table.py:739 setup/main.py:667
+#: engine/hunspell_table.py:937 engine/hunspell_table.py:939 setup/main.py:667
 msgid "Unicode symbols and emoji predictions"
 msgstr "Предположения для символов Юникода и эмодзи"
 
@@ -198,60 +198,60 @@ msgstr "Предположения для символов Юникода и э�
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:758 engine/hunspell_table.py:759 setup/main.py:737
+#: engine/hunspell_table.py:958 engine/hunspell_table.py:959 setup/main.py:737
 msgid "Off the record mode"
 msgstr "Выключить режим записи"
 
-#: engine/hunspell_table.py:2244
+#: engine/hunspell_table.py:2433
 msgid "Highest priority dictionary"
 msgstr "Словарь с наивысшим приоритетом"
 
-#: engine/hunspell_table.py:2245
+#: engine/hunspell_table.py:2434
 msgid "Choose highest priority dictionary"
 msgstr "Выберите словарь с наивысшим приоритетом"
 
-#: engine/hunspell_table.py:2274
+#: engine/hunspell_table.py:2463
 msgid "Preedit input method"
 msgstr "Метод предварительного редактирования"
 
-#: engine/hunspell_table.py:2275
+#: engine/hunspell_table.py:2464
 msgid "Switch preedit input method"
 msgstr "Переключение метода предварительного редактирования ввода"
 
-#: engine/hunspell_table.py:2620
+#: engine/hunspell_table.py:2809
 msgid "Setup"
 msgstr "Настройка"
 
-#: engine/hunspell_table.py:2623 setup/main.py:152
+#: engine/hunspell_table.py:2812 setup/main.py:152
 msgid "Preferences for ibus-typing-booster"
 msgstr "Предпочтения для ibus-typing-booster"
 
-#: engine/hunspell_table.py:6769
+#: engine/hunspell_table.py:6924
 msgid "Failed to import Google speech-to-text."
 msgstr "Не удалось импортировать речь-в-текст Google."
 
-#: engine/hunspell_table.py:6772
+#: engine/hunspell_table.py:6927
 msgid "Failed to import pyaudio."
 msgstr "Не удалось импортировать pyaudio."
 
-#: engine/hunspell_table.py:6775
+#: engine/hunspell_table.py:6930
 msgid "Failed to import queue."
 msgstr "Не удалось импортировать очередь."
 
-#: engine/hunspell_table.py:6780
+#: engine/hunspell_table.py:6935
 msgid "No supported language for speech recognition."
 msgstr "Нет поддерживаемого языка для распознавания речи."
 
-#: engine/hunspell_table.py:6784
+#: engine/hunspell_table.py:6939
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Файл \"Учетные данные приложения Google\" \"%s\" не найден."
 
-#: engine/hunspell_table.py:6797
+#: engine/hunspell_table.py:6952
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Не удалось инициировать Google речь-в-текст. Смотрите debug.log."
 
-#: engine/hunspell_table.py:6905
+#: engine/hunspell_table.py:7060
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Ошибка преобразования речи в текст Google. См. файл debug.log."
 
@@ -1677,8 +1677,8 @@ msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
 msgstr ""
-"Символ, отображаемый при активации функции «Ускоритель "
-"ввода» (транслитерация, предложение вариантов, проверка орфографии и т. д.)."
+"Символ, отображаемый при активации функции «Ускоритель ввода» "
+"(транслитерация, предложение вариантов, проверка орфографии и т. д.)."
 
 #: setup/main.py:2376
 msgid "Symbol for \"disabled\" (Direct Input) mode"
