@@ -142,8 +142,13 @@ class Dictionary():
                     self.voikko = None
                 return
             if IMPORT_ENCHANT_SUCCESSFUL:
+                broker = enchant.Broker()
+                broker.set_ordering(self.name, 'hunspell,nuspell,aspell,voikko')
                 try:
-                    self.enchant_dict = enchant.Dict(self.name)
+                    self.enchant_dict = broker.request_dict(self.name)
+                    if DEBUG_LEVEL > 1 and self.enchant_dict is not None:
+                        LOGGER.debug(
+                            '%s: %r', self.name, self.enchant_dict.provider)
                 except enchant.errors.DictNotFoundError as error:
                     LOGGER.exception(
                         'Error initializing enchant for %s: %s: %s',
@@ -674,7 +679,7 @@ class Hunspell:
         True
 
         >>> h = Hunspell(['en_US'])
-        >>> all((x, 0) in h.suggest('tree') for x in ('trees', 'treed', "tree's"))
+        >>> all((x, 0) in h.suggest('tree') for x in ('trees', 'treed'))
         True
 
         For benchmarking:
