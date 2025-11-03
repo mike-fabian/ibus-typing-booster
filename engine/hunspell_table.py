@@ -430,6 +430,93 @@ class TypingBoosterLookupTable:
         '''Return the internal IBus.LookupTable'''
         return self._ibus_lookup_table
 
+class TypingBoosterAuxiliaryText:
+    '''Tracks the current contents and visibility of the auxiliary text.
+
+    This class encapsulates the state of the auxiliary text, ensuring that
+    the content and visibility are always synchronized with the displayed text.
+    '''
+    def __init__(self) -> None:
+        self._visible: bool = False
+        self._content: IBus.Text = IBus.Text.new_from_string('')
+
+    @property
+    def visible(self) -> bool:
+        '''Get whether the auxiliary text is visible'''
+        return self._visible
+
+    @visible.setter
+    def visible(self, visible: bool) -> None:
+        '''Set whether the auxiliary text is hidden'''
+        self._visible = visible
+
+    @property
+    def content(self) -> IBus.Text:
+        '''Get the current content of the auxiliary text'''
+        return self._content
+
+    @content.setter
+    def content(self, content: IBus.Text) -> None:
+        '''Set the current content of the auxiliary text'''
+        self._content = content
+
+class TypingBoosterPreeditText:
+    '''Tracks the current contents and visibility of the preedit text.
+
+    This class encapsulates the state of the preedit text, ensuring that
+    the content and visibility are always synchronized with the displayed text.
+    '''
+    def __init__(self) -> None:
+        self._content: IBus.Text = IBus.Text.new_from_string('')
+        self._cursor_pos: int = 0
+        self._visible: bool = False
+        self._focus_mode: int = IBus.PreeditFocusMode.CLEAR
+
+    @property
+    def content(self) -> IBus.Text:
+        '''Get the current content of the preedit text'''
+        return self._content
+
+    @content.setter
+    def content(self, content: IBus.Text) -> None:
+        '''Set the current content of the preedit text'''
+        self._content = content
+
+    @property
+    def cursor_pos(self) -> int:
+        '''Get the preedit cursor position'''
+        return self._cursor_pos
+
+    @cursor_pos.setter
+    def cursor_pos(self, cursor_pos: int) -> None:
+        '''Set the preedit cursor position'''
+        self._cursor_pos = cursor_pos
+
+    @property
+    def visible(self) -> bool:
+        '''Get whether the preedit text is visible'''
+        return self._visible
+
+    @visible.setter
+    def visible(self, visible: bool) -> None:
+        '''Set whether the preedit text is hidden'''
+        self._visible = visible
+
+    @property
+    def focus_mode(self) -> int:
+        '''Get the current focus mode of the preedit text'''
+        return self._focus_mode
+
+    @focus_mode.setter
+    def focus_mode(self, focus_mode: int) -> None:
+        '''Set the current focus mode of the preedit text'''
+        self._focus_mode = focus_mode
+
+    @property
+    def text_str(self) -> str:
+        '''Get the content of the preedit text as a string'''
+        return self._content.text
+
 class TypingBoosterEngine(IBus.Engine):
     '''The IBus Engine for ibus-typing-booster'''
 
@@ -486,8 +573,10 @@ class TypingBoosterEngine(IBus.Engine):
         self._unit_test = unit_test
         self._input_purpose: int = 0
         self._input_hints: int = 0
-        self._current_auxiliary_text = ''
-        self._current_preedit_text = ''
+        self._current_auxiliary_text: TypingBoosterAuxiliaryText = (
+            TypingBoosterAuxiliaryText())
+        self._current_preedit_text: TypingBoosterPreeditText = (
+            TypingBoosterPreeditText())
         self._bus = bus
         self.database = database
         self.emoji_matcher: Optional[itb_emoji.EmojiMatcher] = None
@@ -1014,6 +1103,48 @@ class TypingBoosterEngine(IBus.Engine):
         else:
             super().update_lookup_table(lookup_table, visible)
 
+    def show_auxiliary_text(self) -> None: # pylint: disable=arguments-differ
+        super().show_auxiliary_text()
+        self._current_auxiliary_text.visible = True
+
+    def hide_auxiliary_text(self) -> None: # pylint: disable=arguments-differ
+        super().hide_auxiliary_text()
+        self._current_auxiliary_text.visible = False
+
+    def update_auxiliary_text( # pylint: disable=arguments-differ
+            self, content: IBus.Text, visible: bool) -> None:
+        super().update_auxiliary_text(content, visible)
+        self._current_auxiliary_text.visible = visible
+        self._current_auxiliary_text.content = content
+
+    def show_preedit_text(self) -> None: # pylint: disable=arguments-differ
+        super().show_preedit_text()
+        self._current_preedit_text.visible = True
+
+    def hide_preedit_text(self) -> None: # pylint: disable=arguments-differ
+        super().hide_preedit_text()
+        self._current_preedit_text.visible = False
+
+    def update_preedit_text( # pylint: disable=arguments-differ
+            self, content: IBus.Text, cursor_pos: int, visible: bool) -> None:
+        super().update_preedit_text(content, cursor_pos, visible)
+        self._current_preedit_text.content = content
+        self._current_preedit_text.cursor_pos = cursor_pos
+        self._current_preedit_text.visible = visible
+
+    def update_preedit_text_with_mode( # pylint: disable=arguments-differ
+            self,
+            content: IBus.Text,
+            cursor_pos: int,
+            visible: bool,
+            focus_mode: int) -> None:
+        super().update_preedit_text_with_mode(
+            content, cursor_pos, visible, focus_mode)
+        self._current_preedit_text.content = content
+        self._current_preedit_text.cursor_pos = cursor_pos
+        self._current_preedit_text.visible = visible
+        self._current_preedit_text.focus_mode = focus_mode
+
     @property
     def has_osk(self) -> bool:
         '''Return True if OSK capability flag is set.'''
@@ -1415,6 +1546,11 @@ class TypingBoosterEngine(IBus.Engine):
         self._lookup_table.state = LookupTableState.NORMAL
         self._temporary_word_predictions = False
         self._temporary_emoji_predictions = False
+        self.update_preedit_text_with_mode(
+            IBus.Text.new_from_string(''), 0, False,
+            IBus.PreeditFocusMode.COMMIT)
+        self.update_auxiliary_text(
+            IBus.Text.new_from_string(''), False)
 
     def _insert_string_at_cursor(self, string_to_insert: List[str]) -> None:
         '''Insert typed string at cursor position'''
@@ -3040,16 +3176,14 @@ class TypingBoosterEngine(IBus.Engine):
         if self._hide_input:
             _str = '*' * len(_str)
         if _str == '':
-            if not self._current_preedit_text:
+            if self._current_preedit_text.text_str == '':
                 if self._debug_level > 1:
                     LOGGER.debug('Avoid clearing already empty preedit.')
                 return
-            super().update_preedit_text_with_mode(
+            self.update_preedit_text_with_mode(
                 IBus.Text.new_from_string(''), 0, False,
                 IBus.PreeditFocusMode.COMMIT)
-            self._current_preedit_text = ''
             return
-        self._current_preedit_text = _str
         attrs = IBus.AttrList()
         if (not self._preedit_style_only_when_lookup
             or self._lookup_table.enabled_by_tab
@@ -3071,7 +3205,7 @@ class TypingBoosterEngine(IBus.Engine):
                 IBus.AttrUnderline.NONE, 0, len(_str)))
         text = IBus.Text.new_from_string(_str)
         text.set_attributes(attrs)
-        super().update_preedit_text_with_mode(
+        self.update_preedit_text_with_mode(
             text, self.get_caret(), True, IBus.PreeditFocusMode.COMMIT)
 
     def _update_aux(self) -> None:
@@ -3154,8 +3288,7 @@ class TypingBoosterEngine(IBus.Engine):
                 and not self._lookup_table.enabled_by_tab)
             or not aux_string):
             visible = False
-        super().update_auxiliary_text(text, visible)
-        self._current_auxiliary_text = aux_string
+        self.update_auxiliary_text(text, visible)
 
     def _update_lookup_table(self) -> None:
         '''Update the lookup table
@@ -3216,7 +3349,7 @@ class TypingBoosterEngine(IBus.Engine):
                 # to the standard lookup table:
                 self.hide_lookup_table()
                 text = IBus.Text.new_from_string('')
-                super().update_auxiliary_text(text, False)
+                self.update_auxiliary_text(text, False)
             self._update_preedit()
             return
         # Show only the first candidate, inline in the preëdit, hide
@@ -3224,9 +3357,8 @@ class TypingBoosterEngine(IBus.Engine):
         completion = first_candidate[len(typed_string):]
         self.hide_lookup_table()
         text = IBus.Text.new_from_string('')
-        super().update_auxiliary_text(text, False)
+        self.update_auxiliary_text(text, False)
         text = IBus.Text.new_from_string(typed_string + completion)
-        self._current_preedit_text = typed_string + completion
         attrs = IBus.AttrList()
         attrs.append(IBus.attr_underline_new(
             self._preedit_underline, 0, len(typed_string)))
@@ -3251,7 +3383,7 @@ class TypingBoosterEngine(IBus.Engine):
             caret = len(first_candidate)
         else:
             caret = self.get_caret()
-        super().update_preedit_text_with_mode(
+        self.update_preedit_text_with_mode(
             text, caret, True, IBus.PreeditFocusMode.COMMIT)
         return
 
@@ -3307,11 +3439,11 @@ class TypingBoosterEngine(IBus.Engine):
             # Show a label in the auxiliary text to indicate that the
             # lookup table is being updated (by default an hourglass
             # with moving sand):
-            super().update_auxiliary_text(
+            self.update_auxiliary_text(
                 IBus.Text.new_from_string(
                     self._label_busy_string.strip()), True)
         else:
-            super().update_auxiliary_text(
+            self.update_auxiliary_text(
                 IBus.Text.new_from_string(''), False)
         self._update_candidates()
         self._update_lookup_table_and_aux()
@@ -3338,8 +3470,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.hide_lookup_table()
         self._lookup_table.enabled_by_tab = False
         self._lookup_table.state = LookupTableState.NORMAL
-        self._current_auxiliary_text = ''
-        super().update_auxiliary_text(
+        self.update_auxiliary_text(
             IBus.Text.new_from_string(''), False)
 
     def _update_ui_empty_input_try_completion(self) -> None:
@@ -3388,11 +3519,11 @@ class TypingBoosterEngine(IBus.Engine):
             # Show a label in the auxiliary text to indicate that the
             # lookup table is being updated (by default an hourglass
             # with moving sand):
-            super().update_auxiliary_text(
+            self.update_auxiliary_text(
                 IBus.Text.new_from_string(
                     self._label_busy_string.strip()), True)
         else:
-            super().update_auxiliary_text(
+            self.update_auxiliary_text(
                 IBus.Text.new_from_string(''), False)
         self._candidates = [
             itb_util.PredictionCandidate(
@@ -3443,8 +3574,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._lookup_table.clear()
             self._lookup_table.set_cursor_visible(False)
             self.hide_lookup_table()
-            self._current_auxiliary_text = ''
-            super().update_auxiliary_text(
+            self.update_auxiliary_text(
                 IBus.Text.new_from_string(''), False)
             self._update_preedit()
             return
@@ -3459,7 +3589,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
         self.hide_lookup_table()
-        super().update_auxiliary_text(
+        self.update_auxiliary_text(
             IBus.Text.new_from_string(''), False)
         if self._timeout_source_id:
             GLib.source_remove(self._timeout_source_id)
@@ -3508,17 +3638,19 @@ class TypingBoosterEngine(IBus.Engine):
         # being updated. Don’t clear the lookup table here because we
         # might want to show it quickly again if nothing related is
         # found:
+        original_auxiliary_text_content = self._current_auxiliary_text.content
+        original_auxiliary_text_visible = self._current_auxiliary_text.visible
         if self._lookup_table.get_number_of_candidates():
             self.hide_lookup_table()
         if self._label_busy and self._label_busy_string.strip():
             # Show a label in the auxiliary text to indicate that the
             # lookup table is being updated (by default an hourglass
             # with moving sand):
-            super().update_auxiliary_text(
+            self.update_auxiliary_text(
                 IBus.Text.new_from_string(
                     self._label_busy_string.strip()), True)
         else:
-            super().update_auxiliary_text(
+            self.update_auxiliary_text(
                 IBus.Text.new_from_string(''), False)
         related_candidates = []
         # Try to find similar emoji even if emoji predictions are
@@ -3570,13 +3702,9 @@ class TypingBoosterEngine(IBus.Engine):
         if not related_candidates:
             # Nothing related found, show the original lookup table
             # and original auxiliary text again:
-            if self._current_auxiliary_text:
-                super().update_auxiliary_text(
-                    IBus.Text.new_from_string(self._current_auxiliary_text),
-                    True)
-            else:
-                super().update_auxiliary_text(
-                    IBus.Text.new_from_string(''), False)
+            self.update_auxiliary_text(
+                original_auxiliary_text_content,
+                original_auxiliary_text_visible)
             if self._lookup_table.get_number_of_candidates():
                 self.update_lookup_table(self.get_lookup_table(), True)
             return False
@@ -4369,10 +4497,9 @@ class TypingBoosterEngine(IBus.Engine):
             # the delete_surrounding_text() does not seem to remove the text
             # from the editor until something is committed or the preedit is
             # set to an empty string:
-            super().update_preedit_text_with_mode(
+            self.update_preedit_text_with_mode(
                 IBus.Text.new_from_string(''), 0, True,
                 IBus.PreeditFocusMode.COMMIT)
-            self._current_preedit_text = ''
             if (re.search(r'^[^:]*:[^:]*:WhatsApp', self._im_client)
                 and len(token) == cursor_pos):
                 # Workaround for WhatsApp in firefox (google-chrome
@@ -4453,10 +4580,9 @@ class TypingBoosterEngine(IBus.Engine):
             # the delete_surrounding_text() does not seem to remove the text
             # from the editor until something is committed or the preedit is
             # set to an empty string:
-            super().update_preedit_text_with_mode(
+            self.update_preedit_text_with_mode(
                 IBus.Text.new_from_string(''), 0, True,
                 IBus.PreeditFocusMode.COMMIT)
-            self._current_preedit_text = ''
             if (re.search(r'^[^:]*:[^:]*:WhatsApp', self._im_client)
                 and not text[:cursor_pos].strip()):
                 # Workaround for WhatsApp in firefox (google-chrome
@@ -6909,7 +7035,7 @@ class TypingBoosterEngine(IBus.Engine):
             # recognition:
             auxiliary_text_label = (
                 self._label_speech_recognition_string.strip())
-        super().update_auxiliary_text(
+        self.update_auxiliary_text(
             IBus.Text.new_from_string(
                 auxiliary_text_label + '⚠️' + error_message), True)
         time.sleep(2)
@@ -7013,7 +7139,7 @@ class TypingBoosterEngine(IBus.Engine):
             # that it works just fine. One has to try it.
             auxiliary_text_label += '❌' # not officially supported
         auxiliary_text_label += ': '
-        super().update_auxiliary_text(
+        self.update_auxiliary_text(
             IBus.Text.new_from_string(auxiliary_text_label), True)
 
         transcript = ''
@@ -7051,7 +7177,7 @@ class TypingBoosterEngine(IBus.Engine):
                     # the voice recording is finished.  But in future
                     # I may try to use a different thread for the
                     # voice recording.
-                    super().update_auxiliary_text(
+                    self.update_auxiliary_text(
                         IBus.Text.new_from_string(
                             auxiliary_text_label + transcript),
                         True)
@@ -7416,10 +7542,9 @@ class TypingBoosterEngine(IBus.Engine):
             # delete_surrounding_text() does not seem to remove
             # the text from the editor until something is
             # committed or the preedit is set to an empty string:
-            super().update_preedit_text_with_mode(
+            self.update_preedit_text_with_mode(
                 IBus.Text.new_from_string(''), 0, True,
                 IBus.PreeditFocusMode.COMMIT)
-            self._current_preedit_text = ''
             if (re.search(r'^[^:]*:[^:]*:WhatsApp', self._im_client)
                 and not text[:cursor_pos].strip()):
                 # Workaround for WhatsApp in firefox (google-chrome
@@ -7738,7 +7863,6 @@ class TypingBoosterEngine(IBus.Engine):
             # it:
             self._clear_input()
             self.hide_lookup_table()
-            self._current_preedit_text = ''
             GLib.idle_add(lambda:
                           self._ai_chat_query(
                               selection_text, selection_text))
@@ -7759,7 +7883,6 @@ class TypingBoosterEngine(IBus.Engine):
             # it:
             self._clear_input()
             self.hide_lookup_table()
-            self._current_preedit_text = ''
             # `wl-paste -p` might have been used to get the primary
             # selection.  If `wl-paste` (with or without `-p`) is used, it
             # causes a focus out, a focus in to `self._im_client=fake`,
@@ -7783,9 +7906,9 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
         prompt = self._surrounding_text.text[
             :self._surrounding_text.cursor_pos].split('\n')[-1]
-        if self._current_preedit_text != '':
-            if not prompt.endswith(self._current_preedit_text):
-                prompt += self._current_preedit_text
+        if self._current_preedit_text.text_str != '':
+            if not prompt.endswith(self._current_preedit_text.text_str):
+                prompt += self._current_preedit_text.text_str
             self._commit_current_input()
         GLib.timeout_add(delay, lambda: self._ai_chat_query('', prompt))
         return False
@@ -7801,24 +7924,20 @@ class TypingBoosterEngine(IBus.Engine):
         if self._label_busy and self._label_busy_string.strip():
             # Show a label in the auxiliary text to indicate busy
             # state (by default an hourglass with moving sand):
-            self._current_auxiliary_text = (
-                f'{self._label_busy_string.strip()}'
-                f'{self._ollama_server_label}'
-                f'[{len(self._ollama_messages)}] {self._ollama_model}\n'
-                f'{prompt}')
-            super().update_auxiliary_text(
-                IBus.Text.new_from_string(self._current_auxiliary_text),
-                True)
+            self.update_auxiliary_text(
+                IBus.Text.new_from_string(
+                    f'{self._label_busy_string.strip()}'
+                    f'{self._ollama_server_label}'
+                    f'[{len(self._ollama_messages)}] {self._ollama_model}\n'
+                    f'{prompt}'), True)
         else:
-            self._current_auxiliary_text = ''
-            super().update_auxiliary_text(
+            self.update_auxiliary_text(
                 IBus.Text.new_from_string(''), False)
         if prompt == '':
             # Keep auxilary text for a second to show that getting a
             # prompt failed.
             time.sleep(1)
-            super().update_auxiliary_text(IBus.Text.new_from_string(''), False)
-            self._current_auxiliary_text = ''
+            self.update_auxiliary_text(IBus.Text.new_from_string(''), False)
             return False
         self._ollama_messages = (
             [] if self._ollama_max_context == 0
@@ -7882,13 +8001,12 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if self._ollama_response_style == 'preedit':
             attrs = IBus.AttrList()
-            self._current_preedit_text = self._ollama_response
             attrs.append(IBus.attr_underline_new(
-                self._preedit_underline, 0, len(self._current_preedit_text)))
-            ibus_text = IBus.Text.new_from_string(self._current_preedit_text)
+                self._preedit_underline, 0, len(self._ollama_response)))
+            ibus_text = IBus.Text.new_from_string(self._ollama_response)
             ibus_text.set_attributes(attrs)
-            super().update_preedit_text_with_mode(
-                ibus_text, len(self._current_preedit_text), True,
+            self.update_preedit_text_with_mode(
+                ibus_text, len(self._ollama_response), True,
                 IBus.PreeditFocusMode.CLEAR)
             return False
         if self._ollama_response_style == 'aux':
@@ -7905,9 +8023,8 @@ class TypingBoosterEngine(IBus.Engine):
             if len(aux_lines_split) > max_aux_lines_stream:
                 aux_lines = '\n'.join(
                     ['[…]'] + aux_lines_split[-max_aux_lines_stream:])
-            self._current_auxiliary_text = aux_prefix + aux_lines
-            super().update_auxiliary_text(
-                IBus.Text.new_from_string(self._current_auxiliary_text),
+            self.update_auxiliary_text(
+                IBus.Text.new_from_string(aux_prefix + aux_lines),
                 True)
             return False
         LOGGER.error('Invalid self._ollama_response_style = %r',
@@ -7923,19 +8040,18 @@ class TypingBoosterEngine(IBus.Engine):
         if self._debug_level > 1:
             LOGGER.debug('self._ollama_response=%r', self._ollama_response)
         if self._ollama_response_style == 'preedit':
-            super().update_auxiliary_text(IBus.Text.new_from_string(''), False)
-            self._current_auxiliary_text = ''
+            self.update_auxiliary_text(IBus.Text.new_from_string(''), False)
             return False
         if self._ollama_response_style == 'aux':
             if self._ollama_model.startswith('deepseek'):
                 self._ollama_response = re.sub(
                     r'<think>.*?</think>', '',
                     self._ollama_response, flags=re.DOTALL).strip()
-            self._current_auxiliary_text = '\n'.join(
-                [self._ollama_aux_wrapper.fill(line)
-                 for line in self._ollama_response.splitlines()])
-            super().update_auxiliary_text(
-                IBus.Text.new_from_string(self._current_auxiliary_text),
+            self.update_auxiliary_text(
+                IBus.Text.new_from_string(
+                    '\n'.join(
+                        [self._ollama_aux_wrapper.fill(line)
+                         for line in self._ollama_response.splitlines()])),
                 True)
             return False
         LOGGER.error('Invalid self._ollama_response_style = %r',
@@ -7952,11 +8068,10 @@ class TypingBoosterEngine(IBus.Engine):
         self._ollama_chat_query_error = True
         super().commit_text(IBus.Text.new_from_string(
             f'{self._ollama_selection_text}'))
-        super().update_preedit_text_with_mode(
+        self.update_preedit_text_with_mode(
             IBus.Text.new_from_string(''), 0, True,
             IBus.PreeditFocusMode.COMMIT)
-        super().update_auxiliary_text(IBus.Text.new_from_string(''), False)
-        self._current_preedit_text = self._current_auxiliary_text = ''
+        self.update_auxiliary_text(IBus.Text.new_from_string(''), False)
         return False
 
     def _ollama_chat_query_cancel(
@@ -7985,11 +8100,10 @@ class TypingBoosterEngine(IBus.Engine):
         :return: *Must* always return False to avoid that this callback
                  called by GLib.idle_add() runs again.
         '''
-        super().update_preedit_text_with_mode(
+        self.update_preedit_text_with_mode(
             IBus.Text.new_from_string(''), 0, True,
             IBus.PreeditFocusMode.COMMIT)
-        super().update_auxiliary_text(IBus.Text.new_from_string(''), False)
-        self._current_preedit_text = self._current_auxiliary_text = ''
+        self.update_auxiliary_text(IBus.Text.new_from_string(''), False)
         return False
 
     def _ollama_chat_query_process_key(self, key: itb_util.KeyEvent) -> bool:
@@ -8038,11 +8152,10 @@ class TypingBoosterEngine(IBus.Engine):
         else:
             super().commit_text(IBus.Text.new_from_string(
                 f'{self._ollama_selection_text}\n{self._ollama_response}'))
-        super().update_preedit_text_with_mode(
+        self.update_preedit_text_with_mode(
             IBus.Text.new_from_string(''), 0, True,
             IBus.PreeditFocusMode.COMMIT)
-        super().update_auxiliary_text(IBus.Text.new_from_string(''), False)
-        self._current_preedit_text = self._current_auxiliary_text = ''
+        self.update_auxiliary_text(IBus.Text.new_from_string(''), False)
         return False
 
     def _command_next_input_method(self) -> bool:
@@ -9373,8 +9486,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self._lookup_table.clear()
                 self._lookup_table.set_cursor_visible(False)
                 self.hide_lookup_table()
-                self._current_auxiliary_text = ''
-                super().update_auxiliary_text(
+                self.update_auxiliary_text(
                     IBus.Text.new_from_string(''), False)
                 self._lookup_table.enabled_by_tab = False
                 self._lookup_table.state = LookupTableState.NORMAL
@@ -9434,8 +9546,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
         self.hide_lookup_table()
-        self._current_auxiliary_text = ''
-        super().update_auxiliary_text(
+        self.update_auxiliary_text(
             IBus.Text.new_from_string(''), False)
         for candidate in self._m17n_trans_parts.candidates:
             if candidate:
@@ -9461,8 +9572,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._lookup_table.clear()
             self._lookup_table.set_cursor_visible(False)
             self.hide_lookup_table()
-            self._current_auxiliary_text = ''
-            super().update_auxiliary_text(
+            self.update_auxiliary_text(
                     IBus.Text.new_from_string(''), False)
             self._lookup_table.enabled_by_tab = False
             self._lookup_table.state = LookupTableState.NORMAL
@@ -9710,8 +9820,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._lookup_table.clear()
         self._lookup_table.set_cursor_visible(False)
         self.hide_lookup_table()
-        self._current_auxiliary_text = ''
-        super().update_auxiliary_text(
+        self.update_auxiliary_text(
             IBus.Text.new_from_string(''), False)
         if not isinstance(compose_result, str):
             # compose sequence is unfinished
@@ -9769,14 +9878,13 @@ class TypingBoosterEngine(IBus.Engine):
         super().commit_text(
             IBus.Text.new_from_string(compose_result))
         self._commit_happened_after_focus_in = True
-        if not self._current_preedit_text:
+        if self._current_preedit_text.text_str == '':
             if self._debug_level > 1:
                 LOGGER.debug('Avoid clearing already empty preedit.')
             return True
-        super().update_preedit_text_with_mode(
+        self.update_preedit_text_with_mode(
             IBus.Text.new_from_string(''), 0, False,
             IBus.PreeditFocusMode.COMMIT)
-        self._current_preedit_text = ''
         return True
 
     def _translate_to_ibus_keymap(
@@ -10877,11 +10985,11 @@ class TypingBoosterEngine(IBus.Engine):
 
         '''
         if self._debug_level > 1:
-            LOGGER.debug('self._current_preedit_text=%r '
+            LOGGER.debug('self._current_preedit_text.text_str=%r '
                          'self._typed_string=%s '
                          'self._typed_compose_sequence=%s '
                          'compose preedit representation=%r',
-                         self._current_preedit_text,
+                         self._current_preedit_text.text_str,
                          repr(self._typed_string),
                          repr(self._typed_compose_sequence),
                          self._compose_sequences.preedit_representation(
@@ -10908,7 +11016,7 @@ class TypingBoosterEngine(IBus.Engine):
             # reset_ic() switches to the default mode to input Chinese
             # characters.
             self._transliterators[ime].reset_ic()
-        if not self._current_preedit_text:
+        if self._current_preedit_text.text_str == '':
             if self._debug_level > 1:
                 LOGGER.debug('Current preedit is empty: '
                              'do not record, clear input, update UI.')
@@ -10922,8 +11030,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._lookup_table.clear()
             self._lookup_table.set_cursor_visible(False)
             self.hide_lookup_table()
-            self._current_auxiliary_text = ''
-            super().update_auxiliary_text(
+            self.update_auxiliary_text(
                 IBus.Text.new_from_string(''), False)
             self._lookup_table.enabled_by_tab = False
             self._lookup_table.state = LookupTableState.NORMAL
@@ -10950,12 +11057,12 @@ class TypingBoosterEngine(IBus.Engine):
                 LOGGER.debug('self._surrounding_text=%r',
                              self._surrounding_text)
             if (self._im_client.startswith('gtk3-im')
-                and not text_to_cursor.endswith(self._current_preedit_text)):
+                and not text_to_cursor.endswith(self._current_preedit_text.text_str)):
                 # On Wayland this causes problems, as the surrounding text
                 # behaves differently. Do this workaround only if the im client
                 # uses gtk3-im, if not it will cause more problems then help.
-                LOGGER.debug('self._current_preedit_text=“%s”',
-                             self._current_preedit_text)
+                LOGGER.debug('self._current_preedit_text.text_str=“%s”',
+                             self._current_preedit_text.text_str)
                 LOGGER.debug(
                     'Whatever caused the reset did not commit the preedit. '
                     'A reset seems to happen sometimes right after '
