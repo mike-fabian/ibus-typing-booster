@@ -25,6 +25,7 @@ The setup tool for ibus typing booster.
 from typing import Tuple
 from typing import List
 from typing import Dict
+from typing import Set
 from typing import Union
 from typing import Any
 from typing import Optional
@@ -85,7 +86,7 @@ import itb_emoji
 import itb_version
 # pylint: enable=import-error
 
-from pkginstall import InstallPackages
+from pkginstall import install_packages_with_dialog
 from i18n import _, init as i18n_init
 
 IMPORT_ITB_OLLAMA_ERROR = None
@@ -4206,14 +4207,14 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionaries_listbox.select_row(
             self._dictionaries_listbox.get_row_at_index(index + 1))
 
-    def _on_install_missing_dictionaries(self, *_args: Any) -> None:
+    def _on_install_missing_dictionaries(self, button: Gtk.Button) -> None:
         '''
         Signal handler called when the “Install missing dictionaries”
         button is clicked.
 
         Tries to install the appropriate dictionary packages.
         '''
-        missing_dictionary_packages = set()
+        missing_dictionary_packages: Set[str] = set()
         for name in self._dictionary_names:
             if name.split('_')[0] == 'fi':
                 missing_dictionary_packages.add('python3-libvoikko')
@@ -4232,15 +4233,22 @@ class SetupUI(Gtk.Window): # type: ignore
                     else:
                         missing_dictionary_packages.add(
                             'hunspell-' + name.split('_')[0])
-        InstallPackages(missing_dictionary_packages)
-        self._fill_dictionaries_listbox()
-        if missing_dictionary_packages:
+        if not missing_dictionary_packages:
+            return
+
+        def on_complete(status: str) -> None:
+            self._fill_dictionaries_listbox()
             # Write a timestamp to dconf to trigger the callback
             # for changed dconf values in the engine and reload
             # the dictionaries:
             self._gsettings.set_value(
                 'dictionaryinstalltimestamp',
                 GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
+
+        parent_window = button.get_toplevel()
+        install_packages_with_dialog(
+            parent_window, missing_dictionary_packages, on_complete=on_complete)
+
 
     def _on_dictionaries_default_button_clicked(self, *_args: Any) -> None:
         '''Signal handler called when the “Set to default” button for the
