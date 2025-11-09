@@ -87,6 +87,7 @@ import itb_version
 # pylint: enable=import-error
 
 from pkginstall import install_packages_with_dialog
+from dictionary_download import download_dictionaries_with_dialog
 from i18n import _, init as i18n_init
 
 IMPORT_ITB_OLLAMA_ERROR = None
@@ -1208,12 +1209,21 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionaries_install_missing_button = Gtk.Button(
             # Translators: A button used to try to install the
             # dictionaries which are setup here but not installed
-            label=_('Install missing dictionaries'))
+            label='📦 ' +_('Install missing dictionaries'))
         self._dictionaries_install_missing_button.set_tooltip_text(
             _('Install the dictionaries which are '
               'setup here but not installed'))
         self._dictionaries_install_missing_button.connect(
             'clicked', self._on_install_missing_dictionaries)
+        self._dictionaries_download_button = Gtk.Button(
+            # Translators: A button used to download
+            # missing dictionaries and update existing ones.
+            label='📥 ' +_('Download dictionaries'))
+        self._dictionaries_download_button.set_tooltip_text(
+            _('Download missing dictionaries and update '
+              'existing ones'))
+        self._dictionaries_download_button.connect(
+            'clicked', self._on_download_dictionaries)
         self._dictionaries_default_button = Gtk.Button()
         self._dictionaries_default_button_label = Gtk.Label()
         self._dictionaries_default_button_label.set_text(
@@ -1239,6 +1249,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionaries_action_area.add(self._dictionaries_down_button)
         self._dictionaries_action_area.add(
             self._dictionaries_install_missing_button)
+        self._dictionaries_action_area.add(
+            self._dictionaries_download_button)
         self._dictionaries_action_area.add(
             self._dictionaries_default_button)
         self._dictionaries_listbox_selected_dictionary_name = ''
@@ -3009,6 +3021,10 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionaries_listbox.show_all()
         self._dictionaries_install_missing_button.set_sensitive(
             missing_dictionaries)
+        self._dictionaries_download_button.set_sensitive(
+            len(self._dictionary_names) >= 1
+            and
+            self._dictionary_names != ['None'])
         self._dictionaries_add_button.set_sensitive(
             len(self._dictionary_names)
             < itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES)
@@ -4249,6 +4265,29 @@ class SetupUI(Gtk.Window): # type: ignore
         install_packages_with_dialog(
             parent_window, missing_dictionary_packages, on_complete=on_complete)
 
+    def _on_download_dictionaries(self, button: Gtk.Button) -> None:
+        '''
+        Called when the “Download dictionaries” button is clicked.
+
+        Downloads missing dictionaries and updates existing dictionries
+        '''
+        languages: Set[str] = {
+            name for name in self._dictionary_names if name != 'None'}
+        if not languages:
+            return
+
+        def on_complete(status: str) -> None:
+            self._fill_dictionaries_listbox()
+            # Write a timestamp to dconf to trigger the callback
+            # for changed dconf values in the engine and reload
+            # the dictionaries:
+            self._gsettings.set_value(
+                'dictionaryinstalltimestamp',
+                GLib.Variant.new_string(strftime('%Y-%m-%d %H:%M:%S')))
+
+        parent_window = button.get_toplevel()
+        download_dictionaries_with_dialog(
+            parent_window, languages, on_complete=on_complete)
 
     def _on_dictionaries_default_button_clicked(self, *_args: Any) -> None:
         '''Signal handler called when the “Set to default” button for the

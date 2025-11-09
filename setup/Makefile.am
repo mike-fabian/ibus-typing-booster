@@ -39,6 +39,7 @@ setup_typing_booster_PYTHON = \
 	main.py \
 	itb_version.py \
 	pkginstall.py \
+	dictionary_download.py \
 	test_input_purpose.py \
 	$(NULL)
 
