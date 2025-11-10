@@ -188,7 +188,7 @@ def install_packages_sequentially_async(
             '''
             results[pkg] = status == 'success'
             if on_output:
-                on_output(f'{pkg} {"✔️" if status == 'success' else "⚠️"}')
+                on_output(f'{pkg} {"✔️" if status == "success" else "⚠️"}')
             install_next(index + 1)
 
         current_proc = install_packages_async(
