@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 12 Nov 2025 Release 2.28.4
+* Make it possible to download missing dictionaries and update existing ones from upstream (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/822)
+* Show in a tooltip from which path a hunspell dictionary and a cldr annotation have been loaded
+* Translation update from Weblate (de 100%, es 100%, fi 100%, ja 100%, ka 100%, ko 100%, sv 100%, tr 100%, uk 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 07 Nov 2025 Release 2.28.3
 * Fix [Install missing dictionaries] feature in the setup tool (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/821)
 * Prefer hunspell over aspell
