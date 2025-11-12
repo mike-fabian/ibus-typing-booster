@@ -15,16 +15,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-11-12 01:15+0100\n"
-"PO-Revision-Date: 2025-09-24 22:23+0000\n"
+"PO-Revision-Date: 2025-11-12 16:54+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13.3\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:267
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -1090,14 +1090,12 @@ msgstr ""
 #. Translators: A button used to download
 #. missing dictionaries and update existing ones.
 #: setup/main.py:1221
-#, fuzzy
-#| msgid "Add dictionary"
 msgid "Download dictionaries"
-msgstr "Wörterbuch hinzufügen"
+msgstr "Wörterbücher herunterladen"
 
 #: setup/main.py:1223
 msgid "Download missing dictionaries and update existing ones"
-msgstr ""
+msgstr "Fehlende Wörterbücher herunterladen und vorhandene aktualisieren"
 
 #: setup/main.py:1230 setup/main.py:1377 setup/main.py:1619 setup/main.py:5608
 msgid "Set to default"
