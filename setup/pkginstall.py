@@ -287,7 +287,9 @@ def install_packages_with_dialog(
             progressbar.set_fraction(total_percent / (package_count * 200))
             progressbar.set_text(f'{int(total_percent / (package_count * 2))}%')
             text = top_label.get_text()
-            top_label.set_text(f'{text + "\n" if text else ""}{line}')
+            # In Python < 3.12, f-string expression part cannot include a backslash
+            newline = '\n'
+            top_label.set_text(f'{text + newline if text else ""}{line}')
 
     def finish(status: InstallStatus) -> None:
         '''Installation of all packages finished or cancelled.'''
