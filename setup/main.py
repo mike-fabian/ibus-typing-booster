@@ -2929,7 +2929,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._ai_model_combobox.handler_unblock(self._ai_model_combobox_changed_id)
         return True # keep running, GLib.timeout_add()
 
-    def _fill_dictionaries_listbox_row(self, name: str) -> Tuple[str, bool]:
+    def _fill_dictionaries_listbox_row(self, name: str) -> Tuple[str, bool, str]:
         '''
         Formats the text of a line in the listbox of configured dictionaries
 
@@ -2950,6 +2950,7 @@ class SetupUI(Gtk.Window): # type: ignore
             row += ' ' + language_description
         row += ':  '
         row_item = ' ' + _('Spell checking') + ' '
+        dic_path: str = ''
         if name.split('_')[0] != 'fi':
             (dic_path,
              dummy_aff_path) = itb_util.find_hunspell_dictionary(name)
@@ -2978,7 +2979,7 @@ class SetupUI(Gtk.Window): # type: ignore
             else:
                 row_item += '❌'
             row += itb_util.bidi_embed(row_item)
-        return (row, missing_dictionary)
+        return (row, missing_dictionary, dic_path)
 
     def _fill_dictionaries_listbox(self) -> None:
         '''
@@ -3005,12 +3006,13 @@ class SetupUI(Gtk.Window): # type: ignore
             for name in self._dictionary_names:
                 label = Gtk.Label()
                 (text,
-                 missing_dictionary) = self._fill_dictionaries_listbox_row(
+                 missing_dictionary, dic_path) = self._fill_dictionaries_listbox_row(
                      name)
                 if missing_dictionary:
                     missing_dictionaries = True
                 label.set_text(html.escape(text))
                 label.set_use_markup(True)
+                label.set_tooltip_text(dic_path)
                 label.set_xalign(0)
                 margin = 1
                 label.set_margin_start(margin)
