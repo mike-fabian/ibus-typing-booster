@@ -129,7 +129,7 @@ ANTHY_HENKAN_WIDE = [
 # When matching keybindings, only the bits in the following mask are
 # considered for key.state:
 KEYBINDING_STATE_MASK = (
-    IBus.ModifierType.MODIFIER_MASK
+    IBus.ModifierType.MODIFIER_MASK # pylint: disable=no-member
     & ~IBus.ModifierType.LOCK_MASK # Caps Lock
     & ~IBus.ModifierType.MOD2_MASK # Num Lock
     & ~IBus.ModifierType.MOD3_MASK # Scroll Lock
@@ -6005,7 +6005,7 @@ class KeyvalsToKeycodes:
     '''
     def __init__(self) -> None:
         self.keyvals_to_keycodes: Dict[int, List[int]] = {}
-        display = Gdk.Display.get_default()
+        display = Gdk.Display.get_default() # pylint: disable=no-value-for-parameter
         if not display:
             LOGGER.warning('Gdk.Display.get_default() returned %s', display)
             self._fallback_to_std_us_layout()
@@ -6198,7 +6198,7 @@ class KeyEvent:
         self.button5 = self.state & IBus.ModifierType.BUTTON5_MASK != 0
         self.release = self.state & IBus.ModifierType.RELEASE_MASK != 0
         # MODIFIER_MASK: Modifier mask for the all the masks above
-        self.modifier = self.state & IBus.ModifierType.MODIFIER_MASK != 0
+        self.modifier = self.state & IBus.ModifierType.MODIFIER_MASK != 0  # pylint: disable=no-member
         if is_ascii(self.msymbol):
             # The prefixes *must* be added in this order:
             # 'S-C-M-A-G-s-H-', see:

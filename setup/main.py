@@ -101,9 +101,10 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 
 GLIB_MAIN_LOOP: Optional[GLib.MainLoop] = None
 
-GTK_VERSION = (Gtk.get_major_version(),
-               Gtk.get_minor_version(),
-               Gtk.get_micro_version())
+GTK_VERSION = (
+    Gtk.get_major_version(), # pylint: disable=no-value-for-parameter
+    Gtk.get_minor_version(), # pylint: disable=no-value-for-parameter
+    Gtk.get_micro_version()) # pylint: disable=no-value-for-parameter
 
 M17N_DB_INFO = None
 
@@ -184,7 +185,7 @@ class SetupUI(Gtk.Window): # type: ignore
             }
             ''')
         Gtk.StyleContext.add_provider_for_screen(
-            Gdk.Screen.get_default(),
+            Gdk.Screen.get_default(), # pylint: disable=c-extension-no-member
             style_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
@@ -199,7 +200,7 @@ class SetupUI(Gtk.Window): # type: ignore
 
         self._allowed_autosettings: Dict[str, Dict[str, str]] = {}
         schema_source: Gio.SettingsSchemaSource = (
-            Gio.SettingsSchemaSource.get_default())
+            Gio.SettingsSchemaSource.get_default()) # pylint: disable=no-value-for-parameter
         schema: Gio.SettingsSchema = schema_source.lookup(
             'org.freedesktop.ibus.engine.typing-booster', True)
         for key in schema.list_keys():
@@ -1454,7 +1455,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._shortcut_expansion_scroll.set_can_focus(False)
         self._shortcut_expansion_scroll.set_hexpand(False)
         self._shortcut_expansion_scroll.set_vexpand(True)
-        self._shortcut_expansion_scroll.set_shadow_type(Gtk.ShadowType.IN)
+        self._shortcut_expansion_scroll.set_shadow_type(
+            Gtk.ShadowType.IN) # pylint: disable=c-extension-no-member
         self._shortcut_expansion_textview_buffer = Gtk.TextBuffer()
         self._shortcut_expansion_textview = Gtk.TextView()
         self._shortcut_expansion_textview.set_buffer(
@@ -1520,7 +1522,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._shortcut_treeview_scroll.set_can_focus(False)
         self._shortcut_treeview_scroll.set_hexpand(False)
         self._shortcut_treeview_scroll.set_vexpand(True)
-        self._shortcut_treeview_scroll.set_shadow_type(Gtk.ShadowType.IN)
+        self._shortcut_treeview_scroll.set_shadow_type(
+            Gtk.ShadowType.IN) # pylint: disable=c-extension-no-member
         self._shortcut_treeview = Gtk.TreeView()
         self._shortcut_treeview_model = Gtk.ListStore(str, str)
         self._shortcut_treeview.set_model(self._shortcut_treeview_model)
@@ -1563,7 +1566,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._keybindings_treeview_scroll.set_can_focus(False)
         self._keybindings_treeview_scroll.set_hexpand(False)
         self._keybindings_treeview_scroll.set_vexpand(True)
-        self._keybindings_treeview_scroll.set_shadow_type(Gtk.ShadowType.IN)
+        self._keybindings_treeview_scroll.set_shadow_type(
+            Gtk.ShadowType.IN) # pylint: disable=c-extension-no-member
         self._keybindings_treeview = Gtk.TreeView()
         self._keybindings_treeview_model = Gtk.ListStore(str, str)
         self._keybindings_treeview.set_model(self._keybindings_treeview_model)
@@ -2548,7 +2552,8 @@ class SetupUI(Gtk.Window): # type: ignore
         ai_system_message_scroll.set_can_focus(False)
         ai_system_message_scroll.set_hexpand(True)
         ai_system_message_scroll.set_vexpand(True)
-        ai_system_message_scroll.set_shadow_type(Gtk.ShadowType.IN)
+        ai_system_message_scroll.set_shadow_type(
+            Gtk.ShadowType.IN) # pylint: disable=c-extension-no-member
         self._ai_system_message_textview_buffer = Gtk.TextBuffer()
         self._ai_system_message_textview_buffer.set_text(
             self._settings_dict['aisystemmessage']['user'])
@@ -2626,7 +2631,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._autosettings_scroll.set_vexpand(True)
         self._autosettings_scroll.set_kinetic_scrolling(False)
         self._autosettings_scroll.set_overlay_scrolling(True)
-        self._autosettings_scroll.set_shadow_type(Gtk.ShadowType.IN)
+        self._autosettings_scroll.set_shadow_type(
+            Gtk.ShadowType.IN) # pylint: disable=c-extension-no-member
         self._autosettings_vbox.add(self._autosettings_scroll)
         autosettings_action_area = Gtk.Box()
         autosettings_action_area.set_orientation(
@@ -2814,7 +2820,7 @@ class SetupUI(Gtk.Window): # type: ignore
         }
 
         schema_source: Gio.SettingsSchemaSource = (
-            Gio.SettingsSchemaSource.get_default())
+            Gio.SettingsSchemaSource.get_default()) # pylint: disable=no-value-for-parameter
         schema: Gio.SettingsSchema = schema_source.lookup(
             'org.freedesktop.ibus.engine.typing-booster', True)
         special_defaults = {
@@ -4256,7 +4262,7 @@ class SetupUI(Gtk.Window): # type: ignore
         if not missing_dictionary_packages:
             return
 
-        def on_complete(status: str) -> None:
+        def on_complete(_status: str) -> None:
             self._fill_dictionaries_listbox()
             # Write a timestamp to dconf to trigger the callback
             # for changed dconf values in the engine and reload
@@ -4280,7 +4286,7 @@ class SetupUI(Gtk.Window): # type: ignore
         if not languages:
             return
 
-        def on_complete(status: str) -> None:
+        def on_complete(_status: str) -> None:
             self._fill_dictionaries_listbox()
             # Write a timestamp to dconf to trigger the callback
             # for changed dconf values in the engine and reload
@@ -7697,7 +7703,7 @@ if __name__ == '__main__':
         LOGGER.exception("IBUS-WARNING **: Using the fallback 'C' locale")
         locale.setlocale(locale.LC_ALL, 'C')
     i18n_init()
-    if IBus.get_address() is None:
+    if IBus.get_address() is None: # pylint: disable=no-value-for-parameter
         DIALOG = Gtk.MessageDialog(
             modal=True,
             message_type=Gtk.MessageType.ERROR,

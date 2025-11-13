@@ -73,9 +73,10 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 
 GLIB_MAIN_LOOP: Optional[GLib.MainLoop] = None
 
-GTK_VERSION = (Gtk.get_major_version(),
-               Gtk.get_minor_version(),
-               Gtk.get_micro_version())
+GTK_VERSION = (
+    Gtk.get_major_version(), # pylint: disable=no-value-for-parameter
+    Gtk.get_minor_version(), # pylint: disable=no-value-for-parameter
+    Gtk.get_micro_version()) # pylint: disable=no-value-for-parameter
 
 DOMAINNAME = 'ibus-typing-booster'
 _: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
@@ -287,7 +288,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             }
             ''')
         Gtk.StyleContext.add_provider_for_screen(
-            Gdk.Screen.get_default(),
+            Gdk.Screen.get_default(), # pylint: disable=c-extension-no-member
             style_provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         self.set_default_size(700, 400)
@@ -473,7 +474,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._search_entry.connect(
             'grab-focus', self.on_search_entry_grab_focus)
 
-        self._browse_paned = Gtk.HPaned()
+        self._browse_paned = Gtk.HPaned() # pylint: disable=c-extension-no-member
         self._main_container.add(self._browse_paned)
         self._browse_paned.set_wide_handle(True)
         self._browse_paned.set_hexpand(True)
@@ -612,10 +613,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 natural_width_search_bar)
         self._browse_paned.set_position(natural_width_search_bar)
 
-        self._selection_clipboard = Gtk.Clipboard.get(
-            Gdk.SELECTION_CLIPBOARD)
-        self._selection_primary = Gtk.Clipboard.get(
-            Gdk.SELECTION_PRIMARY)
+        self._selection_clipboard = Gtk.Clipboard.get( # pylint: disable=c-extension-no-member
+            Gdk.SELECTION_CLIPBOARD) # pylint: disable=c-extension-no-member
+        self._selection_primary = Gtk.Clipboard.get( # pylint: disable=c-extension-no-member
+            Gdk.SELECTION_PRIMARY) # pylint: disable=c-extension-no-member
 
     def _busy_start(self) -> None:
         ''' Show that this program is busy '''
@@ -897,7 +898,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             # Process pending events, replacement for:
             # while Gtk.events_pending():
             #     Gtk.main_iteration())
-            while GLib.MainContext.default().iteration(False):
+            while GLib.MainContext.default().iteration(False): # pylint: disable=no-value-for-parameter
                 if SIGNAL_HANDLER.interrupt_requested:
                     LOGGER.info('Control+C pressed, exiting ...')
                     sys.exit(1)
@@ -957,7 +958,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             gtk_label.set_margin_top(margin)
             gtk_label.set_margin_bottom(margin)
             self._emoji_label_set_tooltip(emoji, gtk_label)
-            event_box = Gtk.EventBox()
+            event_box = Gtk.EventBox() # pylint: disable=c-extension-no-member
             event_box.set_above_child(True)
             event_box.set_can_focus(False)
             event_box.add(gtk_label)
@@ -1273,7 +1274,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
     def on_main_window_key_press_event(
             self,
             _window: Gtk.Window,
-            event_key: Gdk.EventKey) -> None:
+            event_key: Gdk.EventKey, # pylint: disable=c-extension-no-member
+    ) -> None:
         '''
         Some key has been typed into the main window
 
@@ -1330,7 +1332,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             # Process pending events, replacement for:
             # while Gtk.events_pending():
             #     Gtk.main_iteration())
-            while GLib.MainContext.default().iteration(False):
+            while GLib.MainContext.default().iteration(False): # pylint: disable=no-value-for-parameter
                 if SIGNAL_HANDLER.interrupt_requested:
                     LOGGER.info('Control+C pressed, exiting ...')
                     sys.exit(1)
@@ -1381,7 +1383,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             # Process pending events, replacement for:
             # while Gtk.events_pending():
             #     Gtk.main_iteration())
-            while GLib.MainContext.default().iteration(False):
+            while GLib.MainContext.default().iteration(False): # pylint: disable=no-value-for-parameter
                 if SIGNAL_HANDLER.interrupt_requested:
                     LOGGER.info('Control+C pressed, exiting ...')
                     sys.exit(1)
@@ -1430,7 +1432,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             label.set_margin_top(margin)
             label.set_margin_bottom(margin)
             self._emoji_label_set_tooltip(emoji, label)
-            event_box = Gtk.EventBox()
+            event_box = Gtk.EventBox() # pylint: disable=c-extension-no-member
             event_box.set_can_focus(False)
             event_box.add(label)
             event_box.add_events(Gdk.EventType.BUTTON_PRESS)
@@ -1649,7 +1651,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         return False
 
     def _emoji_event_box_selected(
-            self, event_box: Gtk.EventBox, popover: bool = True) -> bool:
+            self,
+            event_box: Gtk.EventBox, # pylint: disable=c-extension-no-member
+            popover: bool = True,
+    ) -> bool:
         '''
         Called when an event box containing an emoji
         was selected in the flowbox.
@@ -1881,7 +1886,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             gesture: Gtk.GestureLongPress,
             x_coordinate: int,
             y_coordinate: int,
-            event_box: Gtk.EventBox) -> None:
+            event_box: Gtk.EventBox, # pylint: disable=c-extension-no-member
+    ) -> None:
         '''
         :param gesture: The object which received the signal
         :param x_coordinate: the X coordinate where the press happened,
@@ -1898,8 +1904,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
 
     def on_flowbox_event_box_button_release(
             self,
-            event_box: Gtk.EventBox,
-            event_button: Gdk.EventButton) -> Gdk.EVENT_PROPAGATE:
+            event_box: Gtk.EventBox, # pylint: disable=c-extension-no-member
+            event_button: Gdk.EventButton, # pylint: disable=c-extension-no-member
+    ) -> Gdk.EVENT_PROPAGATE:
         '''
         Signal handler for button release events on labels in the flowbox
 
@@ -1931,7 +1938,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             self._emoji_info_popover.hide()
         return Gdk.EVENT_PROPAGATE
 
-    def _show_skin_tone_popover(self, event_box: Gtk.EventBox) -> None:
+    def _show_skin_tone_popover(
+            self, event_box: Gtk.EventBox, # pylint: disable=c-extension-no-member
+    ) -> None:
         '''
         Show a skin tone popover if there is an emoji in this event box
         which supports skin tones.
@@ -1964,7 +1973,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         # root window of the desktop. Better constrain it to
         # the toplevel window under Wayland as well.
         self._skin_tone_popover.set_constrain_to(
-            Gtk.PopoverConstraint.WINDOW)
+            Gtk.PopoverConstraint.WINDOW) # pylint: disable=c-extension-no-member
         self._skin_tone_popover.set_relative_to(event_box)
         self._skin_tone_popover.set_position(Gtk.PositionType.TOP)
         self._skin_tone_popover.set_vexpand(False)
@@ -2042,7 +2051,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._skin_tone_popover.show_all()
 
     def _show_emoji_info_popover(
-            self, event_box: Gtk.EventBox) -> None:
+            self,
+            event_box: Gtk.EventBox, # pylint: disable=c-extension-no-member
+    ) -> None:
         '''
         Show an info popover if there is an emoji in this event box.
 
@@ -2065,7 +2076,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         # root window of the desktop. Better constrain it to
         # the toplevel window under Wayland as well.
         self._emoji_info_popover.set_constrain_to(
-            Gtk.PopoverConstraint.WINDOW)
+            Gtk.PopoverConstraint.WINDOW) # pylint: disable=c-extension-no-member
         self._emoji_info_popover.set_relative_to(event_box)
         self._emoji_info_popover.set_position(Gtk.PositionType.BOTTOM)
         self._emoji_info_popover.set_vexpand(False)
@@ -2152,8 +2163,9 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
 
     def on_flowbox_event_box_button_press(
             self,
-            event_box: Gtk.EventBox,
-            event_button: Gdk.EventButton) -> Gdk.EVENT_STOP:
+            event_box: Gtk.EventBox, # pylint: disable=c-extension-no-member
+            event_button: Gdk.EventButton, # pylint: disable=c-extension-no-member
+    ) -> Gdk.EVENT_STOP:
         '''Signal handler for button presses in flowbox children
 
         Returns Gdk.EVENT_STOP (True) to prevent a long press gesture

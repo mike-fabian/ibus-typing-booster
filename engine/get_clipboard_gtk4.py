@@ -39,7 +39,7 @@ class ClipboardApp(Gtk.Application): # type: ignore[misc]
     def __init__(self) -> None:
         super().__init__(application_id="org.freedesktop.ibus.engine.typing_booster.GetSelection")
         self.window: Optional[Gtk.ApplicationWindow] = None
-        self.display: Gdk.Display = Gdk.Display.get_default()
+        self.display: Gdk.Display = Gdk.Display.get_default() # pylint: disable=no-value-for-parameter
 
     def do_activate(self) -> None: # pylint: disable=arguments-differ
         if 'wayland' in self.display.get_name().lower():

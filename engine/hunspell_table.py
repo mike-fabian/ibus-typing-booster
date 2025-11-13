@@ -1400,7 +1400,7 @@ class TypingBoosterEngine(IBus.Engine):
                 'get': self.get_google_application_credentials},
         }
         schema_source: Gio.SettingsSchemaSource = (
-            Gio.SettingsSchemaSource.get_default())
+            Gio.SettingsSchemaSource.get_default()) # pylint: disable=no-value-for-parameter
         schema: Gio.SettingsSchema = schema_source.lookup(
             'org.freedesktop.ibus.engine.typing-booster', True)
         special_defaults = {
