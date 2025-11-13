@@ -25,10 +25,12 @@ from typing import Iterable
 from typing import Dict
 from typing import Union
 from typing import Callable
+from typing import Optional
 from typing import Any
 import sys
 import os
 import gzip
+import tempfile
 import logging
 import unittest
 
@@ -45,6 +47,17 @@ try:
 except (ImportError,):
     IMPORT_DISTRO_SUCCESSFUL = False
 
+# Avoid failing test cases because updated dictionaries in:
+#
+# - ~/.local/share/ibus-typing-booster/data
+# - ~/.config/enchant/<backend>
+#
+# The environments needs to be changed *before* using `import tabsqlitedb`
+# since it must be set before using `import enchant`!
+_ORIG_HOME = os.environ.pop('HOME', None)
+_TEMPDIR = tempfile.TemporaryDirectory() # pylint: disable=consider-using-with
+os.environ['HOME'] = _TEMPDIR.name
+
 # pylint: disable=wrong-import-order
 # pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
@@ -60,6 +73,25 @@ sys.path.pop(0)
 # pylint: disable=missing-function-docstring
 
 class TabSqliteDbTestCase(unittest.TestCase):
+    '''Test cases for tabsqlitedb.py'''
+    _tempdir: Optional[tempfile.TemporaryDirectory] = None # type: ignore[type-arg]
+    _orig_home: Optional[str] = None
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls._tempdir = _TEMPDIR
+        cls._orig_home = _ORIG_HOME
+        os.environ['HOME'] = cls._tempdir.name
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        if cls._orig_home is not None:
+            os.environ['HOME'] = cls._orig_home
+        else:
+            _value = os.environ.pop('HOME', None)
+        if cls._tempdir is not None:
+            cls._tempdir.cleanup()
+
     def setUp(self) -> None:
         self.database: tabsqlitedb.TabSqliteDb = tabsqlitedb.TabSqliteDb(
             user_db_file=':memory:')

@@ -21,8 +21,22 @@
 This file implements test cases for suggestions from hunspell dictionaries
 '''
 
+from typing import Optional
 import sys
+import os
+import tempfile
 import unittest
+
+# Avoid failing test cases because updated dictionaries in:
+#
+# - ~/.local/share/ibus-typing-booster/data
+# - ~/.config/enchant/<backend>
+#
+# The environments needs to be changed *before* `import hunspell_suggest`
+# since it must be set before using `import enchant`!
+_ORIG_HOME = os.environ.pop('HOME', None)
+_TEMPDIR = tempfile.TemporaryDirectory() # pylint: disable=consider-using-with
+os.environ['HOME'] = _TEMPDIR.name
 
 # pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
@@ -64,6 +78,25 @@ except (ImportError,):
 # pylint: disable=line-too-long
 
 class HunspellSuggestTestCase(unittest.TestCase):
+    '''Test cases for hunspell_suggest.py'''
+    _tempdir: Optional[tempfile.TemporaryDirectory] = None # type: ignore[type-arg]
+    _orig_home: Optional[str] = None
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls._tempdir = _TEMPDIR
+        cls._orig_home = _ORIG_HOME
+        os.environ['HOME'] = cls._tempdir.name
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        if cls._orig_home is not None:
+            os.environ['HOME'] = cls._orig_home
+        else:
+            _value = os.environ.pop('HOME', None)
+        if cls._tempdir is not None:
+            cls._tempdir.cleanup()
+
     def setUp(self) -> None:
         self.maxDiff = None
 
