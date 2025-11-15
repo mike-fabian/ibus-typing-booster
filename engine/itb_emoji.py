@@ -400,7 +400,7 @@ def find_cldr_annotation_path(language: str) -> str:
         (path, dummy_open_function) = _find_path_and_open_function(
             dirnames, basenames, subdir='annotations')
         if path and os.path.basename(path).startswith(acceptable_match):
-            return path
+            return os.path.abspath(path)
     return ''
 
 # @functools.cache is available only in Python >= 3.9.

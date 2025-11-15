@@ -2929,7 +2929,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._ai_model_combobox.handler_unblock(self._ai_model_combobox_changed_id)
         return True # keep running, GLib.timeout_add()
 
-    def _fill_dictionaries_listbox_row(self, name: str) -> Tuple[str, bool, str]:
+    def _fill_dictionaries_listbox_row(self, name: str) -> Tuple[str, bool, str, str]:
         '''
         Formats the text of a line in the listbox of configured dictionaries
 
@@ -2967,7 +2967,8 @@ class SetupUI(Gtk.Window): # type: ignore
                 missing_dictionary = True
         row += itb_util.bidi_embed(row_item)
         row_item = ' ' + _('Emoji') + ' '
-        if itb_emoji.find_cldr_annotation_path(name):
+        cldr_path = itb_emoji.find_cldr_annotation_path(name)
+        if cldr_path:
             row_item += '✔️'
         else:
             row_item += '❌'
@@ -2979,7 +2980,7 @@ class SetupUI(Gtk.Window): # type: ignore
             else:
                 row_item += '❌'
             row += itb_util.bidi_embed(row_item)
-        return (row, missing_dictionary, dic_path)
+        return (row, missing_dictionary, dic_path, cldr_path)
 
     def _fill_dictionaries_listbox(self) -> None:
         '''
@@ -3006,13 +3007,14 @@ class SetupUI(Gtk.Window): # type: ignore
             for name in self._dictionary_names:
                 label = Gtk.Label()
                 (text,
-                 missing_dictionary, dic_path) = self._fill_dictionaries_listbox_row(
+                 missing_dictionary,
+                 dic_path, cldr_path) = self._fill_dictionaries_listbox_row(
                      name)
                 if missing_dictionary:
                     missing_dictionaries = True
                 label.set_text(html.escape(text))
                 label.set_use_markup(True)
-                label.set_tooltip_text(dic_path)
+                label.set_tooltip_text(f'{dic_path}\n{cldr_path}')
                 label.set_xalign(0)
                 margin = 1
                 label.set_margin_start(margin)
