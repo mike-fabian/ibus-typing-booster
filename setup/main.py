@@ -3040,11 +3040,12 @@ class SetupUI(Gtk.Window): # type: ignore
             < itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES)
 
     @staticmethod
-    def _fill_input_methods_listbox_row(ime: str) -> str:
+    def _fill_input_methods_listbox_row(ime: str) -> Tuple[str, str]:
         '''
         Formats the text of a line in the listbox of configured input methods
 
-        Returns the formatted line of text.
+        Returns a tuple consisting of the formatted line of text
+        and another string containing the path used to load the input method.
 
         :param ime: Name of the input method
         '''
@@ -3055,8 +3056,10 @@ class SetupUI(Gtk.Window): # type: ignore
         # add some spaces for nicer formatting:
         row += ' ' * (20 - len(ime))
         title = ''
+        path = ''
         if M17N_DB_INFO is not None:
             title = M17N_DB_INFO.get_title(ime)
+            path = M17N_DB_INFO.get_path(ime)
         if title:
             row += '\t' + '(' + title + ')'
         try:
@@ -3064,7 +3067,7 @@ class SetupUI(Gtk.Window): # type: ignore
             row += '\t' + '✔️'
         except ValueError as open_error:
             row += '\t' + '❌ ' + str(open_error)
-        return row
+        return (row, path)
 
     def _fill_input_methods_listbox(self) -> None:
         '''
@@ -3089,10 +3092,11 @@ class SetupUI(Gtk.Window): # type: ignore
             'row-selected', self._on_input_method_selected)
         for ime in self._current_imes:
             label = Gtk.Label()
-            label.set_text(html.escape(
-                self.__class__._fill_input_methods_listbox_row( # pylint: disable=protected-access
-                    ime)))
+            row, path = self.__class__._fill_input_methods_listbox_row( # pylint: disable=protected-access
+                ime)
+            label.set_text(html.escape(row))
             label.set_use_markup(True)
+            label.set_tooltip_text(f'{path}')
             label.set_xalign(0)
             margin = 1
             label.set_margin_start(margin)
@@ -4409,7 +4413,7 @@ class SetupUI(Gtk.Window): # type: ignore
             if ime in self._current_imes:
                 continue
             filter_words = itb_util.remove_accents(filter_text.lower()).split()
-            row = self.__class__._fill_input_methods_listbox_row( # pylint: disable=protected-access
+            row, _path = self.__class__._fill_input_methods_listbox_row( # pylint: disable=protected-access
                 ime)
             text_to_match = row.replace(' ', '').lower()
             ime_language = ime.split('-')[0]
@@ -4652,9 +4656,9 @@ class SetupUI(Gtk.Window): # type: ignore
         hbox.set_orientation(Gtk.Orientation.HORIZONTAL)
         hbox.set_spacing(10)
         label = Gtk.Label()
-        label.set_text(html.escape(
-            self.__class__._fill_input_methods_listbox_row( # pylint: disable=protected-access
-                ime)))
+        row, _path = self.__class__._fill_input_methods_listbox_row( # pylint: disable=protected-access
+            ime)
+        label.set_text(html.escape(row))
         margin = 1
         label.set_margin_start(margin)
         label.set_margin_end(margin)
