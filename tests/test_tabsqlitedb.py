@@ -348,9 +348,9 @@ class TabSqliteDbTestCase(unittest.TestCase):
         # -7.3% saved on Fedora 35 when typing the French poem with
         # the fr_FR dictionary. On openSUSE Tumbleweed (2021-11-23)
         # it is -8.2%.
-        # -9.0% on Fedora 42 when the results from select_words()
-        # are normalized to NFC.
-        self.assertEqual(-9.0, round(stats['percent'], 1))
+        # -10.5% on Fedora 43 with hunspell-fr-7.0-1.fc43.noarch when
+        # the results from select_words() are normalized to NFC.
+        self.assertEqual(-10.5, round(stats['percent'], 1))
         self.assertEqual(
             'plonge',
             self.database.select_words(
