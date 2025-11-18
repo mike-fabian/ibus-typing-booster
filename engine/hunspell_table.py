@@ -845,8 +845,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._remember_input_mode: bool = self._settings_dict[
             'rememberinputmode']['user']
-        if (self._keybindings['toggle_input_mode_on_off']
-            and self._remember_input_mode):
+        if self._remember_input_mode:
             self._input_mode = self._settings_dict['inputmode']['user']
         else:
             self.set_input_mode(True, update_gsettings=True)
@@ -2490,12 +2489,6 @@ class TypingBoosterEngine(IBus.Engine):
                     self._keypad_digits_used_in_keybindings = True
         # Update hotkeys:
         self._hotkeys = itb_util.HotKeys(self._keybindings)
-        # If there is no key binding to toggle ibus-typing-booster
-        # between ”On” and “Off”, ibus-typing-booster has to be
-        # “On” always. I.e. the input mode needs to be set
-        # to True in that case:
-        if not self._keybindings['toggle_input_mode_on_off']:
-            self.set_input_mode(True, update_gsettings=True)
         # Some property menus have tooltips which show hints for the
         # key bindings. These may need to be updated if the key
         # bindings have changed.
@@ -2811,7 +2804,16 @@ class TypingBoosterEngine(IBus.Engine):
                 tooltip = f'{menu["tooltip"]}\n{menu["shortcut_hint"]}'
         visible = True
         if menu_key == 'InputMode':
-            visible = bool(self._keybindings['toggle_input_mode_on_off'])
+            # I used to show the direct input mode menu only when
+            # there was a key binding for direct input mode, i.e. when
+            # bool(self._keybindings['toggle_input_mode_on_off']) was
+            # True. But nowadays it seems acceptable and even desired
+            # that *all* input methods have a direct input mode. So I
+            # think it is OK now to enable this *always*. This also
+            # guarantees that the Gnome panel immediately shows the
+            # desired monochrome rocket icon '🚀\uFE0E' no matter
+            # whether the ibus cache has been updated or not.
+            visible = True
         if menu_key in ('EmojiPredictionMode', 'OffTheRecordMode'):
             visible = self._show_prediction_candidates()
         self._init_or_update_sub_properties(
@@ -2855,7 +2857,16 @@ class TypingBoosterEngine(IBus.Engine):
             update = True
         visible = True
         if menu_key == 'InputMode':
-            visible = bool(self._keybindings['toggle_input_mode_on_off'])
+            # I used to show the direct input mode menu only when
+            # there was a key binding for direct input mode, i.e. when
+            # bool(self._keybindings['toggle_input_mode_on_off']) was
+            # True. But nowadays it seems acceptable and even desired
+            # that *all* input methods have a direct input mode. So I
+            # think it is OK now to enable this *always*. This also
+            # guarantees that the Gnome panel immediately shows the
+            # desired monochrome rocket icon '🚀\uFE0E' no matter
+            # whether the ibus cache has been updated or not.
+            visible = True
         if menu_key in ('EmojiPredictionMode', 'OffTheRecordMode'):
             visible = self._show_prediction_candidates()
         for mode in sorted(modes, key=lambda x: (int(modes[x]['number']))):
@@ -2923,10 +2934,18 @@ class TypingBoosterEngine(IBus.Engine):
             )
             self.main_prop_list.append(m17n_icon_property)
 
-        if self._keybindings['toggle_input_mode_on_off']:
-            self._init_or_update_property_menu(
-                self.input_mode_menu,
-                self._input_mode)
+        # I used to show the direct input mode menu only when there
+        # was a key binding for direct input mode, i.e. when
+        # bool(self._keybindings['toggle_input_mode_on_off']) was
+        # True. But nowadays it seems acceptable and even desired that
+        # *all* input methods have a direct input mode. So I think it
+        # is OK now to enable this *always*. This also guarantees that
+        # the Gnome panel immediately shows the desired monochrome
+        # rocket icon '🚀\uFE0E' no matter whether the ibus cache has
+        # been updated or not.
+        self._init_or_update_property_menu(
+            self.input_mode_menu,
+            self._input_mode)
 
         if self._show_prediction_candidates():
             # These two menus are not useful for the restricted
