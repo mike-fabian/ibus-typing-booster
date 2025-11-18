@@ -10578,6 +10578,20 @@ class TypingBoosterEngine(IBus.Engine):
             if (self._current_imes[0].startswith('zh')
                 and key.val == IBus.KEY_space and key.msymbol == ' '):
                 return True
+            if (key.val in (IBus.KEY_space,
+                            IBus.KEY_Return,
+                            IBus.KEY_KP_Enter,
+                            IBus.KEY_ISO_Enter)
+                and re.compile(r':(soffice|libreoffice.*):'
+                               ).search(self._im_client)):
+                # https://github.com/mike-fabian/ibus-typing-booster/issues/834
+                LOGGER.info('Commit triggered by space, Return, or Enter: '
+                            'Apply workaround for libreoffice autocorrection: '
+                            'Sleep, press and release Shift_L.')
+                time.sleep(self._ibus_event_sleep_seconds)
+                self._forward_generated_key_event(IBus.KEY_Shift_L, 0)
+                self._forward_generated_key_event(
+                    IBus.KEY_Shift_L, IBus.ModifierType.RELEASE_MASK)
             # These sleeps between commit() and
             # forward_key_event() are unfortunately needed because
             # this is racy, without the sleeps it works
@@ -10683,6 +10697,17 @@ class TypingBoosterEngine(IBus.Engine):
                     super().commit_text(
                         IBus.Text.new_from_string(
                             transliterated_parts.committed))
+                    if re.compile(r':(soffice|libreoffice.*):'
+                                  ).search(self._im_client):
+                        # https://github.com/mike-fabian/ibus-typing-booster/issues/834
+                        LOGGER.info(
+                            'Early commit: '
+                            'Apply workaround for libreoffice autocorrection: '
+                            'Sleep, press and release Shift_L.')
+                        time.sleep(self._ibus_event_sleep_seconds)
+                        self._forward_generated_key_event(IBus.KEY_Shift_L, 0)
+                        self._forward_generated_key_event(
+                            IBus.KEY_Shift_L, IBus.ModifierType.RELEASE_MASK)
             self._update_ui()
             return True
 
