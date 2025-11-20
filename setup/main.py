@@ -7701,6 +7701,8 @@ if __name__ == '__main__':
         LOGGER.info('*** ibus-typing-booster %s setup starting ***',
                     itb_version.get_version())
 
+    itb_util.set_program_name('ibus-setup-tb')
+
     try:
         locale.setlocale(locale.LC_ALL, '')
     except locale.Error:

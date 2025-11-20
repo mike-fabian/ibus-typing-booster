@@ -2551,6 +2551,8 @@ if __name__ == '__main__':
         PROFILE = cProfile.Profile()
         PROFILE.enable()
 
+    itb_util.set_program_name('emoji-picker')
+
     try:
         locale.setlocale(locale.LC_ALL, '')
     except locale.Error:

@@ -498,7 +498,7 @@ def main() -> None:
     LOGGER.setLevel(logging.DEBUG)
     LOGGER.addHandler(log_handler)
     LOGGER.info('********** STARTING **********')
-
+    itb_util.set_program_name('ibus-engine-tb')
     if _ARGS.daemon:
         if os.fork():
             sys.exit()

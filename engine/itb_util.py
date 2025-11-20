@@ -48,6 +48,9 @@ import shutil
 import subprocess
 import glob
 import gettext
+import platform
+import ctypes
+import ctypes.util
 import xml.etree.ElementTree
 from dataclasses import dataclass
 from collections import defaultdict
@@ -3884,6 +3887,61 @@ def dict_update_existing_keys(
     for key in other_pdict:
         if key in pdict:
             pdict[key] = other_pdict[key]
+
+def utf8_safe_truncate(text: str, max_bytes: int) -> bytes:
+    '''
+    Truncate a UTF-8 string to at most `max_bytes` bytes,
+    without ever cutting a multibyte UTF-8 sequence.
+    '''
+    encoded = text.encode('UTF-8')
+    if len(encoded) <= max_bytes:
+        return encoded
+    # Safe truncation: back up until valid UTF-8
+    truncated = encoded[:max_bytes]
+    while True:
+        try:
+            truncated.decode('UTF-8')
+            return truncated
+        except UnicodeDecodeError:
+            truncated = truncated[:-1]
+
+def set_program_name(name: str) -> None:
+    '''
+    Set a short process name on Linux (prctl PR_SET_NAME)
+    or BSD (setproctitle).
+
+    Useful to make a nicer process name show up in
+    apps like `gnome-system-monitor` instead of just
+    showing a `python3` process.
+
+    See:
+
+    https://github.com/mike-fabian/ibus-typing-booster/issues/833
+    '''
+    sysname = platform.system()
+    if sysname in ("FreeBSD", "OpenBSD", "NetBSD"):
+        libc = ctypes.CDLL(ctypes.util.find_library("c"))
+        # setproctitle(const char *fmt, ...)
+        libc.setproctitle(b'%s', name.encode('UTF-8'))
+        LOGGER.info("setproctitle → %r", name)
+        return
+    if sysname == 'Linux':
+        libc = ctypes.CDLL(ctypes.util.find_library('c'))
+        # Linux limit: 16 bytes including the null terminator
+        max_bytes = 15
+        name_bytes = utf8_safe_truncate(name, max_bytes)
+        if len(name_bytes) < len(name.encode('utf-8')):
+            LOGGER.warning(
+                'Process name truncated for PR_SET_NAME: %r → %r',
+                name, name_bytes.decode('utf-8', errors='ignore'))
+        buff = ctypes.create_string_buffer(max_bytes + 1)
+        buff.value = name_bytes
+        # see `man prctl`
+        PR_SET_NAME = 15 # pylint: disable=invalid-name
+        libc.prctl(PR_SET_NAME, ctypes.byref(buff), 0, 0, 0)
+        LOGGER.info('trying to set program name %r %r %r', libc, buff, name_bytes)
+        return
+    LOGGER.debug('set_program_name: unsupported platform %r', sysname)
 
 def distro_id() -> str:
     '''
