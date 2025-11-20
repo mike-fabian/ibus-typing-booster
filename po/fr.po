@@ -9,22 +9,23 @@
 # Julien Humbert <julroy67@gmail.com>, 2020, 2022.
 # Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2020.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024.
+# Irenee THIRION <irenee.thirion@outlook.fr>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-11-15 11:55+0100\n"
-"PO-Revision-Date: 2025-09-24 22:23+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: French <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/fr/>\n"
+"PO-Revision-Date: 2025-11-20 16:58+0000\n"
+"Last-Translator: Irenee THIRION <irenee.thirion@outlook.fr>\n"
+"Language-Team: French <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.13.3\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:268
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -708,10 +709,8 @@ msgstr ""
 #. Translators: A combo box to select which emoji style
 #. should be used.
 #: setup/main.py:691
-#, fuzzy
-#| msgid "Emoji"
 msgid "Emoji style"
-msgstr "Emoji"
+msgstr "Style d’émoji"
 
 #. Translators: A tooltip for the combobox to select which
 #. emoji style should be used.
@@ -1990,7 +1989,7 @@ msgstr ""
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
-msgstr "L’accélérateur de saisie"
+msgstr "Accélérateur de saisie"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:7
 msgid "Predictive input method"
@@ -2002,9 +2001,9 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
-"L’accélérateur de saisie « Ibus-typing-booster » est une méthode de saisie "
-"qui prédit des mots complets à partir du contexte et de la saisie partielle. "
-"On peut ainsi améliorer sa vitesse d’écriture et son orthographe en "
+"Accélérateur de saisie « Ibus-typing-booster » est une méthode de saisie qui "
+"prédit des mots complets à partir du contexte et de la saisie partielle. On "
+"peut ainsi améliorer sa vitesse d’écriture et son orthographe en "
 "sélectionnant simplement le mot désiré dans une liste de suggestions."
 
 #~ msgid "Another instance of this app is already running."
