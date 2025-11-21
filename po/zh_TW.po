@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-11-15 11:55+0100\n"
+"POT-Creation-Date: 2025-11-20 14:45+0100\n"
 "PO-Revision-Date: 2025-04-30 04:50+0000\n"
 "Last-Translator: hsu zangmen <chzang55@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://translate.fedoraproject.org/"
@@ -162,21 +162,21 @@ msgstr "系統預設"
 msgid "Set Font"
 msgstr "設定字型"
 
-#: engine/hunspell_table.py:982 engine/hunspell_table.py:1016
-#: engine/hunspell_table.py:1037
+#: engine/hunspell_table.py:981 engine/hunspell_table.py:1015
+#: engine/hunspell_table.py:1036
 msgid "Off"
 msgstr "關閉"
 
-#: engine/hunspell_table.py:987 engine/hunspell_table.py:1021
-#: engine/hunspell_table.py:1042
+#: engine/hunspell_table.py:986 engine/hunspell_table.py:1020
+#: engine/hunspell_table.py:1041
 msgid "On"
 msgstr "開"
 
-#: engine/hunspell_table.py:1006
+#: engine/hunspell_table.py:1005
 msgid "Input mode"
 msgstr "輸入模式"
 
-#: engine/hunspell_table.py:1007
+#: engine/hunspell_table.py:1006
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "在這裡您可以開啟或關閉 ibus-typing-booster。"
 
@@ -187,7 +187,7 @@ msgstr "在這裡您可以開啟或關閉 ibus-typing-booster。"
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:1026 engine/hunspell_table.py:1028
+#: engine/hunspell_table.py:1025 engine/hunspell_table.py:1027
 #: setup/main.py:670
 msgid "Unicode symbols and emoji predictions"
 msgstr "Unicode 符號和表情符號預測"
@@ -199,61 +199,61 @@ msgstr "Unicode 符號和表情符號預測"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:1047 engine/hunspell_table.py:1048
+#: engine/hunspell_table.py:1046 engine/hunspell_table.py:1047
 #: setup/main.py:740
 msgid "Off the record mode"
 msgstr "關閉錄影模式"
 
-#: engine/hunspell_table.py:2573
+#: engine/hunspell_table.py:2566
 msgid "Highest priority dictionary"
 msgstr "最高優先級字典"
 
-#: engine/hunspell_table.py:2574
+#: engine/hunspell_table.py:2567
 msgid "Choose highest priority dictionary"
 msgstr "選擇最高優先順序的字典"
 
-#: engine/hunspell_table.py:2603
+#: engine/hunspell_table.py:2596
 msgid "Preedit input method"
 msgstr "預編輸入法"
 
-#: engine/hunspell_table.py:2604
+#: engine/hunspell_table.py:2597
 msgid "Switch preedit input method"
 msgstr "切換預編輸入法"
 
-#: engine/hunspell_table.py:2949
+#: engine/hunspell_table.py:2968
 msgid "Setup"
 msgstr "設置"
 
-#: engine/hunspell_table.py:2952 setup/main.py:155
+#: engine/hunspell_table.py:2971 setup/main.py:155
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster 的偏好設定"
 
-#: engine/hunspell_table.py:7054
+#: engine/hunspell_table.py:7073
 msgid "Failed to import Google speech-to-text."
 msgstr "匯入 Google 語音轉文字失敗。"
 
-#: engine/hunspell_table.py:7057
+#: engine/hunspell_table.py:7076
 msgid "Failed to import pyaudio."
 msgstr "匯入 pyaudio 失敗。"
 
-#: engine/hunspell_table.py:7060
+#: engine/hunspell_table.py:7079
 msgid "Failed to import queue."
 msgstr "匯入佇列失敗。"
 
-#: engine/hunspell_table.py:7065
+#: engine/hunspell_table.py:7084
 msgid "No supported language for speech recognition."
 msgstr "語音辨識不支援該語言。"
 
-#: engine/hunspell_table.py:7069
+#: engine/hunspell_table.py:7088
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "未找到 「Google 應用程式憑證」 檔案 \"%s\"。"
 
-#: engine/hunspell_table.py:7082
+#: engine/hunspell_table.py:7101
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "啟動 Google 語音轉文字失敗。請參閱 debug.log。"
 
-#: engine/hunspell_table.py:7190
+#: engine/hunspell_table.py:7209
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google speech-to-text 錯誤。請參閱 debug.log。"
 
@@ -338,31 +338,31 @@ msgstr "區域"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2845
+#: engine/itb_util.py:2848
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "其他, 雜項, 各種, 多元化"
 
-#: engine/itb_util.py:4998 engine/itb_util.py:5740
+#: engine/itb_util.py:5056 engine/itb_util.py:5798
 msgid "File not found"
 msgstr "未找到檔案"
 
-#: engine/itb_util.py:5002 engine/itb_util.py:5744
+#: engine/itb_util.py:5060 engine/itb_util.py:5802
 msgid "Permission error"
 msgstr "權限錯誤"
 
-#: engine/itb_util.py:5006 engine/itb_util.py:5748
+#: engine/itb_util.py:5064 engine/itb_util.py:5806
 msgid "Unicode decoding error"
 msgstr "Unicode 解碼錯誤"
 
-#: engine/itb_util.py:5010 engine/itb_util.py:5752
+#: engine/itb_util.py:5068 engine/itb_util.py:5810
 msgid "Unknown error"
 msgstr "不明的錯誤"
 
-#: engine/itb_util.py:5718
+#: engine/itb_util.py:5776
 msgid "Native Keyboard"
 msgstr "原生鍵盤"
 
-#: engine/itb_util.py:5720
+#: engine/itb_util.py:5778
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -374,11 +374,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6508
+#: engine/itb_util.py:6566
 msgid "Key input"
 msgstr "按鍵輸入"
 
-#: engine/itb_util.py:6514
+#: engine/itb_util.py:6572
 msgid "Cancel"
 msgstr "取消"
 
@@ -386,27 +386,27 @@ msgstr "取消"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6521
+#: engine/itb_util.py:6579
 msgid "Please press a key (or a key combination)"
 msgstr "請按鍵盤按鍵 (或是按鍵組合)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6526
+#: engine/itb_util.py:6584
 msgid "The dialog will be closed when the key is released"
 msgstr "釋放按鍵時，對話框將會關閉"
 
-#: engine/itb_util.py:6565
+#: engine/itb_util.py:6623
 msgid "A completion input method to speedup typing."
 msgstr "可加快完成打字速度的輸入法。"
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6574
+#: engine/itb_util.py:6632
 msgid "translator-credits"
 msgstr "Zang-Men Hsu 許展銘/neko0xff <chzang55@gmail.com>, 2025"
 
-#: engine/itb_util.py:6582 setup/main.py:2422
+#: engine/itb_util.py:6640 setup/main.py:2422
 msgid "Online documentation:"
 msgstr "線上文件:"
 
@@ -426,7 +426,7 @@ msgstr "偏好設定"
 msgid "Restore all defaults"
 msgstr "全部還原至預設值"
 
-#: setup/main.py:276 setup/main.py:7635 setup/pkginstall.py:245
+#: setup/main.py:276 setup/main.py:7639 setup/pkginstall.py:245
 msgid "_Close"
 msgstr "關閉 (_C)"
 
@@ -1042,7 +1042,7 @@ msgstr "新增字典"
 msgid "Download missing dictionaries and update existing ones"
 msgstr ""
 
-#: setup/main.py:1231 setup/main.py:1378 setup/main.py:1623 setup/main.py:5618
+#: setup/main.py:1231 setup/main.py:1378 setup/main.py:1623 setup/main.py:5622
 msgid "Set to default"
 msgstr "設定為預設值"
 
@@ -1149,7 +1149,7 @@ msgstr "編輯"
 msgid "Edit the key bindings for the selected command"
 msgstr "編輯選取指令的按鍵綁定"
 
-#: setup/main.py:1627 setup/main.py:5623
+#: setup/main.py:1627 setup/main.py:5627
 msgid "Set default key bindings for the selected command"
 msgstr "為選取的指令設定預設按鍵綁定"
 
@@ -1692,7 +1692,7 @@ msgid "System prompt that guides how the AI responds."
 msgstr ""
 
 #. Translators:
-#: setup/main.py:2584 setup/main.py:3845
+#: setup/main.py:2584 setup/main.py:3849
 msgid "Set “Google application credentials” .json file:"
 msgstr "設定「Google 應用程式憑證」的 .json 檔案："
 
@@ -1708,7 +1708,7 @@ msgstr "檔案尚未設定。"
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2652 setup/main.py:5121
+#: setup/main.py:2652 setup/main.py:5125
 msgid "Add an autosetting"
 msgstr "新增自動設定"
 
@@ -1750,7 +1750,7 @@ msgstr "拼字檢查"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:3161
+#: setup/main.py:3165
 msgid "Setting"
 msgstr "設定"
 
@@ -1758,64 +1758,64 @@ msgstr "設定"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:3170 setup/main.py:4694
+#: setup/main.py:3174 setup/main.py:4698
 msgid "Value"
 msgstr "值"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:3194
+#: setup/main.py:3198
 msgid "Regular expression"
 msgstr "正規表達式"
 
-#: setup/main.py:3227
+#: setup/main.py:3231
 msgid "Are you sure?"
 msgstr "你確定嗎？"
 
-#: setup/main.py:3229 setup/main.py:3848 setup/main.py:3941 setup/main.py:5692
+#: setup/main.py:3233 setup/main.py:3852 setup/main.py:3945 setup/main.py:5696
 #: setup/pkginstall.py:240
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: setup/main.py:3230 setup/main.py:3849 setup/main.py:3942 setup/main.py:5693
+#: setup/main.py:3234 setup/main.py:3853 setup/main.py:3946 setup/main.py:5697
 msgid "_OK"
 msgstr "確定(_O)"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3350
+#: setup/main.py:3354
 msgid "Do you really want to restore all default settings?"
 msgstr "您真的想要還原所有預設設定嗎？"
 
-#: setup/main.py:3938
+#: setup/main.py:3942
 msgid "Select .wav sound file:"
 msgstr "請選擇副檔名為 .wav 音效檔案："
 
-#: setup/main.py:4125
+#: setup/main.py:4129
 msgid "Add dictionary"
 msgstr "新增字典"
 
-#: setup/main.py:4501
+#: setup/main.py:4505
 msgid "Add input method"
 msgstr "新增輸入方法"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4685
+#: setup/main.py:4689
 msgid "Variable"
 msgstr "可變變數"
 
-#: setup/main.py:5571
+#: setup/main.py:5575
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "編輯命令 \"%s\" 的按鍵綁定"
 
-#: setup/main.py:5599
+#: setup/main.py:5603
 msgid "Add a key binding"
 msgstr "新增按鍵綁定"
 
-#: setup/main.py:5611
+#: setup/main.py:5615
 msgid "Remove selected key binding"
 msgstr "移除選取的按鍵綁定"
 
@@ -1824,22 +1824,22 @@ msgstr "移除選取的按鍵綁定"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5674
+#: setup/main.py:5678
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr "您真的要將所有指令的按鍵綁定設定為預設值？"
 
-#: setup/main.py:5689
+#: setup/main.py:5693
 msgid "Open File ..."
 msgstr "開啟檔案 ..."
 
-#: setup/main.py:5706
+#: setup/main.py:5710
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "成功從檔案 %(filename)s 學習。"
 
-#: setup/main.py:5715
+#: setup/main.py:5719
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "從檔案 %(filename)s 學習失敗。"
@@ -1854,13 +1854,13 @@ msgstr "從檔案 %(filename)s 學習失敗。"
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5738
+#: setup/main.py:5742
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr "您真的想要刪除所有從打字或讀取檔案所學到的語言資料嗎？"
 
-#: setup/main.py:7711
+#: setup/main.py:7717
 msgid "ibus is not running."
 msgstr "ibus 未正在執行。"
 

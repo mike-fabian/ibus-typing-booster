@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-11-15 11:55+0100\n"
+"POT-Creation-Date: 2025-11-20 14:45+0100\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Dutch <https://translate.fedoraproject.org/projects/ibus-"
@@ -169,21 +169,21 @@ msgstr "Systeemstandaard"
 msgid "Set Font"
 msgstr "Lettertype instellen"
 
-#: engine/hunspell_table.py:982 engine/hunspell_table.py:1016
-#: engine/hunspell_table.py:1037
+#: engine/hunspell_table.py:981 engine/hunspell_table.py:1015
+#: engine/hunspell_table.py:1036
 msgid "Off"
 msgstr "Uit"
 
-#: engine/hunspell_table.py:987 engine/hunspell_table.py:1021
-#: engine/hunspell_table.py:1042
+#: engine/hunspell_table.py:986 engine/hunspell_table.py:1020
+#: engine/hunspell_table.py:1041
 msgid "On"
 msgstr "Aan"
 
-#: engine/hunspell_table.py:1006
+#: engine/hunspell_table.py:1005
 msgid "Input mode"
 msgstr "Invoermethode"
 
-#: engine/hunspell_table.py:1007
+#: engine/hunspell_table.py:1006
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Hier kun je ibus-typing-booster aan- of uitzetten."
 
@@ -194,7 +194,7 @@ msgstr "Hier kun je ibus-typing-booster aan- of uitzetten."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:1026 engine/hunspell_table.py:1028
+#: engine/hunspell_table.py:1025 engine/hunspell_table.py:1027
 #: setup/main.py:670
 msgid "Unicode symbols and emoji predictions"
 msgstr "Unicode-symbolen en emoji-voorspellingen"
@@ -206,65 +206,65 @@ msgstr "Unicode-symbolen en emoji-voorspellingen"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:1047 engine/hunspell_table.py:1048
+#: engine/hunspell_table.py:1046 engine/hunspell_table.py:1047
 #: setup/main.py:740
 msgid "Off the record mode"
 msgstr "Strikte modus"
 
-#: engine/hunspell_table.py:2573
+#: engine/hunspell_table.py:2566
 msgid "Highest priority dictionary"
 msgstr "Woordenboek met hoogste prioriteit"
 
-#: engine/hunspell_table.py:2574
+#: engine/hunspell_table.py:2567
 msgid "Choose highest priority dictionary"
 msgstr "Kies het woordenboek dat de hoogste prioriteit moet krijgen"
 
-#: engine/hunspell_table.py:2603
+#: engine/hunspell_table.py:2596
 msgid "Preedit input method"
 msgstr "Bewerken alvorens in te voegen"
 
-#: engine/hunspell_table.py:2604
+#: engine/hunspell_table.py:2597
 msgid "Switch preedit input method"
 msgstr "Bewerkmethode kiezen"
 
-#: engine/hunspell_table.py:2949
+#: engine/hunspell_table.py:2968
 msgid "Setup"
 msgstr "Instellen"
 
-#: engine/hunspell_table.py:2952 setup/main.py:155
+#: engine/hunspell_table.py:2971 setup/main.py:155
 msgid "Preferences for ibus-typing-booster"
 msgstr "Voorkeuren van ibus-typing-booster"
 
-#: engine/hunspell_table.py:7054
+#: engine/hunspell_table.py:7073
 msgid "Failed to import Google speech-to-text."
 msgstr "Het importeren van Google tekst-naar-spraak is mislukt."
 
-#: engine/hunspell_table.py:7057
+#: engine/hunspell_table.py:7076
 msgid "Failed to import pyaudio."
 msgstr "Het importeren van pyaudio is mislukt."
 
-#: engine/hunspell_table.py:7060
+#: engine/hunspell_table.py:7079
 msgid "Failed to import queue."
 msgstr "Het importeren van de wachtrij is mislukt."
 
-#: engine/hunspell_table.py:7065
+#: engine/hunspell_table.py:7084
 msgid "No supported language for speech recognition."
 msgstr "Geen ondersteunde taal aangetroffen voor spraakherkenning."
 
-#: engine/hunspell_table.py:7069
+#: engine/hunspell_table.py:7088
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "Het bestand '%s', wat nodig is voor je Google-inloggegevens, is niet "
 "aangetroffen."
 
-#: engine/hunspell_table.py:7082
+#: engine/hunspell_table.py:7101
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Het starten van Google tekst-naar-spraak is mislukt. Bekijk het bestand "
 "'debug.log'."
 
-#: engine/hunspell_table.py:7190
+#: engine/hunspell_table.py:7209
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google tekst-naar-spraak-fout. Bekijk het bestand 'debug.log'."
 
@@ -349,31 +349,31 @@ msgstr "regionaal"
 #. number of words as the original English, any
 #. number of words is fine. It doesn’t matter if the words
 #. are seperated by punctuation or white space.
-#: engine/itb_util.py:2845
+#: engine/itb_util.py:2848
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Andere, Diverse, Verscheidene, Verschillende"
 
-#: engine/itb_util.py:4998 engine/itb_util.py:5740
+#: engine/itb_util.py:5056 engine/itb_util.py:5798
 msgid "File not found"
 msgstr "Bestand niet aangetroffen"
 
-#: engine/itb_util.py:5002 engine/itb_util.py:5744
+#: engine/itb_util.py:5060 engine/itb_util.py:5802
 msgid "Permission error"
 msgstr "Toegangsfout"
 
-#: engine/itb_util.py:5006 engine/itb_util.py:5748
+#: engine/itb_util.py:5064 engine/itb_util.py:5806
 msgid "Unicode decoding error"
 msgstr "Unicode-decoderingsfout"
 
-#: engine/itb_util.py:5010 engine/itb_util.py:5752
+#: engine/itb_util.py:5068 engine/itb_util.py:5810
 msgid "Unknown error"
 msgstr "Onbekende fout"
 
-#: engine/itb_util.py:5718
+#: engine/itb_util.py:5776
 msgid "Native Keyboard"
 msgstr "Eigen toetsenbord"
 
-#: engine/itb_util.py:5720
+#: engine/itb_util.py:5778
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
@@ -386,11 +386,11 @@ msgstr ""
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
-#: engine/itb_util.py:6508
+#: engine/itb_util.py:6566
 msgid "Key input"
 msgstr "Toetsaanslag"
 
-#: engine/itb_util.py:6514
+#: engine/itb_util.py:6572
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -398,28 +398,28 @@ msgstr "Annuleren"
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6521
+#: engine/itb_util.py:6579
 msgid "Please press a key (or a key combination)"
 msgstr "Druk op een toets (of een toetscombinatie)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
 #. command.
-#: engine/itb_util.py:6526
+#: engine/itb_util.py:6584
 msgid "The dialog will be closed when the key is released"
 msgstr "Het venster wordt gesloten zodra je de toets(en) loslaat"
 
-#: engine/itb_util.py:6565
+#: engine/itb_util.py:6623
 msgid "A completion input method to speedup typing."
 msgstr ""
 "Een invoermethode met automatisch aanvullen om sneller te kunnen typen."
 
 #. Translators: put your names here, one name per line.
-#: engine/itb_util.py:6574
+#: engine/itb_util.py:6632
 msgid "translator-credits"
 msgstr "Heimen Stoffels"
 
-#: engine/itb_util.py:6582 setup/main.py:2422
+#: engine/itb_util.py:6640 setup/main.py:2422
 msgid "Online documentation:"
 msgstr "Online-documentatie:"
 
@@ -443,7 +443,7 @@ msgstr "Voorkeuren"
 msgid "Restore all defaults"
 msgstr "Alle standaardinstellingen herstellen"
 
-#: setup/main.py:276 setup/main.py:7635 setup/pkginstall.py:245
+#: setup/main.py:276 setup/main.py:7639 setup/pkginstall.py:245
 msgid "_Close"
 msgstr "_Sluiten"
 
@@ -1086,7 +1086,7 @@ msgstr "Woordenboek toevoegen"
 msgid "Download missing dictionaries and update existing ones"
 msgstr ""
 
-#: setup/main.py:1231 setup/main.py:1378 setup/main.py:1623 setup/main.py:5618
+#: setup/main.py:1231 setup/main.py:1378 setup/main.py:1623 setup/main.py:5622
 msgid "Set to default"
 msgstr "Standaard sneltoets instellen"
 
@@ -1195,7 +1195,7 @@ msgstr "Aanpassen"
 msgid "Edit the key bindings for the selected command"
 msgstr "Kies een andere sneltoets voor de geselecteerde opdracht"
 
-#: setup/main.py:1627 setup/main.py:5623
+#: setup/main.py:1627 setup/main.py:5627
 msgid "Set default key bindings for the selected command"
 msgstr "Stel de standaard sneltoets in voor de geselecteerde opdracht"
 
@@ -1780,7 +1780,7 @@ msgid "System prompt that guides how the AI responds."
 msgstr ""
 
 #. Translators:
-#: setup/main.py:2584 setup/main.py:3845
+#: setup/main.py:2584 setup/main.py:3849
 msgid "Set “Google application credentials” .json file:"
 msgstr ".json-bestand voor Google-inloggegevens:"
 
@@ -1796,7 +1796,7 @@ msgstr "Bestand nog niet ingesteld."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2652 setup/main.py:5121
+#: setup/main.py:2652 setup/main.py:5125
 msgid "Add an autosetting"
 msgstr "Voeg een automatische instelling toe"
 
@@ -1838,7 +1838,7 @@ msgstr "Spellingcontrole"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:3161
+#: setup/main.py:3165
 msgid "Setting"
 msgstr "Instelling"
 
@@ -1846,64 +1846,64 @@ msgstr "Instelling"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:3170 setup/main.py:4694
+#: setup/main.py:3174 setup/main.py:4698
 msgid "Value"
 msgstr "Waarde"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:3194
+#: setup/main.py:3198
 msgid "Regular expression"
 msgstr "Reguliere expressie"
 
-#: setup/main.py:3227
+#: setup/main.py:3231
 msgid "Are you sure?"
 msgstr "Weet je het zeker?"
 
-#: setup/main.py:3229 setup/main.py:3848 setup/main.py:3941 setup/main.py:5692
+#: setup/main.py:3233 setup/main.py:3852 setup/main.py:3945 setup/main.py:5696
 #: setup/pkginstall.py:240
 msgid "_Cancel"
 msgstr "_Annuleren"
 
-#: setup/main.py:3230 setup/main.py:3849 setup/main.py:3942 setup/main.py:5693
+#: setup/main.py:3234 setup/main.py:3853 setup/main.py:3946 setup/main.py:5697
 msgid "_OK"
 msgstr "_Oké"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3350
+#: setup/main.py:3354
 msgid "Do you really want to restore all default settings?"
 msgstr "Weet je zeker dat je alle standaardinstellingen wilt herstellen?"
 
-#: setup/main.py:3938
+#: setup/main.py:3942
 msgid "Select .wav sound file:"
 msgstr "Selecteer .wav-geluidsbestand:"
 
-#: setup/main.py:4125
+#: setup/main.py:4129
 msgid "Add dictionary"
 msgstr "Woordenboek toevoegen"
 
-#: setup/main.py:4501
+#: setup/main.py:4505
 msgid "Add input method"
 msgstr "Invoermethode toevoegen"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4685
+#: setup/main.py:4689
 msgid "Variable"
 msgstr "Variabele"
 
-#: setup/main.py:5571
+#: setup/main.py:5575
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Andere sneltoets kiezen voor de opdracht '%s'"
 
-#: setup/main.py:5599
+#: setup/main.py:5603
 msgid "Add a key binding"
 msgstr "Sneltoets toevoegen"
 
-#: setup/main.py:5611
+#: setup/main.py:5615
 msgid "Remove selected key binding"
 msgstr "Geselecteerde sneltoets verwijderen"
 
@@ -1912,7 +1912,7 @@ msgstr "Geselecteerde sneltoets verwijderen"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5674
+#: setup/main.py:5678
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1920,16 +1920,16 @@ msgstr ""
 "Weet je zeker dat je alle sneltoetsen wilt instellen op de standaard "
 "sneltoetsen?"
 
-#: setup/main.py:5689
+#: setup/main.py:5693
 msgid "Open File ..."
 msgstr "Bestand openen..."
 
-#: setup/main.py:5706
+#: setup/main.py:5710
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Geleerd uit het bestand '%(filename)s'."
 
-#: setup/main.py:5715
+#: setup/main.py:5719
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Leren uit '%(filename)s' mislukt."
@@ -1944,7 +1944,7 @@ msgstr "Leren uit '%(filename)s' mislukt."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5738
+#: setup/main.py:5742
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1952,7 +1952,7 @@ msgstr ""
 "Weet je zeker dat je alle persoonlijke taalinformatie die geleerd is middels "
 "typen of uit bestanden wilt wissen?"
 
-#: setup/main.py:7711
+#: setup/main.py:7717
 msgid "ibus is not running."
 msgstr "ibus is niet actief."
 
