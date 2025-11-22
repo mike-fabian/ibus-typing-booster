@@ -41,6 +41,32 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.28.6" date="2025-11-22" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.28.6</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Improve workaround for LibreOffice autocorrection (Related
+            github-issue#834)
+          </li>
+          <li>
+            Refactor: Add a ClientInfo class to store the client id (improve readability and speed)
+          </li>
+          <li>
+            Code cleanup in setup/main.py
+          </li>
+          <li>
+            Translation update from Weblate (de 100%, es 100%, ja 100%, pl 100%, ru 100%, tr 100%, uk 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/834">
+          github-issues#834
+        </issue>
+      </issues>
+    </release>
     <release version="2.28.5" date="2025-11-18" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.28.5</url>
       <description>

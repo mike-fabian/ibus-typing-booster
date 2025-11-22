@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 22 Nov 2025 Release 2.28.6
+* Improve workaround for LibreOffice autocorrection (Related:  https://github.com/mike-fabian/ibus-typing-booster/issues/834)
+* Refactor: Add a ClientInfo class to store the client id (improve readability and speed)
+* Code cleanup in setup/main.py
+* Translation update from Weblate (de 100%, es 100%, ja 100%, pl 100%, ru 100%, tr 100%, uk 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 18 Nov 2025 Release 2.28.5
 * Set short process names on Linux (prctl PR_SET_NAME) or BSD (setproctitle) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/833)
 * Show the direct input mode menu always
