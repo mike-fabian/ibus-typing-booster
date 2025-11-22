@@ -5665,7 +5665,7 @@ class SetupUI(Gtk.Window): # type: ignore
 
     def _on_keybindings_all_default_button_clicked(self, *_args: Any) -> None:
         '''
-        Signal handler called when the “Set all to default” button to reset the
+        Signal handler called when the “Set all to default” button to reset
         all key bindings top their defaults has been clicked.
         '''
         self._keybindings_all_default_button.set_sensitive(False)
