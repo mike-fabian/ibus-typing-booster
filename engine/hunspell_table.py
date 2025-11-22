@@ -10597,14 +10597,11 @@ class TypingBoosterEngine(IBus.Engine):
             if (self._current_imes[0].startswith('zh')
                 and key.val == IBus.KEY_space and key.msymbol == ' '):
                 return True
-            if (key.val in (IBus.KEY_space,
-                            IBus.KEY_Return,
-                            IBus.KEY_KP_Enter,
-                            IBus.KEY_ISO_Enter)
+            if (key.val in (IBus.KEY_space,)
                 and re.compile(r':(soffice|libreoffice.*):'
                                ).search(self._im_client)):
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/834
-                LOGGER.info('Commit triggered by space, Return, or Enter: '
+                LOGGER.info('Commit triggered by space: '
                             'Apply workaround for libreoffice autocorrection: '
                             'Sleep, press and release Shift_L.')
                 time.sleep(self._ibus_event_sleep_seconds)

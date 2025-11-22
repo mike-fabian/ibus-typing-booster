@@ -2703,10 +2703,18 @@ class SetupUI(Gtk.Window): # type: ignore
         self._autosettings_down_button.connect(
             'clicked', self._on_autosettings_down_button_clicked)
         self._autosettings_down_button.set_sensitive(False)
+        self._autosettings_all_default_button = Gtk.Button(
+            label=_('Set all to default'))
+        self._autosettings_all_default_button.set_tooltip_text(
+            _('Set all autosettings to default'))
+        self._autosettings_all_default_button.set_sensitive(True)
+        self._autosettings_all_default_button.connect(
+            'clicked', self._on_autosettings_all_default_button_clicked)
         autosettings_action_area.add(self._autosettings_add_button)
         autosettings_action_area.add(self._autosettings_remove_button)
         autosettings_action_area.add(self._autosettings_up_button)
         autosettings_action_area.add(self._autosettings_down_button)
+        autosettings_action_area.add(self._autosettings_all_default_button)
         self._autosettings_selected_index = -1
         self._autosettings_treeview = None
         self._autosettings_add_listbox = None
@@ -5681,6 +5689,24 @@ class SetupUI(Gtk.Window): # type: ignore
             default_keybindings = self._settings_dict['keybindings']['default']
             self.set_keybindings(default_keybindings)
         self._keybindings_all_default_button.set_sensitive(True)
+
+    def _on_autosettings_all_default_button_clicked(self, *_args: Any) -> None:
+        '''
+        Signal handler called when the “Set all to default” button to reset
+        all autosettings to their defaults has been clicked.
+        '''
+        self._autosettings_all_default_button.set_sensitive(False)
+        response = self._run_are_you_sure_dialog(
+            # Translators: This is the text in the centre of a small
+            # dialog window, trying to confirm whether the user is
+            # really sure to reset all autosettings the defaults.
+            # This cannot be reversed so the user
+            # should be really sure he wants to do that.
+            _('Do you really want to set all autosettings to their defaults?'))
+        if response == Gtk.ResponseType.OK:
+            default_autosettings = self._settings_dict['autosettings']['default']
+            self.set_autosettings(default_autosettings)
+        self._autosettings_all_default_button.set_sensitive(True)
 
     def _on_learn_from_file_clicked(self, _widget: Gtk.Button) -> None:
         '''

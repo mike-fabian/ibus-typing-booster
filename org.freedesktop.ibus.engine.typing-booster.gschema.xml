@@ -683,7 +683,11 @@
       <description>The list of configurable keybindings</description>
     </key>
     <key name="autosettings" type="aas">
-      <default>[]</default>
+      <default>
+        [
+        ['prefercommit', 'false', '^[^:]*:(soffice|libreoffice.*):']
+        ]
+      </default>
       <summary>List of automatic settings</summary>
       <description>The list of settings automatically applied when regular expressions match windows</description>
     </key>
