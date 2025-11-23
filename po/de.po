@@ -15,10 +15,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-11-23 00:16+0100\n"
-"PO-Revision-Date: 2025-11-12 16:54+0000\n"
+"PO-Revision-Date: 2025-11-22 23:59+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: German <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/de/>\n"
+"Language-Team: German <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1833,10 +1833,8 @@ msgid "Move an autosetting down"
 msgstr "Automatisierte Einstellung nach unten verschieben"
 
 #: setup/main.py:2621
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Set all autosettings to default"
-msgstr "Alle auf Standard setzen"
+msgstr "Alle Auto-Einstellungen auf Standardwerte zurücksetzen"
 
 #: setup/main.py:2878
 msgid "Spell checking"
@@ -1932,14 +1930,9 @@ msgstr ""
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
 #: setup/main.py:5617
-#, fuzzy
-#| msgid ""
-#| "Do you really want to set the key bindings for all commands to their "
-#| "defaults?"
 msgid "Do you really want to set all autosettings to their defaults?"
 msgstr ""
-"Wollen Sie wirklich die Tastenbelegungen für alle Befehle auf die "
-"Voreinstellungen zurücksetzen?"
+"Wollen Sie wirklich Alle Auto-Einstellungen auf Standardwerte zurücksetzen?"
 
 #: setup/main.py:5631
 msgid "Open File ..."
