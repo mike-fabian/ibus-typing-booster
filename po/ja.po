@@ -10,10 +10,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-11-23 00:54+0100\n"
-"PO-Revision-Date: 2025-11-22 21:45+0000\n"
+"PO-Revision-Date: 2025-11-23 00:05+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/ja/>\n"
+"Language-Team: Japanese <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1752,10 +1752,8 @@ msgid "Move an autosetting down"
 msgstr "自動設定を下に移動する"
 
 #: setup/main.py:2621
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Set all autosettings to default"
-msgstr "すべてをデフォルトに設定する"
+msgstr "すべての自動設定をデフォルトに戻す"
 
 #: setup/main.py:2878
 msgid "Spell checking"
@@ -1849,12 +1847,8 @@ msgstr "すべてのコマンドのキーバインディングをデフォルト
 #. This cannot be reversed so the user
 #. should be really sure he wants to do that.
 #: setup/main.py:5617
-#, fuzzy
-#| msgid ""
-#| "Do you really want to set the key bindings for all commands to their "
-#| "defaults?"
 msgid "Do you really want to set all autosettings to their defaults?"
-msgstr "すべてのコマンドのキーバインディングをデフォルトに設定したいのですか？"
+msgstr "これは、自動設定をすべてリセットします。よろしいですか？"
 
 #: setup/main.py:5631
 msgid "Open File ..."
