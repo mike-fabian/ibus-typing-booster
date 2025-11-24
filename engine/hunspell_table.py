@@ -225,6 +225,54 @@ class SurroundingText:
             anchor_pos=self.anchor_pos,
             event=new_event)
 
+class ClientInfo:
+    '''Class to make the parts of the client string more easily accessible'''
+    def __init__(
+            self,
+            client: str = '',
+    ) -> None:
+        self._im_module: str = ''
+        self._program_name: str = ''
+        self._window_title: str = ''
+        self._parse_client_str(client)
+
+    def _parse_client_str(self, client: str) -> None:
+        parts = (client.split(':', 2) + ['', '', ''])[:3]
+        self._im_module, self._program_name, self._window_title = parts
+
+    @property
+    def client(self) -> str:
+        '''return the full client string'''
+        return f'{self._im_module}:{self._program_name}:{self._window_title}'
+
+    @client.setter
+    def client(self, client: str) -> None:
+        '''Set the client'''
+        self._parse_client_str(client)
+
+    @property
+    def im_module(self) -> str:
+        '''Return only the input module'''
+        return self._im_module
+
+    @property
+    def program_name(self) -> str:
+        '''Return only the program name'''
+        return self._program_name
+
+    @property
+    def window_title(self) -> str:
+        '''Return only the window title'''
+        return self._window_title
+
+    def __str__(self) -> str:
+        return self.client
+
+    def __repr__(self) -> str:
+        return (f'ClientInfo(im_module={self._im_module!r}, '
+                f'program_name={self._program_name!r}, '
+                f'window_title={self._window_title!r})')
+
 class LookupTableState(enum.Enum):
     '''Enum of states of the TypingBoosterLookupTable'''
     NORMAL = enum.auto()
@@ -599,7 +647,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.preedit_ime_properties: Dict[str, Any] = {}
         self.preedit_ime_sub_properties_prop_list: IBus.PropList = IBus.PropList()
 
-        self._im_client: str = ''
+        self._client_info: ClientInfo = ClientInfo()
 
         self._current_imes: List[str] = []
 
@@ -3278,7 +3326,7 @@ class TypingBoosterEngine(IBus.Engine):
             0,
             len(aux_string)))
         if self._debug_level > 0 and not self._unit_test:
-            client = f'🪟{self._im_client}'
+            client = f'🪟{self._client_info.client}'
             aux_string += client
             attrs.append(IBus.attr_foreground_new(
                 itb_util.color_string_to_argb('Purple'),
@@ -4157,9 +4205,10 @@ class TypingBoosterEngine(IBus.Engine):
         commit_mode = 'single'
         if len(commit_lines) >= 2:
             if self._debug_level > 0:
-                LOGGER.debug('self._im_client=“%s”', self._im_client)
+                LOGGER.debug(
+                    'self._client_info.client=“%s”', self._client_info.client)
             for pattern, mode in commit_mode_patterns:
-                if re.search(pattern, self._im_client):
+                if re.search(pattern, self._client_info.client):
                     if self._debug_level > 0:
                         LOGGER.debug(
                             'commit_mode_pattern match: pattern=%s mode=%s',
@@ -4333,8 +4382,8 @@ class TypingBoosterEngine(IBus.Engine):
                 # it will show up there only when the next key event is
                 # processed:
                 pattern = re.compile(r'(?P<white_space>[\s]+)$')
-                if re.compile(r'^QIBusInputContext:(kate|kwrite)').search(
-                        self._im_client):
+                if (self._client_info.im_module == 'QIBusInputContext'
+                    and self._client_info.program_name in ('kate', 'kwrite')):
                     # For kate and kwrite (but not for other qt5
                     # applications like 'lineedits' from the qt5
                     # examples), the commit phrase is already found in
@@ -4519,7 +4568,7 @@ class TypingBoosterEngine(IBus.Engine):
             self.update_preedit_text_with_mode(
                 IBus.Text.new_from_string(''), 0, True,
                 IBus.PreeditFocusMode.COMMIT)
-            if (re.search(r'^[^:]*:[^:]*:WhatsApp', self._im_client)
+            if (self._client_info.window_title.startswith('WhatsApp')
                 and len(token) == cursor_pos):
                 # Workaround for WhatsApp in firefox (google-chrome
                 # does not support surrounding text so we don't get
@@ -4602,7 +4651,7 @@ class TypingBoosterEngine(IBus.Engine):
             self.update_preedit_text_with_mode(
                 IBus.Text.new_from_string(''), 0, True,
                 IBus.PreeditFocusMode.COMMIT)
-            if (re.search(r'^[^:]*:[^:]*:WhatsApp', self._im_client)
+            if (self._client_info.window_title.startswith('WhatsApp')
                 and not text[:cursor_pos].strip()):
                 # Workaround for WhatsApp in firefox (google-chrome
                 # does not support surrounding text so we don't get
@@ -7564,7 +7613,7 @@ class TypingBoosterEngine(IBus.Engine):
             self.update_preedit_text_with_mode(
                 IBus.Text.new_from_string(''), 0, True,
                 IBus.PreeditFocusMode.COMMIT)
-            if (re.search(r'^[^:]*:[^:]*:WhatsApp', self._im_client)
+            if (self._client_info.window_title.startswith('WhatsApp')
                 and not text[:cursor_pos].strip()):
                 # Workaround for WhatsApp in firefox (google-chrome
                 # does not support surrounding text so we don't get
@@ -7677,7 +7726,7 @@ class TypingBoosterEngine(IBus.Engine):
         selection_text = itb_util.get_primary_selection_text()
         # `wl-paste -p` might have been used to get the primary
         # selection.  If `wl-paste` (with or without `-p`) is used, it
-        # causes a focus out, a focus in to `self._im_client=fake`,
+        # causes a focus out, a focus in to `self._client_info.client=fake`,
         # then a focus out and a focus in to where the focus
         # originally was.  This might close the candidate if it was
         # already shown or prevent it from appearing. So instead of
@@ -7904,7 +7953,7 @@ class TypingBoosterEngine(IBus.Engine):
             self.hide_lookup_table()
             # `wl-paste -p` might have been used to get the primary
             # selection.  If `wl-paste` (with or without `-p`) is used, it
-            # causes a focus out, a focus in to `self._im_client=fake`,
+            # causes a focus out, a focus in to `self._client_info.client=fake`,
             # then a focus out and a focus in to where the focus
             # originally was.  This might close the candidate if it was
             # already shown or prevent it from appearing. So instead of
@@ -8383,17 +8432,17 @@ class TypingBoosterEngine(IBus.Engine):
                           'ltr', 'rtl', 'toggle'
         '''
         LOGGER.debug('Trying to change line direction to %r'
-                     'self._im_client=%s',
-                     direction, self._im_client)
+                     'self._client_info.client=%s',
+                     direction, self._client_info.client)
         if (not self.has_surrounding_text
             or
             self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
             LOGGER.debug(
                 'Surrounding text not supported, cannot change line direction.')
             return
-        if re.compile(
-                r':(firefox|google-chrome|soffice|libreoffice-calc):').search(
-                    self._im_client):
+        if (self._client_info.program_name in (
+                'firefox', 'google-chrome', 'soffice')
+            or self._client_info.program_name.startswith('libreoffice')):
             LOGGER.debug('firefox, libreoffice, or google-chrome detected. '
                          'Cannot change line direction in these programs. '
                          'These programs already have their own support to '
@@ -8506,7 +8555,7 @@ class TypingBoosterEngine(IBus.Engine):
             IBus.Text.new_from_string(current_line))
         self._commit_happened_after_focus_in = True
         time.sleep(self._ibus_event_sleep_seconds)
-        if re.compile(r'^QIBusInputContext:').search(self._im_client):
+        if self._client_info.im_module =='QIBusInputContext':
             LOGGER.debug('QIBusInputContext detected, correcting cursor.')
             arrow_key_value = IBus.KEY_Left
             if direction == 'rtl':
@@ -8516,8 +8565,8 @@ class TypingBoosterEngine(IBus.Engine):
                              char, unicodedata.category(char))
                 if unicodedata.category(char) not in ('Mn',):
                     self._forward_generated_key_event(arrow_key_value)
-        elif re.compile(r'^(gtk[3,4]-im|gnome-shell):').search(self._im_client):
-            im_module = self._im_client.split(':')[0]
+        elif self._client_info.im_module in ('gtk3-im', 'gtk4-im', 'gnome-shell'):
+            im_module = self._client_info.im_module
             LOGGER.debug('%r detected, trying to correct cursor.', im_module)
             if im_module == 'gtk4-im':
                 LOGGER.debug('forward_key_event() does not work in “gtk4-im”, '
@@ -9016,14 +9065,14 @@ class TypingBoosterEngine(IBus.Engine):
         # performous, see
         # https://github.com/mike-fabian/ibus-typing-booster/issues/580
         if (self._avoid_forward_key_event
-            or self._im_client.startswith('gtk4-im')
-            or self._im_client.startswith('SDL2_Application')
+            or self._client_info.im_module == 'gtk4-im'
+            or self._client_info.im_module == 'SDL2_Application'
             or
             (self.client_capabilities & itb_util.Capabilite.SYNC_PROCESS_KEY)):
             if self._debug_level > 0:
                 LOGGER.info('Returning False')
             return False
-        if (self._im_client.startswith('gnome-shell')
+        if (self._client_info.im_module == 'gnome-shell'
             and os.getenv('XDG_SESSION_TYPE') == 'wayland'
             and ((key.shift and key.name in
                   ('F1', 'F2', 'F3', 'F4', 'F5', 'F6',
@@ -10016,7 +10065,7 @@ class TypingBoosterEngine(IBus.Engine):
                 LOGGER.debug('Direct input mode')
             disabled = True
         elif (self._disable_in_terminals
-              and itb_util.detect_terminal(self._input_purpose, self._im_client)):
+              and itb_util.detect_terminal(self._input_purpose, self._client_info.client)):
             if self._debug_level > 0:
                 LOGGER.debug(
                     'Terminal detected and the option '
@@ -10598,8 +10647,8 @@ class TypingBoosterEngine(IBus.Engine):
                 and key.val == IBus.KEY_space and key.msymbol == ' '):
                 return True
             if (key.val in (IBus.KEY_space,)
-                and re.compile(r':(soffice|libreoffice.*):'
-                               ).search(self._im_client)):
+                and (self._client_info.program_name == 'soffice'
+                     or self._client_info.program_name.startswith('libreoffice'))):
                 # https://github.com/mike-fabian/ibus-typing-booster/issues/834
                 LOGGER.info('Commit triggered by space: '
                             'Apply workaround for libreoffice autocorrection: '
@@ -10713,8 +10762,8 @@ class TypingBoosterEngine(IBus.Engine):
                     super().commit_text(
                         IBus.Text.new_from_string(
                             transliterated_parts.committed))
-                    if re.compile(r':(soffice|libreoffice.*):'
-                                  ).search(self._im_client):
+                    if (self._client_info.program_name == 'soffice'
+                        or self._client_info.program_name.startswith('libreoffice')):
                         # https://github.com/mike-fabian/ibus-typing-booster/issues/834
                         LOGGER.info(
                             'Early commit: '
@@ -10776,6 +10825,7 @@ class TypingBoosterEngine(IBus.Engine):
                                       'gnome-shell' instead.
                        'Qt':      Qt4 input module
                        'QIBusInputContext': Qt5 input module
+                       'SDL2_Application': SDL2 input module
 
                        In case of the Gtk input modules, the name of the
                        client is also shown after the “:”, for example
@@ -10794,13 +10844,15 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.debug(
                 'program_name=“%s” window_title=“%s”',
                 program_name, window_title)
-        self._im_client = client
-        if ':' not in self._im_client:
-            self._im_client += ':' + program_name + ':' + window_title
+        client_info_str = client
+        if ':' not in client_info_str:
+            client_info_str += ':' + program_name + ':' + window_title
         else:
-            self._im_client += ':' + window_title
+            client_info_str += ':' + window_title
+        self._client_info.client = client_info_str
         if self._debug_level > 1:
-            LOGGER.debug('self._im_client=%s\n', self._im_client)
+            LOGGER.debug(
+                'self._client_info.client=%r\n', self._client_info.client)
         self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
         if self._debug_level > 2:
             for keyval in self._keyvals_to_keycodes.keyvals():
@@ -10819,10 +10871,10 @@ class TypingBoosterEngine(IBus.Engine):
     def _apply_autosettings(self) -> None:
         '''Apply automatic setting changes for the window which just got focus'''
         if self._debug_level > 0:
-            LOGGER.debug('self._im_client=%s', self._im_client)
+            LOGGER.debug('self._client_info.client=%s', self._client_info.client)
         if self._autosettings_revert:
             self._revert_autosettings()
-        if not self._im_client:
+        if not self._client_info.client:
             return
         autosettings_apply: Dict[str, Any] = {}
         for (setting, value, regexp) in self._autosettings:
@@ -10832,7 +10884,7 @@ class TypingBoosterEngine(IBus.Engine):
                 or 'get_function' not in self._settings_dict[setting]):
                 continue
             pattern = re.compile(regexp)
-            if not pattern.search(self._im_client):
+            if not pattern.search(self._client_info.client):
                 continue
             current_value = self._settings_dict[setting]['get_function']()
             if setting in ('inputmethod', 'dictionary'):
@@ -10860,7 +10912,7 @@ class TypingBoosterEngine(IBus.Engine):
                 continue
             LOGGER.info(
                 'regexp “%s” matches “%s”, trying to set “%s” to “%s”',
-                regexp, self._im_client, setting, value)
+                regexp, self._client_info.client, setting, value)
             autosettings_apply[setting] = new_value
             self._autosettings_revert[setting] = current_value
         for setting, value in autosettings_apply.items():
@@ -10985,7 +11037,7 @@ class TypingBoosterEngine(IBus.Engine):
         # https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/5966#note_1576732
         # if the input purpose is set correctly on focus in, then it
         # should not be necessary to reset it here.
-        self._im_client = ''
+        self._client_info.client = ''
         # The preëdit, if there was any, has already been committed
         # automatically because
         # update_preedit_text_with_mode(,,,IBus.PreeditFocusMode.COMMIT)
@@ -11097,7 +11149,7 @@ class TypingBoosterEngine(IBus.Engine):
             if self._debug_level > 1:
                 LOGGER.debug('self._surrounding_text=%r',
                              self._surrounding_text)
-            if (self._im_client.startswith('gtk3-im')
+            if (self._client_info.im_module == 'gtk3-im'
                 and not text_to_cursor.endswith(self._current_preedit_text.text_str)):
                 # On Wayland this causes problems, as the surrounding text
                 # behaves differently. Do this workaround only if the im client
