@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-11-23 00:54+0100\n"
+"POT-Creation-Date: 2025-11-24 15:01+0100\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Czech <https://translate.fedoraproject.org/projects/ibus-"
@@ -162,21 +162,21 @@ msgstr "Systémové výchozí"
 msgid "Set Font"
 msgstr "Nastavit písmo"
 
-#: engine/hunspell_table.py:981 engine/hunspell_table.py:1015
-#: engine/hunspell_table.py:1036
+#: engine/hunspell_table.py:1029 engine/hunspell_table.py:1063
+#: engine/hunspell_table.py:1084
 msgid "Off"
 msgstr "Vypnuto"
 
-#: engine/hunspell_table.py:986 engine/hunspell_table.py:1020
-#: engine/hunspell_table.py:1041
+#: engine/hunspell_table.py:1034 engine/hunspell_table.py:1068
+#: engine/hunspell_table.py:1089
 msgid "On"
 msgstr "Zapnuto"
 
-#: engine/hunspell_table.py:1005
+#: engine/hunspell_table.py:1053
 msgid "Input mode"
 msgstr "Režim vstupu"
 
-#: engine/hunspell_table.py:1006
+#: engine/hunspell_table.py:1054
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Zde je možné ibus-typing-booster vypnout nebo zapnout."
 
@@ -187,7 +187,7 @@ msgstr "Zde je možné ibus-typing-booster vypnout nebo zapnout."
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:1025 engine/hunspell_table.py:1027
+#: engine/hunspell_table.py:1073 engine/hunspell_table.py:1075
 #: setup/main.py:694
 msgid "Unicode symbols and emoji predictions"
 msgstr "Predikce symbolů Unicode a emodži"
@@ -199,63 +199,63 @@ msgstr "Predikce symbolů Unicode a emodži"
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:1046 engine/hunspell_table.py:1047
+#: engine/hunspell_table.py:1094 engine/hunspell_table.py:1095
 #: setup/main.py:764
 msgid "Off the record mode"
 msgstr "Režim mimo záznam"
 
-#: engine/hunspell_table.py:2566
+#: engine/hunspell_table.py:2614
 msgid "Highest priority dictionary"
 msgstr "Nejprioritnější slovník"
 
-#: engine/hunspell_table.py:2567
+#: engine/hunspell_table.py:2615
 msgid "Choose highest priority dictionary"
 msgstr "Zvolte nejprioritnější slovník"
 
-#: engine/hunspell_table.py:2596
+#: engine/hunspell_table.py:2644
 msgid "Preedit input method"
 msgstr "Metoda vstupu před editací"
 
-#: engine/hunspell_table.py:2597
+#: engine/hunspell_table.py:2645
 msgid "Switch preedit input method"
 msgstr "Přepnout metodu vstupu před editací"
 
 # auto translated by TM merge from project: ibus-table, version: master, DocId: ibus-table
-#: engine/hunspell_table.py:2968
+#: engine/hunspell_table.py:3016
 msgid "Setup"
 msgstr "Nastavení"
 
-#: engine/hunspell_table.py:2971 setup/main.py:199
+#: engine/hunspell_table.py:3019 setup/main.py:199
 msgid "Preferences for ibus-typing-booster"
 msgstr "Předvolby pro ibus-typing-booster"
 
-#: engine/hunspell_table.py:7073
+#: engine/hunspell_table.py:7122
 msgid "Failed to import Google speech-to-text."
 msgstr "Nepodařilo se importovat Google speech-to-text."
 
-#: engine/hunspell_table.py:7076
+#: engine/hunspell_table.py:7125
 msgid "Failed to import pyaudio."
 msgstr "Nepodařilo se importovat pyaudio."
 
-#: engine/hunspell_table.py:7079
+#: engine/hunspell_table.py:7128
 msgid "Failed to import queue."
 msgstr "Nepodařilo se importovat frontu."
 
-#: engine/hunspell_table.py:7084
+#: engine/hunspell_table.py:7133
 msgid "No supported language for speech recognition."
 msgstr "Žádný jazyk podporovaný pro rozpoznávání řeči."
 
-#: engine/hunspell_table.py:7088
+#: engine/hunspell_table.py:7137
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Nenalezen soubor „%s“ s „přihlašovacími údaji do Google“."
 
-#: engine/hunspell_table.py:7101
+#: engine/hunspell_table.py:7150
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Nepodařilo se inicializovat Google řeč na text. Viz záznam ladících událostí."
 
-#: engine/hunspell_table.py:7209
+#: engine/hunspell_table.py:7258
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Chyba Google řeč na text. Viz záznam ladících událostí."
 

@@ -10,11 +10,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2025-11-23 00:54+0100\n"
+"POT-Creation-Date: 2025-11-24 15:01+0100\n"
 "PO-Revision-Date: 2025-11-24 13:58+0000\n"
 "Last-Translator: \"Sergey A.\" <Ser82-png@yandex.ru>\n"
-"Language-Team: Russian <https://translate.fedoraproject.org/projects/"
-"ibus-typing-booster/app/ru/>\n"
+"Language-Team: Russian <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -162,21 +162,21 @@ msgstr "Системные по умолчанию"
 msgid "Set Font"
 msgstr "Установить шрифт"
 
-#: engine/hunspell_table.py:981 engine/hunspell_table.py:1015
-#: engine/hunspell_table.py:1036
+#: engine/hunspell_table.py:1029 engine/hunspell_table.py:1063
+#: engine/hunspell_table.py:1084
 msgid "Off"
 msgstr "Выкл."
 
-#: engine/hunspell_table.py:986 engine/hunspell_table.py:1020
-#: engine/hunspell_table.py:1041
+#: engine/hunspell_table.py:1034 engine/hunspell_table.py:1068
+#: engine/hunspell_table.py:1089
 msgid "On"
 msgstr "Вкл."
 
-#: engine/hunspell_table.py:1005
+#: engine/hunspell_table.py:1053
 msgid "Input mode"
 msgstr "Режим ввода"
 
-#: engine/hunspell_table.py:1006
+#: engine/hunspell_table.py:1054
 msgid "Here you can switch ibus-typing-booster on or off."
 msgstr "Здесь вы можете включить или выключить ibus-typing-booster."
 
@@ -187,7 +187,7 @@ msgstr "Здесь вы можете включить или выключить 
 #. symbols (€₹₺…), braille patterns (⠥⠩…), and many other
 #. symbols. These are technically not emoji but
 #. nevertheless useful symbols.
-#: engine/hunspell_table.py:1025 engine/hunspell_table.py:1027
+#: engine/hunspell_table.py:1073 engine/hunspell_table.py:1075
 #: setup/main.py:694
 msgid "Unicode symbols and emoji predictions"
 msgstr "Предположения для символов Юникода и эмодзи"
@@ -199,61 +199,61 @@ msgstr "Предположения для символов Юникода и э�
 #. should use this option sparingly. Only if one wants to
 #. avoid saving secret user input to disk it might make
 #. sense to use this option temporarily.
-#: engine/hunspell_table.py:1046 engine/hunspell_table.py:1047
+#: engine/hunspell_table.py:1094 engine/hunspell_table.py:1095
 #: setup/main.py:764
 msgid "Off the record mode"
 msgstr "Выключить режим записи"
 
-#: engine/hunspell_table.py:2566
+#: engine/hunspell_table.py:2614
 msgid "Highest priority dictionary"
 msgstr "Словарь с наивысшим приоритетом"
 
-#: engine/hunspell_table.py:2567
+#: engine/hunspell_table.py:2615
 msgid "Choose highest priority dictionary"
 msgstr "Выберите словарь с наивысшим приоритетом"
 
-#: engine/hunspell_table.py:2596
+#: engine/hunspell_table.py:2644
 msgid "Preedit input method"
 msgstr "Метод предварительного редактирования"
 
-#: engine/hunspell_table.py:2597
+#: engine/hunspell_table.py:2645
 msgid "Switch preedit input method"
 msgstr "Переключение метода предварительного редактирования ввода"
 
-#: engine/hunspell_table.py:2968
+#: engine/hunspell_table.py:3016
 msgid "Setup"
 msgstr "Настройка"
 
-#: engine/hunspell_table.py:2971 setup/main.py:199
+#: engine/hunspell_table.py:3019 setup/main.py:199
 msgid "Preferences for ibus-typing-booster"
 msgstr "Предпочтения для ibus-typing-booster"
 
-#: engine/hunspell_table.py:7073
+#: engine/hunspell_table.py:7122
 msgid "Failed to import Google speech-to-text."
 msgstr "Не удалось импортировать речь-в-текст Google."
 
-#: engine/hunspell_table.py:7076
+#: engine/hunspell_table.py:7125
 msgid "Failed to import pyaudio."
 msgstr "Не удалось импортировать pyaudio."
 
-#: engine/hunspell_table.py:7079
+#: engine/hunspell_table.py:7128
 msgid "Failed to import queue."
 msgstr "Не удалось импортировать очередь."
 
-#: engine/hunspell_table.py:7084
+#: engine/hunspell_table.py:7133
 msgid "No supported language for speech recognition."
 msgstr "Нет поддерживаемого языка для распознавания речи."
 
-#: engine/hunspell_table.py:7088
+#: engine/hunspell_table.py:7137
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Файл \"Учетные данные приложения Google\" \"%s\" не найден."
 
-#: engine/hunspell_table.py:7101
+#: engine/hunspell_table.py:7150
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Не удалось инициировать Google речь-в-текст. Смотрите debug.log."
 
-#: engine/hunspell_table.py:7209
+#: engine/hunspell_table.py:7258
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Ошибка преобразования речи в текст Google. См. файл debug.log."
 
