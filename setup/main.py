@@ -7547,12 +7547,12 @@ class HelpWindow(Gtk.Window): # type: ignore
                  title: str = '',
                  contents: str = '') -> None:
         Gtk.Window.__init__(self, title=title)
-        if parent:
-            self.set_parent(parent)
+        if parent is not None:
             self.set_transient_for(parent)
             # to receive mouse events for scrolling and for the close
             # button
             self.set_modal(True)
+            self.set_destroy_with_parent(True)
         self.set_destroy_with_parent(False)
         self.set_default_size(600, 500)
         self.vbox = Gtk.Box()
