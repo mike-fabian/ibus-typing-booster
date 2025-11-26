@@ -25,6 +25,7 @@ from typing import List
 from typing import Dict
 from typing import Union
 from typing import Any
+from typing import TYPE_CHECKING
 from types import FrameType
 import sys
 import os
@@ -45,12 +46,20 @@ from gi.repository import GLib # type: ignore
 # messages when import modules are failed. E.g. Gtk.
 GLib.set_application_name('Ollama Pull')
 
-# pylint: disable=wrong-import-position
-require_version('Gtk', '3.0')
-from gi.repository import Gtk # type: ignore
-# pylint: enable=wrong-import-position
-
 import itb_ollama
+from itb_gtk import Gtk, GTK_MAJOR # type: ignore
+if TYPE_CHECKING:
+    # These imports are only for type checkers (mypy). They must not be
+    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
+    # pylint: disable=reimported
+    from gi.repository import Gtk  # type: ignore
+    # pylint: enable=reimported
+from g_compat_helpers import (
+    add_child,
+    set_border_width,
+    show_all,
+    CompatButton,
+)
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -126,18 +135,20 @@ class OllamaPullUI(Gtk.Window): # type: ignore
         self.set_title(title)
         self.set_name('Ollama Pull')
         self.set_modal(True)
-        self.connect('destroy-event', self.__class__._on_destroy_event)
-        self.connect('delete-event', self.__class__._on_delete_event)
-        self._main_container = Gtk.Box()
-        self._main_container.set_orientation(Gtk.Orientation.VERTICAL)
-        self._main_container.set_spacing(0)
-        self._main_container.set_hexpand(True)
-        self._main_container.set_vexpand(True)
-        self.add(self._main_container) # pylint: disable=no-member
+        if GTK_MAJOR >= 4:
+            self.connect('close-request', self._on_close)
+        else:
+            self.connect('delete-event', self._on_close)
+        main_container = Gtk.Box()
+        main_container.set_orientation(Gtk.Orientation.VERTICAL)
+        main_container.set_spacing(0)
+        main_container.set_hexpand(True)
+        main_container.set_vexpand(True)
+        add_child(self, main_container)
         self._progress_grid = Gtk.Grid()
         self._progress_grid.set_visible(True)
         self._progress_grid.set_can_focus(False)
-        self._progress_grid.set_border_width(5)
+        set_border_width(self._progress_grid, 5)
         self._progress_grid.set_row_spacing(5)
         self._progress_grid.set_column_spacing(10)
         self._progress_grid.set_row_homogeneous(False)
@@ -145,33 +156,29 @@ class OllamaPullUI(Gtk.Window): # type: ignore
         self._progress_grid.set_hexpand(True)
         self._progress_grid.set_vexpand(False)
         self._row = -1
-        self._main_container.add(self._progress_grid)
-        self._dialog_action_area = Gtk.Box()
-        self._dialog_action_area.set_orientation(Gtk.Orientation.HORIZONTAL)
-        self._dialog_action_area.set_visible(True)
-        self._dialog_action_area.set_can_focus(False)
-        self._dialog_action_area.set_hexpand(True)
-        self._dialog_action_area.set_vexpand(False)
-        self._dialog_action_area.set_spacing(0)
-        self._main_container.add(self._dialog_action_area)
+        add_child(main_container, self._progress_grid)
+        dialog_action_area = Gtk.Box()
+        dialog_action_area.set_orientation(Gtk.Orientation.HORIZONTAL)
+        dialog_action_area.set_visible(True)
+        dialog_action_area.set_can_focus(False)
+        dialog_action_area.set_hexpand(True)
+        dialog_action_area.set_vexpand(False)
+        dialog_action_area.set_spacing(0)
+        add_child(main_container, dialog_action_area)
         empty_hexpanding_label = Gtk.Label()
         empty_hexpanding_label.set_hexpand(True)
         empty_hexpanding_label.set_vexpand(False)
-        self._dialog_action_area.add(empty_hexpanding_label)
-        self._cancel_button = Gtk.Button()
-        self._cancel_button_label = Gtk.Label()
-        self._cancel_button_label.set_text_with_mnemonic(_('_Cancel'))
-        self._cancel_button.add(self._cancel_button_label)
+        add_child(dialog_action_area, empty_hexpanding_label)
+        self._cancel_button = CompatButton(
+            label=_('_Cancel'), use_underline=True)
         self._cancel_button.connect('clicked', self._on_cancel_clicked)
-        self._dialog_action_area.add(self._cancel_button)
-        self._close_button = Gtk.Button()
-        self._close_button_label = Gtk.Label()
-        self._close_button_label.set_text_with_mnemonic(_('_Close'))
-        self._close_button.add(self._close_button_label)
+        add_child(dialog_action_area, self._cancel_button)
+        self._close_button = CompatButton(
+            label=_('_Close'), use_underline=True)
         self._close_button.connect('clicked', self._on_close_clicked)
-        self._dialog_action_area.add(self._close_button)
-        self.show_all() # pylint: disable=no-member
-        self._close_button.hide()
+        add_child(dialog_action_area, self._close_button)
+        show_all(self)
+        self._close_button.set_visible(False)
         GLib.timeout_add(200, self._check_for_interrupt)
         GLib.idle_add(self._pull)
 
@@ -203,10 +210,10 @@ class OllamaPullUI(Gtk.Window): # type: ignore
             error_label.set_text(error)
             error_label.set_xalign(0)
             self._progress_grid.attach(
-                error_label, 0, self._row, 1, 1)
-            error_label.show()
-            self._cancel_button.hide()
-            self._close_button.show()
+                error_label, 1, self._row, 1, 1)
+            error_label.set_visible(True)
+            self._cancel_button.set_visible(False)
+            self._close_button.set_visible(True)
             return
         if status is not None and status != self._status:
             self._status = status
@@ -216,7 +223,7 @@ class OllamaPullUI(Gtk.Window): # type: ignore
             self._progress_grid.attach(
                 self._status_labels[self._row],
                 0, self._row, 1, 1)
-            self._status_labels[self._row].show()
+            self._status_labels[self._row].set_visible(True)
             self._status_progress_bars.append(Gtk.ProgressBar())
             self._status_progress_bars[self._row].set_show_text(False)
             self._status_progress_bars[self._row].set_pulse_step(0)
@@ -229,7 +236,7 @@ class OllamaPullUI(Gtk.Window): # type: ignore
             self._progress_grid.attach(
                 self._status_progress_bars[self._row],
                 1, self._row, 1, 1)
-            self._status_progress_bars[self._row].hide()
+            self._status_progress_bars[self._row].set_visible(False)
         if total is not None and completed is not None:
             fraction = float(completed / total) if total > 0.0 else 0.0
             status_text = status if status is not None else ''
@@ -246,15 +253,15 @@ class OllamaPullUI(Gtk.Window): # type: ignore
                 self._status_labels[self._row].set_text(
                     f'{status_text}: {total_text} ({100 * fraction:.1f}%)')
             if self._status_progress_bars[self._row] is not None:
-                self._status_progress_bars[self._row].show()
+                self._status_progress_bars[self._row].set_visible(True)
                 self._status_progress_bars[self._row].set_fraction(fraction)
         elif status is not None:
             LOGGER.info('%r', status)
             if self._status_labels[self._row] is not None:
                 self._status_labels[self._row].set_text(status)
         if status == 'success':
-            self._cancel_button.hide()
-            self._close_button.show()
+            self._cancel_button.set_visible(False)
+            self._close_button.set_visible(True)
 
     @staticmethod
     def _quit() -> None:
@@ -265,15 +272,9 @@ class OllamaPullUI(Gtk.Window): # type: ignore
         else:
             raise RuntimeError('GLIB_MAIN_LOOP not initialized!')
 
-    def _on_delete_event(self, *_args: Any) -> None:
-        '''The window has been deleted, probably by the window manager.'''
+    def _on_close(self, *_args: Any) -> None:
+        '''The window has been closed, probably by the window manager.'''
         LOGGER.info('Window deleted by the window manager.')
-        self._cancel_pull()
-        self.__class__._quit() # pylint: disable=protected-access
-
-    def _on_destroy_event(self, *_args: Any) -> None:
-        '''The window has been destroyed.'''
-        LOGGER.info('Window destroyed.')
         self._cancel_pull()
         self.__class__._quit() # pylint: disable=protected-access
 
@@ -291,8 +292,8 @@ class OllamaPullUI(Gtk.Window): # type: ignore
             self._pull_progress({'status': 'cancelled'})
         self._stop_event.clear()
         self._thread = None
-        self._cancel_button.hide()
-        self._close_button.show()
+        self._cancel_button.set_visible(False)
+        self._close_button.set_visible(True)
 
     def _on_cancel_clicked(self, *_args: Any) -> None:
         '''The button to cancel has been clicked.'''

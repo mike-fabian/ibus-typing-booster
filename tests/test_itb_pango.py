@@ -21,16 +21,11 @@
 This file implements test cases for itb_pango.py
 '''
 
+from typing import TYPE_CHECKING
 import sys
 import os
 import logging
 import unittest
-
-# pylint: disable=wrong-import-position
-from gi import require_version as gi_require_version
-gi_require_version('Gdk', '3.0')
-from gi.repository import Gdk # type: ignore
-# pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -41,11 +36,18 @@ try:
 except (ImportError,):
     IMPORT_DISTRO_SUCCESSFUL = False
 
-# pylint: disable=wrong-import-position
+# pylint: disable=wrong-import-position,import-error
 sys.path.insert(0, "../engine")
-import itb_pango # pylint: disable=import-error
+from itb_gtk import Gdk # type: ignore
+if TYPE_CHECKING:
+    # These imports are only for type checkers (mypy). They must not be
+    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
+    # pylint: disable=reimported
+    from gi.repository import Gdk  # type: ignore
+    # pylint: enable=reimported
+import itb_pango
 sys.path.pop(0)
-# pylint: enable=wrong-import-position
+# pylint: enable=wrong-import-position,import-error
 
 # pylint: disable=missing-class-docstring
 # pylint: disable=missing-function-docstring

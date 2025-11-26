@@ -24,24 +24,40 @@ A test program to test input purpose and hints
 from typing import Dict
 from typing import Any
 from typing import Optional
+from typing import TYPE_CHECKING
 from types import FrameType
 import sys
 import signal
 import logging
 import logging.handlers
 
-# pylint: disable=wrong-import-position
 from gi import require_version
 require_version('GLib', '2.0')
+# pylint: disable=wrong-import-position
 from gi.repository import GLib # type: ignore
-require_version('Gtk', '3.0')
-from gi.repository import Gtk # type: ignore
-# pylint: enable=wrong-import-position
+
+# set_prgname before importing other modules to show the name in warning
+# messages when import modules are failed. E.g. Gtk.
+GLib.set_application_name('InputPurposeTest')
+# This makes gnome-shell load the .desktop file when running under Wayland:
+GLib.set_prgname('InputPurposeTest')
 
 # pylint: disable=import-error
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 import itb_util
+from itb_gtk import Gtk, GTK_MAJOR # type: ignore
+if TYPE_CHECKING:
+    # These imports are only for type checkers (mypy). They must not be
+    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
+    # pylint: disable=reimported
+    from gi.repository import Gtk  # type: ignore
+    # pylint: enable=reimported
+from g_compat_helpers import (
+    add_child,
+    show_all,
+)
 # pylint: enable=import-error
+# pylint: enable=wrong-import-position
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -56,55 +72,57 @@ class InputPurposeTest(Gtk.Window): # type: ignore
         self.set_name('InputPurposeTest')
         self.set_modal(False)
         self.set_title('Input Purpose Test')
-        self.connect('destroy-event', self.on_destroy_event)
-        self.connect('delete-event', self.on_delete_event)
+        if GTK_MAJOR >= 4:
+            self.connect('close_request', self.on_close)
+        else:
+            self.connect('delete-event', self.on_close)
 
-        self._main_container = Gtk.Box()
-        self._main_container.set_orientation(Gtk.Orientation.VERTICAL)
-        self._main_container.set_spacing(0)
-        self.add(self._main_container) # pylint: disable=no-member
+        main_container = Gtk.Box()
+        main_container.set_orientation(Gtk.Orientation.VERTICAL)
+        main_container.set_spacing(0)
+        add_child(self, main_container)
 
         margin = 5
 
         self._input_purpose = itb_util.InputPurpose.FREE_FORM
-        self._input_purpose_combobox = Gtk.ComboBox()
-        self._input_purpose_combobox.set_margin_start(margin)
-        self._input_purpose_combobox.set_margin_end(margin)
-        self._input_purpose_combobox.set_margin_top(margin)
-        self._input_purpose_combobox.set_margin_bottom(margin)
+        input_purpose_combobox = Gtk.ComboBox()
+        input_purpose_combobox.set_margin_start(margin)
+        input_purpose_combobox.set_margin_end(margin)
+        input_purpose_combobox.set_margin_top(margin)
+        input_purpose_combobox.set_margin_bottom(margin)
         self._input_purpose_store = Gtk.ListStore(str, int)
         for purpose in list(itb_util.InputPurpose):
             self._input_purpose_store.append([purpose.name, purpose])
-        self._input_purpose_combobox.set_model(self._input_purpose_store)
+        input_purpose_combobox.set_model(self._input_purpose_store)
         renderer_text = Gtk.CellRendererText()
-        self._input_purpose_combobox.pack_start(renderer_text, True)
-        self._input_purpose_combobox.add_attribute(renderer_text, "text", 0)
+        input_purpose_combobox.pack_start(renderer_text, True)
+        input_purpose_combobox.add_attribute(renderer_text, "text", 0)
         for i, item in enumerate(self._input_purpose_store):
             if self._input_purpose == item[1]:
-                self._input_purpose_combobox.set_active(i)
-        self._input_purpose_combobox.connect(
+                input_purpose_combobox.set_active(i)
+        input_purpose_combobox.connect(
             'changed', self.on_input_purpose_combobox_changed)
 
-        self._main_container.add(self._input_purpose_combobox)
+        add_child(main_container, input_purpose_combobox)
 
         self._input_hints = itb_util.InputHints.NONE
 
-        self._input_hints_checkbuttons: Dict[str, Gtk.CheckButton] = {}
+        input_hints_checkbuttons: Dict[str, Gtk.CheckButton] = {}
         for hint in itb_util.InputHints:
             if hint.name is None or hint.name == 'NONE':
                 continue
-            self._input_hints_checkbuttons[hint.name] = Gtk.CheckButton(
+            input_hints_checkbuttons[hint.name] = Gtk.CheckButton(
                 label=hint.name)
-            self._input_hints_checkbuttons[hint.name].set_margin_start(margin)
-            self._input_hints_checkbuttons[hint.name].set_margin_end(margin)
-            self._input_hints_checkbuttons[hint.name].set_margin_top(margin)
-            self._input_hints_checkbuttons[hint.name].set_margin_bottom(margin)
-            self._input_hints_checkbuttons[hint.name].set_active(False)
-            self._input_hints_checkbuttons[hint.name].set_hexpand(False)
-            self._input_hints_checkbuttons[hint.name].set_vexpand(False)
-            self._input_hints_checkbuttons[hint.name].connect(
-                'clicked', self.on_checkbutton, hint)
-            self._main_container.add(self._input_hints_checkbuttons[hint.name])
+            input_hints_checkbuttons[hint.name].set_margin_start(margin)
+            input_hints_checkbuttons[hint.name].set_margin_end(margin)
+            input_hints_checkbuttons[hint.name].set_margin_top(margin)
+            input_hints_checkbuttons[hint.name].set_margin_bottom(margin)
+            input_hints_checkbuttons[hint.name].set_active(False)
+            input_hints_checkbuttons[hint.name].set_hexpand(False)
+            input_hints_checkbuttons[hint.name].set_vexpand(False)
+            input_hints_checkbuttons[hint.name].connect(
+                'toggled', self.on_checkbutton, hint)
+            add_child(main_container, input_hints_checkbuttons[hint.name])
 
         self._test_entry = Gtk.Entry()
         self._test_entry.set_margin_start(margin)
@@ -119,7 +137,7 @@ class InputPurposeTest(Gtk.Window): # type: ignore
         self._test_entry.set_input_hints(self._input_hints)
         self._test_entry.connect('notify::text', self.on_test_entry)
 
-        self._main_container.add(self._test_entry)
+        add_child(main_container, self._test_entry)
 
         self._test_text_view = Gtk.TextView()
         self._test_text_view.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
@@ -139,23 +157,13 @@ class InputPurposeTest(Gtk.Window): # type: ignore
         self._test_text_view_buffer.connect(
             'changed', self.on_test_text_view_buffer_changed)
 
-        self._main_container.add(self._test_text_view)
+        add_child(main_container, self._test_text_view)
 
-        self.show_all() # pylint: disable=no-member
+        show_all(self)
 
-    def on_delete_event(self, *_args: Any) -> None: # pylint: disable=no-self-use
-        '''The window has been deleted, probably by the window manager.'''
+    def on_close(self, *_args: Any) -> None: # pylint: disable=no-self-use
+        '''Main window has been closed, quit the glib main loop'''
         LOGGER.info('Window deleted by the window manager.')
-        if GLIB_MAIN_LOOP is not None:
-            GLIB_MAIN_LOOP.quit()
-        else:
-            raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
-
-    def on_destroy_event(self, *_args: Any) -> None: # pylint: disable=no-self-use
-        '''
-        The window has been destroyed.
-        '''
-        LOGGER.info('Window has been destroyed.')
         if GLIB_MAIN_LOOP is not None:
             GLIB_MAIN_LOOP.quit()
         else:
@@ -277,6 +285,8 @@ if __name__ == '__main__':
     LOGGER.setLevel(logging.DEBUG)
     LOGGER.addHandler(LOG_HANDLER_STREAM)
     LOGGER.info('********** STARTING **********')
+
+    itb_util.set_program_name('inputpurposetes') # only 15 characters
 
     INPUT_PURPOSE_TEST = InputPurposeTest()
     GLIB_MAIN_LOOP = GLib.MainLoop()

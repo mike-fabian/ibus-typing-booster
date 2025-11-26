@@ -28,6 +28,7 @@ from typing import Iterable
 from typing import Dict
 from typing import Optional
 from typing import Union
+from typing import TYPE_CHECKING
 from types import FrameType
 import sys
 import os
@@ -56,26 +57,28 @@ GLib.set_application_name('Emoji Picker')
 # This makes gnome-shell load the .desktop file when running under Wayland:
 GLib.set_prgname('emoji-picker')
 
-# pylint: disable=wrong-import-position
-require_version('Gdk', '3.0')
-from gi.repository import Gdk # type: ignore
-require_version('Gtk', '3.0')
-from gi.repository import Gtk # type: ignore
+os.environ['ITB_GTK_VERSION'] = '3'
+# pylint: disable=wrong-import-position,wrong-import-order,ungrouped-imports
+from itb_gtk import Gdk, Gtk, GTK_MAJOR, GTK_VERSION # type: ignore
+if TYPE_CHECKING:
+    # These imports are only for type checkers (mypy). They must not be
+    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
+    # pylint: disable=reimported
+    from gi.repository import Gtk, Gdk  # type: ignore
+    # pylint: enable=reimported
 from gi.repository import GObject # type: ignore
-# pylint: enable=wrong-import-position
+# pylint: enable=wrong-import-position,wrong-import-order,ungrouped-imports
 import itb_emoji
 import itb_util
 import itb_pango
 import itb_version
+from g_compat_helpers import (
+    is_wayland,
+)
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
 GLIB_MAIN_LOOP: Optional[GLib.MainLoop] = None
-
-GTK_VERSION = (
-    Gtk.get_major_version(), # pylint: disable=no-value-for-parameter
-    Gtk.get_minor_version(), # pylint: disable=no-value-for-parameter
-    Gtk.get_micro_version()) # pylint: disable=no-value-for-parameter
 
 DOMAINNAME = 'ibus-typing-booster'
 
@@ -278,27 +281,39 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self.set_name('EmojiPicker')
         style_provider = Gtk.CssProvider()
         style_provider.load_from_data(
-            b'''
-            #EmojiPicker {
-            }
-            flowbox {
-            }
-            flowboxchild {
+            f'''
+            #EmojiPicker {{
+            }}
+            flowbox {{
+            }}
+            flowboxchild {{
                 border-style: groove;
                 border-width: 0.05px;
-            }
-            row { /* This is for listbox rows */
+            }}
+            row {{ /* This is for listbox rows */
                 border-style: groove;
                 border-width: 0.05px;
-            }
-            .font {
+            }}
+            .font {{
                 padding: 2px 2px;
-            }
-            ''')
-        Gtk.StyleContext.add_provider_for_screen(
-            Gdk.Screen.get_default(), # pylint: disable=c-extension-no-member
-            style_provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+            }}
+            popover {{
+                border: 0;
+                border-radius: 0;
+                outline: none;
+                background-color: {'transparent' if is_wayland() else '@theme_bg_color'};
+            }}
+            '''.encode('UTF-8'))
+        if GTK_MAJOR >= 4:
+            Gtk.StyleContext.add_provider_for_display(
+                Gdk.Display.get_default(), # pylint: disable=no-value-for-parameter
+                style_provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+        else:
+            Gtk.StyleContext.add_provider_for_screen(
+                Gdk.Screen.get_default(), # pylint: disable=no-value-for-parameter
+                style_provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         self.set_default_size(700, 400)
         self._modal = modal
         self.set_modal(self._modal)
@@ -322,8 +337,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         if fallback is not None:
             self._fallback = bool(fallback)
         self._save_options()
-        self.connect('destroy-event', self.on_destroy_event)
-        self.connect('delete-event', self.on_delete_event)
+        if GTK_MAJOR >= 4:
+            self.connect('close-request', self.on_close)
+        else:
+            self.connect('delete-event', self.on_close)
         self.connect('key-press-event', self.on_main_window_key_press_event)
         self._languages = languages
         self._emoji_unicode_min = emoji_unicode_min
@@ -395,7 +412,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 'clicked', self.on_about_button_clicked)
             self._main_menu_popover_vbox.add(self._main_menu_about_button)
         self._main_menu_quit_button = Gtk.Button(label=_('Quit'))
-        self._main_menu_quit_button.connect('clicked', self.on_delete_event)
+        self._main_menu_quit_button.connect('clicked', self.on_close)
         self._main_menu_popover_vbox.add(self._main_menu_quit_button)
         self._main_menu_popover.add(self._main_menu_popover_vbox)
         self._main_menu_button.connect(
@@ -1257,7 +1274,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             'itb_emoji._match_rapidfuzz() cache info: %s',
             itb_emoji._match_rapidfuzz.cache_info()) # pylint: disable=no-value-for-parameter, protected-access
 
-    def on_delete_event(self, *_args: Any) -> None:
+    def on_close(self, *_args: Any) -> bool:
         ''' The window has been deleted, probably by the window manager. '''
         LOGGER.info('Window deleted by the window manager.')
         self._save_recently_used_emoji()
@@ -1267,17 +1284,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             GLIB_MAIN_LOOP.quit()
         else:
             raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
-
-    def on_destroy_event(self, *_args: Any) -> None:
-        ''' The window has been destroyed. '''
-        LOGGER.info('Window destroyed.')
-        self._save_recently_used_emoji()
-        if _ARGS.debug:
-            self.print_profiling_information()
-        if GLIB_MAIN_LOOP is not None:
-            GLIB_MAIN_LOOP.quit()
-        else:
-            raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
+        # Gtk3 expects a boolean return value, Gtk4 ignores the return value:
+        return False
 
     def on_main_window_key_press_event(
             self,

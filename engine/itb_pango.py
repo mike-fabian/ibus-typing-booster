@@ -24,6 +24,7 @@ from typing import List
 from typing import Tuple
 from typing import Dict
 from typing import Any
+from typing import TYPE_CHECKING
 import sys
 import re
 import subprocess
@@ -32,11 +33,16 @@ import functools
 import logging
 from gi import require_version
 # pylint: disable=wrong-import-position
-require_version('Gtk', '3.0')
-from gi.repository import Gtk # type: ignore
 require_version('Pango', '1.0')
 from gi.repository import Pango # type: ignore
 # pylint: enable=wrong-import-position
+from itb_gtk import Gtk # type: ignore
+if TYPE_CHECKING:
+    # These imports are only for type checkers (mypy). They must not be
+    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
+    # pylint: disable=reimported
+    from gi.repository import Gtk  # type: ignore
+    # pylint: enable=reimported
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
