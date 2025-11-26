@@ -28,6 +28,7 @@ from typing import List
 from typing import Dict
 from typing import Any
 from typing import Optional
+from typing import TYPE_CHECKING
 import argparse
 import os
 import signal
@@ -37,14 +38,10 @@ import unittest
 # pylint: disable=wrong-import-position
 from gi import require_version as gi_require_version
 gi_require_version('GLib', '2.0')
-gi_require_version('Gdk', '3.0')
 gi_require_version('Gio', '2.0')
-gi_require_version('Gtk', '3.0')
 gi_require_version('IBus', '1.0')
 from gi.repository import GLib # type: ignore
-from gi.repository import Gdk # type: ignore
 from gi.repository import Gio # type: ignore
-from gi.repository import Gtk # type: ignore
 from gi.repository import IBus
 # pylint: enable=wrong-import-position
 
@@ -52,6 +49,18 @@ from gi.repository import IBus
 os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
 
 sys.path.insert(0, "../engine")
+if os.environ.get('ITB_GTK_VERSION', None) is None:
+    os.environ['ITB_GTK_VERSION'] = '3'
+# pylint: disable=import-error
+from itb_gtk import Gdk, Gtk # type: ignore
+# pylint: enable=import-error
+if TYPE_CHECKING:
+    # These imports are only for type checkers (mypy). They must not be
+    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
+    # pylint: disable=reimported
+    from gi.repository import Gtk, Gdk  # type: ignore
+    # pylint: enable=reimported
+
 IMPORT_ITB_UTIL_SUCCESSFUL = False
 try:
     import itb_util
@@ -100,7 +109,7 @@ def printerr(sentence: str) -> None:
 @unittest.skipUnless(
     itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
     'Skipping because no en_US dictionary could be found. ')
-class SimpleGtkTestCase(unittest.TestCase):
+class SimpleGtk3TestCase(unittest.TestCase):
     glib_main_loop: Optional[GLib.MainLoop] = None
     ENGINE_PATH = '/com/redhat/IBus/engines/typing_booster/Test/Engine'
     _flag: bool = False
@@ -298,7 +307,7 @@ class SimpleGtkTestCase(unittest.TestCase):
     def __entry_focus_in_event_cb(
             self,
             entry: Gtk.Entry,
-            event: Gdk.EventFocus, # pylint: disable=c-extension-no-member
+            event: 'Gdk.EventFocus', # pylint: disable=c-extension-no-member
     ) -> bool:
         if self.__test_index == len(TestCases['tests']):
             if DONE_EXIT and self.__class__.glib_main_loop is not None:

@@ -26,6 +26,7 @@ from typing import Any
 from typing import Optional
 from typing import Dict
 from typing import List
+from typing import TYPE_CHECKING
 import os
 import glob
 import sys
@@ -41,8 +42,6 @@ from unittest import mock
 from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus
-require_version('Gdk', '3.0')
-from gi.repository import Gdk # type: ignore
 require_version('GLib', '2.0')
 from gi.repository import GLib # type: ignore
 # pylint: enable=wrong-import-position
@@ -73,6 +72,13 @@ os.environ['M17NDIR'] = _TEMPDIR.name
 # pylint: disable=wrong-import-order
 sys.path.insert(0, "../engine")
 # pylint: disable=import-error
+from itb_gtk import Gdk # type: ignore
+if TYPE_CHECKING:
+    # These imports are only for type checkers (mypy). They must not be
+    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
+    # pylint: disable=reimported
+    from gi.repository import Gdk  # type: ignore
+    # pylint: enable=reimported
 import hunspell_table
 import tabsqlitedb
 import itb_util

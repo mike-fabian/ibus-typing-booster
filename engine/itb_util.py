@@ -19,7 +19,6 @@
 '''
 Utility functions used in ibus-typing-booster
 '''
-
 from typing import Any
 from typing import Tuple
 from typing import List
@@ -29,6 +28,7 @@ from typing import Set
 from typing import Optional
 from typing import Union
 from typing import Iterable
+from typing import TYPE_CHECKING
 # pylint: disable=wrong-import-position
 import sys
 if sys.version_info >= (3, 8):
@@ -58,10 +58,14 @@ require_version('IBus', '1.0')
 from gi.repository import IBus
 require_version('GLib', '2.0')
 from gi.repository import GLib # type: ignore
-require_version('Gdk', '3.0')
-from gi.repository import Gdk # type: ignore
-require_version('Gtk', '3.0')
-from gi.repository import Gtk # type: ignore
+from itb_gtk import Gdk, Gtk, GTK_MAJOR, GTK_VERSION # type: ignore
+# For static type checking only: import real GI modules so mypy can resolve
+if TYPE_CHECKING:
+    # These imports are only for type checkers (mypy). They must not be
+    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
+    # pylint: disable=reimported
+    from gi.repository import Gtk, Gdk  # type: ignore
+    # pylint: enable=reimported
 # pylint: enable=wrong-import-position
 
 import itb_version
@@ -6076,18 +6080,124 @@ class KeyvalsToKeycodes:
             LOGGER.warning('Gdk.Display.get_default() returned %s', display)
             self._fallback_to_std_us_layout()
             return
-        keymap = Gdk.Keymap.get_for_display(display)
+        try:
+            if GTK_MAJOR >= 4:
+                self._init_gtk4(display)
+            else:
+                self._init_gtk3(display)
+        except Exception as error: # pylint: disable=broad-exception-caught
+            LOGGER.exception('Exception while initializing keymap: %s', error)
+            self._fallback_to_std_us_layout()
+            return
+        if not self.keyvals_to_keycodes:
+            LOGGER.warning('No keycodes found, falling back to standard US layout')
+            self._fallback_to_std_us_layout()
+
+    def _init_gtk4(self, display: Gdk.Display) -> None:
+        '''Gtk4 implementation (no Gdk.Keymap exists).'''
+        # GTK4: AltGr is represented as ALT_MASK.
+        # The API deliberately abstracts keyboard layout details.
+        # ALT_MASK is the only safe/effective representation of level-3 (AltGr)
+        # translate_keyboard_state() still returns level-3 keyvals when needed.
+        # If you want truly accurate physical-keyboard-layout access on Wayland,
+        # there is no way through GTK.
+        altgr_mods = Gdk.ModifierType.ALT_MASK # pylint: disable=no-member
+        # Keycodes 1-7 were traditionally reserved for internal X
+        # server use (e.g., fake keys for pointer buttons).  Keycodes
+        # 8-255 were for physical keys
+        for keycode in range(8, 256):
+            # display.map_keycode(...) may return:
+            #  - upstream GTK4: a list of Gdk.KeymapKey objects
+            #  - compatibility wrapper (Fedora/RHEL): (success, keys, keyvals)
+            #  - unexpected types: handle defensively
+            result = display.map_keycode(keycode)
+            try:
+                result = display.map_keycode(keycode)
+            except Exception as error: # pylint: disable=broad-exception-caught
+                LOGGER.debug('display.map_keycode(%d) raised: %s', keycode, error)
+                continue
+            keys_list: List[Gdk.KeymapKey] = []
+            keyvals_from_result: Optional[List[int]] = None
+            # upstream GTK4: result is a list of Gdk.KeymapKey-like objects
+            if isinstance(result, list):
+                keys_list = result
+                # also derive keyvals if available via attribute
+                keyvals_from_result = None
+            elif isinstance(result, tuple):
+                # compatibility tuple: (success, keys, keyvals)
+                if len(result) == 3:
+                    success, keys_obj, keyvals_obj = result
+                    if not success:
+                        continue
+                    keys_list = list(keys_obj) if keys_obj is not None else []
+                    keyvals_from_result = (
+                        list(keyvals_obj) if keyvals_obj is not None else None)
+                else:
+                    LOGGER.debug(
+                        'display.map_keycode returned unexpected tuple shape: %r',
+                        result)
+                    continue
+            else:
+                LOGGER.debug(
+                    'display.map_keycode returned unexpected type %r',
+                    type(result))
+                continue
+            if not keys_list and not keyvals_from_result:
+                continue
+            # Base keyvals: try to get from objects or from keyvals_from_result
+            base_keyvals: Set[int] = set()
+            # If we have explicit keyvals provided by the compat tuple, use them
+            if keyvals_from_result:
+                for kv in keyvals_from_result:
+                    if kv:
+                        base_keyvals.add(int(kv))
+            else:
+                # Extract keyval attribute from each key object if present
+                for k in keys_list:
+                    if hasattr(k, 'keyval'):
+                        try:
+                            kv = int(getattr(k, 'keyval'))
+                        except Exception: # pylint: disable=broad-exception-caught
+                            continue
+                        if kv:
+                            base_keyvals.add(kv)
+            if not base_keyvals: # Nothing meaningful for this keycode
+                continue
+            all_keyvals: Set[int] = set(base_keyvals)
+            try:
+                ok, keyval, *_ = display.translate_keyboard_state(
+                    keycode, Gdk.ModifierType.SHIFT_MASK, 0)
+            except Exception: # pylint: disable=broad-exception-caught
+                ok = False
+                keyval = 0
+            if ok and keyval:
+                all_keyvals.add(int(keyval))
+            try:
+                ok, keyval, *_ = display.translate_keyboard_state(
+                    keycode, altgr_mods, 0)
+            except Exception: # pylint: disable=broad-exception-caught
+                ok = False
+                keyval = 0
+            if ok and keyval:
+                all_keyvals.add(int(keyval))
+            for keyval in all_keyvals:
+                if keyval:
+                    self.keyvals_to_keycodes.setdefault(
+                        keyval, []).append(keycode)
+
+    def _init_gtk3(self, display: Gdk.Display) -> None:
+        '''Gtk3 implementation using Gdk.Keymap.'''
+        keymap = Gdk.Keymap.get_for_display(display) # pylint: disable=c-extension-no-member
         if not keymap:
             LOGGER.warning('Could not get keymap')
-            self._fallback_to_std_us_layout()
             return
         # Checking AltGr state should not just check for Mod5,
         # that works only on Legacy X11 systems. Modern X11 and
         # Wayland systems use Mod1 + Level3 (1 << 16) instead:
         altgr_mods = (
-            Gdk.ModifierType.MOD1_MASK |
+            Gdk.ModifierType.MOD1_MASK | # pylint: disable=no-member
             Gdk.ModifierType(1 << 16) |
-            Gdk.ModifierType.MOD5_MASK
+            Gdk.ModifierType.MOD5_MASK   # pylint: disable=no-member
         )
         # Keycodes 1-7 were traditionally reserved for internal X
         # server use (e.g., fake keys for pointer buttons).  Keycodes
@@ -6097,7 +6207,7 @@ class KeyvalsToKeycodes:
                 keycode)
             if not success:
                 continue
-            all_keyvals = set(base_keyvals)
+            all_keyvals: Set[int] = set(base_keyvals or [])
             (success,
              keyval,
              _effective_group,
@@ -6118,9 +6228,6 @@ class KeyvalsToKeycodes:
                 if keyval:
                     self.keyvals_to_keycodes.setdefault(
                         keyval, []).append(keycode)
-        if not self.keyvals_to_keycodes:
-            LOGGER.warning('No keycodes found, falling back to standard US layout')
-            self._fallback_to_std_us_layout()
 
     def _fallback_to_std_us_layout(self) -> None:
         """Fallback mapping for when keycode detection fails"""
@@ -6549,22 +6656,10 @@ class HotKeys:
     def __str__(self) -> str:
         return repr(self._hotkeys)
 
-def run_message_dialog(
-        message: str,
-        message_type: Gtk.MessageType = Gtk.MessageType.INFO) -> None:
-    '''Run a dialog to show an error or warning message'''
-    dialog = Gtk.MessageDialog(
-        flags=Gtk.DialogFlags.MODAL,
-        message_type=message_type,
-        buttons=Gtk.ButtonsType.OK,
-        message_format=message)
-    dialog.run()
-    dialog.destroy()
-
-class ItbKeyInputDialog(Gtk.MessageDialog): # type: ignore
+class ItbKeyInputDialog:
     '''
-    A dialog to enter a key or a key combination to be used as a
-    key binding for a command.
+    Unified Gtk3/Gtk4 dialog for capturing a single key or key combination.
+    API-compatible with the original Gtk3 MessageDialog version.
     '''
     def __init__(
             self,
@@ -6572,52 +6667,197 @@ class ItbKeyInputDialog(Gtk.MessageDialog): # type: ignore
             # requesting that the user types a key to be used as a new
             # key binding for a command.
             title: str = _('Key input'),
-            parent: Gtk.Window = None) -> None:
-        Gtk.MessageDialog.__init__(
-            self,
+            parent: Gtk.Window = None,
+            parent_popover: Gtk.Popover = None) -> None:
+        self.e: Optional[Tuple[int, int]] = None
+        self._response: Optional[Gtk.ResponseType] = None
+        if parent_popover:
+            parent_popover.popdown()
+        if GTK_MAJOR >= 4:
+            self._build_gtk4(title, parent)
+            return
+        self._build_gtk3(title,parent)
+
+    def _build_gtk3(self, title: str, parent: Gtk.Window) -> None:
+        '''Build Gtk3 version of the dialog'''
+        self.dialog = Gtk.MessageDialog(
+            parent=parent,
             title=title,
-            parent=parent)
-        self.add_button(_('Cancel'), Gtk.ResponseType.CANCEL)
-        self.set_modal(True)
-        self.set_markup(
+            message_type=Gtk.MessageType.INFO,
+            buttons=Gtk.ButtonsType.NONE)
+        self.dialog.add_button(_('Cancel'), Gtk.ResponseType.CANCEL)
+        self.dialog.set_modal(True)
+        self.dialog.set_markup(
             '<big><b>%s</b></big>' # pylint: disable=consider-using-f-string
             # Translators: This is from the dialog to enter a key or a
             # key combination to be used as a key binding for a
             # command.
             % _('Please press a key (or a key combination)'))
-        self.format_secondary_text(
+        self.dialog.format_secondary_text(
             # Translators: This is from the dialog to enter a key or a
             # key combination to be used as a key binding for a
             # command.
             _('The dialog will be closed when the key is released'))
-        self.connect('key_press_event', self.__class__.on_key_press_event)
-        self.connect('key_release_event', self.__class__.on_key_release_event)
+        self.dialog.connect('key-press-event', self._on_key_press_gtk3)
+        self.dialog.connect('key-release-event', self._on_key_release_gtk3)
         if parent:
-            self.set_transient_for(parent.get_toplevel())
-        self.show()
+            self.dialog.set_transient_for(parent)
+        self.dialog.show()
 
-    @staticmethod
-    def on_key_press_event(
-            widget: Gtk.MessageDialog, event: Gdk.EventKey) -> bool:
+    def _on_key_press_gtk3(
+        self,
+        _widget: Gtk.Widget,
+        event: 'Gdk.EventKey', # pylint: disable=c-extension-no-member
+    ) -> bool:
         '''Called when a key is pressed'''
-        widget.e = (event.keyval,
-                    event.get_state() & KEYBINDING_STATE_MASK)
+        self.e = (event.keyval,
+                  event.get_state() & KEYBINDING_STATE_MASK)
         return True
 
-    @staticmethod
-    def on_key_release_event(
-            widget: Gtk.MessageDialog, _event: Gdk.EventKey) -> bool:
+    def _on_key_release_gtk3(
+        self,
+        _widget: Gtk.Widget,
+        _event: 'Gdk.EventKey', # pylint: disable=c-extension-no-member
+    ) -> bool:
         '''Called when a key is released'''
-        widget.response(Gtk.ResponseType.OK)
+        self.dialog.response(Gtk.ResponseType.OK)
         return True
+
+    def _build_gtk4(self, title: str, parent: Gtk.Window) -> None:
+        self.dialog = Gtk.Dialog(
+            title=title,
+            transient_for=parent,
+            modal=True)
+        self.dialog.add_button(_("Cancel"), Gtk.ResponseType.CANCEL)
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        box.set_margin_top(12)
+        box.set_margin_bottom(12)
+        box.set_margin_start(12)
+        box.set_margin_end(12)
+        self.dialog.set_child(box)
+        title_label = Gtk.Label()
+        title_label.set_markup(
+            '<big><b>%s</b></big>'  # pylint: disable=consider-using-f-string
+            # Translators: This is from the dialog to enter a key or a
+            # key combination to be used as a key binding for a
+            # command.
+            %_('Please press a key (or a key combination)'))
+        title_label.set_xalign(0)
+        box.append(title_label)
+        sec_label = Gtk.Label(label=_(
+            # Translators: This is from the dialog to enter a key or a
+            # key combination to be used as a key binding for a
+            # command.
+            'The dialog will be closed when the key is released'))
+        sec_label.set_xalign(0)
+        sec_label.set_wrap(True)
+        box.append(sec_label)
+        button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+        button_box.set_halign(Gtk.Align.END)
+        button_box.set_margin_top(12)
+        box.append(button_box)
+        cancel_button = Gtk.Button(label=_('Cancel'))
+        button_box.append(cancel_button)
+        controller = Gtk.EventControllerKey()
+        controller.connect('key-pressed', self._on_key_press_gtk4)
+        controller.connect('key-released', self._on_key_release_gtk4)
+        self.dialog.add_controller(controller)
+        self.dialog.set_focusable(True)
+
+        def on_dialog_mapped(dialog: Gtk.Dialog) -> None:
+            '''Try to grab pointer and input'''
+            dialog.grab_focus()
+            default = dialog.get_default_widget()
+            if default:
+                default.grab_focus()
+
+        def on_response(dialog: Gtk.Dialog, response_id: Gtk.ResponseType) -> None:
+            '''Handle responses (cancel button, dialog close)'''
+            self._response = response_id
+            try:
+                dialog.hide()
+            except Exception: # pylint: disable=broad-exception-caught
+                pass
+
+        def on_cancel_clicked(_button: Gtk.Button) -> None:
+            '''Called when the cancel button is clicked'''
+            self._response = Gtk.ResponseType.CANCEL
+            try:
+                self.dialog.hide()
+            except Exception: # pylint: disable=broad-exception-caught
+                pass
+
+        cancel_button.connect('clicked', on_cancel_clicked)
+        self.dialog.connect('response', on_response)
+        self.dialog.connect('map', on_dialog_mapped)
+        self.dialog.present()
+
+    def _on_key_press_gtk4(
+            self,
+            _controller: 'Gtk.EventControllerKey',
+            keyval: int,
+            _keycode: int,
+            state: int,
+    ) -> bool:
+        '''Called when a key is pressed'''
+        self.e = (keyval, state & KEYBINDING_STATE_MASK)
+        return True
+
+    def _on_key_release_gtk4(
+            self,
+            _controller: 'Gtk.EventControllerKey',
+            _keyval: int,
+            _keycode: int,
+            _state: int,
+    ) -> bool:
+        '''Called when a key is released'''
+        self._response = Gtk.ResponseType.OK
+        try:
+            self.dialog.hide()
+        except Exception: # pylint: disable=broad-exception-caught
+            pass
+        return True
+
+    def run(self) -> int:
+        '''Gtk4 run() emulation'''
+        if GTK_MAJOR < 4:
+            return int(self.dialog.run())
+
+        loop = GLib.MainLoop() # Manual mainloop until _response is set
+
+        def _quit_when_ready() -> bool:
+            if self._response is not None:
+                loop.quit()
+                return False
+            return True
+
+        GLib.timeout_add(20, _quit_when_ready)
+        loop.run()
+
+        if self._response is None:
+            return int(Gtk.ResponseType.CANCEL)
+        return int(self._response)
+
+    def destroy(self) -> None:
+        '''Common to Gtk3 and Gtk4'''
+        try:
+            self.dialog.destroy()
+        except Exception: # pylint: disable=broad-exception-caught
+            pass
 
 class ItbAboutDialog(Gtk.AboutDialog): # type: ignore
     '''
     The “About” dialog for Typing Booster
     '''
-    def  __init__(self, parent: Gtk.Window = None) -> None:
-        Gtk.AboutDialog.__init__(self, parent=parent)
-        self.set_modal(True)
+    def  __init__(self, parent: Optional[Gtk.Window] = None) -> None:
+        if GTK_MAJOR >= 4:
+            Gtk.AboutDialog.__init__(self)
+        else:
+            Gtk.AboutDialog.__init__(self, parent=parent)
+        if parent is not None:
+            self.set_transient_for(parent)
+            self.set_modal(True)
+            self.set_destroy_with_parent(True)
         # An empty string in aboutdialog.set_logo_icon_name('')
         # prevents an ugly default icon to be shown. We don’t yet
         # have nice icons for ibus-typing-booster.
@@ -6626,11 +6866,13 @@ class ItbAboutDialog(Gtk.AboutDialog): # type: ignore
             f'🚀 ibus-typing-booster {itb_version.get_version()}')
         self.set_program_name(
             '🚀 ibus-typing-booster')
-        self.set_version(itb_version.get_version())
+        self.set_version(
+            f'ibus-typing-booster-{itb_version.get_version()}'
+            f', Gtk {".".join((str(i) for i in GTK_VERSION))}')
         self.set_comments(
             _('A completion input method to speedup typing.'))
         self.set_copyright(
-            'Copyright © 2012–2023 Mike FABIAN')
+            'Copyright © 2012–2025 Mike FABIAN')
         self.set_authors([
             'Mike FABIAN <maiku.fabian@gmail.com>',
             'Anish Patil <anish.developer@gmail.com>',
@@ -6664,15 +6906,14 @@ class ItbAboutDialog(Gtk.AboutDialog): # type: ignore
         self.set_wrap_license(True)
         # overrides the above .set_license()
         self.set_license_type(Gtk.License.GPL_3_0)
-        self.connect('response', self.on_close_aboutdialog)
-        if parent:
-            self.set_transient_for(parent.get_toplevel())
+        if GTK_MAJOR >= 4:
+            self.connect('close-request', self.on_close_aboutdialog)
+        else:
+            self.connect('response', self.on_close_aboutdialog)
         self.show()
+        self.present()
 
-    def on_close_aboutdialog( # pylint: disable=no-self-use
-            self,
-            _about_dialog: Gtk.Dialog,
-            _response: Gtk.ResponseType) -> None:
+    def on_close_aboutdialog(self, *_args: Any) -> None:
         '''
         The “About” dialog has been closed by the user
 

@@ -20,20 +20,30 @@
 '''
 This file implements test cases for finding key codes for key values
 '''
-
+from typing import TYPE_CHECKING
 import sys
+import logging
 import unittest
+
+LOGGER = logging.getLogger('ibus-typing-booster')
 
 # pylint: disable=wrong-import-position
 from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus
-require_version('Gdk', '3.0')
-from gi.repository import Gdk # type: ignore
 # pylint: enable=wrong-import-position
 
 sys.path.insert(0, "../engine")
-import itb_util # pylint: disable=import-error
+# pylint: disable=import-error, wrong-import-position
+from itb_gtk import Gdk # type: ignore
+if TYPE_CHECKING:
+    # These imports are only for type checkers (mypy). They must not be
+    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
+    # pylint: disable=reimported
+    from gi.repository import Gdk  # type: ignore
+    # pylint: enable=reimported
+import itb_util
+# pylint: enable=import-error, wrong-import-position
 sys.path.pop(0)
 
 # pylint: disable=missing-class-docstring
@@ -89,4 +99,7 @@ class KeyvalsToKeycodesTestCase(unittest.TestCase):
         print(self._keyvals_to_keycodes)
 
 if __name__ == '__main__':
+    LOG_HANDLER = logging.StreamHandler(stream=sys.stderr)
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(LOG_HANDLER)
     unittest.main()

@@ -26,6 +26,7 @@ from typing import Set
 from typing import List
 from typing import Optional
 from typing import Callable
+from typing import TYPE_CHECKING
 # pylint: disable=wrong-import-position
 import sys
 if sys.version_info >= (3, 8):
@@ -46,14 +47,25 @@ from gi import require_version
 # pylint: disable=wrong-import-position
 require_version('GLib', '2.0')
 require_version('Gio', '2.0')
-require_version('Gtk', '3.0')
 from gi.repository import GLib # type: ignore
 from gi.repository import Gio # type: ignore
-from gi.repository import Gtk # type: ignore
 # pylint: enable=wrong-import-position
 from i18n import _, init as i18n_init
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'engine'))
-import itb_util # pylint: disable=import-error, wrong-import-order
+# pylint: disable=import-error, wrong-import-order
+import itb_util
+from itb_gtk import Gtk # type: ignore
+if TYPE_CHECKING:
+    # These imports are only for type checkers (mypy). They must not be
+    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
+    # pylint: disable=reimported
+    from gi.repository import Gtk # type: ignore
+    # pylint: enable=reimported
+from g_compat_helpers import (
+    add_child,
+    show_all,
+)
+# pylint: enable=import-error, wrong-import-order
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -679,7 +691,7 @@ def download_dictionaries_with_dialog(
     vbox = dialog.get_content_area()
     top_label = Gtk.Label(label='')
     top_label.set_xalign(0)
-    vbox.pack_start(top_label, False, False, 6)
+    add_child(vbox, top_label)
     textview = Gtk.TextView()
     textview.set_editable(False)
     textview.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
@@ -687,12 +699,12 @@ def download_dictionaries_with_dialog(
     scrolled = Gtk.ScrolledWindow()
     scrolled.set_vexpand(True)
     scrolled.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-    scrolled.add(textview)
-    vbox.pack_start(scrolled, True, True, 6)
+    add_child(scrolled, textview)
+    add_child(vbox, scrolled)
     progressbar = Gtk.ProgressBar()
     progressbar.set_show_text(True)
     progressbar.set_text('0%')
-    vbox.pack_start(progressbar, False, False, 6)
+    add_child(vbox, progressbar)
     action_area = Gtk.Box()
     action_area.set_orientation(Gtk.Orientation.HORIZONTAL)
     action_area.set_halign(Gtk.Align.END)
@@ -701,13 +713,13 @@ def download_dictionaries_with_dialog(
     action_area.set_hexpand(True)
     action_area.set_vexpand(False)
     action_area.set_spacing(0)
-    vbox.pack_start(action_area, False, False, 6)
+    add_child(vbox, action_area)
     cancel_button = Gtk.Button.new_with_mnemonic(_('_Cancel'))
-    action_area.pack_end(cancel_button, False, False, 6)
+    add_child(action_area, cancel_button)
     close_button = Gtk.Button.new_with_mnemonic(_('_Close'))
-    action_area.pack_end(close_button, False, False, 6)
-    dialog.show_all()
-    close_button.hide()
+    add_child(action_area, close_button)
+    show_all(dialog)
+    close_button.set_visible(False)
 
     url_index: int = 0
     url_count: int = 2 * len(languages)
@@ -751,16 +763,16 @@ def download_dictionaries_with_dialog(
         else: # 'failed'
             end = textbuffer.get_end_iter()
             textbuffer.insert(end, '❌ There were some failures.\n')
-        cancel_button.hide()
-        close_button.show()
+        cancel_button.set_visible(False)
+        close_button.set_visible(True)
         if on_complete:
             on_complete(status)
 
     def on_cancel(_button: Gtk.Button) -> None:
         '''Cancel button clicked'''
         cancellable.cancel()
-        cancel_button.hide()
-        close_button.show()
+        cancel_button.set_visible(False)
+        close_button.set_visible(True)
 
     def on_close(_button: Gtk.Button) -> None:
         '''Close button clicked'''

@@ -9,6 +9,7 @@ engine/itb_emoji.py
 engine/itb_util.py
 engine/main.py
 engine/tabsqlitedb.py
+engine/g_compat_helpers.py
 setup/ibus-setup-typing-booster.desktop.in.in
 setup/main.py
 setup/pkginstall.py

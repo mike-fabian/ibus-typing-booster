@@ -41,6 +41,7 @@ engine_table_PYTHON = \
 	hunspell_table.py \
 	hunspell_suggest.py \
 	tabsqlitedb.py \
+	itb_gtk.py \
 	itb_util.py \
 	itb_emoji.py \
 	itb_nltk.py \
@@ -54,6 +55,7 @@ engine_table_PYTHON = \
 	tabstatistics.py \
 	get_clipboard_gtk4.py \
 	ollama_pull.py \
+	g_compat_helpers.py \
 	$(NULL)
 engine_table_DATA = \
 	$(NULL)
