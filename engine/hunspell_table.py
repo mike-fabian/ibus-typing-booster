@@ -6773,22 +6773,12 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.warning(
                 'keymap %s not in itb_util.AVAILABLE_IBUS_KEYMAPS=%s',
                 keymap, repr(itb_util.AVAILABLE_IBUS_KEYMAPS))
-        # Try the standard constructor (works on Fedora, fails on Alpine)
         try:
             return IBus.Keymap(keymap)
-        except (TypeError, AttributeError) as error:
-            LOGGER.warning(
-                'IBus.Keymap("%s") failed: %s: %s. '
-                'Falling back to IBus.Keymap.new("%s").',
-                keymap, error.__class__.__name__, error, keymap)
-        # Always deprecated, but necessary for Alpine Linux
-        try:
-            return IBus.Keymap.new(keymap)
-        except (TypeError, AttributeError) as error:
-            LOGGER.exception(
-                'Exception in IBus.Keymap.new("%s"): %s: %s',
+        except Exception as error: # pylint: disable=broad-except
+            LOGGER.error(
+                'Exception in IBus.Keymap("%s"): %s: %s. Returning None.',
                 keymap, error.__class__.__name__, error)
-            LOGGER.error('Returning None')
             return None
 
     def set_ibus_keymap(
