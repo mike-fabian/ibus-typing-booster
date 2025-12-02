@@ -174,7 +174,7 @@ class SimpleGtkTestCase(unittest.TestCase):
             self._gsettings.set_boolean('inputmode', True)
             self._gsettings.set_int('inlinecompletion', 0)
             self._gsettings.set_int('autoselectcandidate', 0)
-            self._gsettings.set_int('candidatesdelaymilliseconds', 0)
+            self._gsettings.set_uint('candidatesdelaymilliseconds', 0)
         self.__class__.glib_main_loop = GLib.MainLoop()
         Gtk.init() # pylint: disable=no-value-for-parameter
 
