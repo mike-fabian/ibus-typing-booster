@@ -137,8 +137,8 @@ def get_font_version(font_file: str) -> str:
 
     Examples:
 
-    >>> get_font_version('/usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf')
-    'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced'
+    >>> get_font_version('/usr/share/fonts/google-noto-color-emoji-fonts/Noto-COLRv1.ttf')
+    'Version 2.048;GOOG;noto-emoji:20250612:c7a259fc809502bcb45d983f6a78f94dfceb1fbe'
 
     >>> get_font_version('/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf')
     'Version 2.37'
@@ -174,9 +174,6 @@ def get_font_tables(font_file: str) -> List[str]:
     (Only those which are interesting for rendering emoji)
 
     Examples:
-
-    >>> get_font_tables('/usr/share/fonts/google-noto-color-emoji-fonts/NotoColorEmoji.ttf')
-    ['CBDT']
 
     >>> get_font_tables('/home/mfabian/.fonts/Noto-COLRv1.ttf')
     ['COLR']
@@ -288,7 +285,7 @@ def get_fonts_used_for_text(
     >>> fonts_used[0][1]['lang']
     'und-zsye'
     >>> fonts_used[0][1]['version']
-    'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced'
+    'Version 2.048;GOOG;noto-emoji:20250612:c7a259fc809502bcb45d983f6a78f94dfceb1fbe'
     >>> fonts_used[0][1]['opentype-tables']
     ['COLR']
     >>> fonts_used[1][0]
@@ -366,7 +363,7 @@ def get_fonts_used_for_text(
     >>> fonts_used[1][1]['lang']
     'und-zsye'
     >>> fonts_used[1][1]['version']
-    'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced'
+    'Version 2.048;GOOG;noto-emoji:20250612:c7a259fc809502bcb45d983f6a78f94dfceb1fbe'
     >>> fonts_used[1][1]['opentype-tables']
     ['COLR']
 
@@ -384,7 +381,7 @@ def get_fonts_used_for_text(
     >>> fonts_used[0][1]['lang']
     'und-zsye'
     >>> fonts_used[0][1]['version']
-    'Version 2.047;GOOG;noto-emoji:20240827:6c211821b8442ab3683a502f9a79b2034293fced'
+    'Version 2.048;GOOG;noto-emoji:20250612:c7a259fc809502bcb45d983f6a78f94dfceb1fbe'
     >>> fonts_used[0][1]['opentype-tables']
     ['COLR']
     '''
