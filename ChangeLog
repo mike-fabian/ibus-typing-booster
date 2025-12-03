@@ -1,4 +1,14 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 13 Dec 2025 Release 2.29.0
+* find_hunspell_dictionary(language: str): Never fall back to en if language is not English
+* emoji_picker.py: improve selecting a label while search is still running
+* Fix minus sign on buttons in adding autosettings and keybindings
+* Fixes for the Gtk3/Gtk4 port needed for RHEL9 and Ubuntu ≤ 22.04: Fall back to Gtk3 on these old systems
+* setup/dictionary_download.py: Fix dictionary download for Ubuntu 24.04.3 LTS
+* Port setup tool, emoji_picker, and everything else exept test_0_gtk.py to Gtk4. Gtk4 is used by default if available on the system, if not Gtk3 is used as a fallback. (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/848)
+* Translation update from Weblate (cz 100%, hu 40.4%, it 99.5%, ka 100%, ko 100%, sv 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 22 Nov 2025 Release 2.28.6
 * Improve workaround for LibreOffice autocorrection (Related:  https://github.com/mike-fabian/ibus-typing-booster/issues/834)
 * Refactor: Add a ClientInfo class to store the client id (improve readability and speed)
