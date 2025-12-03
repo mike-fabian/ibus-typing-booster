@@ -47,6 +47,26 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.28.7" date="2025-12-06" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.28.7</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            setup/dictionary_download.py: Fix dictionary download for Ubuntu 24.04.3 LTS
+          </li>
+          <li>
+            Port setup tool and most other stuff to Gtk4 (except
+            emoji_picker.py and test_0_gtk.py). Gtk4 is used by
+            default if available on the system, if not Gtk3 is used as
+            a fallback.
+          </li>
+          <li>
+            Translation update from Weblate (cz 100%, hu 40.4%, it 99.6%, ka 100%, ko 100%, sv 100%)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.28.6" date="2025-11-22" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.28.6</url>
       <description>
