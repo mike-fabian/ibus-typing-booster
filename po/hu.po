@@ -6,22 +6,23 @@
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 # Balázs Meskó <meskobalazs@mailbox.org>, 2020.
 # Bendegúz Gyönki <gyonkibendeguz@gmail.com>, 2020.
+# Nimrod Turi <nimrodturi@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-11-24 15:01+0100\n"
-"PO-Revision-Date: 2020-07-08 15:27+0000\n"
-"Last-Translator: Bendegúz Gyönki <gyonkibendeguz@gmail.com>\n"
-"Language-Team: Hungarian <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/hu/>\n"
+"PO-Revision-Date: 2025-12-03 02:06+0000\n"
+"Last-Translator: Nimrod Turi <nimrodturi@gmail.com>\n"
+"Language-Team: Hungarian <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:268
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -104,10 +105,8 @@ msgid "Unicode Version:"
 msgstr "Unicode verzió:"
 
 #: engine/emoji_picker.py:787
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji Version:"
-msgstr "Unicode verzió:"
+msgstr "Emodzsi verzió:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
