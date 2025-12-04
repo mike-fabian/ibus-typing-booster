@@ -22,6 +22,7 @@ This file implements test cases for finding key codes for key values
 '''
 
 import sys
+import os
 import logging
 import unittest
 
@@ -45,7 +46,8 @@ itb_emoji.DOMAINNAME = ''
 # pylint: disable=line-too-long
 
 @unittest.skipIf(
-    '..' not in itb_emoji.find_cldr_annotation_path('en'),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), '../data/annotations'))
+    != os.path.abspath(os.path.dirname(itb_emoji.find_cldr_annotation_path('en'))),
     f'Using external emoji annotations: '
     f'{itb_emoji.find_cldr_annotation_path("en")} '
     f'Testing with older emoji annotations instead '
