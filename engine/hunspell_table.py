@@ -48,7 +48,7 @@ import logging
 import threading
 import subprocess
 import textwrap
-from gettext import dgettext
+import gettext
 from dataclasses import dataclass, field
 # pylint: disable=wrong-import-position
 from gi import require_version
@@ -116,8 +116,18 @@ __all__ = (
     "TypingBoosterEngine",
 )
 
-_: Callable[[str], str] = lambda a: dgettext("ibus-typing-booster", a)
-N_: Callable[[str], str] = lambda a: a
+DOMAINNAME = 'ibus-typing-booster'
+
+def _(text: str) -> str:
+    '''Gettext translation function.'''
+    return gettext.dgettext(DOMAINNAME, text)
+
+def N_(text: str) -> str: # pylint: disable=invalid-name
+    '''Mark string for translation without actually translating.
+
+    Used by gettext tools to extract strings that need translation.
+    '''
+    return text
 
 # ☐ U+2610 BALLOT BOX
 MODE_OFF_SYMBOL = '☐'
@@ -1562,7 +1572,7 @@ class TypingBoosterEngine(IBus.Engine):
                     and not self._temporary_word_predictions
                     and not self._emoji_predictions
                     and not self._temporary_emoji_predictions
-                    and not self._typed_string[0] in self._emoji_trigger_characters)
+                    and self._typed_string[0] not in self._emoji_trigger_characters)
 
     def is_empty(self) -> bool:
         '''Checks whether the preëdit is empty
@@ -8295,7 +8305,7 @@ class TypingBoosterEngine(IBus.Engine):
              and self._current_imes[0] != 'ja-anthy')
              or not self._lookup_table.get_number_of_candidates()):
             return False
-        dummy = self._arrow_down()
+        _dummy = self._arrow_down()
         self._update_lookup_table_and_aux()
         return True
 
@@ -8309,7 +8319,7 @@ class TypingBoosterEngine(IBus.Engine):
              and self._current_imes[0] != 'ja-anthy')
             or not self._lookup_table.get_number_of_candidates()):
             return False
-        dummy = self._arrow_up()
+        _dummy = self._arrow_up()
         self._update_lookup_table_and_aux()
         return True
 
@@ -8323,7 +8333,7 @@ class TypingBoosterEngine(IBus.Engine):
              and self._current_imes[0] != 'ja-anthy')
             or not self._lookup_table.get_number_of_candidates()):
             return False
-        dummy = self._page_down()
+        _dummy = self._page_down()
         self._update_lookup_table_and_aux()
         return True
 
@@ -8337,7 +8347,7 @@ class TypingBoosterEngine(IBus.Engine):
              and self._current_imes[0] != 'ja-anthy')
             or not self._lookup_table.get_number_of_candidates()):
             return False
-        dummy = self._page_up()
+        _dummy = self._page_up()
         self._update_lookup_table_and_aux()
         return True
 
@@ -9158,7 +9168,7 @@ class TypingBoosterEngine(IBus.Engine):
             return False
         if (not self._m17n_trans_parts.candidates
             and key.val in self._commit_trigger_keys
-            and not self._current_imes[0] in ('ja-anthy',)
+            and self._current_imes[0] not in ('ja-anthy',)
             and key.val == IBus.KEY_space
             and key.msymbol == ' '):
             # I could make BackSpace, Delete, Left, and Right reopen
@@ -9230,7 +9240,7 @@ class TypingBoosterEngine(IBus.Engine):
         if (self._lookup_table.state == LookupTableState.M17N_CANDIDATES
             and self._lookup_table.is_cursor_visible()
             and not self._is_candidate_auto_selected
-            and not key.val in (IBus.KEY_BackSpace,)):
+            and key.val not in (IBus.KEY_BackSpace,)):
             if self._debug_level > 1:
                 LOGGER.debug('m17n candidate manually selected')
             if (self._current_imes[0] == 'ja-anthy'
@@ -9332,7 +9342,7 @@ class TypingBoosterEngine(IBus.Engine):
             and not (self._current_imes[0] in ('t-lsymbol',)
                      and self._typed_string[
                          :self._typed_string_cursor][-1:] == ['/'])
-            and not key.val in (IBus.KEY_BackSpace,)):
+            and key.val not in (IBus.KEY_BackSpace,)):
             # There are m17n candidates but nothing is selected in
             # the lookup table or the lookup table is not shown at all
             # (because no key was pressed to enable a lookup table).

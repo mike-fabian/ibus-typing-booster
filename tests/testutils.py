@@ -33,18 +33,11 @@ import itb_util
 sys.path.pop(0)
 
 IMPORT_ENCHANT_SUCCESSFUL = False
-IMPORT_HUNSPELL_SUCCESSFUL = False
 try:
     import enchant # type: ignore
     IMPORT_ENCHANT_SUCCESSFUL = True
 except (ImportError,):
-    try:
-        # pylint: disable=unused-import
-        import hunspell # type: ignore
-        # pylint: enable=unused-import
-        IMPORT_HUNSPELL_SUCCESSFUL = True
-    except (ImportError,):
-        pass
+    pass
 
 IMPORT_LIBVOIKKO_SUCCESSFUL = False
 try:

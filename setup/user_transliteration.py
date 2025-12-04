@@ -101,7 +101,7 @@ class LatinConvert:
         try:
             aff_buffer = codecs.open(
                 self.aff_file, mode='r', encoding='ISO-8859-1').read().replace('\r\n', '\n')
-        except:
+        except Exception:
             import traceback
             traceback.print_exc()
         if aff_buffer:
@@ -116,14 +116,14 @@ class LatinConvert:
         try:
             dict_buffer = codecs.open(
                 self.hunspell_dict, encoding=encoding).read().replace('\r\n', '\n')
-        except:
+        except Exception:
             print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, fall back to ISO-8859-1." %{
                 'dic': self.hunspell_dict, 'enc': encoding})
             encoding = 'ISO-8859-1'
             try:
                 dict_buffer = codecs.open(
                     self.hunspell_dict, encoding=encoding).read().replace('\r\n', '\n')
-            except:
+            except Exception:
                 print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, giving up." %{
                     'dic': self.hunspell_dict, 'enc': encoding})
         if dict_buffer[0] == '\ufeff':
@@ -134,14 +134,14 @@ class LatinConvert:
         buff = self.read_hunspell_dict()
         word_pattern = re.compile(r'^[^\s]+.*?(?=/|$)', re.MULTILINE|re.UNICODE)
         words: List[str] = word_pattern.findall(buff)
-        nwords = int(words[0])
+        _nwords = int(words[0])
         words = words[1:]
         return words
 
     def trans_word(self, word: str) -> str:
         try:
             return str(self.trans.transliterate(word)[0])
-        except:
+        except Exception:
             print("Error while transliteration")
             return word
 
@@ -178,7 +178,7 @@ class LatinConvert:
                 words))
             conn.executemany(sql,sqlargs)
             conn.commit()
-        except:
+        except Exception:
             import traceback
             traceback.print_exc()
 

@@ -28,7 +28,6 @@ from typing import Iterable
 from typing import Dict
 from typing import Optional
 from typing import Union
-from typing import Callable
 from types import FrameType
 import sys
 import os
@@ -79,8 +78,17 @@ GTK_VERSION = (
     Gtk.get_micro_version()) # pylint: disable=no-value-for-parameter
 
 DOMAINNAME = 'ibus-typing-booster'
-_: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
-N_: Callable[[str], str] = lambda a: a
+
+def _(text: str) -> str:
+    '''Gettext translation function.'''
+    return gettext.dgettext(DOMAINNAME, text)
+
+def N_(text: str) -> str: # pylint: disable=invalid-name
+    '''Mark string for translation without actually translating.
+
+    Used by gettext tools to extract strings that need translation.
+    '''
+    return text
 
 def str2bool(v: Union[bool, str]) -> bool:
     '''
@@ -523,7 +531,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._browse_treeview.set_model(self._browse_treeview_model)
 
         self._recently_used_label = '🕒 ' + _('Recently used')
-        dummy_recent_iter = self._browse_treeview_model.append(
+        _dummy_recent_iter = self._browse_treeview_model.append(
             None,
             [self._recently_used_label, '', '', self._recently_used_label])
 
@@ -701,7 +709,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 x.lower()))
 
     def _translate_key(self, key: str, language: str = 'en') -> str:
-        dummy_keys_to_translate = [
+        _dummy_keys_to_translate = [
             N_('Categories'),
             N_('Unicode categories'),
             N_('Keywords'),

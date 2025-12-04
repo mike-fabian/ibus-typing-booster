@@ -23,6 +23,7 @@ This file implements test cases for miscellaneous stuff in itb_util.py.
 
 import sys
 import os
+import importlib.util
 import logging
 import unittest
 import unicodedata
@@ -42,23 +43,9 @@ try:
 except (ImportError,):
     IMPORT_DISTRO_SUCCESSFUL = False
 
-IMPORT_LANGTABLE_SUCCESSFUL = False
-try:
-    # pylint: disable=unused-import
-    import langtable # type: ignore
-    # pylint: enable=unused-import
-    IMPORT_LANGTABLE_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_LANGTABLE_SUCCESSFUL = False
+IS_LANGTABLE_AVAILABLE = importlib.util.find_spec('langtable') is not None
 
-IMPORT_PYCOUNTRY_SUCCESSFUL = False
-try:
-    # pylint: disable=unused-import
-    import pycountry # type: ignore
-    # pylint: enable=unused-import
-    IMPORT_PYCOUNTRY_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_PYCOUNTRY_SUCCESSFUL = False
+IS_PYCOUNTRY_AVAILABLE = importlib.util.find_spec('pycountry') is not None
 
 # pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
@@ -96,31 +83,31 @@ class ItbUtilTestCase(unittest.TestCase):
         self.assertEqual([], missing_imes_for_defaults)
 
     @unittest.skipUnless(
-        IMPORT_LANGTABLE_SUCCESSFUL or IMPORT_PYCOUNTRY_SUCCESSFUL,
+        IS_LANGTABLE_AVAILABLE or IS_PYCOUNTRY_AVAILABLE,
         'Skipping, requires langtable or pycountry.')
     def test_locale_text_to_match(self) -> None:
         if 'LC_ALL' in os.environ:
             del os.environ['LC_ALL']
         os.environ['LC_MESSAGES'] = 'de_DE.UTF-8'
         text_to_match = itb_util.locale_text_to_match('fr_FR')
-        if IMPORT_LANGTABLE_SUCCESSFUL:
+        if IS_LANGTABLE_AVAILABLE:
             self.assertEqual(
                 'fr_fr franzosisch (frankreich) francais (france) french (france)',
                 text_to_match)
-        elif IMPORT_PYCOUNTRY_SUCCESSFUL:
+        elif IS_PYCOUNTRY_AVAILABLE:
             self.assertEqual(
                 'fr_fr french franzosisch francais france frankreich france',
                 text_to_match)
 
     @unittest.skipUnless(
-        IMPORT_LANGTABLE_SUCCESSFUL or IMPORT_PYCOUNTRY_SUCCESSFUL,
+        IS_LANGTABLE_AVAILABLE or IS_PYCOUNTRY_AVAILABLE,
         'Skipping, requires langtable or pycountry.')
     def test_locale_language_description(self) -> None:
         if 'LC_ALL' in os.environ:
             del os.environ['LC_ALL']
         os.environ['LC_MESSAGES'] = 'de_DE.UTF-8'
         language_description = itb_util.locale_language_description('fr_FR')
-        if IMPORT_LANGTABLE_SUCCESSFUL or IMPORT_PYCOUNTRY_SUCCESSFUL:
+        if IS_LANGTABLE_AVAILABLE or IS_PYCOUNTRY_AVAILABLE:
             self.assertEqual(
                 'Französisch (Frankreich)',
                 language_description)

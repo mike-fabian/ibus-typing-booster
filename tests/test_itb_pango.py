@@ -71,7 +71,7 @@ class ItbPangoTestCase(unittest.TestCase):
         pass
 
     def font_available_or_skip(self, font_family_name: str) -> None:
-        if not font_family_name in itb_pango.get_available_font_names():
+        if font_family_name not in itb_pango.get_available_font_names():
             self.skipTest(f'{font_family_name} is not available.')
 
     def test_dummy(self) -> None:

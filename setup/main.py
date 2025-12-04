@@ -40,6 +40,7 @@ import locale
 import copy
 import logging
 import logging.handlers
+import importlib.util
 from time import strftime
 
 # pylint: disable=wrong-import-position
@@ -67,14 +68,7 @@ require_version('IBus', '1.0')
 from gi.repository import IBus
 # pylint: enable=wrong-import-position
 
-IMPORT_LIBVOIKKO_SUCCESSFUL = False
-try:
-    # pylint: disable=unused-import
-    import libvoikko # type: ignore
-    # pylint: enable=unused-import
-    IMPORT_LIBVOIKKO_SUCCESSFUL = True
-except (ImportError,):
-    pass
+IS_LIBVOIKKO_AVAILABLE = importlib.util.find_spec('libvoikko') is not None
 
 # pylint: disable=import-error
 sys.path = [sys.path[0]+'/../engine'] + sys.path
@@ -2886,7 +2880,7 @@ class SetupUI(Gtk.Window): # type: ignore
                 row_item += '❌'
                 missing_dictionary = True
         else:
-            if IMPORT_LIBVOIKKO_SUCCESSFUL:
+            if IS_LIBVOIKKO_AVAILABLE:
                 row_item += '✔️'
             else:
                 row_item += '❌'
@@ -2983,7 +2977,7 @@ class SetupUI(Gtk.Window): # type: ignore
         if title:
             row += '\t' + '(' + title + ')'
         try:
-            dummy = m17n_translit.Transliterator(ime)
+            _dummy = m17n_translit.Transliterator(ime)
             row += '\t' + '✔️'
         except ValueError as open_error:
             row += '\t' + '❌ ' + str(open_error)

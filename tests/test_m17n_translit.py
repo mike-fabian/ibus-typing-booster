@@ -120,7 +120,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         # because a non-existing input method was given as the
         # argument, a ValueError is raised:
         try:
-            dummy_trans = m17n_translit.Transliterator('ru-translitx')
+            _dummy_trans = m17n_translit.Transliterator('ru-translitx')
         except ValueError:
             pass
         except Exception: # pylint: disable=broad-except

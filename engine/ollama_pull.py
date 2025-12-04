@@ -20,7 +20,6 @@
 A module with utilites to use ollama
 '''
 
-from typing import Callable
 from typing import Optional
 from typing import List
 from typing import Dict
@@ -58,8 +57,17 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 GLIB_MAIN_LOOP: Optional[GLib.MainLoop] = None
 
 DOMAINNAME = 'ibus-typing-booster'
-_: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
-N_: Callable[[str], str] = lambda a: a
+
+def _(text: str) -> str:
+    '''Gettext translation function.'''
+    return gettext.dgettext(DOMAINNAME, text)
+
+def N_(text: str) -> str: # pylint: disable=invalid-name
+    '''Mark string for translation without actually translating.
+
+    Used by gettext tools to extract strings that need translation.
+    '''
+    return text
 
 def str2bool(v: Union[bool, str]) -> bool:
     '''

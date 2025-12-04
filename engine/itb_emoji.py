@@ -44,8 +44,17 @@ import gettext
 import itb_util
 
 DOMAINNAME = 'ibus-typing-booster'
-_: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
-N_: Callable[[str], str] = lambda a: a
+
+def _(text: str) -> str:
+    '''Gettext translation function.'''
+    return gettext.dgettext(DOMAINNAME, text)
+
+def N_(text: str) -> str: # pylint: disable=invalid-name
+    '''Mark string for translation without actually translating.
+
+    Used by gettext tools to extract strings that need translation.
+    '''
+    return text
 
 IMPORT_BZ2_SUCCESSFUL = False
 try:
@@ -846,7 +855,7 @@ class EmojiMatcher():
                                 self._add_to_emoji_dict(
                                     emoji_dict_key, 'names', [name])
                         elif tag == 'kEH_Func':
-                            if not ' ' in value:
+                            if ' ' not in value:
                                 self._add_to_emoji_dict(
                                     emoji_dict_key, 'keywords', [value])
                             else:
@@ -1415,7 +1424,7 @@ class EmojiMatcher():
         :param emoji_string: An emoji
         :param categories: The categories of the emoji
         '''
-        dummy_categories_to_translate = [
+        _dummy_categories_to_translate = [
             # Translators: This is a name for a category of emoji
             N_('activity'),
             # Translators: This is a name for a category of emoji

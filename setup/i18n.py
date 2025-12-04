@@ -19,15 +19,22 @@
 '''
 Module to initialize gettext
 '''
-from typing import Callable
 import locale
 import gettext
 import os
 
-DOMAINNAME = "ibus-typing-booster"
+DOMAINNAME = 'ibus-typing-booster'
 
-_: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
-N_: Callable[[str], str] = lambda a: a
+def _(text: str) -> str:
+    '''Gettext translation function.'''
+    return gettext.dgettext(DOMAINNAME, text)
+
+def N_(text: str) -> str: # pylint: disable=invalid-name
+    '''Mark string for translation without actually translating.
+
+    Used by gettext tools to extract strings that need translation.
+    '''
+    return text
 
 def init() -> None:
     '''

@@ -29,7 +29,6 @@ from typing import Set
 from typing import Optional
 from typing import Union
 from typing import Iterable
-from typing import Callable
 # pylint: disable=wrong-import-position
 import sys
 if sys.version_info >= (3, 8):
@@ -116,8 +115,17 @@ except (ImportError,):
 LOGGER = logging.getLogger('ibus-typing-booster')
 
 DOMAINNAME = 'ibus-typing-booster'
-_: Callable[[str], str] = lambda a: gettext.dgettext(DOMAINNAME, a)
-N_: Callable[[str], str] = lambda a: a
+
+def _(text: str) -> str:
+    '''Gettext translation function.'''
+    return gettext.dgettext(DOMAINNAME, text)
+
+def N_(text: str) -> str: # pylint: disable=invalid-name
+    '''Mark string for translation without actually translating.
+
+    Used by gettext tools to extract strings that need translation.
+    '''
+    return text
 
 M17N_ENGINE_NAME_PATTERN = re.compile(
     r'^tb:(?P<lang>[a-z]{1,3}):(?P<name>[^\s:]+)$')

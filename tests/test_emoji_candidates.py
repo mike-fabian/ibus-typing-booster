@@ -23,6 +23,7 @@ This file implements test cases for emoji candidates
 
 import sys
 import os
+import importlib.util
 import logging
 import unittest
 
@@ -42,21 +43,7 @@ import testutils # pylint: disable=import-error
 # added, changed, or missing.
 itb_emoji.DOMAINNAME = ''
 
-IMPORT_ENCHANT_SUCCESSFUL = False
-IMPORT_HUNSPELL_SUCCESSFUL = False
-try:
-    # pylint: disable=unused-import
-    import enchant # type: ignore
-    # pylint: enable=unused-import
-    IMPORT_ENCHANT_SUCCESSFUL = True
-except (ImportError,):
-    try:
-        # pylint: disable=unused-import
-        import hunspell # type: ignore
-        # pylint: enable=unused-import
-        IMPORT_HUNSPELL_SUCCESSFUL = True
-    except (ImportError,):
-        pass
+IS_ENCHANT_AVAILABLE = importlib.util.find_spec('enchant') is not None
 
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-class-docstring
@@ -416,7 +403,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'flag: svalbard & jan mayen')
 
     @unittest.skipUnless(
-        IMPORT_ENCHANT_SUCCESSFUL,
+        IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
         testutils.enchant_working_as_expected(),
@@ -450,7 +437,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'people holding hands')
 
     @unittest.skipUnless(
-        IMPORT_ENCHANT_SUCCESSFUL,
+        IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
         testutils.enchant_working_as_expected(),
@@ -512,7 +499,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'baby bottle [birth]')
 
     @unittest.skipUnless(
-        IMPORT_ENCHANT_SUCCESSFUL,
+        IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
         testutils.enchant_working_as_expected(),
@@ -540,7 +527,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertTrue(first_match.comment.startswith('peace symbol'))
 
     @unittest.skipUnless(
-        IMPORT_ENCHANT_SUCCESSFUL,
+        IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
         testutils.enchant_working_as_expected(),
@@ -671,7 +658,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'anchor')
 
     @unittest.skipUnless(
-        IMPORT_ENCHANT_SUCCESSFUL,
+        IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
         testutils.enchant_working_as_expected(),

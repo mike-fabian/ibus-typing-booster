@@ -25,6 +25,7 @@ from typing import Optional
 import sys
 import os
 import tempfile
+import importlib.util
 import unittest
 
 # Avoid failing test cases because updated dictionaries in:
@@ -47,30 +48,8 @@ sys.path.pop(0)
 import testutils # pylint: disable=import-error
 # pylint: enable=wrong-import-position
 
-IMPORT_ENCHANT_SUCCESSFUL = False
-IMPORT_HUNSPELL_SUCCESSFUL = False
-try:
-    # pylint: disable=unused-import
-    import enchant # type: ignore
-    # pylint: enable=unused-import
-    IMPORT_ENCHANT_SUCCESSFUL = True
-except (ImportError,):
-    try:
-        # pylint: disable=unused-import
-        import hunspell # type: ignore
-        # pylint: enable=unused-import
-        IMPORT_HUNSPELL_SUCCESSFUL = True
-    except (ImportError,):
-        pass
-
-IMPORT_LIBVOIKKO_SUCCESSFUL = False
-try:
-    # pylint: disable=unused-import
-    import libvoikko # type: ignore
-    # pylint: enable=unused-import
-    IMPORT_LIBVOIKKO_SUCCESSFUL = True
-except (ImportError,):
-    pass
+IS_ENCHANT_AVAILABLE = importlib.util.find_spec('enchant') is not None
+IS_HUNSPELL_AVAILABLE = importlib.util.find_spec('hunspell') is not None
 
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-class-docstring
@@ -110,7 +89,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         itb_util.distro_id() in ('debian', 'ubuntu'),
         'Skipping due to different Czech dictionary in Debian/Ubuntu.')
     @unittest.skipUnless(
-        IMPORT_ENCHANT_SUCCESSFUL,
+        IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('cs_CZ')[0],
@@ -135,7 +114,6 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(
             h.suggest('Alpengluhen')[0],
             ('Alpenglu\u0308hen', 0))
-        print('FIXME', h.suggest('filosofictejsi'))
         self.assertEqual(
             h.suggest('filosofictejsi'), [
                 ('filosofic\u030Cte\u030Cjs\u030Ci\u0301', 0),
@@ -153,7 +131,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
             ('filosofic\u030Cte\u030Cjs\u030Ci\u0301', 0))
 
     @unittest.skipUnless(
-        IMPORT_HUNSPELL_SUCCESSFUL and not IMPORT_ENCHANT_SUCCESSFUL,
+        IS_HUNSPELL_AVAILABLE and not IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-pyhunspell to work.")
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('cs_CZ')[0],
@@ -306,7 +284,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
              ('Pariisin-suurlähetetila', -2)])
 
     @unittest.skipUnless(
-        IMPORT_ENCHANT_SUCCESSFUL,
+        IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
@@ -320,7 +298,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         itb_util.distro_id() in ('debian', 'ubuntu'),
         'Skipping due to different Czech dictionary in Debian/Ubuntu.')
     @unittest.skipUnless(
-        IMPORT_ENCHANT_SUCCESSFUL,
+        IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
@@ -341,7 +319,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertTrue('Camel' in d.spellcheck_suggest_enchant('kamel'))
 
     @unittest.skipUnless(
-        IMPORT_HUNSPELL_SUCCESSFUL and not IMPORT_ENCHANT_SUCCESSFUL,
+        IS_HUNSPELL_AVAILABLE and not IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-pyhunspell to work.")
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
@@ -352,7 +330,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(d.spellcheck_pyhunspell('winxer'), False)
 
     @unittest.skipUnless(
-        IMPORT_HUNSPELL_SUCCESSFUL and not IMPORT_ENCHANT_SUCCESSFUL,
+        IS_HUNSPELL_AVAILABLE and not IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-pyhunspell to work.")
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('en_US')[0],

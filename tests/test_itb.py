@@ -33,6 +33,7 @@ import tempfile
 import shutil
 import unittest
 import importlib
+import importlib.util
 from unittest import mock
 
 # pylint: disable=wrong-import-position
@@ -86,30 +87,7 @@ import m17n_translit
 sys.path.pop(0)
 # pylint: enable=wrong-import-order
 
-IMPORT_ENCHANT_SUCCESSFUL = False
-IMPORT_HUNSPELL_SUCCESSFUL = False
-try:
-    # pylint: disable=unused-import
-    import enchant # type: ignore
-    # pylint: enable=unused-import
-    IMPORT_ENCHANT_SUCCESSFUL = True
-except (ImportError,):
-    try:
-        # pylint: disable=unused-import
-        import hunspell # type: ignore
-        # pylint: enable=unused-import
-        IMPORT_HUNSPELL_SUCCESSFUL = True
-    except (ImportError,):
-        pass
-
-IMPORT_LIBVOIKKO_SUCCESSFUL = False
-try:
-    # pylint: disable=unused-import
-    import libvoikko # type: ignore
-    # pylint: enable=unused-import
-    IMPORT_LIBVOIKKO_SUCCESSFUL = True
-except (ImportError,):
-    pass
+IS_ENCHANT_AVAILABLE = importlib.util.find_spec('enchant') is not None
 
 # pylint: disable=missing-function-docstring
 # pylint: disable=protected-access
@@ -458,7 +436,7 @@ class ItbTestCase(unittest.TestCase):
 
         `Tab` needs to work as input, it is used in some m17n-db input methods.
         '''
-        dummy_trans = self.get_transliterator_or_skip('te-rts')
+        _dummy_trans = self.get_transliterator_or_skip('te-rts')
         self.engine.set_current_imes(
             ['te-rts'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
@@ -470,7 +448,7 @@ class ItbTestCase(unittest.TestCase):
 
     def test_shift_space_latn_post(self) -> None:
         '''https://github.com/mike-fabian/ibus-typing-booster/issues/524'''
-        dummy_trans = self.get_transliterator_or_skip('t-latn-post')
+        _dummy_trans = self.get_transliterator_or_skip('t-latn-post')
         self.engine.set_current_imes(
             ['t-latn-post', 'NoIME'], update_gsettings=False)
         self.engine.do_process_key_event(
@@ -487,7 +465,7 @@ class ItbTestCase(unittest.TestCase):
 
     def test_shift_space_mr_itrans(self) -> None:
         '''https://github.com/mike-fabian/ibus-typing-booster/issues/524'''
-        dummy_trans = self.get_transliterator_or_skip('mr-itrans')
+        _dummy_trans = self.get_transliterator_or_skip('mr-itrans')
         self.engine.set_current_imes(
             ['mr-itrans', 'NoIME'], update_gsettings=False)
         self.engine.do_process_key_event(
@@ -1188,7 +1166,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text_visible, False)
 
     @unittest.skipUnless(
-        IMPORT_ENCHANT_SUCCESSFUL,
+        IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
         testutils.get_hunspell_dictionary_length('en_US') >= 10000,
@@ -1412,7 +1390,7 @@ class ItbTestCase(unittest.TestCase):
                          'Alpengl\u00fchen Alpenglu\u0308hen ')
 
     @unittest.skipUnless(
-        IMPORT_ENCHANT_SUCCESSFUL,
+        IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('de_DE')[0],
@@ -1533,7 +1511,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'différemment ')
 
     @unittest.skipUnless(
-        IMPORT_ENCHANT_SUCCESSFUL,
+        IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
         testutils.get_hunspell_dictionary_length('en_US') >= 10000,
@@ -1572,7 +1550,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'Camel 🐫 ')
 
     @unittest.skipUnless(
-        IMPORT_ENCHANT_SUCCESSFUL,
+        IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('cs_CZ')[0],
@@ -1907,7 +1885,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'test\tcerulean ')
 
     def test_hi_inscript2_rupee_symbol(self) -> None:
-        dummy_trans = self.get_transliterator_or_skip('hi-inscript2')
+        _dummy_trans = self.get_transliterator_or_skip('hi-inscript2')
         self.engine.set_current_imes(
             ['hi-inscript2'], update_gsettings=False)
         self.engine.set_dictionary_names(
@@ -2142,7 +2120,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'y44XX')
 
     def test_russian_keyboard_use_ibus_keymap_true_keymap_in_hi_inscript2(self) -> None:
-        dummy_trans = self.get_transliterator_or_skip('hi-inscript2')
+        _dummy_trans = self.get_transliterator_or_skip('hi-inscript2')
         self.engine.set_current_imes(['hi-inscript2'], update_gsettings=False)
         self.engine.set_dictionary_names(['None'], update_gsettings=False)
         self.engine.set_use_ibus_keymap(True, update_gsettings=False)
@@ -2680,7 +2658,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, 'TEST℅&CX')
 
     def test_sinhala_wijesekara(self) -> None:
-        dummy_trans = self.get_transliterator_or_skip('si-wijesekara')
+        _dummy_trans = self.get_transliterator_or_skip('si-wijesekara')
         self.engine.set_current_imes(
             ['si-wijesekara', 'NoIME'], update_gsettings=False)
         self.engine.set_dictionary_names(
@@ -2818,7 +2796,7 @@ class ItbTestCase(unittest.TestCase):
 
     def test_compose_early_commit(self) -> None:
         ''' https://github.com/mike-fabian/ibus-typing-booster/issues/662 '''
-        dummy_trans = self.get_transliterator_or_skip('t-rfc1345')
+        _dummy_trans = self.get_transliterator_or_skip('t-rfc1345')
         self.engine.set_current_imes(['t-rfc1345'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_x, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'x')
@@ -2862,7 +2840,7 @@ class ItbTestCase(unittest.TestCase):
 
     def test_unicode_data_all(self) -> None:
         '''https://github.com/mike-fabian/ibus-typing-booster/issues/667'''
-        dummy_trans = self.get_transliterator_or_skip('t-rfc1345')
+        _dummy_trans = self.get_transliterator_or_skip('t-rfc1345')
         self.engine.set_emoji_prediction_mode(True, update_gsettings=False)
         self.engine.set_current_imes(['t-rfc1345'], update_gsettings=False)
         self.engine.set_dictionary_names(['en_US'], update_gsettings=False)
@@ -2922,7 +2900,7 @@ class ItbTestCase(unittest.TestCase):
         ']' to ़ U+093C DEVANAGARI SIGN NUKTA
         'j' to र U+0930 DEVANAGARI LETTER RA
         '''
-        dummy_trans = self.get_transliterator_or_skip('hi-inscript2')
+        _dummy_trans = self.get_transliterator_or_skip('hi-inscript2')
         self.engine.set_current_imes(
             ['hi-inscript2'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_Multi_key, 0, 0)
@@ -3709,7 +3687,7 @@ class ItbTestCase(unittest.TestCase):
         testutils.init_libvoikko_error(),
         f'Skipping, {testutils.init_libvoikko_error()}')
     @unittest.skipUnless(
-        IMPORT_ENCHANT_SUCCESSFUL,
+        IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
         testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
@@ -3832,7 +3810,7 @@ class ItbTestCase(unittest.TestCase):
         of unicode.mim, see:
         https://github.com/mike-fabian/ibus-typing-booster/issues/281
         '''
-        dummy_trans = self.get_transliterator_or_skip('t-unicode')
+        _dummy_trans = self.get_transliterator_or_skip('t-unicode')
         self.engine.set_current_imes(
             ['t-unicode'], update_gsettings=False)
         self.engine.set_dictionary_names(
@@ -3886,7 +3864,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'ॲa ')
 
     def test_lsymbol(self) -> None:
-        dummy_trans = self.get_transliterator_or_skip('t-lsymbol')
+        _dummy_trans = self.get_transliterator_or_skip('t-lsymbol')
         self.engine.set_current_imes(
             ['t-lsymbol', 'NoIME'], update_gsettings=False)
         self.engine.set_dictionary_names(
@@ -4041,7 +4019,7 @@ class ItbTestCase(unittest.TestCase):
             self.engine.mock_committed_text, 'a☺\uFE0Fb a😇a☺\uFE0Fb \u200C a\u200C ')
 
     def test_zh_py(self) -> None:
-        dummy_trans = self.get_transliterator_or_skip('zh-py')
+        _dummy_trans = self.get_transliterator_or_skip('zh-py')
         self.engine.set_current_imes(
             ['zh-py', 'NoIME'], update_gsettings=False)
         # There are sequences starting with `a` and `x` in zh-py. But
@@ -4132,7 +4110,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'x爱啊')
 
     def test_zh_tonepy(self) -> None:
-        dummy_trans = self.get_transliterator_or_skip('zh-tonepy')
+        _dummy_trans = self.get_transliterator_or_skip('zh-tonepy')
         self.engine.set_current_imes(
             ['zh-tonepy', 'NoIME'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
@@ -4202,7 +4180,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, '愛爱')
 
     def test_zh_cangjie(self) -> None:
-        dummy_trans = self.get_transliterator_or_skip('zh-cangjie')
+        _dummy_trans = self.get_transliterator_or_skip('zh-cangjie')
         self.engine.set_current_imes(
             ['zh-cangjie', 'NoIME'], update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
@@ -4301,7 +4279,7 @@ class ItbTestCase(unittest.TestCase):
         'Alpine Linux. I have no time to investigate that now and '
         'I think it is good enough to test ja-anthy an Fedora at the moment.')
     def test_ja_anthy_aki_aki_aki_aki_simple(self) -> None:
-        dummy_trans = self.get_transliterator_or_skip('ja-anthy')
+        _dummy_trans = self.get_transliterator_or_skip('ja-anthy')
         self.engine.set_current_imes(
             ['ja-anthy', 'NoIME'], update_gsettings=False)
         self.engine.set_dictionary_names(
@@ -4450,7 +4428,7 @@ class ItbTestCase(unittest.TestCase):
         Booster is to do henkan on shorter kana input.
 
         '''
-        dummy_trans = self.get_transliterator_or_skip('ja-anthy')
+        _dummy_trans = self.get_transliterator_or_skip('ja-anthy')
         self.engine.set_current_imes(
             ['ja-anthy', 'NoIME'], update_gsettings=False)
         self.engine.set_dictionary_names(
@@ -4552,7 +4530,7 @@ class ItbTestCase(unittest.TestCase):
 
     def test_issue_712_mim(self) -> None:
         ''' https://github.com/mike-fabian/ibus-typing-booster/issues/712 '''
-        dummy_trans = self.get_transliterator_or_skip('t-test-issue-712')
+        _dummy_trans = self.get_transliterator_or_skip('t-test-issue-712')
         self.engine.set_current_imes(
             ['t-test-issue-712'], update_gsettings=False)
         # C-x has a transliteration:
@@ -4645,7 +4623,7 @@ class ItbTestCase(unittest.TestCase):
 
     def test_issue_707_mim(self) -> None:
         ''' https://github.com/mike-fabian/ibus-typing-booster/issues/707 '''
-        dummy_trans = self.get_transliterator_or_skip('t-test-issue-707')
+        _dummy_trans = self.get_transliterator_or_skip('t-test-issue-707')
         self.engine.set_current_imes(
             ['t-test-issue-707'], update_gsettings=False)
         self.engine.do_process_key_event(
@@ -4669,7 +4647,7 @@ class ItbTestCase(unittest.TestCase):
 
     def test_issue_704_mim(self) -> None:
         ''' https://github.com/mike-fabian/ibus-typing-booster/issues/704 '''
-        dummy_trans = self.get_transliterator_or_skip('t-test-issue-704')
+        _dummy_trans = self.get_transliterator_or_skip('t-test-issue-704')
         self.engine.set_current_imes(
             ['t-test-issue-704'], update_gsettings=False)
         self.engine.do_process_key_event(

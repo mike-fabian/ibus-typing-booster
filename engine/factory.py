@@ -22,13 +22,10 @@ TypingBoosterEngine Factory
 '''
 from typing import Dict
 from typing import Optional
-from typing import Callable
 import re
 import os
 import logging
-from gettext import dgettext
-_: Callable[[str], str] = lambda a: dgettext("ibus-typing-booster", a)
-N_: Callable[[str], str] = lambda a: a
+import gettext
 from gi import require_version
 # pylint: disable=wrong-import-position
 require_version('IBus', '1.0')
@@ -41,6 +38,19 @@ import itb_util
 LOGGER = logging.getLogger('ibus-typing-booster')
 
 DEBUG_LEVEL = int(0)
+
+DOMAINNAME = 'ibus-typing-booster'
+
+def _(text: str) -> str:
+    '''Gettext translation function.'''
+    return gettext.dgettext(DOMAINNAME, text)
+
+def N_(text: str) -> str: # pylint: disable=invalid-name
+    '''Mark string for translation without actually translating.
+
+    Used by gettext tools to extract strings that need translation.
+    '''
+    return text
 
 class EngineFactory(IBus.Factory):
     """Table IM Engine Factory"""
