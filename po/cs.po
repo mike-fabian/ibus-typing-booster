@@ -1,6 +1,6 @@
 # Zdenek <chmelarz@gmail.com>, 2017. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2025.
-# Pavel Borecki <pavel.borecki@gmail.com>, 2019. #zanata, 2021.
+# Pavel Borecki <pavel.borecki@gmail.com>, 2019. #zanata, 2021, 2025.
 # Josef Hruska <hrusjos@gmail.com>, 2019, 2021.
 # Daniel Rusek <mail@asciiwolf.com>, 2024, 2025.
 msgid ""
@@ -9,16 +9,16 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-11-24 15:01+0100\n"
-"PO-Revision-Date: 2025-04-02 07:48+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
-"Language-Team: Czech <https://translate.fedoraproject.org/projects/ibus-"
-"typing-booster/app/cs/>\n"
+"PO-Revision-Date: 2025-12-05 23:29+0000\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
+"Language-Team: Czech <https://translate.fedoraproject.org/projects/"
+"ibus-typing-booster/app/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:268
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -489,7 +489,7 @@ msgstr "Vzhled"
 #. (Artificial Intelligence).
 #: setup/main.py:433
 msgid "AI"
-msgstr ""
+msgstr "AI"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
@@ -670,16 +670,12 @@ msgstr ""
 
 #. Translators: Whether ibus-typing-booster should show word predictions.
 #: setup/main.py:675
-#, fuzzy
-#| msgid "Add dictionary"
 msgid "Word predictions"
-msgstr "Přidat slovník"
+msgstr "Předvídání slov"
 
 #: setup/main.py:677
-#, fuzzy
-#| msgid "Whether ibus-typing-booster should be disabled in terminals."
 msgid "Whether ibus-typing-booster should show word predictions."
-msgstr "Zda má být ibus-typing-booster zakázán v terminálech."
+msgstr "Zda má ibus-typing-booster zobrazovat předvídání slov."
 
 #: setup/main.py:696
 msgid ""
@@ -698,10 +694,8 @@ msgstr ""
 #. Translators: A combo box to select which emoji style
 #. should be used.
 #: setup/main.py:715
-#, fuzzy
-#| msgid "Emoji"
 msgid "Emoji style"
-msgstr "Emodži"
+msgstr "Styl emodži"
 
 #. Translators: A tooltip for the combobox to select which
 #. emoji style should be used.
@@ -710,6 +704,8 @@ msgid ""
 "To select between colorful emoji (emoji style), monochrome emoji (text "
 "style), or no style preference."
 msgstr ""
+"Pro výběr mezi barevnými emoji (emoji styl), monochromatickými emoji "
+"(textový styl), nebo žádným stylem."
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Emoji style”, i.e.  typically colored.
@@ -722,7 +718,7 @@ msgstr "Emodži"
 #. monochrome.
 #: setup/main.py:734
 msgid "Text"
-msgstr ""
+msgstr "Textové"
 
 #. Translators: This option is to use unqualified emoji
 #. sequences. When this style is used, some emoji may display
@@ -730,7 +726,7 @@ msgstr ""
 #. the emoji in the Unicode emoji data files.
 #: setup/main.py:739
 msgid "No style"
-msgstr ""
+msgstr "Neopatřeno stylem"
 
 #: setup/main.py:766
 msgid ""
@@ -908,6 +904,8 @@ msgid ""
 "The ibus keymap to use when forcing an IBus keymap while Typing Booster is "
 "active."
 msgstr ""
+"ibus klávesová mapa kterou použít při vynucování IBus klávesové mapy, když "
+"je Typing Booster aktivní."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -1067,14 +1065,12 @@ msgstr "Nainstalovat slovníky, které jsou zde nastavené, ale nenainstalované
 #. Translators: A button used to download
 #. missing dictionaries and update existing ones.
 #: setup/main.py:1222
-#, fuzzy
-#| msgid "Add dictionary"
 msgid "Download dictionaries"
-msgstr "Přidat slovník"
+msgstr "Stáhnout si slovníky"
 
 #: setup/main.py:1223
 msgid "Download missing dictionaries and update existing ones"
-msgstr ""
+msgstr "Stáhnout si chybějící slovníky a zaktualizovat ty existující"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
@@ -1430,36 +1426,26 @@ msgstr "Zde můžete určit, jakou barvu použít pro náhled psaní."
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the m17n preedit.
 #: setup/main.py:1952
-#, fuzzy
-#| msgid "Use color for compose preview"
 msgid "Use color for m17n preedit"
-msgstr "Použít barvu pro náhled psaní"
+msgstr "Použít barvu pro m17n předúpravu"
 
 #: setup/main.py:1954
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for the compose "
-#| "preview."
 msgid ""
 "Here you can choose whether a custom color is used for the m17n preedit."
 msgstr ""
-"Zde je možné zvolit, zda je pro náhled psaní používána uživatelsky určená "
-"barva."
+"Zde je možné zvolit zda je pro náhled m17n předúprav bude používána "
+"uživatelsky určená barva."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the m17n preedit.
 #: setup/main.py:1978
-#, fuzzy
-#| msgid "Choose color for compose preview"
 msgid "Choose color for m17n preedit"
-msgstr "Zvolte barvu pro náhled psaní"
+msgstr "Zvolte barvu pro m17 předúpravy"
 
 #: setup/main.py:1980
-#, fuzzy
-#| msgid "Here you can specify which color to use for the compose preview."
 msgid "Here you can specify which color to use for the m17n preedit."
-msgstr "Zde můžete určit, jakou barvu použít pro náhled psaní."
+msgstr "Zde můžete určit, jakou barvu použít pro m17n předúpravy."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
@@ -1572,19 +1558,14 @@ msgstr ""
 "vyhledávání, která pochází z uživatelovy databáze."
 
 #: setup/main.py:2157
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from the user database. This setting only has an effect "
-#| "if the use of color for candidates from the user database is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from the user database. This setting only has an effect if the "
 "use of a label for candidates from the user database is enabled."
 msgstr ""
-"Zde je možné kterou barvu použít pro kandidáty v tabulce vyhledávání která "
-"pochází z uživatelské databáze. Toto nastavení má význam pouze pokud je "
-"zapnuto použít barvu pro kandidáty z uživatelské databáze."
+"Zde je možné kterou jmenovku použít pro kandidáty v tabulce vyhledávání "
+"která pochází z uživatelské databáze. Toto nastavení má význam pouze pokud "
+"je zapnuto použít jmenovku pro kandidáty z uživatelské databáze."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1602,19 +1583,14 @@ msgstr ""
 "vyhledávání, která pochází z kontroly pravopisu."
 
 #: setup/main.py:2192
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from spellchecking. This setting only has an effect if "
-#| "the use of color for candidates from spellchecking is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from spellchecking. This setting only has an effect if the use of "
 "a label for candidates from spellchecking is enabled."
 msgstr ""
-"Zde je možné určit kterou barvu použít pro kandidáty v tabulce vyhledávání, "
-"která pochází z kontroly pravopisu. Toto nastavení má význam pouze pokud je "
-"zapnuté použít barvy pro kandidáty z kontroly pravopisu."
+"Zde je možné určit kterou jmenovku použít pro kandidáty v tabulce "
+"vyhledávání, která pochází z kontroly pravopisu. Toto nastavení má význam "
+"pouze pokud je zapnuté použít jmenovky pro kandidáty z kontroly pravopisu."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
@@ -1632,19 +1608,14 @@ msgstr ""
 "tabulce, které pocházejí ze slovníku."
 
 #: setup/main.py:2227
-#, fuzzy
-#| msgid ""
-#| "Here you can specify which color to use for candidates in the lookup "
-#| "table which come from a dictionary. This setting only has an effect if "
-#| "the use of color for candidates from a dictionary is enabled."
 msgid ""
 "Here you can specify which label to use for candidates in the lookup table "
 "which come from a dictionary. This setting only has an effect if the use of "
 "a label for candidates from a dictionary is enabled."
 msgstr ""
-"Zde možné určit kterou barvu použít pro kandidáty v tabulce vyhledávání, "
+"Zde možné určit kterou jmenovku použít pro kandidáty v tabulce vyhledávání, "
 "která pocházejí ze slovníku. Toto nastavení má význam pouze pokud je zapnuté "
-"použití barvy pro kandidáty ze slovníku."
+"použití jmenovku pro kandidáty ze slovníku."
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
@@ -1677,20 +1648,16 @@ msgstr ""
 
 #. Translators: Tooltip for an entry
 #: setup/main.py:2279
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a label is used to indicate when ibus-typing-"
-#| "booster is busy."
 msgid ""
 "Here you can specify which label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
-"Zde je možné zvolit, zda je štítek použit, když je ibus-typing-booster "
+"Zde je možné určit který štítek použít, když je ibus-typing-booster "
 "zaneprázdněné."
 
 #: setup/main.py:2297
 msgid "Symbol for \"enabled\" mode"
-msgstr ""
+msgstr "Symbol pro režim „zapnuto“"
 
 #. Translators: Tooltip for 'Symbol for "enabled" mode'
 #: setup/main.py:2300 setup/main.py:2307
@@ -1698,10 +1665,12 @@ msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
 msgstr ""
+"Symbol zobrazovaný když je Typing Booster aktivní "
+"(přepisování vstupu, doporučování pokračování, kontrola pravopisu, atd.)."
 
 #: setup/main.py:2326
 msgid "Symbol for \"disabled\" (Direct Input) mode"
-msgstr ""
+msgstr "Symbol pro režim „vypnuto“ (přímý vstup)"
 
 #. Translators: Tooltip for 'Symbol for "disabled" (Direct
 #. Input) mode'
@@ -1710,13 +1679,15 @@ msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
 msgstr ""
+"Symbol který je zobrzaování pokud je Typing Booster vypnutý "
+"(vstup je předáván přímo bez zpracovávání)."
 
 #. Translators: Checkbox to enable the AI (Artificial
 #. Intelligence) chat feature using ollama or ramalama
 #. servers.
 #: setup/main.py:2375
 msgid "Enable AI chat"
-msgstr ""
+msgstr "Zapnout AI chat"
 
 #. Translators: Tooltip for “Enable AI chat”.
 #: setup/main.py:2378
@@ -1724,18 +1695,20 @@ msgid ""
 "Enable or disable AI chat globally. When disabled, all AI chat related "
 "features and keybindings are turned off."
 msgstr ""
+"Zapnout nebo vypnout AI chat globálně. Pokud vypnuto, veškeré funkce "
+"související s AI chatem a jejich navázání na klávesy je vypnuté."
 
 #. Translators: The ollama or ramalama server to use for AI
 #. (Artificial Intelligence).
 #: setup/main.py:2390
 msgid "AI server:"
-msgstr ""
+msgstr "AI server:"
 
 #. Translators: The connection status to the ollama or
 #. ramalama server used for AI (Artificial Intelligence).
 #: setup/main.py:2396
 msgid "Connection status to the AI server."
-msgstr ""
+msgstr "Stav spojení s AI serverem."
 
 #. Translators: “Model:” specifies the LLM (Large Language
 #. Model) to be used with ollama or ramalama.
@@ -1747,7 +1720,7 @@ msgstr ""
 #. sent to the AI for context.
 #: setup/main.py:2437
 msgid "Message history limit:"
-msgstr ""
+msgstr "Limit historie zprávy:"
 
 #. Translators: This is the AI system message field to set
 #. the implicit context for AI chats. For example it could
@@ -1756,7 +1729,7 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2466
 msgid "AI system message:"
-msgstr ""
+msgstr "Zpráva z AI systému:"
 
 #. Translators: Tooltip explaining the AI system message
 #. field to set the implicit context for AI chats. For
@@ -1765,7 +1738,7 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2475
 msgid "System prompt that guides how the AI responds."
-msgstr ""
+msgstr "Systémový prompt který vede to, jak AI odpovídá."
 
 #. Translators:
 #: setup/main.py:2514 setup/main.py:3769
@@ -1821,10 +1794,8 @@ msgid "Move an autosetting down"
 msgstr "Posunout autonastavení níž"
 
 #: setup/main.py:2621
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Set all autosettings to default"
-msgstr "Nastavit vše na výchozí"
+msgstr "Nastavit veškerá automatická nastavení na výchozí"
 
 #: setup/main.py:2878
 msgid "Spell checking"
@@ -1920,14 +1891,9 @@ msgstr ""
 #. This cannot be reversed so the user
 #. should be really sure he wants to do that.
 #: setup/main.py:5617
-#, fuzzy
-#| msgid ""
-#| "Do you really want to set the key bindings for all commands to their "
-#| "defaults?"
 msgid "Do you really want to set all autosettings to their defaults?"
 msgstr ""
-"Opravdu chcete nastavit navázání kláves pro všechny příkazy na výchozí "
-"hodnoty?"
+"Opravdu chcete nastavit veškerá automatická nastavení na výchozí hodnoty?"
 
 #: setup/main.py:5631
 msgid "Open File ..."
