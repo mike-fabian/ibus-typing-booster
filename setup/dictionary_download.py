@@ -40,8 +40,6 @@ CompleteCallback = Callable[[InstallStatus], None]
 import pathlib
 import os
 import locale
-import subprocess
-import time
 import logging
 from gi import require_version
 # pylint: disable=wrong-import-position
@@ -49,6 +47,13 @@ require_version('GLib', '2.0')
 require_version('Gio', '2.0')
 from gi.repository import GLib # type: ignore
 from gi.repository import Gio # type: ignore
+try:
+    require_version('Soup', '3.0')
+    from gi.repository import Soup # type: ignore
+except Exception: # pylint: disable=broad-exception-caught
+    # no Soup 3 available, try Soup 2.4
+    require_version('Soup', '2.4')
+    from gi.repository import Soup # type: ignore
 # pylint: enable=wrong-import-position
 from i18n import _, init as i18n_init
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'engine'))
@@ -441,49 +446,7 @@ DICTIONARY_SOURCES = {
 }
 # pylint: enable=line-too-long
 
-def ensure_gvfs_alive(on_output: Optional[Callable[[str], None]] = None) -> None:
-    '''
-    Ensure GVfs daemons (gvfsd and gvfsd-http) are running and responsive.
-    If they appear hung, restart them safely.
-    Logs progress via on_output if provided.
-    '''
 
-    def log(msg: str) -> None:
-        LOGGER.info(msg)
-        if on_output:
-            on_output(msg)
-
-    def gio_test() -> bool:
-        '''Try a quick non-blocking check for GIO HTTP responsiveness.'''
-        try:
-            subprocess.run(
-                [
-                    'gio', 'info', '--attributes=standard::size',
-                    'https://raw.githubusercontent.com/LibreOffice/dictionaries/master/README.md'
-                ],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-                timeout=3,
-                check=False,
-            )
-            return True
-        except subprocess.TimeoutExpired:
-            return False
-        except FileNotFoundError:
-            # GIO CLI missing – nothing to test.
-            return True
-
-    if not gio_test():
-        log('⚠️ GVfs HTTP backend appears hung — restarting gvfsd...')
-        subprocess.run(['pkill', '-f', 'gvfsd-http'], check=False)
-        subprocess.run(['pkill', '-f', 'gvfsd'], check=False)
-        time.sleep(1)
-        if gio_test():
-            log('✅ GVfs HTTP backend recovered.')
-        else:
-            log('❌ GVfs HTTP backend still unresponsive.')
-    else:
-        log('GVfs backend appears responsive.')
 
 def download_file_async(
     url: str,
@@ -493,8 +456,10 @@ def download_file_async(
     on_complete: Optional[Callable[[InstallStatus], None]],
     cancellable: Optional[Gio.Cancellable] = None,
 ) -> None:
-    '''
-    Download a file from url to dest_path asynchronously.
+    '''Download a file from url to dest_path asynchronously.
+
+    Using libsoup async instead of Gio.File.copy_async, which is
+    broken on Ubuntu for HTTP URIs.
 
     on_output(line):       textual log
     on_progress(fraction): 0.0..1.0 progress fraction
@@ -503,58 +468,160 @@ def download_file_async(
     '''
     try:
         os.makedirs(os.path.dirname(dest_path), exist_ok=True)
-        src = Gio.File.new_for_uri(url)
-        dest = Gio.File.new_for_path(dest_path)
+    except Exception as error: # pylint: disable=broad-except
+        LOGGER.exception('Failed to make directory: %s', error)
         if on_output:
-            on_output('Starting:')
+            on_output(f'Failed to make directory: {error}')
+        if on_complete and not (cancellable and cancellable.is_cancelled()):
+            on_complete('failure')
+    try:
+        dest_file = Gio.File.new_for_path(dest_path)
+        out_stream = dest_file.replace(
+            None,
+            False,
+            Gio.FileCreateFlags.NONE, # pylint: disable=no-member
+            cancellable)
+    except GLib.Error as err:
+        LOGGER.exception('Failed to open destination: %s', err)
+        if on_output:
+            on_output(f'Failed to open destination: {err}')
+        if on_complete:
+            on_complete('failure')
+        return
 
-        def progress_cb(cur_bytes: int, total_bytes: int) -> None:
-            if total_bytes > 0 and on_progress:
-                fraction = float(cur_bytes) / float(total_bytes)
-                fraction = max(0.0, min(1.0, fraction))
-                on_progress(fraction)
-            if on_output:
-                kb = cur_bytes / 1024.0
-                on_output(f'{kb:.1f} KiB')
+    if Soup.MAJOR_VERSION == 3:
+        session: 'Soup.Session' = Soup.Session()
+        message: 'Soup.Message' = Soup.Message.new('GET', url)
 
-        def finish_cb(fileobj: Gio.File, result: Gio.AsyncResult) -> None:
+        def on_read_finished(
+                session: 'Soup.Session',
+                result: 'Gio.AsyncResult',
+                msg: 'Soup.Message',
+        ) -> None:
             try:
-                # This raises on error or cancellation
-                fileobj.copy_finish(result)
+                # This returns a GLib.Bytes (GBytes) or similar; in any case it's
+                # the whole response body already read by libsoup.
+                body = session.send_and_read_finish(result)
+                data_bytes: Optional[bytes] = None
+                try:
+                    # GLib.Bytes.get_data()
+                    data_bytes = body.get_data()
+                except Exception: # pylint: disable=broad-exception-caught
+                    try:
+                        # Maybe it’s already a Python bytes object
+                        data_bytes = bytes(body)
+                    except Exception: # pylint: disable=broad-exception-caught
+                        if on_output:
+                            on_output('Failed: could not obtain response bytes')
+                        if on_complete:
+                            on_complete('failure')
+                        return
+                gbytes = GLib.Bytes.new(data_bytes)
+                try:
+                    out_stream.write_bytes(gbytes, cancellable)
+                except GLib.Error as err:
+                    LOGGER.exception('Write failed: %s', err)
+                    if on_output:
+                        on_output(f'Write failed: {err}')
+                    if on_complete:
+                        on_complete('failure')
+                    return
+                try:
+                    out_stream.close(cancellable)
+                except GLib.Error as err:
+                    LOGGER.exception('Failed to close output: %s', err)
+                    if on_output:
+                        on_output(f'Failed to close output: {err}')
+                    if on_complete:
+                        on_complete('failure')
+                    return
+                if on_progress:
+                    on_progress(1.0) # We’ve read the whole body
                 if on_output:
-                    on_output('Finished.')
-                if on_complete:
-                    on_complete('success')
+                    on_output(f'{len(data_bytes)/1024.0:.1f} KiB')
+                status = msg.get_status()
+                if status == Soup.Status.OK:
+                    if on_output:
+                        on_output('Finished.')
+                    if on_complete:
+                        on_complete('success')
+                else:
+                    if on_output:
+                        on_output(f'Failed: HTTP {status}')
+                    if on_complete:
+                        on_complete('failure')
             except GLib.Error as err:
-                # detect cancellation
-                if err.matches( # pylint: disable=no-value-for-parameter
-                        Gio.io_error_quark(), Gio.IOErrorEnum.CANCELLED):
+                if cancellable and cancellable.is_cancelled():
                     if on_output:
                         on_output('Cancelled.')
                     if on_complete:
                         on_complete('cancelled')
                 else:
-                    LOGGER.error('Download failed: %s', err)
+                    LOGGER.exception('Failed to send request: %s', err)
                     if on_output:
-                        on_output(f'Failed: {err}')
+                        on_output(f'Failed to send request: {err}')
                     if on_complete:
                         on_complete('failure')
 
-        src.copy_async(
-            dest,
-            Gio.FileCopyFlags.OVERWRITE,
+        session.send_and_read_async(
+            message,
             GLib.PRIORITY_DEFAULT,
             cancellable,
-            progress_cb,
-            finish_cb,
-        )
+            on_read_finished,
+            message)
+        return
 
-    except Exception as error: # pylint: disable=broad-except
-        LOGGER.exception('Exception during download: %s', error)
+    # Soup3 could not be imported, try Soup2:
+    session_soup2: 'Soup.SessionAsync' = (
+        Soup.SessionAsync()) # pylint: disable=c-extension-no-member
+    message_soup2: 'Soup.Message' = Soup.Message.new('GET', url)
+
+    total_bytes: int = -1
+    received_bytes: int = 0
+
+    def on_headers(msg: 'Soup.Message') -> None:
+        nonlocal total_bytes
+        total_bytes = msg.response_headers.get_content_length()
+
+    def on_chunk(_msg: 'Soup.Message', chunk: 'Soup.Buffer') -> None:
+        nonlocal received_bytes
+        data_bytes = chunk.get_data()
+        received_bytes += len(data_bytes)
+        try:
+            out_stream.write(data_bytes, cancellable)
+        except GLib.Error as err:
+            LOGGER.exception('Write failed: %s', err)
+            if on_output:
+                on_output(f'Write failed: {err}')
+            if on_complete:
+                on_complete('failure')
+            return
+        if on_progress and total_bytes > 0:
+            frac = min(1.0, received_bytes / total_bytes)
+            on_progress(frac)
         if on_output:
-            on_output(f'Exception during download: {error}')
-        if on_complete and not (cancellable and cancellable.is_cancelled()):
+            on_output(f'{received_bytes/1024.0:.1f} KiB')
+
+    def on_finished(msg: 'Soup.Message') -> None:
+        try:
+            out_stream.close(cancellable)
+        except GLib.Error:
+            pass
+        if msg.status_code == 200:
+            if on_output:
+                on_output('Finished.')
+            if on_complete:
+                on_complete('success')
+            return
+        if on_output:
+            on_output(f'Failed: HTTP {msg.status_code}')
+        if on_complete:
             on_complete('failure')
+
+    message_soup2.connect('got_headers', on_headers)
+    message_soup2.connect('got_chunk', on_chunk)
+    message_soup2.connect('finished', on_finished)
+    session_soup2.queue_message(message_soup2, None)
 
 def download_dictionaries_sequentially_async(
     languages: Set[str],
@@ -782,8 +849,6 @@ def download_dictionaries_with_dialog(
 
     cancel_button.connect('clicked', on_cancel)
     close_button.connect('clicked', on_close)
-    # Check GVfs health before starting downloads:
-    ensure_gvfs_alive(on_output=append_line)
     download_dictionaries_sequentially_async(
         languages,
         on_output=append_line,
