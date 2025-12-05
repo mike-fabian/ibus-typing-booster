@@ -106,6 +106,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
     def test_dummy(self) -> None:
         self.assertEqual(True, True)
 
+    @unittest.skipIf(
+        itb_util.distro_id() in ('debian', 'ubuntu'),
+        'Skipping due to different Czech dictionary in Debian/Ubuntu.')
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
@@ -217,6 +220,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
             h.suggest('tenéis')[0],
             ('tene\u0301is', 0))
 
+    @unittest.skipIf(
+        itb_util.distro_id() in ('debian', 'ubuntu'),
+        'Skipping due to different Czech dictionary in Debian/Ubuntu.')
     @unittest.skipUnless(
         itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no US English hunspell dictionary could be found.')
@@ -310,6 +316,9 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(d.spellcheck_enchant('winter'), True)
         self.assertEqual(d.spellcheck_enchant('winxer'), False)
 
+    @unittest.skipIf(
+        itb_util.distro_id() in ('debian', 'ubuntu'),
+        'Skipping due to different Czech dictionary in Debian/Ubuntu.')
     @unittest.skipUnless(
         IMPORT_ENCHANT_SUCCESSFUL,
         "Skipping because this test requires python3-enchant to work.")
