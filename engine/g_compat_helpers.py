@@ -30,6 +30,7 @@ helper module should work with whichever version is loaded.
 from typing import (
     List,
     Tuple,
+    Iterable,
     Optional,
     Callable,
     Any,
@@ -107,7 +108,7 @@ def set_border_width(widget: Gtk.Widget, width: int) -> None:
         # Use padding instead of border-width for blank space around the widget:
         css = f'* {{ padding: {width}px; }}'
         provider = Gtk.CssProvider()
-        provider.load_from_data(css.encode("utf-8"))
+        provider.load_from_data(css, len(css)) # Gtk4 wants string
         widget.get_style_context().add_provider(
             provider,
             Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
@@ -1237,3 +1238,37 @@ def choose_file_open(
     file_dialog.open(parent, None, on_finish)
     loop.run()
     return result
+
+def liststore_append(store: Gtk.ListStore, values: Iterable[Any]) -> Gtk.TreeIter:
+    '''
+    Append a row to a Gtk.ListStore in a way that is compatible with all
+    versions of GTK and PyGObject (GTK3, GTK4 on Fedora/Debian/Ubuntu, and
+    GTK4 on RHEL9).
+
+    Why this function is needed:
+        PyGObject normally allows:
+            store.append([value0, value1, ...])
+        but this depends on the underlying GTK method
+        `Gtk.ListStore.insert_with_valuesv()`.  Some distributions
+        (notably RHEL9 with GTK 4.12.3) ship incomplete GIR/typelib
+        files that *omit* this method.  When Python tries to call
+        append([...]), it fails with:
+
+            AttributeError: 'ListStore' object has no attribute 'insert_with_valuesv'
+
+        To avoid this, we append an empty row first and then fill in
+        the values using `store.set()`, which is guaranteed to exist
+        in all GTK versions.  This makes the function portable across
+        all supported platforms.
+
+    Args:
+        store: A Gtk.ListStore instance.
+        values: An iterable of column values for the newly inserted row.
+
+    Returns:
+        Gtk.TreeIter: The iter pointing to the newly created row.
+    '''
+    iter_: Gtk.TreeIter = store.append()
+    for column, value in enumerate(values):
+        store.set(iter_, column, value)
+    return iter_

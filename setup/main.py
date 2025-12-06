@@ -108,6 +108,7 @@ from g_compat_helpers import (
     ConfirmDialogCompat,
     CompatButton,
     choose_file_open,
+    liststore_append,
 )
 # pylint: enable=wrong-import-order
 # pylint: enable=import-error
@@ -199,9 +200,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self.set_name('TypingBoosterPreferences')
         self.set_modal(True)
         self.set_icon_name('ibus-typing-booster')
-        style_provider = Gtk.CssProvider()
-        style_provider.load_from_data(
-            f'''
+        css = f'''
             #TypingBoosterPreferences {{
             }}
             row {{ /* This is for listbox rows */
@@ -226,13 +225,16 @@ class SetupUI(Gtk.Window): # type: ignore
                 outline: none;
                 background-color: {'transparent' if is_wayland() else '@theme_bg_color'};
             }}
-            '''.encode('UTF-8'))
+            '''
+        style_provider = Gtk.CssProvider()
         if GTK_MAJOR >= 4:
+            style_provider.load_from_data(css, len(css)) # Gtk4 wants string
             Gtk.StyleContext.add_provider_for_display(
                 Gdk.Display.get_default(), # pylint: disable=no-value-for-parameter
                 style_provider,
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         else:
+            style_provider.load_from_data(css.encode('UTF-8')) # Gtk3 wants bytes
             Gtk.StyleContext.add_provider_for_screen(
                 Gdk.Screen.get_default(), # pylint: disable=c-extension-no-member
                 style_provider,
@@ -534,12 +536,11 @@ class SetupUI(Gtk.Window): # type: ignore
         self._inline_completion_label.set_xalign(0)
         self._inline_completion_combobox = Gtk.ComboBox()
         self._inline_completion_store = Gtk.ListStore(str, int)
-        self._inline_completion_store.append(
-            [_('No'), 0])
-        self._inline_completion_store.append(
-            [_('Yes, with fallback to popup'), 1])
-        self._inline_completion_store.append(
-            [_('Yes, without fallback to popup'), 2])
+        liststore_append(self._inline_completion_store, [_('No'), 0])
+        liststore_append(self._inline_completion_store,
+                         [_('Yes, with fallback to popup'), 1])
+        liststore_append(self._inline_completion_store,
+                         [_('Yes, without fallback to popup'), 2])
         self._inline_completion_combobox.set_model(
             self._inline_completion_store)
         renderer_text = Gtk.CellRendererText()
@@ -596,12 +597,12 @@ class SetupUI(Gtk.Window): # type: ignore
         auto_select_candidate_label.set_xalign(0)
         self._auto_select_candidate_combobox = Gtk.ComboBox()
         self._auto_select_candidate_store = Gtk.ListStore(str, int)
-        self._auto_select_candidate_store.append(
-            [_('No'), 0])
-        self._auto_select_candidate_store.append(
-            [_('Yes, but only when extremely likely'), 1])
-        self._auto_select_candidate_store.append(
-            [_('Yes, always'), 2])
+        liststore_append(self._auto_select_candidate_store,
+                         [_('No'), 0])
+        liststore_append(self._auto_select_candidate_store,
+                         [_('Yes, but only when extremely likely'), 1])
+        liststore_append(self._auto_select_candidate_store,
+                         [_('Yes, always'), 2])
         self._auto_select_candidate_combobox.set_model(
             self._auto_select_candidate_store)
         renderer_text = Gtk.CellRendererText()
@@ -739,16 +740,16 @@ class SetupUI(Gtk.Window): # type: ignore
         self._emoji_style_store = Gtk.ListStore(str, str)
         # Translators: This option is to use fully-qualified emoji
         # sequences to request “Emoji style”, i.e.  typically colored.
-        self._emoji_style_store.append([_('Emoji'), 'emoji'])
+        liststore_append(self._emoji_style_store, [_('Emoji'), 'emoji'])
         # Translators: This option is to use fully-qualified emoji
         # sequences to request “Text style”, i.e.  typically
         # monochrome.
-        self._emoji_style_store.append([_('Text'), 'text'])
+        liststore_append(self._emoji_style_store, [_('Text'), 'text'])
         # Translators: This option is to use unqualified emoji
         # sequences. When this style is used, some emoji may display
         # in color, some monochrome, depending on the properties of
         # the emoji in the Unicode emoji data files.
-        self._emoji_style_store.append([_('No style'), ''])
+        liststore_append(self._emoji_style_store, [_('No style'), ''])
         self._emoji_style_combobox.set_model(self._emoji_style_store)
         renderer_text = Gtk.CellRendererText()
         self._emoji_style_combobox.pack_start(renderer_text, True)
@@ -812,14 +813,11 @@ class SetupUI(Gtk.Window): # type: ignore
         self._record_mode_label.set_xalign(0)
         self._record_mode_combobox = Gtk.ComboBox()
         self._record_mode_store = Gtk.ListStore(str, int)
-        self._record_mode_store.append(
-            [_('Everything'), 0])
-        self._record_mode_store.append(
-            [_('Correctly spelled or previously recorded'), 1])
-        self._record_mode_store.append(
-            [_('Correctly spelled'), 2])
-        self._record_mode_store.append(
-            [_('Nothing'), 3])
+        liststore_append(self._record_mode_store, [_('Everything'), 0])
+        liststore_append(
+            self._record_mode_store, [_('Correctly spelled or previously recorded'), 1])
+        liststore_append(self._record_mode_store, [_('Correctly spelled'), 2])
+        liststore_append(self._record_mode_store, [_('Nothing'), 3])
         self._record_mode_combobox.set_model(
             self._record_mode_store)
         renderer_text = Gtk.CellRendererText()
@@ -965,7 +963,8 @@ class SetupUI(Gtk.Window): # type: ignore
               'Typing Booster is active.'))
         self._ibus_keymap_store = Gtk.ListStore(str, str)
         for keymap in itb_util.AVAILABLE_IBUS_KEYMAPS:
-            self._ibus_keymap_store.append(
+            liststore_append(
+                self._ibus_keymap_store,
                 # Translators: “English” is used here to indicate
                 # variants of IBus keymaps producing ASCII
                 # (i.e. “English” letters). What will be displayed
@@ -1532,7 +1531,8 @@ class SetupUI(Gtk.Window): # type: ignore
         self._keybindings_treeview_model = Gtk.ListStore(str, str)
         keybindings_treeview.set_model(self._keybindings_treeview_model)
         for command in sorted(self._settings_dict['keybindings']['user']):
-            self._keybindings_treeview_model.append(
+            liststore_append(
+                self._keybindings_treeview_model,
                 (command,
                  repr(self._settings_dict['keybindings']['user'][command])))
         keybindings_treeview_column_0 = Gtk.TreeViewColumn(
@@ -1670,12 +1670,12 @@ class SetupUI(Gtk.Window): # type: ignore
         lookup_table_orientation_label.set_xalign(0)
         self._lookup_table_orientation_combobox = Gtk.ComboBox()
         self._lookup_table_orientation_store = Gtk.ListStore(str, int)
-        self._lookup_table_orientation_store.append(
-            [_('Horizontal'), IBus.Orientation.HORIZONTAL])
-        self._lookup_table_orientation_store.append(
-            [_('Vertical'), IBus.Orientation.VERTICAL])
-        self._lookup_table_orientation_store.append(
-            [_('System default'), IBus.Orientation.SYSTEM])
+        liststore_append(self._lookup_table_orientation_store,
+                         [_('Horizontal'), IBus.Orientation.HORIZONTAL])
+        liststore_append(self._lookup_table_orientation_store,
+                         [_('Vertical'), IBus.Orientation.VERTICAL])
+        liststore_append(self._lookup_table_orientation_store,
+                         [_('System default'), IBus.Orientation.SYSTEM])
         self._lookup_table_orientation_combobox.set_model(
             self._lookup_table_orientation_store)
         renderer_text = Gtk.CellRendererText()
@@ -1738,19 +1738,23 @@ class SetupUI(Gtk.Window): # type: ignore
         preedit_underline_label.set_xalign(0)
         self._preedit_underline_combobox = Gtk.ComboBox()
         self._preedit_underline_store = Gtk.ListStore(str, int)
-        self._preedit_underline_store.append(
+        liststore_append(
+            self._preedit_underline_store,
             # Translators: This is the setting to use no underline
             # at all for the preedit.
             [_('None'), IBus.AttrUnderline.NONE])
-        self._preedit_underline_store.append(
+        liststore_append(
+            self._preedit_underline_store,
             # Translators: This is the setting to use a single
             # underline for the preedit.
             [_('Single'), IBus.AttrUnderline.SINGLE])
-        self._preedit_underline_store.append(
+        liststore_append(
+            self._preedit_underline_store,
             # Translators: This is the setting to use a double
             # underline for the preedit.
             [_('Double'), IBus.AttrUnderline.DOUBLE])
-        self._preedit_underline_store.append(
+        liststore_append(
+            self._preedit_underline_store,
             # Translators: This is the setting to use a low
             # underline for the preedit.
             [_('Low'), IBus.AttrUnderline.LOW])
@@ -2818,7 +2822,8 @@ class SetupUI(Gtk.Window): # type: ignore
             selected_ollama_model = self._settings_dict['ollamamodel']['user']
             self._ai_model_combobox.handler_block(self._ai_model_combobox_changed_id)
             self._ai_model_store.clear()
-            self._ai_model_store.append(
+            liststore_append(
+                self._ai_model_store,
                 [f'{selected_ollama_model} ❌️', selected_ollama_model, False])
             combobox_set_active(self._ai_model_combobox,
                                 self._ai_model_store, 0)
@@ -2849,10 +2854,12 @@ class SetupUI(Gtk.Window): # type: ignore
             long_id = ''
             if model_id_short != model_id:
                 long_id = f'({model_id.split("/")[-1]})'
-            self._ai_model_store.append(
+            liststore_append(
+                self._ai_model_store,
                 [f'{model_id_short} ✔️ {long_id}', model_id_short, True])
         if not selected_ollama_model_short_available:
-            self._ai_model_store.append(
+            liststore_append(
+                self._ai_model_store,
                 [f'{selected_ollama_model_short} ❌️',
                  selected_ollama_model_short, False])
         for i, item in enumerate(self._ai_model_store):
@@ -3071,8 +3078,8 @@ class SetupUI(Gtk.Window): # type: ignore
             if (setting in self._allowed_autosettings
                 and 'value_hint' in self._allowed_autosettings[setting]):
                 value_hint = self._allowed_autosettings[setting]['value_hint']
-            autosettings_treeview_model.append((
-                setting, value, regexp, value_hint))
+            liststore_append(autosettings_treeview_model,
+                             (setting, value, regexp, value_hint))
         autosettings_treeview_column_0 = Gtk.TreeViewColumn(
             # Translators: Column heading of the table listing
             # the automatic settings
@@ -4477,7 +4484,7 @@ class SetupUI(Gtk.Window): # type: ignore
         treeview_model = Gtk.ListStore(str, str, str)
         treeview.set_model(treeview_model)
         for (name, description, value) in variables:
-            treeview_model.append((name, description, value))
+            liststore_append(treeview_model, (name, description, value))
         treeview_column_0 = Gtk.TreeViewColumn(
             # Translators: Column heading of the table listing the variables
             # for the currently selected input method
@@ -5102,7 +5109,7 @@ class SetupUI(Gtk.Window): # type: ignore
                     input_phrase=shortcut,
                     phrase=shortcut_expansion,
                     user_freq=itb_util.SHORTCUT_USER_FREQ)
-                model.append((shortcut, shortcut_expansion))
+                liststore_append(model, (shortcut, shortcut_expansion))
             self._shortcut_entry.set_text('')
             expansion_buffer.set_text('')
             self._shortcut_treeview.get_selection().unselect_all()
@@ -5134,7 +5141,7 @@ class SetupUI(Gtk.Window): # type: ignore
                 itb_util.remove_accents(shortcut[0]).lower()
                 + ' ' + itb_util.remove_accents(shortcut[1]).lower())
             if all(filter_word in text_to_match for filter_word in filter_words):
-                self._shortcut_treeview_model.append(shortcut)
+                liststore_append(self._shortcut_treeview_model, shortcut)
 
     def _on_shortcut_search_entry_changed(
             self, search_entry: Gtk.SearchEntry) -> None:

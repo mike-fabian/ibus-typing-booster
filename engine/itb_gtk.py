@@ -35,7 +35,10 @@ entire process uses a consistent GI setup.
 This module must be imported **before** any other module imports
 Gtk or Gdk.
 '''
-from typing import Tuple
+from typing import (
+    Tuple,
+    Dict,
+)
 import sys
 import os
 import traceback
@@ -55,11 +58,58 @@ if 'gi.repository.Gdk' in sys.modules:
         'Ensure all imports of Gtk/Gdk go through itb_gtk. '
         'Import stack trace:\n' + ''.join(traceback.format_stack()))
 
+def _os_release() -> Dict[str, str]:
+    '''Return ID, VERSION_ID, ID_LIKE from /etc/os-release.'''
+    result = {}
+    try:
+        with open('/etc/os-release', encoding='utf-8') as f:
+            for line in f:
+                if '=' in line:
+                    k, v = line.strip().split('=', 1)
+                    result[k] = v.strip('"')
+    except Exception: # pylint: disable=broad-except
+        pass
+    return result
+
+def _is_rhel9() -> bool:
+    '''
+    Detect RHEL 9 and RHEL 9 compatible rebuilds (AlmaLinux 9, Rocky 9, etc.)
+
+    These systems ship Gtk4 but lack support for color emoji in Gtk4,
+    so ibus-typing-booster should force Gtk3.
+    '''
+    data = _os_release()
+    distro_id = data.get('ID', '')
+    version = data.get('VERSION_ID', '')
+    if distro_id in ('rhel', 'almalinux', 'rocky'):
+        return version.startswith('9.')
+    return False
+
+def _is_ubuntu_2204_or_older() -> bool:
+    '''
+    Detect Ubuntu ≤ 22.04 (Jammy).
+
+    Jammy ships Gtk 4.6 which lacks:
+        Gtk.Picture.set_content_fit
+    which ibus-typing-booster needs.
+
+    Force Gtk3 on such systems.
+    '''
+    data = _os_release()
+    distro_id = data.get('ID', '')
+    version = data.get('VERSION_ID', '')
+    if distro_id != 'ubuntu':
+        return False
+    try:
+        major, minor = map(int, version.split('.')[:2])
+    except Exception: # pylint: disable=broad-except
+        return False
+    return (major, minor) <= (22, 4)
+
 def _gtk_available(major: int) -> bool:
     '''Check if Gtk major version is installed and introspectable.'''
     try:
-        req = '4.0' if major == 4 else '3.0'
-        require_version('Gtk', req)
+        require_version('Gtk', '4.0' if major == 4 else '3.0')
         return True
     except Exception: # pylint: disable=broad-except
         return False
@@ -72,11 +122,14 @@ if requested in ('3', 'gtk3', '3.0'):
 elif requested in ('4', 'gtk4', '4.0'):
     VERSION = '4'
 else:
-    # Autodetect: prefer Gtk4 if available, else Gtk3
-    if _gtk_available(4):
-        VERSION = '4'
-    else:
+    # Autodetect
+    if _is_rhel9():
+        # Force Gtk3 on RHEL9 due to broken emoji support in Gtk4
         VERSION = '3'
+    elif _is_ubuntu_2204_or_older():
+        VERSION = '3'
+    else:
+        VERSION = '4' if _gtk_available(4) else '3'
 
 # Apply GI version requirements
 if VERSION == '3':
@@ -96,10 +149,7 @@ from gi.repository import Gtk, Gdk # type: ignore # noqa: F401 # Intentional re-
 GTK_MAJOR: int = Gtk.get_major_version()
 GTK_MINOR: int = Gtk.get_minor_version()
 GTK_MICRO: int = Gtk.get_micro_version()
-GTK_VERSION: Tuple[int, int, int] = (
-    Gtk.get_major_version(),
-    Gtk.get_minor_version(),
-    Gtk.get_micro_version())
+GTK_VERSION: Tuple[int, int, int] = (GTK_MAJOR, GTK_MINOR, GTK_MICRO)
 # pylint: enable=no-value-for-parameter
 
 ## Re-export for external use (create mypy warnings, uncomment for the moment)
