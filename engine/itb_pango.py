@@ -46,6 +46,8 @@ if TYPE_CHECKING:
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
+_HAS_ATTR_FALLBACK = hasattr(Pango, "attr_fallback_new")
+
 @functools.lru_cache(maxsize=1)
 def _get_global_gtk_label() -> Gtk.Label:
     '''Create a reusable Gtk.Label, first call initializes'''
@@ -392,7 +394,9 @@ def get_fonts_used_for_text(
     ['COLR']
     '''
     # pylint: enable=line-too-long
-    fonts_used = []
+    fonts_used: List[Tuple[str, Dict[str, Any]]]  = []
+    if not _HAS_ATTR_FALLBACK:
+        return [(text, {'font': 'unknown: Pango broken on this platform (RHEL8?)'})]
     text_utf8 = text.encode('UTF-8', errors='replace')
     pango_layout = _get_global_pango_layout()
     pango_font_description = Pango.font_description_from_string(font)
@@ -509,6 +513,8 @@ def emoji_font_fallback_needed(font: str, text: str) -> bool:
         return False
     fonts_used = get_fonts_used_for_text(font, text, fallback=False)
     if not fonts_used:
+        return False
+    if not _HAS_ATTR_FALLBACK: # RHEL8?
         return False
     if len(fonts_used) > 1:
         # If there is more than one run, that means the text contained more
