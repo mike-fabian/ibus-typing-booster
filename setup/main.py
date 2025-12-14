@@ -2588,7 +2588,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._autosettings_add_button.set_sensitive(True)
         self._autosettings_add_button.set_can_focus(True)
         self._autosettings_remove_button = CompatButton(
-            label='<span size="xx-large"><b>-</b></span>',
+            label='<span size="xx-large"><b>−</b></span>',
             # Translators: This is a button to remove an autosetting.
             # “Autosettings” are settings which may change automatically
             # to specific valueS depending on which window (or which
@@ -5363,7 +5363,7 @@ class SetupUI(Gtk.Window): # type: ignore
             'clicked', self._on_keybindings_edit_popover_add_button_clicked)
         self._keybindings_edit_popover_add_button.set_sensitive(True)
         self._keybindings_edit_popover_remove_button = CompatButton(
-            label='<span size="xx-large"><b>-</b></span>',
+            label='<span size="xx-large"><b>−</b></span>',
             tooltip_text=_('Remove selected key binding'))
         self._keybindings_edit_popover_remove_button.connect(
             'clicked', self._on_keybindings_edit_popover_remove_button_clicked)
