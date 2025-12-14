@@ -4053,6 +4053,11 @@ def find_hunspell_dictionary(language: str) -> Tuple[str, str]:
     aff_path = ''
     dirnames: List[str] = hunspell_dirnames()
     for lang in expand_languages([language]):
+        if lang.startswith('en') and not language.startswith('en'):
+            # never fall back to 'en' if language is not English.  For
+            # emoji search a last ditch fallback to English is OK, but
+            # not for a spelling dictionary.
+            continue
         for dirname in dirnames:
             if os.path.isfile(os.path.join(dirname, lang + '.dic')):
                 dic_path = os.path.join(dirname, lang + '.dic')
