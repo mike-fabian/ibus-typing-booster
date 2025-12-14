@@ -1543,6 +1543,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             LOGGER.debug(
                 'on_search_entry_search_changed() query_string = %s\n',
                 query_string)
+        self._currently_selected_label = None # stop label processing
         if not self._search_bar.get_search_mode():
             # If the text in the search entry changes while
             # the search bar is invisible, ignore it.
@@ -1587,7 +1588,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 'self._currently_selected_label = %s\n',
                 model[iterator][:],
                 repr(self._currently_selected_label))
+        # stop search processing
         self._search_bar.set_search_mode(False)
+        self._search_entry.set_text('')
+        self._query_string = ''
         self._browse_treeview.grab_focus()
         language = model[iterator][1]
         label_key = model[iterator][2]
