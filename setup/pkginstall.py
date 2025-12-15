@@ -36,9 +36,6 @@ if sys.version_info >= (3, 8):
 else:
     from typing_extensions import Literal
 # pylint: enable=wrong-import-position
-InstallStatus = Literal['success', 'cancelled', 'failure']
-OutputCallback = Callable[[str], None]
-CompleteCallback = Callable[[InstallStatus], None]
 import os
 import re
 import signal
@@ -66,6 +63,9 @@ from g_compat_helpers import (
     show_all,
 )
 # pylint: enable=import-error, wrong-import-order
+InstallStatus = Literal['success', 'cancelled', 'failure']
+OutputCallback = Callable[[str], None]
+CompleteCallback = Callable[[InstallStatus], None]
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
