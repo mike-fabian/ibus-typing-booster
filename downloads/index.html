@@ -39,11 +39,4 @@ sudo apt install ibus-typing-booster
 curl -fsSL https://download.opensuse.org/repositories/home:mike-fabian/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_mike-fabian.gpg &gt; /dev/null
 sudo apt update
 sudo apt install ibus-typing-booster
-</code></pre></li></ul><p>Unfortunately, the openSUSE build service does not create valid
-signatures for the above apt repositories at the moment. I have
-reported this issue here:
-<a href=https://github.com/openSUSE/open-build-service/issues/18983>https://github.com/openSUSE/open-build-service/issues/18983</a></p><p>To work around this invalid signature problem, one can add
-<code>[trusted=yes]</code> to the repository file installed by one of the above
-commands. For example make it look like this:</p><pre><code>mfabian@ubuntu24:~$ cat /etc/apt/sources.list.d/home\:mike-fabian.list 
-deb [trusted=yes] http://download.opensuse.org/repositories/home:/mike-fabian/xUbuntu_24.04/ /
-</code></pre><p>After adding <code>[trusted=yes]</code>, <code>sudo apt update</code> and <code>sudo apt install ibus-typing-booster</code> should work.</p><footer class=site-footer><span class=site-footer-credits>Made with <a href=https://gohugo.io/>Hugo</a>. Themed by <a href=https://github.com/zwbetz-gh/cayman-hugo-theme>Cayman</a>.</span></footer></section></body></html>
+</code></pre></li></ul><footer class=site-footer><span class=site-footer-credits>Made with <a href=https://gohugo.io/>Hugo</a>. Themed by <a href=https://github.com/zwbetz-gh/cayman-hugo-theme>Cayman</a>.</span></footer></section></body></html>
