@@ -96,20 +96,3 @@ Then:
   sudo apt update
   sudo apt install ibus-typing-booster
   ```
-
-Unfortunately, the openSUSE build service does not create valid
-signatures for the above apt repositories at the moment. I have
-reported this issue here:
-https://github.com/openSUSE/open-build-service/issues/18983
-
-To work around this invalid signature problem, one can add
-`[trusted=yes]` to the repository file installed by one of the above
-commands.  For example make it look like this:
-
-```
-mfabian@ubuntu24:~$ cat /etc/apt/sources.list.d/home\:mike-fabian.list 
-deb [trusted=yes] http://download.opensuse.org/repositories/home:/mike-fabian/xUbuntu_24.04/ /
-```
-
-After adding `[trusted=yes]`, `sudo apt update` and `sudo apt install ibus-typing-booster` should work.
-
