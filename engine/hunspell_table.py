@@ -10050,6 +10050,11 @@ class TypingBoosterEngine(IBus.Engine):
         if self._debug_level > 1:
             LOGGER.debug('KeyEvent object: %s', key)
             LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
+            if self._debug_level > 2:
+                for cap in itb_util.Capabilite:
+                    if self.client_capabilities & cap:
+                        LOGGER.debug('capability: %s %s',
+                                     str(cap), format(int(cap), '016b'))
 
         if self._use_ibus_keymap:
             key = self._translate_to_ibus_keymap(key)
@@ -11191,21 +11196,17 @@ class TypingBoosterEngine(IBus.Engine):
         self._input_hints = hints
         if self._debug_level > 1:
             if (self._input_purpose
-                in [int(x) for x in list(itb_util.InputPurpose)]):
-                for input_purpose in list(itb_util.InputPurpose):
-                    if self._input_purpose == input_purpose:
-                        LOGGER.debug(
-                            'self._input_purpose = %s (%s)',
-                            self._input_purpose, str(input_purpose))
-            else:
-                LOGGER.debug(
-                    'self._input_purpose = %s (Unknown)',
-                    self._input_purpose)
+                not in [int(x) for x in list(itb_util.InputPurpose)]):
+                LOGGER.debug('self._input_purpose = %s (Unknown)',
+                             self._input_purpose)
+            for input_purpose in list(itb_util.InputPurpose):
+                if self._input_purpose == input_purpose:
+                    LOGGER.debug('self._input_purpose = %s (%s)',
+                                 self._input_purpose, str(input_purpose))
             for hint in itb_util.InputHints:
                 if self._input_hints & hint:
-                    LOGGER.debug(
-                        'hint: %s %s',
-                        str(hint), format(int(hint), '016b'))
+                    LOGGER.debug('hint: %s %s',
+                                 str(hint), format(int(hint), '016b'))
 
     def do_enable(self) -> None: # pylint: disable=arguments-differ
         '''Called when this input engine is enabled'''
