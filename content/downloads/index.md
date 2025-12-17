@@ -75,6 +75,13 @@ Then:
   sudo apt update
   sudo apt install ibus-typing-booster
   ```
+* For **Ubuntu 25.10** run the following:
+  ```
+  echo 'deb http://download.opensuse.org/repositories/home:/mike-fabian/xUbuntu_25.10/ /' | sudo tee /etc/apt/sources.list.d/home:mike-fabian.list
+  curl -fsSL https://download.opensuse.org/repositories/home:mike-fabian/xUbuntu_25.10/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_mike-fabian.gpg > /dev/null
+  sudo apt update
+  sudo apt install ibus-typing-booster
+  ```
 * For **Ubuntu 25.04** run the following:
   ```
   echo 'deb http://download.opensuse.org/repositories/home:/mike-fabian/xUbuntu_25.04/ /' | sudo tee /etc/apt/sources.list.d/home:mike-fabian.list
