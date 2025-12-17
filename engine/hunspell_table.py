@@ -7990,6 +7990,8 @@ class TypingBoosterEngine(IBus.Engine):
         if self._debug_level > 1:
             LOGGER.debug('selection_text=%r prompt=%r', selection_text, prompt)
         if self._label_busy and self._label_busy_string.strip():
+            # In Python < 3.12, f-string expression part cannot include a backslash
+            wrapped_prompt = '\n'.join([self._ollama_aux_wrapper.fill(prompt)])
             # Show a label in the auxiliary text to indicate busy
             # state (by default an hourglass with moving sand):
             self.update_auxiliary_text(
@@ -7997,7 +7999,7 @@ class TypingBoosterEngine(IBus.Engine):
                     f'{self._label_busy_string.strip()}'
                     f'{self._ollama_server_label}'
                     f'[{len(self._ollama_messages)}] {self._ollama_model}\n'
-                    f'{prompt}'), True)
+                    f'{wrapped_prompt}'), True)
         else:
             self.update_auxiliary_text(
                 IBus.Text.new_from_string(''), False)
