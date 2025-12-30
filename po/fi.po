@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2025-12-14 22:22+0100\n"
-"PO-Revision-Date: 2025-11-12 21:33+0000\n"
+"PO-Revision-Date: 2025-12-30 16:37+0000\n"
 "Last-Translator: Jan Kuparinen <copper_fin@hotmail.com>\n"
 "Language-Team: Finnish <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/fi/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:301
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -1796,10 +1796,8 @@ msgid "Move an autosetting down"
 msgstr "Siirrä automaattinen asetus alas"
 
 #: setup/main.py:2630
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Set all autosettings to default"
-msgstr "Aseta kaikki oletuksiksi"
+msgstr "Aseta kaikki automaattiset asetukset oletusarvoihin"
 
 #: setup/main.py:2892
 msgid "Spell checking"
@@ -1897,14 +1895,9 @@ msgstr ""
 #. This cannot be reversed so the user
 #. should be really sure he wants to do that.
 #: setup/main.py:5486
-#, fuzzy
-#| msgid ""
-#| "Do you really want to set the key bindings for all commands to their "
-#| "defaults?"
 msgid "Do you really want to set all autosettings to their defaults?"
 msgstr ""
-"Haluatko todella asettaa kaikkien komentojen näppäinsidokset "
-"oletusarvoihinsa?"
+"Haluatko todella palauttaa kaikki automaattiset asetukset oletusarvoihinsa?"
 
 #: setup/main.py:5507
 #, python-format
