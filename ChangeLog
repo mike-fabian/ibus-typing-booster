@@ -1,4 +1,19 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 22 Jan 2026 Release 2.30.0
+* Make autosetting `ibuseventsleepseconds` possible (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/878)
+* Use a better estimate of how many `Left` keys are needed to step back over the committed string to the caret position (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/874)
+* Finalize commit string also when the preedit cursor is not at the right end of the preedit (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/871)
+* Change the look of the selected Gtk.Notebook tab (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/872)
+* Commit key should commit the final form always (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/870)
+* Make the “Options” and “Appearance” tabs in the setup tool scrollable to save vertical space (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/865)
+* Add an option to show in the preedit what would be committed on pressing space (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/854)
+* Add commands to commit the raw input, with and without forwarding the key (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/855)
+* Add an option to show the raw input in the auxiliary text (Resolves:  https://github.com/mike-fabian/ibus-typing-booster/issues/853)
+* When a candidate is autoselected, the `cancel` command should deselect (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/851)
+* Use self._ollama_aux_wrapper when showing the prompt in the auxiliary text (Without that, long prompts may be shown as a very long single line auxiliary text partly off-screen.)
+* Translation update from Weblate (ca 100%, de 100%, fi 100%, it 100%, ja 100%, ka 100%, ko 100%, sv 100%, tr 100%, uk 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 13 Dec 2025 Release 2.29.0
 * find_hunspell_dictionary(language: str): Never fall back to en if language is not English
 * emoji_picker.py: improve selecting a label while search is still running
