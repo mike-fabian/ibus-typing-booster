@@ -7435,7 +7435,9 @@ class TypingBoosterEngine(IBus.Engine):
             # list:
             self._lookup_table.set_cursor_visible(False)
             self._lookup_table.set_cursor_pos(0)
-            self._update_lookup_table_and_aux()
+            self.update_lookup_table(self.get_lookup_table(), True)
+            if not self._is_candidate_auto_selected:
+                self._update_lookup_table_and_aux()
             return True
         if (self._lookup_table.state == LookupTableState.RELATED_CANDIDATES
             or self._current_case_mode != 'orig'):

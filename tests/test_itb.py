@@ -4534,6 +4534,58 @@ class ItbTestCase(unittest.TestCase):
         self.assertFalse(self.engine._temporary_emoji_predictions)
         self.assertFalse(self.engine._temporary_word_predictions)
 
+    def test_cancel_candidate_auto_select_no(self) -> None:
+        '''https://github.com/mike-fabian/ibus-typing-booster/issues/851'''
+        self.engine.set_current_imes(['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(['en_US'], update_gsettings=False)
+        # 0 means no autoselection
+        self.engine.set_auto_select_candidate(0, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'a')
+        # No candidate should be selected
+        self.assertEqual(0, self.engine._lookup_table.get_cursor_pos())
+        self.assertEqual(False, self.engine._lookup_table.is_cursor_visible())
+        # select 1st candidate
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(0, self.engine._lookup_table.get_cursor_pos())
+        self.assertEqual(True, self.engine._lookup_table.is_cursor_visible())
+        # select 2nd candidate
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(1, self.engine._lookup_table.get_cursor_pos())
+        self.assertEqual(True, self.engine._lookup_table.is_cursor_visible())
+        # cancel, no candidate should be selected
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        self.assertEqual(0, self.engine._lookup_table.get_cursor_pos())
+        self.assertEqual(False, self.engine._lookup_table.is_cursor_visible())
+        # preedit unchanged:
+        self.assertEqual(self.engine.mock_preedit_text, 'a')
+
+    def test_cancel_candidate_auto_select_always(self) -> None:
+        '''https://github.com/mike-fabian/ibus-typing-booster/issues/851'''
+        self.engine.set_current_imes(['NoIME'], update_gsettings=False)
+        self.engine.set_dictionary_names(['en_US'], update_gsettings=False)
+        # 2 means always autoselection
+        self.engine.set_auto_select_candidate(2, update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'a')
+        # 1st candidate should be selected
+        self.assertEqual(0, self.engine._lookup_table.get_cursor_pos())
+        self.assertEqual(True, self.engine._lookup_table.is_cursor_visible())
+        # select 2nd candidate
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(1, self.engine._lookup_table.get_cursor_pos())
+        self.assertEqual(True, self.engine._lookup_table.is_cursor_visible())
+        # cancel, 1st candidate should be selected again
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        self.assertEqual(0, self.engine._lookup_table.get_cursor_pos())
+        self.assertEqual(True, self.engine._lookup_table.is_cursor_visible())
+        # cancel, no candidate should be selected
+        self.engine.do_process_key_event(IBus.KEY_Escape, 0, 0)
+        self.assertEqual(0, self.engine._lookup_table.get_cursor_pos())
+        self.assertEqual(False, self.engine._lookup_table.is_cursor_visible())
+        # preedit unchanged:
+        self.assertEqual(self.engine.mock_preedit_text, 'a')
+
     def test_issue_712_mim(self) -> None:
         ''' https://github.com/mike-fabian/ibus-typing-booster/issues/712 '''
         _dummy_trans = self.get_transliterator_or_skip('t-test-issue-712')
