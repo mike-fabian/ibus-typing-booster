@@ -5082,6 +5082,20 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         return self._arrow_keys_reopen_preedit
 
+    def _commit_raw_input(self) -> None:
+        '''Commits the raw input'''
+        commit_string = ''.join(self._typed_string)
+        if self._typed_compose_sequence:
+            commit_string = (
+                ''.join(self._typed_string[:self._typed_string_cursor])
+                + self._compose_sequences.preedit_representation(
+                    self._typed_compose_sequence)
+                + ''.join(self._typed_string[self._typed_string_cursor:]))
+        self._commit_string(commit_string, input_phrase=commit_string)
+        for _ in self._typed_string[self._typed_string_cursor:]:
+            self._forward_generated_key_event(IBus.KEY_Left)
+        self._clear_input_and_update_ui()
+
     def _commit_current_input(self) -> None:
         '''Commits the current state:
 
@@ -8718,6 +8732,26 @@ class TypingBoosterEngine(IBus.Engine):
         self._change_line_direction('toggle')
         return True
 
+    def _command_commit_raw_input(self) -> bool:
+        '''Handle hotkey for the command “commit_raw_input”
+
+        :return: True if the key was completely handled, False if not.
+        '''
+        if self.is_empty() and not self._typed_compose_sequence:
+            return False
+        self._commit_raw_input()
+        return True
+
+    def _command_commit_raw_input_and_forward_key(self) -> bool:
+        '''Handle hotkey for the command “commit_raw_input_and_forward_key”
+
+        :return: True if the key was completely handled, False if not.
+        '''
+        if self.is_empty() and not self._typed_compose_sequence:
+            return False
+        self._commit_raw_input()
+        return True
+
     def _command_commit(self) -> bool:
         '''Handle hotkey for the command “commit”
 
@@ -8995,7 +9029,9 @@ class TypingBoosterEngine(IBus.Engine):
                                     'Super_L', 'Super_R',
                                     'ISO_Level3_Shift'):
                         return (True, False)
-                    if command in ('commit_and_forward_key',):
+                    if (command
+                        in ('commit_and_forward_key',
+                            'commit_raw_input_and_forward_key')):
                         return (True, False)
                     return (True, True)
         if hotkey_removed_from_compose_sequence:
@@ -9296,6 +9332,8 @@ class TypingBoosterEngine(IBus.Engine):
                     key, commands=['cancel',
                                    'commit',
                                    'commit_and_forward_key',
+                                   'commit_raw_input',
+                                   'commit_raw_input_and_forward_key',
                                    'toggle_input_mode_on_off',
                                    'enable_lookup',
                                    'select_next_candidate',
@@ -9924,6 +9962,8 @@ class TypingBoosterEngine(IBus.Engine):
                                'change_line_direction_toggle',
                                'commit',
                                'commit_and_forward_key',
+                               'commit_raw_input',
+                               'commit_raw_input_and_forward_key',
                                'toggle_input_mode_on_off',
                                'enable_lookup',
                                'select_next_candidate',

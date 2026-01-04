@@ -631,6 +631,8 @@
         'change_line_direction_toggle': &lt;@as []&gt;,
         'commit': &lt;@as []&gt;,
         'commit_and_forward_key': &lt;@as []&gt;,
+        'commit_raw_input': &lt;@as []&gt;,
+        'commit_raw_input_and_forward_key': &lt;@as []&gt;,
         'commit_candidate_1': &lt;@as []&gt;,
         'commit_candidate_1_plus_space': &lt;['1', 'KP_1', 'F1']&gt;,
         'commit_candidate_2': &lt;@as []&gt;,
