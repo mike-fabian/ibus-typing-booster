@@ -1636,6 +1636,50 @@ class SetupUI(Gtk.Window): # type: ignore
             self._show_status_info_in_auxiliary_text_checkbutton,
             1, _appearance_grid_row, 1, 1)
 
+        show_raw_input_label = Gtk.Label()
+        show_raw_input_label.set_text(
+            # Translators: A combobox to choose whether to show the raw
+            # input in the auxiliary text.  The auxiliary text is an
+            # optional line of text displayed above the candidate
+            # list.
+            _('Show raw input'))
+        show_raw_input_label.set_tooltip_text(
+            _('Showing the raw input may be helpful for '
+              'transliterating input methods.'))
+        show_raw_input_label.set_xalign(0)
+        self._show_raw_input_combobox = Gtk.ComboBox()
+        self._show_raw_input_store = Gtk.ListStore(str, int)
+        # Translators: A value of the combobox to choose whether to
+        # show the raw input in the auxiliary text.  The auxiliary
+        # text is an optional line of text displayed above the
+        # candidate list.
+        liststore_append(self._show_raw_input_store, [_('Never'), 0])
+        # Translators: A value of the combobox to choose whether to
+        # show the raw input in the auxiliary text.  The auxiliary
+        # text is an optional line of text displayed above the
+        # candidate list.
+        liststore_append(self._show_raw_input_store, [_('When there are candidates'), 1])
+        # Translators: A value of the combobox to choose whether to
+        # show the raw input in the auxiliary text.  The auxiliary
+        # text is an optional line of text displayed above the
+        # candidate list.
+        liststore_append(self._show_raw_input_store, [_('Always'), 2])
+        self._show_raw_input_combobox.set_model(self._show_raw_input_store)
+        renderer_text = Gtk.CellRendererText()
+        self._show_raw_input_combobox.pack_start(renderer_text, True)
+        self._show_raw_input_combobox.add_attribute(renderer_text, 'text', 0)
+        for i, item in enumerate(self._show_raw_input_store):
+            if self._settings_dict['showrawinput']['user'] == item[1]:
+                combobox_set_active(self._show_raw_input_combobox,
+                                    self._show_raw_input_store, i)
+        self._show_raw_input_combobox.connect(
+            'changed', self._on_show_raw_input_combobox_changed)
+        _appearance_grid_row += 1
+        appearance_grid.attach(
+            show_raw_input_label, 0, _appearance_grid_row, 1, 1)
+        appearance_grid.attach(
+            self._show_raw_input_combobox, 1, _appearance_grid_row, 1, 1)
+
         page_size_label = Gtk.Label()
         # Translators: Here one can choose how many suggestion
         # candidates to show in one page of the candidate list.
@@ -2708,6 +2752,7 @@ class SetupUI(Gtk.Window): # type: ignore
             'debuglevel': self.set_debug_level,
             'shownumberofcandidates': self.set_show_number_of_candidates,
             'showstatusinfoinaux': self.set_show_status_info_in_auxiliary_text,
+            'showrawinput': self.set_show_raw_input,
             'autoselectcandidate': self.set_auto_select_candidate,
             'colorpreeditspellcheck': self.set_color_preedit_spellcheck,
             'colorpreeditspellcheckstring':
@@ -3565,6 +3610,18 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         self.set_show_status_info_in_auxiliary_text(
             widget.get_active(), update_gsettings=True)
+
+    def _on_show_raw_input_combobox_changed(
+            self, widget: Gtk.ComboBox) -> None:
+        '''
+        The combobox to select whether to show the raw input in the auxiliary text
+        has been changed
+        '''
+        tree_iter = widget.get_active_iter()
+        if tree_iter is not None:
+            model = widget.get_model()
+            mode = model[tree_iter][1]
+            self.set_show_raw_input(mode, update_gsettings=True)
 
     def _on_preedit_style_only_when_lookup_checkbutton(
             self, widget: Gtk.CheckButton) -> None:
@@ -7184,6 +7241,37 @@ class SetupUI(Gtk.Window): # type: ignore
         else:
             self._show_status_info_in_auxiliary_text_checkbutton.set_active(
                 mode)
+
+    def set_show_raw_input(
+            self,
+            mode: Union[int, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the “Show raw input” mode
+
+        :param mode: Whether to show the raw input in the auxiliary text:
+                     0: Never
+                     1: When there are candidates
+                     2: Always
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
+        mode = int(mode)
+        if 0 <= mode <= 2:
+            self._settings_dict['showrawinput']['user'] = mode
+            if update_gsettings:
+                self._gsettings.set_value(
+                    'showrawinput',
+                    GLib.Variant.new_int32(mode))
+            else:
+                for i, item in enumerate(self._show_raw_input_store):
+                    if mode == item[1]:
+                        combobox_set_active(self._show_raw_input_combobox,
+                                            self._show_raw_input_store, i)
 
     def set_preedit_style_only_when_lookup(
             self,

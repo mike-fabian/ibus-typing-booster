@@ -748,6 +748,9 @@ class TypingBoosterEngine(IBus.Engine):
         self._show_status_info_in_auxiliary_text: bool = self._settings_dict[
             'showstatusinfoinaux']['user']
 
+        self._show_raw_input: int = self._settings_dict[
+            'showrawinput']['user']
+
         self._is_candidate_auto_selected = False
         self._auto_select_candidate: int = self._settings_dict[
             'autoselectcandidate']['user']
@@ -1356,6 +1359,9 @@ class TypingBoosterEngine(IBus.Engine):
             'showstatusinfoinaux': {
                 'set': self.set_show_status_info_in_auxiliary_text,
                 'get': self.get_show_status_info_in_auxiliary_text},
+            'showrawinput': {
+                'set': self.set_show_raw_input,
+                'get': self.get_show_raw_input},
             'autoselectcandidate': {
                 'set': self.set_auto_select_candidate,
                 'get': self.get_auto_select_candidate},
@@ -3143,6 +3149,37 @@ class TypingBoosterEngine(IBus.Engine):
         self.do_focus_out()
         super().destroy()
 
+    def _raw_input_representation(self) -> str:
+        '''Return a representation of the raw input as a string
+
+        The cursor position within the raw input is indicated with
+        '│' U+2502 BOX DRAWINGS LIGHT VERTICAL.
+
+        Compared to '|' U+007C VERTICAL BAR, U+2502 has the advantages:
+
+        - less likely in regular input
+        - wider spacing in a horizontal box and thicker line
+          (makes it less likely to be confused with a normal character)
+
+        `te│st`      ← Obvious separation, clear gap, cursor stands out
+        `I│love`     ← No confusion with capital I
+        `l│ist`      ← No confusion with lowercase L
+
+        '┃' U+2503 BOX DRAWINGS HEAVY VERTICAL might be an alternative
+        but this renders ugly and narrow on Gnome Wayland on a default
+        Fedora 43 install.
+        '''
+        if not self._typed_string:
+            return ''
+        raw_input_repr = (
+            f'{"".join(self._typed_string[:self._typed_string_cursor])}│'
+            f'{"".join(self._typed_string[self._typed_string_cursor:])}')
+        if self._current_imes[0] == 'ja-anthy':
+            # This is pretty ugly, I should work on supporting the henkan region
+            # properly ...
+            return raw_input_repr.replace(''.join(itb_util.ANTHY_HENKAN_WIDE), '')
+        return raw_input_repr
+
     def _add_color_to_attrs_for_spellcheck(
             self, attrs: IBus.AttrList, text: str) -> bool:
         '''May color the preedit if spellchecking fails
@@ -3247,6 +3284,17 @@ class TypingBoosterEngine(IBus.Engine):
         '''Update Preedit String in UI'''
         if self._debug_level > 1:
             LOGGER.debug('entering function')
+        if (self._show_raw_input >= 2  # Show *always*
+            and self._typed_string
+            and (self._lookup_table.hidden
+                 or not self._lookup_table.get_number_of_candidates())):
+            self.update_auxiliary_text(
+                IBus.Text.new_from_string(f'{self._raw_input_representation()}'),
+                True)
+            # Although the lookup table is invisible now, it needs an
+            # update to get the auxiliary text positioned correctly
+            # next to the cursor position:
+            self.update_lookup_table(self.get_lookup_table(), False)
         _str = self._get_preedit_string_with_case_mode_applied()
         if self._debug_level > 2:
             LOGGER.debug('_str=“%s”', _str)
@@ -3295,6 +3343,9 @@ class TypingBoosterEngine(IBus.Engine):
                     :self._typed_string_cursor]).replace(
                                    ''.join(itb_util.ANTHY_HENKAN_WIDE), '')
             aux_string += ' '
+        if (self._show_raw_input >= 1  # Show when there are candidates
+            and self._lookup_table.state == LookupTableState.NORMAL):
+            aux_string += f'{self._raw_input_representation()} '
         if self._show_number_of_candidates:
             aux_string += (
                 f'({self._lookup_table.get_cursor_pos() + 1} / '
@@ -6990,6 +7041,38 @@ class TypingBoosterEngine(IBus.Engine):
         “Show status in auxiliary text” mode
         '''
         return self._show_status_info_in_auxiliary_text
+
+    def set_show_raw_input(
+            self,
+            mode: Union[int, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets the “Show raw input” mode
+
+        :param mode: Whether to show the raw input in the auxiliary text.
+                     0: Never
+                     1: When there are candidates
+                     2: Always
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._show_raw_input:
+            return
+        self._show_raw_input = mode
+        self._clear_input_and_update_ui()
+        if update_gsettings:
+            self._gsettings.set_value(
+                'showrawinput',
+                GLib.Variant.new_int32(mode))
+
+    def get_show_raw_input(self) -> int:
+        '''Returns the current value of the “Show raw input” mode'''
+        return self._show_raw_input
 
     def set_auto_select_candidate(
             self,

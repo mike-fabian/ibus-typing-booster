@@ -536,6 +536,13 @@
         list.
       </description>
     </key>
+    <key name="showrawinput" type="i">
+      <default>1</default>
+      <summary>Show raw input</summary>
+      <description>
+        Showing the raw input may be helpful for transliterating input methods.
+      </description>
+    </key>
     <key name="autoselectcandidate" type="i">
       <default>0</default>
       <summary>Automatically select the best candidate</summary>
