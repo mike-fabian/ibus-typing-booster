@@ -2,7 +2,7 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # Hyeonho Kang <hyeonho2010@naver.com>, 2025.
-# 김인수 <simmon@nplob.com>, 2025.
+# 김인수 <simmon@nplob.com>, 2025, 2026.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
 # Mike FABIAN <mfabian@redhat.com>, 2025.
 msgid ""
@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-05 01:01+0100\n"
-"PO-Revision-Date: 2025-11-25 18:16+0000\n"
+"PO-Revision-Date: 2026-01-06 08:00+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/ko/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:301
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -1227,11 +1227,11 @@ msgstr ""
 #. list.
 #: setup/main.py:1644
 msgid "Show raw input"
-msgstr ""
+msgstr "단순 입력 표시"
 
 #: setup/main.py:1646
 msgid "Showing the raw input may be helpful for transliterating input methods."
-msgstr ""
+msgstr "단순 입력 표시는 입력 방식을 음역하는 데 도움이 될 수 있습니다."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
