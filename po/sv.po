@@ -7,14 +7,15 @@
 # Luna Jernberg <bittin@reimu.nl>, 2022, 2023, 2024, 2025.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024, 2025.
 # Luna Jernberg <droidbittin@gmail.com>, 2025.
+# Daniel Nylander <po@danielnylander.se>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-05 01:01+0100\n"
-"PO-Revision-Date: 2025-11-25 09:34+0000\n"
-"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"PO-Revision-Date: 2026-01-06 08:00+0000\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/sv/>\n"
 "Language: sv\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:301
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -1241,11 +1242,13 @@ msgstr ""
 #. list.
 #: setup/main.py:1644
 msgid "Show raw input"
-msgstr ""
+msgstr "Visa rå inmatning"
 
 #: setup/main.py:1646
 msgid "Showing the raw input may be helpful for transliterating input methods."
 msgstr ""
+"Visning av rå inmatning kan vara till hjälp för translitterering av "
+"inmatningsmetoder."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
