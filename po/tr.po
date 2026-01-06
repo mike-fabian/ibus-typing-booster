@@ -4,7 +4,7 @@
 # Oguz Ersen <oguzersen@protonmail.com>, 2019.
 # Oğuz Ersen <oguzersen@protonmail.com>, 2019, 2020, 2021, 2022.
 # Mike FABIAN <mfabian@redhat.com>, 2021, 2022, 2025.
-# Oğuz Ersen <oguz@ersen.moe>, 2022, 2023, 2024, 2025.
+# Oğuz Ersen <oguz@ersen.moe>, 2022, 2023, 2024, 2025, 2026.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024.
 msgid ""
 msgstr ""
@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-05 01:01+0100\n"
-"PO-Revision-Date: 2025-11-23 12:41+0000\n"
+"PO-Revision-Date: 2026-01-06 08:00+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/tr/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:301
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -1244,11 +1244,12 @@ msgstr ""
 #. list.
 #: setup/main.py:1644
 msgid "Show raw input"
-msgstr ""
+msgstr "Ham girişi göster"
 
 #: setup/main.py:1646
 msgid "Showing the raw input may be helpful for transliterating input methods."
 msgstr ""
+"Ham girişi göstermek, giriş yöntemlerini çevirmek için kullanışlı olabilir."
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
