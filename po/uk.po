@@ -1,10 +1,10 @@
-# Yuri Chornoivan <yurchor@ukr.net>, 2016, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
-# Yuri Chornoivan <yurchor@ukr.net>, 2016. #zanata, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
+# Yuri Chornoivan <yurchor@ukr.net>, 2016, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026.
+# Yuri Chornoivan <yurchor@ukr.net>, 2016. #zanata, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026.
 # Mike FABIAN <mfabian@redhat.com>, 2017. #zanata, 2019, 2020, 2025.
-# Yuri Chornoivan <yurchor@ukr.net>, 2017. #zanata, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
+# Yuri Chornoivan <yurchor@ukr.net>, 2017. #zanata, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026.
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2025.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018. #zanata, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
-# Yuri Chornoivan <yurchor@ukr.net>, 2019. #zanata, 2020, 2021, 2022, 2023, 2024, 2025.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018. #zanata, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026.
+# Yuri Chornoivan <yurchor@ukr.net>, 2019. #zanata, 2020, 2021, 2022, 2023, 2024, 2025, 2026.
 # Jelly Lopster <jellylopster@gmail.com>, 2024.
 msgid ""
 msgstr ""
@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-06 19:00+0100\n"
-"PO-Revision-Date: 2025-11-23 12:41+0000\n"
+"PO-Revision-Date: 2026-01-07 08:06+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/uk/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:301
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -1262,11 +1262,13 @@ msgstr ""
 #. list.
 #: setup/main.py:1645
 msgid "Show raw input"
-msgstr ""
+msgstr "Показувати необроблене введення"
 
 #: setup/main.py:1647
 msgid "Showing the raw input may be helpful for transliterating input methods."
 msgstr ""
+"Показ необробленого введення може бути корисним для способів введення з "
+"транслітерацією."
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1274,7 +1276,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1656
 msgid "Never"
-msgstr ""
+msgstr "Ніколи"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1282,7 +1284,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1661
 msgid "When there are candidates"
-msgstr ""
+msgstr "Якщо є пропозиції"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1290,7 +1292,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1666
 msgid "Always"
-msgstr ""
+msgstr "Завжди"
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
