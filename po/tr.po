@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-06 19:00+0100\n"
-"PO-Revision-Date: 2026-01-06 08:00+0000\n"
+"PO-Revision-Date: 2026-01-10 05:58+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/tr/>\n"
@@ -1257,7 +1257,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1656
 msgid "Never"
-msgstr ""
+msgstr "Asla"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1265,7 +1265,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1661
 msgid "When there are candidates"
-msgstr ""
+msgstr "Adaylar olduğunda"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1273,7 +1273,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1666
 msgid "Always"
-msgstr ""
+msgstr "Her zaman"
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
