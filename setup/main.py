@@ -289,7 +289,7 @@ class SetupUI(Gtk.Window): # type: ignore
         notebook = Gtk.Notebook()
         notebook.set_visible(True)
         notebook.set_can_focus(True) # True allows childs to focus in Gtk4
-        notebook.set_scrollable(True)
+        notebook.set_scrollable(False)
         notebook.set_tab_pos(Gtk.PositionType.LEFT)
         # popup enable is not needed when the tabs are at the left side
         # unless there are so many tabs that it even needs to scroll
@@ -359,13 +359,17 @@ class SetupUI(Gtk.Window): # type: ignore
         options_grid.set_row_homogeneous(False)
         options_grid.set_column_homogeneous(False)
         options_grid.set_hexpand(True)
-        options_grid.set_vexpand(False)
+        options_grid.set_vexpand(True)
         options_label = Gtk.Label()
         options_label.set_xalign(0)
         # Translators: This is the label of a tab in the setup tool.
         # Here the user can set up some options which influence the
         # behaviour of ibus-typing-booster.
         options_label.set_text('⚙️ '+ _('Options'))
+        options_scroll = Gtk.ScrolledWindow()
+        #options_scroll.set_hscrollbar_policy(Gtk.PolicyType.NEVER)
+        #options_scroll.set_vscrollbar_policy(Gtk.PolicyType.AUTOMATIC)
+        add_child(options_scroll, options_grid)
 
         custom_shortcuts_grid = Gtk.Grid()
         custom_shortcuts_grid.set_visible(True)
@@ -424,6 +428,8 @@ class SetupUI(Gtk.Window): # type: ignore
         # dictionaries, or from spellchecking) and/or whether
         # diffent types of candidates should be marked with labels.
         appearance_label.set_text('🎨 ' + _('Appearance'))
+        appearance_scroll = Gtk.ScrolledWindow()
+        add_child(appearance_scroll, appearance_grid)
 
         ai_grid = Gtk.Grid()
         ai_grid.set_visible(True)
@@ -481,10 +487,10 @@ class SetupUI(Gtk.Window): # type: ignore
         notebook.append_page(
             dictionaries_and_input_methods_vbox,
             dictionaries_and_input_methods_label)
-        notebook.append_page(options_grid, options_label)
+        notebook.append_page(options_scroll, options_label)
         notebook.append_page(custom_shortcuts_grid, custom_shortcuts_label)
         notebook.append_page(keybindings_vbox, keybindings_label)
-        notebook.append_page(appearance_grid, appearance_label)
+        notebook.append_page(appearance_scroll, appearance_label)
         notebook.append_page(ai_grid, ai_label)
         notebook.append_page(speech_recognition_grid, speech_recognition_label)
         notebook.append_page(autosettings_vbox, autosettings_label)
@@ -936,7 +942,7 @@ class SetupUI(Gtk.Window): # type: ignore
         _options_grid_row += 1
         options_grid.attach(
             self._ascii_digits_checkbutton,
-            0, _options_grid_row, 1, 1)
+            0, _options_grid_row, 2, 1)
 
         self._show_final_form_checkbutton = Gtk.CheckButton(
             # Translators: Checkbox for whether to show the final form while typing,
@@ -954,9 +960,10 @@ class SetupUI(Gtk.Window): # type: ignore
             'toggled', self._on_show_final_form_checkbutton)
         self._show_final_form_checkbutton.set_active(
             self._settings_dict['showfinalform']['user'])
+        _options_grid_row += 1
         options_grid.attach(
             self._show_final_form_checkbutton,
-            1, _options_grid_row, 1, 1)
+            0, _options_grid_row, 2, 1)
 
         self._use_ibus_keymap_checkbutton = Gtk.CheckButton(
             # Translators: Whether the use of an IBus keymap is
@@ -1651,10 +1658,11 @@ class SetupUI(Gtk.Window): # type: ignore
         _appearance_grid_row += 1
         appearance_grid.attach(
             self._show_number_of_candidates_checkbutton,
-            0, _appearance_grid_row, 1, 1)
+            0, _appearance_grid_row, 2, 1)
+        _appearance_grid_row += 1
         appearance_grid.attach(
             self._show_status_info_in_auxiliary_text_checkbutton,
-            1, _appearance_grid_row, 1, 1)
+            0, _appearance_grid_row, 2, 1)
 
         show_raw_input_label = Gtk.Label()
         show_raw_input_label.set_text(
