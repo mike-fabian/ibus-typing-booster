@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-12 19:37+0100\n"
-"PO-Revision-Date: 2026-01-06 19:04+0000\n"
+"PO-Revision-Date: 2026-01-12 22:19+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/ja/>\n"
@@ -878,7 +878,7 @@ msgstr ""
 #. by pressing space.
 #: setup/main.py:951
 msgid "Show final form while typing"
-msgstr ""
+msgstr "確定前の最終文字を表示"
 
 #. Translators: Tooltip for the checkbox for whether to
 #. show the final form while typing, i.e. show the text as
@@ -888,7 +888,7 @@ msgstr ""
 msgid ""
 "Show the text as it would appear if you ended the composition now by "
 "pressing Space."
-msgstr ""
+msgstr "スペースキーで確定した場合に挿入される文字を、プレエディット中に表示します。"
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
