@@ -234,6 +234,8 @@ class ItbTestCase(unittest.TestCase):
             self.engine.get_disable_in_terminals())
         self.orig_ascii_digits = (
             self.engine.get_ascii_digits())
+        self.orig_show_final_form = (
+            self.engine.get_show_final_form())
         self.orig_word_prediction_mode = (
             self.engine.get_word_prediction_mode())
         self.orig_emoji_prediction_mode = (
@@ -291,6 +293,9 @@ class ItbTestCase(unittest.TestCase):
             update_gsettings=False)
         self.engine.set_ascii_digits(
             self.orig_ascii_digits,
+            update_gsettings=False)
+        self.engine.set_show_final_form(
+            self.orig_show_final_form,
             update_gsettings=False)
         self.engine.set_word_prediction_mode(
             self.orig_word_prediction_mode,
@@ -445,9 +450,26 @@ class ItbTestCase(unittest.TestCase):
         _dummy_trans = self.get_transliterator_or_skip('te-rts')
         self.engine.set_current_imes(
             ['te-rts'], update_gsettings=False)
+        self.engine.set_show_final_form(False)
         self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertEqual(self.engine.mock_preedit_text, 'మ్')
+        self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine.mock_preedit_text, 'ం\t')
+
+    def test_te_rts_tab_show_final_form(self) -> None:
+        '''https://github.com/mike-fabian/ibus-typing-booster/issues/708
+
+        `Tab` needs to work as input, it is used in some m17n-db input methods.
+        '''
+        _dummy_trans = self.get_transliterator_or_skip('te-rts')
+        self.engine.set_current_imes(
+            ['te-rts'], update_gsettings=False)
+        self.engine.set_show_final_form(True)
+        self.engine.do_process_key_event(IBus.KEY_m, 0, 0)
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.assertEqual(self.engine.mock_preedit_text, 'ం')
         self.engine.do_process_key_event(IBus.KEY_Tab, 0, 0)
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertEqual(self.engine.mock_preedit_text, 'ం\t')
@@ -494,8 +516,21 @@ class ItbTestCase(unittest.TestCase):
         ''' https://bugzilla.redhat.com/show_bug.cgi?id=1353672 '''
         self.engine.set_current_imes(
             ['hi-itrans', 'mr-itrans', 'NoIME'], update_gsettings=False)
+        self.engine.set_show_final_form(False)
         self.engine.do_process_key_event(IBus.KEY_period, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '.')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '। ')
+
+    def test_hi_itrans_full_stop_space_show_final_form(self) -> None:
+        ''' https://bugzilla.redhat.com/show_bug.cgi?id=1353672 '''
+        self.engine.set_current_imes(
+            ['hi-itrans', 'mr-itrans', 'NoIME'], update_gsettings=False)
+        self.engine.set_show_final_form(True)
+        self.engine.do_process_key_event(IBus.KEY_period, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '।')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
@@ -507,6 +542,7 @@ class ItbTestCase(unittest.TestCase):
         '''
         self.engine.set_current_imes(
             ['hi-itrans', 'mr-itrans', 'NoIME'], update_gsettings=False)
+        self.engine.set_show_final_form(False)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'न्')
         self.assertEqual(self.engine.mock_committed_text, '')
@@ -517,6 +553,41 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(IBus.KEY_T, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'न्ट्')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(
+            IBus.KEY_Return, 0,
+            IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'न्ट्')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'न्ट् ')
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'अ')
+        self.assertEqual(self.engine.mock_committed_text, 'न्ट् ')
+        self.engine.do_process_key_event(
+            IBus.KEY_Return, 0,
+            IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'न्ट् अ\r')
+
+    def test_hi_itrans_commit_to_preedit_show_final_form(self) -> None:
+        ''' https://github.com/mike-fabian/ibus-typing-booster/issues/457
+        hi-itrans uses S-C-Return as a commit-key.
+        '''
+        self.engine.set_current_imes(
+            ['hi-itrans', 'mr-itrans', 'NoIME'], update_gsettings=False)
+        self.engine.set_show_final_form(True)
+        self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'न')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(
+            IBus.KEY_Return, 0,
+            IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
+        self.assertEqual(self.engine.mock_preedit_text, 'न्')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_T, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'न्ट')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.engine.do_process_key_event(
             IBus.KEY_Return, 0,
@@ -4684,6 +4755,7 @@ class ItbTestCase(unittest.TestCase):
         _dummy_trans = self.get_transliterator_or_skip('t-test-issue-707')
         self.engine.set_current_imes(
             ['t-test-issue-707'], update_gsettings=False)
+        self.engine.set_show_final_form(False)
         self.engine.do_process_key_event(
             IBus.KEY_u, 0, IBus.ModifierType.CONTROL_MASK)
         self.assertEqual(self.engine.mock_preedit_text, 'prompt:')

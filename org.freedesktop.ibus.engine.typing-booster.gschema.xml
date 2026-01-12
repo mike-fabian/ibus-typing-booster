@@ -394,6 +394,14 @@
         by input methods always to ASCII digits.
       </description>
     </key>
+    <key name="showfinalform" type="b">
+      <default>false</default>
+      <summary>Show final form while typing</summary>
+      <description>
+        Show the text as it would appear if you ended the composition
+        now by pressing Space.
+      </description>
+    </key>
     <key name="addspaceoncommit" type="b">
       <default>true</default>
       <summary>Add a space when committing by label or mouse</summary>

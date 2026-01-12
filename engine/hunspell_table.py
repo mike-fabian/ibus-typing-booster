@@ -763,6 +763,8 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._ascii_digits: bool = self._settings_dict['asciidigits']['user']
 
+        self._show_final_form: bool = self._settings_dict['showfinalform']['user']
+
         self._off_the_record: bool = self._settings_dict[
             'offtherecord']['user']
 
@@ -1314,6 +1316,9 @@ class TypingBoosterEngine(IBus.Engine):
             'asciidigits': {
                 'set': self.set_ascii_digits,
                 'get': self.get_ascii_digits},
+            'showfinalform': {
+                'set': self.set_show_final_form,
+                'get': self.get_show_final_form},
             'pagesize': {
                 'set': self.set_page_size,
                 'get': self.get_page_size},
@@ -3243,8 +3248,16 @@ class TypingBoosterEngine(IBus.Engine):
             trans = self._transliterators[ime]
             transliterated_parts = trans.transliterate_parts(
                 self._typed_string, ascii_digits=self._ascii_digits)
-            length_before = len(transliterated_parts.committed)
-            length_inner_preedit = len(transliterated_parts.preedit)
+            before = transliterated_parts.committed
+            length_before = len(before)
+            inner_preedit = transliterated_parts.preedit
+            length_inner_preedit = len(inner_preedit)
+            if self._show_final_form:
+                finalized = trans.transliterate(
+                    self._typed_string + [' '], ascii_digits=self._ascii_digits)
+                if finalized.endswith(' ') and finalized.startswith(before):
+                    inner_preedit = finalized[len(before):-1]
+                    length_inner_preedit = len(inner_preedit)
         if not length_inner_preedit:
             return False
         attrs.append(IBus.attr_foreground_new(
@@ -3266,15 +3279,22 @@ class TypingBoosterEngine(IBus.Engine):
         if self._typed_compose_sequence:
             before = self._transliterated_strings_before_compose[ime]
             inner_preedit = self._transliterated_strings_compose_part
+            after = text[len(before) + len(inner_preedit):]
         elif self._m17n_trans_parts.candidates:
             before = self._m17n_trans_parts.committed
             inner_preedit = self._m17n_trans_parts.preedit
+            after = text[len(before) + len(inner_preedit):]
         else:
             transliterated_parts = trans.transliterate_parts(
                 self._typed_string, ascii_digits=self._ascii_digits)
             before = transliterated_parts.committed
             inner_preedit = transliterated_parts.preedit
-        after = text[len(before) + len(inner_preedit):]
+            after = ''
+            if self._show_final_form:
+                finalized = trans.transliterate(
+                    self._typed_string + [' '], ascii_digits=self._ascii_digits)
+                if finalized.endswith(' ') and finalized.startswith(before):
+                    inner_preedit = finalized[len(before):-1]
         cm_func = self._case_modes[self._current_case_mode]['function']
         before = str(cm_func(before))
         after = str(cm_func(after))
@@ -3330,8 +3350,11 @@ class TypingBoosterEngine(IBus.Engine):
                 IBus.AttrUnderline.NONE, 0, len(_str)))
         text = IBus.Text.new_from_string(_str)
         text.set_attributes(attrs)
+        caret = self.get_caret()
+        if self._show_final_form:
+            caret = self.get_caret(extra_msymbol=' ')
         self.update_preedit_text_with_mode(
-            text, self.get_caret(), True, IBus.PreeditFocusMode.COMMIT)
+            text, caret, True, IBus.PreeditFocusMode.COMMIT)
 
     def _update_aux(self) -> None:
         '''Update auxiliary text'''
@@ -6505,6 +6528,46 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         self.set_ascii_digits(
             not self._ascii_digits, update_gsettings)
+
+    def set_show_final_form(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets whether the show the final form while typing
+
+        :param mode: Whether to show the final form while typing
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        if self._debug_level > 1:
+            LOGGER.debug(
+                '(%s, update_gsettings = %s)', mode, update_gsettings)
+        if mode == self._show_final_form:
+            return
+        self._show_final_form = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'showfinalform',
+                GLib.Variant.new_boolean(mode))
+
+    def get_show_final_form(self) -> bool:
+        '''Returns the current value of the “Show final form while typing” mode'''
+        return self._show_final_form
+
+    def toggle_show_final_form(self, update_gsettings: bool = True) -> None:
+        '''Toggles whether to show the final form while typing
+
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        self.set_show_final_form(
+            not self._show_final_form, update_gsettings)
 
     def set_remember_last_used_preedit_ime(
             self,

@@ -936,7 +936,27 @@ class SetupUI(Gtk.Window): # type: ignore
         _options_grid_row += 1
         options_grid.attach(
             self._ascii_digits_checkbutton,
-            0, _options_grid_row, 2, 1)
+            0, _options_grid_row, 1, 1)
+
+        self._show_final_form_checkbutton = Gtk.CheckButton(
+            # Translators: Checkbox for whether to show the final form while typing,
+            # i.e. show the text as it would appear if you ended the composition now
+            # by pressing space.
+            label=_('Show final form while typing'))
+        self._show_final_form_checkbutton.set_tooltip_text(
+            # Translators: Tooltip for the checkbox for whether to
+            # show the final form while typing, i.e. show the text as
+            # it would appear if you ended the composition now by
+            # pressing space.
+            _('Show the text as it would appear if you ended the composition '
+              'now by pressing Space.'))
+        self._show_final_form_checkbutton.connect(
+            'toggled', self._on_show_final_form_checkbutton)
+        self._show_final_form_checkbutton.set_active(
+            self._settings_dict['showfinalform']['user'])
+        options_grid.attach(
+            self._show_final_form_checkbutton,
+            1, _options_grid_row, 1, 1)
 
         self._use_ibus_keymap_checkbutton = Gtk.CheckButton(
             # Translators: Whether the use of an IBus keymap is
@@ -2718,6 +2738,7 @@ class SetupUI(Gtk.Window): # type: ignore
         set_functions = {
             'disableinterminals': self.set_disable_in_terminals,
             'asciidigits': self.set_ascii_digits,
+            'showfinalform': self.set_show_final_form,
             'avoidforwardkeyevent': self.set_avoid_forward_key_event,
             'addspaceoncommit': self.set_add_space_on_commit,
             'arrowkeysreopenpreedit': self.set_arrow_keys_reopen_preedit,
@@ -3726,6 +3747,14 @@ class SetupUI(Gtk.Window): # type: ignore
         digits to ASCII digits has been clicked.
         '''
         self.set_ascii_digits(
+            widget.get_active(), update_gsettings=True)
+
+    def _on_show_final_form_checkbutton(
+            self, widget: Gtk.CheckButton) -> None:
+        '''
+        The checkbutton whether show the final form while typing has been clicked.
+        '''
+        self.set_show_final_form(
             widget.get_active(), update_gsettings=True)
 
     def _on_use_ibus_keymap_checkbutton(
@@ -5714,6 +5743,30 @@ class SetupUI(Gtk.Window): # type: ignore
                 GLib.Variant.new_boolean(mode))
         else:
             self._ascii_digits_checkbutton.set_active(mode)
+
+    def set_show_final_form(
+            self,
+            mode: Union[bool, Any],
+            update_gsettings: bool = True) -> None:
+        '''Sets whether the show the final form while typing
+
+        :param mode: Whether to show the final form while typing
+        :param update_gsettings: Whether to write the change to Gsettings.
+                                 Set this to False if this method is
+                                 called because the Gsettings key changed
+                                 to avoid endless loops when the Gsettings
+                                 key is changed twice in a short time.
+        '''
+        LOGGER.info(
+            '(%s, update_gsettings = %s)', mode, update_gsettings)
+        mode = bool(mode)
+        self._settings_dict['showfinalform']['user'] = mode
+        if update_gsettings:
+            self._gsettings.set_value(
+                'showfinalform',
+                GLib.Variant.new_boolean(mode))
+        else:
+            self._show_final_form_checkbutton.set_active(mode)
 
     def set_word_prediction_mode(
             self,
