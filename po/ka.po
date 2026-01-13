@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-12 19:37+0100\n"
-"PO-Revision-Date: 2026-01-07 15:31+0000\n"
+"PO-Revision-Date: 2026-01-13 08:00+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/ka/>\n"
@@ -883,7 +883,7 @@ msgstr ""
 #. by pressing space.
 #: setup/main.py:951
 msgid "Show final form while typing"
-msgstr ""
+msgstr "საბოლოო ფორმის ჩვენება კრეფისას"
 
 #. Translators: Tooltip for the checkbox for whether to
 #. show the final form while typing, i.e. show the text as
@@ -894,6 +894,8 @@ msgid ""
 "Show the text as it would appear if you ended the composition now by "
 "pressing Space."
 msgstr ""
+"ტექსტის ჩვენება ისე, როგორც ის გამოჩნდებოდა, თუ კრეფას ჰარეს დაჭერით "
+"დაასრულებდით."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
