@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-12 19:37+0100\n"
-"PO-Revision-Date: 2026-01-07 08:06+0000\n"
+"PO-Revision-Date: 2026-01-14 19:58+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/ko/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:301
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -877,7 +877,7 @@ msgstr ""
 #. by pressing space.
 #: setup/main.py:951
 msgid "Show final form while typing"
-msgstr ""
+msgstr "입력 할 때에 최종 형태 표시"
 
 #. Translators: Tooltip for the checkbox for whether to
 #. show the final form while typing, i.e. show the text as
@@ -888,6 +888,8 @@ msgid ""
 "Show the text as it would appear if you ended the composition now by "
 "pressing Space."
 msgstr ""
+"만약 당신이 현재 스페이스를 눌러서 입력을 종료했을 때 텍스트를 실제 표시되는 "
+"방식으로 표시합니다."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
