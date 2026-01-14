@@ -5620,14 +5620,11 @@ class SetupUI(Gtk.Window): # type: ignore
         '''
         self._delete_learned_data_button.set_sensitive(False)
 
-        def really_restore() -> None:
+        def really_delete() -> None:
             LOGGER.info('Delete learned data.')
             self._delete_learned_data_button.set_sensitive(True)
-            return
-            # pylint: disable=unreachable
             self.tabsqlitedb.remove_all_phrases()
             self._delete_learned_data_button.set_sensitive(True)
-            # pylint: enable=unreachable
 
         def cancelled() -> None:
             LOGGER.info('Delete learned data cancelled.')
@@ -5650,7 +5647,7 @@ class SetupUI(Gtk.Window): # type: ignore
             title=_('Are you sure?'),
             ok_label=_('_OK'),
             cancel_label=_('_Cancel'),
-            on_ok=really_restore,
+            on_ok=really_delete,
             on_cancel=cancelled,
         )
         dialog.show()
