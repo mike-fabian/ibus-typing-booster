@@ -408,7 +408,7 @@ class SetupUI(Gtk.Window): # type: ignore
 
         appearance_grid = Gtk.Grid()
         appearance_grid.set_visible(True)
-        appearance_grid.set_can_focus(False)
+        appearance_grid.set_can_focus(True) # True allows childs to focus in Gtk4
         set_border_width(appearance_grid, grid_border_width)
         appearance_grid.set_row_spacing(grid_row_spacing)
         appearance_grid.set_column_spacing(grid_column_spacing)
