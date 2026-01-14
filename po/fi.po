@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Ricky Tigg <ricky.tigg@gmail.com>, 2025.
 # Mike FABIAN <mfabian@redhat.com>, 2025.
-# Jan Kuparinen <copper_fin@hotmail.com>, 2025.
+# Jan Kuparinen <copper_fin@hotmail.com>, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-12 19:37+0100\n"
-"PO-Revision-Date: 2025-12-30 16:37+0000\n"
+"PO-Revision-Date: 2026-01-14 19:58+0000\n"
 "Last-Translator: Jan Kuparinen <copper_fin@hotmail.com>\n"
 "Language-Team: Finnish <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/fi/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:301
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -884,7 +884,7 @@ msgstr ""
 #. by pressing space.
 #: setup/main.py:951
 msgid "Show final form while typing"
-msgstr ""
+msgstr "Näytä lopullinen lomake kirjoitettaessa"
 
 #. Translators: Tooltip for the checkbox for whether to
 #. show the final form while typing, i.e. show the text as
@@ -895,6 +895,8 @@ msgid ""
 "Show the text as it would appear if you ended the composition now by "
 "pressing Space."
 msgstr ""
+"Näytä teksti sellaisena kuin se näyttäisi, jos olisit lopettanut "
+"kirjoittamisen nyt painamalla välilyöntiä."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
