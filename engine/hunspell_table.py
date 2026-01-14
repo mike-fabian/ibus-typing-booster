@@ -8404,6 +8404,14 @@ class TypingBoosterEngine(IBus.Engine):
             self.set_current_imes(
                 imes[1:] + imes[:1],
                 update_gsettings=update_gsettings)
+            if self.is_empty():
+                self.update_auxiliary_text(
+                    IBus.Text.new_from_string(f'{self.get_current_imes()[0]}'),
+                    True)
+                # Although the lookup table is invisible now, it needs an
+                # update to get the auxiliary text positioned correctly
+                # next to the cursor position:
+                self.update_lookup_table(self.get_lookup_table(), False)
             return True
         return False
 
@@ -8421,6 +8429,14 @@ class TypingBoosterEngine(IBus.Engine):
             self.set_current_imes(
                 imes[-1:] + imes[:-1],
                 update_gsettings=update_gsettings)
+            if self.is_empty():
+                self.update_auxiliary_text(
+                    IBus.Text.new_from_string(f'{self.get_current_imes()[0]}'),
+                    True)
+                # Although the lookup table is invisible now, it needs an
+                # update to get the auxiliary text positioned correctly
+                # next to the cursor position:
+                self.update_lookup_table(self.get_lookup_table(), False)
             return True
         return False
 
