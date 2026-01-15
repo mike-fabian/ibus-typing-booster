@@ -5142,7 +5142,11 @@ class TypingBoosterEngine(IBus.Engine):
             self._insert_string_at_cursor(list(compose_result))
             self._update_transliterated_strings()
         preedit_ime = self._current_imes[0]
-        input_phrase = self._transliterated_strings[preedit_ime]
+        trans = self._transliterators[preedit_ime]
+        input_phrase = trans.transliterate(
+            self._typed_string + [' '], ascii_digits=self._ascii_digits)
+        if input_phrase.endswith(' '):
+            input_phrase = input_phrase[:-1]
         input_phrase = self._case_modes[
             self._current_case_mode]['function'](input_phrase)
         if (self._lookup_table.get_number_of_candidates()
@@ -5167,7 +5171,7 @@ class TypingBoosterEngine(IBus.Engine):
         candidate_was_selected = False
         if self._lookup_table.is_cursor_visible():
             candidate_was_selected = True
-        caret_was = self.get_caret()
+        caret_was = self.get_caret(extra_msymbol=' ')
         self._commit_string(commit_string, input_phrase=input_phrase)
         self._clear_input_and_update_ui()
         if not candidate_was_selected:
