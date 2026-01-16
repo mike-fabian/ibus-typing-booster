@@ -1,14 +1,15 @@
 # Mike FABIAN <mfabian@redhat.com>, 2016. #zanata, 2020, 2022.
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2020, 2022.
 # Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019, 2020, 2021.
+# naly zzwd <xeanhort007@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-12 19:37+0100\n"
-"PO-Revision-Date: 2022-02-25 18:38+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"PO-Revision-Date: 2026-01-16 22:58+0000\n"
+"Last-Translator: naly zzwd <xeanhort007@gmail.com>\n"
 "Language-Team: Catalan <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/ca/>\n"
 "Language: ca\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:301
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -25,10 +26,8 @@ msgstr "Selector d’emojis"
 
 #: engine/emoji-picker.desktop.in.in:3
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:7
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji browsing tool"
-msgstr "Versió del Unicode:"
+msgstr "Eina de navegació d'emojis"
 
 #: engine/emoji_picker.py:431
 msgid "Search for emoji"
@@ -59,6 +58,8 @@ msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
+"Si s'ha d'utilitzar una lletra alternativa per als emojis o parts de "
+"seqüències d'emojis que no es poden mostrar amb la lletra seleccionada."
 
 #: engine/emoji_picker.py:563
 msgid "Recently used"
@@ -85,8 +86,6 @@ msgid "Unicode Version:"
 msgstr "Versió del Unicode:"
 
 #: engine/emoji_picker.py:820
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji Version:"
 msgstr "Versió del Unicode:"
 
@@ -94,25 +93,19 @@ msgstr "Versió del Unicode:"
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:827
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Emoji properties:"
 msgstr "Versió del Unicode:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
 #: engine/emoji_picker.py:833
-#, fuzzy
-#| msgid "Unicode categories"
 msgid "Unicode category:"
-msgstr "Categories del Unicode"
+msgstr "Categoria Unicode:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
 #: engine/emoji_picker.py:840
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Unicode block:"
 msgstr "Versió del Unicode:"
 
@@ -122,7 +115,7 @@ msgstr "Feu clic per a copiar"
 
 #: engine/emoji_picker.py:862
 msgid "Long press or middle click for skin tones"
-msgstr ""
+msgstr "Mantingueu premut o feu clic central per als tons de pell"
 
 #: engine/emoji_picker.py:863
 msgid "Right click for info"
@@ -142,7 +135,7 @@ msgstr "S’ha copiat al porta-retalls."
 
 #: engine/emoji_picker.py:1744
 msgid "Clear recently used"
-msgstr "Neteja els utilitzats recentment"
+msgstr "Escrit correctament"
 
 #: engine/emoji_picker.py:1749 setup/main.py:309
 msgid "About"
@@ -163,7 +156,7 @@ msgstr "Valor per defecte de sistema"
 
 #: engine/emoji_picker.py:2305
 msgid "Set Font"
-msgstr ""
+msgstr "Estableix el tipus de lletra"
 
 #: engine/hunspell_table.py:1044 engine/hunspell_table.py:1078
 #: engine/hunspell_table.py:1099
@@ -181,7 +174,7 @@ msgstr "Mode d’entrada"
 
 #: engine/hunspell_table.py:1069
 msgid "Here you can switch ibus-typing-booster on or off."
-msgstr ""
+msgstr "Aquí podeu activar o desactivar l'ibus-typing-booster."
 
 #. Translators: Whether Unicode symbols and emoji should be
 #. included in the predictions. Emoji are pictographs like
@@ -221,7 +214,7 @@ msgstr "Mètode d’entrada de preedició"
 
 #: engine/hunspell_table.py:2666
 msgid "Switch preedit input method"
-msgstr ""
+msgstr "Canvia el mètode d'entrada de preedició"
 
 #: engine/hunspell_table.py:3037
 msgid "Setup"
@@ -347,7 +340,7 @@ msgstr "regions"
 #. are seperated by punctuation or white space.
 #: engine/itb_util.py:2860
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "Altres, Miscel·lània, Diversos, Variats"
 
 #: engine/itb_util.py:5073 engine/itb_util.py:5815
 msgid "File not found"
@@ -355,11 +348,11 @@ msgstr "No s’ha trobat el fitxer"
 
 #: engine/itb_util.py:5077 engine/itb_util.py:5819
 msgid "Permission error"
-msgstr ""
+msgstr "Error de permís"
 
 #: engine/itb_util.py:5081 engine/itb_util.py:5823
 msgid "Unicode decoding error"
-msgstr ""
+msgstr "Error de descodificació Unicode"
 
 #: engine/itb_util.py:5085 engine/itb_util.py:5827
 msgid "Unknown error"
@@ -375,6 +368,9 @@ msgid ""
 "whatever comes from the current keyboard layout without any further changes. "
 "So no transliteration or composing is done here."
 msgstr ""
+"Entrada directa de teclat. Això no és realment un mètode d'entrada, utilitza "
+"directament el que prové de la disposició actual del teclat sense cap canvi "
+"addicional. Per tant, no es fa transliteració ni composició aquí."
 
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
@@ -420,16 +416,12 @@ msgid "Open File ..."
 msgstr "Obre el fitxer..."
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:2
-#, fuzzy
-#| msgid "Typing Booster"
 msgid "Typing Booster Preferences"
-msgstr "Accelerador mecanogràfic"
+msgstr "Preferències de l'Accelerador Mecanogràfic"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:3
-#, fuzzy
-#| msgid "Typing Booster"
 msgid "Set Typing Booster Options"
-msgstr "Accelerador mecanogràfic"
+msgstr "Configura les Opcions de l'Accelerador mecanogràfic"
 
 #: setup/main.py:186
 msgid "Preferences"
@@ -497,7 +489,7 @@ msgstr "Aparença"
 #. (Artificial Intelligence).
 #: setup/main.py:451
 msgid "AI"
-msgstr ""
+msgstr "IA"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
@@ -515,7 +507,7 @@ msgstr "Reconeixement de veu"
 #. focus:
 #: setup/main.py:485 setup/main.py:2629
 msgid "Autosettings"
-msgstr ""
+msgstr "Configuració automàtica"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -526,6 +518,7 @@ msgstr ""
 #: setup/main.py:507
 msgid "Enable suggestions by key (Default is the Tab key)"
 msgstr ""
+"Activa els suggeriments per tecla (Per defecte és la tecla de tabulació)"
 
 #: setup/main.py:509
 msgid ""
@@ -535,6 +528,12 @@ msgid ""
 "a commit the suggestions are hidden again until the next key bound to this "
 "command is typed."
 msgstr ""
+"Si aquesta opció està activada, els suggeriments no es mostren per defecte. "
+"Aleshores cal prémer una tecla per mostrar la llista de suggeriments. La "
+"tecla a utilitzar per a això es pot canviar a la configuració de vinculació "
+"de tecles. Per defecte és la tecla de tabulació. Després d'una confirmació, "
+"els suggeriments s'amaguen de nou fins que es prem la següent tecla "
+"vinculada a aquesta ordre."
 
 #. Translators: Whether the best completion is first shown
 #. inline in the preedit instead of showing a full
@@ -544,7 +543,7 @@ msgstr ""
 #. the next candidate and opens the full candidate list.
 #: setup/main.py:533
 msgid "Use inline completion"
-msgstr ""
+msgstr "Utilitza la compleció en línia"
 
 #: setup/main.py:535
 msgid ""
@@ -554,20 +553,23 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
+"Si la millor compleció es mostra primer en línia a la preedició en lloc de "
+"mostrar una llista completa de candidats. El candidat en línia es pot "
+"seleccionar prement Tabulació i després confirmar com de costum, per exemple "
+"prement Espai o Control+Espai. Prement Tabulació de nou es passa al següent "
+"candidat i s'obre la llista completa de candidats."
 
 #: setup/main.py:545 setup/main.py:607
-#, fuzzy
-#| msgid "None"
 msgid "No"
-msgstr "Cap"
+msgstr "No"
 
 #: setup/main.py:547
 msgid "Yes, with fallback to popup"
-msgstr ""
+msgstr "Sí, amb alternativa emergent"
 
 #: setup/main.py:549
 msgid "Yes, without fallback to popup"
-msgstr ""
+msgstr "Sí, sense alternativa emergent"
 
 #. Translators: Whether to automatically capitalize after
 #. punctuation.
@@ -600,27 +602,35 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
+"El que escriviu es corregirà automàticament al millor candidat seleccionant-"
+"lo automàticament. Si aquesta opció està desactivada, heu de seleccionar un "
+"candidat manualment utilitzant la vinculació de tecles per seleccionar el "
+"següent candidat. Si aquesta opció està activada i no voleu utilitzar el "
+"candidat seleccionat automàticament, podeu utilitzar la vinculació de tecles "
+"per a l'ordre \"cancel·la\" que desseleccionarà tots els candidats."
 
 #: setup/main.py:609
 msgid "Yes, but only when extremely likely"
-msgstr ""
+msgstr "Sí, però només quan sigui extremadament probable"
 
 #: setup/main.py:611
 msgid "Yes, always"
-msgstr ""
+msgstr "Sí, sempre"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
 #. with the mouse.
 #: setup/main.py:635
 msgid "Add a space when committing by mouse click"
-msgstr ""
+msgstr "Afegeix un espai en confirmar amb clic de ratolí"
 
 #: setup/main.py:637
 msgid ""
 "Add a space if a candidate from the candidate list is committed by clicking "
 "it with the mouse."
 msgstr ""
+"Afegeix un espai si un candidat de la llista de candidats es confirma fent-"
+"hi clic amb el ratolí."
 
 #. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -639,6 +649,11 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
+"Si s'utilitza més d'un mètode d'entrada al mateix temps, un d'ells "
+"s'utilitza per a la preedició. Quin mètode d'entrada s'utilitza per a la "
+"preedició es pot canviar mitjançant el menú o les tecles de drecera. Si "
+"aquesta opció està habilitada, aquest canvi es recorda fins i tot si es "
+"reinicia la sessió."
 
 #. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -655,17 +670,17 @@ msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"Si aquesta opció està habilitada, l'últim mode d'entrada utilitzat (activat/"
+"desactivat) es recorda fins i tot si es reinicia la sessió."
 
 #. Translators: Whether ibus-typing-booster should show word predictions.
 #: setup/main.py:694
-#, fuzzy
-#| msgid "Add dictionary"
 msgid "Word predictions"
 msgstr "Afegeix un diccionari"
 
 #: setup/main.py:696
 msgid "Whether ibus-typing-booster should show word predictions."
-msgstr ""
+msgstr "Si ibus-typing-booster hauria de mostrar prediccions de paraules."
 
 #: setup/main.py:715
 msgid ""
@@ -675,12 +690,15 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
+"Si els símbols Unicode i els emojis s'han d'incloure a les prediccions. Els "
+"emojis són pictogrames com ☺♨⛵…. Els símbols Unicode són altres símbols com "
+"símbols matemàtics (∀∑∯…), fletxes (←↑↔…), símbols de moneda (€₹₺…), patrons "
+"braille (⠥⠩…) i molts altres símbols. Tècnicament, aquests no són emojis, "
+"però són símbols útils."
 
 #. Translators: A combo box to select which emoji style
 #. should be used.
 #: setup/main.py:734
-#, fuzzy
-#| msgid "Emoji"
 msgid "Emoji style"
 msgstr "Emoji"
 
@@ -691,6 +709,8 @@ msgid ""
 "To select between colorful emoji (emoji style), monochrome emoji (text "
 "style), or no style preference."
 msgstr ""
+"Per seleccionar entre emojis de colors (estil emoji), emojis monocroms "
+"(estil text) o sense preferència d'estil."
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Emoji style”, i.e.  typically colored.
@@ -703,7 +723,7 @@ msgstr "Emoji"
 #. monochrome.
 #: setup/main.py:753
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #. Translators: This option is to use unqualified emoji
 #. sequences. When this style is used, some emoji may display
@@ -711,7 +731,7 @@ msgstr ""
 #. the emoji in the Unicode emoji data files.
 #: setup/main.py:758
 msgid "No style"
-msgstr ""
+msgstr "Sense estil"
 
 #: setup/main.py:786
 msgid ""
@@ -721,14 +741,18 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
+"Mentre el mode \"Confidencial\" està activat, l'aprenentatge de l'entrada de "
+"l'usuari està desactivat. Si l'entrada apresa de l'usuari està disponible, "
+"les prediccions solen ser molt millors que les prediccions que només "
+"utilitzen diccionaris. Per tant, s'hauria d'utilitzar aquesta opció amb "
+"moderació. Només si es vol evitar desar l'entrada secreta de l'usuari al "
+"disc, pot tenir sentit utilitzar aquesta opció temporalment."
 
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
 #: setup/main.py:806
-#, fuzzy
-#| msgid "Off the record mode"
 msgid "Record mode"
-msgstr "Mode confidencial"
+msgstr "Mode enregistrament"
 
 #: setup/main.py:808
 msgid ""
@@ -742,24 +766,33 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"Selecciona quin tipus d'entrada s'ha de registrar a la base de dades "
+"d'usuaris: \"Tot\": Cada paraula escrita s'afegeix a la base de dades "
+"d'usuaris o s'actualitza la seva freqüència si ja hi és. \"Escrit "
+"correctament o registrat anteriorment\": Una paraula escrita només s'afegeix "
+"a la base de dades d'usuaris si és probable que estigui escrita "
+"correctament. Si una paraula ja és a la base de dades d'usuaris, "
+"s'actualitza la seva freqüència independentment de com estigui escrita. "
+"\"Escrit correctament\": Una paraula escrita només s'afegeix a la base de "
+"dades o s'actualitza la seva freqüència a la base de dades si és probable "
+"que estigui escrita correctament. \"Res\": No registrar cap entrada a la "
+"base de dades d'usuaris."
 
 #: setup/main.py:822
 msgid "Everything"
-msgstr ""
+msgstr "Tot"
 
 #: setup/main.py:824
 msgid "Correctly spelled or previously recorded"
-msgstr ""
+msgstr "Escrit correctament o registrat anteriorment"
 
 #: setup/main.py:825
-#, fuzzy
-#| msgid "Clear recently used"
 msgid "Correctly spelled"
 msgstr "Neteja els utilitzats recentment"
 
 #: setup/main.py:826
 msgid "Nothing"
-msgstr ""
+msgstr "Res"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -802,6 +835,9 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
+"Utilitzeu una solució alternativa si la funció %s està trencada. Activeu "
+"aquesta opció només si és absolutament necessari, també pot causar "
+"problemes, especialment quan s'utilitza XIM."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -809,7 +845,7 @@ msgstr ""
 #. committed words.
 #: setup/main.py:898
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "Habilita la reobertura de preedicions"
 
 #: setup/main.py:900
 msgid ""
@@ -817,22 +853,25 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
+"Si es permet tornar a posar una paraula en una preedició quan el cursor es "
+"mou al final o al principi d'una paraula. Habilitar aquesta opció és útil "
+"per corregir paraules ja confirmades."
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:916
 msgid "Disable in terminals"
-msgstr ""
+msgstr "Desactiva als terminals"
 
 #: setup/main.py:918
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "Si ibus-typing-booster hauria d'estar desactivat als terminals."
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
 #: setup/main.py:931
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "Converteix dígits específics d'idioma a dígits ASCII"
 
 #: setup/main.py:933
 msgid ""
@@ -841,13 +880,18 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"Alguns mètodes d'entrada produeixen dígits específics d'idioma per defecte. "
+"Si mai no es volen utilitzar aquests dígits específics d'idioma però es "
+"prefereixen sempre els dígits occidentals (ASCII), es pot configurar aquesta "
+"opció per convertir sempre els dígits específics d'idioma produïts pels "
+"mètodes d'entrada a dígits ASCII."
 
 #. Translators: Checkbox for whether to show the final form while typing,
 #. i.e. show the text as it would appear if you ended the composition now
 #. by pressing space.
 #: setup/main.py:951
 msgid "Show final form while typing"
-msgstr ""
+msgstr "Mostra la forma final mentre s'escriu"
 
 #. Translators: Tooltip for the checkbox for whether to
 #. show the final form while typing, i.e. show the text as
@@ -858,12 +902,14 @@ msgid ""
 "Show the text as it would appear if you ended the composition now by "
 "pressing Space."
 msgstr ""
+"Mostra el text tal com apareixeria si acabéssiu la composició ara prement "
+"Espai."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
 #: setup/main.py:971
 msgid "Use IBus keymap"
-msgstr ""
+msgstr "Utilitza el mapa de tecles IBus"
 
 #. Translators: This is a tooltip for a checkbox with the
 #. label 'Use IBus keymap'
@@ -873,6 +919,10 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"Si l'ús d'un mapa de tecles IBus es força mentre l'Accelerador mecanogràfic "
+"està actiu. Per a la majoria dels usuaris es recomana no utilitzar un mapa "
+"de tecles IBus. En aquest cas, s'utilitza la disposició del teclat que "
+"estava activa abans de canviar a l'accelerador mecanogràfic."
 
 #. Translators: This is a tooltip for a combobox to choose
 #. a keymap
@@ -881,6 +931,8 @@ msgid ""
 "The ibus keymap to use when forcing an IBus keymap while Typing Booster is "
 "active."
 msgstr ""
+"El mapa de tecles ibus a utilitzar quan es força un mapa de tecles IBus "
+"mentre l'Accelerador mecanogràfic està actiu."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -898,13 +950,16 @@ msgstr ""
 #. “Unicode symbols and emoji predictions” is off.
 #: setup/main.py:1026
 msgid "Emoji trigger characters:"
-msgstr ""
+msgstr "Caràcters activadors d'emojis:"
 
 #: setup/main.py:1028
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
 msgstr ""
+"Els caràcters d'aquesta llista activen una cerca d'emojis i símbols Unicode "
+"fins i tot si l'opció \"Prediccions d'emojis i símbols Unicode\" està "
+"desactivada."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -920,7 +975,7 @@ msgstr ""
 #. (which is the default).
 #: setup/main.py:1057
 msgid "Auto commit characters:"
-msgstr ""
+msgstr "Caràcters de confirmació automàtica:"
 
 #: setup/main.py:1059
 msgid ""
@@ -934,6 +989,16 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
+"Els caràcters d'aquesta llista fan que la preedició es confirmi "
+"automàticament, seguida d'un espai. Per exemple, si \".\" és un caràcter de "
+"confirmació automàtica, això us estalvia escriure un espai manualment "
+"després del final d'una frase. Podeu editar lliurement aquesta llista, un "
+"valor raonable podria ser \".,;:?!) \". No hauríeu d'afegir caràcters a "
+"aquesta llista que siguin necessaris pel vostre mètode d'entrada, per "
+"exemple, si utilitzeu Latin-Pre (t-latn-pre) seria una mala idea afegir "
+"\".\" a aquesta llista perquè us impediria escriure \".s\" per obtenir "
+"\"ṡ\". També podeu desactivar aquesta funció completament deixant la llista "
+"buida (que és l'opció per defecte)."
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
@@ -945,6 +1010,8 @@ msgstr "Nombre màxim de caràcter per a la conclusió:"
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
 msgstr ""
+"No mostris suggeriments quan s'hagin escrit menys d'aquest nombre de "
+"caràcters."
 
 #. Translators: A checkbox where one can choose whether a
 #. sound is played on error
@@ -955,6 +1022,7 @@ msgstr ""
 #: setup/main.py:1118
 msgid "Here you can choose whether a sound file is played if an error occurs."
 msgstr ""
+"Aquí podeu triar si es reprodueix un fitxer de so si es produeix un error."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
@@ -1029,20 +1097,19 @@ msgstr "Instal·la els diccionaris ací configurats però que no s'han instal·l
 #. Translators: A button used to download
 #. missing dictionaries and update existing ones.
 #: setup/main.py:1260
-#, fuzzy
-#| msgid "Add dictionary"
 msgid "Download dictionaries"
 msgstr "Afegeix un diccionari"
 
 #: setup/main.py:1261
 msgid "Download missing dictionaries and update existing ones"
-msgstr ""
+msgstr "Descarrega els diccionaris que falten i actualitza els existents"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
 #: setup/main.py:1268
 msgid "Set dictionaries to the default for the current locale."
 msgstr ""
+"Estableix els diccionaris per defecte per a la configuració regional actual."
 
 #: setup/main.py:1274 setup/main.py:1383 setup/main.py:1600 setup/main.py:5466
 msgid "Set to default"
@@ -1081,19 +1148,23 @@ msgstr "Ajuda del mètode d’entrada"
 #: setup/main.py:1357
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
+"Mostra ajuda sobre com utilitzar el mètode d'entrada seleccionat "
+"anteriorment."
 
 #. Translators: Tooltip for a button to set some advanced
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1368
 msgid "Options for the input method selected above."
-msgstr ""
+msgstr "Opcions per al mètode d'entrada seleccionat anteriorment."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
 #: setup/main.py:1376
 msgid "Set input methods to the default for the current locale."
 msgstr ""
+"Estableix els mètodes d'entrada per defecte per a la configuració regional "
+"actual."
 
 #: setup/main.py:1417
 msgid "Enter shortcut here:"
@@ -1169,6 +1240,8 @@ msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
 msgstr ""
+"Mostra quants candidats hi ha i quin està seleccionat a la part superior de "
+"la llista de candidats."
 
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
@@ -1187,6 +1260,10 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
+"Mostra al text auxiliar si el mode \"Predicció d'emojis\" i el mode "
+"\"Confidencial\" estan activats o desactivats i mostra quin mètode d'entrada "
+"s'utilitza actualment per a la preedició. El text auxiliar és una línia de "
+"text opcional que es mostra a sobre de la llista de candidats."
 
 #. Translators: A combobox to choose whether to show the raw
 #. input in the auxiliary text.  The auxiliary text is an
@@ -1194,11 +1271,13 @@ msgstr ""
 #. list.
 #: setup/main.py:1673
 msgid "Show raw input"
-msgstr ""
+msgstr "Mostra l'entrada en brut"
 
 #: setup/main.py:1675
 msgid "Showing the raw input may be helpful for transliterating input methods."
 msgstr ""
+"Mostrar l'entrada en brut pot ser útil per als mètodes d'entrada de "
+"transliteració."
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1214,7 +1293,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1689
 msgid "When there are candidates"
-msgstr ""
+msgstr "Quan hi hagi candidats"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1234,6 +1313,8 @@ msgstr "Mida de la pàgina de la finestra dels candidats:"
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr ""
+"Quants candidats de suggeriment mostrar en una pàgina de la llista de "
+"candidats."
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
@@ -1245,6 +1326,7 @@ msgstr "Orientació de la finestra dels candidats"
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
 msgstr ""
+"Si la finestra de candidats s'ha de dibuixar horitzontalment o verticalment."
 
 #: setup/main.py:1746
 msgid "Horizontal"
@@ -1258,10 +1340,8 @@ msgstr "Vertical"
 #. the system needs to be idle after pressing a key before
 #. candidates are displayed
 #: setup/main.py:1777
-#, fuzzy
-#| msgid "Candidate window page size:"
 msgid "Candidate window delay in milliseconds:"
-msgstr "Mida de la pàgina de la finestra dels candidats:"
+msgstr "Retard de la finestra de candidats en mil·lisegons:"
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
@@ -1269,16 +1349,18 @@ msgstr "Mida de la pàgina de la finestra dels candidats:"
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
 msgstr ""
+"Quant de temps esperar després de l'última pulsació de tecla abans que es "
+"mostrin els candidats."
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
 #: setup/main.py:1807
 msgid "Preedit underline"
-msgstr ""
+msgstr "Subratllat de preedició"
 
 #: setup/main.py:1809
 msgid "Which style of underlining to use for the preedit."
-msgstr ""
+msgstr "Quin estil de subratllat utilitzar per a la preedició."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
@@ -1302,7 +1384,7 @@ msgstr "Doble"
 #. underline for the preedit.
 #: setup/main.py:1832
 msgid "Low"
-msgstr ""
+msgstr "Baix"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is
@@ -1312,7 +1394,7 @@ msgstr ""
 #. of characters before a lookup is done.
 #: setup/main.py:1860
 msgid "Use preedit style only if lookup is enabled"
-msgstr ""
+msgstr "Utilitza l'estil de preedició només si la cerca està activada"
 
 #: setup/main.py:1862
 msgid ""
@@ -1321,6 +1403,11 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
+"Si aquesta opció està activada, un estil de preedició com el subratllat "
+"només s'utilitzarà si la cerca està activada. La cerca es pot desactivar "
+"perquè s'utilitza l'opció d'activar la cerca només quan es prem una tecla o "
+"perquè s'utilitza l'opció de requerir un nombre mínim de caràcters abans que "
+"es faci una cerca."
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -1336,13 +1423,16 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"Aquí podeu triar si es fa la revisió ortogràfica del contingut de la "
+"preedició i s'utilitza un color personalitzat per indicar quan la preedició "
+"pot contenir un error ortogràfic."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1910
 msgid "Choose color for preedit spellchecking"
-msgstr ""
+msgstr "Trieu el color per a la revisió ortogràfica de la preedició"
 
 #: setup/main.py:1912
 msgid ""
@@ -1350,25 +1440,30 @@ msgid ""
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
+"Aquí podeu especificar quin color utilitzar per a la preedició quan la "
+"preedició pugui contenir un error ortogràfic. Aquesta opció només té efecte "
+"si la revisió ortogràfica de la preedició està activada."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
 #: setup/main.py:1935
 msgid "Use color for inline completion"
-msgstr ""
+msgstr "Utilitza color per a la compleció en línia"
 
 #: setup/main.py:1937
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
 msgstr ""
+"Aquí podeu triar si s'utilitza un color personalitzat per a un suggeriment "
+"mostrat en línia."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
 #: setup/main.py:1961
 msgid "Choose color for inline completion"
-msgstr ""
+msgstr "Trieu el color per a la compleció en línia"
 
 #: setup/main.py:1963
 msgid ""
@@ -1376,72 +1471,81 @@ msgid ""
 "only has an effect if the use of color for inline completion is enabled and "
 "inline completion is enabled."
 msgstr ""
+"Aquí podeu especificar quin color utilitzar per a la compleció en línia. "
+"Aquesta opció només té efecte si l'ús de color per a la compleció en línia "
+"està activat i la compleció en línia està activada."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
 #: setup/main.py:1986
 msgid "Use color for compose preview"
-msgstr ""
+msgstr "Utilitza color per a la vista prèvia de composició"
 
 #: setup/main.py:1988
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
+"Aquí podeu triar si s'utilitza un color personalitzat per a la vista prèvia "
+"de composició."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:2012
 msgid "Choose color for compose preview"
-msgstr ""
+msgstr "Trieu el color per a la vista prèvia de composició"
 
 #: setup/main.py:2014
 msgid "Here you can specify which color to use for the compose preview."
 msgstr ""
+"Aquí podeu especificar quin color utilitzar per a la vista prèvia de "
+"composició."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the m17n preedit.
 #: setup/main.py:2035
 msgid "Use color for m17n preedit"
-msgstr ""
+msgstr "Utilitza color per a la preedició m17n"
 
 #: setup/main.py:2037
 msgid ""
 "Here you can choose whether a custom color is used for the m17n preedit."
 msgstr ""
+"Aquí podeu triar si s'utilitza un color personalitzat per a la preedició "
+"m17n."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the m17n preedit.
 #: setup/main.py:2061
-#, fuzzy
-#| msgid "Choose color for spellchecking suggestions"
 msgid "Choose color for m17n preedit"
 msgstr "Trieu un color per als suggeriments ortogràfics"
 
 #: setup/main.py:2063
 msgid "Here you can specify which color to use for the m17n preedit."
-msgstr ""
+msgstr "Aquí podeu especificar quin color utilitzar per a la preedició m17n."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
 #. user database.
 #: setup/main.py:2085
 msgid "Use color for user database suggestions"
-msgstr ""
+msgstr "Utilitza color per als suggeriments de la base de dades d'usuaris"
 
 #: setup/main.py:2087
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
 msgstr ""
+"Aquí podeu triar si s'utilitza un color personalitzat per als candidats de "
+"la taula de cerca que provenen de la base de dades d'usuaris."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
 #: setup/main.py:2108
 msgid "Choose color for user database suggestions"
-msgstr ""
+msgstr "Trieu el color per als suggeriments de la base de dades d'usuaris"
 
 #: setup/main.py:2110
 msgid ""
@@ -1449,6 +1553,10 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
 msgstr ""
+"Aquí podeu especificar quin color utilitzar per als candidats de la taula de "
+"cerca que provenen de la base de dades d'usuaris. Aquesta opció només té "
+"efecte si l'ús de color per als candidats de la base de dades d'usuaris està "
+"activat."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
@@ -1461,6 +1569,8 @@ msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
 msgstr ""
+"Aquí podeu triar si s'utilitza un color personalitzat per als candidats de "
+"la taula de cerca que provenen de la revisió ortogràfica."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1475,6 +1585,9 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
 msgstr ""
+"Aquí podeu especificar quin color utilitzar per als candidats de la taula de "
+"cerca que provenen de la revisió ortogràfica. Aquesta opció només té efecte "
+"si l'ús de color per als candidats de la revisió ortogràfica està activat."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
@@ -1488,6 +1601,8 @@ msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
 msgstr ""
+"Aquí podeu triar si s'utilitza un color personalitzat per als candidats de "
+"la taula de cerca que provenen d'un diccionari."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1502,19 +1617,24 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
 msgstr ""
+"Aquí podeu especificar quin color utilitzar per als candidats de la taula de "
+"cerca que provenen d'un diccionari. Aquesta opció només té efecte si l'ús de "
+"color per als candidats d'un diccionari està activat."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
 #. database in the candidate list.
 #: setup/main.py:2227
 msgid "Use label for user database suggestions"
-msgstr ""
+msgstr "Utilitza etiqueta per als suggeriments de la base de dades d'usuaris"
 
 #: setup/main.py:2229
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
 msgstr ""
+"Aquí podeu triar si s'utilitza una etiqueta per als candidats de la taula de "
+"cerca que provenen de la base de dades d'usuaris."
 
 #: setup/main.py:2240
 msgid ""
@@ -1522,19 +1642,25 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of a label for candidates from the user database is enabled."
 msgstr ""
+"Aquí podeu especificar quina etiqueta utilitzar per als candidats de la "
+"taula de cerca que provenen de la base de dades d'usuaris. Aquesta opció "
+"només té efecte si l'ús d'una etiqueta per als candidats de la base de dades "
+"d'usuaris està activat."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
 #. in the candidate list.
 #: setup/main.py:2262
 msgid "Use label for spellchecking suggestions"
-msgstr ""
+msgstr "Utilitza una etiqueta per a les suggerències de correcció ortogràfica"
 
 #: setup/main.py:2264
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
 msgstr ""
+"Aquí podeu triar si s'utilitza una etiqueta per als candidats de la taula de "
+"cerca que provenen de la revisió ortogràfica."
 
 #: setup/main.py:2275
 msgid ""
@@ -1542,19 +1668,25 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "a label for candidates from spellchecking is enabled."
 msgstr ""
+"Aquí podeu especificar quina etiqueta utilitzar per als candidats de la "
+"taula de cerca que provenen de la revisió ortogràfica. Aquesta opció només "
+"té efecte si l'ús d'una etiqueta per als candidats de la revisió ortogràfica "
+"està activat."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2297
 msgid "Use label for dictionary suggestions"
-msgstr ""
+msgstr "Utilitza una etiqueta per als suggeriments del diccionari"
 
 #: setup/main.py:2299
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
+"Aquí podeu triar si s'utilitza una etiqueta per als candidats de la taula de "
+"cerca que provenen d'un diccionari."
 
 #: setup/main.py:2310
 msgid ""
@@ -1562,33 +1694,38 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "a label for candidates from a dictionary is enabled."
 msgstr ""
+"Aquí podeu especificar quina etiqueta utilitzar per als candidats de la "
+"taula de cerca que provenen d'un diccionari. Aquesta opció només té efecte "
+"si l'ús d'una etiqueta per als candidats d'un diccionari està activat."
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
 #. dictionary in the candidate list.
 #: setup/main.py:2332
-#, fuzzy
-#| msgid "Use color for dictionary suggestions"
 msgid "Use flags for dictionary suggestions"
-msgstr "Utilitza un color per als suggeriments del diccionari"
+msgstr "Utilitza banderes per a les suggerències del diccionari"
 
 #: setup/main.py:2334
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
+"Aquí podeu triar si s'utilitzen banderes per als candidats de la taula de "
+"cerca que provenen d'un diccionari."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
 #: setup/main.py:2349
 msgid "Use a label to indicate busy state"
-msgstr ""
+msgstr "Utilitza una etiqueta per indicar l'estat ocupat"
 
 #: setup/main.py:2351
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
+"Aquí podeu triar si s'utilitza una etiqueta per indicar quan ibus-typing-"
+"booster està ocupat."
 
 #. Translators: Tooltip for an entry
 #: setup/main.py:2362
@@ -1596,10 +1733,12 @@ msgid ""
 "Here you can specify which label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
+"Aquí podeu especificar quina etiqueta s'utilitza per indicar quan ibus-"
+"typing-booster està ocupat."
 
 #: setup/main.py:2380
 msgid "Symbol for \"enabled\" mode"
-msgstr ""
+msgstr "Símbol per al mode \"habilitat\""
 
 #. Translators: Tooltip for 'Symbol for "enabled" mode'
 #: setup/main.py:2383 setup/main.py:2390
@@ -1607,10 +1746,12 @@ msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
 msgstr ""
+"El símbol que es mostra quan l'Accelerador mecanogràfic està actiu "
+"(transliterant entrada, suggerint complecions, revisant l'ortografia, etc.)."
 
 #: setup/main.py:2409
 msgid "Symbol for \"disabled\" (Direct Input) mode"
-msgstr ""
+msgstr "Símbol per al mode \"deshabilitat\" (Entrada directa)"
 
 #. Translators: Tooltip for 'Symbol for "disabled" (Direct
 #. Input) mode'
@@ -1619,13 +1760,15 @@ msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
 msgstr ""
+"El símbol que es mostra quan l'Accelerador mecanogràfic està deshabilitat "
+"(l'entrada passa directament sense processar)."
 
 #. Translators: Checkbox to enable the AI (Artificial
 #. Intelligence) chat feature using ollama or ramalama
 #. servers.
 #: setup/main.py:2458
 msgid "Enable AI chat"
-msgstr ""
+msgstr "Habilita el xat amb IA"
 
 #. Translators: Tooltip for “Enable AI chat”.
 #: setup/main.py:2461
@@ -1633,18 +1776,21 @@ msgid ""
 "Enable or disable AI chat globally. When disabled, all AI chat related "
 "features and keybindings are turned off."
 msgstr ""
+"Habilita o deshabilita el xat amb IA globalment. Quan està deshabilitat, "
+"totes les funcions i combinacions de tecles relacionades amb la IA estan "
+"desactivades."
 
 #. Translators: The ollama or ramalama server to use for AI
 #. (Artificial Intelligence).
 #: setup/main.py:2473
 msgid "AI server:"
-msgstr ""
+msgstr "Servidor d'IA:"
 
 #. Translators: The connection status to the ollama or
 #. ramalama server used for AI (Artificial Intelligence).
 #: setup/main.py:2479
 msgid "Connection status to the AI server."
-msgstr ""
+msgstr "Estat de la connexió amb el servidor d'IA."
 
 #. Translators: “Model:” specifies the LLM (Large Language
 #. Model) to be used with ollama or ramalama.
@@ -1656,7 +1802,7 @@ msgstr ""
 #. sent to the AI for context.
 #: setup/main.py:2520
 msgid "Message history limit:"
-msgstr ""
+msgstr "Límit de l'historial de missatges:"
 
 #. Translators: This is the AI system message field to set
 #. the implicit context for AI chats. For example it could
@@ -1665,7 +1811,7 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2549
 msgid "AI system message:"
-msgstr ""
+msgstr "Missatge del sistema d'IA:"
 
 #. Translators: Tooltip explaining the AI system message
 #. field to set the implicit context for AI chats. For
@@ -1674,16 +1820,17 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2558
 msgid "System prompt that guides how the AI responds."
-msgstr ""
+msgstr "Indicació del sistema que guia com respon la IA."
 
 #. Translators:
 #: setup/main.py:2595 setup/main.py:3828
 msgid "Set “Google application credentials” .json file:"
-msgstr ""
+msgstr "Estableix el fitxer .json de \"Credencials de l'aplicació Google\":"
 
 #: setup/main.py:2597
 msgid "Full path of the “Google application credentials” .json file."
 msgstr ""
+"Ruta completa del fitxer .json de \"Credencials de l'aplicació Google\"."
 
 #: setup/main.py:2603
 msgid "File not yet set."
@@ -1695,17 +1842,15 @@ msgstr "Encara no s’ha definit el fitxer."
 #. browser tab) gets the focus.
 #: setup/main.py:2657 setup/main.py:5003
 msgid "Add an autosetting"
-msgstr ""
+msgstr "Afegeix una configuració automàtica"
 
 #. Translators: This is a button to remove an autosetting.
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2668
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remove an autosetting"
-msgstr "Suprimeix un mètode d’entrada"
+msgstr "Eliminar una configuració automàtica"
 
 #. Translators: This is a button to move an autosetting up in the
 #. order the autosettings are applied. “Up” means it is applied
@@ -1716,8 +1861,6 @@ msgstr "Suprimeix un mètode d’entrada"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2682
-#, fuzzy
-#| msgid "Move input method up"
 msgid "Move an autosetting up"
 msgstr "Mou el mètode d’entrada cap amunt"
 
@@ -1730,14 +1873,10 @@ msgstr "Mou el mètode d’entrada cap amunt"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2696
-#, fuzzy
-#| msgid "Move input method down"
 msgid "Move an autosetting down"
 msgstr "Mou el mètode d’entrada cap avall"
 
 #: setup/main.py:2702
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Set all autosettings to default"
 msgstr "Estableix-les totes als valors per defecte"
 
@@ -1749,7 +1888,7 @@ msgstr "Verificació ortogràfica"
 #. the automatic settings
 #: setup/main.py:3160
 msgid "Setting"
-msgstr ""
+msgstr "Paràmetre"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1757,13 +1896,13 @@ msgstr ""
 #. for the currently selected input method
 #: setup/main.py:3169 setup/main.py:4594
 msgid "Value"
-msgstr ""
+msgstr "Valor"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
 #: setup/main.py:3193
 msgid "Regular expression"
-msgstr ""
+msgstr "Expressió regular"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1803,20 +1942,20 @@ msgstr "Afegeix un mètode d’entrada"
 #. for the currently selected input method
 #: setup/main.py:4585
 msgid "Variable"
-msgstr ""
+msgstr "Variable"
 
 #: setup/main.py:5439
 #, python-format
 msgid "Edit key bindings for command “%s”"
-msgstr ""
+msgstr "Edita les combinacions de tecles per a l'ordre “%s”"
 
 #: setup/main.py:5455
 msgid "Add a key binding"
-msgstr ""
+msgstr "Afegeix una combinació de tecles"
 
 #: setup/main.py:5461
 msgid "Remove selected key binding"
-msgstr ""
+msgstr "Elimina la combinació de tecles seleccionada"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1828,6 +1967,8 @@ msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
+"Realment voleu restablir les combinacions de tecles per a totes les ordres "
+"als seus valors predeterminats?"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1835,14 +1976,10 @@ msgstr ""
 #. This cannot be reversed so the user
 #. should be really sure he wants to do that.
 #: setup/main.py:5580
-#, fuzzy
-#| msgid ""
-#| "Do you really want to delete all language data learned from typing or "
-#| "reading files?"
 msgid "Do you really want to set all autosettings to their defaults?"
 msgstr ""
-"Realment voleu suprimir totes les dades lingüístiques apreses a partir de "
-"l'escriptura amb el teclat i de la lectura de fitxers?"
+"Realment vols restablir totes les configuracions automàtiques als valors per "
+"defecte?"
 
 #: setup/main.py:5601
 #, python-format
@@ -1881,6 +2018,8 @@ msgid ""
 "Emoji Picker is an emoji browsing tool which uses the emoji matching code "
 "from Ibus-typing-booster."
 msgstr ""
+"El Selector d'emojis és una eina de navegació d'emojis que utilitza el codi "
+"de coincidència d'emojis d'ibus-typing-booster."
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
@@ -1896,6 +2035,10 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+"Ibus-typing-booster és un mètode d'entrada predictiu que prediu paraules "
+"completes basant-se en el context i l'entrada parcial. Aleshores, simplement "
+"es pot seleccionar la paraula desitjada d'una llista de suggeriments i "
+"millorar la velocitat d'escriptura i l'ortografia."
 
 #~ msgid "Another instance of this app is already running."
 #~ msgstr "Ja s'està executant una altra instància d'aquesta aplicació."
