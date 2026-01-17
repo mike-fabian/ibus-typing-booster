@@ -225,6 +225,10 @@ class SetupUI(Gtk.Window): # type: ignore
                 outline: none;
                 background-color: {'transparent' if is_wayland() else '@theme_bg_color'};
             }}
+            notebook tab:checked {{
+                background-color: @theme_selected_bg_color;
+                color: @theme_selected_fg_color;
+            }}
             '''
         style_provider = Gtk.CssProvider()
         if GTK_MAJOR >= 4:
