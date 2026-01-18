@@ -10646,13 +10646,16 @@ class TypingBoosterEngine(IBus.Engine):
             # When using hi-itrans, “. ” translates to “। ”
             # (See: https://bugzilla.redhat.com/show_bug.cgi?id=1353672)
             #
+            # Also, even if the cursor is not at the end of the input when
+            # the commit is triggered, the transliteration should be finalized
+            # (See: https://github.com/mike-fabian/ibus-typing-booster/issues/871)
+            #
             # But not for `ja-anthy`. In case of `ja-anthy`, a Return
             # will be absorbed in the transliteration because it does
             # a commit in m17n. Other commit trigger keys cannot do
             # anything to change the `ja-anthy` transliteration
             # either.
-            if (self._typed_string_cursor == len(self._typed_string)
-                and not self._current_imes[0] == 'ja-anthy'):
+            if not self._current_imes[0] == 'ja-anthy':
                 input_phrase = self._transliterators[
                     preedit_ime].transliterate(
                         self._typed_string + [key.msymbol],
@@ -10734,6 +10737,12 @@ class TypingBoosterEngine(IBus.Engine):
                 # the selected phrase
                 commit_string = self.get_string_from_lookup_table_cursor_pos()
             elif (key.val in (IBus.KEY_space, IBus.KEY_Tab)
+                  and not (key.control
+                           or key.mod1
+                           or key.mod4
+                           or key.super
+                           or key.hyper
+                           or key.meta)
                   and self._typed_string_cursor == 0):
                 # “space” or “Tab” is typed while the cursor is at the
                 # beginning of the preedit *and* nothing is selected
@@ -10756,6 +10765,12 @@ class TypingBoosterEngine(IBus.Engine):
                 return True
             elif (key.val in (IBus.KEY_space, IBus.KEY_Tab,
                               IBus.KEY_Return, IBus.KEY_KP_Enter)
+                  and not (key.control
+                           or key.mod1
+                           or key.mod4
+                           or key.super
+                           or key.hyper
+                           or key.meta)
                   and (self._typed_string_cursor
                        < len(self._typed_string))):
                 # “space”, “Tab”, “Return”, or “KP_Enter” is used to
