@@ -4,7 +4,7 @@
 # Alessio C. <alciregi@gmail.com>, 2019.
 # Mike FABIAN <mfabian@redhat.com>, 2019, 2020, 2025.
 # Enrico Bella <enric@e.email>, 2020.
-# Nathan <nathan95@live.it>, 2021, 2022, 2025.
+# Nathan <nathan95@live.it>, 2021, 2022, 2025, 2026.
 # Salvatore Cocuzza <info@salvatorecocuzza.it>, 2024, 2025.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2024.
 msgid ""
@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-12 19:37+0100\n"
-"PO-Revision-Date: 2025-12-15 15:47+0000\n"
+"PO-Revision-Date: 2026-01-19 08:37+0000\n"
 "Last-Translator: Nathan <nathan95@live.it>\n"
 "Language-Team: Italian <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/it/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:301
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -887,7 +887,7 @@ msgstr ""
 #. by pressing space.
 #: setup/main.py:951
 msgid "Show final form while typing"
-msgstr ""
+msgstr "Mostra la forma finale durante la digitazione"
 
 #. Translators: Tooltip for the checkbox for whether to
 #. show the final form while typing, i.e. show the text as
@@ -898,6 +898,8 @@ msgid ""
 "Show the text as it would appear if you ended the composition now by "
 "pressing Space."
 msgstr ""
+"Mostra il testo come apparirebbe se terminassi ora la composizione premendo "
+"la barra spaziatrice."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
@@ -1261,11 +1263,13 @@ msgstr ""
 #. list.
 #: setup/main.py:1673
 msgid "Show raw input"
-msgstr ""
+msgstr "Mostra l’input grezzo"
 
 #: setup/main.py:1675
 msgid "Showing the raw input may be helpful for transliterating input methods."
 msgstr ""
+"Mostrare l’input grezzo può essere utile per i metodi di input basati sulla "
+"traslitterazione."
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1273,7 +1277,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1684
 msgid "Never"
-msgstr ""
+msgstr "Mai"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1281,7 +1285,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1689
 msgid "When there are candidates"
-msgstr ""
+msgstr "Quando sono presenti dei candidati"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1289,7 +1293,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1694
 msgid "Always"
-msgstr ""
+msgstr "Sempre"
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
