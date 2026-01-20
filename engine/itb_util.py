@@ -28,6 +28,7 @@ from typing import Set
 from typing import Optional
 from typing import Union
 from typing import Iterable
+from typing import Pattern
 from typing import TYPE_CHECKING
 # pylint: disable=wrong-import-position
 import sys
@@ -3602,7 +3603,7 @@ COMPOSITION_EXCLUSIONS = {
 }
 
 # Compile a regex that matches any of the keys in COMPOSITION_EXCLUSIONS
-COMPOSITION_EXCLUSION_REGEX = re.compile(
+COMPOSITION_EXCLUSION_REGEX: Pattern[str] = re.compile(
     '|'.join(map(re.escape, COMPOSITION_EXCLUSIONS.keys())))
 
 def normalize_nfc_and_composition_exclusions(text: str) -> str:
