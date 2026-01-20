@@ -37,7 +37,6 @@ else:
     from typing_extensions import Literal
 from enum import Enum, Flag
 import os
-import re
 import functools
 import collections
 import unicodedata
@@ -69,6 +68,20 @@ if TYPE_CHECKING:
 # pylint: enable=wrong-import-position
 
 import itb_version
+
+USING_REGEX = False
+try:
+    # Enable new improved regex engine instead of backwards compatible
+    # v0.  regex.match('ß', 'SS', regex.IGNORECASE) matches only with
+    # the improved version!  See also: https://pypi.org/project/regex/
+    import regex # type: ignore
+    regex.DEFAULT_VERSION = regex.VERSION1
+    re = regex
+    USING_REGEX = True
+except ImportError:
+    # Use standard “re” module as a fallback:
+    import re
+    USING_REGEX = False
 
 IMPORT_DISTRO_SUCCESSFUL = False
 try:
@@ -3245,6 +3258,79 @@ def is_invisible(text: str) -> bool:
     '''
     return all(unicodedata.category(character)
                in ('Cc', 'Cf', 'Zl', 'Zp', 'Zs') for character in text)
+
+def estimate_left_steps(text: str, caret: int) -> int:
+    '''Estimates number of `Left` steps to reach the caret position from the end
+
+    The exact number of `Left` steps needed to reach the caret position may
+    depend on the editor application used.
+
+    Examples:
+
+    >>> estimate_left_steps('ü', 1)
+    0
+    >>> estimate_left_steps('ü', 0)
+    1
+    >>> estimate_left_steps('u\u0308', 0) # U+0308 COMBINING DIAERESIS
+    1
+    >>> estimate_left_steps('u\u0308', 1) # U+0308 COMBINING DIAERESIS
+    1
+    >>> estimate_left_steps('u\u0308', 2) # U+0308 COMBINING DIAERESIS
+    0
+    >>> estimate_left_steps('gru\u0308n', 3)
+    2
+    >>> estimate_left_steps('क्फ़्र', 6)
+    0
+    >>> estimate_left_steps('क्फ़्र', 5)
+    1
+    >>> estimate_left_steps('क्फ़्र', 3)
+    1
+
+    # In reality the following needs 2 steps in gedit, gnome-text-editor, emacs, ...
+    >>> estimate_left_steps('क्फ़्र', 0)
+    1
+    >>> estimate_left_steps('ক্ষ্র', 5)
+    0
+    >>> estimate_left_steps('ক্ষ্র', 4)
+    1
+    >>> estimate_left_steps('ক্ষ্র', 1)
+    1
+    >>> estimate_left_steps('ক্ষ্র', 0)
+    1
+    >>> estimate_left_steps('🇩🇪', 2)
+    0
+    >>> estimate_left_steps('🇩🇪', 1)
+    1
+    >>> estimate_left_steps('🇩🇪', 0)
+    1
+    >>> estimate_left_steps('🏴󠁧󠁢󠁳󠁣󠁴󠁿', 7)
+    0
+    >>> estimate_left_steps('🏴󠁧󠁢󠁳󠁣󠁴󠁿', 6)
+    1
+    >>> estimate_left_steps('🏴󠁧󠁢󠁳󠁣󠁴󠁿', 1)
+    1
+    >>> estimate_left_steps('🏴󠁧󠁢󠁳󠁣󠁴󠁿', 0)
+    1
+    >>> estimate_left_steps('🏴󠁧󠁢󠁳󠁣󠁴󠁿', -1) # invalid caret!
+    0
+    >>> estimate_left_steps('🇩🇪🏴󠁧󠁢󠁳󠁣󠁴󠁿', 2)
+    1
+    '''
+    if not text or caret < 0:
+        return 0
+    length = len(text)
+    if caret >= length:
+        return 0
+    if not USING_REGEX: # No way to count grapheme clusters without `regex`
+        return length - caret
+    clusters = list(re.finditer(r'\X', text))
+    # Count clusters that END after the caret position (these are the
+    # ones we need to move left over)
+    steps = 0
+    for match in clusters:
+        if match.end() > caret:
+            steps += 1
+    return steps
 
 # Mapping of Unicode ordinals to Unicode ordinals, strings, or None.
 # Unmapped characters are left untouched. Characters mapped to None

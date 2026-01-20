@@ -5171,12 +5171,13 @@ class TypingBoosterEngine(IBus.Engine):
         candidate_was_selected = False
         if self._lookup_table.is_cursor_visible():
             candidate_was_selected = True
-        caret_was = self.get_caret(extra_msymbol=' ')
+        left_steps = itb_util.estimate_left_steps(
+            commit_string, self.get_caret(extra_msymbol=' '))
         self._commit_string(commit_string, input_phrase=input_phrase)
         self._clear_input_and_update_ui()
         if not candidate_was_selected:
             # cursor needs to be corrected leftwards:
-            for dummy_char in commit_string[caret_was:]:
+            for _ in range(0, left_steps):
                 self._forward_generated_key_event(IBus.KEY_Left)
 
     def set_input_mode(
@@ -10848,7 +10849,8 @@ class TypingBoosterEngine(IBus.Engine):
             candidate_was_selected = False
             if self._lookup_table.is_cursor_visible():
                 candidate_was_selected = True
-            caret_was = self.get_caret(extra_msymbol=key.msymbol)
+            left_steps = itb_util.estimate_left_steps(
+                commit_string, self.get_caret(extra_msymbol=key.msymbol))
             if not input_phrase:
                 input_phrase = commit_string
             self._commit_string(commit_string, input_phrase=input_phrase)
@@ -10894,9 +10896,7 @@ class TypingBoosterEngine(IBus.Engine):
             time.sleep(self._ibus_event_sleep_seconds)
             if not candidate_was_selected:
                 # cursor needs to be corrected leftwards:
-                commit_string = itb_util.normalize_nfc_and_composition_exclusions(
-                    commit_string)
-                for dummy_char in commit_string[caret_was:]:
+                for _ in range(0, left_steps):
                     self._forward_generated_key_event(IBus.KEY_Left)
             return False
 
