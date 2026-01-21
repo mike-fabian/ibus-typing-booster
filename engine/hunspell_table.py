@@ -11119,9 +11119,9 @@ class TypingBoosterEngine(IBus.Engine):
             current_value = self._settings_dict[setting]['get_function']()
             if setting in ('inputmethod', 'dictionary'):
                 current_value = ','.join(current_value)
-            if type(current_value) not in [str, int, bool]:
+            if type(current_value) not in [str, int, bool, float]:
                 continue
-            new_value: Union[str, bool, int] = ''
+            new_value: Union[str, bool, int, float] = ''
             if isinstance(current_value, str):
                 new_value = value
             elif isinstance(current_value, bool):
@@ -11132,6 +11132,15 @@ class TypingBoosterEngine(IBus.Engine):
             elif isinstance(current_value, int):
                 try:
                     new_value = int(value)
+                except (ValueError,) as error:
+                    LOGGER.exception(
+                        'Exception converting autosettings value to integer: '
+                        '%s: %s',
+                        error.__class__.__name__, error)
+                    continue
+            elif isinstance(current_value, float):
+                try:
+                    new_value = float(value)
                 except (ValueError,) as error:
                     LOGGER.exception(
                         'Exception converting autosettings value to integer: '
