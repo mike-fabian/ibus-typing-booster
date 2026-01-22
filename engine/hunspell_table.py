@@ -1502,7 +1502,7 @@ class TypingBoosterEngine(IBus.Engine):
                     self._gsettings.get_default_value('keybindings'))
                 if self._engine_name != 'typing-booster':
                     default_value['toggle_input_mode_on_off'] = []
-                    default_value['commit_and_forward_key'] = ['Left']
+                    default_value['commit_and_forward_key'] = ['Left', 'Control+Left']
                 # copy the updated default keybindings, i.e. the
                 # default keybindings for this specific engine, into
                 # the user keybindings:

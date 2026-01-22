@@ -479,7 +479,8 @@ class ItbM17nEmuTestCase(unittest.TestCase):
         self.assertEqual(self.engine._preedit_underline, 0)
         self.assertEqual(self.engine._keybindings['toggle_input_mode_on_off'], [])
         self.assertEqual(self.engine._keybindings['enable_lookup'], ['Tab', 'ISO_Left_Tab']) # normal default
-        self.assertEqual(self.engine._keybindings['commit_and_forward_key'], ['Left'])
+        self.assertEqual(self.engine._keybindings['commit_and_forward_key'],
+                         ['Left', 'Control+Left'])
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'a')
         self.assertEqual(self.engine.mock_committed_text, '')
@@ -537,7 +538,7 @@ class ItbM17nEmuTestCase(unittest.TestCase):
         self.assertEqual(self.engine._keybindings['enable_lookup'],
                          ['Tab', 'ISO_Left_Tab']) # normal default
         self.assertEqual(self.engine._keybindings['commit_and_forward_key'],
-                         ['Left'])
+                         ['Left', 'Control+Left'])
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_i, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '爱')
@@ -692,7 +693,7 @@ class ItbM17nEmuTestCase(unittest.TestCase):
         self.assertEqual(self.engine._keybindings['enable_lookup'],
                          ['Tab', 'ISO_Left_Tab']) # normal default
         self.assertEqual(self.engine._keybindings['commit_and_forward_key'],
-                         ['Left'])
+                         ['Left', 'Control+Left'])
         self.engine.do_process_key_event(IBus.KEY_h, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '하')
