@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 28 Jan 2026 Release 2.30.2
+* Add `Control+Left` to the default for `commit_and_forward_key` for the `tb:*` engines (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/879)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 22 Jan 2026 Release 2.30.0
 * Make autosetting `ibuseventsleepseconds` possible (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/878)
 * Use a better estimate of how many `Left` keys are needed to step back over the committed string to the caret position (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/874)
