@@ -1,42 +1,46 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
-# Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2025.
+# Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-28 11:07+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-01-29 10:18+0000\n"
+"Last-Translator: Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>\n"
+"Language-Team: Romanian <https://translate.fedoraproject.org/projects/ibus-"
+"typing-booster/app/ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:301
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
-msgstr ""
+msgstr "Selector de pictograme „emoji”"
 
 #: engine/emoji-picker.desktop.in.in:3
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:7
 msgid "Emoji browsing tool"
-msgstr ""
+msgstr "Instrument de explorare pictograme „emoji”"
 
 #: engine/emoji_picker.py:431
 msgid "Search for emoji"
-msgstr ""
+msgstr "Căutare pictogramă „emoji”"
 
 #: engine/emoji_picker.py:437
 msgid "Set the font to display emoji"
-msgstr ""
+msgstr "Alegeți fontul pentru afișarea pictogramelor „emoji”"
 
 #: engine/emoji_picker.py:444
 msgid "Set font size"
-msgstr ""
+msgstr "Alegeți mărimea fontului"
 
 #. Translators: This is a checkbox which enables or disables
 #. the pango font fallback. If font fallback is off, only the
@@ -48,128 +52,133 @@ msgstr ""
 #. selected font.
 #: engine/emoji_picker.py:466
 msgid "Fallback"
-msgstr ""
+msgstr "Font alternativ"
 
 #: engine/emoji_picker.py:468
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
+"Stabilește dacă se utilizează un font de rezervă pentru pictogramele „emoji” "
+"sau pentru părți ale secvențelor de „emoji” care nu pot fi afișate folosind "
+"fontul selectat."
 
 #: engine/emoji_picker.py:563
 msgid "Recently used"
-msgstr ""
+msgstr "Utilizate recent"
 
 #: engine/emoji_picker.py:738
 msgid "Categories"
-msgstr ""
+msgstr "Categorii"
 
 #: engine/emoji_picker.py:739
 msgid "Unicode categories"
-msgstr ""
+msgstr "Categorii Unicode"
 
 #: engine/emoji_picker.py:740
 msgid "Keywords"
-msgstr ""
+msgstr "Cuvinte-cheie"
 
 #: engine/emoji_picker.py:758
 msgid "Fonts used to render this emoji:"
-msgstr ""
+msgstr "Fonturi folosite pentru a reda această pictogramă „emoji”:"
 
 #: engine/emoji_picker.py:816
 msgid "Unicode Version:"
-msgstr ""
+msgstr "Versiunea Unicode:"
 
 #: engine/emoji_picker.py:820
 msgid "Emoji Version:"
-msgstr ""
+msgstr "Versiunea pictogramelor „emoji”:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:827
 msgid "Emoji properties:"
-msgstr ""
+msgstr "Proprietăți pictograme „emoji”:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
 #: engine/emoji_picker.py:833
 msgid "Unicode category:"
-msgstr ""
+msgstr "Categorie Unicode:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
 #: engine/emoji_picker.py:840
 msgid "Unicode block:"
-msgstr ""
+msgstr "Blocul Unicode:"
 
 #: engine/emoji_picker.py:859 engine/emoji_picker.py:1980
 msgid "Left click to copy"
-msgstr ""
+msgstr "Apăsați butonul stâng al mouse-ului pentru a copia"
 
 #: engine/emoji_picker.py:862
 msgid "Long press or middle click for skin tones"
 msgstr ""
+"Apăsare lungă a butonului stâng sau apăsați butonul din mijloc al mouse-ului "
+"pentru tonuri de piele"
 
 #: engine/emoji_picker.py:863
 msgid "Right click for info"
-msgstr ""
+msgstr "Apăsați butonul drept al mouse-ului pentru informații"
 
 #: engine/emoji_picker.py:1406
 msgid "Search Results"
-msgstr ""
+msgstr "Rezultatele căutării"
 
 #: engine/emoji_picker.py:1413
 msgid "Search produced empty result."
-msgstr ""
+msgstr "Căutarea nu a dat niciun rezultat."
 
 #: engine/emoji_picker.py:1696 engine/emoji_picker.py:1846
 msgid "Copied to clipboard!"
-msgstr ""
+msgstr "Copiat în clipboard!"
 
 #: engine/emoji_picker.py:1744
 msgid "Clear recently used"
-msgstr ""
+msgstr "Șterge elementele utilizate recent"
 
 #: engine/emoji_picker.py:1749 setup/main.py:313
 msgid "About"
-msgstr ""
+msgstr "Despre"
 
 #: engine/emoji_picker.py:1752
 msgid "Quit"
-msgstr ""
+msgstr "Ieșire"
 
 #: engine/emoji_picker.py:2073
 msgid "Lookup on emojipedia"
-msgstr ""
+msgstr "Căutare în emojipedia"
 
 #: engine/emoji_picker.py:2171 engine/emoji_picker.py:2172
 #: engine/emoji_picker.py:2173 setup/main.py:1754
 msgid "System default"
-msgstr ""
+msgstr "Valoarea implicită a sistemului"
 
 #: engine/emoji_picker.py:2305
 msgid "Set Font"
-msgstr ""
+msgstr "Alegeți fontul"
 
 #: engine/hunspell_table.py:1044 engine/hunspell_table.py:1078
 #: engine/hunspell_table.py:1099
 msgid "Off"
-msgstr ""
+msgstr "Dezactivat"
 
 #: engine/hunspell_table.py:1049 engine/hunspell_table.py:1083
 #: engine/hunspell_table.py:1104
 msgid "On"
-msgstr ""
+msgstr "Activat"
 
 #: engine/hunspell_table.py:1068
 msgid "Input mode"
-msgstr ""
+msgstr "Modul de introducere"
 
 #: engine/hunspell_table.py:1069
 msgid "Here you can switch ibus-typing-booster on or off."
-msgstr ""
+msgstr "Aici puteți activa sau dezactiva «ibus-typing-booster»."
 
 #. Translators: Whether Unicode symbols and emoji should be
 #. included in the predictions. Emoji are pictographs like
@@ -181,7 +190,7 @@ msgstr ""
 #: engine/hunspell_table.py:1088 engine/hunspell_table.py:1090
 #: setup/main.py:717
 msgid "Unicode symbols and emoji predictions"
-msgstr ""
+msgstr "Predicții de simboluri Unicode și emoji"
 
 #. Translators: While “Off the record” mode is on, learning
 #. from user input is disabled. If learned user input is
@@ -193,115 +202,121 @@ msgstr ""
 #: engine/hunspell_table.py:1109 engine/hunspell_table.py:1110
 #: setup/main.py:788
 msgid "Off the record mode"
-msgstr ""
+msgstr "Modul fără înregistrare (confidențial)"
 
 #: engine/hunspell_table.py:2635
 msgid "Highest priority dictionary"
-msgstr ""
+msgstr "Dicționar cu prioritate maximă"
 
 #: engine/hunspell_table.py:2636
 msgid "Choose highest priority dictionary"
-msgstr ""
+msgstr "Alegeți dicționarul cu prioritate maximă"
 
 #: engine/hunspell_table.py:2665
 msgid "Preedit input method"
-msgstr ""
+msgstr "Metoda de introducere a textului"
 
 #: engine/hunspell_table.py:2666
 msgid "Switch preedit input method"
-msgstr ""
+msgstr "Schimbă metoda de introducere a textului"
 
 #: engine/hunspell_table.py:3037
 msgid "Setup"
-msgstr ""
+msgstr "Configurare"
 
 #: engine/hunspell_table.py:3040 setup/main.py:180
 msgid "Preferences for ibus-typing-booster"
-msgstr ""
+msgstr "Preferințe pentru ibus-typing-booster"
 
 #: engine/hunspell_table.py:7287
 msgid "Failed to import Google speech-to-text."
-msgstr ""
+msgstr "Importul funcției Google de transformare a vorbirii în text a eșuat."
 
 #: engine/hunspell_table.py:7290
 msgid "Failed to import pyaudio."
-msgstr ""
+msgstr "Importarea pyaudio a eșuat."
 
 #: engine/hunspell_table.py:7293
 msgid "Failed to import queue."
-msgstr ""
+msgstr "Importarea cozii de așteptare a eșuat."
 
 #: engine/hunspell_table.py:7298
 msgid "No supported language for speech recognition."
-msgstr ""
+msgstr "Nu există limbă acceptată pentru recunoașterea vocală."
 
 #: engine/hunspell_table.py:7302
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
+"Fișierul „%s” cu datele de autentificare pentru aplicația Google nu a fost "
+"găsit."
 
 #: engine/hunspell_table.py:7315
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
+"Inițializarea funcției Google de transformare a vorbirii în text a eșuat. "
+"Consultați fișierul „debug.log”."
 
 #: engine/hunspell_table.py:7423
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
+"Eroare a funcției Google de transformare a vorbirii în text a eșuat. "
+"Consultați fișierul „debug.log”."
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1233 engine/itb_emoji.py:1234 engine/itb_emoji.py:1235
 #: engine/itb_emoji.py:1441
 msgid "people"
-msgstr ""
+msgstr "persoane"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1236 engine/itb_emoji.py:1437
 msgid "nature"
-msgstr ""
+msgstr "natură"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1237 engine/itb_emoji.py:1433
 msgid "food"
-msgstr ""
+msgstr "alimente"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1238 engine/itb_emoji.py:1447
 msgid "travel"
-msgstr ""
+msgstr "călătorie"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1239 engine/itb_emoji.py:1248 engine/itb_emoji.py:1429
 msgid "activity"
-msgstr ""
+msgstr "activități"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1240 engine/itb_emoji.py:1439
 msgid "objects"
-msgstr ""
+msgstr "obiecte"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1241 engine/itb_emoji.py:1445
 msgid "symbols"
-msgstr ""
+msgstr "simboluri"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1242 engine/itb_emoji.py:1431
 msgid "flags"
-msgstr ""
+msgstr "steguri"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1243 engine/itb_emoji.py:1244 engine/itb_emoji.py:1435
 msgid "modifier"
-msgstr ""
+msgstr "modificatori"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1245 engine/itb_emoji.py:1443
 msgid "regional"
-msgstr ""
+msgstr "regiuni"
 
 #. Translators: This is a string is never displayed
 #. anywhere, it is only for searching.
@@ -331,27 +346,27 @@ msgstr ""
 #. are seperated by punctuation or white space.
 #: engine/itb_util.py:2874
 msgid "Others, Miscellaneous, Various, Diverse"
-msgstr ""
+msgstr "Altele, Diverse, Diferite, Variate"
 
 #: engine/itb_util.py:5160 engine/itb_util.py:5902
 msgid "File not found"
-msgstr ""
+msgstr "Fișierul nu a fost găsit"
 
 #: engine/itb_util.py:5164 engine/itb_util.py:5906
 msgid "Permission error"
-msgstr ""
+msgstr "Eroare de permisiuni"
 
 #: engine/itb_util.py:5168 engine/itb_util.py:5910
 msgid "Unicode decoding error"
-msgstr ""
+msgstr "Eroare de decodificare Unicode"
 
 #: engine/itb_util.py:5172 engine/itb_util.py:5914
 msgid "Unknown error"
-msgstr ""
+msgstr "Eroare necunoscută"
 
 #: engine/itb_util.py:5880
 msgid "Native Keyboard"
-msgstr ""
+msgstr "Tastatură nativă"
 
 #: engine/itb_util.py:5882
 msgid ""
@@ -359,17 +374,21 @@ msgid ""
 "whatever comes from the current keyboard layout without any further changes. "
 "So no transliteration or composing is done here."
 msgstr ""
+"Introducere directă de la tastatură. Aceasta nu este realmente o metodă de "
+"introducere, ci utilizează direct ceea ce provine din configurația curentă a "
+"tastaturii, fără alte modificări. Așadar, aici nu se efectuează nici "
+"transliterare, nici compunere."
 
 #. Translators: This is used in the title bar of a dialog window
 #. requesting that the user types a key to be used as a new
 #. key binding for a command.
 #: engine/itb_util.py:6761
 msgid "Key input"
-msgstr ""
+msgstr "Combinația de taste"
 
 #: engine/itb_util.py:6780 engine/itb_util.py:6823 engine/itb_util.py:6851
 msgid "Cancel"
-msgstr ""
+msgstr "Renunță"
 
 #. pylint: disable=consider-using-f-string
 #. Translators: This is from the dialog to enter a key or a
@@ -377,7 +396,7 @@ msgstr ""
 #. command.
 #: engine/itb_util.py:6787 engine/itb_util.py:6836
 msgid "Please press a key (or a key combination)"
-msgstr ""
+msgstr "Apăsați o tastă (sau o combinație de taste)"
 
 #. Translators: This is from the dialog to enter a key or a
 #. key combination to be used as a key binding for a
@@ -385,43 +404,45 @@ msgstr ""
 #: engine/itb_util.py:6792 engine/itb_util.py:6843
 msgid "The dialog will be closed when the key is released"
 msgstr ""
+"Dialogul se va închide când tasta este eliberată (ultima tastă în cazul "
+"combinației de taste)"
 
 #: engine/itb_util.py:6965
 msgid "A completion input method to speedup typing."
-msgstr ""
+msgstr "O metodă de completare a introducerii pentru a accelera tastarea."
 
 #. Translators: put your names here, one name per line.
 #: engine/itb_util.py:6974
 msgid "translator-credits"
-msgstr ""
+msgstr "Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2026"
 
 #: engine/itb_util.py:6982 setup/main.py:2442
 msgid "Online documentation:"
-msgstr ""
+msgstr "Documentație disponibilă în Internet:"
 
 #: engine/g_compat_helpers.py:1191 setup/main.py:5599
 msgid "Open File ..."
-msgstr ""
+msgstr "Deschide fișierul…"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:2
 msgid "Typing Booster Preferences"
-msgstr ""
+msgstr "Preferințe pentru acceleratorul de tastare"
 
 #: setup/ibus-setup-typing-booster.desktop.in.in:3
 msgid "Set Typing Booster Options"
-msgstr ""
+msgstr "Configurarea opțiunilor acceleratorului de tastare"
 
 #: setup/main.py:186
 msgid "Preferences"
-msgstr ""
+msgstr "Preferințe"
 
 #: setup/main.py:321
 msgid "Restore all defaults"
-msgstr ""
+msgstr "Restaurează valorile implicite"
 
 #: setup/main.py:330 setup/main.py:7617 setup/pkginstall.py:254
 msgid "_Close"
-msgstr ""
+msgstr "În_chide"
 
 #. Translators: This is the label of a tab in the setup
 #. tool. Here the user can setup the dictionaries for the
@@ -430,14 +451,14 @@ msgstr ""
 #. in.
 #: setup/main.py:355
 msgid "Dictionaries and input methods"
-msgstr ""
+msgstr "Dicționare și metode de introducere"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence the
 #. behaviour of ibus-typing-booster.
 #: setup/main.py:372
 msgid "Options"
-msgstr ""
+msgstr "Opțiuni"
 
 #. Translators: This is a label of a tab in the setup tool.
 #. Here the user can create custom shortcuts. For example if
@@ -446,7 +467,7 @@ msgstr ""
 #. candidate, he can define such a custom shortcut here.
 #: setup/main.py:393
 msgid "Custom shortcuts"
-msgstr ""
+msgstr "Taste de comenzi rapide personalizate"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can customize the key bindings to execute
@@ -457,7 +478,7 @@ msgstr ""
 #. existing key bindings
 #: setup/main.py:411 setup/main.py:1580
 msgid "Key bindings"
-msgstr ""
+msgstr "Combinații de taste"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options which influence how
@@ -470,7 +491,7 @@ msgstr ""
 #. diffent types of candidates should be marked with labels.
 #: setup/main.py:434
 msgid "Appearance"
-msgstr ""
+msgstr "Aspect"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to AI
@@ -484,7 +505,7 @@ msgstr ""
 #. recognition.
 #: setup/main.py:472 setup/main.py:2995
 msgid "Speech recognition"
-msgstr ""
+msgstr "Recunoașterea vocală"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up whether some settings should change
@@ -495,7 +516,7 @@ msgstr ""
 #. focus:
 #: setup/main.py:489 setup/main.py:2633
 msgid "Autosettings"
-msgstr ""
+msgstr "Configurări automate"
 
 #. Translators: If this option is on, suggestions are not
 #. shown by default. Typing a key is then necessary to show
@@ -505,7 +526,7 @@ msgstr ""
 #. again until the next key bound to this command is typed.
 #: setup/main.py:511
 msgid "Enable suggestions by key (Default is the Tab key)"
-msgstr ""
+msgstr "Activează sugestiile printr-o tastă (implicit este tasta «Tab»)"
 
 #: setup/main.py:513
 msgid ""
@@ -515,6 +536,12 @@ msgid ""
 "a commit the suggestions are hidden again until the next key bound to this "
 "command is typed."
 msgstr ""
+"Dacă această opțiune este activată, sugestiile nu sunt afișate în mod "
+"implicit. Pentru a afișa lista de sugestii, este necesar să apăsați o tastă. "
+"Tasta utilizată în acest scop poate fi modificată în opțiunile de asociere a "
+"tastelor. În mod implicit, aceasta este tasta «Tab». După o confirmare, "
+"sugestiile sunt ascunse din nou până când se apasă tasta asociată acestei "
+"comenzi."
 
 #. Translators: Whether the best completion is first shown
 #. inline in the preedit instead of showing a full
@@ -524,7 +551,7 @@ msgstr ""
 #. the next candidate and opens the full candidate list.
 #: setup/main.py:537
 msgid "Use inline completion"
-msgstr ""
+msgstr "Utilizați completarea automată"
 
 #: setup/main.py:539
 msgid ""
@@ -534,28 +561,34 @@ msgid ""
 "Control+Space. Typing Tab again moves to the next candidate and opens the "
 "full candidate list."
 msgstr ""
+"Dacă cea mai bună completare este afișată mai întâi în linia din pre-"
+"editare, în loc să se afișeze o listă completă de candidate. Candidata "
+"afișată în linie poate fi selectată apăsând tasta «Tab» și apoi confirmată "
+"ca de obicei, de exemplu apăsând tasta «Spațiu» sau «Control+Spațiu». "
+"Apăsând din nou tasta «Tab» se trece la următoarea candidată și se deschide "
+"lista completă de candidate."
 
 #: setup/main.py:549 setup/main.py:611
 msgid "No"
-msgstr ""
+msgstr "Nu"
 
 #: setup/main.py:551
 msgid "Yes, with fallback to popup"
-msgstr ""
+msgstr "Da, cu revenire la fereastra emergentă"
 
 #: setup/main.py:553
 msgid "Yes, without fallback to popup"
-msgstr ""
+msgstr "Da, fără revenire la fereastra emergentă"
 
 #. Translators: Whether to automatically capitalize after
 #. punctuation.
 #: setup/main.py:576
 msgid "Auto capitalize"
-msgstr ""
+msgstr "Majusculă inițială automată"
 
 #: setup/main.py:578
 msgid "Automatically capitalize after punctuation."
-msgstr ""
+msgstr "Scrie automat cu majusculă după semne de punctuație."
 
 #. Translators: What you type will automatically be
 #. corrected to the best candidate by selecting the best
@@ -567,7 +600,7 @@ msgstr ""
 #. command which will deselect all candidates.
 #: setup/main.py:597
 msgid "Automatically select the best candidate"
-msgstr ""
+msgstr "Selectează automat cea mai bună variantă"
 
 #: setup/main.py:599
 msgid ""
@@ -578,14 +611,20 @@ msgid ""
 "selected candidate, you can use the key binding for the “cancel” command "
 "which will deselect all candidates."
 msgstr ""
+"Ceea ce tastați va fi corectat automat la cea mai bună variantă, selectând "
+"automat cea mai bună variantă. Dacă această opțiune este dezactivată, "
+"trebuie să selectați manual o variantă utilizând combinația de taste pentru "
+"a selecta următoarea variantă. Dacă această opțiune este activată și nu "
+"doriți să utilizați varianta selectată automat, puteți utiliza combinația de "
+"taste pentru comanda „anulare”, care va deselecta toate variantele."
 
 #: setup/main.py:613
 msgid "Yes, but only when extremely likely"
-msgstr ""
+msgstr "Da, dar numai atunci când este extrem de probabil"
 
 #: setup/main.py:615
 msgid "Yes, always"
-msgstr ""
+msgstr "Da, întotdeauna"
 
 #. Translators: Add a space if a candidate from the
 #. candidate list is committed by clicking it
@@ -593,12 +632,15 @@ msgstr ""
 #: setup/main.py:639
 msgid "Add a space when committing by mouse click"
 msgstr ""
+"Adaugă un spațiu când confirmați prin apăsarea butonului stâng al mouse-ului"
 
 #: setup/main.py:641
 msgid ""
 "Add a space if a candidate from the candidate list is committed by clicking "
 "it with the mouse."
 msgstr ""
+"Adaugă un spațiu dacă o variantă din lista de variante este selectată făcând "
+"clic pe ea cu mouse-ul."
 
 #. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -608,7 +650,7 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:659
 msgid "Remember last used preedit input method"
-msgstr ""
+msgstr "Reține ultima metodă de introducere utilizată"
 
 #: setup/main.py:661
 msgid ""
@@ -617,6 +659,11 @@ msgid ""
 "via the menu or via shortcut keys. If this option is enabled, such a change "
 "is remembered even if the session is restarted."
 msgstr ""
+"Dacă se utilizează mai multe metode de introducere simultan, una dintre ele "
+"este utilizată pentru pre-editare. Metoda de introducere utilizată pentru "
+"pre-editare poate fi modificată prin meniu sau prin combinațiile de taste "
+"rapide. Dacă această opțiune este activată, modificarea este memorată chiar "
+"și dacă sesiunea este repornită."
 
 #. Translators: If more than one input method is used at
 #. the same time, one of them is used for the preedit.
@@ -626,22 +673,24 @@ msgstr ""
 #. the session is restarted.
 #: setup/main.py:683
 msgid "Remember input mode"
-msgstr ""
+msgstr "Reține modul de introducere"
 
 #: setup/main.py:685
 msgid ""
 "If this option is enabled, the last used input mode (on/off) is remembered "
 "even if the session is restarted."
 msgstr ""
+"Dacă această opțiune este activată, ultimul mod de introducere utilizat "
+"(activat/dezactivat) este memorat chiar și dacă sesiunea este repornită."
 
 #. Translators: Whether ibus-typing-booster should show word predictions.
 #: setup/main.py:698
 msgid "Word predictions"
-msgstr ""
+msgstr "Predicții de cuvinte"
 
 #: setup/main.py:700
 msgid "Whether ibus-typing-booster should show word predictions."
-msgstr ""
+msgstr "Dacă ibus-typing-booster trebuie să afișeze predicții de cuvinte."
 
 #: setup/main.py:719
 msgid ""
@@ -651,6 +700,11 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
+"Dacă simbolurile Unicode și emoji ar trebui incluse în predicții. Emoji sunt "
+"pictograme precum ☺♨⛵…. Simbolurile Unicode sunt alte simboluri, cum ar fi "
+"simbolurile matematice (∀∑∯…), săgețile (←↑↔…), simbolurile monedelor (€₹₺…)"
+", modelele braille (⠥⠩…) și multe alte simboluri. Acestea nu sunt, din punct "
+"de vedere tehnic, emoji, dar sunt totuși simboluri utile."
 
 #. Translators: A combo box to select which emoji style
 #. should be used.
@@ -670,7 +724,7 @@ msgstr ""
 #. sequences to request “Emoji style”, i.e.  typically colored.
 #: setup/main.py:753 setup/main.py:2987
 msgid "Emoji"
-msgstr ""
+msgstr "Emoji"
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Text style”, i.e.  typically
@@ -695,12 +749,19 @@ msgid ""
 "sparingly. Only if one wants to avoid saving secret user input to disk it "
 "might make sense to use this option temporarily."
 msgstr ""
+"Când «Modul fără înregistrare (confidențial)» este activat, învățarea din "
+"introducerea utilizatorului este dezactivată. Dacă introducerea "
+"utilizatorului învățată este disponibilă, predicțiile sunt de obicei mult "
+"mai bune decât predicțiile care utilizează doar dicționare. Prin urmare, "
+"această opțiune trebuie utilizată cu moderație. Doar dacă se dorește "
+"evitarea salvării introducerii secrete a utilizatorului pe disc, ar putea fi "
+"utilă utilizarea temporară a acestei opțiuni."
 
 #. Translators: A combo box to select which kind of input
 #. should be recorded in the user database.
 #: setup/main.py:810
 msgid "Record mode"
-msgstr ""
+msgstr "Modul de înregistrare"
 
 #: setup/main.py:812
 msgid ""
@@ -714,22 +775,33 @@ msgid ""
 "database if it is likely to be correctly spelled.  “Nothing”: Do not record "
 "any input at all in the user database."
 msgstr ""
+"Selectează tipul de intrare care trebuie înregistrată în baza de date a "
+"utilizatorului: «Totul»: fiecare cuvânt tastat este adăugat în baza de date "
+"a utilizatorului sau frecvența sa este actualizată dacă acesta există deja. «"
+"Ortografiat corect sau înregistrat anterior»: un cuvânt tastat este adăugat "
+"în baza de date a utilizatorului numai dacă este probabil să fie ortografiat "
+"corect. Dacă un cuvânt există deja în baza de date a utilizatorului, "
+"frecvența sa este actualizată indiferent de ortografie. «Ortografiat corect"
+"»: un cuvânt tastat este adăugat în baza de date sau frecvența sa este "
+"actualizată în baza de date numai dacă este probabil să fie ortografiat "
+"corect. «Nimic»: nu se înregistrează nicio intrare în baza de date a "
+"utilizatorului."
 
 #: setup/main.py:826
 msgid "Everything"
-msgstr ""
+msgstr "Totul"
 
 #: setup/main.py:828
 msgid "Correctly spelled or previously recorded"
-msgstr ""
+msgstr "Ortografiat corect sau înregistrat anterior"
 
 #: setup/main.py:829
 msgid "Correctly spelled"
-msgstr ""
+msgstr "Ortografiat corect"
 
 #: setup/main.py:830
 msgid "Nothing"
-msgstr ""
+msgstr "Nimic"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -747,7 +819,7 @@ msgstr ""
 #: setup/main.py:865
 #, python-format
 msgid "Avoid using the %s function"
-msgstr ""
+msgstr "Evită utilizarea funcției %s"
 
 #. Translators: Avoid the function forward_key_event() in
 #. case it is not implemented or has a broken
@@ -772,6 +844,9 @@ msgid ""
 "absolutely necessary, it can also cause problems, especially when XIM is "
 "used."
 msgstr ""
+"Utilizează o soluție alternativă dacă funcția %s nu funcționează. Activați "
+"această opțiune numai dacă este absolut necesar, deoarece poate cauza "
+"probleme, în special când se utilizează XIM."
 
 #. Translators: Whether it is allowed to reopen a preedit
 #. when the cursor reaches a word boundary after moving it.
@@ -779,7 +854,7 @@ msgstr ""
 #. committed words.
 #: setup/main.py:902
 msgid "Enable reopening preedits"
-msgstr ""
+msgstr "Activează redeschiderea pre-editărilor"
 
 #: setup/main.py:904
 msgid ""
@@ -787,22 +862,25 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
+"Dacă este permisă reintroducerea unui cuvânt într-o pre-editare atunci când "
+"cursorul se deplasează la sfârșitul sau la începutul unui cuvânt. Activarea "
+"acestei opțiuni este utilă pentru corectarea cuvintelor deja confirmate."
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
 #: setup/main.py:920
 msgid "Disable in terminals"
-msgstr ""
+msgstr "Dezactivează în terminale"
 
 #: setup/main.py:922
 msgid "Whether ibus-typing-booster should be disabled in terminals."
-msgstr ""
+msgstr "Dacă ibus-typing-booster trebuie să fie dezactivat în terminale."
 
 #. Translators: Whether language specific digits should be
 #. converted to ASCII digits
 #: setup/main.py:935
 msgid "Convert language specific digits to ASCII digits"
-msgstr ""
+msgstr "Conevertește cifrele specifice limbii în cifre ASCII"
 
 #: setup/main.py:937
 msgid ""
@@ -811,6 +889,11 @@ msgid ""
 "digits always, one can set this option to convert language specific digits "
 "produced by input methods always to ASCII digits."
 msgstr ""
+"Unele metode de introducere generează în mod implicit cifre specifice "
+"limbii. Dacă nu doriți să utilizați astfel de cifre specifice limbii, ci "
+"preferați întotdeauna cifrele occidentale (ASCII), puteți activa această "
+"opțiune pentru a converti întotdeauna cifrele specifice limbii generate de "
+"metodele de introducere în cifre ASCII."
 
 #. Translators: Checkbox for whether to show the final form while typing,
 #. i.e. show the text as it would appear if you ended the composition now
@@ -833,7 +916,7 @@ msgstr ""
 #. forced while Typing Booster is active
 #: setup/main.py:975
 msgid "Use IBus keymap"
-msgstr ""
+msgstr "Utilizați configurația de taste IBus"
 
 #. Translators: This is a tooltip for a checkbox with the
 #. label 'Use IBus keymap'
@@ -843,6 +926,11 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
+"Dacă utilizarea unei configurații de taste IBus este forțată în timp ce «"
+"Acceleratorul de tastare» este activ. Pentru majoritatea utilizatorilor, se "
+"recomandă să nu se utilizeze o configurație de taste IBus. În acest caz, se "
+"utilizează configurația tastaturii care era activă înainte de trecerea la «"
+"Acceleratorul de tastare»."
 
 #. Translators: This is a tooltip for a combobox to choose
 #. a keymap
@@ -861,20 +949,23 @@ msgstr ""
 #. “English” keymap used.
 #: setup/main.py:1006
 msgid "English"
-msgstr ""
+msgstr "Engleză"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
 #. “Unicode symbols and emoji predictions” is off.
 #: setup/main.py:1030
 msgid "Emoji trigger characters:"
-msgstr ""
+msgstr "Caractere declanșatoare emoji:"
 
 #: setup/main.py:1032
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
 msgstr ""
+"Caracterele din această listă declanșează căutarea unui simbol emoji și "
+"Unicode chiar dacă opțiunea «Predicții simboluri Unicode și emoji» este "
+"dezactivată."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -890,7 +981,7 @@ msgstr ""
 #. (which is the default).
 #: setup/main.py:1061
 msgid "Auto commit characters:"
-msgstr ""
+msgstr "Caractere de confirmare automată:"
 
 #: setup/main.py:1063
 msgid ""
@@ -904,95 +995,113 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
+"Caracterele din această listă determină confirmarea automată a preeditării, "
+"urmată de un spațiu. De exemplu, dacă „.” este un caracter de confirmare "
+"automată, acest lucru vă scutește de a introduce manual un spațiu după "
+"sfârșitul unei propoziții. Puteți edita liber această listă, o valoare "
+"rezonabilă ar putea fi „.,;:?!)”. Nu trebuie să adăugați caractere la "
+"această listă care sunt necesare metodei dvs. de introducere, de exemplu, "
+"dacă utilizați Latin-Pre (t-latn-pre), nu ar fi o idee bună să adăugați „.” "
+"la această listă, deoarece v-ar împiedica să tastați „.s” pentru a obține „ṡ"
+"”. De asemenea, puteți dezactiva complet această funcție golind lista (care "
+"este valoarea implicită)."
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
 #: setup/main.py:1093
 msgid "Minimum number of chars for completion:"
-msgstr ""
+msgstr "Numărul minim de caractere pentru completare:"
 
 #: setup/main.py:1095
 msgid ""
 "Show no suggestions when less than this number of characters have been typed."
 msgstr ""
+"Nu se afișează sugestii atunci când s-au introdus mai puține caractere decât "
+"acest număr."
 
 #. Translators: A checkbox where one can choose whether a
 #. sound is played on error
 #: setup/main.py:1120
 msgid "Play sound file on error"
-msgstr ""
+msgstr "Redă fișierul audio în caz de eroare"
 
 #: setup/main.py:1122
 msgid "Here you can choose whether a sound file is played if an error occurs."
 msgstr ""
+"Aici puteți alege dacă se redă un fișier audio în cazul apariției unei erori."
 
 #. Translators: When the debug level is greater than 0,
 #. debug information may be printed to the log file and
 #. debug information may also be shown graphically.
 #: setup/main.py:1155
 msgid "Debug level:"
-msgstr ""
+msgstr "Nivelul de depanare:"
 
 #: setup/main.py:1157
 msgid ""
 "When greater than 0, debug information may be printed to the log file and "
 "debug information may also be shown graphically."
 msgstr ""
+"Când valoarea este mai mare decât 0, informațiile de depanare pot fi "
+"imprimate în fișierul jurnal și pot fi afișate și grafic."
 
 #. Translators: A button used to popup a file selector to
 #. choose a text file and learn your writing style by
 #. reading that text file.
 #: setup/main.py:1181
 msgid "Learn from text file"
-msgstr ""
+msgstr "Învață din fișierul text"
 
 #: setup/main.py:1183
 msgid "Learn your style by reading a text file"
-msgstr ""
+msgstr "Învață stilul tău citind un fișier text"
 
 #. Translators: A button used to delete all personal
 #. language data learned from typing or from reading files.
 #: setup/main.py:1195
 msgid "Delete learned data"
-msgstr ""
+msgstr "Șterge datele învățate"
 
 #: setup/main.py:1197
 msgid ""
 "Delete all personal language data learned from typing or from reading files"
 msgstr ""
+"Ștergeți toate datele lingvistice personale învățate din tastare sau din "
+"citirea fișierelor"
 
 #. Translators: This is the header of the list of
 #. dictionaries which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:1211
 msgid "Use dictionaries for the following languages:"
-msgstr ""
+msgstr "Utilizați dicționare pentru următoarele limbi:"
 
 #: setup/main.py:1231
 msgid "Add a dictionary"
-msgstr ""
+msgstr "Adaugă un dicționar"
 
 #: setup/main.py:1237
 msgid "Remove a dictionary"
-msgstr ""
+msgstr "Elimină un dicționar"
 
 #: setup/main.py:1243
 msgid "Move dictionary up"
-msgstr ""
+msgstr "Mută dicționarul în sus"
 
 #: setup/main.py:1249
 msgid "Move dictionary down"
-msgstr ""
+msgstr "Mută dicționarul în jos"
 
 #. Translators: A button used to try to install the
 #. dictionaries which are setup here but not installed
 #: setup/main.py:1256 setup/pkginstall.py:221
 msgid "Install missing dictionaries"
-msgstr ""
+msgstr "Instalează dicționarele lipsă"
 
 #: setup/main.py:1257
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
+"Instalează dicționarele care sunt configurate aici, dar nu sunt instalate."
 
 #. Translators: A button used to download
 #. missing dictionaries and update existing ones.
@@ -1009,57 +1118,62 @@ msgstr ""
 #: setup/main.py:1272
 msgid "Set dictionaries to the default for the current locale."
 msgstr ""
+"Definește dicționarele ca implicite pentru configurația regională curentă."
 
 #: setup/main.py:1278 setup/main.py:1387 setup/main.py:1604 setup/main.py:5470
 msgid "Set to default"
-msgstr ""
+msgstr "Stabilește combinația de taste ca implicită"
 
 #. Translators: This is the header of the list of input
 #. methods which are currently set up to be used by
 #. ibus-typing-booster.
 #: setup/main.py:1313
 msgid "Use the following input methods:"
-msgstr ""
+msgstr "Utilizează următoarele metode de introducere:"
 
 #: setup/main.py:1333
 msgid "Add an input method"
-msgstr ""
+msgstr "Adaugă o metodă de introducere"
 
 #: setup/main.py:1340
 msgid "Remove an input method"
-msgstr ""
+msgstr "Elimină o metodă de introducere"
 
 #: setup/main.py:1346
 msgid "Move input method up"
-msgstr ""
+msgstr "Mută metoda de introducere în sus"
 
 #: setup/main.py:1352
 msgid "Move input method down"
-msgstr ""
+msgstr "Mută metoda de introducere în jos"
 
 #. Translators: A button to display some help showing how
 #. to use the input method selected in the list of input
 #. methods.
 #: setup/main.py:1360
 msgid "Input Method Help"
-msgstr ""
+msgstr "Ajutor pentru metoda de introducere"
 
 #: setup/main.py:1361
 msgid "Display some help showing how to use the input method selected above."
 msgstr ""
+"Afișează ajutorul care arată cum se utilizează metoda de introducere "
+"selectată mai sus."
 
 #. Translators: Tooltip for a button to set some advanced
 #. options for the input method currently selected in the
 #. list of input methods.
 #: setup/main.py:1372
 msgid "Options for the input method selected above."
-msgstr ""
+msgstr "Opțiuni pentru metoda de introducere selectată mai sus."
 
 #. Translators: Tooltip for a button used to set the list of
 #. input methods to the default for the current locale.
 #: setup/main.py:1380
 msgid "Set input methods to the default for the current locale."
 msgstr ""
+"Definește metodele de introducere ca implicite pentru configurația regională "
+"curentă."
 
 #: setup/main.py:1421
 msgid "Enter shortcut here:"
@@ -1095,46 +1209,48 @@ msgstr ""
 
 #: setup/main.py:1547
 msgid "Current key bindings:"
-msgstr ""
+msgstr "Combinațiile de taste curente:"
 
 #. Translators: Column heading of the table listing the
 #. existing key bindings
 #: setup/main.py:1572
 msgid "Command"
-msgstr ""
+msgstr "Comandă"
 
 #: setup/main.py:1597
 msgid "Edit"
-msgstr ""
+msgstr "Editare"
 
 #: setup/main.py:1598
 msgid "Edit the key bindings for the selected command"
-msgstr ""
+msgstr "Editați combinația de taste pentru comanda selectată"
 
 #: setup/main.py:1605 setup/main.py:5471
 msgid "Set default key bindings for the selected command"
-msgstr ""
+msgstr "Stabilește combinația de taste implicită pentru comanda selectată"
 
 #: setup/main.py:1610 setup/main.py:2705
 msgid "Set all to default"
-msgstr ""
+msgstr "Stabilește toate combinațiile de taste ca implicite"
 
 #: setup/main.py:1611
 msgid "Set default key bindings for all commands"
-msgstr ""
+msgstr "Stabilește combinațiile de taste implicite pentru toate comenzile"
 
 #. Translators: Checkbox to choose whether to display how
 #. many candidates there are and which one is selected on
 #. top of the list of candidates.
 #: setup/main.py:1633
 msgid "Display total number of candidates"
-msgstr ""
+msgstr "Afișează numărul total de variante"
 
 #: setup/main.py:1635
 msgid ""
 "Display how many candidates there are and which one is selected on top of "
 "the list of candidates."
 msgstr ""
+"Afişează numărul de variante şi care dintre acestea este selectată în partea "
+"de sus a listei de variante."
 
 #. Translators: Checkbox to choose whether to show above
 #. the candidate list whether “Emoji prediction” mode and
@@ -1144,7 +1260,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1649
 msgid "Show status info in auxiliary text"
-msgstr ""
+msgstr "Afișează informații despre stare în textul auxiliar"
 
 #: setup/main.py:1651
 msgid ""
@@ -1153,6 +1269,10 @@ msgid ""
 "for the preedit. The auxiliary text is an optional line of text displayed "
 "above the candidate list."
 msgstr ""
+"Afișează în textul auxiliar dacă modul «Predicție emoji» și «Modul fără "
+"înregistrare (confidențial)» sunt activate sau dezactivate și afișează ce "
+"metodă de introducere este utilizată în prezent pentru pre-editare. Textul "
+"auxiliar este o linie opțională de text afișată deasupra listei de variante."
 
 #. Translators: A combobox to choose whether to show the raw
 #. input in the auxiliary text.  The auxiliary text is an
@@ -1194,38 +1314,40 @@ msgstr ""
 #. candidates to show in one page of the candidate list.
 #: setup/main.py:1718
 msgid "Candidate window page size:"
-msgstr ""
+msgstr "Dimensiunea listei de variante:"
 
 #: setup/main.py:1720
 msgid ""
 "How many suggestion candidates to show in one page of the candidate list."
 msgstr ""
+"Câte variante de sugestii să se afișeze pe o pagină din lista de variante."
 
 #. Translators: A combobox to choose whether the candidate
 #. window should be drawn horizontally or vertically.
 #: setup/main.py:1742
 msgid "Candidate window orientation"
-msgstr ""
+msgstr "Orientarea ferestrei de variante"
 
 #: setup/main.py:1744
 msgid ""
 "Whether the candidate window should be drawn horizontally or vertically."
 msgstr ""
+"Dacă fereastra de variante trebuie desenată pe orizontală sau pe verticală."
 
 #: setup/main.py:1750
 msgid "Horizontal"
-msgstr ""
+msgstr "Orizontală"
 
 #: setup/main.py:1752
 msgid "Vertical"
-msgstr ""
+msgstr "Verticală"
 
 #. Translators: Here one can choose how many milliseconds
 #. the system needs to be idle after pressing a key before
 #. candidates are displayed
 #: setup/main.py:1781
 msgid "Candidate window delay in milliseconds:"
-msgstr ""
+msgstr "Întârzierea afișării ferestrei de variante în secunde:"
 
 #. Translators: A tooltip explaining the meaning of the
 #. “Candidate window delay in milliseconds:” option.
@@ -1233,40 +1355,42 @@ msgstr ""
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
 msgstr ""
+"Cât timp trebuie să așteptați după ultima apăsare de tastă înainte ca "
+"variantele să fie afișate."
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
 #: setup/main.py:1811
 msgid "Preedit underline"
-msgstr ""
+msgstr "Subliniere pre-editare"
 
 #: setup/main.py:1813
 msgid "Which style of underlining to use for the preedit."
-msgstr ""
+msgstr "Ce stil de subliniere să se utilizeze pentru pre-editare."
 
 #. Translators: This is the setting to use no underline
 #. at all for the preedit.
 #: setup/main.py:1821
 msgid "None"
-msgstr ""
+msgstr "Niciunul"
 
 #. Translators: This is the setting to use a single
 #. underline for the preedit.
 #: setup/main.py:1826
 msgid "Single"
-msgstr ""
+msgstr "Simplu"
 
 #. Translators: This is the setting to use a double
 #. underline for the preedit.
 #: setup/main.py:1831
 msgid "Double"
-msgstr ""
+msgstr "Dublu"
 
 #. Translators: This is the setting to use a low
 #. underline for the preedit.
 #: setup/main.py:1836
 msgid "Low"
-msgstr ""
+msgstr "Redus"
 
 #. Translators: Checkbox to choose whether a preedit style
 #. like underlining will only be used if lookup is
@@ -1276,7 +1400,7 @@ msgstr ""
 #. of characters before a lookup is done.
 #: setup/main.py:1864
 msgid "Use preedit style only if lookup is enabled"
-msgstr ""
+msgstr "Utilizează stilul de pre-editare numai dacă căutarea este activată"
 
 #: setup/main.py:1866
 msgid ""
@@ -1285,6 +1409,11 @@ msgid ""
 "enable lookup only when a key is pressed or because one uses the option to "
 "require a minimum number of characters before a lookup is done."
 msgstr ""
+"Dacă această opțiune este activată, un stil de pre-editare, cum ar fi "
+"sublinierea, va fi utilizat numai dacă căutarea este activată. Căutarea "
+"poate fi dezactivată deoarece se utilizează opțiunea de activare a căutării "
+"numai când se apasă o tastă sau deoarece se utilizează opțiunea de a "
+"solicita un număr minim de caractere înainte de efectuarea căutării."
 
 #. Translators: A checkbox where one can choose whether
 #. spellchecking is done on the contents of the preedit and
@@ -1292,7 +1421,7 @@ msgstr ""
 #. might contain a spelling error.
 #: setup/main.py:1886
 msgid "Preedit spellchecking"
-msgstr ""
+msgstr "Verificare ortografică în pre-editare"
 
 #: setup/main.py:1888
 msgid ""
@@ -1300,13 +1429,16 @@ msgid ""
 "preedit and a custom color is used to indicate when the preedit might "
 "contain a spelling error."
 msgstr ""
+"Aici puteți alege dacă verificarea ortografică se efectuează pe conținutul "
+"pre-editării și dacă se utilizează o culoare personalizată pentru a indica "
+"când pre-editarea ar putea conține o eroare ortografică."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the spellchecking in the preedit.
 #: setup/main.py:1914
 msgid "Choose color for preedit spellchecking"
-msgstr ""
+msgstr "Alegeți culoarea pentru verificarea ortografică în pre-editare"
 
 #: setup/main.py:1916
 msgid ""
@@ -1314,25 +1446,30 @@ msgid ""
 "might contain a spelling error. This setting only has an effect if the "
 "preedit spellchecking is enabled."
 msgstr ""
+"Aici puteți specifica ce culoare să se utilizeze pentru pre-editare atunci "
+"când pre-editarea poate conține o eroare ortografică. Această opțiune are "
+"efect numai dacă verificarea ortografică a pre-editării este activată."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions shown inline.
 #: setup/main.py:1939
 msgid "Use color for inline completion"
-msgstr ""
+msgstr "Utilizează o culoare pentru completarea în linie"
 
 #: setup/main.py:1941
 msgid ""
 "Here you can choose whether a custom color is used for a suggestion shown "
 "inline."
 msgstr ""
+"Aici puteți alege dacă se utilizează o culoare personalizată pentru o "
+"sugestie afișată în linie."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. inline completion.
 #: setup/main.py:1965
 msgid "Choose color for inline completion"
-msgstr ""
+msgstr "Alegeți culoarea pentru completarea în linie"
 
 #: setup/main.py:1967
 msgid ""
@@ -1340,28 +1477,35 @@ msgid ""
 "only has an effect if the use of color for inline completion is enabled and "
 "inline completion is enabled."
 msgstr ""
+"Aici puteți specifica culoarea care va fi utilizată pentru completarea în "
+"linie. Această opțiune are efect numai dacă utilizarea culorii pentru "
+"completarea în linie este activată și completarea în linie este activată."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the compose preview.
 #: setup/main.py:1990
 msgid "Use color for compose preview"
-msgstr ""
+msgstr "Utilizează o culoare pentru previzualizarea compunerii"
 
 #: setup/main.py:1992
 msgid ""
 "Here you can choose whether a custom color is used for the compose preview."
 msgstr ""
+"Aici puteți alege dacă se utilizează o culoare personalizată pentru "
+"previzualizarea compunerii."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the compose preview.
 #: setup/main.py:2016
 msgid "Choose color for compose preview"
-msgstr ""
+msgstr "Alegeți culoarea pentru previzualizarea compunerii"
 
 #: setup/main.py:2018
 msgid "Here you can specify which color to use for the compose preview."
 msgstr ""
+"Aici puteți specifica culoarea pe care doriți să o utilizați pentru "
+"previzualizarea compunerii."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for the m17n preedit.
@@ -1391,19 +1535,23 @@ msgstr ""
 #: setup/main.py:2089
 msgid "Use color for user database suggestions"
 msgstr ""
+"Utilizează o culoare pentru sugestiile din baza de date a utilizatorului"
 
 #: setup/main.py:2091
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from the user database."
 msgstr ""
+"Aici puteți alege dacă se utilizează o culoare personalizată pentru "
+"variantele din tabelul de căutare care provin din baza de date a "
+"utilizatorului."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from the user database.
 #: setup/main.py:2112
 msgid "Choose color for user database suggestions"
-msgstr ""
+msgstr "Alegeți culoarea pentru sugestiile bazei de date a utilizatorului"
 
 #: setup/main.py:2114
 msgid ""
@@ -1411,25 +1559,31 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of color for candidates from the user database is enabled."
 msgstr ""
+"Aici puteți specifica culoarea care va fi utilizată pentru variantele din "
+"tabelul de căutare provenite din baza de date a utilizatorului. Această "
+"opțiune are efect numai dacă utilizarea culorilor pentru variantele din baza "
+"de date a utilizatorului este activată."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for spellchecking suggestions.
 #: setup/main.py:2135
 msgid "Use color for spellchecking suggestions"
-msgstr ""
+msgstr "Utilizează o culoare pentru sugestiile de verificare ortografică"
 
 #: setup/main.py:2137
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from spellchecking."
 msgstr ""
+"Aici puteți alege dacă se utilizează o culoare personalizată pentru "
+"variantele din tabelul de căutare care provin din verificarea ortografică."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. spellchecking suggestions.
 #: setup/main.py:2158
 msgid "Choose color for spellchecking suggestions"
-msgstr ""
+msgstr "Alegeți culoarea pentru sugestiile de verificare ortografică"
 
 #: setup/main.py:2160
 msgid ""
@@ -1437,26 +1591,32 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "color for candidates from spellchecking is enabled."
 msgstr ""
+"Aici puteți specifica culoarea care va fi utilizată pentru variantele din "
+"tabelul de căutare provenite din verificarea ortografică. Această opțiune "
+"are efect numai dacă utilizarea culorilor pentru variantele provenite din "
+"verificarea ortografică este activată."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from a
 #. dictionary.
 #: setup/main.py:2183
 msgid "Use color for dictionary suggestions"
-msgstr ""
+msgstr "Utilizează o culoare pentru sugestiile din dicționar"
 
 #: setup/main.py:2185
 msgid ""
 "Here you can choose whether a custom color is used for candidates in the "
 "lookup table which come from a dictionary."
 msgstr ""
+"Aici puteți alege dacă se utilizează o culoare personalizată pentru "
+"variantele din tabelul de căutare care provin dintr-un dicționar."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. suggestions from a dictionary.
 #: setup/main.py:2206
 msgid "Choose color for dictionary suggestions"
-msgstr ""
+msgstr "Alegeți culoarea pentru sugestiile din dicționar"
 
 #: setup/main.py:2208
 msgid ""
@@ -1464,6 +1624,10 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "color for candidates from a dictionary is enabled."
 msgstr ""
+"Aici puteți specifica culoarea care va fi utilizată pentru variantele din "
+"tabelul de căutare provenite dintr-un dicționar. Această opțiune are efect "
+"numai dacă utilizarea culorilor pentru variantele dintr-un dicționar este "
+"activată."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from the user
@@ -1471,12 +1635,15 @@ msgstr ""
 #: setup/main.py:2231
 msgid "Use label for user database suggestions"
 msgstr ""
+"Utilizează o etichetă pentru sugestiile din baza de date a utilizatorului"
 
 #: setup/main.py:2233
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from the user database."
 msgstr ""
+"Aici puteți alege dacă o etichetă este utilizată pentru variantele din "
+"tabelul de căutare care provin din baza de date a utilizatorului."
 
 #: setup/main.py:2244
 msgid ""
@@ -1490,13 +1657,15 @@ msgstr ""
 #. in the candidate list.
 #: setup/main.py:2266
 msgid "Use label for spellchecking suggestions"
-msgstr ""
+msgstr "Utilizează o etichetă pentru sugestiile de verificare ortografică"
 
 #: setup/main.py:2268
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from spellchecking."
 msgstr ""
+"Aici puteți alege dacă o etichetă este utilizată pentru variantele din "
+"tabelul de căutare care provin din verificarea ortografică."
 
 #: setup/main.py:2279
 msgid ""
@@ -1510,13 +1679,15 @@ msgstr ""
 #. dictionary in the candidate list.
 #: setup/main.py:2301
 msgid "Use label for dictionary suggestions"
-msgstr ""
+msgstr "Utilizează o etichetă pentru sugestiile din dicționar"
 
 #: setup/main.py:2303
 msgid ""
 "Here you can choose whether a label is used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
+"Aici puteți alege dacă o etichetă este utilizată pentru variantele din "
+"tabelul de căutare care provin dintr-un dicționar."
 
 #: setup/main.py:2314
 msgid ""
@@ -1530,25 +1701,29 @@ msgstr ""
 #. dictionary in the candidate list.
 #: setup/main.py:2336
 msgid "Use flags for dictionary suggestions"
-msgstr ""
+msgstr "Utilizează steaguri pentru sugestiile din dicționar"
 
 #: setup/main.py:2338
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
+"Aici puteți alege dacă steagurile sunt utilizate pentru variantele din "
+"tabelul de căutare care provin dintr-un dicționar."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to show when ibus-typing-booster is busy.
 #: setup/main.py:2353
 msgid "Use a label to indicate busy state"
-msgstr ""
+msgstr "Utilizează o etichetă pentru a indica starea de ocupat"
 
 #: setup/main.py:2355
 msgid ""
 "Here you can choose whether a label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
+"Aici puteți alege dacă se utilizează o etichetă pentru a indica când «ibus-"
+"typing-booster» este ocupat."
 
 #. Translators: Tooltip for an entry
 #: setup/main.py:2366
@@ -1639,15 +1814,15 @@ msgstr ""
 #. Translators:
 #: setup/main.py:2599 setup/main.py:3832
 msgid "Set “Google application credentials” .json file:"
-msgstr ""
+msgstr "Definiți fișierul „Credențiale aplicație Google” .json:"
 
 #: setup/main.py:2601
 msgid "Full path of the “Google application credentials” .json file."
-msgstr ""
+msgstr "Ruta completă către fișierul „Credențiale aplicație Google” .json."
 
 #: setup/main.py:2607
 msgid "File not yet set."
-msgstr ""
+msgstr "Fișierul nu este încă definit."
 
 #. Translators: This is a button to add an autosetting.
 #. “Autosettings” are settings which may change automatically
@@ -1655,7 +1830,7 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2661 setup/main.py:5007
 msgid "Add an autosetting"
-msgstr ""
+msgstr "Adaugă o configurare automată"
 
 #. Translators: This is a button to remove an autosetting.
 #. “Autosettings” are settings which may change automatically
@@ -1663,7 +1838,7 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2672
 msgid "Remove an autosetting"
-msgstr ""
+msgstr "Elimină o configurare automată"
 
 #. Translators: This is a button to move an autosetting up in the
 #. order the autosettings are applied. “Up” means it is applied
@@ -1675,7 +1850,7 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2686
 msgid "Move an autosetting up"
-msgstr ""
+msgstr "Mută configurarea automată în sus"
 
 #. Translators: This is a button to move an autosetting down in the
 #. order the autosettings are applied. “Down” means it is applied
@@ -1687,7 +1862,7 @@ msgstr ""
 #. browser tab) gets the focus.
 #: setup/main.py:2700
 msgid "Move an autosetting down"
-msgstr ""
+msgstr "Mută configurarea automată în jos"
 
 #: setup/main.py:2706
 msgid "Set all autosettings to default"
@@ -1695,13 +1870,13 @@ msgstr ""
 
 #: setup/main.py:2970
 msgid "Spell checking"
-msgstr ""
+msgstr "Verificarea ortografiei"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
 #: setup/main.py:3164
 msgid "Setting"
-msgstr ""
+msgstr "Opțiunea"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
@@ -1709,66 +1884,66 @@ msgstr ""
 #. for the currently selected input method
 #: setup/main.py:3173 setup/main.py:4598
 msgid "Value"
-msgstr ""
+msgstr "Valoarea"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
 #: setup/main.py:3197
 msgid "Regular expression"
-msgstr ""
+msgstr "Expresie regulată"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
 #: setup/main.py:3327
 msgid "Do you really want to restore all default settings?"
-msgstr ""
+msgstr "Doriți cu adevărat să restaurați toate valorile implicite?"
 
 #: setup/main.py:3328 setup/main.py:5549 setup/main.py:5585 setup/main.py:5651
 msgid "Are you sure?"
-msgstr ""
+msgstr "Sunteți sigur?"
 
 #: setup/main.py:3329 setup/main.py:4068 setup/main.py:4409 setup/main.py:5550
 #: setup/main.py:5586 setup/main.py:5608 setup/main.py:5616 setup/main.py:5652
 #: setup/main.py:7697
 msgid "_OK"
-msgstr ""
+msgstr "_Ok"
 
 #: setup/main.py:3330 setup/main.py:5551 setup/main.py:5587 setup/main.py:5653
 #: setup/pkginstall.py:252
 msgid "_Cancel"
-msgstr ""
+msgstr "_Renunță"
 
 #: setup/main.py:3918
 msgid "Select .wav sound file:"
-msgstr ""
+msgstr "Selectați fișierul audio .wav:"
 
 #: setup/main.py:4082
 msgid "Add dictionary"
-msgstr ""
+msgstr "Adaugă dicționar"
 
 #: setup/main.py:4423
 msgid "Add input method"
-msgstr ""
+msgstr "Adaugă metodă de introducere"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
 #: setup/main.py:4589
 msgid "Variable"
-msgstr ""
+msgstr "Variabilă"
 
 #: setup/main.py:5443
 #, python-format
 msgid "Edit key bindings for command “%s”"
-msgstr ""
+msgstr "Editați combinația de taste pentru comanda „%s”"
 
 #: setup/main.py:5459
 msgid "Add a key binding"
-msgstr ""
+msgstr "Adaugă o combinație de taste"
 
 #: setup/main.py:5465
 msgid "Remove selected key binding"
-msgstr ""
+msgstr "Elimină combinația de taste selectată"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1780,6 +1955,8 @@ msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
 msgstr ""
+"Doriți cu adevărat să restaurați combinațiile de taste implicite pentru "
+"toate comenzile la valorile implicite?"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1793,12 +1970,12 @@ msgstr ""
 #: setup/main.py:5605
 #, python-format
 msgid "Learned successfully from file %(filename)s."
-msgstr ""
+msgstr "Învățare cu succes din fișierul %(filename)s."
 
 #: setup/main.py:5613
 #, python-format
 msgid "Learning from file %(filename)s failed."
-msgstr ""
+msgstr "Învățarea din fișierul %(filename)s a eșuat."
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1815,24 +1992,29 @@ msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
 msgstr ""
+"Doriți cu adevăr să ștergeți toate datele lingvistice învățate din tastarea "
+"sau citirea fișierelor?"
 
 #: setup/main.py:7694
 msgid "ibus is not running."
-msgstr ""
+msgstr "ibus nu rulează."
 
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:9
 msgid ""
 "Emoji Picker is an emoji browsing tool which uses the emoji matching code "
 "from Ibus-typing-booster."
 msgstr ""
+"Selectorul de pictograme „emoji” este un instrument de explorare a "
+"pictogramelor „emoji” care utilizează codul de potrivire a pictogramelor „"
+"emoji” din Ibus-typing-booster."
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
-msgstr ""
+msgstr "Acceleratorul de tastare"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:7
 msgid "Predictive input method"
-msgstr ""
+msgstr "Metoda de introducere predictivă"
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:9
 msgid ""
@@ -1840,3 +2022,7 @@ msgid ""
 "based on context and partial input. One can then simply select the desired "
 "word from a list of suggestions and improve one’s typing speed and spelling."
 msgstr ""
+"Ibus-typing-booster este o metodă de introducere predictivă și prezice "
+"cuvinte complete pe baza contextului și a introducerii parțiale. Apoi, se "
+"poate selecta pur și simplu cuvântul dorit dintr-o listă de sugestii și se "
+"poate îmbunătăți viteza de tastare și ortografia."
