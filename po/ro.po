@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-28 11:07+0100\n"
-"PO-Revision-Date: 2026-01-29 10:18+0000\n"
+"PO-Revision-Date: 2026-01-30 18:58+0000\n"
 "Last-Translator: Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>\n"
 "Language-Team: Romanian <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/ro/>\n"
@@ -498,7 +498,7 @@ msgstr "Aspect"
 #. (Artificial Intelligence).
 #: setup/main.py:455
 msgid "AI"
-msgstr ""
+msgstr "IA"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
@@ -710,7 +710,7 @@ msgstr ""
 #. should be used.
 #: setup/main.py:738
 msgid "Emoji style"
-msgstr ""
+msgstr "Stilul pictogramelor „emoji”"
 
 #. Translators: A tooltip for the combobox to select which
 #. emoji style should be used.
@@ -719,6 +719,8 @@ msgid ""
 "To select between colorful emoji (emoji style), monochrome emoji (text "
 "style), or no style preference."
 msgstr ""
+"Pentru a selecta între pictograme „emoji” colorate (stil emoji), pictograme „"
+"emoji” monocrome (stil text) sau fără preferințe de stil."
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Emoji style”, i.e.  typically colored.
@@ -731,7 +733,7 @@ msgstr "Emoji"
 #. monochrome.
 #: setup/main.py:757
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #. Translators: This option is to use unqualified emoji
 #. sequences. When this style is used, some emoji may display
@@ -739,7 +741,7 @@ msgstr ""
 #. the emoji in the Unicode emoji data files.
 #: setup/main.py:762
 msgid "No style"
-msgstr ""
+msgstr "Niciun stil"
 
 #: setup/main.py:790
 msgid ""
@@ -900,7 +902,7 @@ msgstr ""
 #. by pressing space.
 #: setup/main.py:955
 msgid "Show final form while typing"
-msgstr ""
+msgstr "Afișează forma finală în timp ce tastați"
 
 #. Translators: Tooltip for the checkbox for whether to
 #. show the final form while typing, i.e. show the text as
@@ -911,6 +913,8 @@ msgid ""
 "Show the text as it would appear if you ended the composition now by "
 "pressing Space."
 msgstr ""
+"Afișează textul așa cum ar apărea dacă ați încheia compunerea acum apăsând "
+"tasta «Spațiu»."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
@@ -939,6 +943,8 @@ msgid ""
 "The ibus keymap to use when forcing an IBus keymap while Typing Booster is "
 "active."
 msgstr ""
+"Configurația de taste ibus care trebuie utilizată atunci când se forțează o "
+"configurație de taste IBus în timp ce «Acceleratorul de tastare». este activ."
 
 #. Translators: “English” is used here to indicate
 #. variants of IBus keymaps producing ASCII
@@ -1101,17 +1107,17 @@ msgstr "Instalează dicționarele lipsă"
 #: setup/main.py:1257
 msgid "Install the dictionaries which are setup here but not installed"
 msgstr ""
-"Instalează dicționarele care sunt configurate aici, dar nu sunt instalate."
+"Instalează dicționarele care sunt configurate aici, dar nu sunt instalate"
 
 #. Translators: A button used to download
 #. missing dictionaries and update existing ones.
 #: setup/main.py:1264
 msgid "Download dictionaries"
-msgstr ""
+msgstr "Descarcă dicționare"
 
 #: setup/main.py:1265
 msgid "Download missing dictionaries and update existing ones"
-msgstr ""
+msgstr "Descarcă dicționarele lipsă și leactualizează pe cele existente"
 
 #. Translators: Tooltip for a button used to set the list of
 #. dictionaries to the default for the current locale.
@@ -1177,35 +1183,35 @@ msgstr ""
 
 #: setup/main.py:1421
 msgid "Enter shortcut here:"
-msgstr ""
+msgstr "Indicați abrevierea:"
 
 #: setup/main.py:1439
 msgid "Enter shortcut expansion here:"
-msgstr ""
+msgstr "Indicați extinderea abrevierii:"
 
 #: setup/main.py:1469
 msgid "Clear input"
-msgstr ""
+msgstr "Șterge textul introdus"
 
 #: setup/main.py:1480
 msgid "Delete shortcut"
-msgstr ""
+msgstr "Șterge abrevierea"
 
 #: setup/main.py:1491
 msgid "Add shortcut"
-msgstr ""
+msgstr "Adaugă abrevierea"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
 #: setup/main.py:1525
 msgid "Shortcut"
-msgstr ""
+msgstr "Abrevierea"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
 #: setup/main.py:1533
 msgid "Shortcut expansion"
-msgstr ""
+msgstr "Extinderea abrevierii"
 
 #: setup/main.py:1547
 msgid "Current key bindings:"
@@ -1280,11 +1286,11 @@ msgstr ""
 #. list.
 #: setup/main.py:1677
 msgid "Show raw input"
-msgstr ""
+msgstr "Afișează introducerea brută"
 
 #: setup/main.py:1679
 msgid "Showing the raw input may be helpful for transliterating input methods."
-msgstr ""
+msgstr "Afișarea datelor brute poate fi utilă pentru metodele de transliterare."
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1292,7 +1298,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1688
 msgid "Never"
-msgstr ""
+msgstr "Niciodată"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1300,7 +1306,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1693
 msgid "When there are candidates"
-msgstr ""
+msgstr "Când există variante"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1308,7 +1314,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1698
 msgid "Always"
-msgstr ""
+msgstr "Întotdeauna"
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
@@ -1511,23 +1517,26 @@ msgstr ""
 #. custom color is used for the m17n preedit.
 #: setup/main.py:2039
 msgid "Use color for m17n preedit"
-msgstr ""
+msgstr "Utilizează o culoare pentru pre-editarea m17n"
 
 #: setup/main.py:2041
 msgid ""
 "Here you can choose whether a custom color is used for the m17n preedit."
 msgstr ""
+"Aici puteți alege dacă se utilizează o culoare personalizată pentru pre-"
+"editarea m17n."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
 #. the m17n preedit.
 #: setup/main.py:2065
 msgid "Choose color for m17n preedit"
-msgstr ""
+msgstr "Alegeți culoarea pentru pre-editarea m17n"
 
 #: setup/main.py:2067
 msgid "Here you can specify which color to use for the m17n preedit."
 msgstr ""
+"Aici puteți specifica culoarea care va fi utilizată pentru pre-editarea m17n."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
@@ -1651,6 +1660,10 @@ msgid ""
 "which come from the user database. This setting only has an effect if the "
 "use of a label for candidates from the user database is enabled."
 msgstr ""
+"Aici puteți specifica ce etichetă să utilizați pentru variantele din tabelul "
+"de căutare care provin din baza de date a utilizatorului. Această opțiune "
+"are efect numai dacă utilizarea unei etichete pentru variantele din baza de "
+"date a utilizatorului este activată."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from spellchecking
@@ -1673,6 +1686,10 @@ msgid ""
 "which come from spellchecking. This setting only has an effect if the use of "
 "a label for candidates from spellchecking is enabled."
 msgstr ""
+"Aici puteți specifica ce etichetă să se utilizeze pentru variantele din "
+"tabelul de căutare care provin din verificarea ortografică. Această opțiune "
+"are efect numai dacă utilizarea unei etichete pentru variantele din "
+"verificarea ortografică este activată."
 
 #. Translators: A checkbox where one can choose whether a
 #. label is used to mark suggestions coming from a
@@ -1695,6 +1712,10 @@ msgid ""
 "which come from a dictionary. This setting only has an effect if the use of "
 "a label for candidates from a dictionary is enabled."
 msgstr ""
+"Aici puteți specifica ce etichetă să se utilizeze pentru variantele din "
+"tabelul de căutare care provin dintr-un dicționar. Această opțiune are efect "
+"numai dacă utilizarea unei etichete pentru variantele dintr-un dicționar "
+"este activată."
 
 #. Translators: A checkbox where one can choose whether a
 #. flags are added to mark suggestions coming from a
@@ -1731,10 +1752,12 @@ msgid ""
 "Here you can specify which label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
+"Aici puteți specifica ce etichetă este utilizată pentru a indica când «ibus-"
+"typing-booster» este ocupat."
 
 #: setup/main.py:2384
 msgid "Symbol for \"enabled\" mode"
-msgstr ""
+msgstr "Simbolul pentru modul „activat”"
 
 #. Translators: Tooltip for 'Symbol for "enabled" mode'
 #: setup/main.py:2387 setup/main.py:2394
@@ -1742,10 +1765,12 @@ msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
 msgstr ""
+"Simbolul afișat când «Acceleratorul de tastare» este activ (transliterarea "
+"introducerii, sugerarea completărilor, verificarea ortografică etc.)."
 
 #: setup/main.py:2413
 msgid "Symbol for \"disabled\" (Direct Input) mode"
-msgstr ""
+msgstr "Simbolul pentru modul „dezactivat” (introducere directă)"
 
 #. Translators: Tooltip for 'Symbol for "disabled" (Direct
 #. Input) mode'
@@ -1754,13 +1779,15 @@ msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
 msgstr ""
+"Simbolul afișat când «Acceleratorul de tastare» este dezactivat (intrarea "
+"este transmisă direct fără a fi procesată)."
 
 #. Translators: Checkbox to enable the AI (Artificial
 #. Intelligence) chat feature using ollama or ramalama
 #. servers.
 #: setup/main.py:2462
 msgid "Enable AI chat"
-msgstr ""
+msgstr "Activează conversația cu IA"
 
 #. Translators: Tooltip for “Enable AI chat”.
 #: setup/main.py:2465
@@ -1768,30 +1795,33 @@ msgid ""
 "Enable or disable AI chat globally. When disabled, all AI chat related "
 "features and keybindings are turned off."
 msgstr ""
+"Activează sau dezactivează conversația cu IA la nivel global. Când este "
+"dezactivată, toate funcțiile și combinațiile de taste legate de conversația "
+"cu IA sunt dezactivate."
 
 #. Translators: The ollama or ramalama server to use for AI
 #. (Artificial Intelligence).
 #: setup/main.py:2477
 msgid "AI server:"
-msgstr ""
+msgstr "Serverul de IA:"
 
 #. Translators: The connection status to the ollama or
 #. ramalama server used for AI (Artificial Intelligence).
 #: setup/main.py:2483
 msgid "Connection status to the AI server."
-msgstr ""
+msgstr "Starea conexiunii la serverul de IA."
 
 #. Translators: “Model:” specifies the LLM (Large Language
 #. Model) to be used with ollama or ramalama.
 #: setup/main.py:2498
 msgid "Model:"
-msgstr ""
+msgstr "Model:"
 
 #. Translators: The limit of how many past messages are
 #. sent to the AI for context.
 #: setup/main.py:2524
 msgid "Message history limit:"
-msgstr ""
+msgstr "Limita istoricului mesajelor:"
 
 #. Translators: This is the AI system message field to set
 #. the implicit context for AI chats. For example it could
@@ -1800,7 +1830,7 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2553
 msgid "AI system message:"
-msgstr ""
+msgstr "Mesaj al sistemului de IA:"
 
 #. Translators: Tooltip explaining the AI system message
 #. field to set the implicit context for AI chats. For
@@ -1809,7 +1839,7 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2562
 msgid "System prompt that guides how the AI responds."
-msgstr ""
+msgstr "Promptul sistemului care ghidează modul în care răspunde IA."
 
 #. Translators:
 #: setup/main.py:2599 setup/main.py:3832
@@ -1866,7 +1896,7 @@ msgstr "Mută configurarea automată în jos"
 
 #: setup/main.py:2706
 msgid "Set all autosettings to default"
-msgstr ""
+msgstr "Restaurează toate configurările automate la valorile implicite"
 
 #: setup/main.py:2970
 msgid "Spell checking"
@@ -1966,6 +1996,8 @@ msgstr ""
 #: setup/main.py:5584
 msgid "Do you really want to set all autosettings to their defaults?"
 msgstr ""
+"Doriți cu adevărat să restaurați toate configurările automate la valorile "
+"implicite?"
 
 #: setup/main.py:5605
 #, python-format
