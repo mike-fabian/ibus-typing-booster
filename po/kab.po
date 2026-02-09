@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-01-28 11:07+0100\n"
-"PO-Revision-Date: 2026-01-30 18:58+0000\n"
+"PO-Revision-Date: 2026-02-09 17:58+0000\n"
 "Last-Translator: ButterflyOfFire "
 "<butterflyoffire@users.noreply.translate.fedoraproject.org>\n"
 "Language-Team: Kabyle <https://translate.fedoraproject.org/projects/ibus-"
@@ -1011,10 +1011,8 @@ msgstr "Sbedd imawalen i yettusbadun dagi maca ur ttusbedden ara"
 #. Translators: A button used to download
 #. missing dictionaries and update existing ones.
 #: setup/main.py:1264
-#, fuzzy
-#| msgid "Add dictionary"
 msgid "Download dictionaries"
-msgstr "Rnu amawal"
+msgstr "Sader-d imawalen"
 
 #: setup/main.py:1265
 msgid "Download missing dictionaries and update existing ones"
@@ -1392,15 +1390,9 @@ msgid "Use color for m17n preedit"
 msgstr "Seqdec ini i m17n yettucaren"
 
 #: setup/main.py:2041
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a custom color is used for the compose "
-#| "preview."
 msgid ""
 "Here you can choose whether a custom color is used for the m17n preedit."
-msgstr ""
-"Dagi tzemreḍ ad tferneḍ anwa ini udmawan i yettwasqedcen i teskant n "
-"tasudest."
+msgstr "Da tzemreḍ ad tferneḍ anwa ini udmawan i yettwasqedcen i m17n preedit."
 
 #. Translators: Used in the title bar of the colour chooser
 #. dialog window where one can choose a custom colour for
@@ -1410,10 +1402,8 @@ msgid "Choose color for m17n preedit"
 msgstr "Fren ini i m17n i yettucaren"
 
 #: setup/main.py:2067
-#, fuzzy
-#| msgid "Here you can specify which color to use for the compose preview."
 msgid "Here you can specify which color to use for the m17n preedit."
-msgstr "Dagi tzemreḍ ad tsuzzgeḍ anwa ini ara tesqedceḍ i teskant n tsudest."
+msgstr "Da tzemreḍ ad tsuzzgeḍ anwa ini ara tesqedceḍ i m17n preedit."
 
 #. Translators: A checkbox where one can choose whether a
 #. custom color is used for suggestions coming from the
@@ -1584,15 +1574,11 @@ msgstr ""
 
 #. Translators: Tooltip for an entry
 #: setup/main.py:2366
-#, fuzzy
-#| msgid ""
-#| "Here you can choose whether a label is used to indicate when ibus-typing-"
-#| "booster is busy."
 msgid ""
 "Here you can specify which label is used to indicate when ibus-typing-"
 "booster is busy."
 msgstr ""
-"Dagi tzemreḍ ad tferneḍ acu n tebzimt i yettwasqedcen i tummla n ibus-typing-"
+"Da tzemreḍ ad tferneḍ anta n tebzimt i yettwasqedcen i tummla n ibus-typing-"
 "booster mi ara yecɣel."
 
 #: setup/main.py:2384
@@ -1623,7 +1609,7 @@ msgstr ""
 #. servers.
 #: setup/main.py:2462
 msgid "Enable AI chat"
-msgstr ""
+msgstr "Sermed adiwenni AI"
 
 #. Translators: Tooltip for “Enable AI chat”.
 #: setup/main.py:2465
@@ -1654,7 +1640,7 @@ msgstr "Tamudemt:"
 #. sent to the AI for context.
 #: setup/main.py:2524
 msgid "Message history limit:"
-msgstr ""
+msgstr "Talast n umazray n yiznan:"
 
 #. Translators: This is the AI system message field to set
 #. the implicit context for AI chats. For example it could
@@ -1663,7 +1649,7 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2553
 msgid "AI system message:"
-msgstr ""
+msgstr "Izen anagrawan n AI:"
 
 #. Translators: Tooltip explaining the AI system message
 #. field to set the implicit context for AI chats. For
