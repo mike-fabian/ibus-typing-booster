@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-01-28 11:07+0100\n"
+"POT-Creation-Date: 2026-02-04 11:15+0100\n"
 "PO-Revision-Date: 2026-01-12 22:19+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
@@ -203,58 +203,58 @@ msgstr "Unicode 記号と絵文字の予測"
 msgid "Off the record mode"
 msgstr "オフ・ザ・レコードモード"
 
-#: engine/hunspell_table.py:2635
+#: engine/hunspell_table.py:2636
 msgid "Highest priority dictionary"
 msgstr "最優先辞書"
 
-#: engine/hunspell_table.py:2636
+#: engine/hunspell_table.py:2637
 msgid "Choose highest priority dictionary"
 msgstr "最優先辞書を選択"
 
-#: engine/hunspell_table.py:2665
+#: engine/hunspell_table.py:2666
 msgid "Preedit input method"
 msgstr "プリエディット入力方法"
 
-#: engine/hunspell_table.py:2666
+#: engine/hunspell_table.py:2667
 msgid "Switch preedit input method"
 msgstr "プリエディット入力方法の切り替え"
 
-#: engine/hunspell_table.py:3037
+#: engine/hunspell_table.py:3038
 msgid "Setup"
 msgstr "設定"
 
-#: engine/hunspell_table.py:3040 setup/main.py:180
+#: engine/hunspell_table.py:3041 setup/main.py:180
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster の設定"
 
-#: engine/hunspell_table.py:7287
+#: engine/hunspell_table.py:7288
 msgid "Failed to import Google speech-to-text."
 msgstr "Google音声テキストのインポートに失敗しました。"
 
-#: engine/hunspell_table.py:7290
+#: engine/hunspell_table.py:7291
 msgid "Failed to import pyaudio."
 msgstr "pyaudio のインポートに失敗しました。"
 
-#: engine/hunspell_table.py:7293
+#: engine/hunspell_table.py:7294
 msgid "Failed to import queue."
 msgstr "queue のインポートに失敗しました。"
 
-#: engine/hunspell_table.py:7298
+#: engine/hunspell_table.py:7299
 msgid "No supported language for speech recognition."
 msgstr "音声認識に対応する言語がありません。"
 
-#: engine/hunspell_table.py:7302
+#: engine/hunspell_table.py:7303
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "'Google application credentials' ファイル '%s' が見つかりませんでした。"
 
-#: engine/hunspell_table.py:7315
+#: engine/hunspell_table.py:7316
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Google音声テキストの初期化に失敗しました。debug.logを参照してください。"
 
-#: engine/hunspell_table.py:7423
+#: engine/hunspell_table.py:7424
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google音声テキストエラー。debug.logを参照してください。"
 
@@ -412,7 +412,7 @@ msgstr "Mike FABIAN <mfabian@redhat.com>, 2020-2025"
 msgid "Online documentation:"
 msgstr "オンラインドキュメント："
 
-#: engine/g_compat_helpers.py:1191 setup/main.py:5599
+#: engine/g_compat_helpers.py:1191 setup/main.py:5600
 msgid "Open File ..."
 msgstr "ファイルを開く…"
 
@@ -432,7 +432,7 @@ msgstr "設定"
 msgid "Restore all defaults"
 msgstr "全て初期設定に戻す"
 
-#: setup/main.py:330 setup/main.py:7617 setup/pkginstall.py:254
+#: setup/main.py:330 setup/main.py:7618 setup/pkginstall.py:254
 msgid "_Close"
 msgstr "閉じる(_C)"
 
@@ -495,7 +495,7 @@ msgstr "AI"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:472 setup/main.py:2995
+#: setup/main.py:472 setup/main.py:2996
 msgid "Speech recognition"
 msgstr "音声認識"
 
@@ -706,7 +706,7 @@ msgstr ""
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Emoji style”, i.e.  typically colored.
-#: setup/main.py:753 setup/main.py:2987
+#: setup/main.py:753 setup/main.py:2988
 msgid "Emoji"
 msgstr "絵文字"
 
@@ -1088,7 +1088,7 @@ msgstr "不足している辞書をダウンロードし、既存の辞書を更
 msgid "Set dictionaries to the default for the current locale."
 msgstr "現在のロケールにデフォルトの辞書を設定します。"
 
-#: setup/main.py:1278 setup/main.py:1387 setup/main.py:1604 setup/main.py:5470
+#: setup/main.py:1278 setup/main.py:1387 setup/main.py:1604 setup/main.py:5471
 msgid "Set to default"
 msgstr "デフォルトに設定する"
 
@@ -1189,7 +1189,7 @@ msgstr "編集"
 msgid "Edit the key bindings for the selected command"
 msgstr "選択したコマンドのキーバインディングを編集します"
 
-#: setup/main.py:1605 setup/main.py:5471
+#: setup/main.py:1605 setup/main.py:5472
 msgid "Set default key bindings for the selected command"
 msgstr "選択したコマンドのキーバインディングを初期設定に戻します"
 
@@ -1757,7 +1757,7 @@ msgid "System prompt that guides how the AI responds."
 msgstr "AI の応答方法をガイドするシステムプロンプト。"
 
 #. Translators:
-#: setup/main.py:2599 setup/main.py:3832
+#: setup/main.py:2599 setup/main.py:3833
 msgid "Set “Google application credentials” .json file:"
 msgstr "「Googleアプリケーションの資格情報」.jsonファイルを設定:"
 
@@ -1773,7 +1773,7 @@ msgstr "ファイルがまだ設定されていません。"
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2661 setup/main.py:5007
+#: setup/main.py:2661 setup/main.py:5008
 msgid "Add an autosetting"
 msgstr "自動設定を追加する"
 
@@ -1813,13 +1813,13 @@ msgstr "自動設定を下に移動する"
 msgid "Set all autosettings to default"
 msgstr "すべての自動設定をデフォルトに戻す"
 
-#: setup/main.py:2970
+#: setup/main.py:2971
 msgid "Spell checking"
 msgstr "スペルチェック"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:3164
+#: setup/main.py:3165
 msgid "Setting"
 msgstr "設定"
 
@@ -1827,66 +1827,66 @@ msgstr "設定"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:3173 setup/main.py:4598
+#: setup/main.py:3174 setup/main.py:4599
 msgid "Value"
 msgstr "値"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:3197
+#: setup/main.py:3198
 msgid "Regular expression"
 msgstr "正規表現"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3327
+#: setup/main.py:3328
 msgid "Do you really want to restore all default settings?"
 msgstr "すべて初期設定に戻してもよろしいですか？"
 
-#: setup/main.py:3328 setup/main.py:5549 setup/main.py:5585 setup/main.py:5651
+#: setup/main.py:3329 setup/main.py:5550 setup/main.py:5586 setup/main.py:5652
 msgid "Are you sure?"
 msgstr "本当によろしいでしょうか？"
 
-#: setup/main.py:3329 setup/main.py:4068 setup/main.py:4409 setup/main.py:5550
-#: setup/main.py:5586 setup/main.py:5608 setup/main.py:5616 setup/main.py:5652
-#: setup/main.py:7697
+#: setup/main.py:3330 setup/main.py:4069 setup/main.py:4410 setup/main.py:5551
+#: setup/main.py:5587 setup/main.py:5609 setup/main.py:5617 setup/main.py:5653
+#: setup/main.py:7698
 msgid "_OK"
 msgstr "OK(_O)"
 
-#: setup/main.py:3330 setup/main.py:5551 setup/main.py:5587 setup/main.py:5653
+#: setup/main.py:3331 setup/main.py:5552 setup/main.py:5588 setup/main.py:5654
 #: setup/pkginstall.py:252
 msgid "_Cancel"
 msgstr "キャンセル(_C)"
 
-#: setup/main.py:3918
+#: setup/main.py:3919
 msgid "Select .wav sound file:"
 msgstr ".wavファイルを選択:"
 
-#: setup/main.py:4082
+#: setup/main.py:4083
 msgid "Add dictionary"
 msgstr "辞書を追加する"
 
-#: setup/main.py:4423
+#: setup/main.py:4424
 msgid "Add input method"
 msgstr "入力メソッドを追加する"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4589
+#: setup/main.py:4590
 msgid "Variable"
 msgstr "変数"
 
-#: setup/main.py:5443
+#: setup/main.py:5444
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "コマンド %s のキー割り当ての編集"
 
-#: setup/main.py:5459
+#: setup/main.py:5460
 msgid "Add a key binding"
 msgstr "キー割り当てを追加する"
 
-#: setup/main.py:5465
+#: setup/main.py:5466
 msgid "Remove selected key binding"
 msgstr "キー割り当てを削除する"
 
@@ -1895,7 +1895,7 @@ msgstr "キー割り当てを削除する"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5547
+#: setup/main.py:5548
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1906,16 +1906,16 @@ msgstr "すべてのコマンドのキーバインディングをデフォルト
 #. really sure to reset all autosettings the defaults.
 #. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5584
+#: setup/main.py:5585
 msgid "Do you really want to set all autosettings to their defaults?"
 msgstr "これは、自動設定をすべてリセットします。よろしいですか？"
 
-#: setup/main.py:5605
+#: setup/main.py:5606
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "ファイル %(filename)s からの学習が成功しました。"
 
-#: setup/main.py:5613
+#: setup/main.py:5614
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "ファイル %(filename)s からの学習に失敗しました。"
@@ -1930,7 +1930,7 @@ msgstr "ファイル %(filename)s からの学習に失敗しました。"
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5649
+#: setup/main.py:5650
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1938,7 +1938,7 @@ msgstr ""
 "本当にタイピングやファイルの読み込みから学習したすべての言語データを削除しま"
 "すか？"
 
-#: setup/main.py:7694
+#: setup/main.py:7695
 msgid "ibus is not running."
 msgstr "ibus が起動していません。"
 

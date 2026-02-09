@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-01-28 11:07+0100\n"
+"POT-Creation-Date: 2026-02-04 11:15+0100\n"
 "PO-Revision-Date: 2026-01-30 18:58+0000\n"
 "Last-Translator: Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>\n"
 "Language-Team: Romanian <https://translate.fedoraproject.org/projects/ibus-"
@@ -204,60 +204,60 @@ msgstr "Predicții de simboluri Unicode și emoji"
 msgid "Off the record mode"
 msgstr "Modul fără înregistrare (confidențial)"
 
-#: engine/hunspell_table.py:2635
+#: engine/hunspell_table.py:2636
 msgid "Highest priority dictionary"
 msgstr "Dicționar cu prioritate maximă"
 
-#: engine/hunspell_table.py:2636
+#: engine/hunspell_table.py:2637
 msgid "Choose highest priority dictionary"
 msgstr "Alegeți dicționarul cu prioritate maximă"
 
-#: engine/hunspell_table.py:2665
+#: engine/hunspell_table.py:2666
 msgid "Preedit input method"
 msgstr "Metoda de introducere a textului"
 
-#: engine/hunspell_table.py:2666
+#: engine/hunspell_table.py:2667
 msgid "Switch preedit input method"
 msgstr "Schimbă metoda de introducere a textului"
 
-#: engine/hunspell_table.py:3037
+#: engine/hunspell_table.py:3038
 msgid "Setup"
 msgstr "Configurare"
 
-#: engine/hunspell_table.py:3040 setup/main.py:180
+#: engine/hunspell_table.py:3041 setup/main.py:180
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferințe pentru ibus-typing-booster"
 
-#: engine/hunspell_table.py:7287
+#: engine/hunspell_table.py:7288
 msgid "Failed to import Google speech-to-text."
 msgstr "Importul funcției Google de transformare a vorbirii în text a eșuat."
 
-#: engine/hunspell_table.py:7290
+#: engine/hunspell_table.py:7291
 msgid "Failed to import pyaudio."
 msgstr "Importarea pyaudio a eșuat."
 
-#: engine/hunspell_table.py:7293
+#: engine/hunspell_table.py:7294
 msgid "Failed to import queue."
 msgstr "Importarea cozii de așteptare a eșuat."
 
-#: engine/hunspell_table.py:7298
+#: engine/hunspell_table.py:7299
 msgid "No supported language for speech recognition."
 msgstr "Nu există limbă acceptată pentru recunoașterea vocală."
 
-#: engine/hunspell_table.py:7302
+#: engine/hunspell_table.py:7303
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "Fișierul „%s” cu datele de autentificare pentru aplicația Google nu a fost "
 "găsit."
 
-#: engine/hunspell_table.py:7315
+#: engine/hunspell_table.py:7316
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Inițializarea funcției Google de transformare a vorbirii în text a eșuat. "
 "Consultați fișierul „debug.log”."
 
-#: engine/hunspell_table.py:7423
+#: engine/hunspell_table.py:7424
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 "Eroare a funcției Google de transformare a vorbirii în text a eșuat. "
@@ -420,7 +420,7 @@ msgstr "Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2026"
 msgid "Online documentation:"
 msgstr "Documentație disponibilă în Internet:"
 
-#: engine/g_compat_helpers.py:1191 setup/main.py:5599
+#: engine/g_compat_helpers.py:1191 setup/main.py:5600
 msgid "Open File ..."
 msgstr "Deschide fișierul…"
 
@@ -440,7 +440,7 @@ msgstr "Preferințe"
 msgid "Restore all defaults"
 msgstr "Restaurează valorile implicite"
 
-#: setup/main.py:330 setup/main.py:7617 setup/pkginstall.py:254
+#: setup/main.py:330 setup/main.py:7618 setup/pkginstall.py:254
 msgid "_Close"
 msgstr "În_chide"
 
@@ -503,7 +503,7 @@ msgstr "IA"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:472 setup/main.py:2995
+#: setup/main.py:472 setup/main.py:2996
 msgid "Speech recognition"
 msgstr "Recunoașterea vocală"
 
@@ -702,9 +702,9 @@ msgid ""
 msgstr ""
 "Dacă simbolurile Unicode și emoji ar trebui incluse în predicții. Emoji sunt "
 "pictograme precum ☺♨⛵…. Simbolurile Unicode sunt alte simboluri, cum ar fi "
-"simbolurile matematice (∀∑∯…), săgețile (←↑↔…), simbolurile monedelor (€₹₺…)"
-", modelele braille (⠥⠩…) și multe alte simboluri. Acestea nu sunt, din punct "
-"de vedere tehnic, emoji, dar sunt totuși simboluri utile."
+"simbolurile matematice (∀∑∯…), săgețile (←↑↔…), simbolurile monedelor (€₹"
+"₺…), modelele braille (⠥⠩…) și multe alte simboluri. Acestea nu sunt, din "
+"punct de vedere tehnic, emoji, dar sunt totuși simboluri utile."
 
 #. Translators: A combo box to select which emoji style
 #. should be used.
@@ -719,12 +719,12 @@ msgid ""
 "To select between colorful emoji (emoji style), monochrome emoji (text "
 "style), or no style preference."
 msgstr ""
-"Pentru a selecta între pictograme „emoji” colorate (stil emoji), pictograme „"
-"emoji” monocrome (stil text) sau fără preferințe de stil."
+"Pentru a selecta între pictograme „emoji” colorate (stil emoji), pictograme "
+"„emoji” monocrome (stil text) sau fără preferințe de stil."
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Emoji style”, i.e.  typically colored.
-#: setup/main.py:753 setup/main.py:2987
+#: setup/main.py:753 setup/main.py:2988
 msgid "Emoji"
 msgstr "Emoji"
 
@@ -779,12 +779,12 @@ msgid ""
 msgstr ""
 "Selectează tipul de intrare care trebuie înregistrată în baza de date a "
 "utilizatorului: «Totul»: fiecare cuvânt tastat este adăugat în baza de date "
-"a utilizatorului sau frecvența sa este actualizată dacă acesta există deja. «"
-"Ortografiat corect sau înregistrat anterior»: un cuvânt tastat este adăugat "
+"a utilizatorului sau frecvența sa este actualizată dacă acesta există deja. "
+"«Ortografiat corect sau înregistrat anterior»: un cuvânt tastat este adăugat "
 "în baza de date a utilizatorului numai dacă este probabil să fie ortografiat "
 "corect. Dacă un cuvânt există deja în baza de date a utilizatorului, "
-"frecvența sa este actualizată indiferent de ortografie. «Ortografiat corect"
-"»: un cuvânt tastat este adăugat în baza de date sau frecvența sa este "
+"frecvența sa este actualizată indiferent de ortografie. «Ortografiat "
+"corect»: un cuvânt tastat este adăugat în baza de date sau frecvența sa este "
 "actualizată în baza de date numai dacă este probabil să fie ortografiat "
 "corect. «Nimic»: nu se înregistrează nicio intrare în baza de date a "
 "utilizatorului."
@@ -930,11 +930,11 @@ msgid ""
 "For most users not using an IBus keymap is recommended. In that case, the "
 "keyboard layout which was active before switching to typing booster is used."
 msgstr ""
-"Dacă utilizarea unei configurații de taste IBus este forțată în timp ce «"
-"Acceleratorul de tastare» este activ. Pentru majoritatea utilizatorilor, se "
+"Dacă utilizarea unei configurații de taste IBus este forțată în timp ce "
+"«Acceleratorul de tastare» este activ. Pentru majoritatea utilizatorilor, se "
 "recomandă să nu se utilizeze o configurație de taste IBus. În acest caz, se "
-"utilizează configurația tastaturii care era activă înainte de trecerea la «"
-"Acceleratorul de tastare»."
+"utilizează configurația tastaturii care era activă înainte de trecerea la "
+"«Acceleratorul de tastare»."
 
 #. Translators: This is a tooltip for a combobox to choose
 #. a keymap
@@ -1008,9 +1008,9 @@ msgstr ""
 "rezonabilă ar putea fi „.,;:?!)”. Nu trebuie să adăugați caractere la "
 "această listă care sunt necesare metodei dvs. de introducere, de exemplu, "
 "dacă utilizați Latin-Pre (t-latn-pre), nu ar fi o idee bună să adăugați „.” "
-"la această listă, deoarece v-ar împiedica să tastați „.s” pentru a obține „ṡ"
-"”. De asemenea, puteți dezactiva complet această funcție golind lista (care "
-"este valoarea implicită)."
+"la această listă, deoarece v-ar împiedica să tastați „.s” pentru a obține "
+"„ṡ”. De asemenea, puteți dezactiva complet această funcție golind lista "
+"(care este valoarea implicită)."
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.
@@ -1126,7 +1126,7 @@ msgid "Set dictionaries to the default for the current locale."
 msgstr ""
 "Definește dicționarele ca implicite pentru configurația regională curentă."
 
-#: setup/main.py:1278 setup/main.py:1387 setup/main.py:1604 setup/main.py:5470
+#: setup/main.py:1278 setup/main.py:1387 setup/main.py:1604 setup/main.py:5471
 msgid "Set to default"
 msgstr "Stabilește combinația de taste ca implicită"
 
@@ -1231,7 +1231,7 @@ msgstr "Editare"
 msgid "Edit the key bindings for the selected command"
 msgstr "Editați combinația de taste pentru comanda selectată"
 
-#: setup/main.py:1605 setup/main.py:5471
+#: setup/main.py:1605 setup/main.py:5472
 msgid "Set default key bindings for the selected command"
 msgstr "Stabilește combinația de taste implicită pentru comanda selectată"
 
@@ -1290,7 +1290,8 @@ msgstr "Afișează introducerea brută"
 
 #: setup/main.py:1679
 msgid "Showing the raw input may be helpful for transliterating input methods."
-msgstr "Afișarea datelor brute poate fi utilă pentru metodele de transliterare."
+msgstr ""
+"Afișarea datelor brute poate fi utilă pentru metodele de transliterare."
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1842,7 +1843,7 @@ msgid "System prompt that guides how the AI responds."
 msgstr "Promptul sistemului care ghidează modul în care răspunde IA."
 
 #. Translators:
-#: setup/main.py:2599 setup/main.py:3832
+#: setup/main.py:2599 setup/main.py:3833
 msgid "Set “Google application credentials” .json file:"
 msgstr "Definiți fișierul „Credențiale aplicație Google” .json:"
 
@@ -1858,7 +1859,7 @@ msgstr "Fișierul nu este încă definit."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2661 setup/main.py:5007
+#: setup/main.py:2661 setup/main.py:5008
 msgid "Add an autosetting"
 msgstr "Adaugă o configurare automată"
 
@@ -1898,13 +1899,13 @@ msgstr "Mută configurarea automată în jos"
 msgid "Set all autosettings to default"
 msgstr "Restaurează toate configurările automate la valorile implicite"
 
-#: setup/main.py:2970
+#: setup/main.py:2971
 msgid "Spell checking"
 msgstr "Verificarea ortografiei"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:3164
+#: setup/main.py:3165
 msgid "Setting"
 msgstr "Opțiunea"
 
@@ -1912,66 +1913,66 @@ msgstr "Opțiunea"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:3173 setup/main.py:4598
+#: setup/main.py:3174 setup/main.py:4599
 msgid "Value"
 msgstr "Valoarea"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:3197
+#: setup/main.py:3198
 msgid "Regular expression"
 msgstr "Expresie regulată"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3327
+#: setup/main.py:3328
 msgid "Do you really want to restore all default settings?"
 msgstr "Doriți cu adevărat să restaurați toate valorile implicite?"
 
-#: setup/main.py:3328 setup/main.py:5549 setup/main.py:5585 setup/main.py:5651
+#: setup/main.py:3329 setup/main.py:5550 setup/main.py:5586 setup/main.py:5652
 msgid "Are you sure?"
 msgstr "Sunteți sigur?"
 
-#: setup/main.py:3329 setup/main.py:4068 setup/main.py:4409 setup/main.py:5550
-#: setup/main.py:5586 setup/main.py:5608 setup/main.py:5616 setup/main.py:5652
-#: setup/main.py:7697
+#: setup/main.py:3330 setup/main.py:4069 setup/main.py:4410 setup/main.py:5551
+#: setup/main.py:5587 setup/main.py:5609 setup/main.py:5617 setup/main.py:5653
+#: setup/main.py:7698
 msgid "_OK"
 msgstr "_Ok"
 
-#: setup/main.py:3330 setup/main.py:5551 setup/main.py:5587 setup/main.py:5653
+#: setup/main.py:3331 setup/main.py:5552 setup/main.py:5588 setup/main.py:5654
 #: setup/pkginstall.py:252
 msgid "_Cancel"
 msgstr "_Renunță"
 
-#: setup/main.py:3918
+#: setup/main.py:3919
 msgid "Select .wav sound file:"
 msgstr "Selectați fișierul audio .wav:"
 
-#: setup/main.py:4082
+#: setup/main.py:4083
 msgid "Add dictionary"
 msgstr "Adaugă dicționar"
 
-#: setup/main.py:4423
+#: setup/main.py:4424
 msgid "Add input method"
 msgstr "Adaugă metodă de introducere"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4589
+#: setup/main.py:4590
 msgid "Variable"
 msgstr "Variabilă"
 
-#: setup/main.py:5443
+#: setup/main.py:5444
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Editați combinația de taste pentru comanda „%s”"
 
-#: setup/main.py:5459
+#: setup/main.py:5460
 msgid "Add a key binding"
 msgstr "Adaugă o combinație de taste"
 
-#: setup/main.py:5465
+#: setup/main.py:5466
 msgid "Remove selected key binding"
 msgstr "Elimină combinația de taste selectată"
 
@@ -1980,7 +1981,7 @@ msgstr "Elimină combinația de taste selectată"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5547
+#: setup/main.py:5548
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1993,18 +1994,18 @@ msgstr ""
 #. really sure to reset all autosettings the defaults.
 #. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5584
+#: setup/main.py:5585
 msgid "Do you really want to set all autosettings to their defaults?"
 msgstr ""
 "Doriți cu adevărat să restaurați toate configurările automate la valorile "
 "implicite?"
 
-#: setup/main.py:5605
+#: setup/main.py:5606
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Învățare cu succes din fișierul %(filename)s."
 
-#: setup/main.py:5613
+#: setup/main.py:5614
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Învățarea din fișierul %(filename)s a eșuat."
@@ -2019,7 +2020,7 @@ msgstr "Învățarea din fișierul %(filename)s a eșuat."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5649
+#: setup/main.py:5650
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -2027,7 +2028,7 @@ msgstr ""
 "Doriți cu adevăr să ștergeți toate datele lingvistice învățate din tastarea "
 "sau citirea fișierelor?"
 
-#: setup/main.py:7694
+#: setup/main.py:7695
 msgid "ibus is not running."
 msgstr "ibus nu rulează."
 
@@ -2037,8 +2038,8 @@ msgid ""
 "from Ibus-typing-booster."
 msgstr ""
 "Selectorul de pictograme „emoji” este un instrument de explorare a "
-"pictogramelor „emoji” care utilizează codul de potrivire a pictogramelor „"
-"emoji” din Ibus-typing-booster."
+"pictogramelor „emoji” care utilizează codul de potrivire a pictogramelor "
+"„emoji” din Ibus-typing-booster."
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"

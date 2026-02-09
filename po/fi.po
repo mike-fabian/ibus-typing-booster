@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-01-28 11:07+0100\n"
+"POT-Creation-Date: 2026-02-04 11:15+0100\n"
 "PO-Revision-Date: 2026-01-20 08:36+0000\n"
 "Last-Translator: Jan Kuparinen <copper_fin@hotmail.com>\n"
 "Language-Team: Finnish <https://translate.fedoraproject.org/projects/ibus-"
@@ -203,56 +203,56 @@ msgstr "Unicode-symbolit ja emoji-ennusteet"
 msgid "Off the record mode"
 msgstr "Epävirallinen-tila"
 
-#: engine/hunspell_table.py:2635
+#: engine/hunspell_table.py:2636
 msgid "Highest priority dictionary"
 msgstr "Korkeimman prioriteetin sanakirja"
 
-#: engine/hunspell_table.py:2636
+#: engine/hunspell_table.py:2637
 msgid "Choose highest priority dictionary"
 msgstr "Valitse korkeimman prioriteetin sanakirja"
 
-#: engine/hunspell_table.py:2665
+#: engine/hunspell_table.py:2666
 msgid "Preedit input method"
 msgstr "Esimuokkaa syöttötapaa"
 
-#: engine/hunspell_table.py:2666
+#: engine/hunspell_table.py:2667
 msgid "Switch preedit input method"
 msgstr "Vaihda esimuokkaa syöttötapaa"
 
-#: engine/hunspell_table.py:3037
+#: engine/hunspell_table.py:3038
 msgid "Setup"
 msgstr "Asettaminen"
 
-#: engine/hunspell_table.py:3040 setup/main.py:180
+#: engine/hunspell_table.py:3041 setup/main.py:180
 msgid "Preferences for ibus-typing-booster"
 msgstr "Ibus-typing-boosterin asetukset"
 
-#: engine/hunspell_table.py:7287
+#: engine/hunspell_table.py:7288
 msgid "Failed to import Google speech-to-text."
 msgstr "Googlen puheen tekstiksi tuonti epäonnistui."
 
-#: engine/hunspell_table.py:7290
+#: engine/hunspell_table.py:7291
 msgid "Failed to import pyaudio."
 msgstr "Pyaudion tuonti epäonnistui."
 
-#: engine/hunspell_table.py:7293
+#: engine/hunspell_table.py:7294
 msgid "Failed to import queue."
 msgstr "Jonon tuonti epäonnistui."
 
-#: engine/hunspell_table.py:7298
+#: engine/hunspell_table.py:7299
 msgid "No supported language for speech recognition."
 msgstr "Ei tuettua kieltä puheentunnistukseen."
 
-#: engine/hunspell_table.py:7302
+#: engine/hunspell_table.py:7303
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "\"Google sovelluksen valtuustiedot\" -tiedostoa \"%s\" ei löydy."
 
-#: engine/hunspell_table.py:7315
+#: engine/hunspell_table.py:7316
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Googlen puheen tekstiksi muuttaminen epäonnistui. Katso debug.log."
 
-#: engine/hunspell_table.py:7423
+#: engine/hunspell_table.py:7424
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Googlen puhe tekstiksi -virhe. Katso debug.log."
 
@@ -410,7 +410,7 @@ msgstr "Ricky Tigg"
 msgid "Online documentation:"
 msgstr "Verkkotilassa oleva dokumentaatio:"
 
-#: engine/g_compat_helpers.py:1191 setup/main.py:5599
+#: engine/g_compat_helpers.py:1191 setup/main.py:5600
 msgid "Open File ..."
 msgstr "Avaa tiedosto ..."
 
@@ -430,7 +430,7 @@ msgstr "Asetukset"
 msgid "Restore all defaults"
 msgstr "Palauta kaikki oletusarvot"
 
-#: setup/main.py:330 setup/main.py:7617 setup/pkginstall.py:254
+#: setup/main.py:330 setup/main.py:7618 setup/pkginstall.py:254
 msgid "_Close"
 msgstr "_Sulje"
 
@@ -493,7 +493,7 @@ msgstr "Tekoäly"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:472 setup/main.py:2995
+#: setup/main.py:472 setup/main.py:2996
 msgid "Speech recognition"
 msgstr "Puheentunnistus"
 
@@ -711,7 +711,7 @@ msgstr ""
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Emoji style”, i.e.  typically colored.
-#: setup/main.py:753 setup/main.py:2987
+#: setup/main.py:753 setup/main.py:2988
 msgid "Emoji"
 msgstr "Emoji"
 
@@ -1104,7 +1104,7 @@ msgstr "Lataa puuttuvat sanakirjat ja päivitä olemassa olevat"
 msgid "Set dictionaries to the default for the current locale."
 msgstr "Aseta sanakirjat oletuksiksi nykyiselle maa-asetukselle."
 
-#: setup/main.py:1278 setup/main.py:1387 setup/main.py:1604 setup/main.py:5470
+#: setup/main.py:1278 setup/main.py:1387 setup/main.py:1604 setup/main.py:5471
 msgid "Set to default"
 msgstr "Aseta oletukseksi"
 
@@ -1205,7 +1205,7 @@ msgstr "Muokkaa"
 msgid "Edit the key bindings for the selected command"
 msgstr "Muokkaa valitun komennon näppäinsidoksia"
 
-#: setup/main.py:1605 setup/main.py:5471
+#: setup/main.py:1605 setup/main.py:5472
 msgid "Set default key bindings for the selected command"
 msgstr "Aseta valitun komennon oletusnäppäinsidokset"
 
@@ -1801,7 +1801,7 @@ msgid "System prompt that guides how the AI responds."
 msgstr "Järjestelmäkehote, joka ohjaa kuinka tekoäly vastaa."
 
 #. Translators:
-#: setup/main.py:2599 setup/main.py:3832
+#: setup/main.py:2599 setup/main.py:3833
 msgid "Set “Google application credentials” .json file:"
 msgstr "Aseta \"Google-sovelluksen valtuustiedot\".json -tiedosto:"
 
@@ -1817,7 +1817,7 @@ msgstr "Tiedostoa ei ole vielä asetettu."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2661 setup/main.py:5007
+#: setup/main.py:2661 setup/main.py:5008
 msgid "Add an autosetting"
 msgstr "Lisää automaattinen asetus"
 
@@ -1857,13 +1857,13 @@ msgstr "Siirrä automaattinen asetus alas"
 msgid "Set all autosettings to default"
 msgstr "Aseta kaikki automaattiset asetukset oletusarvoihin"
 
-#: setup/main.py:2970
+#: setup/main.py:2971
 msgid "Spell checking"
 msgstr "Oikoluku"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:3164
+#: setup/main.py:3165
 msgid "Setting"
 msgstr "Asetus"
 
@@ -1871,66 +1871,66 @@ msgstr "Asetus"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:3173 setup/main.py:4598
+#: setup/main.py:3174 setup/main.py:4599
 msgid "Value"
 msgstr "Arvo"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:3197
+#: setup/main.py:3198
 msgid "Regular expression"
 msgstr "Säännöllinen lauseke"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3327
+#: setup/main.py:3328
 msgid "Do you really want to restore all default settings?"
 msgstr "Haluatko todella palauttaa kaikki oletusasetukset?"
 
-#: setup/main.py:3328 setup/main.py:5549 setup/main.py:5585 setup/main.py:5651
+#: setup/main.py:3329 setup/main.py:5550 setup/main.py:5586 setup/main.py:5652
 msgid "Are you sure?"
 msgstr "Oletko varma?"
 
-#: setup/main.py:3329 setup/main.py:4068 setup/main.py:4409 setup/main.py:5550
-#: setup/main.py:5586 setup/main.py:5608 setup/main.py:5616 setup/main.py:5652
-#: setup/main.py:7697
+#: setup/main.py:3330 setup/main.py:4069 setup/main.py:4410 setup/main.py:5551
+#: setup/main.py:5587 setup/main.py:5609 setup/main.py:5617 setup/main.py:5653
+#: setup/main.py:7698
 msgid "_OK"
 msgstr "_Hyvä on"
 
-#: setup/main.py:3330 setup/main.py:5551 setup/main.py:5587 setup/main.py:5653
+#: setup/main.py:3331 setup/main.py:5552 setup/main.py:5588 setup/main.py:5654
 #: setup/pkginstall.py:252
 msgid "_Cancel"
 msgstr "_Peru"
 
-#: setup/main.py:3918
+#: setup/main.py:3919
 msgid "Select .wav sound file:"
 msgstr "Valitse .wav-äänitiedosto:"
 
-#: setup/main.py:4082
+#: setup/main.py:4083
 msgid "Add dictionary"
 msgstr "Lisää sanakirja"
 
-#: setup/main.py:4423
+#: setup/main.py:4424
 msgid "Add input method"
 msgstr "Lisää syöttömenetelmä"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4589
+#: setup/main.py:4590
 msgid "Variable"
 msgstr "Muuttuja"
 
-#: setup/main.py:5443
+#: setup/main.py:5444
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Muokkaa näppäinsidoksia komennolle \"%s\""
 
-#: setup/main.py:5459
+#: setup/main.py:5460
 msgid "Add a key binding"
 msgstr "Lisää näppäinsidonta"
 
-#: setup/main.py:5465
+#: setup/main.py:5466
 msgid "Remove selected key binding"
 msgstr "Poista valittu näppäinsidonta"
 
@@ -1939,7 +1939,7 @@ msgstr "Poista valittu näppäinsidonta"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5547
+#: setup/main.py:5548
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1952,17 +1952,17 @@ msgstr ""
 #. really sure to reset all autosettings the defaults.
 #. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5584
+#: setup/main.py:5585
 msgid "Do you really want to set all autosettings to their defaults?"
 msgstr ""
 "Haluatko todella palauttaa kaikki automaattiset asetukset oletusarvoihinsa?"
 
-#: setup/main.py:5605
+#: setup/main.py:5606
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Oppittu onnistuneesti tiedostosta %(filename)s."
 
-#: setup/main.py:5613
+#: setup/main.py:5614
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Oppiminen tiedostosta %(filename)s epäonnistui."
@@ -1977,7 +1977,7 @@ msgstr "Oppiminen tiedostosta %(filename)s epäonnistui."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5649
+#: setup/main.py:5650
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1985,7 +1985,7 @@ msgstr ""
 "Haluatko todella poistaa kaikki kirjoittamisesta tai tiedostojen lukemisesta "
 "opitut kielitiedot?"
 
-#: setup/main.py:7694
+#: setup/main.py:7695
 msgid "ibus is not running."
 msgstr "ibus ei ole käynnissä."
 

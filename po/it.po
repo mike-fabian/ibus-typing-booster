@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-01-28 11:07+0100\n"
+"POT-Creation-Date: 2026-02-04 11:15+0100\n"
 "PO-Revision-Date: 2026-01-19 08:37+0000\n"
 "Last-Translator: Nathan <nathan95@live.it>\n"
 "Language-Team: Italian <https://translate.fedoraproject.org/projects/ibus-"
@@ -205,56 +205,56 @@ msgstr "Previsioni dei simboli Unicode e delle emoji"
 msgid "Off the record mode"
 msgstr "Modalità Off the record"
 
-#: engine/hunspell_table.py:2635
+#: engine/hunspell_table.py:2636
 msgid "Highest priority dictionary"
 msgstr "Dizionario a priorità massima"
 
-#: engine/hunspell_table.py:2636
+#: engine/hunspell_table.py:2637
 msgid "Choose highest priority dictionary"
 msgstr "Seleziona il dizionario con priorità massima"
 
-#: engine/hunspell_table.py:2665
+#: engine/hunspell_table.py:2666
 msgid "Preedit input method"
 msgstr "Metodo di predizione"
 
-#: engine/hunspell_table.py:2666
+#: engine/hunspell_table.py:2667
 msgid "Switch preedit input method"
 msgstr "Cambia metodo di predizione"
 
-#: engine/hunspell_table.py:3037
+#: engine/hunspell_table.py:3038
 msgid "Setup"
 msgstr "Impostazioni"
 
-#: engine/hunspell_table.py:3040 setup/main.py:180
+#: engine/hunspell_table.py:3041 setup/main.py:180
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferenze di ibus-typing-booster"
 
-#: engine/hunspell_table.py:7287
+#: engine/hunspell_table.py:7288
 msgid "Failed to import Google speech-to-text."
 msgstr "Importazione speech-to-text Google fallita."
 
-#: engine/hunspell_table.py:7290
+#: engine/hunspell_table.py:7291
 msgid "Failed to import pyaudio."
 msgstr "Importazione pyaudio fallita."
 
-#: engine/hunspell_table.py:7293
+#: engine/hunspell_table.py:7294
 msgid "Failed to import queue."
 msgstr "Importazione coda fallita."
 
-#: engine/hunspell_table.py:7298
+#: engine/hunspell_table.py:7299
 msgid "No supported language for speech recognition."
 msgstr "Nessuna lingua supportata per il riconoscimento vocale."
 
-#: engine/hunspell_table.py:7302
+#: engine/hunspell_table.py:7303
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "File “Google application credentials” “%s” non trovato."
 
-#: engine/hunspell_table.py:7315
+#: engine/hunspell_table.py:7316
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "Avvio speech-to-text Google fallito. Vedi debug.log."
 
-#: engine/hunspell_table.py:7423
+#: engine/hunspell_table.py:7424
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Errore nel speech-to-text Google. Vedi debug.log."
 
@@ -412,7 +412,7 @@ msgstr "Alessio C. <alciregi@gmail.com>, 2019."
 msgid "Online documentation:"
 msgstr "Documentazione online:"
 
-#: engine/g_compat_helpers.py:1191 setup/main.py:5599
+#: engine/g_compat_helpers.py:1191 setup/main.py:5600
 msgid "Open File ..."
 msgstr "Apri file ..."
 
@@ -432,7 +432,7 @@ msgstr "Preferenze"
 msgid "Restore all defaults"
 msgstr "Ripristina di tutte le impostazioni predefinite"
 
-#: setup/main.py:330 setup/main.py:7617 setup/pkginstall.py:254
+#: setup/main.py:330 setup/main.py:7618 setup/pkginstall.py:254
 msgid "_Close"
 msgstr "_Chiudi"
 
@@ -495,7 +495,7 @@ msgstr "AI"
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to speech
 #. recognition.
-#: setup/main.py:472 setup/main.py:2995
+#: setup/main.py:472 setup/main.py:2996
 msgid "Speech recognition"
 msgstr "Riconoscimento vocale"
 
@@ -712,7 +712,7 @@ msgstr ""
 
 #. Translators: This option is to use fully-qualified emoji
 #. sequences to request “Emoji style”, i.e.  typically colored.
-#: setup/main.py:753 setup/main.py:2987
+#: setup/main.py:753 setup/main.py:2988
 msgid "Emoji"
 msgstr "Emoji"
 
@@ -1105,7 +1105,7 @@ msgstr "Scarica i dizionari mancanti e aggiorna quelli esistenti"
 msgid "Set dictionaries to the default for the current locale."
 msgstr "Imposta i dizionari sui valori predefiniti per la locale corrente."
 
-#: setup/main.py:1278 setup/main.py:1387 setup/main.py:1604 setup/main.py:5470
+#: setup/main.py:1278 setup/main.py:1387 setup/main.py:1604 setup/main.py:5471
 msgid "Set to default"
 msgstr "Ripristina predefinito"
 
@@ -1208,7 +1208,7 @@ msgstr "Modifica"
 msgid "Edit the key bindings for the selected command"
 msgstr "Modifica la combinazione del comando selezionato"
 
-#: setup/main.py:1605 setup/main.py:5471
+#: setup/main.py:1605 setup/main.py:5472
 msgid "Set default key bindings for the selected command"
 msgstr "Ripristina combinazione predefinita del comando selezionato"
 
@@ -1811,7 +1811,7 @@ msgid "System prompt that guides how the AI responds."
 msgstr "Prompt di sistema che guida il modo in cui l'IA risponde."
 
 #. Translators:
-#: setup/main.py:2599 setup/main.py:3832
+#: setup/main.py:2599 setup/main.py:3833
 msgid "Set “Google application credentials” .json file:"
 msgstr "Imposta file .json “Google application credentials”:"
 
@@ -1827,7 +1827,7 @@ msgstr "File non impostato."
 #. “Autosettings” are settings which may change automatically
 #. to specific values depending on which window (or which
 #. browser tab) gets the focus.
-#: setup/main.py:2661 setup/main.py:5007
+#: setup/main.py:2661 setup/main.py:5008
 msgid "Add an autosetting"
 msgstr "Aggiungi un'impostazione automatica"
 
@@ -1867,13 +1867,13 @@ msgstr "Spostare un'impostazione automatica verso il basso"
 msgid "Set all autosettings to default"
 msgstr "Ripristina tutte le impostazioni automatiche ai valori predefiniti"
 
-#: setup/main.py:2970
+#: setup/main.py:2971
 msgid "Spell checking"
 msgstr "Ortografia"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:3164
+#: setup/main.py:3165
 msgid "Setting"
 msgstr "Impostazioni"
 
@@ -1881,66 +1881,66 @@ msgstr "Impostazioni"
 #. the automatic settings
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:3173 setup/main.py:4598
+#: setup/main.py:3174 setup/main.py:4599
 msgid "Value"
 msgstr "Valore"
 
 #. Translators: Column heading of the table listing
 #. the automatic settings
-#: setup/main.py:3197
+#: setup/main.py:3198
 msgid "Regular expression"
 msgstr "Espressione regolare"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
 #. really sure to restore all default settings.
-#: setup/main.py:3327
+#: setup/main.py:3328
 msgid "Do you really want to restore all default settings?"
 msgstr "Vuoi davvero ripristinare tutte le impostazioni predefinite?"
 
-#: setup/main.py:3328 setup/main.py:5549 setup/main.py:5585 setup/main.py:5651
+#: setup/main.py:3329 setup/main.py:5550 setup/main.py:5586 setup/main.py:5652
 msgid "Are you sure?"
 msgstr "Sei sicuro?"
 
-#: setup/main.py:3329 setup/main.py:4068 setup/main.py:4409 setup/main.py:5550
-#: setup/main.py:5586 setup/main.py:5608 setup/main.py:5616 setup/main.py:5652
-#: setup/main.py:7697
+#: setup/main.py:3330 setup/main.py:4069 setup/main.py:4410 setup/main.py:5551
+#: setup/main.py:5587 setup/main.py:5609 setup/main.py:5617 setup/main.py:5653
+#: setup/main.py:7698
 msgid "_OK"
 msgstr "_OK"
 
-#: setup/main.py:3330 setup/main.py:5551 setup/main.py:5587 setup/main.py:5653
+#: setup/main.py:3331 setup/main.py:5552 setup/main.py:5588 setup/main.py:5654
 #: setup/pkginstall.py:252
 msgid "_Cancel"
 msgstr "A_nnulla"
 
-#: setup/main.py:3918
+#: setup/main.py:3919
 msgid "Select .wav sound file:"
 msgstr "Seleziona il file audio .wav:"
 
-#: setup/main.py:4082
+#: setup/main.py:4083
 msgid "Add dictionary"
 msgstr "Aggiungi dizionario"
 
-#: setup/main.py:4423
+#: setup/main.py:4424
 msgid "Add input method"
 msgstr "Aggiungi metodo inserimento"
 
 #. Translators: Column heading of the table listing the variables
 #. for the currently selected input method
-#: setup/main.py:4589
+#: setup/main.py:4590
 msgid "Variable"
 msgstr "Variabile"
 
-#: setup/main.py:5443
+#: setup/main.py:5444
 #, python-format
 msgid "Edit key bindings for command “%s”"
 msgstr "Modifica combinazioni per “%s”"
 
-#: setup/main.py:5459
+#: setup/main.py:5460
 msgid "Add a key binding"
 msgstr "Aggiungi combinazione"
 
-#: setup/main.py:5465
+#: setup/main.py:5466
 msgid "Remove selected key binding"
 msgstr "Rimuovi combinazione selezionata"
 
@@ -1949,7 +1949,7 @@ msgstr "Rimuovi combinazione selezionata"
 #. really sure to reset the key bindings for *all* commands
 #. to their defaults. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5547
+#: setup/main.py:5548
 msgid ""
 "Do you really want to set the key bindings for all commands to their "
 "defaults?"
@@ -1962,18 +1962,18 @@ msgstr ""
 #. really sure to reset all autosettings the defaults.
 #. This cannot be reversed so the user
 #. should be really sure he wants to do that.
-#: setup/main.py:5584
+#: setup/main.py:5585
 msgid "Do you really want to set all autosettings to their defaults?"
 msgstr ""
 "Vuoi davvero ripristinare tutte le impostazioni automatiche ai valori "
 "predefiniti?"
 
-#: setup/main.py:5605
+#: setup/main.py:5606
 #, python-format
 msgid "Learned successfully from file %(filename)s."
 msgstr "Appreso correttamente dal file %(filename)s."
 
-#: setup/main.py:5613
+#: setup/main.py:5614
 #, python-format
 msgid "Learning from file %(filename)s failed."
 msgstr "Apprendimento dal file %(filename)s fallito."
@@ -1988,7 +1988,7 @@ msgstr "Apprendimento dal file %(filename)s fallito."
 #. beginning because of the learning from user
 #. input. Deleting this learned data cannot be reversed. So
 #. the user should be really sure he really wants to do that.
-#: setup/main.py:5649
+#: setup/main.py:5650
 msgid ""
 "Do you really want to delete all language data learned from typing or "
 "reading files?"
@@ -1996,7 +1996,7 @@ msgstr ""
 "Eliminare davvero tutti i dati di apprendimento registrati tramite "
 "digitazione o lettura file?"
 
-#: setup/main.py:7694
+#: setup/main.py:7695
 msgid "ibus is not running."
 msgstr "ibus non è in esecuzione."
 
