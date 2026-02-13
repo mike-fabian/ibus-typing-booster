@@ -1482,7 +1482,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         emoji_labels = emoji_flowbox_get_labels(self._flowbox)
         if emoji_labels:
             # Auto-select the first search result:
-            self._emoji_label_selected(emoji_labels[0], show_popover=True)
+            self._emoji_label_selected(emoji_labels[0], show_popover=False)
         self._busy_stop()
 
     def on_fontsize_spin_button_grab_focus( # pylint: disable=no-self-use
