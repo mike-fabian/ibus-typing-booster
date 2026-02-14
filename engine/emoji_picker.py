@@ -79,6 +79,7 @@ from g_compat_helpers import (
     clear_children,
     children_of,
     forward_key_event_to_entry,
+    flowbox_get_children,
     emoji_flowbox_get_labels,
     show_all,
     set_label_wrap_mode,
@@ -310,6 +311,11 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 border-style: groove;
                 border-width: 0.05px;
             }}
+            flowboxchild:selected {{
+                background-color: @theme_selected_bg_color;
+                outline: 2px solid @theme_selected_fg_color;
+                outline-offset: -2px;
+            }}
             row {{ /* This is for listbox rows */
                 border-style: groove;
                 border-width: 0.05px;
@@ -369,7 +375,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             self.connect('key-press-event', self.on_main_window_key_press_event)
         else:
             controller = Gtk.EventControllerKey.new() # pylint: disable=no-value-for-parameter
-            controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
+            controller.set_propagation_phase(Gtk.PropagationPhase.BUBBLE)
             controller.connect(
                 'key-pressed', self.on_main_window_key_pressed_gtk4)
             self.add_controller(controller) # pylint: disable=no-member
@@ -490,6 +496,11 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._search_entry.set_vexpand(False)
         self._search_entry.set_can_focus(True)
         grab_focus_without_selecting(self._search_entry)
+        if GTK_MAJOR >= 4:
+            entry_controller = Gtk.EventControllerKey.new() # pylint: disable=no-value-for-parameter
+            entry_controller.set_propagation_phase(Gtk.PropagationPhase.BUBBLE)
+            entry_controller.connect("key-pressed", self.on_search_entry_key_pressed)
+            self._search_entry.add_controller(entry_controller)
         self._search_bar = Gtk.SearchBar()
         self._search_bar.set_hexpand(False)
         self._search_bar.set_vexpand(False)
@@ -877,12 +888,14 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._flowbox.set_row_spacing(0)
         self._flowbox.set_column_spacing(0)
         self._flowbox.set_activate_on_single_click(True)
-        self._flowbox.set_selection_mode(Gtk.SelectionMode.NONE)
+        self._flowbox.set_selection_mode(Gtk.SelectionMode.SINGLE)
         self._flowbox.set_can_focus(True)
+        if GTK_MAJOR >= 4:
+            self._flowbox.set_focusable(True)
         self._flowbox.set_homogeneous(False)
         self._flowbox.set_hexpand(False)
         self._flowbox.set_vexpand(False)
-        self._flowbox.connect('child-activated', self.on_emoji_selected)
+        self._flowbox.connect('selected-children-changed', self.on_emoji_selection_changed)
 
     def _fill_flowbox_browse(self) -> None:
         '''
@@ -993,7 +1006,12 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 'released', self.on_flowbox_event_box_button_release)
             event_box.connect(
                 'long-pressed', self.on_flowbox_event_box_long_press_pressed)
-            self._flowbox.insert(event_box, -1)
+            flowbox_child = Gtk.FlowBoxChild()
+            if GTK_MAJOR >= 4:
+                flowbox_child.set_focusable(True)  # pylint: disable=no-member
+                flowbox_child.set_can_focus(True)
+            add_child(flowbox_child, event_box)
+            self._flowbox.insert(flowbox_child, -1)
             # showing after each insert shows some progress
             show_all(self._flowbox)
 
@@ -1314,23 +1332,20 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         '''
         if _ARGS.debug:
             LOGGER.debug('keyval = %s\n', event_key.keyval)
-        if self._fontsize_spin_button.has_focus():
-            if _ARGS.debug:
-                LOGGER.debug(
-                    'self._fontsize_spin_button has focus\n')
-            # if the fontsize spin button has focus, we do not want
-            # to take it away from there by popping up the search bar.
+        if isinstance(self.get_focus(), Gtk.Editable):
             return False
-        # https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html#GdkEventKey
-        # See /usr/include/gtk-3.0/gdk/gdkkeysyms.h for a list
-        # of Gdk keycodes
-        if (event_key.keyval in (
-                Gdk.KEY_Tab,
-                Gdk.KEY_Down, Gdk.KEY_KP_Down,
-                Gdk.KEY_Up, Gdk.KEY_KP_Up,
-                Gdk.KEY_Page_Down, Gdk.KEY_KP_Page_Down,
-                Gdk.KEY_Page_Up, Gdk.KEY_KP_Page_Up)):
-            self._search_bar.set_search_mode(False)
+        if ((event_key.state & Gdk.ModifierType.CONTROL_MASK)
+            and event_key.string == 'f'):
+            # Control+f should open the search bar if not yet open but
+            # not insert an 'f':
+            self._search_bar.set_search_mode(True)
+            show_all(self._search_bar)
+            return True
+        alt_mask = (Gdk.ModifierType.ALT_MASK
+                    if hasattr(Gdk.ModifierType, "ALT_MASK")
+                    else Gdk.ModifierType.MOD1_MASK)
+        if event_key.state & (Gdk.ModifierType.CONTROL_MASK |
+            alt_mask | Gdk.ModifierType.META_MASK):
             return False
         if not event_key.string:
             return False
@@ -1474,15 +1489,23 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 'released', self.on_flowbox_event_box_button_release)
             event_box.connect(
                 'long-pressed', self.on_flowbox_event_box_long_press_pressed)
-            self._flowbox.insert(event_box, -1)
+            flowbox_child = Gtk.FlowBoxChild()
+            if GTK_MAJOR >= 4:
+                flowbox_child.set_focusable(True)  # pylint: disable=no-member
+                flowbox_child.set_can_focus(True)
+            add_child(flowbox_child, event_box)
+            self._flowbox.insert(flowbox_child, -1)
             # showing after each insert shows some progress
             show_all(self._flowbox)
+            if index == 0:
+                # Auto-select the first search result:
+                # (But do not grab the focus, the focus should
+                # stay on the search entry)
+                self._flowbox.select_child(flowbox_child)
+                emoji_labels = emoji_flowbox_get_labels(self._flowbox)
+                self._emoji_label_selected(emoji_labels[0], show_popover=False)
 
         show_all(self)
-        emoji_labels = emoji_flowbox_get_labels(self._flowbox)
-        if emoji_labels:
-            # Auto-select the first search result:
-            self._emoji_label_selected(emoji_labels[0], show_popover=False)
         self._busy_stop()
 
     def on_fontsize_spin_button_grab_focus( # pylint: disable=no-self-use
@@ -1507,6 +1530,46 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         if GTK_MAJOR < 4:
             GObject.signal_stop_emission_by_name(spin_button, 'grab-focus')
         return True
+
+    def on_search_entry_key_pressed(
+        self,
+        _controller: Gtk.EventControllerKey,
+        keyval: int,
+        _keycode: int,
+        _state: Gdk.ModifierType,
+    ) -> bool:
+        '''Handler called when a key is pressed on the search entry'''
+        if (keyval in (Gdk.KEY_Down,)
+            and self._search_bar.get_search_mode()):
+            children = flowbox_get_children(self._flowbox)
+            if children:
+                # Focus first result. I think is nice not to close the search
+                # bar, i.e. not call self._search_bar.set_search_mode(False):
+                child = children[0]
+                self._flowbox.grab_focus()
+                self._flowbox.select_child(child)
+                # In Gtk4, select_child() only changes the selection state.
+                # It does NOT initialize the internal keyboard navigation cursor.
+                #
+                # Arrow-key navigation in Gtk.FlowBox is based on an internal
+                # "cursor" (navigation anchor), not on the selection.
+                #
+                # When a child is clicked with the mouse, Gtk sets this cursor
+                # automatically. But when we select a child programmatically,
+                # Gtk does NOT do that for us.
+                #
+                # Therefore we must explicitly set the FlowBox cursor to the
+                # selected FlowBoxChild. Without this call, the first Down key
+                # works (we handle it), but subsequent arrow keys do nothing.
+                #
+                # Important: call Gtk.FlowBox.set_cursor(...) on the class to
+                # disambiguate it from Gtk.Widget.set_cursor(Gdk.Cursor).
+                Gtk.FlowBox.set_cursor(self._flowbox, child)
+                child.grab_focus()
+                emoji_labels = emoji_flowbox_get_labels(self._flowbox)
+                self._emoji_label_selected(emoji_labels[0], show_popover=False)
+            return True
+        return False
 
     def on_search_entry_grab_focus( # pylint: disable=no-self-use
             self,
@@ -1701,28 +1764,33 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             self._popup_manager.popdown_current(kind=PopupKind.EMOJI_SELECTED))
         return True # Gdk.EVENT_PROPAGATE is defined as False
 
-    def on_emoji_selected(
+    def on_emoji_selection_changed(
             self,
-            _flowbox: Gtk.FlowBox,
-            flowbox_child: Gtk.FlowBoxChild) -> Gdk.EVENT_PROPAGATE:
+            flowbox: Gtk.FlowBox,
+    ) -> Gdk.EVENT_PROPAGATE:
         '''
-        Signal handler for selecting an emoji in the flowbox
-        via the flowbox selection
+        Signal handler called when the selection of emoji in the
+        flowbox changes.
 
         Not called if long press gestures are used to show the
         skin tone popovers. In that case, emoji selection is handled
         in on_flowbox_event_box_button_release() instead.
 
         :param _flowbox: The flowbox displaying the Emoji
-        :param flowbox_child: The child object containing the selected emoji
         '''
         if _ARGS.debug:
-            LOGGER.debug("on_emoji_selected()\n")
+            LOGGER.debug('on_emoji_selection_changed()')
+        selected = flowbox.get_selected_children()
+        if not selected:
+            if _ARGS.debug:
+                LOGGER.debug('Nothing selected')
+            return Gdk.EVENT_PROPAGATE
+        flowbox_child = selected[0]
         if GTK_MAJOR >= 4:
             emoji_label = flowbox_child.get_child().get_first_child()
         else:
             emoji_label = flowbox_child.get_child().get_child()
-        self._emoji_label_selected(emoji_label)
+        self._emoji_label_selected(emoji_label, show_popover=False)
         return Gdk.EVENT_PROPAGATE
 
     def on_main_menu_button_clicked(self, button: Gtk.Button) -> None:
@@ -1894,9 +1962,6 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         '''
         if _ARGS.debug:
             LOGGER.debug('event_box=%r button=%d', event_box, button)
-        if button == 1:
-            emoji_label = clickable_event_box_compat_get_gtk_label(event_box)
-            self._emoji_label_selected(emoji_label)
         if button == 2:
             self._show_skin_tone_popover(event_box)
         if button == 3:
@@ -1927,6 +1992,22 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 self._variation_selector_normalize_for_font(skin_tone_variant))
         if len(skin_tone_variants) <= 1:
             return
+        # Ensure the emoji we are showing skin tones for is selected:
+        # Notes:
+        # - This is triggered by mouse gestures (long press / middle click).
+        # - select_child() is enough to update the visual selection.
+        # - grab_focus() ensures keyboard navigation starts from this child.
+        # - Do NOT call Gtk.FlowBox.set_cursor() here: it only works when
+        #   the FlowBox has keyboard focus and no pointer grab is active.
+        #   Mouse gestures like long press keep the FlowBox “locked” internally,
+        #   causing GTK4 to raise a TypeError.
+        flowbox_child = event_box.get_parent()
+        if isinstance(flowbox_child, Gtk.FlowBoxChild):
+            # If not already selected, select it
+            if not flowbox_child.is_selected():
+                self._flowbox.grab_focus()
+                self._flowbox.select_child(flowbox_child)
+                flowbox_child.grab_focus()
         self._skin_tone_popover = create_popover(
             pointing_to=emoji_label, position=Gtk.PositionType.TOP)
         popover = self._skin_tone_popover
@@ -1947,7 +2028,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         flowbox.set_column_spacing(0)
         flowbox.set_activate_on_single_click(True)
         flowbox.set_selection_mode(
-            Gtk.SelectionMode.NONE)
+            Gtk.SelectionMode.SINGLE)
         flowbox.set_can_focus(False)
         flowbox.set_homogeneous(False)
         flowbox.set_hexpand(True)

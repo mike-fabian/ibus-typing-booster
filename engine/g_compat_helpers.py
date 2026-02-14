@@ -701,6 +701,12 @@ def clickable_event_box_compat_get_gtk_label(
         return event_box.get_child()
     return event_box.get_first_child()
 
+def flowbox_get_children(flowbox: Gtk.FlowBox) -> List[Gtk.FlowBoxChild]:
+    '''Returns a list of flowbox children'''
+    if hasattr(flowbox, "get_children"):  # GTK3
+        return list(flowbox.get_children())
+    return list(children_of(flowbox))
+
 def emoji_flowbox_get_labels(flowbox: Gtk.FlowBox) -> List[Gtk.Label]:
     '''Returns a list of (emoji)-labels in a Gtk.FlowBox as used in emoji_picker.py
     Compatible with both Gtk3 and Gtk4.
@@ -733,6 +739,8 @@ class ClickableEventBoxCompat(Gtk.Box if GTK_MAJOR >= 4 else Gtk.EventBox): # ty
         else: # Gtk4 mode (Gtk.Box)
             super().__init__(orientation=Gtk.Orientation.HORIZONTAL)
             self.set_sensitive(True)
+            self.set_can_focus(False)
+            self.set_focusable(False)  # pylint: disable=no-member
             click = Gtk.GestureClick()  # pylint: disable=c-extension-no-member
             click.set_button(0)  # accept all buttons
             click.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
