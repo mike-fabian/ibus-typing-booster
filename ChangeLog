@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 15 Feb 2026 Release 2.30.4
+* emoji-picker: key handling improvments: Show selected emoji clearly, Fix Control+f and Escape issue, Navigation with arrow keys in the flowboxes (See: See: https://github.com/mike-fabian/ibus-typing-booster/issues/883#issuecomment-3901653686)
+* emoji-picker: Don’t show popover when autoselecting first search result (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/883)
+* Translation update from Weblate (kab 73.8%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 04 Feb 2026 Release 2.30.3
 * Add `Mod1+Left` to the default for `commit_and_forward_key` for the `tb:*` engines (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/879#issuecomment-3844807216)
 * Translation update from Weblate (kab 71.4%, ro 100%)

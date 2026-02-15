@@ -47,6 +47,31 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.30.4" date="2026-02-15" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.30.4</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            emoji-picker: key handling improvments: Show selected
+            emoji clearly, Fix Control+f and Escape issue, Navigation
+            with arrow keys in the flowboxes (See: github-issues:883)
+          </li>
+          <li>
+            emoji-picker: Don’t show popover when autoselecting first
+            search result (Resolves: github-issues:883)
+          </li>
+          <li>
+            Translation update from Weblate (kab 73.8%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/883">
+          github-issues#883
+        </issue>
+      </issues>
+    </release>
     <release version="2.30.3" date="2026-02-04" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.30.3</url>
       <description>
