@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-02-04 11:15+0100\n"
+"POT-Creation-Date: 2026-02-15 19:49+0100\n"
 "PO-Revision-Date: 2019-12-20 00:16+0000\n"
 "Last-Translator: Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>\n"
 "Language-Team: Odia <https://translate.stg.fedoraproject.org/projects/ibus-"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.9.1\n"
 
-#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:301
+#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:302
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
 msgstr "ଇମୋଜି ବଛାରି"
@@ -33,15 +33,15 @@ msgstr "ଇମୋଜି ବଛାରି"
 msgid "Emoji browsing tool"
 msgstr "ୟୁନିକୋଡ଼ ପ୍ରକାରାନ୍ତର:"
 
-#: engine/emoji_picker.py:431
+#: engine/emoji_picker.py:437
 msgid "Search for emoji"
 msgstr "ଇମୋଜି ପାଇଁ ଖୋଜନ୍ତୁ"
 
-#: engine/emoji_picker.py:437
+#: engine/emoji_picker.py:443
 msgid "Set the font to display emoji"
 msgstr "ଅକ୍ଷର ଶୈଳୀକୁ  ଇମୋଜୀ ଦର୍ଶାଇବା ପାଇଁ ଧାର୍ଯ୍ୟ କରନ୍ତୁ"
 
-#: engine/emoji_picker.py:444
+#: engine/emoji_picker.py:450
 msgid "Set font size"
 msgstr "ଅକ୍ଷର ଶୈଳୀର ଆକାର ଧାର୍ଯ୍ୟ କରନ୍ତୁ"
 
@@ -53,11 +53,11 @@ msgstr "ଅକ୍ଷର ଶୈଳୀର ଆକାର ଧାର୍ଯ୍ୟ କ�
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:466
+#: engine/emoji_picker.py:472
 msgid "Fallback"
 msgstr "ପୂର୍ବନିର୍ଦ୍ଧାରିତ"
 
-#: engine/emoji_picker.py:468
+#: engine/emoji_picker.py:474
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -65,31 +65,31 @@ msgstr ""
 "ପୂର୍ବନିର୍ଦ୍ଧାରିତ ଫଣ୍ଟକୁ ଇମୋଜୀ କିମ୍ୱା ଇମୋଜୀ ଅନୁକ୍ରମମାନର ଅଂଶମାନଙ୍କ ପାଇଁ ବ୍ୟବହାର କରିବା ଯାହା "
 "ବଛାଯାଇଥିବା ଫଣ୍ଟ ଦ୍ୱାରା ଦର୍ଶାଯାଇ ପାରୁନାହିଁ।"
 
-#: engine/emoji_picker.py:563
+#: engine/emoji_picker.py:574
 msgid "Recently used"
 msgstr "ସାମ୍ପ୍ରତିକ ଭାବେ ବ୍ୟବହୃତ"
 
-#: engine/emoji_picker.py:738
+#: engine/emoji_picker.py:749
 msgid "Categories"
 msgstr "ଶ୍ରେଣୀଭୁକ୍ତମାନ"
 
-#: engine/emoji_picker.py:739
+#: engine/emoji_picker.py:750
 msgid "Unicode categories"
 msgstr "ୟୁନିକୋଡ଼ ଶ୍ରେଣୀଭୁକ୍ତମାନ"
 
-#: engine/emoji_picker.py:740
+#: engine/emoji_picker.py:751
 msgid "Keywords"
 msgstr "ମୁଖ୍ୟଶବ୍ଦମାନ"
 
-#: engine/emoji_picker.py:758
+#: engine/emoji_picker.py:769
 msgid "Fonts used to render this emoji:"
 msgstr "ଏହି ଇମୋଜୀକୁ ପ୍ରତ୍ୟପର୍ଣ କରିବା ପାଇଁ ବ୍ୟବହୃତ ଅକ୍ଷର ଶୈଳୀମାନ:"
 
-#: engine/emoji_picker.py:816
+#: engine/emoji_picker.py:827
 msgid "Unicode Version:"
 msgstr "ୟୁନିକୋଡ଼ ପ୍ରକାରାନ୍ତର:"
 
-#: engine/emoji_picker.py:820
+#: engine/emoji_picker.py:831
 #, fuzzy
 #| msgid "Unicode Version:"
 msgid "Emoji Version:"
@@ -98,7 +98,7 @@ msgstr "ୟୁନିକୋଡ଼ ପ୍ରକାରାନ୍ତର:"
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
-#: engine/emoji_picker.py:827
+#: engine/emoji_picker.py:838
 #, fuzzy
 #| msgid "Unicode Version:"
 msgid "Emoji properties:"
@@ -106,7 +106,7 @@ msgstr "ୟୁନିକୋଡ଼ ପ୍ରକାରାନ୍ତର:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
-#: engine/emoji_picker.py:833
+#: engine/emoji_picker.py:844
 #, fuzzy
 #| msgid "Unicode categories"
 msgid "Unicode category:"
@@ -115,58 +115,58 @@ msgstr "ୟୁନିକୋଡ଼ ଶ୍ରେଣୀଭୁକ୍ତମାନ"
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
-#: engine/emoji_picker.py:840
+#: engine/emoji_picker.py:851
 #, fuzzy
 #| msgid "Unicode Version:"
 msgid "Unicode block:"
 msgstr "ୟୁନିକୋଡ଼ ପ୍ରକାରାନ୍ତର:"
 
-#: engine/emoji_picker.py:859 engine/emoji_picker.py:1980
+#: engine/emoji_picker.py:870 engine/emoji_picker.py:2061
 msgid "Left click to copy"
 msgstr "ନକଲ କରିବା ପାଇଁ ବାମକୁ ଚିପନ୍ତୁ"
 
-#: engine/emoji_picker.py:862
+#: engine/emoji_picker.py:873
 msgid "Long press or middle click for skin tones"
 msgstr "ଲମ୍ବା ଦବାନ୍ତୁ କିମ୍ବା ମଝି କ୍ଲିକ କରନ୍ତୁ skin  tone ପାଇଁ"
 
-#: engine/emoji_picker.py:863
+#: engine/emoji_picker.py:874
 msgid "Right click for info"
 msgstr "ତଥ୍ୟ ପାଇଁ ଡ଼ାହାଣକୁ ଚିପନ୍ତୁ"
 
-#: engine/emoji_picker.py:1406
+#: engine/emoji_picker.py:1421
 msgid "Search Results"
 msgstr "ଅନୁସନ୍ଧାନ ଫଳମାନ"
 
-#: engine/emoji_picker.py:1413
+#: engine/emoji_picker.py:1428
 msgid "Search produced empty result."
 msgstr "ଅନୁସନ୍ଧାନ ଶୂନ୍ୟ ଫଳ ପ୍ରକାଶ କରିଛି।"
 
-#: engine/emoji_picker.py:1696 engine/emoji_picker.py:1846
+#: engine/emoji_picker.py:1759 engine/emoji_picker.py:1914
 msgid "Copied to clipboard!"
 msgstr "କ୍ଲିପିବୋର୍ଡ଼କୁ ପ୍ରତିଲିପି କରଣ ସମାପ୍ତ !"
 
-#: engine/emoji_picker.py:1744
+#: engine/emoji_picker.py:1812
 msgid "Clear recently used"
 msgstr "ସାମ୍ପ୍ରତିକ ବ୍ୟବହୃତକୁ ସଫା କରନ୍ତୁ"
 
-#: engine/emoji_picker.py:1749 setup/main.py:313
+#: engine/emoji_picker.py:1817 setup/main.py:313
 msgid "About"
 msgstr "ବିଷୟରେ"
 
-#: engine/emoji_picker.py:1752
+#: engine/emoji_picker.py:1820
 msgid "Quit"
 msgstr "ବନ୍ଦ"
 
-#: engine/emoji_picker.py:2073
+#: engine/emoji_picker.py:2154
 msgid "Lookup on emojipedia"
 msgstr "ଇମୋଜୀପିଡ଼ିଆରେ ଅନୁସନ୍ଧାନ କରନ୍ତୁ"
 
-#: engine/emoji_picker.py:2171 engine/emoji_picker.py:2172
-#: engine/emoji_picker.py:2173 setup/main.py:1754
+#: engine/emoji_picker.py:2252 engine/emoji_picker.py:2253
+#: engine/emoji_picker.py:2254 setup/main.py:1754
 msgid "System default"
 msgstr "ତନ୍ତ୍ର ପୂର୍ବନିଦ୍ଧାରିତ"
 
-#: engine/emoji_picker.py:2305
+#: engine/emoji_picker.py:2386
 msgid "Set Font"
 msgstr "ଅକ୍ଷର ଶୈଳୀ ଧାର୍ଯ୍ୟ କରନ୍ତୁ"
 
@@ -419,7 +419,7 @@ msgstr "ଅନୁବାଦକାରୀ-ସ୍ବୀକୃତିମାନ"
 msgid "Online documentation:"
 msgstr "ଅନଲାଇନ ଦସ୍ତାବିଜ଼:"
 
-#: engine/g_compat_helpers.py:1191 setup/main.py:5600
+#: engine/g_compat_helpers.py:1199 setup/main.py:5600
 msgid "Open File ..."
 msgstr ""
 

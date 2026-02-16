@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-02-04 11:15+0100\n"
+"POT-Creation-Date: 2026-02-15 19:49+0100\n"
 "PO-Revision-Date: 2025-04-30 04:50+0000\n"
 "Last-Translator: hsu zangmen <chzang55@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://translate.fedoraproject.org/"
@@ -23,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.11\n"
 
-#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:301
+#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:302
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
 msgstr "表情符號挑選器"
@@ -33,15 +33,15 @@ msgstr "表情符號挑選器"
 msgid "Emoji browsing tool"
 msgstr "表情符號瀏覽工具"
 
-#: engine/emoji_picker.py:431
+#: engine/emoji_picker.py:437
 msgid "Search for emoji"
 msgstr "搜尋表情符號"
 
-#: engine/emoji_picker.py:437
+#: engine/emoji_picker.py:443
 msgid "Set the font to display emoji"
 msgstr "設定顯示表情符號的字型"
 
-#: engine/emoji_picker.py:444
+#: engine/emoji_picker.py:450
 msgid "Set font size"
 msgstr "設定字型大小"
 
@@ -53,11 +53,11 @@ msgstr "設定字型大小"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:466
+#: engine/emoji_picker.py:472
 msgid "Fallback"
 msgstr "回退"
 
-#: engine/emoji_picker.py:468
+#: engine/emoji_picker.py:474
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -65,100 +65,100 @@ msgstr ""
 "對於無法使用選取字型顯示的表情符號或表情符號序列的部分，是否要使用字型備用功"
 "能。"
 
-#: engine/emoji_picker.py:563
+#: engine/emoji_picker.py:574
 msgid "Recently used"
 msgstr "最近使用"
 
-#: engine/emoji_picker.py:738
+#: engine/emoji_picker.py:749
 msgid "Categories"
 msgstr "類別"
 
-#: engine/emoji_picker.py:739
+#: engine/emoji_picker.py:750
 msgid "Unicode categories"
 msgstr "Unicode 類別"
 
-#: engine/emoji_picker.py:740
+#: engine/emoji_picker.py:751
 msgid "Keywords"
 msgstr "關鍵字"
 
-#: engine/emoji_picker.py:758
+#: engine/emoji_picker.py:769
 msgid "Fonts used to render this emoji:"
 msgstr "用來呈現這個表情符號的字體："
 
-#: engine/emoji_picker.py:816
+#: engine/emoji_picker.py:827
 msgid "Unicode Version:"
 msgstr "Unicode 版本："
 
-#: engine/emoji_picker.py:820
+#: engine/emoji_picker.py:831
 msgid "Emoji Version:"
 msgstr "表情符號 版本："
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
-#: engine/emoji_picker.py:827
+#: engine/emoji_picker.py:838
 msgid "Emoji properties:"
 msgstr "表情符號 屬性："
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
-#: engine/emoji_picker.py:833
+#: engine/emoji_picker.py:844
 msgid "Unicode category:"
 msgstr "Unicode類別："
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
-#: engine/emoji_picker.py:840
+#: engine/emoji_picker.py:851
 msgid "Unicode block:"
 msgstr "Unicode 區塊："
 
-#: engine/emoji_picker.py:859 engine/emoji_picker.py:1980
+#: engine/emoji_picker.py:870 engine/emoji_picker.py:2061
 msgid "Left click to copy"
 msgstr "左鍵按一下複製"
 
-#: engine/emoji_picker.py:862
+#: engine/emoji_picker.py:873
 msgid "Long press or middle click for skin tones"
 msgstr "長按或中間按一下可調整膚色"
 
-#: engine/emoji_picker.py:863
+#: engine/emoji_picker.py:874
 msgid "Right click for info"
 msgstr "右鍵按一下以取得資訊"
 
-#: engine/emoji_picker.py:1406
+#: engine/emoji_picker.py:1421
 msgid "Search Results"
 msgstr "搜尋結果"
 
-#: engine/emoji_picker.py:1413
+#: engine/emoji_picker.py:1428
 msgid "Search produced empty result."
 msgstr "搜尋結果為空白。"
 
-#: engine/emoji_picker.py:1696 engine/emoji_picker.py:1846
+#: engine/emoji_picker.py:1759 engine/emoji_picker.py:1914
 msgid "Copied to clipboard!"
 msgstr "己複製到剪貼簿！"
 
-#: engine/emoji_picker.py:1744
+#: engine/emoji_picker.py:1812
 msgid "Clear recently used"
 msgstr "清除最近使用的"
 
-#: engine/emoji_picker.py:1749 setup/main.py:313
+#: engine/emoji_picker.py:1817 setup/main.py:313
 msgid "About"
 msgstr "關於"
 
-#: engine/emoji_picker.py:1752
+#: engine/emoji_picker.py:1820
 msgid "Quit"
 msgstr "結束"
 
-#: engine/emoji_picker.py:2073
+#: engine/emoji_picker.py:2154
 msgid "Lookup on emojipedia"
 msgstr "在 emojipedia 上查詢"
 
-#: engine/emoji_picker.py:2171 engine/emoji_picker.py:2172
-#: engine/emoji_picker.py:2173 setup/main.py:1754
+#: engine/emoji_picker.py:2252 engine/emoji_picker.py:2253
+#: engine/emoji_picker.py:2254 setup/main.py:1754
 msgid "System default"
 msgstr "系統預設"
 
-#: engine/emoji_picker.py:2305
+#: engine/emoji_picker.py:2386
 msgid "Set Font"
 msgstr "設定字型"
 
@@ -410,7 +410,7 @@ msgstr "Zang-Men Hsu 許展銘/neko0xff <chzang55@gmail.com>, 2025"
 msgid "Online documentation:"
 msgstr "線上文件:"
 
-#: engine/g_compat_helpers.py:1191 setup/main.py:5600
+#: engine/g_compat_helpers.py:1199 setup/main.py:5600
 msgid "Open File ..."
 msgstr "開啟檔案 ..."
 
