@@ -1,16 +1,16 @@
 # Zdenek <chmelarz@gmail.com>, 2017. #zanata
 # Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2025.
-# Pavel Borecki <pavel.borecki@gmail.com>, 2019. #zanata, 2021, 2025.
+# Pavel Borecki <pavel.borecki@gmail.com>, 2019. #zanata, 2021, 2025, 2026.
 # Josef Hruska <hrusjos@gmail.com>, 2019, 2021.
 # Daniel Rusek <mail@asciiwolf.com>, 2024, 2025.
-# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
+# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-02-15 19:49+0100\n"
-"PO-Revision-Date: 2025-12-05 23:29+0000\n"
+"PO-Revision-Date: 2026-02-22 15:58+0000\n"
 "Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
 "memory@weblate.org>\n"
 "Language-Team: Czech <https://translate.fedoraproject.org/projects/ibus-"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.16\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:302
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -851,9 +851,9 @@ msgid ""
 "moves to the end or the beginning of a word. Enabling this option is useful "
 "to correct already committed words."
 msgstr ""
-"Zda je povoleno vložit slovo zpět do předúpravy, když se kurzor přesune na "
-"konec nebo začátek slova. Povolení této možnosti je užitečné pro opravu již "
-"potvrzených slov."
+"Zda je povoleno vrátit slovo zpět do předtiskové přípravy, když se kurzor "
+"přesune na konec nebo začátek slova. Povolení této možnosti je užitečné pro "
+"opravu už odevzdaných slov."
 
 #. Translators: Whether ibus-typing-booster should be disabled in terminals
 #. (gnome-terminal, xfce4-terminal, ...)
@@ -889,7 +889,7 @@ msgstr ""
 #. by pressing space.
 #: setup/main.py:955
 msgid "Show final form while typing"
-msgstr ""
+msgstr "V průběhu psaní zobrazovat konečnou podobu"
 
 #. Translators: Tooltip for the checkbox for whether to
 #. show the final form while typing, i.e. show the text as
@@ -900,6 +900,8 @@ msgid ""
 "Show the text as it would appear if you ended the composition now by "
 "pressing Space."
 msgstr ""
+"Zobrazit text tak, jak by se objevil, pokud by jste už nyní jeho skládání "
+"ukončili stiskem mezerníku."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
@@ -939,22 +941,22 @@ msgstr ""
 #. “English” keymap used.
 #: setup/main.py:1006
 msgid "English"
-msgstr "angličtina"
+msgstr "Česky"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
 #. “Unicode symbols and emoji predictions” is off.
 #: setup/main.py:1030
 msgid "Emoji trigger characters:"
-msgstr "Spouštěcí znaky emodži:"
+msgstr "Znaky spouštějící emoji:"
 
 #: setup/main.py:1032
 msgid ""
 "The characters in this list trigger an emoji and Unicode symbol lookup even "
 "if the option “Unicode symbols and emoji predictions” is off."
 msgstr ""
-"Znaky v tomto seznamu spouštějí vyhledávání emodži a symbolů Unicode, i když "
-"je vypnutá možnost „Predikce symbolů Unicode a emodži“."
+"Znaky v tomto seznamu spustí vyhledávání symbolů emoji a Unicode, i když je "
+"vypnuta možnost „Předpovědi symbolů Unicode a emoji“."
 
 #. Translators: The characters in this list cause the
 #. preedit to be committed automatically, followed by a
@@ -1009,7 +1011,7 @@ msgstr "Pokud je zadáno méně než tolik znaků nezobrazovat žádné návrhy.
 #. sound is played on error
 #: setup/main.py:1120
 msgid "Play sound file on error"
-msgstr "Přehrát zvukový soubor při chybě"
+msgstr "Při chybě přehrát zvukový soubor"
 
 #: setup/main.py:1122
 msgid "Here you can choose whether a sound file is played if an error occurs."
@@ -1020,7 +1022,7 @@ msgstr "Zde je možné zvolit, zda se v případě chyby přehraje zvukový soub
 #. debug information may also be shown graphically.
 #: setup/main.py:1155
 msgid "Debug level:"
-msgstr "Úroveň podrobnosti ladících údajů:"
+msgstr "Stupeň podrobnosti ladících údajů:"
 
 #: setup/main.py:1157
 msgid ""
@@ -1257,11 +1259,13 @@ msgstr ""
 #. list.
 #: setup/main.py:1677
 msgid "Show raw input"
-msgstr ""
+msgstr "Zobrazit vstup před zpracováním"
 
 #: setup/main.py:1679
 msgid "Showing the raw input may be helpful for transliterating input methods."
 msgstr ""
+"Zobrazení holého vstupu může být užitečné pro vstupní metody, používající "
+"transliteraci."
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1269,7 +1273,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1688
 msgid "Never"
-msgstr ""
+msgstr "Nikdy"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1277,7 +1281,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1693
 msgid "When there are candidates"
-msgstr ""
+msgstr "Když jsou kandidáti"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1285,7 +1289,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1698
 msgid "Always"
-msgstr ""
+msgstr "Vždy"
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
@@ -1681,14 +1685,14 @@ msgstr ""
 #. dictionary in the candidate list.
 #: setup/main.py:2336
 msgid "Use flags for dictionary suggestions"
-msgstr "Použít vlaječky pro návrhy ze slovníku"
+msgstr "Použít pro návrhy ze slovníku příznaky"
 
 #: setup/main.py:2338
 msgid ""
 "Here you can choose whether flags are used for candidates in the lookup "
 "table which come from a dictionary."
 msgstr ""
-"Zde je možné zvolit, zda jsou vlaječky použity pro kandidáty ve vyhledávací "
+"Zde je možné zvolit zda jsou použity příznaky pro kandidáty ve vyhledávací "
 "tabulce, které pocházejí ze slovníku."
 
 #. Translators: A checkbox where one can choose whether a

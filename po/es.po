@@ -9,14 +9,14 @@
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 # Javier Francisco <fserrador@gmail.com>, 2025.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
-# "Fco. Javier F. Serrador" <fserrador@gmail.com>, 2025.
+# "Fco. Javier F. Serrador" <fserrador@gmail.com>, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-02-15 19:49+0100\n"
-"PO-Revision-Date: 2025-11-24 09:46+0000\n"
+"PO-Revision-Date: 2026-02-20 11:58+0000\n"
 "Last-Translator: \"Fco. Javier F. Serrador\" <fserrador@gmail.com>\n"
 "Language-Team: Spanish <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/es/>\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.16\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:302
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -283,7 +283,7 @@ msgstr "alimentos"
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1238 engine/itb_emoji.py:1447
 msgid "travel"
-msgstr "viajes"
+msgstr "viaje"
 
 #. Translators: This is a name for a category of emoji
 #: engine/itb_emoji.py:1239 engine/itb_emoji.py:1248 engine/itb_emoji.py:1429
@@ -900,7 +900,7 @@ msgstr ""
 #. by pressing space.
 #: setup/main.py:955
 msgid "Show final form while typing"
-msgstr ""
+msgstr "Mostrar formulario final mientras teclea"
 
 #. Translators: Tooltip for the checkbox for whether to
 #. show the final form while typing, i.e. show the text as
@@ -911,6 +911,8 @@ msgid ""
 "Show the text as it would appear if you ended the composition now by "
 "pressing Space."
 msgstr ""
+"Muestra el texto como aparecería si finalizó ahora la composición "
+"presionando Espacio."
 
 #. Translators: Whether the use of an IBus keymap is
 #. forced while Typing Booster is active
@@ -1276,11 +1278,13 @@ msgstr ""
 #. list.
 #: setup/main.py:1677
 msgid "Show raw input"
-msgstr ""
+msgstr "Muestra la entrada en crudo"
 
 #: setup/main.py:1679
 msgid "Showing the raw input may be helpful for transliterating input methods."
 msgstr ""
+"Mostrando la entrada sin formato puede ser de ayuda para transliterar "
+"métodos de entrada."
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1288,7 +1292,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1688
 msgid "Never"
-msgstr ""
+msgstr "Nunca"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1296,7 +1300,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1693
 msgid "When there are candidates"
-msgstr ""
+msgstr "Cuando hay candidatos"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1304,7 +1308,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1698
 msgid "Always"
-msgstr ""
+msgstr "Siempre"
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
