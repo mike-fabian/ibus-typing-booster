@@ -3,7 +3,7 @@
 # Pavel Borecki <pavel.borecki@gmail.com>, 2019. #zanata, 2021, 2025, 2026.
 # Josef Hruska <hrusjos@gmail.com>, 2019, 2021.
 # Daniel Rusek <mail@asciiwolf.com>, 2024, 2025.
-# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
+# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -11,7 +11,8 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2026-02-15 19:49+0100\n"
 "PO-Revision-Date: 2026-02-22 15:58+0000\n"
-"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Czech <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/cs/>\n"
 "Language: cs\n"
@@ -940,7 +941,7 @@ msgstr ""
 #. “English” keymap used.
 #: setup/main.py:1006
 msgid "English"
-msgstr "angličtina"
+msgstr "Česky"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
@@ -1272,7 +1273,7 @@ msgstr ""
 #. candidate list.
 #: setup/main.py:1688
 msgid "Never"
-msgstr ""
+msgstr "Nikdy"
 
 #. Translators: A value of the combobox to choose whether to
 #. show the raw input in the auxiliary text.  The auxiliary
@@ -1288,7 +1289,7 @@ msgstr "Když jsou kandidáti"
 #. candidate list.
 #: setup/main.py:1698
 msgid "Always"
-msgstr ""
+msgstr "Vždy"
 
 #. Translators: Here one can choose how many suggestion
 #. candidates to show in one page of the candidate list.
