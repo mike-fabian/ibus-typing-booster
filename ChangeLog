@@ -1,4 +1,10 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 01 Apr 2026 Release 2.30.6
+* Split itb_util.py into itb_util_core.py and itb_util_gui.py and use only itb_util_core for `ibus-typing-booster --xml` (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/888)
+* Don’t check for gnome and gnome version in a loop over all input methods! Check only once! (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/889)
+* Translation update from Weblate (cs 100%, es 100%, ru 100%, zh_CN 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 15 Feb 2026 Release 2.30.4
 * emoji-picker: key handling improvments: Show selected emoji clearly, Fix Control+f and Escape issue, Navigation with arrow keys in the flowboxes (See: See: https://github.com/mike-fabian/ibus-typing-booster/issues/883#issuecomment-3901653686)
 * emoji-picker: Don’t show popover when autoselecting first search result (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/883)

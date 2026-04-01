@@ -47,6 +47,35 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.30.6" date="2026-04-07" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.30.6</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Split itb_util.py into itb_util_core.py and
+            itb_util_gui.py and use only itb_util_core for
+            `ibus-typing-booster --xml` (Resolves: github-issues:888)
+          </li>
+          <li>
+             Don’t check for gnome and gnome version in a loop over
+             all input methods! Check only once! (Resolves:
+             github-issues:889)
+          </li>
+          <li>
+            Translation update from Weblate (cs 100%, es 100%, ru 100%, zh_CN 100%)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/888">
+          github-issues#888
+        </issue>
+        <issue url="https://github.com/mike-fabian/ibus-typing-booster/issues/889">
+          github-issues#889
+        </issue>
+      </issues>
+    </release>
     <release version="2.30.4" date="2026-02-15" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.30.4</url>
       <description>
