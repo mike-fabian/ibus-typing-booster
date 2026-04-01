@@ -362,6 +362,9 @@ def write_xml() -> None:
 
     egs = Element('engines') # pylint: disable=possibly-used-before-assignment
 
+    recent_gnome = (itb_util.is_desktop('gnome')
+                    and itb_util.get_gnome_shell_version() >= (48, 3))
+
     for ime in supported_input_methods:
         _engine = SubElement( # pylint: disable=possibly-used-before-assignment
             egs, 'engine')
@@ -380,8 +383,7 @@ def write_xml() -> None:
         icon = os.path.join(ICON_DIR, 'ibus-typing-booster.svg')
         description = 'A completion input method to speedup typing.'
         symbol = '🚀'
-        if (itb_util.is_desktop('gnome')
-            and itb_util.get_gnome_shell_version() >= (48, 3)):
+        if recent_gnome:
             # If running on Gnome and gnome-shell is new enough to contain
             # https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/3753
             # make the symbol black and white:
