@@ -34,7 +34,7 @@ import time
 import re
 import gzip
 import logging
-import itb_util
+import itb_util_core
 import hunspell_suggest
 
 LOGGER = logging.getLogger('ibus-typing-booster')
@@ -358,11 +358,11 @@ class TabSqliteDb:
         '''
         if not input_phrase or not phrase:
             return True # “Nothing” successfully updated
-        input_phrase = itb_util.remove_accents(input_phrase.lower())
+        input_phrase = itb_util_core.remove_accents(input_phrase.lower())
         phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
-        p_phrase = itb_util.remove_accents(p_phrase.lower())
-        pp_phrase = itb_util.remove_accents(pp_phrase.lower())
+            itb_util_core.NORMALIZATION_FORM_INTERNAL, phrase)
+        p_phrase = itb_util_core.remove_accents(p_phrase.lower())
+        pp_phrase = itb_util_core.remove_accents(pp_phrase.lower())
         sqlstr = '''
         UPDATE user_db.phrases
         SET user_freq = :user_freq, timestamp = :timestamp
@@ -452,11 +452,11 @@ class TabSqliteDb:
                 input_phrase, phrase, user_freq)
         if not input_phrase or not phrase:
             return True # “Nothing” successfully added
-        input_phrase = itb_util.remove_accents(input_phrase.lower())
+        input_phrase = itb_util_core.remove_accents(input_phrase.lower())
         phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
-        p_phrase = itb_util.remove_accents(p_phrase.lower())
-        pp_phrase = itb_util.remove_accents(pp_phrase.lower())
+            itb_util_core.NORMALIZATION_FORM_INTERNAL, phrase)
+        p_phrase = itb_util_core.remove_accents(p_phrase.lower())
+        pp_phrase = itb_util_core.remove_accents(pp_phrase.lower())
         select_sqlstr = '''
         SELECT * FROM user_db.phrases
         WHERE input_phrase = :input_phrase
@@ -529,15 +529,15 @@ class TabSqliteDb:
 
     def select_shortcuts(
             self,
-            input_phrase: str) -> List[itb_util.PredictionCandidate]:
+            input_phrase: str) -> List[itb_util_core.PredictionCandidate]:
         '''Get shortcuts from database completing input_phrase.'''
         input_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
+            itb_util_core.NORMALIZATION_FORM_INTERNAL, input_phrase)
         if DEBUG_LEVEL > 1:
             LOGGER.debug('input_phrase=%s', input_phrase)
         phrase_frequencies: Dict[str, float] = {}
         sqlargs = {'input_phrase': input_phrase + '%',
-                   'user_freq': itb_util.SHORTCUT_USER_FREQ}
+                   'user_freq': itb_util_core.SHORTCUT_USER_FREQ}
         sqlstr = ('SELECT phrase, sum(user_freq) FROM user_db.phrases '
                   'WHERE input_phrase LIKE :input_phrase '
                   'AND user_freq >= :user_freq '
@@ -553,7 +553,7 @@ class TabSqliteDb:
                  error.__class__.__name__, error)
         if results_shortcuts:
             phrase_frequencies.update(results_shortcuts)
-        best_shortcut_candidates = itb_util.best_candidates(phrase_frequencies)
+        best_shortcut_candidates = itb_util_core.best_candidates(phrase_frequencies)
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'best_shortcut_candidates=%s', best_shortcut_candidates)
@@ -562,7 +562,7 @@ class TabSqliteDb:
     def select_words_empty_input(
             self,
             p_phrase: str,
-            pp_phrase: str) -> List[itb_util.PredictionCandidate]:
+            pp_phrase: str) -> List[itb_util_core.PredictionCandidate]:
         '''Get phrases from database which occured previously with
         any input after the given context
 
@@ -576,9 +576,9 @@ class TabSqliteDb:
                 'p_phrase=%s pp_phrase=%s', p_phrase, pp_phrase)
         phrase_frequencies: Dict[str, float] = {}
         if not p_phrase or not pp_phrase:
-            return itb_util.best_candidates(phrase_frequencies)
-        p_phrase = itb_util.remove_accents(p_phrase.lower())
-        pp_phrase = itb_util.remove_accents(pp_phrase.lower())
+            return itb_util_core.best_candidates(phrase_frequencies)
+        p_phrase = itb_util_core.remove_accents(p_phrase.lower())
+        pp_phrase = itb_util_core.remove_accents(pp_phrase.lower())
         sqlargs = {'p_phrase': p_phrase, 'pp_phrase': pp_phrase}
         sqlstr = ('SELECT phrase, sum(user_freq) FROM user_db.phrases '
                   'WHERE p_phrase = :p_phrase '
@@ -593,7 +593,7 @@ class TabSqliteDb:
                 error.__class__.__name__, error)
             results = None
         if not results:
-            return itb_util.best_candidates(phrase_frequencies)
+            return itb_util_core.best_candidates(phrase_frequencies)
         sqlstr = (
             'SELECT sum(user_freq) FROM user_db.phrases '
             'WHERE p_phrase = :p_phrase AND pp_phrase = :pp_phrase;')
@@ -608,21 +608,21 @@ class TabSqliteDb:
                  error.__class__.__name__, error)
             count_pp_phrase_p_phrase = 0
         if not count_pp_phrase_p_phrase:
-            return itb_util.best_candidates(phrase_frequencies)
+            return itb_util_core.best_candidates(phrase_frequencies)
         for result in results:
             phrase_frequencies.update(
                 [(result[0], result[1]/float(count_pp_phrase_p_phrase))])
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Best candidates for empty input with given context=%s',
-                itb_util.best_candidates(phrase_frequencies))
-        return itb_util.best_candidates(phrase_frequencies)
+                itb_util_core.best_candidates(phrase_frequencies))
+        return itb_util_core.best_candidates(phrase_frequencies)
 
     def select_words(
             self,
             input_phrase: str,
             p_phrase: str = '',
-            pp_phrase: str = '') -> List[itb_util.PredictionCandidate]:
+            pp_phrase: str = '') -> List[itb_util_core.PredictionCandidate]:
         '''
         Get phrases from database completing input_phrase.
 
@@ -638,9 +638,9 @@ class TabSqliteDb:
             return self.select_words_empty_input(p_phrase, pp_phrase)
         phrase_frequencies: Dict[str, float] = {}
         input_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
-        p_phrase = itb_util.remove_accents(p_phrase.lower())
-        pp_phrase = itb_util.remove_accents(pp_phrase.lower())
+            itb_util_core.NORMALIZATION_FORM_INTERNAL, input_phrase)
+        p_phrase = itb_util_core.remove_accents(p_phrase.lower())
+        pp_phrase = itb_util_core.remove_accents(pp_phrase.lower())
         title_case = input_phrase.istitle()
         if ' ' not in input_phrase:
             # Get suggestions from hunspell dictionaries. But only
@@ -653,7 +653,7 @@ class TabSqliteDb:
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'hunspell: best_candidates=%s',
-                itb_util.best_candidates(phrase_frequencies, title=title_case))
+                itb_util_core.best_candidates(phrase_frequencies, title=title_case))
         # Remove the accents *after* getting the hunspell candidates.
         # If the accents were removed before getting the hunspell candidates
         # an input phrase like “Glühwürmchen” would not be added as a
@@ -662,7 +662,7 @@ class TabSqliteDb:
         # is not in the German hunspell dictionary as a single word but
         # created by suffix and prefix rules, the accent insensitive match
         # in the German hunspell dictionary would not find it either.
-        input_phrase = itb_util.remove_accents(input_phrase.lower())
+        input_phrase = itb_util_core.remove_accents(input_phrase.lower())
         # Now phrase_frequencies might contain something like this:
         #
         # {'code': 0, 'communicability': 0, 'cold': 0, 'colour': 0}
@@ -723,7 +723,7 @@ class TabSqliteDb:
             # If no unigrams matched, bigrams and trigrams cannot
             # match either. We can stop here and return what we got
             # from hunspell.
-            return itb_util.best_candidates(phrase_frequencies, title=title_case)
+            return itb_util_core.best_candidates(phrase_frequencies, title=title_case)
         # Now normalize the unigram frequencies with the total count
         # (which is 11 in the above example), which gives us the
         # normalized result:
@@ -745,11 +745,11 @@ class TabSqliteDb:
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Unigram best_candidates=%s',
-                itb_util.best_candidates(phrase_frequencies, title=title_case))
+                itb_util_core.best_candidates(phrase_frequencies, title=title_case))
         if not p_phrase:
             # If no context for bigram matching is available, return
             # what we have so far:
-            return itb_util.best_candidates(phrase_frequencies, title=title_case)
+            return itb_util_core.best_candidates(phrase_frequencies, title=title_case)
         sqlstr = (
             'SELECT phrase, sum(user_freq) FROM like_input_phrase_view '
             'WHERE p_phrase = :p_phrase GROUP BY phrase;')
@@ -762,7 +762,7 @@ class TabSqliteDb:
                 error.__class__.__name__, error)
         if not results_bi:
             # If no bigram could be matched, return what we have so far:
-            return itb_util.best_candidates(phrase_frequencies, title=title_case)
+            return itb_util_core.best_candidates(phrase_frequencies, title=title_case)
         # get the total count of p_phrase to normalize the bigram frequencies:
         sqlstr = (
             'SELECT sum(user_freq) FROM like_input_phrase_view '
@@ -786,11 +786,11 @@ class TabSqliteDb:
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Bigram best_candidates=%s',
-                itb_util.best_candidates(phrase_frequencies, title=title_case))
+                itb_util_core.best_candidates(phrase_frequencies, title=title_case))
         if not pp_phrase:
             # If no context for trigram matching is available, return
             # what we have so far:
-            return itb_util.best_candidates(phrase_frequencies, title=title_case)
+            return itb_util_core.best_candidates(phrase_frequencies, title=title_case)
         sqlstr = ('SELECT phrase, sum(user_freq) FROM like_input_phrase_view '
                   'WHERE p_phrase = :p_phrase '
                   'AND pp_phrase = :pp_phrase GROUP BY phrase;')
@@ -803,7 +803,7 @@ class TabSqliteDb:
                  error.__class__.__name__, error)
         if not results_tri:
             # if no trigram could be matched, return what we have so far:
-            return itb_util.best_candidates(phrase_frequencies, title=title_case)
+            return itb_util_core.best_candidates(phrase_frequencies, title=title_case)
         # get the total count of (p_phrase, pp_phrase) pairs to
         # normalize the bigram frequencies:
         sqlstr = (
@@ -830,8 +830,8 @@ class TabSqliteDb:
         if DEBUG_LEVEL > 1:
             LOGGER.debug(
                 'Trigram best_candidates=%s',
-                itb_util.best_candidates(phrase_frequencies, title=title_case))
-        return itb_util.best_candidates(phrase_frequencies, title=title_case)
+                itb_util_core.best_candidates(phrase_frequencies, title=title_case))
+        return itb_util_core.best_candidates(phrase_frequencies, title=title_case)
 
     def generate_userdb_desc(self) -> bool:
         '''
@@ -946,7 +946,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         sqlstr = '''
         SELECT input_phrase, phrase FROM user_db.phrases WHERE user_freq >= :freq
         ;'''
-        sqlargs = {'freq': itb_util.SHORTCUT_USER_FREQ}
+        sqlargs = {'freq': itb_util_core.SHORTCUT_USER_FREQ}
         if DEBUG_LEVEL > 1:
             LOGGER.debug('sqlstr=%s', sqlstr)
             LOGGER.debug('sqlargs=%s', sqlargs)
@@ -959,7 +959,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             self,
             input_phrase: str = '',
             phrase: str = '',
-            user_freq: int = itb_util.SHORTCUT_USER_FREQ) -> bool:
+            user_freq: int = itb_util_core.SHORTCUT_USER_FREQ) -> bool:
         '''
         Defines a new user shortcut
 
@@ -970,16 +970,16 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 'input_phrase=%s phrase=%s user_freq=%s',
                 input_phrase, phrase, user_freq)
         if (not input_phrase or not phrase
-            or user_freq < itb_util.SHORTCUT_USER_FREQ):
+            or user_freq < itb_util_core.SHORTCUT_USER_FREQ):
             if DEBUG_LEVEL > 1:
                 LOGGER.debug('Not defining shortcut.')
             return False
         phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
+            itb_util_core.NORMALIZATION_FORM_INTERNAL, phrase)
         # Contrary to add_phrase(), do *not* remove accents and do *not*
         # lower case input_phrase:
         input_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
+            itb_util_core.NORMALIZATION_FORM_INTERNAL, input_phrase)
         sqlargs = {'input_phrase': input_phrase,
                    'phrase': phrase,
                    'user_freq': user_freq,
@@ -1022,11 +1022,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         if not input_phrase or not phrase:
             return False
         phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
+            itb_util_core.NORMALIZATION_FORM_INTERNAL, phrase)
         input_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
+            itb_util_core.NORMALIZATION_FORM_INTERNAL, input_phrase)
         sqlargs = {'phrase': phrase,
-                   'user_freq': itb_util.SHORTCUT_USER_FREQ,
+                   'user_freq': itb_util_core.SHORTCUT_USER_FREQ,
                    'timestamp': time.time()}
         sqlstr = ('SELECT input_phrase, user_freq '
                   'FROM user_db.phrases '
@@ -1105,13 +1105,13 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             input_phrase = phrase
         if not phrase:
             return True # "Nothing" checked and update successfully
-        input_phrase = itb_util.strip_token(input_phrase)
-        phrase = itb_util.strip_token(phrase)
+        input_phrase = itb_util_core.strip_token(input_phrase)
+        phrase = itb_util_core.strip_token(phrase)
         phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
-        p_phrase = itb_util.remove_accents(p_phrase.lower())
-        pp_phrase = itb_util.remove_accents(pp_phrase.lower())
-        input_phrase = itb_util.remove_accents(input_phrase.lower())
+            itb_util_core.NORMALIZATION_FORM_INTERNAL, phrase)
+        p_phrase = itb_util_core.remove_accents(p_phrase.lower())
+        pp_phrase = itb_util_core.remove_accents(pp_phrase.lower())
+        input_phrase = itb_util_core.remove_accents(input_phrase.lower())
 
         # There should never be more than 1 database row for the same
         # input_phrase *and* phrase. So the following query on
@@ -1175,7 +1175,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         if not phrase:
             return 0
         phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
+            itb_util_core.NORMALIZATION_FORM_INTERNAL, phrase)
         try:
             row = self.database.execute(
                 'SELECT sum(user_freq) FROM user_db.phrases WHERE phrase = ?',
@@ -1208,10 +1208,10 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         if DEBUG_LEVEL > 1:
             LOGGER.debug('phrase=%r', phrase)
         phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, phrase)
+            itb_util_core.NORMALIZATION_FORM_INTERNAL, phrase)
         if input_phrase:
             input_phrase = unicodedata.normalize(
-                itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
+                itb_util_core.NORMALIZATION_FORM_INTERNAL, input_phrase)
         delete_sqlstr = f'''
             DELETE FROM user_db.phrases
             WHERE {'input_phrase = :input_phrase AND ' if input_phrase else ''}
@@ -1249,9 +1249,9 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                 ''').fetchall()
                 return [
                     (unicodedata.normalize(
-                        itb_util.NORMALIZATION_FORM_INTERNAL, x[0]),
+                        itb_util_core.NORMALIZATION_FORM_INTERNAL, x[0]),
                      unicodedata.normalize(
-                        itb_util.NORMALIZATION_FORM_INTERNAL, x[1]),
+                        itb_util_core.NORMALIZATION_FORM_INTERNAL, x[1]),
                      x[2])
                     for x in phrases
                 ]
@@ -1299,14 +1299,14 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
         pp_token = ''
         database_dict: Dict[Tuple[str, str, str, str], Dict[str, Any]] = {}
         for row in rows:
-            # itb_util.remove_accents() returns in NORMALIZATION_FORM_INTERNAL.
+            # itb_util_core.remove_accents() returns in NORMALIZATION_FORM_INTERNAL.
             # row[1] (“phrase”) should already be in NORMALIZATION_FORM_INTERNAL
             # but better convert it again here just to make sure.
-            input_phrase = itb_util.remove_accents(row[0].lower())
+            input_phrase = itb_util_core.remove_accents(row[0].lower())
             phrase = unicodedata.normalize(
-                itb_util.NORMALIZATION_FORM_INTERNAL, row[1])
-            p_phrase = itb_util.remove_accents(row[2].lower())
-            pp_phrase = itb_util.remove_accents(row[3].lower())
+                itb_util_core.NORMALIZATION_FORM_INTERNAL, row[1])
+            p_phrase = itb_util_core.remove_accents(row[2].lower())
+            pp_phrase = itb_util_core.remove_accents(row[3].lower())
             database_dict.update([((row[0], row[1], row[2], row[3]),
                                    {'input_phrase': input_phrase,
                                     'phrase': phrase,
@@ -1321,7 +1321,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                     filename, mode='rt', encoding='UTF-8') as file_handle:
                 lines = [
                     unicodedata.normalize(
-                        itb_util.NORMALIZATION_FORM_INTERNAL, line)
+                        itb_util_core.NORMALIZATION_FORM_INTERNAL, line)
                     for line in file_handle.readlines()]
         except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
@@ -1329,19 +1329,19 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                  error.__class__.__name__, error)
             return False
         for line in lines:
-            for token in itb_util.tokenize(line):
-                key = (itb_util.remove_accents(token.lower()),
+            for token in itb_util_core.tokenize(line):
+                key = (itb_util_core.remove_accents(token.lower()),
                        token,
-                       itb_util.remove_accents(p_token.lower()),
-                       itb_util.remove_accents(pp_token.lower()))
+                       itb_util_core.remove_accents(p_token.lower()),
+                       itb_util_core.remove_accents(pp_token.lower()))
                 if key in database_dict:
                     database_dict[key]['user_freq'] += 1
                 else:
                     database_dict[key] = {
-                        'input_phrase': itb_util.remove_accents(token.lower()),
+                        'input_phrase': itb_util_core.remove_accents(token.lower()),
                         'phrase': token,
-                        'p_phrase': itb_util.remove_accents(p_token.lower()),
-                        'pp_phrase': itb_util.remove_accents(pp_token.lower()),
+                        'p_phrase': itb_util_core.remove_accents(p_token.lower()),
+                        'pp_phrase': itb_util_core.remove_accents(pp_token.lower()),
                         'user_freq': 1,
                         'timestamp': time_new}
                 pp_token = p_token
@@ -1471,7 +1471,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             for row in rows:
                 user_freq = row[5]
                 if (index > max_rows
-                    and user_freq < itb_util.SHORTCUT_USER_FREQ):
+                    and user_freq < itb_util_core.SHORTCUT_USER_FREQ):
                     LOGGER.info('1st pass: deleting %s %s',
                                 repr(row),
                                 time.strftime("%Y-%m-%d %H:%M:%S",
@@ -1521,7 +1521,7 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             for row in rows_kept:
                 user_freq = row[5]
                 if (index > index_decay
-                    and user_freq < itb_util.SHORTCUT_USER_FREQ):
+                    and user_freq < itb_util_core.SHORTCUT_USER_FREQ):
                     if user_freq == 1:
                         LOGGER.info('2nd pass: deleting %s %s',
                                     repr(row),

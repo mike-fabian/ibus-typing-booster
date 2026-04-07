@@ -70,7 +70,8 @@ if TYPE_CHECKING:
 from gi.repository import GObject # type: ignore
 # pylint: enable=wrong-import-position,wrong-import-order,ungrouped-imports
 import itb_emoji
-import itb_util
+import itb_util_core
+import itb_util_gui
 import itb_pango
 import itb_version
 from g_compat_helpers import (
@@ -357,7 +358,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._font_popover_scroll: Optional[Gtk.ScrolledWindow] = None
         self._font_popover_listbox: Optional[Gtk.ListBox] = None
         self._options_file = os.path.join(
-            itb_util.xdg_save_data_path('emoji-picker'),
+            itb_util_core.xdg_save_data_path('emoji-picker'),
             'options')
         self._read_options()
         if font is not None:
@@ -394,7 +395,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
             emoji_unicode_max=self._emoji_unicode_max,
             variation_selector='emoji')
         self._gettext_translations: Dict[str, Any] = {}
-        for language in itb_util.expand_languages(self._languages):
+        for language in itb_util_core.expand_languages(self._languages):
             mo_file = gettext.find(DOMAINNAME, languages=[language])
             if (mo_file
                     and
@@ -578,13 +579,13 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
 
         self._recently_used_emoji: Dict[str, Dict[str, float]] = {}
         self._recently_used_emoji_file = os.path.join(
-            itb_util.xdg_save_data_path('emoji-picker'),
+            itb_util_core.xdg_save_data_path('emoji-picker'),
             'recently-used')
         self._recently_used_emoji_maximum = 100
         self._read_recently_used()
 
         self._emoji_by_label = self._emoji_matcher.emoji_by_label()
-        expanded_languages = itb_util.expand_languages(self._languages)
+        expanded_languages = itb_util_core.expand_languages(self._languages)
         # 'en_001' and 'es_419' are not very useful in the treeview to
         # browse the languages, remove them from the list:
         expanded_languages = [
@@ -626,7 +627,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 'expanded_languages  = %s\n'
                 'first_language_with_categories = %s\n'
                 'number_of_empty_languages = %s\n',
-                itb_util.expand_languages(self._languages),
+                itb_util_core.expand_languages(self._languages),
                 first_language_with_categories,
                 number_of_empty_languages)
 
@@ -800,7 +801,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                     + f'<span fallback="true">{code_points}</span>')
                 fonts_description += f': {font_dict}'
         descriptions.append(fonts_description)
-        for language in itb_util.expand_languages(self._languages):
+        for language in itb_util_core.expand_languages(self._languages):
             names = self._emoji_matcher.names(emoji, language=language)
             description = f'<b>{language}</b>'
             description_empty = True
@@ -975,7 +976,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
                 f'<span font="{self._font} {self._fontsize}" '
                 f'fallback="{str(fallback).lower()}">'
                 f'{html.escape(emoji)}</span>')
-            if itb_util.is_invisible(emoji):
+            if itb_util_core.is_invisible(emoji):
                 text += (
                     f'<span fallback="false" font="{self._fontsize / 2}">'
                     f' U+{ord(emoji):04X} {self._emoji_matcher.name(emoji)}'
@@ -1235,14 +1236,14 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         subtitle =  f'({len(emoji_flowbox_get_labels(self._flowbox))})'
         # Display the names of the emoji in the first language
         # where names are available in the header bar title:
-        for language in itb_util.expand_languages(self._languages):
+        for language in itb_util_core.expand_languages(self._languages):
             names = self._emoji_matcher.names(emoji, language=language)
             if names:
                 title += f' {", ".join(names)}'
                 break
         # Display the keywords of the emoji in the first language
         # where keywords are available in the header bar subtitle:
-        for language in itb_util.expand_languages(self._languages):
+        for language in itb_util_core.expand_languages(self._languages):
             keywords = self._emoji_matcher.keywords(emoji, language=language)
             if keywords:
                 subtitle += (
@@ -1268,8 +1269,8 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         stats.print_stats('itb_pango', 25)
         LOGGER.info('Profiling info:\n%s', stats_stream.getvalue())
         LOGGER.info(
-            'itb_util.remove_accents() cache info: %s',
-            itb_util.remove_accents.cache_info())
+            'itb_util_core.remove_accents() cache info: %s',
+            itb_util_core.remove_accents.cache_info())
         LOGGER.info(
             'itb_emoji.EmojiMatcher.variation_selector_normalize() cache info: %s',
             itb_emoji.EmojiMatcher.variation_selector_normalize.cache_info()) # pylint: disable=no-value-for-parameter
@@ -1397,7 +1398,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         if _ARGS.debug:
             LOGGER.debug('on_about_button_clicked()\n')
         self._popup_manager.popdown_current()
-        itb_util.ItbAboutDialog(parent=get_toplevel_window(button))
+        itb_util_gui.ItbAboutDialog(parent=get_toplevel_window(button))
 
     def _fill_flowbox_with_search_results(self) -> None:
         '''
@@ -1422,7 +1423,7 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._header_bar.set_subtitle(f'({(len(candidates))})')
 
         if not candidates:
-            candidates = [itb_util.PredictionCandidate(
+            candidates = [itb_util_core.PredictionCandidate(
                 phrase='∅',
                 user_freq=1,
                 comment=_('Search produced empty result.'))]
@@ -2517,7 +2518,7 @@ if __name__ == '__main__':
         PROFILE = cProfile.Profile()
         PROFILE.enable()
 
-    itb_util.set_program_name('emoji-picker')
+    itb_util_core.set_program_name('emoji-picker')
 
     try:
         locale.setlocale(locale.LC_ALL, '')

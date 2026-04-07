@@ -42,7 +42,7 @@ os.environ['HOME'] = _TEMPDIR.name
 # pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
 import hunspell_suggest # pylint: disable=import-error
-import itb_util # pylint: disable=import-error
+import itb_util_core # pylint: disable=import-error
 sys.path.pop(0)
 
 import testutils # pylint: disable=import-error
@@ -86,16 +86,16 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(True, True)
 
     @unittest.skipIf(
-        itb_util.distro_id() in ('debian', 'ubuntu'),
+        itb_util_core.distro_id() in ('debian', 'ubuntu'),
         'Skipping due to different Czech dictionary in Debian/Ubuntu.')
     @unittest.skipUnless(
         IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('cs_CZ')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('cs_CZ')[0],
         'Skipping because no Czech hunspell dictionary could be found.')
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('de_DE')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('de_DE')[0],
         'Skipping because no German hunspell dictionary could be found.')
     @unittest.skipUnless(
         testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
@@ -134,10 +134,10 @@ class HunspellSuggestTestCase(unittest.TestCase):
         IS_HUNSPELL_AVAILABLE and not IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-pyhunspell to work.")
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('cs_CZ')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('cs_CZ')[0],
         'Skipping because no Czech hunspell dictionary could be found.')
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('de_DE')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('de_DE')[0],
         'Skipping because no German hunspell dictionary could be found.')
     def test_de_DE_cs_CZ_pyhunspell(self) -> None:
         h = hunspell_suggest.Hunspell(['de_DE', 'cs_CZ'])
@@ -168,7 +168,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
             ('filosofic\u030Cte\u030Cjs\u030Ci\u0301', 0))
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('it_IT')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('it_IT')[0],
         'Skipping because no Italian hunspell dictionary could be found.')
     def test_it_IT(self) -> None:
         h = hunspell_suggest.Hunspell(['it_IT'])
@@ -181,7 +181,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
              ('principiasti', -5)])
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('es_ES')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('es_ES')[0],
         'Skipping because no Spanish hunspell dictionary could be found.')
     def test_es_ES(self) -> None:
         h = hunspell_suggest.Hunspell(['es_ES'])
@@ -199,10 +199,10 @@ class HunspellSuggestTestCase(unittest.TestCase):
             ('tene\u0301is', 0))
 
     @unittest.skipIf(
-        itb_util.distro_id() in ('debian', 'ubuntu'),
+        itb_util_core.distro_id() in ('debian', 'ubuntu'),
         'Skipping due to different Czech dictionary in Debian/Ubuntu.')
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no US English hunspell dictionary could be found.')
     @unittest.skipUnless(
         testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
@@ -228,7 +228,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(spellcheck_suggestions, set())
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('fr_FR')[0],
         'Skipping because no French hunspell dictionary could be found.')
     def test_fr_FR(self) -> None:
         h = hunspell_suggest.Hunspell(['fr_FR'])
@@ -237,7 +237,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
             [('diffe\u0301remment', 0)])
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('el_GR')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('el_GR')[0],
         "Skipping because no Greek dictionary could be found. ")
     def test_el_GR(self) -> None:
         h = hunspell_suggest.Hunspell(['el_GR'])
@@ -287,7 +287,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no US English hunspell dictionary could be found.')
     def test_en_US_spellcheck_enchant(self) -> None:
         d = hunspell_suggest.Dictionary('en_US')
@@ -295,13 +295,13 @@ class HunspellSuggestTestCase(unittest.TestCase):
         self.assertEqual(d.spellcheck_enchant('winxer'), False)
 
     @unittest.skipIf(
-        itb_util.distro_id() in ('debian', 'ubuntu'),
+        itb_util_core.distro_id() in ('debian', 'ubuntu'),
         'Skipping due to different Czech dictionary in Debian/Ubuntu.')
     @unittest.skipUnless(
         IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no US English hunspell dictionary could be found.')
     @unittest.skipUnless(
         testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
@@ -322,7 +322,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         IS_HUNSPELL_AVAILABLE and not IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-pyhunspell to work.")
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no US English hunspell dictionary could be found.')
     def test_en_US_spellcheck_pyhunspell(self) -> None:
         d = hunspell_suggest.Dictionary('en_US')
@@ -333,7 +333,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
         IS_HUNSPELL_AVAILABLE and not IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-pyhunspell to work.")
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no US English hunspell dictionary could be found.')
     def test_en_US_spellcheck_suggest_pyhunspell(self) -> None:
         d = hunspell_suggest.Dictionary('en_US')
@@ -367,7 +367,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
             ['kissa', 'kissaa', 'kisassa', 'kisussa', 'Kiassa'])
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('sv_SE')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('sv_SE')[0],
         "Skipping because no Swedish dictionary could be found. ")
     def test_sv_SE(self) -> None:
         h = hunspell_suggest.Hunspell(['sv_SE'])

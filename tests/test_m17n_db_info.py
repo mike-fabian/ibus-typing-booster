@@ -27,7 +27,7 @@ import unittest
 
 # pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
-import itb_util # pylint: disable=import-error
+import itb_util_core # pylint: disable=import-error
 sys.path.pop(0)
 # pylint: enable=wrong-import-position
 
@@ -37,7 +37,7 @@ sys.path.pop(0)
 
 class M17nDbInfoTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        self._m17n_db_info = itb_util.M17nDbInfo()
+        self._m17n_db_info = itb_util_core.M17nDbInfo()
 
     def tearDown(self) -> None:
         pass

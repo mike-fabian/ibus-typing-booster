@@ -87,7 +87,7 @@ if TYPE_CHECKING:
     # pylint: enable=reimported
 import hunspell_table
 import tabsqlitedb
-import itb_util
+import itb_util_core
 import m17n_translit
 # pylint: enable=import-error
 sys.path.pop(0)
@@ -202,7 +202,7 @@ class ItbTestCase(unittest.TestCase):
             unit_test=True)
         self.backup_original_settings()
         self.set_default_settings()
-        self._compose_sequences = itb_util.ComposeSequences()
+        self._compose_sequences = itb_util_core.ComposeSequences()
 
     def tearDown(self) -> None:
         self.restore_original_settings()
@@ -1353,7 +1353,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text_visible, False)
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('mr_IN')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('mr_IN')[0],
         "Skipping because no Marathi dictionary could be found. "
         + "On some systems like Ubuntu or Elementary OS it is not available.")
     def test_marathi_and_british_english(self) -> None:
@@ -1381,7 +1381,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'गुरु ')
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('ko_KR')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('ko_KR')[0],
         "Skipping because no Korean dictionary could be found. "
         + "On some systems like Arch Linux or FreeBSD it is not available.")
     def test_korean(self) -> None:
@@ -1485,7 +1485,7 @@ class ItbTestCase(unittest.TestCase):
         IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('de_DE')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('de_DE')[0],
         'Skipping because no de_DE hunspell dictionary could be found.')
     def test_accent_insensitive_matching_german_database(self) -> None:
         self.engine.set_current_imes(
@@ -1577,7 +1577,7 @@ class ItbTestCase(unittest.TestCase):
             'Glühwürmchen Glühwürmchen Glühwürmchen ')
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('fr_FR')[0],
         'Skipping because no fr_FR hunspell dictionary could be found.')
     def test_accent_insensitive_matching_french_dictionary(self) -> None:
         self.engine.set_current_imes(
@@ -1645,7 +1645,7 @@ class ItbTestCase(unittest.TestCase):
         IS_ENCHANT_AVAILABLE,
         "Skipping because this test requires python3-enchant to work.")
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('cs_CZ')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('cs_CZ')[0],
         'Skipping because no Czech hunspell dictionary could be found.')
     @unittest.skipUnless(
         testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
@@ -1690,7 +1690,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')
     def test_auto_capitalize(self) -> None:
         '''Test auto capitalization after punctuation
@@ -1903,7 +1903,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')
     def test_add_space_on_commit(self) -> None:
         '''Test new option to avoid adding spaces when committing by label
@@ -2440,7 +2440,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'cerulean cerulean')
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')
     @unittest.skipUnless(
         testutils.get_hunspell_dictionary_length('en_US') >= 10000,
@@ -2477,7 +2477,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, 'Cerulean ')
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')
     def test_toggle_case_mode_then_return(self) -> None:
         '''
@@ -3692,16 +3692,16 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(0x01000915, 0, 0)
         self.assertEqual(
             self.engine.mock_preedit_text,
-            itb_util.normalize_nfc_and_composition_exclusions('\u0958'))
+            itb_util_core.normalize_nfc_and_composition_exclusions('\u0958'))
         self.assertEqual(
             self.engine.mock_preedit_text,
-            itb_util.normalize_nfc_and_composition_exclusions('क़'))
+            itb_util_core.normalize_nfc_and_composition_exclusions('क़'))
         self.assertEqual(
             self.engine.mock_preedit_text,
-            itb_util.normalize_nfc_and_composition_exclusions('\u0915\u093C'))
+            itb_util_core.normalize_nfc_and_composition_exclusions('\u0915\u093C'))
         self.assertEqual(
             self.engine.mock_preedit_text,
-            itb_util.normalize_nfc_and_composition_exclusions('क़'))
+            itb_util_core.normalize_nfc_and_composition_exclusions('क़'))
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         # On commit the text is not only converted to NFC but also
@@ -4388,7 +4388,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(
             self.engine._typed_string,
             ['a', 'k', 'i', ' ']
-            + itb_util.ANTHY_HENKAN_WIDE)
+            + itb_util_core.ANTHY_HENKAN_WIDE)
         self.assertEqual(self.engine.mock_preedit_text, '秋')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertTrue(len(self.engine._candidates) > 5)
@@ -4410,7 +4410,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(
             self.engine._typed_string,
             ['秋', 'a', 'k', 'i', ' ']
-            + itb_util.ANTHY_HENKAN_WIDE)
+            + itb_util_core.ANTHY_HENKAN_WIDE)
         self.assertEqual(self.engine.mock_preedit_text, '秋秋')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertTrue(len(self.engine._candidates) > 5)
@@ -4428,7 +4428,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(
             self.engine._typed_string,
             ['秋', 'a', 'k', 'i', ' ',  'a', 'k', 'i', ' ']
-            + itb_util.ANTHY_HENKAN_WIDE)
+            + itb_util_core.ANTHY_HENKAN_WIDE)
         self.assertEqual(self.engine.mock_preedit_text, '秋秋秋')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertTrue(len(self.engine._candidates) > 5)
@@ -4454,7 +4454,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(
             self.engine._typed_string,
             ['秋', 'a', 'k', 'i', ' ',  '空',  'き', 'a', 'k', 'i', ' ']
-            + itb_util.ANTHY_HENKAN_WIDE)
+            + itb_util_core.ANTHY_HENKAN_WIDE)
         self.assertEqual(self.engine.mock_preedit_text, '秋秋空き秋')
         self.assertEqual(self.engine.mock_committed_text, '')
         self.assertTrue(len(self.engine._candidates) > 5)
@@ -4546,7 +4546,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(
             self.engine._typed_string,
             ['s', 'u', 'i', 'm', 'i', 'n', 'b', 'u', 's', 'o', 'k', 'u', ' ']
-            + itb_util.ANTHY_HENKAN_WIDE)
+            + itb_util_core.ANTHY_HENKAN_WIDE)
         # When doing henkan on such a wide input, there are not many
         # choices:
         self.assertEqual(len(self.engine._candidates), 3)

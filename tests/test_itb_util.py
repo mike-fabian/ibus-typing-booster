@@ -49,7 +49,7 @@ IS_PYCOUNTRY_AVAILABLE = importlib.util.find_spec('pycountry') is not None
 
 # pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
-import itb_util # pylint: disable=import-error
+import itb_util_core # pylint: disable=import-error
 sys.path.pop(0)
 # pylint: enable=wrong-import-position
 
@@ -73,11 +73,11 @@ class ItbUtilTestCase(unittest.TestCase):
         'Skipping, requires new enough m17n-db package, '
         'might not be available on older distributions.')
     def test_default_input_methods_available(self) -> None:
-        m17n_db_info = itb_util.M17nDbInfo()
+        m17n_db_info = itb_util_core.M17nDbInfo()
         available_imes = m17n_db_info.get_imes()
         missing_imes_for_defaults = []
-        for locale in itb_util.LOCALE_DEFAULTS:
-            for ime in itb_util.LOCALE_DEFAULTS[locale]['inputmethods']:
+        for locale in itb_util_core.LOCALE_DEFAULTS:
+            for ime in itb_util_core.LOCALE_DEFAULTS[locale]['inputmethods']:
                 if ime not in available_imes:
                     missing_imes_for_defaults.append(ime)
         self.assertEqual([], missing_imes_for_defaults)
@@ -89,7 +89,7 @@ class ItbUtilTestCase(unittest.TestCase):
         if 'LC_ALL' in os.environ:
             del os.environ['LC_ALL']
         os.environ['LC_MESSAGES'] = 'de_DE.UTF-8'
-        text_to_match = itb_util.locale_text_to_match('fr_FR')
+        text_to_match = itb_util_core.locale_text_to_match('fr_FR')
         if IS_LANGTABLE_AVAILABLE:
             self.assertEqual(
                 'fr_fr franzosisch (frankreich) francais (france) french (france)',
@@ -106,7 +106,7 @@ class ItbUtilTestCase(unittest.TestCase):
         if 'LC_ALL' in os.environ:
             del os.environ['LC_ALL']
         os.environ['LC_MESSAGES'] = 'de_DE.UTF-8'
-        language_description = itb_util.locale_language_description('fr_FR')
+        language_description = itb_util_core.locale_language_description('fr_FR')
         if IS_LANGTABLE_AVAILABLE or IS_PYCOUNTRY_AVAILABLE:
             self.assertEqual(
                 'Französisch (Frankreich)',
@@ -116,52 +116,52 @@ class ItbUtilTestCase(unittest.TestCase):
         if 'LC_ALL' in os.environ:
             del os.environ['LC_ALL']
         os.environ['LC_MESSAGES'] = 'de_DE.UTF-8'
-        self.assertEqual(itb_util.is_right_to_left_messages(), False)
+        self.assertEqual(itb_util_core.is_right_to_left_messages(), False)
         os.environ['LC_MESSAGES'] = 'ar_EG.UTF-8'
-        self.assertEqual(itb_util.is_right_to_left_messages(), True)
+        self.assertEqual(itb_util_core.is_right_to_left_messages(), True)
         os.environ['LC_MESSAGES'] = 'C'
-        self.assertEqual(itb_util.is_right_to_left_messages(), False)
+        self.assertEqual(itb_util_core.is_right_to_left_messages(), False)
         # Result should be False for an invalid locale:
         os.environ['LC_MESSAGES'] = 'nonsense'
-        self.assertEqual(itb_util.is_right_to_left_messages(), False)
+        self.assertEqual(itb_util_core.is_right_to_left_messages(), False)
         # LC_ALL should have higher priority than LC_MESSAGES:
         os.environ['LC_MESSAGES'] = 'de_DE.UTF-8'
         os.environ['LC_ALL'] = 'ar_EG.UTF-8'
-        self.assertEqual(itb_util.is_right_to_left_messages(), True)
+        self.assertEqual(itb_util_core.is_right_to_left_messages(), True)
         os.environ['LC_ALL'] = 'en_US.UTF-8'
-        self.assertEqual(itb_util.is_right_to_left_messages(), False)
+        self.assertEqual(itb_util_core.is_right_to_left_messages(), False)
         os.environ['LC_ALL'] = 'C'
-        self.assertEqual(itb_util.is_right_to_left_messages(), False)
+        self.assertEqual(itb_util_core.is_right_to_left_messages(), False)
 
     def test_remove_accents(self) -> None:
         self.assertEqual(
-            itb_util.remove_accents('abcÅøßẞüxyz'),
+            itb_util_core.remove_accents('abcÅøßẞüxyz'),
             'abcAossSSuxyz')
         self.assertEqual(
-            itb_util.remove_accents(
+            itb_util_core.remove_accents(
                 unicodedata.normalize('NFD', 'abcÅøßẞüxyz')),
             'abcAossSSuxyz')
         self.assertEqual(
             unicodedata.normalize(
                 'NFC',
-                itb_util.remove_accents('abcÅøßẞüxyz', keep='åÅØø')),
+                itb_util_core.remove_accents('abcÅøßẞüxyz', keep='åÅØø')),
             'abcÅøssSSuxyz')
         self.assertEqual(
             unicodedata.normalize(
                 'NFC',
-                itb_util.remove_accents(
+                itb_util_core.remove_accents(
                     unicodedata.normalize('NFD', 'abcÅøßẞüxyz'),
                     keep=unicodedata.normalize('NFD', 'åÅØø'))),
             'abcÅøssSSuxyz')
         self.assertEqual(
             unicodedata.normalize(
                 'NFC',
-                itb_util.remove_accents('alkoholförgiftning', keep='åÅÖö')),
+                itb_util_core.remove_accents('alkoholförgiftning', keep='åÅÖö')),
             'alkoholförgiftning')
         self.assertEqual(
             unicodedata.normalize(
                 'NFC',
-                itb_util.remove_accents(
+                itb_util_core.remove_accents(
                     unicodedata.normalize('NFD', 'alkoholförgiftning'),
                     keep=unicodedata.normalize('NFD', 'åÅÖö'))),
             'alkoholförgiftning')
@@ -171,42 +171,42 @@ class ItbUtilTestCase(unittest.TestCase):
         Return: https://github.com/mike-fabian/ibus-typing-booster/issues/457
         Escape: https://github.com/mike-fabian/ibus-typing-booster/issues/704
         '''
-        key_event = itb_util.KeyEvent(
+        key_event = itb_util_core.KeyEvent(
             IBus.KEY_Escape,
             0,
             0)
         self.assertEqual(key_event.msymbol, 'Escape')
-        key_event = itb_util.KeyEvent(
+        key_event = itb_util_core.KeyEvent(
             IBus.KEY_Escape,
             0,
             IBus.ModifierType.SHIFT_MASK)
         self.assertEqual(key_event.msymbol, 'S-Escape')
-        key_event = itb_util.KeyEvent(
+        key_event = itb_util_core.KeyEvent(
             IBus.KEY_Escape,
             0,
             IBus.ModifierType.CONTROL_MASK)
         self.assertEqual(key_event.msymbol, 'C-Escape')
-        key_event = itb_util.KeyEvent(
+        key_event = itb_util_core.KeyEvent(
             IBus.KEY_Escape,
             0,
             IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
         self.assertEqual(key_event.msymbol, 'S-C-Escape')
-        key_event = itb_util.KeyEvent(
+        key_event = itb_util_core.KeyEvent(
             IBus.KEY_Return,
             0,
             0)
         self.assertEqual(key_event.msymbol, 'Return')
-        key_event = itb_util.KeyEvent(
+        key_event = itb_util_core.KeyEvent(
             IBus.KEY_Return,
             0,
             IBus.ModifierType.SHIFT_MASK)
         self.assertEqual(key_event.msymbol, 'S-Return')
-        key_event = itb_util.KeyEvent(
+        key_event = itb_util_core.KeyEvent(
             IBus.KEY_Return,
             0,
             IBus.ModifierType.CONTROL_MASK)
         self.assertEqual(key_event.msymbol, 'C-Return')
-        key_event = itb_util.KeyEvent(
+        key_event = itb_util_core.KeyEvent(
             IBus.KEY_Return,
             0,
             IBus.ModifierType.SHIFT_MASK | IBus.ModifierType.CONTROL_MASK)
@@ -214,17 +214,17 @@ class ItbUtilTestCase(unittest.TestCase):
 
     def test_msymbol_for_tab_backspace_delete(self) -> None:
         ''' https://github.com/mike-fabian/ibus-typing-booster/issues/709 '''
-        key_event = itb_util.KeyEvent(
+        key_event = itb_util_core.KeyEvent(
             IBus.KEY_Tab,
             0,
             0)
         self.assertEqual(key_event.msymbol, 'Tab')
-        key_event = itb_util.KeyEvent(
+        key_event = itb_util_core.KeyEvent(
             IBus.KEY_BackSpace,
             0,
             0)
         self.assertEqual(key_event.msymbol, 'BackSpace')
-        key_event = itb_util.KeyEvent(
+        key_event = itb_util_core.KeyEvent(
             IBus.KEY_Delete,
             0,
             0)

@@ -44,7 +44,7 @@ os.environ['M17NDIR'] = _TEMPDIR.name
 # pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
 import m17n_translit # pylint: disable=import-error
-import itb_util # pylint: disable=import-error
+import itb_util_core # pylint: disable=import-error
 sys.path.pop(0)
 # pylint: enable=wrong-import-position
 
@@ -52,7 +52,7 @@ sys.path.pop(0)
 # pylint: disable=missing-function-docstring
 # pylint: disable=invalid-name
 
-M17N_DB_INFO = itb_util.M17nDbInfo()
+M17N_DB_INFO = itb_util_core.M17nDbInfo()
 M17N_DB_VERSION = (M17N_DB_INFO.get_major_version(),
                    M17N_DB_INFO.get_minor_version(),
                    M17N_DB_INFO.get_micro_version())

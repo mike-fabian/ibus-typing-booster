@@ -60,7 +60,8 @@ require_version('GLib', '2.0')
 from gi.repository import GLib # type: ignore
 # pylint: enable=wrong-import-position
 import m17n_translit
-import itb_util
+import itb_util_core
+import itb_util_gui
 import itb_active_window
 import itb_sound
 import itb_emoji
@@ -609,7 +610,7 @@ class TypingBoosterEngine(IBus.Engine):
         schema_path = '/org/freedesktop/ibus/engine/typing-booster/'
         if self._engine_name != 'typing-booster':
             try:
-                match = itb_util.M17N_ENGINE_NAME_PATTERN.search(
+                match = itb_util_core.M17N_ENGINE_NAME_PATTERN.search(
                         self._engine_name)
                 if not match:
                     raise ValueError('Invalid engine name.')
@@ -626,8 +627,8 @@ class TypingBoosterEngine(IBus.Engine):
             schema='org.freedesktop.ibus.engine.typing-booster',
             path=schema_path)
 
-        self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
-        self._compose_sequences = itb_util.ComposeSequences()
+        self._keyvals_to_keycodes = itb_util_gui.KeyvalsToKeycodes()
+        self._compose_sequences = itb_util_core.ComposeSequences()
         self._unit_test = unit_test
         self._input_purpose: int = 0
         self._input_hints: int = 0
@@ -693,7 +694,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._candidates_delay_milliseconds = max(
             self._candidates_delay_milliseconds, 0)
         self._candidates_delay_milliseconds = min(
-            self._candidates_delay_milliseconds, itb_util.UINT32_MAX)
+            self._candidates_delay_milliseconds, itb_util_core.UINT32_MAX)
         LOGGER.info('self._candidates_delay_milliseconds=%s',
                     self._candidates_delay_milliseconds)
 
@@ -809,7 +810,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._color_preedit_spellcheck_string: str = self._settings_dict[
             'colorpreeditspellcheckstring']['user']
-        self._color_preedit_spellcheck_argb = itb_util.color_string_to_argb(
+        self._color_preedit_spellcheck_argb = itb_util_gui.color_string_to_argb(
             self._color_preedit_spellcheck_string)
 
         self._color_inline_completion: bool = self._settings_dict[
@@ -817,7 +818,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._color_inline_completion_string: str = self._settings_dict[
             'colorinlinecompletionstring']['user']
-        self._color_inline_completion_argb = itb_util.color_string_to_argb(
+        self._color_inline_completion_argb = itb_util_gui.color_string_to_argb(
             self._color_inline_completion_string)
 
         self._color_compose_preview: bool = self._settings_dict[
@@ -825,7 +826,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._color_compose_preview_string: str = self._settings_dict[
             'colorcomposepreviewstring']['user']
-        self._color_compose_preview_argb = itb_util.color_string_to_argb(
+        self._color_compose_preview_argb = itb_util_gui.color_string_to_argb(
             self._color_compose_preview_string)
 
         self._color_m17n_preedit: bool = self._settings_dict[
@@ -833,14 +834,14 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._color_m17n_preedit_string: str = self._settings_dict[
             'colorm17npreeditstring']['user']
-        self._color_m17n_preedit_argb = itb_util.color_string_to_argb(
+        self._color_m17n_preedit_argb = itb_util_gui.color_string_to_argb(
             self._color_m17n_preedit_string)
 
         self._color_userdb: bool = self._settings_dict['coloruserdb']['user']
 
         self._color_userdb_string: str = self._settings_dict[
             'coloruserdbstring']['user']
-        self._color_userdb_argb = itb_util.color_string_to_argb(
+        self._color_userdb_argb = itb_util_gui.color_string_to_argb(
             self._color_userdb_string)
 
         self._color_spellcheck: bool = self._settings_dict[
@@ -848,7 +849,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._color_spellcheck_string: str = self._settings_dict[
             'colorspellcheckstring']['user']
-        self._color_spellcheck_argb = itb_util.color_string_to_argb(
+        self._color_spellcheck_argb = itb_util_gui.color_string_to_argb(
             self._color_spellcheck_string)
 
         self._color_dictionary: bool = self._settings_dict[
@@ -856,7 +857,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._color_dictionary_string: str = self._settings_dict[
             'colordictionarystring']['user']
-        self._color_dictionary_argb = itb_util.color_string_to_argb(
+        self._color_dictionary_argb = itb_util_gui.color_string_to_argb(
             self._color_dictionary_string)
 
         self._label_userdb: bool = self._settings_dict['labeluserdb']['user']
@@ -894,7 +895,7 @@ class TypingBoosterEngine(IBus.Engine):
             'googleapplicationcredentials']['user']
 
         self._keybindings: Dict[str, List[str]] = {}
-        self._hotkeys: Optional[itb_util.HotKeys] = None
+        self._hotkeys: Optional[itb_util_core.HotKeys] = None
         self._normal_digits_used_in_keybindings = False
         self._keypad_digits_used_in_keybindings = False
         self.set_keybindings(
@@ -923,7 +924,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._dictionary_names: List[str] = []
         dictionary = self._settings_dict['dictionary']['user']
-        self._dictionary_names = itb_util.dictionaries_str_to_list(dictionary)
+        self._dictionary_names = itb_util_core.dictionaries_str_to_list(dictionary)
         if ','.join(self._dictionary_names) != dictionary:
             # Value changed due to normalization or getting the locale
             # defaults, save it back to settings:
@@ -932,7 +933,7 @@ class TypingBoosterEngine(IBus.Engine):
                 GLib.Variant.new_string(','.join(self._dictionary_names)))
         self.database.hunspell_obj.set_dictionary_names(
             self._dictionary_names[:])
-        self._dictionary_flags: Dict[str, str] = itb_util.get_flags(
+        self._dictionary_flags: Dict[str, str] = itb_util_core.get_flags(
             self._dictionary_names)
 
         if  self._emoji_predictions:
@@ -950,7 +951,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         # Try to get the selected input methods from Gsettings:
         inputmethod = self._settings_dict['inputmethod']['user']
-        self._current_imes = itb_util.input_methods_str_to_list(inputmethod)
+        self._current_imes = itb_util_core.input_methods_str_to_list(inputmethod)
         if ','.join(self._current_imes) != inputmethod:
             # Value changed due to normalization or getting the locale
             # defaults, save it back to settings:
@@ -960,7 +961,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._commit_happened_after_focus_in = False
 
-        self._prev_key: Optional[itb_util.KeyEvent] = None
+        self._prev_key: Optional[itb_util_core.KeyEvent] = None
         self._translated_key_state = 0
         self._m17n_trans_parts: m17n_translit.TransliterationParts = (
             m17n_translit.TransliterationParts())
@@ -976,9 +977,9 @@ class TypingBoosterEngine(IBus.Engine):
         self._transliterated_strings_compose_part = ''
         self._transliterators: Dict[str, m17n_translit.Transliterator] = {}
         self._init_transliterators()
-        self._candidates: List[itb_util.PredictionCandidate] = []
+        self._candidates: List[itb_util_core.PredictionCandidate] = []
         # a copy of self._candidates in case mode 'orig':
-        self._candidates_case_mode_orig: List[itb_util.PredictionCandidate] = []
+        self._candidates_case_mode_orig: List[itb_util_core.PredictionCandidate] = []
         self._current_case_mode = 'orig'
         # 'orig': candidates have original case.
         # 'capitalize': candidates have been converted to the first character
@@ -1011,7 +1012,7 @@ class TypingBoosterEngine(IBus.Engine):
                 # Therefore, make sure the case change is done after the string
                 # is converted to NFC.
                 'function': lambda x: getattr(
-                    str, 'title')(itb_util.normalize_nfc_and_composition_exclusions(x))},
+                    str, 'title')(itb_util_core.normalize_nfc_and_composition_exclusions(x))},
             'upper': {
                 'next': 'lower',
                 'previous': 'capitalize',
@@ -1026,7 +1027,7 @@ class TypingBoosterEngine(IBus.Engine):
             page_size=self._page_size,
             orientation=self._lookup_table_orientation)
 
-        cached_input_mode_true_symbol = itb_util.ibus_read_cache().get(
+        cached_input_mode_true_symbol = itb_util_core.ibus_read_cache().get(
             self._engine_name, {}).get('symbol', '')
         LOGGER.info('Cached symbol: %r Current symbol: %r',
                     cached_input_mode_true_symbol,
@@ -1035,7 +1036,7 @@ class TypingBoosterEngine(IBus.Engine):
             != self._settings_dict['inputmodetruesymbol']['user']):
             LOGGER.info(
                 'Cached symbol is outdated, call `ibus write-cache`.')
-            itb_util.ibus_write_cache()
+            itb_util_core.ibus_write_cache()
 
         self.input_mode_properties = {
             'InputMode.Off': {
@@ -1210,13 +1211,13 @@ class TypingBoosterEngine(IBus.Engine):
     @property
     def has_osk(self) -> bool:
         '''Return True if OSK capability flag is set.'''
-        return bool(self.client_capabilities & itb_util.Capabilite.OSK)
+        return bool(self.client_capabilities & itb_util_core.Capabilite.OSK)
 
     @property
     def has_surrounding_text(self) -> bool:
         '''Return True if SURROUNDING_TEXT capability flag is set.'''
         return bool(
-            self.client_capabilities & itb_util.Capabilite.SURROUNDING_TEXT)
+            self.client_capabilities & itb_util_core.Capabilite.SURROUNDING_TEXT)
 
     def _trigger_surrounding_text_update(self) -> None:
         '''Trigger surrounding text update by calling get_surrounding_text()
@@ -1482,15 +1483,15 @@ class TypingBoosterEngine(IBus.Engine):
         }
         if self._engine_name != 'typing-booster':
             symbol = ''
-            for pattern, pattern_symbol in itb_util.M17N_IME_SYMBOLS:
+            for pattern, pattern_symbol in itb_util_core.M17N_IME_SYMBOLS:
                 if re.fullmatch(pattern, self._engine_name):
                     symbol = pattern_symbol
                     break
             if symbol:
                 special_defaults['inputmodetruesymbol'] = symbol
                 special_defaults['inputmodefalsesymbol'] = f'•{symbol}'
-        elif (itb_util.is_desktop('gnome')
-              and itb_util.get_gnome_shell_version() >= (48, 3)):
+        elif (itb_util_core.is_desktop('gnome')
+              and itb_util_core.get_gnome_shell_version() >= (48, 3)):
             # If running on Gnome and gnome-shell is new enough to contain
             # https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/3753
             # make the input mode symbols black and white:
@@ -1498,7 +1499,7 @@ class TypingBoosterEngine(IBus.Engine):
             special_defaults['inputmodefalsesymbol'] = '🐌\uFE0E'
         for key in schema.list_keys():
             if key == 'keybindings': # keybindings are special!
-                default_value = itb_util.variant_to_value(
+                default_value = itb_util_core.variant_to_value(
                     self._gsettings.get_default_value('keybindings'))
                 if self._engine_name != 'typing-booster':
                     default_value['toggle_input_mode_on_off'] = []
@@ -1508,18 +1509,18 @@ class TypingBoosterEngine(IBus.Engine):
                 # default keybindings for this specific engine, into
                 # the user keybindings:
                 user_value = copy.deepcopy(default_value)
-                user_gsettings = itb_util.variant_to_value(
+                user_gsettings = itb_util_core.variant_to_value(
                     self._gsettings.get_user_value(key))
                 if not user_gsettings:
                     user_gsettings = {}
-                itb_util.dict_update_existing_keys(user_value, user_gsettings)
+                itb_util_core.dict_update_existing_keys(user_value, user_gsettings)
             else:
-                default_value = itb_util.variant_to_value(
+                default_value = itb_util_core.variant_to_value(
                     self._gsettings.get_default_value(key))
                 if (self._engine_name != 'typing-booster'
                     or key in ('inputmodetruesymbol', 'inputmodefalsesymbol')):
                     default_value = special_defaults.get(key, default_value)
-                user_value = itb_util.variant_to_value(
+                user_value = itb_util_core.variant_to_value(
                     self._gsettings.get_user_value(key))
                 if user_value is None:
                     user_value = default_value
@@ -1738,15 +1739,15 @@ class TypingBoosterEngine(IBus.Engine):
             from_user_db: bool = False,
             spell_checking: bool = False) -> None:
         '''append candidate to lookup_table'''
-        phrase = itb_util.normalize_nfc_and_composition_exclusions(phrase)
+        phrase = itb_util_core.normalize_nfc_and_composition_exclusions(phrase)
         dictionary_matches: List[str] = []
-        if phrase and itb_util.is_invisible(phrase):
+        if phrase and itb_util_core.is_invisible(phrase):
             if len(phrase) == 1:
                 if comment == '':
                     # There may be a comment already if this came from
                     # EmojiMatcher, if a comment is already there, leave
                     # it alone.
-                    comment = f'U+{ord(phrase):04X} ' + itb_util.unicode_name(
+                    comment = f'U+{ord(phrase):04X} ' + itb_util_core.unicode_name(
                         phrase).lower()
             phrase = repr(phrase)
         elif (len(phrase) >= 3
@@ -1780,17 +1781,17 @@ class TypingBoosterEngine(IBus.Engine):
         #
         # Without the embedding, similar problems happen when “comment”
         # is right-to-left but “phrase” is not.
-        phrase = itb_util.bidi_embed(phrase)
+        phrase = itb_util_core.bidi_embed(phrase)
         # If a candidate is extremely long, it will make the lookup
         # table too wide maybe wider than the available screen space
         # and then you cannot see the whole candidate anyway. So it is
         # better to elide extremely long candidates. Maybe best to
         # elide them in the middle?:
-        phrase = itb_util.elide_middle(phrase, max_length=80)
+        phrase = itb_util_core.elide_middle(phrase, max_length=80)
         attrs = IBus.AttrList()
-        comment = itb_util.elide_middle(comment, max_length=80)
+        comment = itb_util_core.elide_middle(comment, max_length=80)
         if comment:
-            phrase += ' ' + itb_util.bidi_embed(comment)
+            phrase += ' ' + itb_util_core.bidi_embed(comment)
         color_used = False
         label_spellcheck_string = self._label_spellcheck_string.strip()
         label_userdb_string = self._label_userdb_string.strip()
@@ -1879,7 +1880,7 @@ class TypingBoosterEngine(IBus.Engine):
             # Show frequency information for debugging
             phrase += f' {str(user_freq)}'
             attrs.append(IBus.attr_foreground_new(
-                itb_util.color_string_to_argb('HotPink'),
+                itb_util_gui.color_string_to_argb('HotPink'),
                 len(phrase) - len(str(user_freq)),
                 len(phrase)))
         text = IBus.Text.new_from_string(phrase)
@@ -1904,7 +1905,7 @@ class TypingBoosterEngine(IBus.Engine):
             return
         self._candidates = []
         phrase_frequencies: Dict[str, float] = {}
-        phrase_candidates: List[itb_util.PredictionCandidate] = []
+        phrase_candidates: List[itb_util_core.PredictionCandidate] = []
         self._lookup_table.enabled_by_min_char_complete = False
         if self._word_predictions or self._temporary_word_predictions:
             for ime in self._current_imes:
@@ -1913,7 +1914,7 @@ class TypingBoosterEngine(IBus.Engine):
                     prefix_length = 0
                     prefix = ''
                     stripped_transliterated_string = (
-                        itb_util.lstrip_token(self._transliterated_strings[ime]))
+                        itb_util_core.lstrip_token(self._transliterated_strings[ime]))
                     if ime in ['ko-romaja', 'ko-han2']:
                         # The two Korean input methods we have in m17n produce
                         # Jamo from the Hangul compatibility block and not
@@ -1964,7 +1965,7 @@ class TypingBoosterEngine(IBus.Engine):
                                 error.__class__.__name__, error)
                     if candidates and prefix:
                         candidates = [
-                            itb_util.PredictionCandidate(
+                            itb_util_core.PredictionCandidate(
                                 phrase=prefix+x.phrase,
                                 user_freq=x.user_freq)
                             for x in candidates]
@@ -1983,7 +1984,7 @@ class TypingBoosterEngine(IBus.Engine):
                                 cand.user_freq)
                         else:
                             phrase_frequencies[cand.phrase] = cand.user_freq
-            phrase_candidates = itb_util.best_candidates(phrase_frequencies)
+            phrase_candidates = itb_util_core.best_candidates(phrase_frequencies)
         # If the first candidate is exactly the same as the typed string
         # prefer longer candidates which start exactly with the typed
         # string. If the user wants the typed string, he can easily
@@ -1991,10 +1992,10 @@ class TypingBoosterEngine(IBus.Engine):
         # that case. Offering longer completions instead may give
         # the opportunity to save some key strokes.
         if phrase_candidates:
-            typed_string = itb_util.normalize_nfc_and_composition_exclusions(
+            typed_string = itb_util_core.normalize_nfc_and_composition_exclusions(
                 self._transliterated_strings[
                     self.get_current_imes()[0]])
-            first_candidate = itb_util.normalize_nfc_and_composition_exclusions(
+            first_candidate = itb_util_core.normalize_nfc_and_composition_exclusions(
                 phrase_candidates[0].phrase)
             if typed_string == first_candidate:
                 phrase_frequencies = {}
@@ -2002,7 +2003,7 @@ class TypingBoosterEngine(IBus.Engine):
                 first_candidate_length = len(first_candidate)
                 for cand in phrase_candidates:
                     candidate_normalized = (
-                        itb_util.normalize_nfc_and_composition_exclusions(
+                        itb_util_core.normalize_nfc_and_composition_exclusions(
                             cand.phrase))
                     if (len(candidate_normalized) > first_candidate_length
                         and candidate_normalized.startswith(first_candidate)):
@@ -2010,7 +2011,7 @@ class TypingBoosterEngine(IBus.Engine):
                             cand.user_freq + first_candidate_user_freq)
                     else:
                         phrase_frequencies[cand.phrase] = cand.user_freq
-                phrase_candidates = itb_util.best_candidates(
+                phrase_candidates = itb_util_core.best_candidates(
                     phrase_frequencies)
         if ((self._emoji_predictions and not self.has_osk)
             or self._temporary_emoji_predictions
@@ -2045,7 +2046,7 @@ class TypingBoosterEngine(IBus.Engine):
                         if (ecand.phrase not in emoji_scores
                                 or ecand.user_freq > emoji_scores[ecand.phrase][0]):
                             emoji_scores[ecand.phrase] = (ecand.user_freq, ecand.comment)
-            phrase_candidates_emoji_name: List[itb_util.PredictionCandidate] = []
+            phrase_candidates_emoji_name: List[itb_util_core.PredictionCandidate] = []
             for cand in phrase_candidates:
                 # If this candidate is duplicated in the emoji candidates,
                 # don’t use this as a text candidate but increase the score
@@ -2061,13 +2062,13 @@ class TypingBoosterEngine(IBus.Engine):
                                            emoji_scores[emoji][1])
                 else:
                     phrase_candidates_emoji_name.append(
-                        itb_util.PredictionCandidate(
+                        itb_util_core.PredictionCandidate(
                             phrase=cand.phrase,
                             user_freq=cand.user_freq,
                             comment=self.emoji_matcher.name(cand.phrase),
                             from_user_db=cand.user_freq > 0,
                             spell_checking=cand.user_freq < 0))
-            emoji_candidates: List[itb_util.PredictionCandidate] = []
+            emoji_candidates: List[itb_util_core.PredictionCandidate] = []
             for (key, value) in sorted(
                     emoji_scores.items(),
                     key=lambda x: (
@@ -2076,7 +2077,7 @@ class TypingBoosterEngine(IBus.Engine):
                         x[1][1]      # name of emoji
                     ))[:self._emoji_match_limit]:
                 emoji_candidates.append(
-                    itb_util.PredictionCandidate(
+                    itb_util_core.PredictionCandidate(
                         phrase=key, user_freq=value[0], comment=value[1]))
             page_size = self._lookup_table.get_page_size()
             phrase_candidates_top = phrase_candidates_emoji_name[:page_size-1]
@@ -2085,7 +2086,7 @@ class TypingBoosterEngine(IBus.Engine):
             emoji_candidates_rest = emoji_candidates[page_size:]
             for cand in phrase_candidates_top:
                 self._candidates.append(
-                    itb_util.PredictionCandidate(
+                    itb_util_core.PredictionCandidate(
                         phrase=cand.phrase,
                         user_freq=cand.user_freq,
                         comment=cand.comment,
@@ -2093,7 +2094,7 @@ class TypingBoosterEngine(IBus.Engine):
                         spell_checking=cand.spell_checking))
             for cand in emoji_candidates_top:
                 self._candidates.append(
-                    itb_util.PredictionCandidate(
+                    itb_util_core.PredictionCandidate(
                         phrase=cand.phrase,
                         user_freq=cand.user_freq,
                         comment=cand.comment,
@@ -2101,7 +2102,7 @@ class TypingBoosterEngine(IBus.Engine):
                         spell_checking=False))
             for cand in phrase_candidates_rest:
                 self._candidates.append(
-                    itb_util.PredictionCandidate(
+                    itb_util_core.PredictionCandidate(
                         phrase=cand.phrase,
                         user_freq=cand.user_freq,
                         comment=cand.comment,
@@ -2109,7 +2110,7 @@ class TypingBoosterEngine(IBus.Engine):
                         spell_checking=cand.spell_checking))
             for cand in emoji_candidates_rest:
                 self._candidates.append(
-                    itb_util.PredictionCandidate(
+                    itb_util_core.PredictionCandidate(
                         phrase=cand.phrase,
                         user_freq=cand.user_freq,
                         comment=cand.comment,
@@ -2118,7 +2119,7 @@ class TypingBoosterEngine(IBus.Engine):
         else:
             for cand in phrase_candidates:
                 self._candidates.append(
-                    itb_util.PredictionCandidate(
+                    itb_util_core.PredictionCandidate(
                         phrase=cand.phrase,
                         user_freq=cand.user_freq,
                         comment='',
@@ -2287,7 +2288,7 @@ class TypingBoosterEngine(IBus.Engine):
             # delete the complete candidate from the user database won’t
             # achieve anything, only the stripped token is in the
             # database.
-            stripped_phrase = itb_util.lstrip_token(phrase)
+            stripped_phrase = itb_util_core.lstrip_token(phrase)
             if stripped_phrase:
                 if self._debug_level > 1:
                     LOGGER.debug('Removing “%s”', stripped_phrase)
@@ -2407,7 +2408,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         LOGGER.debug('imes=%s type(imes)=%s', imes, type(imes))
         if isinstance(imes, str):
-            imes = itb_util.input_methods_str_to_list(imes)
+            imes = itb_util_core.input_methods_str_to_list(imes)
         if imes == self._current_imes: # nothing to do
             return
         if set(imes) != set(self._current_imes):
@@ -2452,13 +2453,13 @@ class TypingBoosterEngine(IBus.Engine):
         LOGGER.debug('dictionary_names=%s type(dictionary_names)=%s',
                      dictionary_names, type(dictionary_names))
         if isinstance(dictionary_names, str):
-            dictionary_names = itb_util.dictionaries_str_to_list(
+            dictionary_names = itb_util_core.dictionaries_str_to_list(
                 dictionary_names)
         if dictionary_names == self._dictionary_names: # nothing to do
             return
         self._dictionary_names = dictionary_names
         self.database.hunspell_obj.set_dictionary_names(dictionary_names)
-        self._dictionary_flags = itb_util.get_flags(self._dictionary_names)
+        self._dictionary_flags = itb_util_core.get_flags(self._dictionary_names)
         self._update_dictionary_menu_dicts()
         self._init_or_update_property_menu_dictionary(
             self.dictionary_menu, current_mode=0)
@@ -2539,10 +2540,10 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         new_keybindings = {}
         # Get the default settings:
-        new_keybindings = itb_util.variant_to_value(
+        new_keybindings = itb_util_core.variant_to_value(
             self._gsettings.get_default_value('keybindings'))
         # Update the default settings with the possibly changed settings:
-        itb_util.dict_update_existing_keys(new_keybindings, keybindings)
+        itb_util_core.dict_update_existing_keys(new_keybindings, keybindings)
         self._keybindings = new_keybindings
         # Update useage of digits in keybindings:
         self._normal_digits_used_in_keybindings = False
@@ -2558,7 +2559,7 @@ class TypingBoosterEngine(IBus.Engine):
                         'KP_5', 'KP_6', 'KP_7', 'KP_8', 'KP_9')):
                     self._keypad_digits_used_in_keybindings = True
         # Update hotkeys:
-        self._hotkeys = itb_util.HotKeys(self._keybindings)
+        self._hotkeys = itb_util_core.HotKeys(self._keybindings)
         # Some property menus have tooltips which show hints for the
         # key bindings. These may need to be updated if the key
         # bindings have changed.
@@ -2615,16 +2616,16 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         self.dictionary_properties = {}
         current_dictionaries = self.get_dictionary_names()
-        current_dictionaries_max = itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES
+        current_dictionaries_max = itb_util_core.MAXIMUM_NUMBER_OF_DICTIONARIES
         for i in range(0, current_dictionaries_max):
             if i < len(current_dictionaries):
                 self.dictionary_properties[
                     'Dictionary.' + str(i)
                 ] = {'number': i,
                      'symbol': current_dictionaries[i]
-                     + ' ' + itb_util.get_flag(current_dictionaries[i]),
+                     + ' ' + itb_util_core.get_flag(current_dictionaries[i]),
                      'label': current_dictionaries[i]
-                     + ' ' + itb_util.get_flag(current_dictionaries[i]),
+                     + ' ' + itb_util_core.get_flag(current_dictionaries[i]),
                      'tooltip': '', # tooltips do not work in sub-properties
                 }
             else:
@@ -2647,7 +2648,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         self.preedit_ime_properties = {}
         current_imes = self.get_current_imes()
-        current_imes_max = itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS
+        current_imes_max = itb_util_core.MAXIMUM_NUMBER_OF_INPUT_METHODS
         for i in range(0, current_imes_max):
             if i < len(current_imes):
                 self.preedit_ime_properties[
@@ -2983,7 +2984,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.main_prop_list = IBus.PropList()
 
         if self._engine_name != 'typing-booster':
-            m17n_db_info = itb_util.M17nDbInfo()
+            m17n_db_info = itb_util_core.M17nDbInfo()
             m17n_icon_property = IBus.Property(
                 key='m17n_icon',
                 label=IBus.Text.new_from_string(self._engine_name),
@@ -3183,7 +3184,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._current_imes[0] == 'ja-anthy':
             # This is pretty ugly, I should work on supporting the henkan region
             # properly ...
-            return raw_input_repr.replace(''.join(itb_util.ANTHY_HENKAN_WIDE), '')
+            return raw_input_repr.replace(''.join(itb_util_core.ANTHY_HENKAN_WIDE), '')
         return raw_input_repr
 
     def _add_color_to_attrs_for_spellcheck(
@@ -3199,7 +3200,7 @@ class TypingBoosterEngine(IBus.Engine):
             or self.get_current_imes()[0][:2] in ('zh', 'ja')
             or not self._color_preedit_spellcheck):
             return False
-        stripped_text = itb_util.strip_token(text)
+        stripped_text = itb_util_core.strip_token(text)
         prefix_length = text.find(stripped_text)
         if (len(stripped_text) >= 4
             and not
@@ -3365,7 +3366,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self._typed_string[
                     self._m17n_trans_parts.committed_index
                     :self._typed_string_cursor]).replace(
-                                   ''.join(itb_util.ANTHY_HENKAN_WIDE), '')
+                                   ''.join(itb_util_core.ANTHY_HENKAN_WIDE), '')
             aux_string += ' '
         if (self._show_raw_input >= 1  # Show when there are candidates
             and self._lookup_table.state == LookupTableState.NORMAL):
@@ -3399,7 +3400,7 @@ class TypingBoosterEngine(IBus.Engine):
                         f'{MODE_OFF_SYMBOL}{OFF_THE_RECORD_MODE_SYMBOL} ')
                 names = self.get_dictionary_names()
                 if names:
-                    aux_string += f'{names[0]} {itb_util.get_flag(names[0])}'
+                    aux_string += f'{names[0]} {itb_util_core.get_flag(names[0])}'
                 preedit_ime = self.get_current_imes()[0]
                 if preedit_ime != 'NoIME':
                     aux_string += f' {preedit_ime} '
@@ -3407,14 +3408,14 @@ class TypingBoosterEngine(IBus.Engine):
         # Needs fix in ibus.
         attrs = IBus.AttrList()
         attrs.append(IBus.attr_foreground_new(
-            itb_util.color_string_to_argb('SlateGray'),
+            itb_util_gui.color_string_to_argb('SlateGray'),
             0,
             len(aux_string)))
         if self._debug_level > 0 and not self._unit_test:
             client = f'🪟{self._client_info.client}'
             aux_string += client
             attrs.append(IBus.attr_foreground_new(
-                itb_util.color_string_to_argb('Purple'),
+                itb_util_gui.color_string_to_argb('Purple'),
                 len(aux_string)-len(client),
                 len(aux_string)))
         if self._debug_level > 2:
@@ -3427,7 +3428,7 @@ class TypingBoosterEngine(IBus.Engine):
                            f'{self.get_pp_phrase()} '
                            f'{self.get_p_phrase()}')
             attrs.append(IBus.attr_foreground_new(
-                itb_util.color_string_to_argb('DeepPink'),
+                itb_util_gui.color_string_to_argb('DeepPink'),
                 len_aux_string_orig,
                 len(aux_string)))
         text = IBus.Text.new_from_string(aux_string)
@@ -3482,10 +3483,10 @@ class TypingBoosterEngine(IBus.Engine):
         # There is at least one candidate the lookup table cursor
         # points to the first candidate, the lookup table is enabled
         # and inline completion is on.
-        typed_string = itb_util.normalize_nfc_and_composition_exclusions(
+        typed_string = itb_util_core.normalize_nfc_and_composition_exclusions(
             self._transliterated_strings[
                 self.get_current_imes()[0]])
-        first_candidate = itb_util.normalize_nfc_and_composition_exclusions(
+        first_candidate = itb_util_core.normalize_nfc_and_composition_exclusions(
             self._candidates[0].phrase)
         if (not first_candidate.startswith(typed_string)
             or first_candidate == typed_string):
@@ -3564,7 +3565,7 @@ class TypingBoosterEngine(IBus.Engine):
                 if self._candidates:
                     first_candidate = self._candidates[0].phrase
                     user_freq = self._candidates[0].user_freq
-                typed_string = itb_util.normalize_nfc_and_composition_exclusions(
+                typed_string = itb_util_core.normalize_nfc_and_composition_exclusions(
                     self._transliterated_strings[self.get_current_imes()[0]])
                 spellcheck_single_dictionary = (
                     self.database.hunspell_obj.spellcheck_single_dictionary(
@@ -3572,7 +3573,7 @@ class TypingBoosterEngine(IBus.Engine):
                 if (spellcheck_single_dictionary
                     and typed_string
                     and typed_string != first_candidate
-                    and itb_util.remove_accents(first_candidate)
+                    and itb_util_core.remove_accents(first_candidate)
                     == typed_string
                     and user_freq > 0.2):
                     self._lookup_table.set_cursor_visible(True)
@@ -3678,7 +3679,7 @@ class TypingBoosterEngine(IBus.Engine):
             self.update_auxiliary_text(
                 IBus.Text.new_from_string(''), False)
         self._candidates = [
-            itb_util.PredictionCandidate(
+            itb_util_core.PredictionCandidate(
                 phrase=cand.phrase,
                 user_freq=cand.user_freq,
                 comment='',
@@ -3835,13 +3836,13 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.info('Getting related words from nltk for: “%s”', phrase)
             try:
                 for synonym in itb_nltk.synonyms(phrase, keep_original=False):
-                    related_candidates.append(itb_util.PredictionCandidate(
+                    related_candidates.append(itb_util_core.PredictionCandidate(
                         phrase=synonym, user_freq=0, comment='[synonym]'))
                 for hypernym in itb_nltk.hypernyms(phrase, keep_original=False):
-                    related_candidates.append(itb_util.PredictionCandidate(
+                    related_candidates.append(itb_util_core.PredictionCandidate(
                         phrase=hypernym, user_freq=0, comment='[hypernym]'))
                 for hyponym in itb_nltk.hyponyms(phrase, keep_original=False):
-                    related_candidates.append(itb_util.PredictionCandidate(
+                    related_candidates.append(itb_util_core.PredictionCandidate(
                         phrase=hyponym, user_freq=0, comment='[hyponym]'))
             except (LookupError,) as error:
                 LOGGER.exception(
@@ -3865,7 +3866,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._lookup_table.set_cursor_visible(False)
         for cand in related_candidates:
             self._candidates.append(
-                itb_util.PredictionCandidate(
+                itb_util_core.PredictionCandidate(
                     phrase=cand.phrase,
                     user_freq=cand.user_freq,
                     comment=cand.comment,
@@ -3919,7 +3920,7 @@ class TypingBoosterEngine(IBus.Engine):
         new_candidates = []
         for cand in self._candidates_case_mode_orig:
             new_candidates.append(
-                itb_util.PredictionCandidate(
+                itb_util_core.PredictionCandidate(
                     phrase=self._case_modes[
                         self._current_case_mode]['function'](cand.phrase),
                     user_freq=cand.user_freq,
@@ -4148,7 +4149,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._new_sentence = False
             names = self.get_dictionary_names()
             name = names[0] if names else ''
-            if itb_util.text_ends_a_sentence(commit_phrase, language=name):
+            if itb_util_core.text_ends_a_sentence(commit_phrase, language=name):
                 self._new_sentence = True
         if fix_sentence_end:
             commit_phrase = (
@@ -4338,11 +4339,11 @@ class TypingBoosterEngine(IBus.Engine):
         if (self._off_the_record
             or self._record_mode == 3
             or self._hide_input
-            or self._input_hints & itb_util.InputHints.PRIVATE):
+            or self._input_hints & itb_util_gui.InputHints.PRIVATE):
             if self._debug_level > 1:
                 LOGGER.debug('Privacy: NOT recording and pushing context.')
             return
-        stripped_commit_phrase = itb_util.strip_token(commit_phrase)
+        stripped_commit_phrase = itb_util_core.strip_token(commit_phrase)
         if self._debug_level > 1:
             LOGGER.debug('input_phrase=%r commit_phrase=%r '
                          'p_phrase=%r pp_phrase=%r ppp_phrase=%r '
@@ -4432,7 +4433,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         if (not self.has_surrounding_text
             or
-            self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
+            self._input_purpose in [itb_util_gui.InputPurpose.TERMINAL.value]):
             return ''
         language_code = '*'
         used_french_spacing_dictionaries = {
@@ -4450,8 +4451,8 @@ class TypingBoosterEngine(IBus.Engine):
                     language_code = list(matched_french_spacing_dictionaries)[0]
         if self._debug_level > 1:
             LOGGER.debug('language_code=%r', language_code)
-        chars_dict = itb_util.FIX_WHITESPACE_CHARACTERS.get(
-            language_code, itb_util.FIX_WHITESPACE_CHARACTERS['*'])
+        chars_dict = itb_util_core.FIX_WHITESPACE_CHARACTERS.get(
+            language_code, itb_util_core.FIX_WHITESPACE_CHARACTERS['*'])
         for chars, new_whitespace in chars_dict.items():
             pattern_sentence_end = re.compile(
                 r'^[' + re.escape(chars) + r']+[\s]*$')
@@ -4503,7 +4504,7 @@ class TypingBoosterEngine(IBus.Engine):
         return ''
 
     def _maybe_reopen_preedit(
-            self, key: itb_util.KeyEvent) -> bool:
+            self, key: itb_util_core.KeyEvent) -> bool:
         '''BackSpace, Delete or arrow left or right has been typed.
 
         If the end of a word has been reached again and if it is
@@ -4582,7 +4583,7 @@ class TypingBoosterEngine(IBus.Engine):
                     'Not reopening the preedit because a modifier is set.')
             return False
         if (not self.has_surrounding_text
-            or self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
+            or self._input_purpose in [itb_util_gui.InputPurpose.TERMINAL.value]):
             if self._debug_level > 1:
                 LOGGER.debug('Surrounding text is not supported. '
                              'No way to repopen preedit.')
@@ -4791,7 +4792,7 @@ class TypingBoosterEngine(IBus.Engine):
         '''
         self._is_context_from_surrounding_text = False
         if (not self.has_surrounding_text
-            or self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
+            or self._input_purpose in [itb_util_gui.InputPurpose.TERMINAL.value]):
             # If getting the surrounding text is not supported, leave
             # the context as it is, i.e. rely on remembering what was
             # typed last.
@@ -4807,8 +4808,8 @@ class TypingBoosterEngine(IBus.Engine):
                 LOGGER.debug('Surrounding text is empty, cannot get context.')
             return
         tokens = ([
-            itb_util.strip_token(token)
-            for token in itb_util.tokenize(text[:cursor_pos])])[-3:]
+            itb_util_core.strip_token(token)
+            for token in itb_util_core.tokenize(text[:cursor_pos])])[-3:]
         if self._debug_level > 1:
             LOGGER.debug(
                 'Found from surrounding text: tokens=%s', repr(tokens))
@@ -5172,7 +5173,7 @@ class TypingBoosterEngine(IBus.Engine):
         candidate_was_selected = False
         if self._lookup_table.is_cursor_visible():
             candidate_was_selected = True
-        left_steps = itb_util.estimate_left_steps(
+        left_steps = itb_util_core.estimate_left_steps(
             commit_string, self.get_caret(extra_msymbol=' '))
         self._commit_string(commit_string, input_phrase=input_phrase)
         self._clear_input_and_update_ui()
@@ -5231,7 +5232,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._prop_dict and self.input_mode_menu:
             self._init_or_update_property_menu(
                 self.input_mode_menu, 1)
-        itb_util.ibus_write_cache()
+        itb_util_core.ibus_write_cache()
         if update_gsettings:
             self._gsettings.set_value(
                 'inputmodetruesymbol',
@@ -5631,7 +5632,7 @@ class TypingBoosterEngine(IBus.Engine):
         if color_string == self._color_preedit_spellcheck_string:
             return
         self._color_preedit_spellcheck_string = color_string
-        self._color_preedit_spellcheck_argb = itb_util.color_string_to_argb(
+        self._color_preedit_spellcheck_argb = itb_util_gui.color_string_to_argb(
             self._color_preedit_spellcheck_string)
         if update_gsettings:
             self._gsettings.set_value(
@@ -5696,7 +5697,7 @@ class TypingBoosterEngine(IBus.Engine):
         if color_string == self._color_inline_completion_string:
             return
         self._color_inline_completion_string = color_string
-        self._color_inline_completion_argb = itb_util.color_string_to_argb(
+        self._color_inline_completion_argb = itb_util_gui.color_string_to_argb(
             self._color_inline_completion_string)
         if update_gsettings:
             self._gsettings.set_value(
@@ -5760,7 +5761,7 @@ class TypingBoosterEngine(IBus.Engine):
         if color_string == self._color_compose_preview_string:
             return
         self._color_compose_preview_string = color_string
-        self._color_compose_preview_argb = itb_util.color_string_to_argb(
+        self._color_compose_preview_argb = itb_util_gui.color_string_to_argb(
             self._color_compose_preview_string)
         if update_gsettings:
             self._gsettings.set_value(
@@ -5824,7 +5825,7 @@ class TypingBoosterEngine(IBus.Engine):
         if color_string == self._color_m17n_preedit_string:
             return
         self._color_m17n_preedit_string = color_string
-        self._color_m17n_preedit_argb = itb_util.color_string_to_argb(
+        self._color_m17n_preedit_argb = itb_util_gui.color_string_to_argb(
             self._color_m17n_preedit_string)
         if update_gsettings:
             self._gsettings.set_value(
@@ -5888,7 +5889,7 @@ class TypingBoosterEngine(IBus.Engine):
         if color_string == self._color_userdb_string:
             return
         self._color_userdb_string = color_string
-        self._color_userdb_argb = itb_util.color_string_to_argb(
+        self._color_userdb_argb = itb_util_gui.color_string_to_argb(
             self._color_userdb_string)
         if update_gsettings:
             self._gsettings.set_value(
@@ -5952,7 +5953,7 @@ class TypingBoosterEngine(IBus.Engine):
         if color_string == self._color_spellcheck_string:
             return
         self._color_spellcheck_string = color_string
-        self._color_spellcheck_argb = itb_util.color_string_to_argb(
+        self._color_spellcheck_argb = itb_util_gui.color_string_to_argb(
             self._color_spellcheck_string)
         if update_gsettings:
             self._gsettings.set_value(
@@ -6016,7 +6017,7 @@ class TypingBoosterEngine(IBus.Engine):
         if color_string == self._color_dictionary_string:
             return
         self._color_dictionary_string = color_string
-        self._color_dictionary_argb = itb_util.color_string_to_argb(
+        self._color_dictionary_argb = itb_util_gui.color_string_to_argb(
             self._color_dictionary_string)
         if update_gsettings:
             self._gsettings.set_value(
@@ -6913,10 +6914,10 @@ class TypingBoosterEngine(IBus.Engine):
         '''Construct a new IBus.Keymap object and store it in
         self._ibus_keymap_object
         '''
-        if keymap not in itb_util.AVAILABLE_IBUS_KEYMAPS:
+        if keymap not in itb_util_core.AVAILABLE_IBUS_KEYMAPS:
             LOGGER.warning(
-                'keymap %s not in itb_util.AVAILABLE_IBUS_KEYMAPS=%s',
-                keymap, repr(itb_util.AVAILABLE_IBUS_KEYMAPS))
+                'keymap %s not in itb_util_core.AVAILABLE_IBUS_KEYMAPS=%s',
+                keymap, repr(itb_util_core.AVAILABLE_IBUS_KEYMAPS))
         try:
             return IBus.Keymap(keymap)
         except Exception as error: # pylint: disable=broad-except
@@ -7287,10 +7288,10 @@ class TypingBoosterEngine(IBus.Engine):
             self._speech_recognition_error(
                 _('Failed to import Google speech-to-text.'))
             return
-        if not itb_util.IMPORT_PYAUDIO_SUCCESSFUL:
+        if not itb_util_core.IMPORT_PYAUDIO_SUCCESSFUL:
             self._speech_recognition_error(_('Failed to import pyaudio.'))
             return
-        if not itb_util.IMPORT_QUEUE_SUCCESSFUL:
+        if not itb_util_core.IMPORT_QUEUE_SUCCESSFUL:
             self._speech_recognition_error(_('Failed to import queue.'))
             return
         language_code = self._dictionary_names[0]
@@ -7318,7 +7319,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         config = speech_types.RecognitionConfig(
             encoding=speech_enums.RecognitionConfig.AudioEncoding.LINEAR16,
-            sample_rate_hertz=itb_util.AUDIO_RATE,
+            sample_rate_hertz=itb_util_core.AUDIO_RATE,
             language_code=language_code)
         streaming_config = speech_types.StreamingRecognitionConfig(
             config=config,
@@ -7332,16 +7333,16 @@ class TypingBoosterEngine(IBus.Engine):
             auxiliary_text_label = (
                 self._label_speech_recognition_string.strip())
         auxiliary_text_label += language_code
-        flag = itb_util.get_flag(language_code.replace('-', '_'))
+        flag = itb_util_core.get_flag(language_code.replace('-', '_'))
         if flag:
             auxiliary_text_label += ' ' + flag
         if (language_code.replace('-', '_')
-            not in itb_util.GOOGLE_SPEECH_TO_TEXT_LANGUAGES):
+            not in itb_util_core.GOOGLE_SPEECH_TO_TEXT_LANGUAGES):
             # The officially list of languages supported by Google
             # speech-to-text is here:
             # https://cloud.google.com/speech-to-text/docs/languages
             # and I copied this list into
-            # itb_util.GOOGLE_SPEECH_TO_TEXT_LANGUAGES.
+            # itb_util_core.GOOGLE_SPEECH_TO_TEXT_LANGUAGES.
             #
             # But I don’t know any way to find out via the API whether
             # a language is supported or not. When trying to set a
@@ -7377,8 +7378,8 @@ class TypingBoosterEngine(IBus.Engine):
             IBus.Text.new_from_string(auxiliary_text_label), True)
 
         transcript = ''
-        with itb_util.MicrophoneStream(
-                itb_util.AUDIO_RATE, itb_util.AUDIO_CHUNK) as stream:
+        with itb_util_core.MicrophoneStream(
+                itb_util_core.AUDIO_RATE, itb_util_core.AUDIO_CHUNK) as stream:
             audio_generator = stream.generator()
             requests = (speech_types.StreamingRecognizeRequest(audio_content=content)
                         for content in audio_generator)
@@ -7432,7 +7433,7 @@ class TypingBoosterEngine(IBus.Engine):
             # first letter unconditionally:
             if (not self.has_surrounding_text
                 or
-                self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
+                self._input_purpose in [itb_util_gui.InputPurpose.TERMINAL.value]):
                 transcript = transcript[0].upper() + transcript[1:]
             else:
                 text = self._surrounding_text.text
@@ -7569,13 +7570,13 @@ class TypingBoosterEngine(IBus.Engine):
                 typed_string_up_to_cursor = (
                     self._typed_string[:self._typed_string_cursor])
                 if (typed_string_up_to_cursor[
-                        -len(itb_util.ANTHY_HENKAN_WIDE):]
-                    == itb_util.ANTHY_HENKAN_WIDE):
+                        -len(itb_util_core.ANTHY_HENKAN_WIDE):]
+                    == itb_util_core.ANTHY_HENKAN_WIDE):
                     if self._debug_level > 1:
                         LOGGER.debug(
-                            'ja-anthy: removing itb_util.ANTHY_HENKAN_WIDE')
+                            'ja-anthy: removing itb_util_core.ANTHY_HENKAN_WIDE')
                     typed_string_up_to_cursor = typed_string_up_to_cursor[
-                        :-len(itb_util.ANTHY_HENKAN_WIDE)]
+                        :-len(itb_util_core.ANTHY_HENKAN_WIDE)]
                     self._typed_string = (
                         typed_string_up_to_cursor
                         + self._typed_string[self._typed_string_cursor:])
@@ -7653,7 +7654,7 @@ class TypingBoosterEngine(IBus.Engine):
                     self._typed_compose_sequence + compose_completion)
                 if compose_result:
                     self._candidates.append(
-                        itb_util.PredictionCandidate(
+                        itb_util_core.PredictionCandidate(
                             phrase=compose_result,
                             user_freq=0,
                             comment='',
@@ -7820,10 +7821,10 @@ class TypingBoosterEngine(IBus.Engine):
         if self._debug_level > 1:
             LOGGER.debug('Surrounding text not supported or failed. '
                          'Fallback to primary selection.')
-        selection_text = itb_util.get_primary_selection_text()
+        selection_text = itb_util_gui.get_primary_selection_text()
         LOGGER.debug('selection_text=%r', selection_text)
         # Calling self._selection_to_preedit_open_preedit() after
-        # itb_util.get_primary_selection_text() needs GLib.idle_add(),
+        # itb_util_gui.get_primary_selection_text() needs GLib.idle_add(),
         # without that no lookup table pops up!
         if selection_text != '':
             GLib.idle_add(lambda:
@@ -7891,7 +7892,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._debug_level > 1:
             LOGGER.debug('Surrounding text not supported or failed. '
                          'Fallback to primary selection.')
-        selection_text = itb_util.get_primary_selection_text()
+        selection_text = itb_util_gui.get_primary_selection_text()
         # `wl-paste -p` might have been used to get the primary
         # selection.  If `wl-paste` (with or without `-p`) is used, it
         # causes a focus out, a focus in to `self._client_info.client=fake`,
@@ -7951,7 +7952,7 @@ class TypingBoosterEngine(IBus.Engine):
             if len(cluster) == 1:
                 phrase = f'\u00A0{cluster} U+{ord(cluster):04X} {name}'
                 comment = phrase
-                candidates.append(itb_util.PredictionCandidate(
+                candidates.append(itb_util_core.PredictionCandidate(
                     phrase=selection_text + phrase, comment=comment))
                 full_breakdown_phrase += phrase
                 code_point_list_phrase += f' U+{ord(cluster):04X}'
@@ -7960,7 +7961,7 @@ class TypingBoosterEngine(IBus.Engine):
             if name:
                 phrase += f' {name}'
             comment = phrase
-            candidates.append(itb_util.PredictionCandidate(
+            candidates.append(itb_util_core.PredictionCandidate(
                 phrase=selection_text + phrase, comment=comment))
             for index, char in enumerate(cluster):
                 name = self.emoji_matcher.name(char)
@@ -7971,7 +7972,7 @@ class TypingBoosterEngine(IBus.Engine):
                     comment = f' ├─{phrase}'
                 else:
                     comment = f' └─{phrase}'
-                candidates.append(itb_util.PredictionCandidate(
+                candidates.append(itb_util_core.PredictionCandidate(
                     phrase=selection_text + phrase, comment=comment))
                 full_breakdown_phrase += phrase
                 code_point_list_phrase += f' U+{ord(char):04X}'
@@ -7979,13 +7980,13 @@ class TypingBoosterEngine(IBus.Engine):
             if self._debug_level > 1:
                 LOGGER.debug('No candidates found.')
             return False
-        candidates.append(itb_util.PredictionCandidate(
+        candidates.append(itb_util_core.PredictionCandidate(
             phrase=selection_text + code_point_list_phrase,
-            comment=itb_util.elide_middle(
+            comment=itb_util_core.elide_middle(
                 code_point_list_phrase, max_length=40)))
-        candidates.append(itb_util.PredictionCandidate(
+        candidates.append(itb_util_core.PredictionCandidate(
             phrase=selection_text + full_breakdown_phrase,
-            comment=itb_util.elide_middle(
+            comment=itb_util_core.elide_middle(
                 full_breakdown_phrase, max_length=40)))
         self._candidates = candidates
         self._lookup_table.clear()
@@ -8108,7 +8109,7 @@ class TypingBoosterEngine(IBus.Engine):
                 'Surrounding text not supported or '
                 'failed to get a selection. '
                 'Fallback to primary selection.')
-        selection_text = itb_util.get_primary_selection_text()
+        selection_text = itb_util_gui.get_primary_selection_text()
         delay = 30 # milliseconds
         if selection_text != '':
             # If there was a preedit, it has been committed by
@@ -8344,7 +8345,7 @@ class TypingBoosterEngine(IBus.Engine):
         self.update_auxiliary_text(IBus.Text.new_from_string(''), False)
         return False
 
-    def _ollama_chat_query_process_key(self, key: itb_util.KeyEvent) -> bool:
+    def _ollama_chat_query_process_key(self, key: itb_util_core.KeyEvent) -> bool:
         '''Process a key event while an ollama chat query is ongoing
 
         :return: True if the key event has been completely handled by
@@ -8622,7 +8623,7 @@ class TypingBoosterEngine(IBus.Engine):
                      direction, self._client_info.client)
         if (not self.has_surrounding_text
             or
-            self._input_purpose in [itb_util.InputPurpose.TERMINAL.value]):
+            self._input_purpose in [itb_util_gui.InputPurpose.TERMINAL.value]):
             LOGGER.debug(
                 'Surrounding text not supported, cannot change line direction.')
             return
@@ -8683,7 +8684,7 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if direction == 'toggle':
             direction = 'rtl'
-            if itb_util.is_right_to_left(current_line):
+            if itb_util_core.is_right_to_left(current_line):
                 direction = 'ltr'
         LOGGER.debug('Current line needs to change direction to %r.',
                      direction)
@@ -8696,7 +8697,7 @@ class TypingBoosterEngine(IBus.Engine):
                     'is_right_to_left': True},
         }
         if (directions[direction]['is_right_to_left']
-            == itb_util.is_right_to_left(current_line)):
+            == itb_util_core.is_right_to_left(current_line)):
             LOGGER.debug(
                 'Current_line already has desired direction %r, do nothing.',
                 direction)
@@ -8730,11 +8731,11 @@ class TypingBoosterEngine(IBus.Engine):
                          removemark)
             current_line = current_line[1:]
             current_line_with_cmarker = current_line_with_cmarker[1:]
-        if is_right_to_left != itb_util.is_right_to_left(current_line):
+        if is_right_to_left != itb_util_core.is_right_to_left(current_line):
             LOGGER.debug('Add direction mark %r', addmark)
             current_line = f'{addmark}{current_line}'
             current_line_with_cmarker = f'{addmark}{current_line_with_cmarker}'
-            if is_right_to_left != itb_util.is_right_to_left(current_line):
+            if is_right_to_left != itb_util_core.is_right_to_left(current_line):
                 LOGGER.error('Line direction still wrong, should never happen.')
                 return
         super().commit_text(
@@ -9048,7 +9049,7 @@ class TypingBoosterEngine(IBus.Engine):
 
     def _handle_hotkeys(
             self,
-            key: itb_util.KeyEvent,
+            key: itb_util_core.KeyEvent,
             commands: Iterable[str] = ()) -> Tuple[bool, bool]:
         '''Handle hotkey commands
 
@@ -9123,7 +9124,7 @@ class TypingBoosterEngine(IBus.Engine):
             self._typed_compose_sequence.append(key.val)
         return (False, False)
 
-    def _return_true(self, key: itb_util.KeyEvent) -> bool:
+    def _return_true(self, key: itb_util_core.KeyEvent) -> bool:
         '''A replacement for “return True” in do_process_key_event()
 
         do_process_key_event() should return “True” if a key event has
@@ -9139,7 +9140,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._trigger_surrounding_text_update()
         return True
 
-    def _return_false(self, key: itb_util.KeyEvent) -> bool:
+    def _return_false(self, key: itb_util_core.KeyEvent) -> bool:
         '''A replacement for “return False” in do_process_key_event()
 
         do_process_key_event() should return “True” if a key event has
@@ -9252,7 +9253,7 @@ class TypingBoosterEngine(IBus.Engine):
                 IBus.KEY_Return, IBus.KEY_KP_Enter, IBus.KEY_ISO_Enter,
                 IBus.KEY_BackSpace, IBus.KEY_Delete))
             and not key.state & IBus.ModifierType.RELEASE_MASK
-            and not key.state & itb_util.KEYBINDING_STATE_MASK):
+            and not key.state & itb_util_core.KEYBINDING_STATE_MASK):
             if self._debug_level > 0:
                 LOGGER.info('Committing instead of forwarding or “return False”')
             super().commit_text(
@@ -9276,7 +9277,7 @@ class TypingBoosterEngine(IBus.Engine):
             or self._client_info.im_module == 'gtk4-im'
             or self._client_info.im_module == 'SDL2_Application'
             or
-            (self.client_capabilities & itb_util.Capabilite.SYNC_PROCESS_KEY)):
+            (self.client_capabilities & itb_util_core.Capabilite.SYNC_PROCESS_KEY)):
             if self._debug_level > 0:
                 LOGGER.info('Returning False')
             return False
@@ -9349,7 +9350,7 @@ class TypingBoosterEngine(IBus.Engine):
                 LOGGER.exception('Playing error sound failed: %s: %s',
                                  error.__class__.__name__, error)
 
-    def _handle_m17n_candidates(self, key: itb_util.KeyEvent) -> bool:
+    def _handle_m17n_candidates(self, key: itb_util_core.KeyEvent) -> bool:
         if self._debug_level > 1:
             LOGGER.debug('KeyEvent object: %s', key)
         if self._typed_compose_sequence:
@@ -9650,13 +9651,13 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.debug('typed_string_up_to_cursor=%s',
                          repr(typed_string_up_to_cursor))
         if self._current_imes[0] == 'ja-anthy':
-            if (typed_string_up_to_cursor[-len(itb_util.ANTHY_HENKAN_WIDE):]
-                == itb_util.ANTHY_HENKAN_WIDE):
+            if (typed_string_up_to_cursor[-len(itb_util_core.ANTHY_HENKAN_WIDE):]
+                == itb_util_core.ANTHY_HENKAN_WIDE):
                 if self._debug_level > 1:
                     LOGGER.debug(
-                        'ja-anthy: removing itb_util.ANTHY_HENKAN_WIDE')
+                        'ja-anthy: removing itb_util_core.ANTHY_HENKAN_WIDE')
                 typed_string_up_to_cursor = typed_string_up_to_cursor[
-                    :-len(itb_util.ANTHY_HENKAN_WIDE)]
+                    :-len(itb_util_core.ANTHY_HENKAN_WIDE)]
                 self._typed_string = (
                     typed_string_up_to_cursor
                     + self._typed_string[self._typed_string_cursor:])
@@ -9667,7 +9668,7 @@ class TypingBoosterEngine(IBus.Engine):
                     # next candidate, see code further above.
                     if self._debug_level > 1:
                         LOGGER.debug('ja-anthy: continue henkan mode')
-                    typed_string_up_to_cursor += itb_util.ANTHY_HENKAN_WIDE
+                    typed_string_up_to_cursor += itb_util_core.ANTHY_HENKAN_WIDE
                 elif key.val in (IBus.KEY_BackSpace,):
                     if self._debug_level > 1:
                         LOGGER.debug('ja-anthy: BackSpace in henkan mode')
@@ -9679,7 +9680,7 @@ class TypingBoosterEngine(IBus.Engine):
             elif key.val == IBus.KEY_space and key.msymbol == ' ':
                 if self._debug_level > 1:
                     LOGGER.debug('ja-anthy: start henkan mode')
-                    # Adding itb_util.ANTHY_HENKAN_WIDE is a crazy
+                    # Adding itb_util_core.ANTHY_HENKAN_WIDE is a crazy
                     # hack to force the henkan region to be as wide as
                     # possible.  When using ibus-m17n, it is possible
                     # to move the henkan region with `Left` or `Right`
@@ -9702,7 +9703,7 @@ class TypingBoosterEngine(IBus.Engine):
                     # then continue to edit the results. It feels a bit different
                     # but not necessarily bad. It seems have some advantages
                     # as well, overall it seems reasonably OK.
-                typed_string_up_to_cursor += [' '] + itb_util.ANTHY_HENKAN_WIDE
+                typed_string_up_to_cursor += [' '] + itb_util_core.ANTHY_HENKAN_WIDE
             elif key.val in (IBus.KEY_BackSpace,):
                 if self._debug_level > 1:
                     LOGGER.debug('ja-anthy: BackSpace in kana mode')
@@ -9828,7 +9829,7 @@ class TypingBoosterEngine(IBus.Engine):
             IBus.Text.new_from_string(''), False)
         for candidate in self._m17n_trans_parts.candidates:
             if candidate:
-                prediction_candidate = itb_util.PredictionCandidate(
+                prediction_candidate = itb_util_core.PredictionCandidate(
                     phrase=candidate,
                     user_freq=0,
                     comment='',
@@ -9902,7 +9903,7 @@ class TypingBoosterEngine(IBus.Engine):
         self._update_ui()
         return True
 
-    def _handle_compose(self, key: itb_util.KeyEvent, add_to_preedit: bool = True) -> bool:
+    def _handle_compose(self, key: itb_util_core.KeyEvent, add_to_preedit: bool = True) -> bool:
         '''Internal method to handle possible compose keys
 
         :return: True if the key event has been handled, else False
@@ -10168,14 +10169,14 @@ class TypingBoosterEngine(IBus.Engine):
         return True
 
     def _translate_to_ibus_keymap(
-            self, key: itb_util.KeyEvent) -> itb_util.KeyEvent:
+            self, key: itb_util_core.KeyEvent) -> itb_util_core.KeyEvent:
         '''Translate key to the selected IBus keymap'''
         if self._ibus_keymap_object is None:
             return key
         state = self._translated_key_state
         if key.release:
             state |= IBus.ModifierType.RELEASE_MASK
-        new_key = itb_util.KeyEvent(
+        new_key = itb_util_core.KeyEvent(
             IBus.Keymap.lookup_keysym(
                 self._ibus_keymap_object, key.code, state),
             key.code, state)
@@ -10186,8 +10187,8 @@ class TypingBoosterEngine(IBus.Engine):
             or
             (new_key.val == key.val
              and
-             new_key.state & itb_util.KEYBINDING_STATE_MASK
-             == key.state & itb_util.KEYBINDING_STATE_MASK)):
+             new_key.state & itb_util_core.KEYBINDING_STATE_MASK
+             == key.state & itb_util_core.KEYBINDING_STATE_MASK)):
             # Do not translate 'ISO_Level3_Shift' and 'Multi_key' if
             # these are already available in the original keyboard
             # layout, but not in the IBus keymap translated to.
@@ -10246,7 +10247,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self._translated_key_state &= ~IBus.ModifierType.MOD5_MASK
             else:
                 self._translated_key_state |= IBus.ModifierType.MOD5_MASK
-        self._translated_key_state &= itb_util.KEYBINDING_STATE_MASK
+        self._translated_key_state &= itb_util_core.KEYBINDING_STATE_MASK
         if self._debug_level > 1:
             LOGGER.debug('new_key: %s state for next key=%x',
                          new_key, self._translated_key_state)
@@ -10258,12 +10259,12 @@ class TypingBoosterEngine(IBus.Engine):
         Key Events include Key Press and Key Release,
         modifier means Key Pressed
         '''
-        key = itb_util.KeyEvent(keyval, keycode, state)
+        key = itb_util_core.KeyEvent(keyval, keycode, state)
         if self._debug_level > 1:
             LOGGER.debug('KeyEvent object: %s', key)
             LOGGER.debug('self._surrounding_text=%r', self._surrounding_text)
             if self._debug_level > 2:
-                for cap in itb_util.Capabilite:
+                for cap in itb_util_core.Capabilite:
                     if self.client_capabilities & cap:
                         LOGGER.debug('capability: %s %s',
                                      str(cap), format(int(cap), '016b'))
@@ -10282,7 +10283,7 @@ class TypingBoosterEngine(IBus.Engine):
                 LOGGER.debug('Direct input mode')
             disabled = True
         elif (self._disable_in_terminals
-              and itb_util.detect_terminal(self._input_purpose, self._client_info.client)):
+              and itb_util_gui.detect_terminal(self._input_purpose, self._client_info.client)):
             if self._debug_level > 0:
                 LOGGER.debug(
                     'Terminal detected and the option '
@@ -10290,7 +10291,7 @@ class TypingBoosterEngine(IBus.Engine):
             disabled = True
         elif (self.has_osk
               and
-              (self._input_purpose in [itb_util.InputPurpose.TERMINAL.value])):
+              (self._input_purpose in [itb_util_gui.InputPurpose.TERMINAL.value])):
             if self._debug_level > 0:
                 LOGGER.debug(
                     'OSK is visible and input purpose is TERMINAL, '
@@ -10298,8 +10299,8 @@ class TypingBoosterEngine(IBus.Engine):
                     'OSK completion buttons.')
             disabled = True
         elif (self._input_purpose
-              in [itb_util.InputPurpose.PASSWORD.value,
-                  itb_util.InputPurpose.PIN.value]):
+              in [itb_util_gui.InputPurpose.PASSWORD.value,
+                  itb_util_gui.InputPurpose.PIN.value]):
             if self._debug_level > 0:
                 LOGGER.debug(
                     'Disable because of input purpose PASSWORD or PIN')
@@ -10335,7 +10336,7 @@ class TypingBoosterEngine(IBus.Engine):
             return self._return_true(key)
         return self._return_false(key)
 
-    def _process_key_event(self, key: itb_util.KeyEvent) -> bool:
+    def _process_key_event(self, key: itb_util_core.KeyEvent) -> bool:
         '''Internal method to process key event
 
         :return: True if the key event has been completely handled by
@@ -10454,7 +10455,7 @@ class TypingBoosterEngine(IBus.Engine):
                           or key.mod1 # mod1: Usually Alt
                           or key.mod4 # mod4: Usually Super, Hyper
                           or key.super or key.hyper or key.meta))
-                 or (itb_util.msymbol_triggers_commit(key.msymbol)
+                 or (itb_util_core.msymbol_triggers_commit(key.msymbol)
                      and not self._has_transliteration([key.msymbol])))):
                 # See:
                 # https://bugzilla.redhat.com/show_bug.cgi?id=1351748
@@ -10850,7 +10851,7 @@ class TypingBoosterEngine(IBus.Engine):
             candidate_was_selected = False
             if self._lookup_table.is_cursor_visible():
                 candidate_was_selected = True
-            left_steps = itb_util.estimate_left_steps(
+            left_steps = itb_util_core.estimate_left_steps(
                 commit_string, self.get_caret(extra_msymbol=key.msymbol))
             if not input_phrase:
                 input_phrase = commit_string
@@ -10916,11 +10917,11 @@ class TypingBoosterEngine(IBus.Engine):
                 if self._auto_capitalize:
                     if self._new_sentence:
                         self._current_case_mode = 'capitalize'
-                    if self._input_hints & itb_util.InputHints.UPPERCASE_WORDS:
+                    if self._input_hints & itb_util_gui.InputHints.UPPERCASE_WORDS:
                         self._current_case_mode = 'capitalize'
-                    if self._input_hints & itb_util.InputHints.UPPERCASE_CHARS:
+                    if self._input_hints & itb_util_gui.InputHints.UPPERCASE_CHARS:
                         self._current_case_mode = 'upper'
-                    if self._input_hints & itb_util.InputHints.LOWERCASE:
+                    if self._input_hints & itb_util_gui.InputHints.LOWERCASE:
                         self._current_case_mode = 'lower'
             if (key.msymbol in ('G- ', 'G-_')
                 and not self._has_transliteration([key.msymbol])):
@@ -10953,7 +10954,7 @@ class TypingBoosterEngine(IBus.Engine):
                 and key.msymbol in self._auto_commit_characters
                 and input_phrase
                 and input_phrase[-1] == key.msymbol
-                and itb_util.contains_letter(input_phrase)
+                and itb_util_core.contains_letter(input_phrase)
             ):
                 if self._debug_level > 1:
                     LOGGER.debug(
@@ -11084,7 +11085,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._debug_level > 1:
             LOGGER.debug(
                 'self._client_info.client=%r\n', self._client_info.client)
-        self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
+        self._keyvals_to_keycodes = itb_util_gui.KeyvalsToKeycodes()
         if self._debug_level > 2:
             for keyval in self._keyvals_to_keycodes.keyvals():
                 name = IBus.keyval_name(keyval)
@@ -11186,7 +11187,7 @@ class TypingBoosterEngine(IBus.Engine):
             input_phrase = self._transliterated_strings[
                 self.get_current_imes()[0]]
         if not commit_phrase:
-            typed_string = itb_util.normalize_nfc_and_composition_exclusions(
+            typed_string = itb_util_core.normalize_nfc_and_composition_exclusions(
                 input_phrase)
             first_candidate = ''
             if self._candidates:
@@ -11203,14 +11204,14 @@ class TypingBoosterEngine(IBus.Engine):
             else:
                 commit_phrase = first_candidate
         # commit_phrase should always be in NFC:
-        commit_phrase = itb_util.normalize_nfc_and_composition_exclusions(
+        commit_phrase = itb_util_core.normalize_nfc_and_composition_exclusions(
             commit_phrase)
-        stripped_input_phrase = itb_util.strip_token(input_phrase)
-        stripped_commit_phrase = itb_util.strip_token(commit_phrase)
+        stripped_input_phrase = itb_util_core.strip_token(input_phrase)
+        stripped_commit_phrase = itb_util_core.strip_token(commit_phrase)
         if (self._off_the_record
             or self._record_mode == 3
             or self._hide_input
-            or self._input_hints & itb_util.InputHints.PRIVATE):
+            or self._input_hints & itb_util_gui.InputHints.PRIVATE):
             if self._debug_level > 1:
                 LOGGER.debug('Privacy: NOT recording and pushing context.')
             return
@@ -11382,7 +11383,7 @@ class TypingBoosterEngine(IBus.Engine):
             return
         if (self.has_surrounding_text
             and
-            self._input_purpose not in [itb_util.InputPurpose.TERMINAL.value]):
+            self._input_purpose not in [itb_util_gui.InputPurpose.TERMINAL.value]):
             text = self._surrounding_text.text
             cursor_pos = self._surrounding_text.cursor_pos
             text_to_cursor = text[:cursor_pos]
@@ -11431,14 +11432,14 @@ class TypingBoosterEngine(IBus.Engine):
         self._input_hints = hints
         if self._debug_level > 1:
             if (self._input_purpose
-                not in [int(x) for x in list(itb_util.InputPurpose)]):
+                not in [int(x) for x in list(itb_util_gui.InputPurpose)]):
                 LOGGER.debug('self._input_purpose = %s (Unknown)',
                              self._input_purpose)
-            for input_purpose in list(itb_util.InputPurpose):
+            for input_purpose in list(itb_util_gui.InputPurpose):
                 if self._input_purpose == input_purpose:
                     LOGGER.debug('self._input_purpose = %s (%s)',
                                  self._input_purpose, str(input_purpose))
-            for hint in itb_util.InputHints:
+            for hint in itb_util_gui.InputHints:
                 if self._input_hints & hint:
                     LOGGER.debug('hint: %s %s',
                                  str(hint), format(int(hint), '016b'))
@@ -11574,7 +11575,7 @@ class TypingBoosterEngine(IBus.Engine):
         :param settings: The settings object
         :param key: The key of the setting which has changed
         '''
-        value = itb_util.variant_to_value(self._gsettings.get_value(key))
+        value = itb_util_core.variant_to_value(self._gsettings.get_value(key))
         LOGGER.debug('Settings changed: key=%s value=%s\n', key, value)
         if (key in self._settings_dict
             and 'set_function' in self._settings_dict[key]):

@@ -58,7 +58,7 @@ except Exception: # pylint: disable=broad-exception-caught
 from i18n import _, init as i18n_init
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'engine'))
 # pylint: disable=import-error, wrong-import-order
-import itb_util
+import itb_util_core
 from itb_gtk import Gtk # type: ignore
 if TYPE_CHECKING:
     # These imports are only for type checkers (mypy). They must not be
@@ -640,7 +640,7 @@ def download_dictionaries_sequentially_async(
             url_list.append({
                 'url': f'{url_base}{suffix}',
                 'dest':
-                itb_util.xdg_save_data_path('ibus-typing-booster/data/')
+                itb_util_core.xdg_save_data_path('ibus-typing-booster/data/')
                 + language + suffix})
 
     results: Dict[str, bool] = {}
@@ -823,7 +823,7 @@ def download_dictionaries_with_dialog(
             progressbar.set_fraction(1.0)
             progressbar.set_text(f'{url_count}/{url_count} (100%)')
             ensure_enchant_symlinks(
-                itb_util.xdg_save_data_path('ibus-typing-booster/data/'))
+                itb_util_core.xdg_save_data_path('ibus-typing-booster/data/'))
         elif status == 'cancelled':
             end = textbuffer.get_end_iter()
             textbuffer.insert(end, '⚠️ Download cancelled by user.\n')

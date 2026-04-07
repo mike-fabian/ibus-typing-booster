@@ -61,10 +61,10 @@ if TYPE_CHECKING:
     from gi.repository import Gtk, Gdk  # type: ignore
     # pylint: enable=reimported
 
-IMPORT_ITB_UTIL_SUCCESSFUL = False
+IMPORT_ITB_UTIL_CORE_SUCCESSFUL = False
 try:
-    import itb_util
-    IMPORT_ITB_UTIL_SUCCESSFUL = True
+    import itb_util_core
+    IMPORT_ITB_UTIL_CORE_SUCCESSFUL = True
 except (ImportError,):
     pass
 IMPORT_HUNSPELL_SUCCESSFUL = False
@@ -104,10 +104,10 @@ def printerr(sentence: str) -> None:
     'XDG_SESSION_TYPE is neither "x11" nor "wayland".')
 @unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
 @unittest.skipUnless(
-    itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
+    itb_util_core.get_hunspell_dictionary_wordlist('fr_FR')[0],
     'Skipping because no fr_FR dictionary could be found. ')
 @unittest.skipUnless(
-    itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+    itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
     'Skipping because no en_US dictionary could be found. ')
 class SimpleGtk3TestCase(unittest.TestCase):
     glib_main_loop: Optional[GLib.MainLoop] = None
@@ -255,7 +255,7 @@ class SimpleGtk3TestCase(unittest.TestCase):
         if engine_name != 'testTyping-booster':
             return None
         if (not IMPORT_HUNSPELL_SUCCESSFUL
-            or not IMPORT_ITB_UTIL_SUCCESSFUL
+            or not IMPORT_ITB_UTIL_CORE_SUCCESSFUL
             or not IMPORT_TABSQLITEDB_SUCCESSFUL):
             with self.subTest(i='create-engine'):
                 self.fail('NG: ibus-typing-booster not installed?')

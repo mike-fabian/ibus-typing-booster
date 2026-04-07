@@ -62,7 +62,7 @@ os.environ['HOME'] = _TEMPDIR.name
 # pylint: disable=wrong-import-position
 sys.path.insert(0, "../engine")
 # pylint: disable=import-error
-import itb_util
+import itb_util_core
 import tabsqlitedb
 # pylint: disable=import-error
 sys.path.pop(0)
@@ -148,7 +148,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
         total_lines = len(lines)
         for line in lines:
             current_line += 1
-            for token in itb_util.tokenize(line):
+            for token in itb_util_core.tokenize(line):
                 length_typed = 0
                 length_saved = 0
                 percent_saved = 0.0
@@ -191,7 +191,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
         self.assertEqual(True, True)
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')
     @unittest.skipUnless(
         testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
@@ -214,7 +214,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
                 'baltim', p_phrase='foo', pp_phrase='bar')[0].phrase)
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')
     @unittest.skipUnless(
         testutils.enchant_sanity_test(language='cs_CZ', word='Praha'),
@@ -261,10 +261,10 @@ class TabSqliteDbTestCase(unittest.TestCase):
             self.database.phrase_exists('suoicodilaipxecitsiligarfilacrepus'))
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('fr_FR')[0],
         'Skipping because no fr_FR hunspell dictionary could be found.')
     @unittest.skipUnless(
         IMPORT_DISTRO_SUCCESSFUL
@@ -319,10 +319,10 @@ class TabSqliteDbTestCase(unittest.TestCase):
         self.assertEqual(-51.3, round(stats['percent'], 1))
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('fr_FR')[0],
         'Skipping because no fr_FR hunspell dictionary could be found.')
     @unittest.skipUnless(
         IMPORT_DISTRO_SUCCESSFUL
@@ -385,7 +385,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
         self.assertEqual(-50.0, round(stats['percent'], 1))
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('fr_FR')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('fr_FR')[0],
         'Skipping because no fr_FR hunspell dictionary could be found.')
     @unittest.skipUnless(
         IMPORT_DISTRO_SUCCESSFUL

@@ -30,7 +30,7 @@ import time
 import sqlite3
 import argparse
 
-import itb_util
+import itb_util_core
 
 def parse_args() -> Any:
     '''
@@ -172,7 +172,7 @@ class DbContents:
         for row in self._original_rows:
             user_freq = row[5]
             if (index > self._max_rows
-                and user_freq < itb_util.SHORTCUT_USER_FREQ):
+                and user_freq < itb_util_core.SHORTCUT_USER_FREQ):
                 number_delete_above_max += 1
                 if self._verbose:
                     self._print_row(row, prefix='1st pass delete: ')
@@ -214,7 +214,7 @@ class DbContents:
         for row in rows_kept:
             user_freq = row[5]
             if (index > index_decay
-                and user_freq < itb_util.SHORTCUT_USER_FREQ):
+                and user_freq < itb_util_core.SHORTCUT_USER_FREQ):
                 if user_freq == 1:
                     number_of_rows_to_delete += 1
                     if self._verbose:

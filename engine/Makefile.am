@@ -42,7 +42,8 @@ engine_table_PYTHON = \
 	hunspell_suggest.py \
 	tabsqlitedb.py \
 	itb_gtk.py \
-	itb_util.py \
+	itb_util_core.py \
+	itb_util_gui.py \
 	itb_emoji.py \
 	itb_nltk.py \
 	itb_pango.py \

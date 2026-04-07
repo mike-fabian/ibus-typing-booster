@@ -44,7 +44,8 @@ GLib.set_prgname('InputPurposeTest')
 
 # pylint: disable=import-error
 sys.path = [sys.path[0]+'/../engine'] + sys.path
-import itb_util
+import itb_util_core
+import itb_util_gui
 from itb_gtk import Gtk, GTK_MAJOR # type: ignore
 if TYPE_CHECKING:
     # These imports are only for type checkers (mypy). They must not be
@@ -84,14 +85,14 @@ class InputPurposeTest(Gtk.Window): # type: ignore
 
         margin = 5
 
-        self._input_purpose = itb_util.InputPurpose.FREE_FORM
+        self._input_purpose = itb_util_gui.InputPurpose.FREE_FORM
         input_purpose_combobox = Gtk.ComboBox()
         input_purpose_combobox.set_margin_start(margin)
         input_purpose_combobox.set_margin_end(margin)
         input_purpose_combobox.set_margin_top(margin)
         input_purpose_combobox.set_margin_bottom(margin)
         self._input_purpose_store = Gtk.ListStore(str, int)
-        for purpose in list(itb_util.InputPurpose):
+        for purpose in list(itb_util_gui.InputPurpose):
             self._input_purpose_store.append([purpose.name, purpose])
         input_purpose_combobox.set_model(self._input_purpose_store)
         renderer_text = Gtk.CellRendererText()
@@ -105,10 +106,10 @@ class InputPurposeTest(Gtk.Window): # type: ignore
 
         add_child(main_container, input_purpose_combobox)
 
-        self._input_hints = itb_util.InputHints.NONE
+        self._input_hints = itb_util_gui.InputHints.NONE
 
         input_hints_checkbuttons: Dict[str, Gtk.CheckButton] = {}
-        for hint in itb_util.InputHints:
+        for hint in itb_util_gui.InputHints:
             if hint.name is None or hint.name == 'NONE':
                 continue
             input_hints_checkbuttons[hint.name] = Gtk.CheckButton(
@@ -196,12 +197,12 @@ class InputPurposeTest(Gtk.Window): # type: ignore
         if tree_iter is not None:
             model = widget.get_model()
             self._input_purpose = model[tree_iter][1]
-            if self._input_purpose not in list(itb_util.InputPurpose):
+            if self._input_purpose not in list(itb_util_gui.InputPurpose):
                 LOGGER.info(
                     'self._input_purpose = %s (Unknown)',
                     self._input_purpose)
                 return
-            for input_purpose in list(itb_util.InputPurpose):
+            for input_purpose in list(itb_util_gui.InputPurpose):
                 if self._input_purpose == input_purpose:
                     LOGGER.info(
                         'self._input_purpose = %s (%s)',
@@ -251,7 +252,7 @@ class InputPurposeTest(Gtk.Window): # type: ignore
             LOGGER.error(
                 'input_hints_entry != input_hints_text_view: %s %s',
                 input_hints_entry, input_hints_text_view)
-        for input_hint in list(itb_util.InputHints):
+        for input_hint in list(itb_util_gui.InputHints):
             if self._input_hints & input_hint:
                 LOGGER.info(
                     'hint: %s %s',
@@ -286,7 +287,7 @@ if __name__ == '__main__':
     LOGGER.addHandler(LOG_HANDLER_STREAM)
     LOGGER.info('********** STARTING **********')
 
-    itb_util.set_program_name('inputpurposetes') # only 15 characters
+    itb_util_core.set_program_name('inputpurposetes') # only 15 characters
 
     INPUT_PURPOSE_TEST = InputPurposeTest()
     GLIB_MAIN_LOOP = GLib.MainLoop()

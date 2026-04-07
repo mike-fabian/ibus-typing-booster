@@ -41,7 +41,7 @@ import unicodedata
 import html
 import logging
 import gettext
-import itb_util
+import itb_util_core
 
 DOMAINNAME = 'ibus-typing-booster'
 
@@ -102,7 +102,7 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 
 DATADIR = os.path.join(os.path.dirname(__file__), '../data')
 # USER_DATADIR will be “~/.local/share/ibus-typing-booster/data” by default
-USER_DATADIR = itb_util.xdg_save_data_path('ibus-typing-booster/data')
+USER_DATADIR = itb_util_core.xdg_save_data_path('ibus-typing-booster/data')
 UNICODE_DATA_DIRNAMES = (
     USER_DATADIR, DATADIR,
     # On Fedora, the “unicode-ucd” package has
@@ -400,11 +400,11 @@ def find_cldr_annotation_path(language: str) -> str:
     :param language: The language to search the annotation file for
     '''
     dirnames = CLDR_ANNOTATION_DIRNAMES
-    locale = itb_util.parse_locale(language)
+    locale = itb_util_core.parse_locale(language)
     acceptable_match = locale.language
     if locale.script:
         acceptable_match += '_' + locale.script
-    for _language in itb_util.expand_languages([language]):
+    for _language in itb_util_core.expand_languages([language]):
         basenames = (_language + '.xml',)
         (path, dummy_open_function) = _find_path_and_open_function(
             dirnames, basenames, subdir='annotations')
@@ -427,7 +427,7 @@ def find_cldr_annotation_path(language: str) -> str:
 @functools.lru_cache(maxsize=None)
 def _match_classic(label: str, match_string: str) -> float:
     '''Matches a label from the emoji data against the query string.'''
-    label = itb_util.remove_accents(label.lower())
+    label = itb_util_core.remove_accents(label.lower())
     total_score = 0.0
     label_words = set(label.split())
     label_no_spaces = label.replace(' ', '')
@@ -476,7 +476,7 @@ def _match_classic(label: str, match_string: str) -> float:
 @functools.lru_cache(maxsize=None)
 def _match_rapidfuzz(label: str, match_string: str) -> float:
     '''Matches a label from the emoji data against the query string using rapidfuzz.'''
-    label = itb_util.remove_accents(label.lower())
+    label = itb_util_core.remove_accents(label.lower())
     return rapidfuzz.fuzz.token_set_ratio(label, match_string)
 
 class EmojiMatcher():
@@ -510,7 +510,7 @@ class EmojiMatcher():
         '''
         self._languages = languages
         self._gettext_translations: Dict[str, Any] = {}
-        for language in itb_util.expand_languages(self._languages):
+        for language in itb_util_core.expand_languages(self._languages):
             mo_file = gettext.find(DOMAINNAME, languages=[language])
             if (mo_file
                     and
@@ -541,7 +541,7 @@ class EmojiMatcher():
                     self._enchant_dicts.append(enchant.Dict(language))
         self._emoji_dict: Dict[Tuple[str, str], Dict[str, Any]] = {}
         self._candidate_cache: Dict[
-            Tuple[str, int, str, bool], List[itb_util.PredictionCandidate]] = {}
+            Tuple[str, int, str, bool], List[itb_util_core.PredictionCandidate]] = {}
         self._match_function: Callable[[Any, Any], Any] = _match_classic
         self._good_match_score: float = 60.0
         self.set_match_algorithm(match_algorithm)
@@ -564,7 +564,7 @@ class EmojiMatcher():
         self._load_unicode_emoji_test()
         self._load_emojione_data()
         if cldr_data:
-            for language in itb_util.expand_languages(self._languages):
+            for language in itb_util_core.expand_languages(self._languages):
                 self._load_cldr_annotation_data(language, 'annotations')
                 self._load_cldr_annotation_data(language, 'annotationsDerived')
         self._load_unicode_blocks()
@@ -1447,7 +1447,7 @@ class EmojiMatcher():
             N_('travel'),
         ]
 
-        for language in itb_util.expand_languages(self._languages):
+        for language in itb_util_core.expand_languages(self._languages):
             if self._gettext_translations[language]:
                 translator = self._gettext_translations[language].gettext
                 translated_categories = []
@@ -1544,7 +1544,7 @@ class EmojiMatcher():
             query_string: str,
             match_limit: int = 20,
             trigger_characters: str  = '',
-            spellcheck: bool = False) -> List[itb_util.PredictionCandidate]:
+            spellcheck: bool = False) -> List[itb_util_core.PredictionCandidate]:
         # pylint: disable=line-too-long
         '''
         Find a list of emoji which best match a query string.
@@ -1925,7 +1925,7 @@ class EmojiMatcher():
             query_string: str,
             match_limit: int = 20,
             trigger_characters: str  = '',
-            spellcheck: bool = False) -> List[itb_util.PredictionCandidate]:
+            spellcheck: bool = False) -> List[itb_util_core.PredictionCandidate]:
         # Remove the trigger characters from the beginning and end of
         # the query string:
         if query_string[:1] and query_string[:1] in trigger_characters:
@@ -1969,7 +1969,7 @@ class EmojiMatcher():
                             if len(x) > 2
                         }
                         match_string += f' {" ".join(suggestions)}'
-        match_string = itb_util.remove_accents(match_string.lower())
+        match_string = itb_util_core.remove_accents(match_string.lower())
         candidates = []
         for emoji_key, emoji_value in self._emoji_dict.items():
             if (not spellcheck
@@ -2029,7 +2029,7 @@ class EmojiMatcher():
                 else:
                     display_name = self.name(emoji_key[0])
                 if (len(emoji_key[0]) == 1
-                        and itb_util.is_invisible(emoji_key[0])):
+                        and itb_util_core.is_invisible(emoji_key[0])):
                     # Add the code point to the display name of
                     # “invisible” characters:
                     display_name = (f'U+{ord(emoji_key[0]):04X} '
@@ -2048,7 +2048,7 @@ class EmojiMatcher():
                     display_name += ' [' + keyword_good_match + ']'
                 if block_good_match not in display_name:
                     display_name += ' {' + block_good_match + '}'
-                candidates.append(itb_util.PredictionCandidate(
+                candidates.append(itb_util_core.PredictionCandidate(
                     phrase=self.variation_selector_normalize(
                         emoji_key[0],
                         self._variation_selector),
@@ -2071,7 +2071,7 @@ class EmojiMatcher():
                         pass
                 if name:
                     name = ' ' + name
-                candidates.append(itb_util.PredictionCandidate(
+                candidates.append(itb_util_core.PredictionCandidate(
                     phrase=char,
                     user_freq=self._good_match_score * 10.0,
                     comment=f'U+{query_string.upper()}{name}'))
@@ -2114,7 +2114,7 @@ class EmojiMatcher():
                 (emoji_value.get(field, []) for field in fields)),
             [emoji_value.get('block', '')])
         return {
-            itb_util.remove_accents(word)
+            itb_util_core.remove_accents(word)
             for label in all_labels if label
             for word in label.lower().split()
         }
@@ -2152,7 +2152,7 @@ class EmojiMatcher():
         if language:
             return list(self._emoji_dict.get(
                 (emoji_string, language), {}).get('names', []))
-        for _language in itb_util.expand_languages(self._languages):
+        for _language in itb_util_core.expand_languages(self._languages):
             names = list(self._emoji_dict.get(
                 (emoji_string, _language), {}).get('names', []))
             if names:
@@ -2273,7 +2273,7 @@ class EmojiMatcher():
         if language:
             return list(self._emoji_dict.get(
                 (emoji_string, language), {}).get('keywords', []))
-        for _language in itb_util.expand_languages(self._languages):
+        for _language in itb_util_core.expand_languages(self._languages):
             keywords = list(self._emoji_dict.get(
                     (emoji_string, _language), {}).get('keywords', []))
             if keywords:
@@ -2310,7 +2310,7 @@ class EmojiMatcher():
         if language:
             return list(self._emoji_dict.get(
                 (emoji_string, language), {}).get('categories', []))
-        for _language in itb_util.expand_languages(self._languages):
+        for _language in itb_util_core.expand_languages(self._languages):
             categories = list(self._emoji_dict.get(
                 (emoji_string, _language), {}).get('categories', []))
             if categories:
@@ -2321,7 +2321,7 @@ class EmojiMatcher():
             self,
             emoji_string: str,
             match_limit: int = 1000,
-            show_keywords: bool = True) -> List[itb_util.PredictionCandidate]:
+            show_keywords: bool = True) -> List[itb_util_core.PredictionCandidate]:
         # pylint: disable=line-too-long
         '''Find similar emojis
 
@@ -2461,7 +2461,7 @@ class EmojiMatcher():
             emoji_string, variation_selector='')
         candidate_scores: Dict[Tuple[str, str, str], List[str]] = {}
         original_labels: Dict[str, Set[str]] = {}
-        expanded_languages = itb_util.expand_languages(self._languages)
+        expanded_languages = itb_util_core.expand_languages(self._languages)
         label_keys = ('ucategories', 'categories', 'keywords')
         for language in expanded_languages:
             original_labels[language] = set()
@@ -2496,7 +2496,7 @@ class EmojiMatcher():
             else:
                 similar_name = self.name(similar_string)
             if (len(similar_string) == 1
-                    and itb_util.is_invisible(similar_string)):
+                    and itb_util_core.is_invisible(similar_string)):
                 # Add the code point to the display name of
                 # “invisible” characters:
                 similar_name = (f'U+{ord(similar_string):04X} '
@@ -2522,7 +2522,7 @@ class EmojiMatcher():
                                 candidate_scores[scores_key].append(label)
                             else:
                                 candidate_scores[scores_key] = [label]
-        candidates: List[itb_util.PredictionCandidate] = [] #List[Tuple[str, str, float]] = []
+        candidates: List[itb_util_core.PredictionCandidate] = [] #List[Tuple[str, str, float]] = []
         cldr_order_emoji_string = self.cldr_order(emoji_string)
         for csi in sorted(
                 candidate_scores.items(),
@@ -2544,7 +2544,7 @@ class EmojiMatcher():
             else:
                 name = csi[0][2]
             score = len(csi[1])
-            candidates.append(itb_util.PredictionCandidate(
+            candidates.append(itb_util_core.PredictionCandidate(
                 phrase=emoji, user_freq=float(score), comment=name))
         return candidates
 
@@ -3048,8 +3048,8 @@ def main() -> None:
         stats.print_stats('enchant', 25)
 
     LOGGER.info(
-        'itb_util.remove_accents() cache info: %s',
-        itb_util.remove_accents.cache_info())
+        'itb_util_core.remove_accents() cache info: %s',
+        itb_util_core.remove_accents.cache_info())
     LOGGER.info(
         'EmojiMatcher.variation_selector_normalize() cache info: %s',
         EmojiMatcher.variation_selector_normalize.cache_info()) # pylint: disable=no-value-for-parameter

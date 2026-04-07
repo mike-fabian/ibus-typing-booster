@@ -42,7 +42,7 @@ if TYPE_CHECKING:
     # pylint: disable=reimported
     from gi.repository import Gdk  # type: ignore
     # pylint: enable=reimported
-import itb_util
+import itb_util_gui
 # pylint: enable=import-error, wrong-import-position
 sys.path.pop(0)
 
@@ -52,7 +52,7 @@ sys.path.pop(0)
 @unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
 class KeyvalsToKeycodesTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        self._keyvals_to_keycodes = itb_util.KeyvalsToKeycodes()
+        self._keyvals_to_keycodes = itb_util_gui.KeyvalsToKeycodes()
 
     def tearDown(self) -> None:
         pass

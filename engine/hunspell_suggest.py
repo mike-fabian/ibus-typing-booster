@@ -33,7 +33,7 @@ import sys
 import unicodedata
 import functools
 import logging
-import itb_util
+import itb_util_core
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -113,12 +113,12 @@ class Dictionary():
             LOGGER.debug('load_dictionary() ...\n')
         (self.dic_path,
          self.encoding,
-         self.words) = itb_util.get_hunspell_dictionary_wordlist(self.name)
+         self.words) = itb_util_core.get_hunspell_dictionary_wordlist(self.name)
         if self.words:
-            if self.language in itb_util.ACCENT_LANGUAGES:
+            if self.language in itb_util_core.ACCENT_LANGUAGES:
                 self.word_pairs = [
-                    (x, itb_util.remove_accents(
-                        x, keep=itb_util.ACCENT_LANGUAGES[self.language]))
+                    (x, itb_util_core.remove_accents(
+                        x, keep=itb_util_core.ACCENT_LANGUAGES[self.language]))
                     for x in self.words
                 ]
             for word in self.words:
@@ -285,7 +285,7 @@ class Dictionary():
         # necessary, neither for Python2 nor for Python3.
         return [
             unicodedata.normalize(
-                itb_util.NORMALIZATION_FORM_INTERNAL, x)
+                itb_util_core.NORMALIZATION_FORM_INTERNAL, x)
             for x in
             self.enchant_dict.suggest(unicodedata.normalize('NFC', word))
             ]
@@ -302,7 +302,7 @@ class Dictionary():
         # pyhunspell needs its input passed in dictionary encoding.
         return [
             unicodedata.normalize(
-                itb_util.NORMALIZATION_FORM_INTERNAL, x)
+                itb_util_core.NORMALIZATION_FORM_INTERNAL, x)
             for x in
             self.pyhunspell_object.suggest(
                 unicodedata.normalize('NFC', word).encode(
@@ -320,7 +320,7 @@ class Dictionary():
             return []
         return [
             unicodedata.normalize(
-                itb_util.NORMALIZATION_FORM_INTERNAL, x)
+                itb_util_core.NORMALIZATION_FORM_INTERNAL, x)
             for x in
             self.voikko.suggest(unicodedata.normalize('NFC', word))
             ]
@@ -707,7 +707,7 @@ class Hunspell:
             return []
         # make sure input_phrase is in the internal normalization form (NFD):
         input_phrase = unicodedata.normalize(
-            itb_util.NORMALIZATION_FORM_INTERNAL, input_phrase)
+            itb_util_core.NORMALIZATION_FORM_INTERNAL, input_phrase)
 
         suggested_words: Dict[str, Dict[str, int]] = {}
         for dictionary in self._dictionaries:
@@ -715,9 +715,9 @@ class Hunspell:
             suggested_words[name] = {}
             if dictionary.words:
                 if dictionary.word_pairs:
-                    input_phrase_no_accents = itb_util.remove_accents(
+                    input_phrase_no_accents = itb_util_core.remove_accents(
                         input_phrase,
-                        keep=itb_util.ACCENT_LANGUAGES[dictionary.language])
+                        keep=itb_util_core.ACCENT_LANGUAGES[dictionary.language])
                 # If the input phrase is longer than than the maximum
                 # word length in a dictionary, don’t try
                 # complete it, it just wastes time then.
@@ -755,7 +755,7 @@ class Hunspell:
                     suggested_words[name].update(suffixed_suggestions)
                     extra_suggestions = (
                         unicodedata.normalize(
-                            itb_util.NORMALIZATION_FORM_INTERNAL, x)
+                            itb_util_core.NORMALIZATION_FORM_INTERNAL, x)
                         for x in
                         dictionary.spellcheck_suggest(input_phrase)
                     )
@@ -763,15 +763,15 @@ class Hunspell:
                         if suggestion not in suggested_words[name]:
                             if (dictionary.word_pairs
                                 and
-                                itb_util.remove_accents(
+                                itb_util_core.remove_accents(
                                     suggestion,
-                                    keep=itb_util.ACCENT_LANGUAGES[
+                                    keep=itb_util_core.ACCENT_LANGUAGES[
                                         dictionary.language])
                                 == input_phrase_no_accents):
                                 suggested_words[name][suggestion] = 0
                             else:
                                 suggested_words[name][suggestion] = -(index + 1)
-        suggested_words_total = itb_util.merge_dicts_max(
+        suggested_words_total = itb_util_core.merge_dicts_max(
             *suggested_words.values())
         sorted_suggestions = sorted(
             suggested_words_total.items(),
@@ -818,8 +818,8 @@ def main() -> None:
         stats.print_stats('hunspell', 25)
         stats.print_stats('enchant', 25)
 
-    LOGGER.info('itb_util.remove_accents() cache info: %s',
-                itb_util.remove_accents.cache_info())
+    LOGGER.info('itb_util_core.remove_accents() cache info: %s',
+                itb_util_core.remove_accents.cache_info())
 
     sys.exit(failed)
 

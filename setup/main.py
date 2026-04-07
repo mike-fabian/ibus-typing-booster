@@ -72,7 +72,8 @@ IS_LIBVOIKKO_AVAILABLE = importlib.util.find_spec('libvoikko') is not None
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'engine'))
 import m17n_translit
 import tabsqlitedb
-import itb_util
+import itb_util_core
+import itb_util_gui
 import itb_sound
 import itb_emoji
 import itb_version
@@ -129,9 +130,9 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 GLIB_MAIN_LOOP: Optional[GLib.MainLoop] = None
 
 @functools.lru_cache(maxsize=1)
-def get_m17n_db_info() -> itb_util.M17nDbInfo:
+def get_m17n_db_info() -> itb_util_core.M17nDbInfo:
     '''Lazy loading of the m17n-db info'''
-    return itb_util.M17nDbInfo()
+    return itb_util_core.M17nDbInfo()
 
 def arg_parser() -> Any:
     '''
@@ -184,7 +185,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._m17n_ime_name = ''
         if self._engine_name != 'typing-booster':
             title = self._engine_name + ' ' + _('Preferences') + ' 🚀'
-            match = itb_util.M17N_ENGINE_NAME_PATTERN.search(self._engine_name)
+            match = itb_util_core.M17N_ENGINE_NAME_PATTERN.search(self._engine_name)
             if not match:
                 raise ValueError('Invalid engine name.')
             self._m17n_ime_lang = match.group('lang')
@@ -993,7 +994,7 @@ class SetupUI(Gtk.Window): # type: ignore
             _('The ibus keymap to use when forcing an IBus keymap while '
               'Typing Booster is active.'))
         self._ibus_keymap_store = Gtk.ListStore(str, str)
-        for keymap in itb_util.AVAILABLE_IBUS_KEYMAPS:
+        for keymap in itb_util_core.AVAILABLE_IBUS_KEYMAPS:
             liststore_append(
                 self._ibus_keymap_store,
                 # Translators: “English” is used here to indicate
@@ -1270,8 +1271,8 @@ class SetupUI(Gtk.Window): # type: ignore
             # Translators: Tooltip for a button used to set the list of
             # dictionaries to the default for the current locale.
             _('Set dictionaries to the default for the current locale.')
-            + f' (LC_CTYPE={itb_util.get_effective_lc_ctype()} '
-            f'→ {itb_util.dictionaries_str_to_list("")})')
+            + f' (LC_CTYPE={itb_util_core.get_effective_lc_ctype()} '
+            f'→ {itb_util_core.dictionaries_str_to_list("")})')
         if self._engine_name != 'typing-booster':
             dictionaries_default_button_tooltip_text = '→ None'
         self._dictionaries_default_button = Gtk.Button(
@@ -1291,7 +1292,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionaries_listbox_selected_dictionary_index = -1
         self._dictionary_names: List[str] = []
         dictionary = self._settings_dict['dictionary']['user']
-        self._dictionary_names = itb_util.dictionaries_str_to_list(dictionary)
+        self._dictionary_names = itb_util_core.dictionaries_str_to_list(dictionary)
         if ','.join(self._dictionary_names) != dictionary:
             # Value changed due to normalization or getting the locale
             # defaults, save it back to settings:
@@ -1378,8 +1379,8 @@ class SetupUI(Gtk.Window): # type: ignore
             # Translators: Tooltip for a button used to set the list of
             # input methods to the default for the current locale.
             _('Set input methods to the default for the current locale.')
-            + f' (LC_CTYPE={itb_util.get_effective_lc_ctype()} '
-            f'→ {itb_util.input_methods_str_to_list("")}')
+            + f' (LC_CTYPE={itb_util_core.get_effective_lc_ctype()} '
+            f'→ {itb_util_core.input_methods_str_to_list("")}')
         if self._engine_name != 'typing-booster':
             input_methods_default_button_tooltip_text = (
                 f'→ {self._m17n_ime_lang}-{self._m17n_ime_name}')
@@ -1400,7 +1401,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._input_methods_listbox_selected_ime_index = -1
         self._current_imes: List[str] = []
         inputmethod = self._settings_dict['inputmethod']['user']
-        self._current_imes = itb_util.input_methods_str_to_list(inputmethod)
+        self._current_imes = itb_util_core.input_methods_str_to_list(inputmethod)
         if ','.join(self._current_imes) != inputmethod:
             # Value changed due to normalization or getting the locale
             # defaults, save it back to settings:
@@ -1791,7 +1792,7 @@ class SetupUI(Gtk.Window): # type: ignore
         self._candidates_delay_milliseconds_adjustment.set_increments(
             10.0, 100.0)
         self._candidates_delay_milliseconds_adjustment.set_range(
-            0.0, float(itb_util.UINT32_MAX))
+            0.0, float(itb_util_core.UINT32_MAX))
         self._candidates_delay_milliseconds_adjustment.set_value(
             int(self._settings_dict['candidatesdelaymilliseconds']['user']))
         self._candidates_delay_milliseconds_adjustment.connect(
@@ -2841,15 +2842,15 @@ class SetupUI(Gtk.Window): # type: ignore
         }
         if self._engine_name != 'typing-booster':
             symbol = ''
-            for pattern, pattern_symbol in itb_util.M17N_IME_SYMBOLS:
+            for pattern, pattern_symbol in itb_util_core.M17N_IME_SYMBOLS:
                 if re.fullmatch(pattern, self._engine_name):
                     symbol = pattern_symbol
                     break
             if symbol:
                 special_defaults['inputmodetruesymbol'] = symbol
                 special_defaults['inputmodefalsesymbol'] = f'•{symbol}'
-        elif (itb_util.is_desktop('gnome')
-              and itb_util.get_gnome_shell_version() >= (48, 3)):
+        elif (itb_util_core.is_desktop('gnome')
+              and itb_util_core.get_gnome_shell_version() >= (48, 3)):
             # If running on Gnome and gnome-shell is new enough to contain
             # https://gitlab.gnome.org/GNOME/gnome-shell/-/merge_requests/3753
             # make the input mode symbols black and white:
@@ -2857,7 +2858,7 @@ class SetupUI(Gtk.Window): # type: ignore
             special_defaults['inputmodefalsesymbol'] = '🐌\uFE0E'
         for key in schema.list_keys():
             if key == 'keybindings': # keybindings are special!
-                default_value = itb_util.variant_to_value(
+                default_value = itb_util_core.variant_to_value(
                     self._gsettings.get_default_value('keybindings'))
                 if self._engine_name != 'typing-booster':
                     default_value['toggle_input_mode_on_off'] = []
@@ -2867,18 +2868,18 @@ class SetupUI(Gtk.Window): # type: ignore
                 # default keybindings for this specific engine, into
                 # the user keybindings:
                 user_value = copy.deepcopy(default_value)
-                user_gsettings = itb_util.variant_to_value(
+                user_gsettings = itb_util_core.variant_to_value(
                     self._gsettings.get_user_value(key))
                 if not user_gsettings:
                     user_gsettings = {}
-                itb_util.dict_update_existing_keys(user_value, user_gsettings)
+                itb_util_core.dict_update_existing_keys(user_value, user_gsettings)
             else:
-                default_value = itb_util.variant_to_value(
+                default_value = itb_util_core.variant_to_value(
                     self._gsettings.get_default_value(key))
                 if (self._engine_name != 'typing-booster'
                     or key in ('inputmodetruesymbol', 'inputmodefalsesymbol')):
                     default_value = special_defaults.get(key, default_value)
-                user_value = itb_util.variant_to_value(
+                user_value = itb_util_core.variant_to_value(
                     self._gsettings.get_user_value(key))
                 if user_value is None:
                     user_value = default_value
@@ -2959,12 +2960,12 @@ class SetupUI(Gtk.Window): # type: ignore
         :param name: Name of the hunspell dictionary
         '''
         missing_dictionary = False
-        flag = itb_util.get_flag(name)
+        flag = itb_util_core.get_flag(name)
         row = name + ' ' + flag
-        if itb_util.is_right_to_left_messages():
+        if itb_util_core.is_right_to_left_messages():
             # Add U+200E LEFT-TO-RIGHT MARK to name and flag:
             row = chr(0x200F) + name + ' ' + chr(0x200F) + flag + ' '
-        language_description = itb_util.locale_language_description(name)
+        language_description = itb_util_core.locale_language_description(name)
         if language_description:
             row += ' ' + language_description
         row += ':  '
@@ -2972,7 +2973,7 @@ class SetupUI(Gtk.Window): # type: ignore
         dic_path: str = ''
         if name.split('_')[0] != 'fi':
             (dic_path,
-             dummy_aff_path) = itb_util.find_hunspell_dictionary(name)
+             dummy_aff_path) = itb_util_core.find_hunspell_dictionary(name)
             if dic_path:
                 row_item += '✔️'
             else:
@@ -2984,21 +2985,21 @@ class SetupUI(Gtk.Window): # type: ignore
             else:
                 row_item += '❌'
                 missing_dictionary = True
-        row += itb_util.bidi_embed(row_item)
+        row += itb_util_core.bidi_embed(row_item)
         row_item = ' ' + _('Emoji') + ' '
         cldr_path = itb_emoji.find_cldr_annotation_path(name)
         if cldr_path:
             row_item += '✔️'
         else:
             row_item += '❌'
-        row += itb_util.bidi_embed(row_item)
+        row += itb_util_core.bidi_embed(row_item)
         if self._settings_dict['keybindings']['user']['speech_recognition']:
             row_item = ' ' + _('Speech recognition') + ' '
-            if name in itb_util.GOOGLE_SPEECH_TO_TEXT_LANGUAGES:
+            if name in itb_util_core.GOOGLE_SPEECH_TO_TEXT_LANGUAGES:
                 row_item += '✔️'
             else:
                 row_item += '❌'
-            row += itb_util.bidi_embed(row_item)
+            row += itb_util_core.bidi_embed(row_item)
         return (row, missing_dictionary, dic_path, cldr_path)
 
     def _fill_dictionaries_listbox(self) -> None:
@@ -3049,7 +3050,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._dictionary_names != ['None'])
         self._dictionaries_add_button.set_sensitive(
             len(self._dictionary_names)
-            < itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES)
+            < itb_util_core.MAXIMUM_NUMBER_OF_DICTIONARIES)
 
     @staticmethod
     def _fill_input_methods_listbox_row(ime: str) -> Tuple[str, str]:
@@ -3062,7 +3063,7 @@ class SetupUI(Gtk.Window): # type: ignore
         :param ime: Name of the input method
         '''
         row = ime
-        if itb_util.is_right_to_left_messages():
+        if itb_util_core.is_right_to_left_messages():
             # start the row with U+200E LEFT-TO-RIGHT MARK
             row = chr(0x200F) + ime
         # add some spaces for nicer formatting:
@@ -3126,7 +3127,7 @@ class SetupUI(Gtk.Window): # type: ignore
             self._input_methods_listbox.insert(hbox, -1)
         show_all(self._input_methods_listbox)
         self._input_methods_add_button.set_sensitive(
-            len(self._current_imes) < itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS)
+            len(self._current_imes) < itb_util_core.MAXIMUM_NUMBER_OF_INPUT_METHODS)
 
     def _fill_autosettings_treeview(self) -> None:
         '''
@@ -3271,7 +3272,7 @@ class SetupUI(Gtk.Window): # type: ignore
         :param settings: The settings object
         :param key: The key of the setting which has changed
         '''
-        value = itb_util.variant_to_value(self._gsettings.get_value(key))
+        value = itb_util_core.variant_to_value(self._gsettings.get_value(key))
         LOGGER.info('Settings changed: key=%s value=%s\n', key, value)
         if key in self._settings_dict:
             set_function = self._settings_dict[key]['set_function']
@@ -3288,7 +3289,7 @@ class SetupUI(Gtk.Window): # type: ignore
 
         :param _button: The “About” button
         '''
-        itb_util.ItbAboutDialog(parent=get_toplevel_window(button))
+        itb_util_gui.ItbAboutDialog(parent=get_toplevel_window(button))
 
     def _on_restore_all_defaults_button_clicked(
             self, _button: Gtk.Button) -> None:
@@ -4016,11 +4017,11 @@ class SetupUI(Gtk.Window): # type: ignore
         self._dictionaries_add_listbox.connect(
             'row-selected', self._on_dictionary_to_add_selected)
         rows = []
-        for name in sorted(itb_util.SUPPORTED_DICTIONARIES):
+        for name in sorted(itb_util_core.SUPPORTED_DICTIONARIES):
             if name in self._dictionary_names:
                 continue
-            filter_words = itb_util.remove_accents(filter_text.lower()).split()
-            text_to_match = itb_util.locale_text_to_match(name)
+            filter_words = itb_util_core.remove_accents(filter_text.lower()).split()
+            text_to_match = itb_util_core.locale_text_to_match(name)
             if all(filter_word in text_to_match for filter_word in filter_words):
                 self._dictionaries_add_listbox_dictionary_names.append(name)
                 rows.append(self._fill_dictionaries_listbox_row(name)[0])
@@ -4053,7 +4054,7 @@ class SetupUI(Gtk.Window): # type: ignore
         dictionary has been clicked.
         '''
         if (len(self._dictionary_names)
-            >= itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES):
+            >= itb_util_core.MAXIMUM_NUMBER_OF_DICTIONARIES):
             # Actually this should never happen because the button to add
             # a dictionary should not be sensitive if the maximum number
             # of dictionaries is already reached.
@@ -4064,7 +4065,7 @@ class SetupUI(Gtk.Window): # type: ignore
             MessageDialogCompat(
                 parent=self,
                 message='The maximum number of dictionaries '
-                f'is {itb_util.MAXIMUM_NUMBER_OF_DICTIONARIES}.',
+                f'is {itb_util_core.MAXIMUM_NUMBER_OF_DICTIONARIES}.',
                 title='⛔',
                 button_label=_('_OK'),
                 message_type=Gtk.MessageType.ERROR).show()
@@ -4193,9 +4194,9 @@ class SetupUI(Gtk.Window): # type: ignore
                 missing_dictionary_packages.add('python3-libvoikko')
             else:
                 (dic_path,
-                 dummy_aff_path) = itb_util.find_hunspell_dictionary(name)
+                 dummy_aff_path) = itb_util_core.find_hunspell_dictionary(name)
                 if not dic_path:
-                    if (itb_util.distro_id() in
+                    if (itb_util_core.distro_id() in
                         ('opensuse',
                          'opensuse-leap',
                          'opensuse-tumbleweed',
@@ -4254,7 +4255,7 @@ class SetupUI(Gtk.Window): # type: ignore
 
         '''
         if self._engine_name == 'typing-booster':
-            self.set_dictionary_names(itb_util.dictionaries_str_to_list(''))
+            self.set_dictionary_names(itb_util_core.dictionaries_str_to_list(''))
             return
         self.set_dictionary_names(self._settings_dict['dictionary']['default'])
 
@@ -4318,7 +4319,7 @@ class SetupUI(Gtk.Window): # type: ignore
                             the filter text as a substring
                             (ignoring case and accents) are listed.
                             The language part of the input method is
-                            expanded using itb_util.locale_text_to_match()
+                            expanded using itb_util_core.locale_text_to_match()
                             into the full name of the language, in English,
                             the endonym, and in the language of the current
                             locale and all words from filter_text have to
@@ -4345,12 +4346,12 @@ class SetupUI(Gtk.Window): # type: ignore
         for ime in get_m17n_db_info().get_imes():
             if ime in self._current_imes:
                 continue
-            filter_words = itb_util.remove_accents(filter_text.lower()).split()
+            filter_words = itb_util_core.remove_accents(filter_text.lower()).split()
             row, _path = self.__class__._fill_input_methods_listbox_row( # pylint: disable=protected-access
                 ime)
             text_to_match = row.replace(' ', '').lower()
             ime_language = ime.split('-')[0]
-            text_to_match += ' ' + itb_util.locale_text_to_match(ime_language)
+            text_to_match += ' ' + itb_util_core.locale_text_to_match(ime_language)
             if all(filter_word in text_to_match for filter_word in filter_words):
                 self._input_methods_add_listbox_imes.append(ime)
                 rows.append(row)
@@ -4394,7 +4395,7 @@ class SetupUI(Gtk.Window): # type: ignore
         Signal handler called when the “add” button to add another
         input method has been clicked.
         '''
-        if len(self._current_imes) >= itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS:
+        if len(self._current_imes) >= itb_util_core.MAXIMUM_NUMBER_OF_INPUT_METHODS:
             # Actually this should never happen because the button to add
             # an input method should not be sensitive if the maximum number
             # of input methods is  already reached.
@@ -4405,7 +4406,7 @@ class SetupUI(Gtk.Window): # type: ignore
             MessageDialogCompat(
                 parent=self,
                 message='The maximum number of input methods '
-                f'is {itb_util.MAXIMUM_NUMBER_OF_INPUT_METHODS}.',
+                f'is {itb_util_core.MAXIMUM_NUMBER_OF_INPUT_METHODS}.',
                 title='⛔',
                 button_label=_('_OK'),
                 message_type=Gtk.MessageType.ERROR).show()
@@ -4753,7 +4754,7 @@ class SetupUI(Gtk.Window): # type: ignore
         Sets the input methods to the default for the current locale.
         '''
         if self._engine_name == 'typing-booster':
-            self.set_current_imes(itb_util.input_methods_str_to_list(''))
+            self.set_current_imes(itb_util_core.input_methods_str_to_list(''))
             return
         self.set_current_imes(self._settings_dict['inputmethod']['default'])
 
@@ -4961,7 +4962,7 @@ class SetupUI(Gtk.Window): # type: ignore
             'row-selected', self._on_autosetting_to_add_selected)
         rows = []
         for setting in sorted(self._allowed_autosettings):
-            filter_words = itb_util.remove_accents(filter_text.lower()).split()
+            filter_words = itb_util_core.remove_accents(filter_text.lower()).split()
             text_to_match = setting
             if all(filter_word in text_to_match for filter_word in filter_words):
                 self._autosettings_add_listbox_settings.append(setting)
@@ -5207,7 +5208,7 @@ class SetupUI(Gtk.Window): # type: ignore
                 self.tabsqlitedb.define_user_shortcut(
                     input_phrase=shortcut,
                     phrase=shortcut_expansion,
-                    user_freq=itb_util.SHORTCUT_USER_FREQ)
+                    user_freq=itb_util_core.SHORTCUT_USER_FREQ)
                 liststore_append(model, (shortcut, shortcut_expansion))
             self._shortcut_entry.set_text('')
             expansion_buffer.set_text('')
@@ -5234,11 +5235,11 @@ class SetupUI(Gtk.Window): # type: ignore
         self._shortcut_treeview.get_selection().set_mode(Gtk.SelectionMode.SINGLE)
         current_shortcuts: List[Tuple[str, str]] = (
             self.tabsqlitedb.list_user_shortcuts())
-        filter_words = itb_util.remove_accents(filter_text.lower()).split()
+        filter_words = itb_util_core.remove_accents(filter_text.lower()).split()
         for shortcut in current_shortcuts:
             text_to_match = (
-                itb_util.remove_accents(shortcut[0]).lower()
-                + ' ' + itb_util.remove_accents(shortcut[1]).lower())
+                itb_util_core.remove_accents(shortcut[0]).lower()
+                + ' ' + itb_util_core.remove_accents(shortcut[1]).lower())
             if all(filter_word in text_to_match for filter_word in filter_words):
                 liststore_append(self._shortcut_treeview_model, shortcut)
 
@@ -5338,15 +5339,15 @@ class SetupUI(Gtk.Window): # type: ignore
         Signal handler called when the “Add” button to add
         a key binding has been clicked.
         '''
-        key_input_dialog = itb_util.ItbKeyInputDialog(
+        key_input_dialog = itb_util_gui.ItbKeyInputDialog(
             parent=self, parent_popover=self._keybindings_edit_popover)
         response = key_input_dialog.run()
         key_input_dialog.destroy()
         if response == Gtk.ResponseType.OK:
             assert key_input_dialog.e is not None
             keyval, state = key_input_dialog.e
-            key = itb_util.KeyEvent(keyval, 0, state)
-            keybinding = itb_util.keyevent_to_keybinding(key)
+            key = itb_util_core.KeyEvent(keyval, 0, state)
+            keybinding = itb_util_core.keyevent_to_keybinding(key)
             command = self._keybindings_selected_command
             if (keybinding
                 not in self._settings_dict['keybindings']['user'][command]):
@@ -6702,7 +6703,7 @@ class SetupUI(Gtk.Window): # type: ignore
             return
         symbol = symbol.strip()
         self._settings_dict['inputmodetruesymbol']['user'] = symbol
-        itb_util.ibus_write_cache()
+        itb_util_core.ibus_write_cache()
         if update_gsettings:
             self._gsettings.set_value(
                 'inputmodetruesymbol',
@@ -6925,7 +6926,7 @@ class SetupUI(Gtk.Window): # type: ignore
         '''Sets the delay of the candidates in milliseconds
 
         :param milliseconds: delay of the candidates in milliseconds
-                             0 <= milliseconds <= itb_util.UINT32_MAX
+                             0 <= milliseconds <= itb_util_core.UINT32_MAX
         :param update_gsettings: Whether to write the change to Gsettings.
                                  Set this to False if this method is
                                  called because the Gsettings key changed
@@ -6935,7 +6936,7 @@ class SetupUI(Gtk.Window): # type: ignore
         LOGGER.info(
             '(%s, update_gsettings = %s)', milliseconds, update_gsettings)
         milliseconds = int(milliseconds)
-        if 0 <= milliseconds <= itb_util.UINT32_MAX:
+        if 0 <= milliseconds <= itb_util_core.UINT32_MAX:
             self._settings_dict[
                 'candidatesdelaymilliseconds']['user'] = milliseconds
             if update_gsettings:
@@ -7078,10 +7079,10 @@ class SetupUI(Gtk.Window): # type: ignore
             '(%s, update_gsettings = %s)', keymap, update_gsettings)
         if not isinstance(keymap, str):
             return
-        if keymap not in itb_util.AVAILABLE_IBUS_KEYMAPS:
+        if keymap not in itb_util_core.AVAILABLE_IBUS_KEYMAPS:
             LOGGER.warning(
-                'keymap %s not in itb_util.AVAILABLE_IBUS_KEYMAPS=%s',
-                keymap, repr(itb_util.AVAILABLE_IBUS_KEYMAPS))
+                'keymap %s not in itb_util_core.AVAILABLE_IBUS_KEYMAPS=%s',
+                keymap, repr(itb_util_core.AVAILABLE_IBUS_KEYMAPS))
         self._settings_dict['ibuskeymap']['user'] = keymap
         if update_gsettings:
             self._gsettings.set_value(
@@ -7432,7 +7433,7 @@ class SetupUI(Gtk.Window): # type: ignore
         LOGGER.debug('imes=“%s” type(imes)=%s update_gsettings=%s',
                      imes, type(imes), update_gsettings)
         if isinstance(imes, str):
-            imes = itb_util.input_methods_str_to_list(imes)
+            imes = itb_util_core.input_methods_str_to_list(imes)
         if imes == self._current_imes: # nothing to do
             return
         self._current_imes = imes
@@ -7472,7 +7473,7 @@ class SetupUI(Gtk.Window): # type: ignore
         LOGGER.debug('dictionary_names=%s type(dictionary_names)=%s',
                      dictionary_names, type(dictionary_names))
         if isinstance(dictionary_names, str):
-            dictionary_names = itb_util.dictionaries_str_to_list(
+            dictionary_names = itb_util_core.dictionaries_str_to_list(
                 dictionary_names)
         if dictionary_names == self._dictionary_names: # nothing to do
             return
@@ -7545,7 +7546,7 @@ class SetupUI(Gtk.Window): # type: ignore
         keybindings = copy.deepcopy(keybindings)
         user_keybindings = self._settings_dict['keybindings']['user']
         # Update the default settings with the possibly changed settings:
-        itb_util.dict_update_existing_keys(user_keybindings, keybindings)
+        itb_util_core.dict_update_existing_keys(user_keybindings, keybindings)
         # update the tree model
         model = self._keybindings_treeview_model
         iterator = model.get_iter_first()
@@ -7681,7 +7682,7 @@ if __name__ == '__main__':
         LOGGER.info('*** ibus-typing-booster %s setup starting ***',
                     itb_version.get_version())
 
-    itb_util.set_program_name('ibus-setup-tb')
+    itb_util_core.set_program_name('ibus-setup-tb')
 
     try:
         locale.setlocale(locale.LC_ALL, '')
@@ -7703,7 +7704,7 @@ if __name__ == '__main__':
         ENGINE_NAME = os.environ['IBUS_ENGINE_NAME']
     LOGGER.info('ENGINE_NAME=%r', ENGINE_NAME)
     if (ENGINE_NAME != 'typing-booster'
-        and not itb_util.M17N_ENGINE_NAME_PATTERN.search(ENGINE_NAME)):
+        and not itb_util_core.M17N_ENGINE_NAME_PATTERN.search(ENGINE_NAME)):
         print('Invalid engine name.')
         PARSER.print_help()
     SETUP_UI = SetupUI(engine_name=ENGINE_NAME)

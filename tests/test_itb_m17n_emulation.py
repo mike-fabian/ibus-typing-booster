@@ -81,7 +81,7 @@ if TYPE_CHECKING:
     # pylint: enable=reimported
 import hunspell_table
 import tabsqlitedb
-import itb_util
+import itb_util_core
 import m17n_translit
 # pylint: enable=import-error
 sys.path.pop(0)
@@ -403,7 +403,7 @@ class ItbM17nEmuTestCase(unittest.TestCase):
                        f"{re.sub(r'[^a-zA-Z0-9_/]', '_', engine_name)}"
                        '/engine/')
         if engine_name != 'typing-booster':
-            match = itb_util.M17N_ENGINE_NAME_PATTERN.search(engine_name)
+            match = itb_util_core.M17N_ENGINE_NAME_PATTERN.search(engine_name)
             if not match:
                 raise ValueError('Invalid engine name.')
             m17n_ime_lang = match.group('lang')
@@ -444,7 +444,7 @@ class ItbM17nEmuTestCase(unittest.TestCase):
         self.assertEqual(False, True)
 
     @unittest.skipUnless(
-        itb_util.get_hunspell_dictionary_wordlist('en_US')[0],
+        itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')
     @unittest.skipUnless(
         testutils.get_hunspell_dictionary_length('en_US') >= 10000,

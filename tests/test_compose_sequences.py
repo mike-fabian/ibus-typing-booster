@@ -39,7 +39,7 @@ from gi.repository import IBus
 LOGGER = logging.getLogger('ibus-typing-booster')
 
 sys.path.insert(0, "../engine")
-import itb_util # pylint: disable=import-error
+import itb_util_core # pylint: disable=import-error
 sys.path.pop(0)
 
 import testutils # pylint: disable=import-error
@@ -75,7 +75,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
 
     def setUp(self) -> None:
         locale.setlocale(locale.LC_CTYPE, 'en_US.UTF-8')
-        self._compose_sequences = itb_util.ComposeSequences()
+        self._compose_sequences = itb_util_core.ComposeSequences()
 
     def tearDown(self) -> None:
         pass
@@ -535,7 +535,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
         # the compose sequences from
         # /usr/share/X11/locale/en_US.UTF-8/Compose:
         locale.setlocale(locale.LC_CTYPE, 'cs_CZ.UTF-8')
-        self._compose_sequences = itb_util.ComposeSequences()
+        self._compose_sequences = itb_util_core.ComposeSequences()
         self.assertEqual(
             self._compose_sequences.compose(
                 [IBus.KEY_dead_caron,
@@ -562,7 +562,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
         f'{testutils.set_locale_error("km_KH.UTF-8")}')
     def test_compose_km_KH(self) -> None: # pylint: disable=invalid-name
         locale.setlocale(locale.LC_CTYPE, 'km_KH.UTF-8')
-        self._compose_sequences = itb_util.ComposeSequences()
+        self._compose_sequences = itb_util_core.ComposeSequences()
         # This sequence comes from
         # /usr/share/X11/locale/en_US.UTF-8/Compose and is not
         # overridden in /usr/share/X11/locale/km_KH.UTF-8/:
@@ -634,7 +634,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
         # the compose sequences from
         # /usr/share/X11/locale/en_US.UTF-8/Compose:
         locale.setlocale(locale.LC_CTYPE, 'pt_BR.UTF-8')
-        self._compose_sequences = itb_util.ComposeSequences()
+        self._compose_sequences = itb_util_core.ComposeSequences()
         self.assertEqual(
             self._compose_sequences.compose(
                 [IBus.KEY_dead_acute,
@@ -713,7 +713,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
         # the compose sequences from
         # /usr/share/X11/locale/en_US.UTF-8/Compose:
         locale.setlocale(locale.LC_CTYPE, 'pt_PT.UTF-8')
-        self._compose_sequences = itb_util.ComposeSequences()
+        self._compose_sequences = itb_util_core.ComposeSequences()
         self.assertEqual(
             self._compose_sequences.compose(
                 [IBus.KEY_dead_acute,
@@ -764,7 +764,7 @@ class ComposeSequencesTestCase(unittest.TestCase):
         # or a dead key. I.e. ibus-typing-booster currently ignores
         # all compose sequences from the am_ET.UTF-8 compose file):
         locale.setlocale(locale.LC_CTYPE, 'am_ET.UTF-8')
-        self._compose_sequences = itb_util.ComposeSequences()
+        self._compose_sequences = itb_util_core.ComposeSequences()
         # pylint: disable=protected-access
         if (self._compose_sequences._locale_compose_file()
             != '/usr/share/X11/locale/am_ET.UTF-8/Compose'):

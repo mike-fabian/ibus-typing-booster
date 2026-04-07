@@ -22,8 +22,8 @@ fi
 
 echo cd $SCRIPT_DIR/setup
 cd $SCRIPT_DIR/setup
-echo ${MYPY} ../engine/{tabsqlitedb,itb_util,itb_emoji}.py *.py
-${MYPY} ../engine/{tabsqlitedb,itb_util,itb_emoji}.py *.py
+echo ${MYPY} ../engine/{tabsqlitedb,itb_util_core,itb_util_gui,itb_emoji}.py *.py
+${MYPY} ../engine/{tabsqlitedb,itb_util_core,itb_util_gui,itb_emoji}.py *.py
 SETUP_RETVAL=$?
 if [ ${SETUP_RETVAL} != 0 ] ; then
     RETVAL=$((${RETVAL} + ${SETUP_RETVAL}))
@@ -31,8 +31,8 @@ fi
 
 echo cd $SCRIPT_DIR/tests
 cd $SCRIPT_DIR/tests
-echo ${MYPY} ../engine/{tabsqlitedb,itb_util,itb_emoji}.py test_*.py
-${MYPY} ../engine/{tabsqlitedb,itb_util,itb_emoji}.py test_*.py
+echo ${MYPY} ../engine/{tabsqlitedb,itb_util_core,itb_util_gui,itb_emoji}.py test_*.py
+${MYPY} ../engine/{tabsqlitedb,itb_util_core,itb_util_gui,itb_emoji}.py test_*.py
 SETUP_RETVAL=$?
 if [ ${SETUP_RETVAL} != 0 ] ; then
     RETVAL=$((${RETVAL} + ${SETUP_RETVAL}))

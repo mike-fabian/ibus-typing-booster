@@ -27,7 +27,7 @@ import locale
 sys.path.insert(0, "../engine")
 # pylint: disable=wrong-import-position
 # pylint: disable=import-error
-import itb_util
+import itb_util_core
 # pylint: enable=import-error
 # pylint: enable=wrong-import-position
 sys.path.pop(0)
@@ -81,7 +81,7 @@ def get_hunspell_dictionary_length(language: str = '') -> int:
 
     See: https://bugzilla.redhat.com/show_bug.cgi?id=2218460
     '''
-    return len(itb_util.get_hunspell_dictionary_wordlist(language)[2])
+    return len(itb_util_core.get_hunspell_dictionary_wordlist(language)[2])
 
 def enchant_sanity_test(language: str = '', word: str = '') -> bool:
     '''Checks whether python3-enchant returns some suggestions given a
@@ -106,7 +106,7 @@ def enchant_sanity_test(language: str = '', word: str = '') -> bool:
     '''
     if not (language and word):
         return False
-    if not itb_util.get_hunspell_dictionary_wordlist(language)[0]:
+    if not itb_util_core.get_hunspell_dictionary_wordlist(language)[0]:
         return False
     enchant_dictionary = enchant.Dict(language)
     if enchant_dictionary.suggest(word):

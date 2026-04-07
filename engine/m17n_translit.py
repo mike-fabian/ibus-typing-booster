@@ -35,7 +35,7 @@ from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus
 # pylint: enable=wrong-import-position
-import itb_util
+import itb_util_core
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -1012,7 +1012,7 @@ class Transliterator:
         # Python >= 3.7 has a str.isascii(), I could use that instead
         # of my own is_ascii(), but that does not work on older
         # distributions like openSUSE 15.6.
-        if itb_util.is_ascii(msymbol):
+        if itb_util_core.is_ascii(msymbol):
             return msymbol
         match = re.search(
             self._msymbol_single_char_with_prefix_pattern, msymbol)

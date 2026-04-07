@@ -33,7 +33,7 @@ from gi.repository import IBus
 # pylint: enable=wrong-import-position
 import hunspell_table
 import tabsqlitedb
-import itb_util
+import itb_util_core
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -87,7 +87,7 @@ class EngineFactory(IBus.Factory):
             else:
                 user_db_file = 'user.db'
                 if engine_name != 'typing-booster':
-                    match = itb_util.M17N_ENGINE_NAME_PATTERN.search(
+                    match = itb_util_core.M17N_ENGINE_NAME_PATTERN.search(
                             engine_name)
                     if not match:
                         raise ValueError('Invalid engine name.')

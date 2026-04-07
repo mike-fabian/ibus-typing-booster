@@ -42,7 +42,7 @@ require_version('GLib', '2.0')
 from gi.repository import GLib # type: ignore
 # pylint: enable=wrong-import-position
 
-import itb_util
+import itb_util_core
 import itb_version
 
 LOGGER = logging.getLogger('ibus-typing-booster')
@@ -236,7 +236,8 @@ class IMApp:
             stats.print_stats('tabsqlite', 25)
             stats.print_stats('hunspell_suggest', 25)
             stats.print_stats('hunspell_table', 25)
-            stats.print_stats('itb_util', 25)
+            stats.print_stats('itb_util_core', 25)
+            stats.print_stats('itb_util_gui', 25)
             stats.print_stats('itb_emoji', 25)
             LOGGER.info('Profiling info:\n%s', stats_stream.getvalue())
 
@@ -272,7 +273,7 @@ def write_xml() -> None:
     '''
     Writes the XML to describe the engine(s) to standard output.
     '''
-    m17n_db_info = itb_util.M17nDbInfo()
+    m17n_db_info = itb_util_core.M17nDbInfo()
     m17n_input_methods = set(m17n_db_info.get_imes())
     m17n_input_methods_skip = set([
         'NoIME',
@@ -362,8 +363,8 @@ def write_xml() -> None:
 
     egs = Element('engines') # pylint: disable=possibly-used-before-assignment
 
-    recent_gnome = (itb_util.is_desktop('gnome')
-                    and itb_util.get_gnome_shell_version() >= (48, 3))
+    recent_gnome = (itb_util_core.is_desktop('gnome')
+                    and itb_util_core.get_gnome_shell_version() >= (48, 3))
 
     for ime in supported_input_methods:
         _engine = SubElement( # pylint: disable=possibly-used-before-assignment
@@ -413,7 +414,7 @@ def write_xml() -> None:
                     layout_option = 'lv3:ralt_switch'
                     break
             symbol = ''
-            for pattern, pattern_symbol in itb_util.M17N_IME_SYMBOLS:
+            for pattern, pattern_symbol in itb_util_core.M17N_IME_SYMBOLS:
                 if re.fullmatch(pattern, name):
                     symbol = pattern_symbol
                     break
@@ -425,7 +426,7 @@ def write_xml() -> None:
         gsettings = Gio.Settings(
             schema='org.freedesktop.ibus.engine.typing-booster',
             path=schema_path)
-        user_symbol = itb_util.variant_to_value(
+        user_symbol = itb_util_core.variant_to_value(
             gsettings.get_user_value('inputmodetruesymbol'))
         if user_symbol is not None:
             symbol = user_symbol
@@ -500,7 +501,7 @@ def main() -> None:
     LOGGER.setLevel(logging.DEBUG)
     LOGGER.addHandler(log_handler)
     LOGGER.info('********** STARTING **********')
-    itb_util.set_program_name('ibus-engine-tb')
+    itb_util_core.set_program_name('ibus-engine-tb')
     if _ARGS.daemon:
         if os.fork():
             sys.exit()
