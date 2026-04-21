@@ -64,19 +64,19 @@ if TYPE_CHECKING:
 try:
     import itb_util_core
     IMPORT_ITB_UTIL_CORE_SUCCESSFUL = True
-except (ImportError,):
+except ImportError:
     IMPORT_ITB_UTIL_CORE_SUCCESSFUL = False
 
 try:
     import hunspell_table
     IMPORT_HUNSPELL_SUCCESSFUL = True
-except (ImportError,):
+except ImportError:
     IMPORT_HUNSPELL_SUCCESSFUL = False
 
 try:
     import tabsqlitedb
     IMPORT_TABSQLITEDB_SUCCESSFUL = True
-except (ImportError,):
+except ImportError:
     IMPORT_TABSQLITEDB_SUCCESSFUL = False
 
 sys.path.pop(0)

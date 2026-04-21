@@ -55,7 +55,7 @@ else:
 try:
     import libvoikko # type: ignore
     IMPORT_LIBVOIKKO_SUCCESSFUL = True
-except (ImportError,):
+except ImportError:
     IMPORT_LIBVOIKKO_SUCCESSFUL = False
 
 # Maximum words that should be returned.
