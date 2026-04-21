@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 21 Apr 2026 Release 2.30.7
+* Translation update from Weblate (pl 100%)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 01 Apr 2026 Release 2.30.6
 * Split itb_util.py into itb_util_core.py and itb_util_gui.py and use only itb_util_core for `ibus-typing-booster --xml` (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/888)
 * Don’t check for gnome and gnome version in a loop over all input methods! Check only once! (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/889)
