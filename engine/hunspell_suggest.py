@@ -39,24 +39,24 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 
 DEBUG_LEVEL = int(0)
 
-IMPORT_ENCHANT_SUCCESSFUL = False
-IMPORT_HUNSPELL_SUCCESSFUL = False
 try:
-    import enchant # type: ignore
-    IMPORT_ENCHANT_SUCCESSFUL = True
-except (ImportError,):
+    import enchant  # type: ignore
+except ImportError:
+    IMPORT_ENCHANT_SUCCESSFUL = False
     try:
-        import hunspell # type: ignore
+        import hunspell  # type: ignore
         IMPORT_HUNSPELL_SUCCESSFUL = True
-    except (ImportError,):
-        pass
+    except ImportError:
+        IMPORT_HUNSPELL_SUCCESSFUL = False
+else:
+    IMPORT_ENCHANT_SUCCESSFUL = True
+    IMPORT_HUNSPELL_SUCCESSFUL = False
 
-IMPORT_LIBVOIKKO_SUCCESSFUL = False
 try:
     import libvoikko # type: ignore
     IMPORT_LIBVOIKKO_SUCCESSFUL = True
 except (ImportError,):
-    pass
+    IMPORT_LIBVOIKKO_SUCCESSFUL = False
 
 # Maximum words that should be returned.
 # This should a rather big number in order not

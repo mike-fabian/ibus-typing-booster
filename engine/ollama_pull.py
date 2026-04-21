@@ -63,7 +63,7 @@ from g_compat_helpers import (
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
-GLIB_MAIN_LOOP: Optional[GLib.MainLoop] = None
+glib_main_loop: Optional[GLib.MainLoop] = None
 
 DOMAINNAME = 'ibus-typing-booster'
 
@@ -267,10 +267,10 @@ class OllamaPullUI(Gtk.Window): # type: ignore
     def _quit() -> None:
         '''Quit the GLib main loop'''
         LOGGER.info('Quit GLib main loop')
-        if GLIB_MAIN_LOOP is not None:
-            GLIB_MAIN_LOOP.quit()
+        if glib_main_loop is not None:
+            glib_main_loop.quit()
         else:
-            raise RuntimeError('GLIB_MAIN_LOOP not initialized!')
+            raise RuntimeError('glib_main_loop not initialized!')
 
     def _on_close(self, *_args: Any) -> None:
         '''The window has been closed, probably by the window manager.'''
@@ -378,10 +378,10 @@ def quit_glib_main_loop(
         except ValueError: # In case signum isn't in Signals enum
             signal_name = str(signum)
         LOGGER.info('Received signal %s (%s), exiting...', signum, signal_name)
-    if GLIB_MAIN_LOOP is not None:
-        GLIB_MAIN_LOOP.quit()
+    if glib_main_loop is not None:
+        glib_main_loop.quit()
     else:
-        raise RuntimeError('GLIB_MAIN_LOOP not initialized!')
+        raise RuntimeError('glib_main_loop not initialized!')
 
 
 if __name__ == '__main__':
@@ -408,7 +408,7 @@ if __name__ == '__main__':
 
     if _ARGS.model is not None:
         OLLAMA_PULL_UI = OllamaPullUI(model=_ARGS.model)
-        GLIB_MAIN_LOOP = GLib.MainLoop()
+        glib_main_loop = GLib.MainLoop()
         # signal.signal(signal.SIGTERM, quit_glib_main_loop) # kill <pid>
         # Ctrl+C (optional, can also use try/except KeyboardInterrupt)
         # signal.signal(signal.SIGINT, quit_glib_main_loop)
@@ -423,8 +423,8 @@ if __name__ == '__main__':
             SIGNAL_HANDLER.handle_sigint, # Keyboard interrupt
             None)
         try:
-            GLIB_MAIN_LOOP.run()
+            glib_main_loop.run()
         except KeyboardInterrupt:
             # SIGNINT (Control+C) received
             LOGGER.info('Control+C pressed, exiting ...')
-            GLIB_MAIN_LOOP.quit()
+            glib_main_loop.quit()

@@ -63,7 +63,6 @@ def log_unhandled_exception(
 
 sys.excepthook = log_unhandled_exception
 
-DEBUG_LEVEL = int(0)
 try:
     DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
 except (TypeError, ValueError):

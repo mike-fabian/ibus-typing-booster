@@ -75,7 +75,7 @@ import subprocess
 import shutil
 import threading
 import logging
-IMPORT_PYATSPI_SUCCESSFUL = False
+
 try:
     import pyatspi # type: ignore
     IMPORT_PYATSPI_SUCCESSFUL = True

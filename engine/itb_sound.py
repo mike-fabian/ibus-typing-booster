@@ -33,21 +33,18 @@ import mimetypes
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
-IMPORT_PYGAME_MIXER_SUCCESSFUL = False
 try:
     import pygame.mixer
     IMPORT_PYGAME_MIXER_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_PYGAME_MIXER_SUCCESSFUL = False
 
-IMPORT_PYAUDIO_SUCCESSFUL = False
 try:
     import pyaudio # type: ignore
     IMPORT_PYAUDIO_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_PYAUDIO_SUCCESSFUL = False
 
-IMPORT_SIMPLEAUDIO_SUCCESSFUL = False
 try:
     import simpleaudio # type: ignore
     IMPORT_SIMPLEAUDIO_SUCCESSFUL = True

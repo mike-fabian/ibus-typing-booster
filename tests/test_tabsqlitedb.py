@@ -40,7 +40,6 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 import testutils # pylint: disable=import-error
 # pylint: enable=wrong-import-position
 
-IMPORT_DISTRO_SUCCESSFUL = False
 try:
     import distro
     IMPORT_DISTRO_SUCCESSFUL = True
