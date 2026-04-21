@@ -71,26 +71,26 @@ except ImportError:
 try:
     import rapidfuzz
     IMPORT_RAPIDFUZZ_SUCCESSFUL = True
-except (ImportError,):
+except ImportError:
     IMPORT_RAPIDFUZZ_SUCCESSFUL = False
 
 try:
     import enchant # type: ignore
     IMPORT_ENCHANT_SUCCESSFUL = True
-except (ImportError,):
+except ImportError:
     IMPORT_ENCHANT_SUCCESSFUL = False
 
 try:
     import pykakasi # type: ignore[import-not-found]
     IMPORT_PYKAKASI_SUCCESSFUL = True
     KAKASI_INSTANCE = pykakasi.kakasi()
-except (ImportError,):
+except ImportError:
     IMPORT_PYKAKASI_SUCCESSFUL = False
 
 try:
     import pinyin # type: ignore
     IMPORT_PINYIN_SUCCESSFUL = True
-except (ImportError,):
+except ImportError:
     IMPORT_PINYIN_SUCCESSFUL = False
 
 LOGGER = logging.getLogger('ibus-typing-booster')

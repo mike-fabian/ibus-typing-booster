@@ -35,13 +35,13 @@ sys.path.pop(0)
 try:
     import enchant # type: ignore
     IMPORT_ENCHANT_SUCCESSFUL = True
-except (ImportError,):
+except ImportError:
     IMPORT_ENCHANT_SUCCESSFUL = False
 
 try:
     import libvoikko # type: ignore
     IMPORT_LIBVOIKKO_SUCCESSFUL = True
-except (ImportError,):
+except ImportError:
     IMPORT_LIBVOIKKO_SUCCESSFUL = False
 
 def get_libvoikko_version() -> str:
