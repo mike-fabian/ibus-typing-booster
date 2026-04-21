@@ -68,6 +68,12 @@ class ItbPangoTestCase(unittest.TestCase):
         _run, results_for_run = fonts_used[0]
         self._fallback_font_name_u16 = results_for_run['font']
         LOGGER.info('Fallback font name Unicode 16.0=“%s”', self._fallback_font_name_u16)
+        # 🫩︎ U+1FAE9 FACE WITH BAGS UNDER EYES, added in Unicode 16.0
+        # with U+FE0E VARIATION SELECTOR-15 (text variation selector)
+        fonts_used = itb_pango.get_fonts_used_for_text('emoji', '🫩\uFE0E', fallback=True)
+        _run, results_for_run = fonts_used[0]
+        self._fallback_font_name_monochrome_u16 = results_for_run['font']
+        LOGGER.info('Fallback font name Unicode 16.0=“%s”', self._fallback_font_name_monochrome_u16)
 
     def tearDown(self) -> None:
         pass
@@ -404,7 +410,7 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual(len(fonts_used), 1)
         run, results_for_run = fonts_used[0]
         self.assertEqual(run, text)
-        self.assertEqual(results_for_run['font'], self._fallback_font_name_u16)
+        self.assertEqual(results_for_run['font'], self._fallback_font_name_monochrome_u16)
         self.assertEqual(results_for_run['glyph-count'], 2)
         self.assertEqual(results_for_run['visible'], True)
         self.assertEqual('glyph-available' in results_for_run, False)
