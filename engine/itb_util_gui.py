@@ -57,7 +57,6 @@ if TYPE_CHECKING:
 import itb_version
 from itb_util_core import KEYBINDING_STATE_MASK
 
-USING_REGEX = False
 try:
     # Enable new improved regex engine instead of backwards compatible
     # v0.  regex.match('ß', 'SS', regex.IGNORECASE) matches only with

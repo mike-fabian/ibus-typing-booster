@@ -32,19 +32,17 @@ import itb_util_core
 # pylint: enable=wrong-import-position
 sys.path.pop(0)
 
-IMPORT_ENCHANT_SUCCESSFUL = False
 try:
     import enchant # type: ignore
     IMPORT_ENCHANT_SUCCESSFUL = True
 except (ImportError,):
-    pass
+    IMPORT_ENCHANT_SUCCESSFUL = False
 
-IMPORT_LIBVOIKKO_SUCCESSFUL = False
 try:
     import libvoikko # type: ignore
     IMPORT_LIBVOIKKO_SUCCESSFUL = True
 except (ImportError,):
-    pass
+    IMPORT_LIBVOIKKO_SUCCESSFUL = False
 
 def get_libvoikko_version() -> str:
     '''Return the version of libvoikko

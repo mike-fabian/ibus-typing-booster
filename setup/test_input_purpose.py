@@ -62,7 +62,7 @@ from g_compat_helpers import (
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
-GLIB_MAIN_LOOP: Optional[GLib.MainLoop] = None
+glib_main_loop: Optional[GLib.MainLoop] = None
 
 class InputPurposeTest(Gtk.Window): # type: ignore
     '''
@@ -165,10 +165,10 @@ class InputPurposeTest(Gtk.Window): # type: ignore
     def on_close(self, *_args: Any) -> None: # pylint: disable=no-self-use
         '''Main window has been closed, quit the glib main loop'''
         LOGGER.info('Window deleted by the window manager.')
-        if GLIB_MAIN_LOOP is not None:
-            GLIB_MAIN_LOOP.quit()
+        if glib_main_loop is not None:
+            glib_main_loop.quit()
         else:
-            raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
+            raise RuntimeError("glib_main_loop not initialized!")
 
     def on_test_entry( # pylint: disable=no-self-use
             self, widget: Gtk.Entry, _property_spec: Any) -> None:
@@ -271,10 +271,10 @@ def quit_glib_main_loop(
         except ValueError: # In case signum isn't in Signals enum
             signal_name = str(signum)
         LOGGER.info('Received signal %s (%s), exiting...', signum, signal_name)
-    if GLIB_MAIN_LOOP is not None:
-        GLIB_MAIN_LOOP.quit()
+    if glib_main_loop is not None:
+        glib_main_loop.quit()
     else:
-        raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
+        raise RuntimeError("glib_main_loop not initialized!")
 
 if __name__ == '__main__':
     LOG_HANDLER_STREAM = logging.StreamHandler(stream=sys.stdout)
@@ -290,13 +290,13 @@ if __name__ == '__main__':
     itb_util_core.set_program_name('inputpurposetes') # only 15 characters
 
     INPUT_PURPOSE_TEST = InputPurposeTest()
-    GLIB_MAIN_LOOP = GLib.MainLoop()
+    glib_main_loop = GLib.MainLoop()
     signal.signal(signal.SIGTERM, quit_glib_main_loop) # kill <pid>
     # Ctrl+C (optional, can also use try/except KeyboardInterrupt)
     # signal.signal(signal.SIGINT, quit_glib_main_loop)
     try:
-        GLIB_MAIN_LOOP.run()
+        glib_main_loop.run()
     except KeyboardInterrupt:
         # SIGNINT (Control+C) received
         LOGGER.info('Control+C pressed, exiting ...')
-        GLIB_MAIN_LOOP.quit()
+        glib_main_loop.quit()

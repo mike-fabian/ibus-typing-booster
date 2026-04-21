@@ -21,7 +21,7 @@ require_version('IBus', '1.0')
 from gi.repository import IBus
 # pylint: enable=wrong-import-position
 
-TestCases = {
+TEST_CASES = {
     #'init': [IBus.KEY_j, 0, IBus.ModifierType.CONTROL_MASK],
     'tests': [
                 { 'preedit': { 'string': 'defaut' },

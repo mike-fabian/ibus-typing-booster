@@ -36,7 +36,6 @@ from gi.repository import IBus
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
-IMPORT_DISTRO_SUCCESSFUL = False
 try:
     import distro
     IMPORT_DISTRO_SUCCESSFUL = True

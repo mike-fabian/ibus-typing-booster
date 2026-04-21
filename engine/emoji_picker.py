@@ -102,7 +102,7 @@ from g_compat_helpers import (
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
-GLIB_MAIN_LOOP: Optional[GLib.MainLoop] = None
+glib_main_loop: Optional[GLib.MainLoop] = None
 
 DOMAINNAME = 'ibus-typing-booster'
 
@@ -1290,10 +1290,10 @@ class EmojiPickerUI(Gtk.Window): # type: ignore
         self._save_recently_used_emoji()
         if _ARGS.debug:
             self.__class__.print_profiling_information()
-        if GLIB_MAIN_LOOP is not None:
-            GLIB_MAIN_LOOP.quit()
+        if glib_main_loop is not None:
+            glib_main_loop.quit()
         else:
-            raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
+            raise RuntimeError("glib_main_loop not initialized!")
         # Gtk3 expects a boolean return value, Gtk4 ignores the return value:
         return False
 
@@ -2494,10 +2494,10 @@ def quit_glib_main_loop(
         except ValueError: # In case signum isn't in Signals enum
             signal_name = str(signum)
         LOGGER.info('Received signal %s (%s), exiting...', signum, signal_name)
-    if GLIB_MAIN_LOOP is not None:
-        GLIB_MAIN_LOOP.quit()
+    if glib_main_loop is not None:
+        glib_main_loop.quit()
     else:
-        raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
+        raise RuntimeError("glib_main_loop not initialized!")
 
 if __name__ == '__main__':
     if not _ARGS.debug:
@@ -2545,7 +2545,7 @@ if __name__ == '__main__':
         emoji_unicode_max=_ARGS.emoji_unicode_max,
         match_limit=_ARGS.match_limit,
         spellcheck=_ARGS.spellcheck)
-    GLIB_MAIN_LOOP = GLib.MainLoop()
+    glib_main_loop = GLib.MainLoop()
     signal.signal(signal.SIGTERM, quit_glib_main_loop) # kill <pid>
     # Ctrl+C (optional, can also use try/except KeyboardInterrupt)
     signal.signal(signal.SIGINT, quit_glib_main_loop)
@@ -2555,8 +2555,8 @@ if __name__ == '__main__':
     #     SIGNAL_HANDLER.handle_sigint,
     #     None)
     try:
-        GLIB_MAIN_LOOP.run()
+        glib_main_loop.run()
     except KeyboardInterrupt:
         # SIGNINT (Control+C) received
         LOGGER.info('Control+C pressed, exiting ...')
-        GLIB_MAIN_LOOP.quit()
+        glib_main_loop.quit()

@@ -56,42 +56,37 @@ def N_(text: str) -> str: # pylint: disable=invalid-name
     '''
     return text
 
-IMPORT_BZ2_SUCCESSFUL = False
 try:
     import bz2
     IMPORT_BZ2_SUCCESSFUL = True
 except ImportError:
-    pass
-IMPORT_LZMA_SUCCESSFUL = False
+    IMPORT_BZ2_SUCCESSFUL = False
+
 try:
     import lzma
     IMPORT_LZMA_SUCCESSFUL = True
 except ImportError:
-    pass
+    IMPORT_LZMA_SUCCESSFUL = False
 
-IMPORT_RAPIDFUZZ_SUCCESSFUL = False
 try:
     import rapidfuzz
     IMPORT_RAPIDFUZZ_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_RAPIDFUZZ_SUCCESSFUL = False
 
-IMPORT_ENCHANT_SUCCESSFUL = False
 try:
     import enchant # type: ignore
     IMPORT_ENCHANT_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_ENCHANT_SUCCESSFUL = False
 
-IMPORT_PYKAKASI_SUCCESSFUL = False
 try:
-    import pykakasi
+    import pykakasi # type: ignore[import-not-found]
     IMPORT_PYKAKASI_SUCCESSFUL = True
-    KAKASI_INSTANCE = pykakasi.kakasi() # type: ignore
+    KAKASI_INSTANCE = pykakasi.kakasi()
 except (ImportError,):
     IMPORT_PYKAKASI_SUCCESSFUL = False
 
-IMPORT_PINYIN_SUCCESSFUL = False
 try:
     import pinyin # type: ignore
     IMPORT_PINYIN_SUCCESSFUL = True
@@ -1455,7 +1450,8 @@ class EmojiMatcher():
                     translated = translator(category)
                     translated_categories.append(translated)
                     if language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
-                        hiragana = kakasi_convert(translated, target='hira')
+                        hiragana = kakasi_convert(  # pylint: disable=possibly-used-before-assignment
+                            translated, target='hira')
                         if hiragana != translated:
                             translated_categories.append(hiragana)
                         if self._romaji:

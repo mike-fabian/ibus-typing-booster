@@ -67,14 +67,12 @@ import itb_sound
 import itb_emoji
 import itb_version
 
-IMPORT_ITB_OLLAMA_ERROR = None
 try:
     import itb_ollama
     IMPORT_ITB_OLLAMA_ERROR = None
-except (ImportError,) as error:
+except ImportError as error:
     IMPORT_ITB_OLLAMA_ERROR = error
 
-USING_REGEX = False
 try:
     # Enable new improved regex engine instead of backwards compatible
     # v0.  regex.match('ß', 'SS', regex.IGNORECASE) matches only with
@@ -88,14 +86,12 @@ except ImportError:
     import re
     USING_REGEX = False
 
-IMPORT_ITB_NLTK_SUCCESSFUL = False
 try:
     import itb_nltk
     IMPORT_ITB_NLTK_SUCCESSFUL = True
 except (ImportError, LookupError, ValueError):
     IMPORT_ITB_NLTK_SUCCESSFUL = False
 
-IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = False
 try:
     from google.cloud import speech # type: ignore
     from google.cloud.speech import enums as speech_enums # type: ignore
@@ -104,7 +100,6 @@ try:
 except (ImportError,):
     IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = False
 
-IMPORT_BIDI_ALGORITHM_SUCCESSFUL = False
 try:
     import bidi.algorithm # type: ignore
     IMPORT_BIDI_ALGORITHM_SUCCESSFUL = True

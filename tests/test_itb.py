@@ -47,7 +47,6 @@ from gi.repository import GLib # type: ignore
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
-IMPORT_DISTRO_SUCCESSFUL = False
 try:
     import distro
     IMPORT_DISTRO_SUCCESSFUL = True

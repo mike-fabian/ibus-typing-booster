@@ -63,7 +63,6 @@ from gi.repository import GLib # type: ignore
 
 import itb_version
 
-USING_REGEX = False
 try:
     # Enable new improved regex engine instead of backwards compatible
     # v0.  regex.match('ß', 'SS', regex.IGNORECASE) matches only with
@@ -77,7 +76,6 @@ except ImportError:
     import re
     USING_REGEX = False
 
-IMPORT_DISTRO_SUCCESSFUL = False
 try:
     import distro
     IMPORT_DISTRO_SUCCESSFUL = True
@@ -95,28 +93,24 @@ except (ImportError,):
 #except (ImportError,):
 #    IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = False
 
-IMPORT_PYAUDIO_SUCCESSFUL = False
 try:
     import pyaudio # type: ignore
     IMPORT_PYAUDIO_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_PYAUDIO_SUCCESSFUL = False
 
-IMPORT_QUEUE_SUCCESSFUL = False
 try:
     import queue
     IMPORT_QUEUE_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_QUEUE_SUCCESSFUL = False
 
-IMPORT_LANGTABLE_SUCCESSFUL = False
 try:
     import langtable # type: ignore
     IMPORT_LANGTABLE_SUCCESSFUL = True
 except (ImportError,):
     IMPORT_LANGTABLE_SUCCESSFUL = False
 
-IMPORT_PYCOUNTRY_SUCCESSFUL = False
 try:
     import pycountry # type: ignore
     IMPORT_PYCOUNTRY_SUCCESSFUL = True

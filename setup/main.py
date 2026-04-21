@@ -118,7 +118,6 @@ from pkginstall import install_packages_with_dialog
 from dictionary_download import download_dictionaries_with_dialog
 from i18n import _, init as i18n_init
 
-IMPORT_ITB_OLLAMA_ERROR = None
 try:
     import itb_ollama
     IMPORT_ITB_OLLAMA_ERROR = None
@@ -127,7 +126,7 @@ except (ImportError,) as error:
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
-GLIB_MAIN_LOOP: Optional[GLib.MainLoop] = None
+glib_main_loop: Optional[GLib.MainLoop] = None
 
 @functools.lru_cache(maxsize=1)
 def get_m17n_db_info() -> itb_util_core.M17nDbInfo:
@@ -3224,10 +3223,10 @@ class SetupUI(Gtk.Window): # type: ignore
     def _on_close(self, *_args: Any) -> bool: # pylint: disable=no-self-use, unused-argument
         '''Main window has been closed, quit the glib main loop'''
         LOGGER.info('Window is closing.')
-        if GLIB_MAIN_LOOP is not None:
-            GLIB_MAIN_LOOP.quit()
+        if glib_main_loop is not None:
+            glib_main_loop.quit()
         else:
-            raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
+            raise RuntimeError("glib_main_loop not initialized!")
         # Gtk3 expects a boolean return value, Gtk4 ignores the return value:
         return False
 
@@ -7648,10 +7647,10 @@ def quit_glib_main_loop(
         except ValueError: # In case signum isn't in Signals enum
             signal_name = str(signum)
         LOGGER.info('Received signal %s (%s), exiting...', signum, signal_name)
-    if GLIB_MAIN_LOOP is not None:
-        GLIB_MAIN_LOOP.quit()
+    if glib_main_loop is not None:
+        glib_main_loop.quit()
     else:
-        raise RuntimeError("GLIB_MAIN_LOOP not initialized!")
+        raise RuntimeError("glib_main_loop not initialized!")
 
 if __name__ == '__main__':
     if _ARGS.no_debug:
@@ -7708,13 +7707,13 @@ if __name__ == '__main__':
         print('Invalid engine name.')
         PARSER.print_help()
     SETUP_UI = SetupUI(engine_name=ENGINE_NAME)
-    GLIB_MAIN_LOOP = GLib.MainLoop()
+    glib_main_loop = GLib.MainLoop()
     signal.signal(signal.SIGTERM, quit_glib_main_loop) # kill <pid>
     # Ctrl+C (optional, can also use try/except KeyboardInterrupt)
     # signal.signal(signal.SIGINT, quit_glib_main_loop)
     try:
-        GLIB_MAIN_LOOP.run()
+        glib_main_loop.run()
     except KeyboardInterrupt:
         # SIGNINT (Control+C) received
         LOGGER.info('Control+C pressed, exiting ...')
-        GLIB_MAIN_LOOP.quit()
+        glib_main_loop.quit()
