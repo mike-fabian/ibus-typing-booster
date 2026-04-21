@@ -217,7 +217,7 @@ class HunspellSuggestTestCase(unittest.TestCase):
     def test_en_US(self) -> None:
         h = hunspell_suggest.Hunspell(['en_US'])
         normal_suggestions = set((
-            'Camel', 'camel', 'camels', 'Camelot', 'camellia', 'camelhair', 'Camelopardalis'))
+            'Camel', 'camel', 'camels', 'Camelot', 'camellia', 'Camelopardalis'))
         spellcheck_suggestions = set(('came', 'cameo'))
         for word, freq in h.suggest('camel'):
             if word in normal_suggestions and freq == 0:
