@@ -63,10 +63,13 @@ def log_unhandled_exception(
 
 sys.excepthook = log_unhandled_exception
 
+# pylint: disable=invalid-name
+DEBUG_LEVEL = 0
 try:
     DEBUG_LEVEL = int(str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
 except (TypeError, ValueError):
-    DEBUG_LEVEL = int(0)
+    DEBUG_LEVEL = 0
+# pylint: enable=invalid-name
 
 if os.getenv('IBUS_TYPING_BOOSTER_LOCATION'):
     ICON_DIR = os.path.join(

@@ -294,7 +294,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
         self.assertEqual(matches[2].user_freq, 5.0)
 
     @unittest.skipIf(
-        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        itb_emoji.pinyin is not None,
         "Skipping because import pinyin worked.")
     def test_similar_horse_racing_pinyin_missing_zh_CN(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -311,7 +311,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
         self.assertEqual(matches[2].user_freq, 6.0)
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        itb_emoji.pinyin is not None,
         "Skipping because import pinyin failed.")
     def test_similar_horse_racing_pinyin_available_zh_CN(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -328,7 +328,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
         self.assertEqual(matches[2].user_freq, 12.0)
 
     @unittest.skipIf(
-        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        itb_emoji.pinyin is not None,
         "Skipping because import pinyin worked.")
     def test_similar_horse_racing_pinyin_missing_zh_TW(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -339,7 +339,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
         self.assertEqual(matches[0].user_freq, 4.0)
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        itb_emoji.pinyin is not None,
         "Skipping because import pinyin failed.")
     def test_similar_horse_racing_pinyin_available_zh_TW(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -350,7 +350,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
         self.assertEqual(matches[0].user_freq, 7.0)
 
     @unittest.skipIf(
-        itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
+        itb_emoji.pykakasi is not None,
         "Skipping because import pykakasi worked.")
     def test_candidates_pykakasi_missing_ja_JP(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -405,7 +405,7 @@ class EmojiSimilarTestCase(unittest.TestCase):
         self.assertEqual(matches[4].user_freq, 2.0)
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
+        itb_emoji.pykakasi is not None,
         "Skipping because import pykakasi failed.")
     def test_candidates_pykakasi_available_ja_JP(self) -> None:
         mq = itb_emoji.EmojiMatcher(

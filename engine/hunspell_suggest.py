@@ -22,12 +22,14 @@
 hunspell dictonaries.
 
 '''
-
+from types import ModuleType
+from typing import Optional
 from typing import Dict
 from typing import Tuple
 from typing import List
 from typing import Iterable
 from typing import Any
+from typing import TYPE_CHECKING
 import os
 import sys
 import unicodedata
@@ -39,24 +41,26 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 
 DEBUG_LEVEL = int(0)
 
+enchant: Optional[ModuleType]
 try:
     import enchant  # type: ignore
 except ImportError:
-    IMPORT_ENCHANT_SUCCESSFUL = False
-    try:
-        import hunspell  # type: ignore
-        IMPORT_HUNSPELL_SUCCESSFUL = True
-    except ImportError:
-        IMPORT_HUNSPELL_SUCCESSFUL = False
-else:
-    IMPORT_ENCHANT_SUCCESSFUL = True
-    IMPORT_HUNSPELL_SUCCESSFUL = False
+    enchant = None
 
+hunspell: Optional[ModuleType]
 try:
-    import libvoikko # type: ignore
-    IMPORT_LIBVOIKKO_SUCCESSFUL = True
+    import hunspell  # type: ignore
 except ImportError:
-    IMPORT_LIBVOIKKO_SUCCESSFUL = False
+    hunspell = None
+
+if TYPE_CHECKING:
+    import libvoikko as _libvoikko  # type: ignore[import-not-found, import-untyped, unused-ignore]
+try:
+    import libvoikko as _libvoikko_runtime
+except ImportError:
+    libvoikko: Optional[ModuleType] = None  # pylint: disable=invalid-name
+else:
+    libvoikko = _libvoikko_runtime
 
 # Maximum words that should be returned.
 # This should a rather big number in order not
@@ -100,7 +104,7 @@ class Dictionary():
         self.max_word_len = 0 # maximum length of words in this dictionary
         self.enchant_dict = None
         self.pyhunspell_object = None
-        self.voikko: libvoikko.Voikko = None
+        self.voikko: Optional['_libvoikko.Voikko'] = None
         if self.name != 'None':
             self.load_dictionary()
 
@@ -130,7 +134,7 @@ class Dictionary():
                 self.enchant_dict = None
                 self.pyhunspell_object = None
                 self.voikko = None
-                if not IMPORT_LIBVOIKKO_SUCCESSFUL:
+                if libvoikko is None:
                     LOGGER.warning(
                         'Language is “fi” but “import libvoikko” failed.')
                     return
@@ -141,7 +145,7 @@ class Dictionary():
                                    error.__class__.__name__, error)
                     self.voikko = None
                 return
-            if IMPORT_ENCHANT_SUCCESSFUL:
+            if enchant is not None:
                 broker = enchant.Broker()
                 broker.set_ordering(self.name, 'hunspell,nuspell,aspell,voikko')
                 try:
@@ -159,7 +163,7 @@ class Dictionary():
                         'Unexpected error initializing enchant for %s: %s: %s',
                         self.name, error.__class__.__name__, error)
                     self.enchant_dict = None
-            elif IMPORT_HUNSPELL_SUCCESSFUL and self.dic_path:
+            elif hunspell is not None and self.dic_path:
                 aff_path = self.dic_path.replace('.dic', '.aff')
                 try:
                     self.pyhunspell_object = (

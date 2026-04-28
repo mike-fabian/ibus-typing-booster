@@ -21,7 +21,7 @@
 Unicode characters.
 
 '''
-
+from types import ModuleType
 from typing import Any
 from typing import List
 from typing import Tuple
@@ -56,42 +56,44 @@ def N_(text: str) -> str: # pylint: disable=invalid-name
     '''
     return text
 
+bz2: Optional[ModuleType]
 try:
     import bz2
-    IMPORT_BZ2_SUCCESSFUL = True
 except ImportError:
-    IMPORT_BZ2_SUCCESSFUL = False
+    bz2 = None
 
+lzma: Optional[ModuleType]
 try:
     import lzma
-    IMPORT_LZMA_SUCCESSFUL = True
 except ImportError:
-    IMPORT_LZMA_SUCCESSFUL = False
+    lzma = None
 
+rapidfuzz: Optional[ModuleType]
 try:
     import rapidfuzz
-    IMPORT_RAPIDFUZZ_SUCCESSFUL = True
 except ImportError:
-    IMPORT_RAPIDFUZZ_SUCCESSFUL = False
+    rapidfuzz = None
 
+enchant: Optional[ModuleType]
 try:
     import enchant # type: ignore
-    IMPORT_ENCHANT_SUCCESSFUL = True
 except ImportError:
-    IMPORT_ENCHANT_SUCCESSFUL = False
+    enchant = None
 
 try:
-    import pykakasi # type: ignore[import-not-found]
-    IMPORT_PYKAKASI_SUCCESSFUL = True
-    KAKASI_INSTANCE = pykakasi.kakasi()
+    import pykakasi as _pykakasi # type: ignore[import-not-found]
 except ImportError:
-    IMPORT_PYKAKASI_SUCCESSFUL = False
+    pykakasi = None  # pylint: disable=invalid-name
+    KAKASI_INSTANCE: Any = None
+else:
+    pykakasi = _pykakasi
+    KAKASI_INSTANCE = _pykakasi.kakasi()
 
+pinyin: Optional[ModuleType]
 try:
     import pinyin # type: ignore
-    IMPORT_PINYIN_SUCCESSFUL = True
 except ImportError:
-    IMPORT_PINYIN_SUCCESSFUL = False
+    pinyin = None
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -258,7 +260,7 @@ UNICODE_DATA_EXTRA_LINES = (
 
 SKIN_TONE_MODIFIERS = ('🏻', '🏼', '🏽', '🏾', '🏿')
 
-if IMPORT_PYKAKASI_SUCCESSFUL:
+if pykakasi is not None:
     def kakasi_convert(text: str, target: str='orig') -> str:
         '''
         Convert Japanese text to hiragana, katakana, or romaji
@@ -295,7 +297,7 @@ if IMPORT_PYKAKASI_SUCCESSFUL:
         >>> kakasi_convert('かな漢字', target='passport')
         'kanakanji'
         '''
-        if not IMPORT_PYKAKASI_SUCCESSFUL or target == 'orig':
+        if pykakasi is None or target == 'orig':
             return text
         result = ''
         for item in KAKASI_INSTANCE.convert(text):
@@ -356,10 +358,10 @@ def _find_path_and_open_function(
                 if base_path.endswith('.gz'):
                     LOGGER.debug('Found gzip file: %s', base_path)
                     return (base_path, gzip.open)
-                if base_path.endswith('.bz2') and IMPORT_BZ2_SUCCESSFUL:
+                if base_path.endswith('.bz2') and bz2 is not None:
                     LOGGER.debug('Found bzip2 file: %s', base_path)
                     return (base_path, bz2.open)
-                if base_path.endswith('.xz') and IMPORT_LZMA_SUCCESSFUL:
+                if base_path.endswith('.xz') and lzma is not None:
                     LOGGER.debug('Found xz file: %s', base_path)
                     return (base_path, lzma.open)
                 LOGGER.debug('Found uncompressed file: %s', base_path)
@@ -368,12 +370,12 @@ def _find_path_and_open_function(
             if os.path.exists(gz_path):
                 LOGGER.debug('Found gzip file: %s', gz_path)
                 return (gz_path, gzip.open)
-            if IMPORT_BZ2_SUCCESSFUL:
+            if bz2 is not None:
                 bz2_path = base_path + '.bz2'
                 if os.path.exists(bz2_path):
                     LOGGER.debug('Found bzip2 file: %s', bz2_path)
                     return (bz2_path, bz2.open)
-            if IMPORT_LZMA_SUCCESSFUL:
+            if lzma is not None:
                 xz_path = base_path + '.xz'
                 if os.path.exists(xz_path):
                     LOGGER.debug('Found xz file: %s', xz_path)
@@ -472,7 +474,8 @@ def _match_classic(label: str, match_string: str) -> float:
 def _match_rapidfuzz(label: str, match_string: str) -> float:
     '''Matches a label from the emoji data against the query string using rapidfuzz.'''
     label = itb_util_core.remove_accents(label.lower())
-    return rapidfuzz.fuzz.token_set_ratio(label, match_string)
+    assert rapidfuzz is not None
+    return float(rapidfuzz.fuzz.token_set_ratio(label, match_string))
 
 class EmojiMatcher():
     '''A class to find Emoji which best match a query string'''
@@ -530,7 +533,7 @@ class EmojiMatcher():
         self._romaji = romaji
         self._unicode_blocks: Dict[range, str] = {}
         self._enchant_dicts = []
-        if IMPORT_ENCHANT_SUCCESSFUL:
+        if enchant is not None:
             for language in self._languages:
                 if enchant.dict_exists(language):
                     self._enchant_dicts.append(enchant.Dict(language))
@@ -575,7 +578,7 @@ class EmojiMatcher():
         Changing the match algorithm clears the candidate cache.
         '''
         self._candidate_cache = {}
-        if name == 'rapidfuzz' and  IMPORT_RAPIDFUZZ_SUCCESSFUL:
+        if name == 'rapidfuzz' and  rapidfuzz is not None:
             self._match_function = _match_rapidfuzz
             self._good_match_score = 60.0
             return
@@ -1449,7 +1452,7 @@ class EmojiMatcher():
                 for category in categories:
                     translated = translator(category)
                     translated_categories.append(translated)
-                    if language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL:
+                    if language == 'ja' and pykakasi is not None:
                         hiragana = kakasi_convert(  # pylint: disable=possibly-used-before-assignment
                             translated, target='hira')
                         if hiragana != translated:
@@ -1482,8 +1485,8 @@ class EmojiMatcher():
                     '.xz', '').replace(
                         '.xml', '')
         is_english = language.startswith('en')
-        add_pinyin = language in ('zh', 'zh_Hant') and IMPORT_PINYIN_SUCCESSFUL
-        add_japanese_phonetics = language == 'ja' and IMPORT_PYKAKASI_SUCCESSFUL
+        add_pinyin = language in ('zh', 'zh_Hant') and pinyin is not None
+        add_japanese_phonetics = language == 'ja' and pykakasi is not None
         try:
             with open_function( # type: ignore
                     path, mode='rt', encoding='utf-8') as cldr_annotation_file:
@@ -1512,6 +1515,7 @@ class EmojiMatcher():
                         content_parts = [part.strip() for part in content.split('|')]
                         label = 'keywords'
                     if add_pinyin:
+                        assert pinyin is not None
                         for part in content_parts:
                             pinyin_str = pinyin.get(part)
                             self._add_to_emoji_dict(
@@ -1953,7 +1957,7 @@ class EmojiMatcher():
                 # in any of the enabled dictionaries, add spell checking
                 # suggestions to the list (don’t do that if it is spelled
                 # correctly in at least one dictionary):
-                if len(word) > 5 and IMPORT_ENCHANT_SUCCESSFUL:
+                if len(word) > 5 and enchant is not None:
                     word_title = word.title()
                     if not any(dic.check(word) or dic.check(word_title)
                                for dic in self._enchant_dicts):
@@ -3020,9 +3024,9 @@ def main() -> None:
             unicode_data=True, cldr_data=True)
         matcher.debug_loading_data()
         matcher.list_emoji_one_bugs()
-    elif not IMPORT_RAPIDFUZZ_SUCCESSFUL:
+    elif rapidfuzz is None:
         LOGGER.info('Skipping doctests because rapidfuzz is not available.')
-    elif not IMPORT_ENCHANT_SUCCESSFUL:
+    elif enchant is None:
         LOGGER.info('Skipping doctests because enchant is not available.')
     else:
         import doctest # pylint: disable=import-outside-toplevel

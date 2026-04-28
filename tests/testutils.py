@@ -20,7 +20,8 @@
 '''
 This file implements a few helper functions for test cases
 '''
-
+from types import ModuleType
+from typing import Optional
 import sys
 import locale
 
@@ -32,24 +33,24 @@ import itb_util_core
 # pylint: enable=wrong-import-position
 sys.path.pop(0)
 
+enchant: Optional[ModuleType]
 try:
-    import enchant # type: ignore
-    IMPORT_ENCHANT_SUCCESSFUL = True
+    import enchant  # type: ignore
 except ImportError:
-    IMPORT_ENCHANT_SUCCESSFUL = False
+    enchant = None
 
+libvoikko: Optional[ModuleType]
 try:
     import libvoikko # type: ignore
-    IMPORT_LIBVOIKKO_SUCCESSFUL = True
 except ImportError:
-    IMPORT_LIBVOIKKO_SUCCESSFUL = False
+    libvoikko = None
 
 def get_libvoikko_version() -> str:
     '''Return the version of libvoikko
 
     If libvoikko is not available, return 0
     '''
-    if IMPORT_LIBVOIKKO_SUCCESSFUL:
+    if libvoikko is not None:
         return str(libvoikko.Voikko.getVersion())
     return '0'
 
@@ -60,7 +61,7 @@ def init_libvoikko_error() -> str:
     :return: '' (empty string) if Voikko initialization worked.
              error message string if Voikko initialization failed.
     '''
-    if IMPORT_LIBVOIKKO_SUCCESSFUL:
+    if libvoikko is not None:
         try:
             voikko = libvoikko.Voikko('fi')
             if voikko:
@@ -106,6 +107,8 @@ def enchant_sanity_test(language: str = '', word: str = '') -> bool:
         return False
     if not itb_util_core.get_hunspell_dictionary_wordlist(language)[0]:
         return False
+    if enchant is None:
+        return False
     enchant_dictionary = enchant.Dict(language)
     if enchant_dictionary.suggest(word):
         return True
@@ -127,7 +130,7 @@ def enchant_working_as_expected() -> bool:
     system to be skipped, I should check carefully and then probably
     update the test cases.
     '''
-    if not IMPORT_ENCHANT_SUCCESSFUL:
+    if enchant is None:
         return False
     enchant_dictionary = enchant.Dict('en_US')
     if enchant_dictionary.check('hedgehgo'):

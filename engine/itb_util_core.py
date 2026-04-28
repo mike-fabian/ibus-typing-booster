@@ -21,6 +21,7 @@ Core utility functions used in ibus-typing-booster.
 
 This module must not import Gtk or Gdk or require a display.
 '''
+from types import ModuleType
 from typing import Any
 from typing import Tuple
 from typing import List
@@ -31,6 +32,7 @@ from typing import Optional
 from typing import Union
 from typing import Iterable
 from typing import Pattern
+from typing import TYPE_CHECKING
 # pylint: disable=wrong-import-position
 import sys
 if sys.version_info >= (3, 8):
@@ -49,6 +51,7 @@ import subprocess
 import glob
 import gettext
 import platform
+import queue
 import ctypes
 import ctypes.util
 import xml.etree.ElementTree
@@ -76,46 +79,44 @@ except ImportError:
     import re
     USING_REGEX = False
 
+distro: Optional[ModuleType]
 try:
     import distro
-    IMPORT_DISTRO_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_DISTRO_SUCCESSFUL = False
+except ImportError:
+    distro = None
 
 # Importing xdg.BaseDirectory is not needed at the moment, see
 # the implemention of xdg_save_data_path() below does not use it
 # at the moment.
 #
-#IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = False
+# from typing import Type
+#
+#xdg_BaseDirectory: Optional[Type]
 #try:
 #    import xdg.BaseDirectory # type: ignore
-#    IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = True
-#except (ImportError,):
-#    IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL = False
+#except ImportError:
+#    xdg_BaseDirectory = None
 
+if TYPE_CHECKING:
+    import pyaudio as _pyaudio  # type: ignore[import-not-found, import-untyped, unused-ignore]
 try:
-    import pyaudio # type: ignore
-    IMPORT_PYAUDIO_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_PYAUDIO_SUCCESSFUL = False
+    import pyaudio as _pyaudio_runtime
+except ImportError:
+    pyaudio: Optional[ModuleType] = None  # pylint: disable=invalid-name
+else:
+    pyaudio = _pyaudio_runtime
 
-try:
-    import queue
-    IMPORT_QUEUE_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_QUEUE_SUCCESSFUL = False
-
+langtable: Optional[ModuleType]
 try:
     import langtable # type: ignore
-    IMPORT_LANGTABLE_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_LANGTABLE_SUCCESSFUL = False
+except ImportError:
+    langtable = None
 
+pycountry: Optional[ModuleType]
 try:
     import pycountry # type: ignore
-    IMPORT_PYCOUNTRY_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_PYCOUNTRY_SUCCESSFUL = False
+except ImportError:
+    pycountry = None
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -2837,14 +2838,14 @@ def locale_text_to_match(localeId: str) -> str: # pylint: disable=invalid-name
             # are seperated by punctuation or white space.
             + ' ' + _('Others, Miscellaneous, Various, Diverse')
             )
-    elif IMPORT_LANGTABLE_SUCCESSFUL:
+    elif langtable is not None:
         query_languages = [effective_lc_messages, localeId, 'en']
         for query_language in query_languages:
             if query_language:
                 text_to_match += ' ' + langtable.language_name(
                     languageId=localeId,
                     languageIdQuery=query_language)
-    elif IMPORT_PYCOUNTRY_SUCCESSFUL:
+    elif pycountry is not None:
         locale = parse_locale(localeId) # pylint: disable=redefined-outer-name
         if locale.language:
             language = pycountry.languages.get(alpha_2=locale.language)
@@ -2902,14 +2903,14 @@ def locale_language_description( # pylint: disable=invalid-name
     '''
     language_description = ''
     effective_lc_messages = get_effective_lc_messages()
-    if IMPORT_LANGTABLE_SUCCESSFUL:
+    if langtable is not None:
         language_description = langtable.language_name(
             languageId=localeId,
             languageIdQuery=effective_lc_messages)
         if not language_description:
             language_description = langtable.language_name(
                 languageId=localeId, languageIdQuery='en')
-    elif IMPORT_PYCOUNTRY_SUCCESSFUL:
+    elif pycountry is not None:
         locale = parse_locale(localeId) # pylint: disable=redefined-outer-name
         if locale.language:
             language = pycountry.languages.get(alpha_2=locale.language)
@@ -4018,7 +4019,7 @@ def distro_id() -> str:
         "sled"          SUSE Linux Enterprise Desktop 15 SP1
 
     '''
-    if IMPORT_DISTRO_SUCCESSFUL:
+    if distro is not None:
         return str(distro.id())
     return ''
 
@@ -5785,7 +5786,7 @@ def xdg_save_data_path(*resource: str) -> str:
     Compatibility function for systems which do not have pyxdg.
     (For example openSUSE Leap 42.1)
     '''
-    # if IMPORT_XDG_BASEDIRECTORY_SUCCESSFUL:
+    # if xdg_BaseDirectory is not None:
     #    return xdg.BaseDirectory.save_data_path(*resource)
     #
     # xdg.BaseDirectory.save_data_path(*resource) unfortunately
@@ -6216,32 +6217,40 @@ class MicrophoneStream():
     GoogleCloudPlatform/python-docs-samples is licensed under the
     Apache License 2.0
     '''
-    def __init__(self, rate: int, chunk: int):
+    def __init__(self, rate: int, chunk: int) -> None:
         self._rate = rate
         self._chunk = chunk
 
         # Create a thread-safe buffer of audio data
-        self._buff: queue.Queue[Any] = queue.Queue()
         self.closed = True
-        self._audio_interface: Optional[pyaudio.PyAudio] = None
+        self._buff: queue.Queue[Any] = queue.Queue()
+        self._audio_interface: Optional['_pyaudio.PyAudio'] = None
         self._audio_stream: Optional[Any] = None
+        if pyaudio is None:
+            raise RuntimeError('PyAudio is not installed')
 
     def __enter__(self) -> Any:
+        if pyaudio is None:
+            raise RuntimeError('PyAudio is not installed')
         self._audio_interface = pyaudio.PyAudio()
-        self._audio_stream = self._audio_interface.open(
-            format=pyaudio.paInt16,
-            # The API currently only supports 1-channel (mono) audio
-            # https://goo.gl/z757pE
-            channels=1, rate=self._rate,
-            input=True, frames_per_buffer=self._chunk,
-            # Run the audio stream asynchronously to fill the buffer object.
-            # This is necessary so that the input device's buffer doesn't
-            # overflow while the calling thread makes network requests, etc.
-            stream_callback=self._fill_buffer,
-        )
-
+        try:
+            self._audio_stream = self._audio_interface.open(
+                format=pyaudio.paInt16,
+                # The API currently only supports 1-channel (mono) audio
+                # https://goo.gl/z757pE
+                channels=1, rate=self._rate,
+                input=True, frames_per_buffer=self._chunk,
+                # Run the audio stream asynchronously to fill the buffer object.
+                # This is necessary so that the input device's buffer doesn't
+                # overflow while the calling thread makes network requests, etc.
+                stream_callback=self._fill_buffer,
+            )
+        except Exception: # pylint: disable=broad-except
+            # Clean up partially initialized state
+            self._audio_interface.terminate()
+            self._audio_interface = None
+            raise
         self.closed = False
-
         return self
 
     def __exit__(self, _type: Any, _value: Any, _traceback: Any) -> None:
@@ -6263,6 +6272,7 @@ class MicrophoneStream():
             _status_flags: Any) -> Tuple[None, Any]:
         """Continuously collect data from the audio stream, into the buffer."""
         self._buff.put(in_data)
+        assert pyaudio is not None
         return None, pyaudio.paContinue
 
     def generator(self) -> Iterable[bytes]:

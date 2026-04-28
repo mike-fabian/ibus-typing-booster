@@ -23,7 +23,7 @@ This file implements the test cases using GTK GUI
 # pylint: disable=attribute-defined-outside-init
 # pylint: disable=missing-function-docstring
 # pylint: disable=missing-class-docstring
-
+from types import ModuleType
 from typing import List
 from typing import Dict
 from typing import Any
@@ -61,24 +61,23 @@ if TYPE_CHECKING:
     from gi.repository import Gtk, Gdk  # type: ignore
     # pylint: enable=reimported
 
+itb_util_core: Optional[ModuleType]
 try:
     import itb_util_core
-    IMPORT_ITB_UTIL_CORE_SUCCESSFUL = True
 except ImportError:
-    IMPORT_ITB_UTIL_CORE_SUCCESSFUL = False
+    itb_util_core = None
 
+hunspell_table: Optional[ModuleType]
 try:
     import hunspell_table
-    IMPORT_HUNSPELL_SUCCESSFUL = True
 except ImportError:
-    IMPORT_HUNSPELL_SUCCESSFUL = False
+    hunspell_table = None
 
+tabsqlitedb: Optional[ModuleType]
 try:
     import tabsqlitedb
-    IMPORT_TABSQLITEDB_SUCCESSFUL = True
 except ImportError:
-    IMPORT_TABSQLITEDB_SUCCESSFUL = False
-
+    tabsqlitedb = None
 sys.path.pop(0)
 
 DONE_EXIT = True
@@ -104,9 +103,13 @@ def printerr(sentence: str) -> None:
     'XDG_SESSION_TYPE is neither "x11" nor "wayland".')
 @unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
 @unittest.skipUnless(
+    itb_util_core is not None
+    and
     itb_util_core.get_hunspell_dictionary_wordlist('fr_FR')[0],
     'Skipping because no fr_FR dictionary could be found. ')
 @unittest.skipUnless(
+    itb_util_core is not None
+    and
     itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
     'Skipping because no en_US dictionary could be found. ')
 class SimpleGtk3TestCase(unittest.TestCase):
@@ -253,9 +256,9 @@ class SimpleGtk3TestCase(unittest.TestCase):
             self, factory: IBus.Factory, engine_name: str) -> Optional[Any]:
         if engine_name != 'testTyping-booster':
             return None
-        if (not IMPORT_HUNSPELL_SUCCESSFUL
-            or not IMPORT_ITB_UTIL_CORE_SUCCESSFUL
-            or not IMPORT_TABSQLITEDB_SUCCESSFUL):
+        if (hunspell_table is None
+            or itb_util_core is None
+            or tabsqlitedb is None):
             with self.subTest(i='create-engine'):
                 self.fail('NG: ibus-typing-booster not installed?')
             self.__class__.glib_main_loop.quit()

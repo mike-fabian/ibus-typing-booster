@@ -20,7 +20,7 @@
 '''
 This file implements test cases for miscellaneous stuff in tabsqlitedb.py.
 '''
-
+from types import ModuleType
 from typing import Iterable
 from typing import Dict
 from typing import Union
@@ -40,11 +40,11 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 import testutils # pylint: disable=import-error
 # pylint: enable=wrong-import-position
 
+distro: Optional[ModuleType]
 try:
     import distro
-    IMPORT_DISTRO_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_DISTRO_SUCCESSFUL = False
+except ImportError:
+    distro = None
 
 # Avoid failing test cases because updated dictionaries in:
 #
@@ -266,7 +266,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
         itb_util_core.get_hunspell_dictionary_wordlist('fr_FR')[0],
         'Skipping because no fr_FR hunspell dictionary could be found.')
     @unittest.skipUnless(
-        IMPORT_DISTRO_SUCCESSFUL
+        distro is not None
         and distro.id() == 'fedora',
         'Skipping on other distros then Fedora, '
         'French dictionary might be too different on other distributions.')
@@ -326,7 +326,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
         itb_util_core.get_hunspell_dictionary_wordlist('fr_FR')[0],
         'Skipping because no fr_FR hunspell dictionary could be found.')
     @unittest.skipUnless(
-        IMPORT_DISTRO_SUCCESSFUL
+        distro is not None
         and distro.id() == 'fedora',
         'Skipping on other distros then Fedora, '
         'French dictionary might be too different on other distributions.')
@@ -389,7 +389,7 @@ class TabSqliteDbTestCase(unittest.TestCase):
         itb_util_core.get_hunspell_dictionary_wordlist('fr_FR')[0],
         'Skipping because no fr_FR hunspell dictionary could be found.')
     @unittest.skipUnless(
-        IMPORT_DISTRO_SUCCESSFUL
+        distro is not None
         and distro.id() == 'fedora',
         'Skipping on other distros then Fedora, '
         'French dictionary might be too different on other distributions.')
