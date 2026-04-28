@@ -21,7 +21,7 @@
 '''
 This file implements the ibus engine for ibus-typing-booster
 '''
-
+from types import ModuleType
 from typing import Any
 from typing import Dict
 from typing import List
@@ -30,6 +30,7 @@ from typing import Union
 from typing import Optional
 from typing import Iterable
 from typing import Callable
+from typing import TYPE_CHECKING
 import sys
 # pylint: disable=wrong-import-position
 if sys.version_info >= (3, 8):
@@ -67,11 +68,17 @@ import itb_sound
 import itb_emoji
 import itb_version
 
+itb_ollama: Optional[ModuleType]
+_itb_ollama_import_error: Optional[Exception]
+if TYPE_CHECKING:
+    from itb_ollama import ItbOllamaClient
 try:
     import itb_ollama
-    IMPORT_ITB_OLLAMA_ERROR = None
-except ImportError as error:
-    IMPORT_ITB_OLLAMA_ERROR = error
+except Exception as error:  # pylint: disable=broad-exception-caught  # intentionally broad: disable feature on any failure
+    itb_ollama = None
+    _itb_ollama_import_error = error
+else:
+    _itb_ollama_import_error = None
 
 try:
     # Enable new improved regex engine instead of backwards compatible
@@ -86,25 +93,37 @@ except ImportError:
     import re
     USING_REGEX = False
 
+itb_nltk: Optional[ModuleType]
 try:
     import itb_nltk
-    IMPORT_ITB_NLTK_SUCCESSFUL = True
 except (ImportError, LookupError, ValueError):
-    IMPORT_ITB_NLTK_SUCCESSFUL = False
+    itb_nltk = None
 
+if TYPE_CHECKING:
+    from google.cloud import speech as _speech  # type: ignore  # noqa: F401
+    from google.cloud.speech import enums as _speech_enums  # type: ignore  # noqa: F401
+    from google.cloud.speech import types as _speech_types  # noqa: F401
 try:
-    from google.cloud import speech # type: ignore
-    from google.cloud.speech import enums as speech_enums # type: ignore
-    from google.cloud.speech import types as speech_types
-    IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL = False
+    from google.cloud import speech as _speech_runtime
+    from google.cloud.speech import enums as _speech_enums_runtime
+    from google.cloud.speech import types as _speech_types_runtime
+except ImportError:
+    speech: Optional[ModuleType] = None  # pylint: disable=invalid-name
+    speech_enums: Optional[ModuleType] = None  # pylint: disable=invalid-name
+    speech_types: Optional[ModuleType] = None  # pylint: disable=invalid-name
+else:
+    speech = _speech_runtime
+    speech_enums = _speech_enums_runtime
+    speech_types = _speech_types_runtime
 
+if TYPE_CHECKING:
+    import bidi.algorithm as _bidi_algorithm  # type: ignore  # noqa: F401
 try:
-    import bidi.algorithm # type: ignore
-    IMPORT_BIDI_ALGORITHM_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_BIDI_ALGORITHM_SUCCESSFUL = False
+    import bidi.algorithm as _bidi_algorithm_runtime
+except ImportError:
+    bidi_algorithm: Optional[ModuleType] = None  # pylint: disable=invalid-name
+else:
+    bidi_algorithm = _bidi_algorithm_runtime
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -661,7 +680,7 @@ class TypingBoosterEngine(IBus.Engine):
             'aichatenable']['user']
         self._ai_system_message: str = self._settings_dict[
             'aisystemmessage']['user']
-        self._ollama_client: Optional[itb_ollama.ItbOllamaClient] = None
+        self._ollama_client: Optional['ItbOllamaClient'] = None
         self._ollama_server_label = '🦙'
         self._ollama_model: str = self._settings_dict[
             'ollamamodel']['user']
@@ -3825,7 +3844,7 @@ class TypingBoosterEngine(IBus.Engine):
         else:
             related_candidates = self.emoji_matcher.similar(
                 phrase, show_keywords=False)
-        if not IMPORT_ITB_NLTK_SUCCESSFUL:
+        if itb_nltk is None:
             LOGGER.info('nltk is not available')
         else:
             LOGGER.info('Getting related words from nltk for: “%s”', phrase)
@@ -7279,15 +7298,12 @@ class TypingBoosterEngine(IBus.Engine):
         if self._debug_level:
             LOGGER.debug('speech_recognition()\n')
         self._clear_input_and_update_ui()
-        if not IMPORT_GOOGLE_SPEECH_TO_TEXT_SUCCESSFUL:
+        if speech is None or speech_enums is None or speech_types is None:
             self._speech_recognition_error(
                 _('Failed to import Google speech-to-text.'))
             return
-        if not itb_util_core.IMPORT_PYAUDIO_SUCCESSFUL:
+        if itb_util_core.pyaudio is None:
             self._speech_recognition_error(_('Failed to import pyaudio.'))
-            return
-        if not itb_util_core.IMPORT_QUEUE_SUCCESSFUL:
-            self._speech_recognition_error(_('Failed to import queue.'))
             return
         language_code = self._dictionary_names[0]
         if not language_code:
@@ -7312,6 +7328,8 @@ class TypingBoosterEngine(IBus.Engine):
                 _('Failed to init Google speech-to-text. See debug.log.'))
             return
 
+        assert speech_types is not None
+        assert speech_enums is not None
         config = speech_types.RecognitionConfig(
             encoding=speech_enums.RecognitionConfig.AudioEncoding.LINEAR16,
             sample_rate_hertz=itb_util_core.AUDIO_RATE,
@@ -7378,7 +7396,7 @@ class TypingBoosterEngine(IBus.Engine):
             audio_generator = stream.generator()
             requests = (speech_types.StreamingRecognizeRequest(audio_content=content)
                         for content in audio_generator)
-            responses = client.streaming_recognize(streaming_config, requests)
+            responses = client.streaming_recognize(streaming_config, requests) # pylint: disable=too-many-function-args
             try:
                 for response in responses:
                     if not response.results:
@@ -8027,9 +8045,9 @@ class TypingBoosterEngine(IBus.Engine):
         is selected but surrounding text works, use the current
         line up to the cursor as additional input.
         '''
-        if IMPORT_ITB_OLLAMA_ERROR:
+        if itb_ollama is None:
             LOGGER.error(
-                '“import itb_ollama” failed: %r', IMPORT_ITB_OLLAMA_ERROR)
+                '“import itb_ollama” failed: %r', _itb_ollama_import_error)
             return
         if self._ollama_model == '':
             LOGGER.error('ollama model is not set.')
@@ -8761,13 +8779,13 @@ class TypingBoosterEngine(IBus.Engine):
                              'the cursor does not seem to work with '
                              'gnome wayland input. ')
                 return
-            if not IMPORT_BIDI_ALGORITHM_SUCCESSFUL:
+            if bidi_algorithm is None:
                 LOGGER.debug(
                     '"import bidi.algorithm" didn’t work, '
                     'no cursor correction possible. '
                     'Try `pip install --user python-bidi`')
                 return
-            new_line_with_cmarker = bidi.algorithm.get_display(
+            new_line_with_cmarker = bidi_algorithm.get_display(
                 current_line_with_cmarker)
             cmarker_pos = new_line_with_cmarker.find(cmarker)
             if cmarker_pos < 0:

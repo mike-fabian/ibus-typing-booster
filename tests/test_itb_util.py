@@ -20,7 +20,8 @@
 '''
 This file implements test cases for miscellaneous stuff in itb_util.py.
 '''
-
+from types import ModuleType
+from typing import Optional
 import sys
 import os
 import importlib.util
@@ -36,11 +37,11 @@ from gi.repository import IBus
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
+distro: Optional[ModuleType]
 try:
     import distro
-    IMPORT_DISTRO_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_DISTRO_SUCCESSFUL = False
+except ImportError:
+    distro = None
 
 IS_LANGTABLE_AVAILABLE = importlib.util.find_spec('langtable') is not None
 
@@ -66,7 +67,7 @@ class ItbUtilTestCase(unittest.TestCase):
         self.assertEqual(True, True)
 
     @unittest.skipUnless(
-        IMPORT_DISTRO_SUCCESSFUL
+        distro is not None
         and distro.id() == 'fedora'
         and distro.version() >= '34',
         'Skipping, requires new enough m17n-db package, '

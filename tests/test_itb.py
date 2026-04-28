@@ -20,8 +20,7 @@
 '''
 This file implements the test cases for the unit tests of ibus-typing-booster
 '''
-
-
+from types import ModuleType
 from typing import Any
 from typing import Optional
 from typing import TYPE_CHECKING
@@ -47,11 +46,11 @@ from gi.repository import GLib # type: ignore
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
+distro: Optional[ModuleType]
 try:
     import distro
-    IMPORT_DISTRO_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_DISTRO_SUCCESSFUL = False
+except ImportError:
+    distro = None
 
 # Get more verbose output in the test log:
 os.environ['IBUS_TYPING_BOOSTER_DEBUG_LEVEL'] = '255'
@@ -4361,7 +4360,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, '昍𣊭曰')
 
     @unittest.skipUnless(
-        IMPORT_DISTRO_SUCCESSFUL
+        distro is not None
         and distro.id() == 'fedora'
         and distro.version() >= '34',
         'Skipping, initializing ja-anthy sometimes segfaults on Alpine Linux. '
@@ -4478,7 +4477,7 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_committed_text, '秋秋空き秋\r')
 
     @unittest.skipUnless(
-        IMPORT_DISTRO_SUCCESSFUL
+        distro is not None
         and distro.id() == 'fedora'
         and distro.version() >= '34',
         'Skipping, initializing ja-anthy sometimes segfaults on Alpine Linux. '

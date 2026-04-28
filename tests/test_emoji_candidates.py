@@ -156,7 +156,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'factory')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_multilingual_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -217,7 +217,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'smiling face with sunglasses')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_white_space_and_underscores_rapidfuzz(self) -> None:
         # Any white space and '_' can be used to separate keywords in the
@@ -252,7 +252,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'emoji modifier fitzpatrick type-6 “tone5”')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_skin_tones_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -288,7 +288,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'input symbol for latin small letters')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_some_letters_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -354,7 +354,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'flag: svalbard & jan mayen')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_flags_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -443,7 +443,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         testutils.enchant_working_as_expected(),
         'Skipping because of an unexpected change in the enchant behaviour.')
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_persons_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -485,7 +485,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'baby bottle [birth]')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_birthday_cake_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -533,7 +533,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         testutils.enchant_working_as_expected(),
         'Skipping because of an unexpected change in the enchant behaviour.')
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_symbols_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -576,7 +576,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'snail {nature}')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_animals_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -626,7 +626,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'anchor')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_travel_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -734,7 +734,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'U+0020 space {Space}')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_various_unicode_chars_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -798,7 +798,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'visage en pleine réflexion')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_french_text_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -841,7 +841,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'U+1B')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_code_point_input_rapidfuzz(self) -> None:
         mq = itb_emoji.EmojiMatcher(
@@ -886,7 +886,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'Gesicht mit Reissverschlussmund')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_RAPIDFUZZ_SUCCESSFUL,
+        itb_emoji.rapidfuzz is not None,
         'Skipping because this test requires rapidfuzz to work.')
     def test_candidates_de_DE_versus_de_CH_rapidfuzz(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
@@ -915,7 +915,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'Gesicht mit Reissverschlussmund')
 
     @unittest.skipIf(
-        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        itb_emoji.pinyin is not None,
         "Skipping because import pinyin worked.")
     def test_candidates_pinyin_missing_zh_CN(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
@@ -927,7 +927,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             0, len(mq.candidates('saima')))
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        itb_emoji.pinyin is not None,
         "Skipping because import pinyin failed.")
     def test_candidates_pinyin_available_zh_CN_classic(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
@@ -941,7 +941,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, '赛马 “sàimǎ”')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        itb_emoji.pinyin is not None,
         "Skipping because import pinyin failed.")
     def test_candidates_pinyin_available_zh_CN_rapidfuzz(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
@@ -955,7 +955,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, '赛马 “sàimǎ” [qímǎ]')
 
     @unittest.skipIf(
-        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        itb_emoji.pinyin is not None,
         "Skipping because import pinyin worked.")
     def test_candidates_pinyin_missing_zh_TW_classic(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
@@ -968,7 +968,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             0, len(mq.candidates('saima')))
 
     @unittest.skipIf(
-        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        itb_emoji.pinyin is not None,
         "Skipping because import pinyin worked.")
     def test_candidates_pinyin_missing_zh_TW_rapidfuzz(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
@@ -981,7 +981,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             0, len(mq.candidates('saima')))
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        itb_emoji.pinyin is not None,
         "Skipping because import pinyin failed.")
     def test_candidates_pinyin_available_zh_TW_classic(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
@@ -995,7 +995,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, '賽馬 “sàimǎ”')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_PINYIN_SUCCESSFUL,
+        itb_emoji.pinyin is not None,
         "Skipping because import pinyin failed.")
     def test_candidates_pinyin_available_zh_TW_rapidfuzz(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
@@ -1009,7 +1009,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, '賽馬 “sàimǎ” [qímǎ]')
 
     @unittest.skipIf(
-        itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
+        itb_emoji.pykakasi is not None,
         "Skipping because import pykakasi worked.")
     def test_candidates_pykakasi_missing_ja_JP_classic(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
@@ -1052,7 +1052,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             0, len(mq.candidates('ねこ＿')))
 
     @unittest.skipIf(
-        itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
+        itb_emoji.pykakasi is not None,
         "Skipping because import pykakasi worked.")
     def test_candidates_pykakasi_missing_ja_JP_rapidfuzz(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
@@ -1095,7 +1095,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
             0, len(mq.candidates('ねこ＿')))
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
+        itb_emoji.pykakasi is not None,
         "Skipping because import pykakasi failed.")
     def test_candidates_pykakasi_available_ja_JP_classic(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(
@@ -1142,7 +1142,7 @@ class EmojiCandidatesTestCase(unittest.TestCase):
         self.assertEqual(first_match.comment, 'ネコ “ねこ”')
 
     @unittest.skipUnless(
-        itb_emoji.IMPORT_PYKAKASI_SUCCESSFUL,
+        itb_emoji.pykakasi is not None,
         "Skipping because import pykakasi failed.")
     def test_candidates_pykakasi_available_ja_JP_rapidfuzz(self) -> None: # pylint: disable=invalid-name
         mq = itb_emoji.EmojiMatcher(

@@ -17,17 +17,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+from typing import Optional
+from typing import Any
+from typing import Type
 import sys
 import os
 import unittest
 
 # pip3 install tap.py --user
-IMPORT_TAP_SUCCESSFUL = False
+TAPTestRunner: Optional[Type[Any]]
 try:
     from tap import TAPTestRunner
-    IMPORT_TAP_SUCCESSFUL = True
-except (ImportError,):
-    pass
+except ImportError:
+    TAPTestRunner = None
 
 if 'IBUS_TYPING_BOOSTER_LOCATION' in os.environ:
     location_path = os.environ['IBUS_TYPING_BOOSTER_LOCATION']
@@ -48,7 +50,7 @@ if len(sys.argv) > 1:
 loader = unittest.TestLoader()
 suite = loader.discover(start_dir=start_dir, pattern=pattern)
 
-if IMPORT_TAP_SUCCESSFUL:
+if TAPTestRunner is not None:
     runner = TAPTestRunner(stream=sys.stderr, verbosity=255)
     runner.set_outdir('.')
     runner.set_format('Hi: {method_name} - {short_description}')

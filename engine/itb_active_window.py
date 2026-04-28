@@ -66,7 +66,8 @@ seen in the terminal shows correctly which window is currently active
 (This works only with AT-SPI).
 
 '''
-
+from types import ModuleType
+from typing import Optional
 from typing import Any
 from typing import Tuple
 import sys
@@ -76,11 +77,11 @@ import shutil
 import threading
 import logging
 
+pyatspi: Optional[ModuleType]
 try:
     import pyatspi # type: ignore
-    IMPORT_PYATSPI_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_PYATSPI_SUCCESSFUL = False
+except ImportError:
+    pyatspi = None
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
@@ -93,7 +94,7 @@ class AtspiMonitor:
         self._active_program_name = ''
         self._active_window_title = ''
         self._events_registered = False
-        if not IMPORT_PYATSPI_SUCCESSFUL:
+        if pyatspi is None:
             LOGGER.info('“import pyatspi” failed.')
             return
         try:
@@ -109,6 +110,8 @@ class AtspiMonitor:
 
     def start(self) -> None:
         '''Starts the monitoring'''
+        if pyatspi is None:
+            return
         if self._events_registered:
             LOGGER.info('Starting AtspiMonitor.')
             pyatspi.Registry.start() # pylint: disable=no-value-for-parameter
@@ -195,6 +198,8 @@ def _get_active_window_atspi() -> None:
              information about the currently focused window.
     '''
     global _ACTIVE_WINDOW # pylint: disable=global-statement
+    if pyatspi is None:
+        return
     try:
         desktop = pyatspi.Registry.getDesktop(0) # pylint: disable=no-value-for-parameter
         for application in desktop:
@@ -217,7 +222,7 @@ def get_active_window_atspi() -> Tuple[str, str]:
     '''
     global _ACTIVE_WINDOW # pylint: disable=global-statement
     _ACTIVE_WINDOW = ('', '')
-    if not IMPORT_PYATSPI_SUCCESSFUL:
+    if pyatspi is None:
         return ('', '')
     active_window_thread = threading.Thread(
         daemon=True, target=_get_active_window_atspi)

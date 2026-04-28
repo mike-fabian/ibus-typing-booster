@@ -20,7 +20,8 @@
 '''
 This file implements test cases for itb_pango.py
 '''
-
+from types import ModuleType
+from typing import Optional
 from typing import TYPE_CHECKING
 import sys
 import os
@@ -29,11 +30,11 @@ import unittest
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
+distro: Optional[ModuleType]
 try:
     import distro
-    IMPORT_DISTRO_SUCCESSFUL = True
-except (ImportError,):
-    IMPORT_DISTRO_SUCCESSFUL = False
+except ImportError:
+    distro = None
 
 # pylint: disable=wrong-import-position,import-error
 sys.path.insert(0, "../engine")
@@ -85,7 +86,7 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual(True, True)
 
     @unittest.skipUnless(
-        IMPORT_DISTRO_SUCCESSFUL
+        distro is not None
         and distro.id() == 'fedora'
         and distro.version() >= '40',
         'Skipping, fonts might be different on Fedora < 40 or other distributions.')
@@ -163,7 +164,7 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual(results_for_run['glyph-available'], True)
 
     @unittest.skipUnless(
-        IMPORT_DISTRO_SUCCESSFUL
+        distro is not None
         and distro.id() == 'fedora'
         and distro.version() >= '40',
         'Skipping, fonts might be different on Fedora < 40 or other distributions.')
@@ -224,7 +225,7 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual(results_for_run['glyph-available'], True)
 
     @unittest.skipUnless(
-        IMPORT_DISTRO_SUCCESSFUL
+        distro is not None
         and distro.id() == 'fedora'
         and distro.version() >= '40',
         'Skipping, fonts might be different on Fedora < 40 or other distributions.')
@@ -415,7 +416,7 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual('glyph-available' in results_for_run, False)
 
     @unittest.skipUnless(
-        IMPORT_DISTRO_SUCCESSFUL
+        distro is not None
         and distro.id() == 'fedora'
         and distro.version() >= '40',
         'Skipping, fonts might be different on Fedora < 40 or other distributions.')
@@ -572,7 +573,7 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual(results_for_run['glyph-available'], True) # real glyph shown
 
     @unittest.skipUnless(
-        IMPORT_DISTRO_SUCCESSFUL
+        distro is not None
         and distro.id() == 'fedora'
         and distro.version() >= '40',
         'Skipping, fonts might be different on Fedora < 40 or other distributions.')
@@ -591,7 +592,7 @@ class ItbPangoTestCase(unittest.TestCase):
         self.assertEqual(itb_pango.emoji_font_fallback_needed(font_name, '🤥'), False)
 
     @unittest.skipUnless(
-        IMPORT_DISTRO_SUCCESSFUL
+        distro is not None
         and distro.id() == 'fedora'
         and distro.version() >= '40',
         'Skipping, fonts might be different on Fedora < 40 or other distributions.')
