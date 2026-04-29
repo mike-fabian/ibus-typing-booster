@@ -100,21 +100,13 @@ except (ImportError, LookupError, ValueError):
     itb_nltk = None
 
 if TYPE_CHECKING:
-    from google.cloud import speech as _speech  # type: ignore  # noqa: F401
-    from google.cloud.speech import enums as _speech_enums  # type: ignore  # noqa: F401
-    from google.cloud.speech import types as _speech_types  # noqa: F401
+    from google.cloud import speech as _speech # type: ignore  # noqa: F401
 try:
     from google.cloud import speech as _speech_runtime
-    from google.cloud.speech import enums as _speech_enums_runtime
-    from google.cloud.speech import types as _speech_types_runtime
 except ImportError:
     speech: Optional[ModuleType] = None  # pylint: disable=invalid-name
-    speech_enums: Optional[ModuleType] = None  # pylint: disable=invalid-name
-    speech_types: Optional[ModuleType] = None  # pylint: disable=invalid-name
 else:
     speech = _speech_runtime
-    speech_enums = _speech_enums_runtime
-    speech_types = _speech_types_runtime
 
 if TYPE_CHECKING:
     import bidi.algorithm as _bidi_algorithm  # type: ignore  # noqa: F401
@@ -7298,7 +7290,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._debug_level:
             LOGGER.debug('speech_recognition()\n')
         self._clear_input_and_update_ui()
-        if speech is None or speech_enums is None or speech_types is None:
+        if speech is None:
             self._speech_recognition_error(
                 _('Failed to import Google speech-to-text.'))
             return
@@ -7328,13 +7320,11 @@ class TypingBoosterEngine(IBus.Engine):
                 _('Failed to init Google speech-to-text. See debug.log.'))
             return
 
-        assert speech_types is not None
-        assert speech_enums is not None
-        config = speech_types.RecognitionConfig(
-            encoding=speech_enums.RecognitionConfig.AudioEncoding.LINEAR16,
+        config = speech.RecognitionConfig(
+            encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
             sample_rate_hertz=itb_util_core.AUDIO_RATE,
             language_code=language_code)
-        streaming_config = speech_types.StreamingRecognitionConfig(
+        streaming_config = speech.StreamingRecognitionConfig(
             config=config,
             interim_results=True)
 
@@ -7394,7 +7384,7 @@ class TypingBoosterEngine(IBus.Engine):
         with itb_util_core.MicrophoneStream(
                 itb_util_core.AUDIO_RATE, itb_util_core.AUDIO_CHUNK) as stream:
             audio_generator = stream.generator()
-            requests = (speech_types.StreamingRecognizeRequest(audio_content=content)
+            requests = (speech.StreamingRecognizeRequest(audio_content=content)
                         for content in audio_generator)
             responses = client.streaming_recognize(streaming_config, requests) # pylint: disable=too-many-function-args
             try:
