@@ -358,10 +358,20 @@ def _find_path_and_open_function(
                 if base_path.endswith('.gz'):
                     LOGGER.debug('Found gzip file: %s', base_path)
                     return (base_path, gzip.open)
-                if base_path.endswith('.bz2') and bz2 is not None:
+                if base_path.endswith('.bz2'):
+                    if bz2 is None:
+                        LOGGER.warning(
+                            'Found bzip2 file but bz2 module is unavailable: %s',
+                            base_path)
+                        continue
                     LOGGER.debug('Found bzip2 file: %s', base_path)
                     return (base_path, bz2.open)
-                if base_path.endswith('.xz') and lzma is not None:
+                if base_path.endswith('.xz'):
+                    if lzma is None:
+                        LOGGER.warning(
+                            'Found xz file but lzma module is unavailable: %s',
+                            base_path)
+                        continue
                     LOGGER.debug('Found xz file: %s', base_path)
                     return (base_path, lzma.open)
                 LOGGER.debug('Found uncompressed file: %s', base_path)
