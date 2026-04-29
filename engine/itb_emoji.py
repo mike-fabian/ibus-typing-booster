@@ -380,14 +380,22 @@ def _find_path_and_open_function(
             if os.path.exists(gz_path):
                 LOGGER.debug('Found gzip file: %s', gz_path)
                 return (gz_path, gzip.open)
-            if bz2 is not None:
-                bz2_path = base_path + '.bz2'
-                if os.path.exists(bz2_path):
+            bz2_path = base_path + '.bz2'
+            if os.path.exists(bz2_path):
+                if bz2 is None:
+                    LOGGER.warning(
+                        'Found bzip2 file but bz2 module is unavailable: %s',
+                        bz2_path)
+                else:
                     LOGGER.debug('Found bzip2 file: %s', bz2_path)
                     return (bz2_path, bz2.open)
-            if lzma is not None:
-                xz_path = base_path + '.xz'
-                if os.path.exists(xz_path):
+            xz_path = base_path + '.xz'
+            if os.path.exists(xz_path):
+                if lzma is None:
+                    LOGGER.warning(
+                        'Found xz file but lzma module is unavailable: %s',
+                        xz_path)
+                else:
                     LOGGER.debug('Found xz file: %s', xz_path)
                     return (xz_path, lzma.open)
     LOGGER.warning('Could not find any "%s" in "%s"', basenames, dirnames)
