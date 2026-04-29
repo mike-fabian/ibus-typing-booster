@@ -37,7 +37,8 @@ import time
 LOGGER = logging.getLogger('ibus-typing-booster')
 
 if TYPE_CHECKING:
-    import pygame.mixer as _pygame_mixer  # type: ignore[import-not-found, import-untyped, unused-ignore]  # noqa: F401
+    import pygame.mixer as _pygame_mixer  # noqa: F401
+    # type: ignore[import-not-found, import-untyped, unused-ignore]
 try:
     import pygame.mixer as _pygame_mixer_runtime
 except ImportError:
@@ -55,7 +56,7 @@ else:
     pyaudio = _pyaudio_runtime
 
 if TYPE_CHECKING:
-    import simpleaudio as _simpleaudio # type: ignore[import-not-found, import-untyped, unused-ignore]
+    import simpleaudio as _simpleaudio  # type: ignore[import-not-found, import-untyped, unused-ignore]  # pylint: disable=line-too-long
 try:
     import simpleaudio as _simpleaudio_runtime
 except ImportError:
@@ -471,8 +472,6 @@ def run_tests() -> None:
     sound_object.wait_done()
 
     # Testing stopping in between with a longer sound file:
-
-    import time # pylint: disable=import-outside-toplevel
 
     sound_object = SoundObject(
         '/home/mfabian/sounds/japanese/今回もよろしくお願いします.wav',
