@@ -38,7 +38,6 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 
 if TYPE_CHECKING:
     import pygame.mixer as _pygame_mixer  # noqa: F401
-    # type: ignore[import-not-found, import-untyped, unused-ignore]
 try:
     import pygame.mixer as _pygame_mixer_runtime
 except ImportError:
