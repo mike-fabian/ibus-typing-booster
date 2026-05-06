@@ -25,7 +25,6 @@ from typing import List
 from typing import Dict
 from typing import Union
 from typing import Any
-from typing import TYPE_CHECKING
 from types import FrameType
 import sys
 import os
@@ -47,13 +46,7 @@ from gi.repository import GLib # type: ignore
 GLib.set_application_name('Ollama Pull')
 
 import itb_ollama
-from itb_gtk import Gtk, GTK_MAJOR # type: ignore
-if TYPE_CHECKING:
-    # These imports are only for type checkers (mypy). They must not be
-    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
-    # pylint: disable=reimported
-    from gi.repository import Gtk  # type: ignore
-    # pylint: enable=reimported
+from itb_gtk import Gtk, GTK_MAJOR
 from g_compat_helpers import (
     add_child,
     set_border_width,
@@ -117,7 +110,7 @@ def parse_args() -> Any:
 
 _ARGS = parse_args()
 
-class OllamaPullUI(Gtk.Window): # type: ignore
+class OllamaPullUI(Gtk.Window):  # type: ignore[misc]
     '''
     UI to show progress while pulling a ollama model.
     '''

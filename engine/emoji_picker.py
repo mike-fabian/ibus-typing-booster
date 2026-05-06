@@ -28,7 +28,6 @@ from typing import Iterable
 from typing import Dict
 from typing import Optional
 from typing import Union
-from typing import TYPE_CHECKING
 from types import FrameType
 import sys
 import os
@@ -60,13 +59,7 @@ GLib.set_application_name('Emoji Picker')
 GLib.set_prgname('emoji-picker')
 
 # pylint: disable=wrong-import-position,wrong-import-order,ungrouped-imports
-from itb_gtk import Gdk, Gtk, GTK_MAJOR # type: ignore
-if TYPE_CHECKING:
-    # These imports are only for type checkers (mypy). They must not be
-    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
-    # pylint: disable=reimported
-    from gi.repository import Gtk, Gdk  # type: ignore
-    # pylint: enable=reimported
+from itb_gtk import Gdk, Gtk, GTK_MAJOR
 from gi.repository import GObject # type: ignore
 # pylint: enable=wrong-import-position,wrong-import-order,ungrouped-imports
 import itb_emoji
@@ -284,7 +277,7 @@ def parse_args() -> Any:
 
 _ARGS = parse_args()
 
-class EmojiPickerUI(Gtk.Window): # type: ignore
+class EmojiPickerUI(Gtk.Window): # type: ignore[misc]
     '''
     User interface of the emoji picker
     '''

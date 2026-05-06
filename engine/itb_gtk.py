@@ -141,7 +141,7 @@ else:
 
 # Import the actual modules
 # pylint: disable=wrong-import-position, unused-import
-from gi.repository import Gtk, Gdk # type: ignore # noqa: F401 # Intentional re-export
+from gi.repository import Gtk, Gdk  # type: ignore[attr-defined]  # ty: ignore[unresolved-import]  # noqa: F401  # pylint: disable=line-too-long  # Intentional re-export
 # pylint: enable=wrong-import-position, unused-import
 
 # Convenience constants for compatibility code
@@ -152,12 +152,12 @@ GTK_MICRO: int = Gtk.get_micro_version()
 GTK_VERSION: Tuple[int, int, int] = (GTK_MAJOR, GTK_MINOR, GTK_MICRO)
 # pylint: enable=no-value-for-parameter
 
-## Re-export for external use (create mypy warnings, uncomment for the moment)
-#__all__ = [
-#    'Gtk',
-#    'Gdk',
-#    'GTK_MAJOR',
-#    'GTK_MINOR',
-#    'GTK_MICRO',
-#    'GTK_VERSION',
-#]
+# Re-export for external use
+__all__ = [
+    'Gtk',
+    'Gdk',
+    'GTK_MAJOR',
+    'GTK_MINOR',
+    'GTK_MICRO',
+    'GTK_VERSION',
+]

@@ -28,7 +28,6 @@ from typing import List
 from typing import Any
 from typing import Optional
 from typing import Callable
-from typing import TYPE_CHECKING
 # pylint: disable=wrong-import-position
 import sys
 if sys.version_info >= (3, 8):
@@ -51,13 +50,7 @@ from gi.repository import Gio # type: ignore
 from i18n import _, init as i18n_init
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'engine'))
 # pylint: disable=import-error, wrong-import-order
-from itb_gtk import Gtk # type: ignore
-if TYPE_CHECKING:
-    # These imports are only for type checkers (mypy). They must not be
-    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
-    # pylint: disable=reimported
-    from gi.repository import Gtk  # type: ignore
-    # pylint: enable=reimported
+from itb_gtk import Gtk
 from g_compat_helpers import (
     add_child,
     show_all,

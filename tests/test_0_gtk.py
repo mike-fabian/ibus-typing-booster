@@ -28,7 +28,6 @@ from typing import List
 from typing import Dict
 from typing import Any
 from typing import Optional
-from typing import TYPE_CHECKING
 import argparse
 import os
 import signal
@@ -52,14 +51,8 @@ sys.path.insert(0, "../engine")
 if os.environ.get('ITB_GTK_VERSION', None) is None:
     os.environ['ITB_GTK_VERSION'] = '3'
 # pylint: disable=import-error
-from itb_gtk import Gdk, Gtk # type: ignore
+from itb_gtk import Gdk, Gtk
 # pylint: enable=import-error
-if TYPE_CHECKING:
-    # These imports are only for type checkers (mypy). They must not be
-    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
-    # pylint: disable=reimported
-    from gi.repository import Gtk, Gdk  # type: ignore
-    # pylint: enable=reimported
 
 itb_util_core: Optional[ModuleType]
 try:

@@ -22,7 +22,6 @@ This file implements test cases for itb_pango.py
 '''
 from types import ModuleType
 from typing import Optional
-from typing import TYPE_CHECKING
 import sys
 import os
 import logging
@@ -38,13 +37,7 @@ except ImportError:
 
 # pylint: disable=wrong-import-position,import-error
 sys.path.insert(0, "../engine")
-from itb_gtk import Gdk # type: ignore
-if TYPE_CHECKING:
-    # These imports are only for type checkers (mypy). They must not be
-    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
-    # pylint: disable=reimported
-    from gi.repository import Gdk  # type: ignore
-    # pylint: enable=reimported
+from itb_gtk import Gdk
 import itb_pango
 sys.path.pop(0)
 # pylint: enable=wrong-import-position,import-error

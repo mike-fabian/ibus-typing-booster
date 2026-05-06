@@ -29,7 +29,6 @@ from typing import Set
 from typing import Union
 from typing import Any
 from typing import Optional
-from typing import TYPE_CHECKING
 from types import FrameType
 import sys
 import os
@@ -78,13 +77,7 @@ import itb_sound
 import itb_emoji
 import itb_version
 # pylint: disable=wrong-import-order
-from itb_gtk import Gdk, Gtk, GTK_MAJOR, GTK_VERSION # type: ignore
-if TYPE_CHECKING:
-    # These imports are only for type checkers (mypy). They must not be
-    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
-    # pylint: disable=reimported
-    from gi.repository import Gtk, Gdk  # type: ignore
-    # pylint: enable=reimported
+from itb_gtk import Gdk, Gtk, GTK_MAJOR, GTK_VERSION
 from g_compat_helpers import (
     is_wayland,
     add_child,

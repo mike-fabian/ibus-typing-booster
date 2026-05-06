@@ -23,7 +23,6 @@ This file implements the test cases for the unit tests of ibus-typing-booster
 from types import ModuleType
 from typing import Any
 from typing import Optional
-from typing import TYPE_CHECKING
 import os
 import glob
 import sys
@@ -76,13 +75,7 @@ os.environ['M17NDIR'] = _TEMPDIR.name
 # pylint: disable=wrong-import-order
 sys.path.insert(0, "../engine")
 # pylint: disable=import-error
-from itb_gtk import Gdk # type: ignore
-if TYPE_CHECKING:
-    # These imports are only for type checkers (mypy). They must not be
-    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
-    # pylint: disable=reimported
-    from gi.repository import Gdk  # type: ignore
-    # pylint: enable=reimported
+from itb_gtk import Gdk
 import hunspell_table
 import tabsqlitedb
 import itb_util_core

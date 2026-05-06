@@ -36,7 +36,6 @@ from typing import (
     Any,
     cast,
     overload,
-    TYPE_CHECKING,
 )
 import html
 import logging
@@ -50,14 +49,8 @@ from gi.repository import GLib # type: ignore
 from gi.repository import Gio # type: ignore
 from gi.repository import GdkPixbuf # type: ignore
 from gi.repository import Pango # type: ignore
-from itb_gtk import Gdk, Gtk, GTK_MAJOR, GTK_VERSION # type: ignore
+from itb_gtk import Gdk, Gtk, GTK_MAJOR, GTK_VERSION
 # pylint: enable=wrong-import-position
-if TYPE_CHECKING:
-    # These imports are only for type checkers (mypy). They must not be
-    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
-    # pylint: disable=reimported
-    from gi.repository import Gtk, Gdk  # type: ignore
-    # pylint: enable=reimported
 ResponseCallback = Callable[[], None]
 ClickCallback = Callable[[Gtk.Widget, int, Any], None]
 ReleaseCallback = Callable[[Gtk.Widget, int, Any], None]

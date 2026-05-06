@@ -20,7 +20,6 @@
 '''
 This file implements test cases for finding key codes for key values
 '''
-from typing import TYPE_CHECKING
 import sys
 import logging
 import unittest
@@ -35,13 +34,7 @@ from gi.repository import IBus
 
 sys.path.insert(0, "../engine")
 # pylint: disable=import-error, wrong-import-position
-from itb_gtk import Gdk # type: ignore
-if TYPE_CHECKING:
-    # These imports are only for type checkers (mypy). They must not be
-    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
-    # pylint: disable=reimported
-    from gi.repository import Gdk  # type: ignore
-    # pylint: enable=reimported
+from itb_gtk import Gdk
 import itb_util_gui
 # pylint: enable=import-error, wrong-import-position
 sys.path.pop(0)
