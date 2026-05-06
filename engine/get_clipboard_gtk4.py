@@ -27,7 +27,6 @@ retrieve the primary selection text using GTK 4, even when the main program
 is using GTK 3.
 '''
 from typing import Optional
-from typing import TYPE_CHECKING
 import sys
 import os
 from gi import require_version
@@ -36,13 +35,7 @@ require_version('GLib', '2.0')
 require_version('Gio', '2.0')
 from gi.repository import Gio, GLib # type: ignore
 os.environ['ITB_GTK_VERSION'] = '4'
-from itb_gtk import Gdk, Gtk  # type: ignore
-if TYPE_CHECKING:
-    # These imports are only for type checkers (mypy). They must not be
-    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
-    # pylint: disable=reimported
-    from gi.repository import Gtk, Gdk  # type: ignore
-    # pylint: enable=reimported
+from itb_gtk import Gdk, Gtk
 # pylint: enable=wrong-import-position
 
 class ClipboardApp(Gtk.Application): # type: ignore[misc]

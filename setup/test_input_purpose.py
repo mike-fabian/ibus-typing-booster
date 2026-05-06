@@ -24,7 +24,6 @@ A test program to test input purpose and hints
 from typing import Dict
 from typing import Any
 from typing import Optional
-from typing import TYPE_CHECKING
 from types import FrameType
 import sys
 import signal
@@ -46,13 +45,7 @@ GLib.set_prgname('InputPurposeTest')
 sys.path = [sys.path[0]+'/../engine'] + sys.path
 import itb_util_core
 import itb_util_gui
-from itb_gtk import Gtk, GTK_MAJOR # type: ignore
-if TYPE_CHECKING:
-    # These imports are only for type checkers (mypy). They must not be
-    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
-    # pylint: disable=reimported
-    from gi.repository import Gtk  # type: ignore
-    # pylint: enable=reimported
+from itb_gtk import Gtk, GTK_MAJOR
 from g_compat_helpers import (
     add_child,
     show_all,

@@ -29,7 +29,6 @@ from typing import List
 from typing import Dict
 from typing import Set
 from typing import Optional
-from typing import TYPE_CHECKING
 # pylint: disable=wrong-import-position
 import sys
 from enum import Enum, Flag
@@ -44,14 +43,7 @@ require_version('IBus', '1.0')
 from gi.repository import IBus
 require_version('GLib', '2.0')
 from gi.repository import GLib # type: ignore
-from itb_gtk import Gdk, Gtk, GTK_MAJOR, GTK_VERSION # type: ignore
-# For static type checking only: import real GI modules so mypy can resolve
-if TYPE_CHECKING:
-    # These imports are only for type checkers (mypy). They must not be
-    # executed at runtime because itb_gtk controls the Gtk/Gdk versions.
-    # pylint: disable=reimported
-    from gi.repository import Gtk, Gdk  # type: ignore
-    # pylint: enable=reimported
+from itb_gtk import Gdk, Gtk, GTK_MAJOR, GTK_VERSION
 # pylint: enable=wrong-import-position
 
 import itb_version
@@ -872,7 +864,7 @@ class ItbKeyInputDialog:
         except Exception: # pylint: disable=broad-exception-caught
             pass
 
-class ItbAboutDialog(Gtk.AboutDialog): # type: ignore
+class ItbAboutDialog(Gtk.AboutDialog): # type: ignore[misc]
     '''
     The “About” dialog for Typing Booster
     '''

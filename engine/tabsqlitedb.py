@@ -24,7 +24,7 @@ from typing import List
 from typing import Tuple
 from typing import Optional
 from typing import Any
-from typing import Callable
+from typing import TextIO
 from typing import Iterator
 import os
 import unicodedata
@@ -1275,9 +1275,12 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
             filename += '.gz'
             if not os.path.isfile(filename):
                 return False
-        open_function: Callable[[Any], Any] = open
-        if filename.endswith('.gz'):
-            open_function = gzip.open
+
+        def _open_text_file(filename: str) -> TextIO:
+            if filename.endswith('.gz'):
+                return gzip.open(filename, mode='rt', encoding='UTF-8')
+            return open(filename, mode='rt', encoding='UTF-8')
+
         rows = self.database.execute(
             'SELECT input_phrase, phrase, p_phrase, pp_phrase, '
             + 'user_freq, timestamp FROM phrases;').fetchall()
@@ -1317,12 +1320,11 @@ CREATE TABLE phrases (id INTEGER PRIMARY KEY, input_phrase TEXT, phrase TEXT, p_
                                   )])
         lines = []
         try:
-            with open_function( # type: ignore
-                    filename, mode='rt', encoding='UTF-8') as file_handle:
+            with _open_text_file(filename) as file_handle:
                 lines = [
                     unicodedata.normalize(
                         itb_util_core.NORMALIZATION_FORM_INTERNAL, line)
-                    for line in file_handle.readlines()]
+                    for line in file_handle]
         except Exception as error: # pylint: disable=broad-except
             LOGGER.exception(
                 'Unexpected error reading training data from file: %s: %s',
