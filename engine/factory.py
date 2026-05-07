@@ -29,7 +29,7 @@ import gettext
 from gi import require_version
 # pylint: disable=wrong-import-position
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus  # ty: ignore[unresolved-import]
 # pylint: enable=wrong-import-position
 import hunspell_table
 import tabsqlitedb

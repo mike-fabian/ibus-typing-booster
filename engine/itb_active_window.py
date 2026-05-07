@@ -79,7 +79,8 @@ import logging
 
 pyatspi: Optional[ModuleType]
 try:
-    import pyatspi # type: ignore
+    import pyatspi as _pyatspi  # type: ignore[import-untyped]
+    pyatspi = _pyatspi
 except ImportError:
     pyatspi = None
 

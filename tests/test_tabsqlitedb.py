@@ -26,7 +26,7 @@ from typing import Dict
 from typing import Union
 from typing import Callable
 from typing import Optional
-from typing import Any
+from typing import TextIO
 import sys
 import os
 import gzip
@@ -42,7 +42,8 @@ import testutils # pylint: disable=import-error
 
 distro: Optional[ModuleType]
 try:
-    import distro
+    import distro as _distro
+    distro = _distro
 except ImportError:
     distro = None
 
@@ -131,10 +132,10 @@ class TabSqliteDbTestCase(unittest.TestCase):
         if not os.path.isfile(path):
             self.assertFalse(True) # pylint: disable=redundant-unittest-assert
             return stats
-        open_function: Callable[[Any], Any] = open
+        open_function: Callable[..., TextIO] = open
         if path.endswith('.gz'):
             open_function = gzip.open
-        with open_function( # type: ignore
+        with open_function(
                 path, mode='rt', encoding='UTF-8') as file_handle:
             lines = file_handle.readlines()
         p_token = ''

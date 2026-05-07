@@ -154,10 +154,10 @@ GTK_VERSION: Tuple[int, int, int] = (GTK_MAJOR, GTK_MINOR, GTK_MICRO)
 
 # Re-export for external use
 __all__ = [
-    'Gtk',
-    'Gdk',
     'GTK_MAJOR',
-    'GTK_MINOR',
     'GTK_MICRO',
+    'GTK_MINOR',
     'GTK_VERSION',
+    'Gdk',
+    'Gtk',
 ]

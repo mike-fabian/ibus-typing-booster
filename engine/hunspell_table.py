@@ -54,7 +54,7 @@ from dataclasses import dataclass, field
 # pylint: disable=wrong-import-position
 from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus  # ty: ignore[unresolved-import]
 require_version('Gio', '2.0')
 from gi.repository import Gio # type: ignore
 require_version('GLib', '2.0')
@@ -73,7 +73,8 @@ _itb_ollama_import_error: Optional[Exception]
 if TYPE_CHECKING:
     from itb_ollama import ItbOllamaClient
 try:
-    import itb_ollama
+    import itb_ollama as _itb_ollama
+    itb_ollama = _itb_ollama
 except Exception as error:  # pylint: disable=broad-exception-caught  # intentionally broad: disable feature on any failure
     itb_ollama = None
     _itb_ollama_import_error = error
@@ -84,8 +85,8 @@ try:
     # Enable new improved regex engine instead of backwards compatible
     # v0.  regex.match('ß', 'SS', regex.IGNORECASE) matches only with
     # the improved version!  See also: https://pypi.org/project/regex/
-    import regex # type: ignore
-    regex.DEFAULT_VERSION = regex.VERSION1
+    import regex  # type: ignore[import-untyped]
+    regex.DEFAULT_VERSION = regex.VERSION1  # ty: ignore[invalid-assignment]
     re = regex
     USING_REGEX = True
 except ImportError:
@@ -95,14 +96,15 @@ except ImportError:
 
 itb_nltk: Optional[ModuleType]
 try:
-    import itb_nltk
+    import itb_nltk as _itb_nltk
+    itb_nltk = _itb_nltk
 except (ImportError, LookupError, ValueError):
     itb_nltk = None
 
 if TYPE_CHECKING:
     from google.cloud import speech as _speech # type: ignore  # noqa: F401
 try:
-    from google.cloud import speech as _speech_runtime
+    from google.cloud import speech as _speech_runtime  # ty: ignore[unresolved-import]
 except ImportError:
     speech: Optional[ModuleType] = None  # pylint: disable=invalid-name
 else:
@@ -111,7 +113,7 @@ else:
 if TYPE_CHECKING:
     import bidi.algorithm as _bidi_algorithm  # type: ignore  # noqa: F401
 try:
-    import bidi.algorithm as _bidi_algorithm_runtime
+    import bidi.algorithm as _bidi_algorithm_runtime  # ty: ignore[unresolved-import]
 except ImportError:
     bidi_algorithm: Optional[ModuleType] = None  # pylint: disable=invalid-name
 else:
@@ -1916,7 +1918,7 @@ class TypingBoosterEngine(IBus.Engine):
         if self._word_predictions or self._temporary_word_predictions:
             for ime in self._current_imes:
                 if self._transliterated_strings[ime]:
-                    candidates = []
+                    candidates: List[itb_util_core.PredictionCandidate] = []
                     prefix_length = 0
                     prefix = ''
                     stripped_transliterated_string = (
@@ -1975,7 +1977,7 @@ class TypingBoosterEngine(IBus.Engine):
                                 phrase=prefix+x.phrase,
                                 user_freq=x.user_freq)
                             for x in candidates]
-                    shortcut_candidates: List[Tuple[str, float]] = []
+                    shortcut_candidates: List[itb_util_core.PredictionCandidate] = []
                     try:
                         shortcut_candidates = self.database.select_shortcuts(
                             self._transliterated_strings[ime])
@@ -9073,7 +9075,8 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.debug('KeyEvent object: %s\n', key)
         if self._debug_level > 5:
             LOGGER.debug('self._hotkeys=%s\n', str(self._hotkeys))
-
+        if self._hotkeys is None:
+            return (False, False)
         if not commands:
             # If no specific command list to match is given, try to
             # match against all commands. Sorting shouldn’t really
@@ -9083,7 +9086,7 @@ class TypingBoosterEngine(IBus.Engine):
             commands = sorted(self._keybindings.keys())
         hotkey_removed_from_compose_sequence = False
         for command in commands:
-            if (self._prev_key, key, command) in self._hotkeys: # type: ignore
+            if (self._prev_key, key, command) in self._hotkeys:
                 if self._debug_level > 1:
                     LOGGER.debug('matched command=%s', command)
                 if (self._typed_compose_sequence

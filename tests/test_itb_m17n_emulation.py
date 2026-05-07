@@ -40,7 +40,7 @@ from unittest import mock
 # pylint: disable=wrong-import-position
 from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus  # ty: ignore[unresolved-import]
 require_version('GLib', '2.0')
 from gi.repository import GLib # type: ignore
 # pylint: enable=wrong-import-position

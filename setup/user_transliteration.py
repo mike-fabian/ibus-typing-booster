@@ -26,7 +26,6 @@ import os
 import os.path as path
 import sys
 import re
-import codecs
 import sqlite3
 import time
 from gi.repository import Translit # type: ignore
@@ -99,8 +98,8 @@ class LatinConvert:
         encoding = ''
         dict_buffer = ''
         try:
-            aff_buffer = codecs.open(
-                self.aff_file, mode='r', encoding='ISO-8859-1').read().replace('\r\n', '\n')
+            with open(self.aff_file, mode='r', encoding='ISO-8859-1') as f:
+                aff_buffer = f.read().replace('\r\n', '\n')
         except Exception:
             import traceback
             traceback.print_exc()
@@ -113,16 +112,18 @@ class LatinConvert:
                 encoding = match.group('encoding')
                 print("load_dictionary(): encoding=%(enc)s found in %(aff)s" %{
                     'enc': encoding, 'aff': self.aff_file})
+        if not encoding:
+            encoding = 'UTF-8'
         try:
-            dict_buffer = codecs.open(
-                self.hunspell_dict, encoding=encoding).read().replace('\r\n', '\n')
+            with open(self.hunspell_dict, encoding=encoding) as f:
+                dict_buffer = f.read().replace('\r\n', '\n')
         except Exception:
             print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, fall back to ISO-8859-1." %{
                 'dic': self.hunspell_dict, 'enc': encoding})
             encoding = 'ISO-8859-1'
             try:
-                dict_buffer = codecs.open(
-                    self.hunspell_dict, encoding=encoding).read().replace('\r\n', '\n')
+                with  open(self.hunspell_dict, encoding=encoding) as f:
+                    dict_buffer = f.read().replace('\r\n', '\n')
             except Exception:
                 print("load_dictionary(): loading %(dic)s as %(enc)s encoding failed, giving up." %{
                     'dic': self.hunspell_dict, 'enc': encoding})

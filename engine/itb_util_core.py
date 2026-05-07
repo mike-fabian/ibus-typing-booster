@@ -39,7 +39,7 @@ if sys.version_info >= (3, 8):
     from typing import Literal
 else:
     from typing_extensions import Literal
-from enum import Flag
+from enum import IntFlag
 import os
 import functools
 import collections
@@ -59,7 +59,7 @@ from dataclasses import dataclass
 from collections import defaultdict
 from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus  # ty: ignore[unresolved-import]
 require_version('GLib', '2.0')
 from gi.repository import GLib # type: ignore
 # pylint: enable=wrong-import-position
@@ -70,8 +70,8 @@ try:
     # Enable new improved regex engine instead of backwards compatible
     # v0.  regex.match('ß', 'SS', regex.IGNORECASE) matches only with
     # the improved version!  See also: https://pypi.org/project/regex/
-    import regex # type: ignore
-    regex.DEFAULT_VERSION = regex.VERSION1
+    import regex  # type: ignore[import-untyped]
+    regex.DEFAULT_VERSION = regex.VERSION1  # ty: ignore[invalid-assignment]
     re = regex
     USING_REGEX = True
 except ImportError:
@@ -81,7 +81,8 @@ except ImportError:
 
 distro: Optional[ModuleType]
 try:
-    import distro
+    import distro as _distro
+    distro = _distro
 except ImportError:
     distro = None
 
@@ -93,7 +94,8 @@ except ImportError:
 #
 #xdg_BaseDirectory: Optional[Type]
 #try:
-#    import xdg.BaseDirectory # type: ignore
+#    import xdg.BaseDirectory as _xdg.BaseDirectory
+#    xdg.BaseDirectory = _xdg.BaseDirectory
 #except ImportError:
 #    xdg_BaseDirectory = None
 
@@ -108,13 +110,15 @@ else:
 
 langtable: Optional[ModuleType]
 try:
-    import langtable # type: ignore
+    import langtable as _langtable  # type: ignore[import-untyped]
+    langtable = _langtable
 except ImportError:
     langtable = None
 
 pycountry: Optional[ModuleType]
 try:
-    import pycountry # type: ignore
+    import pycountry as _pycountry # type: ignore[import-not-found]  # ty: ignore[unresolved-import]
+    pycountry = _pycountry
 except ImportError:
     pycountry = None
 
@@ -4290,7 +4294,7 @@ def best_candidates(
             seen_phrases.add(phrase_title)
     return candidates_title
 
-class Capabilite(Flag):
+class Capabilite(IntFlag):
     '''Compatibility class to handle IBus.Capabilite the same way no matter
     what version of ibus is used.
 
@@ -4329,12 +4333,12 @@ class Capabilite(Flag):
     >>> Capabilite.PREEDIT_TEXT == IBus.Capabilite.PREEDIT_TEXT
     True
     '''
-    def __new__(cls, attr: str) -> Any:
-        obj = object.__new__(cls)
+    def __new__(cls, attr: str, fallback: int = 0) -> Any:
+        value = fallback
         if hasattr(IBus, 'Capabilite') and hasattr(IBus.Capabilite, attr):
-            obj._value_ = int(getattr(IBus.Capabilite, attr))
-        else:
-            obj._value_ = 0
+            value = int(getattr(IBus.Capabilite, attr))
+        obj = int.__new__(cls, value)
+        obj._value_ = value
         return obj
 
     def __int__(self) -> int:
@@ -4372,15 +4376,15 @@ class Capabilite(Flag):
     def __rand__(self, other: Any) -> Any:
         return self.__and__(other)
 
-    PREEDIT_TEXT = 'PREEDIT_TEXT'
-    AUXILIARY_TEXT = 'AUXILIARY_TEXT'
-    LOOKUP_TABLE = 'LOOKUP_TABLE'
-    FOCUS = 'FOCUS'
-    PROPERTY = 'PROPERTY'
-    SURROUNDING_TEXT = 'SURROUNDING_TEXT'
-    OSK = 'OSK'
-    SYNC_PROCESS_KEY = 'SYNC_PROCESS_KEY'
-    SYNC_PROCESS_KEY_V2 = 'SYNC_PROCESS_KEY_V2'
+    PREEDIT_TEXT = ('PREEDIT_TEXT', 0)  # ty: ignore[invalid-assignment]
+    AUXILIARY_TEXT = ('AUXILIARY_TEXT', 0)  # ty: ignore[invalid-assignment]
+    LOOKUP_TABLE = ('LOOKUP_TABLE', 0)  # ty: ignore[invalid-assignment]
+    FOCUS = ('FOCUS', 0)  # ty: ignore[invalid-assignment]
+    PROPERTY = ('PROPERTY', 0)  # ty: ignore[invalid-assignment]
+    SURROUNDING_TEXT = ('SURROUNDING_TEXT', 0)  # ty: ignore[invalid-assignment]
+    OSK = ('OSK', 0)  # ty: ignore[invalid-assignment]
+    SYNC_PROCESS_KEY = ('SYNC_PROCESS_KEY', 0)  # ty: ignore[invalid-assignment]
+    SYNC_PROCESS_KEY_V2 = ('SYNC_PROCESS_KEY_V2', 0)  # ty: ignore[invalid-assignment]
 
 class ComposeSequences:
     '''Class to handle compose sequences.
@@ -6147,7 +6151,7 @@ class HotKeys:
                     self._hotkeys[command] = [(val, state)]
 
     def __contains__(
-            self, command_key_tuple: Tuple[KeyEvent, KeyEvent, str]) -> bool:
+            self, command_key_tuple: Tuple[Optional[KeyEvent], KeyEvent, str]) -> bool:
         if not isinstance(command_key_tuple, tuple):
             return False
         command = command_key_tuple[2]

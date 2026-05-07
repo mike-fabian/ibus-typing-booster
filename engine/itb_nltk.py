@@ -34,7 +34,7 @@ it using:
 
 from typing import List
 import sys
-import nltk # type: ignore
+import nltk # type: ignore[import-untyped]
 
 def synonyms(word: str, keep_original: bool = True) -> List[str]:
     '''List synonyms for word
