@@ -35,7 +35,7 @@ from signal import signal, SIGTERM, SIGINT
 # pylint: disable=wrong-import-position
 from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus  # ty: ignore[unresolved-import]
 require_version('Gio', '2.0')
 from gi.repository import Gio # type: ignore
 require_version('GLib', '2.0')
@@ -480,21 +480,23 @@ def main() -> None:
         logging.NullHandler, logging.handlers.TimedRotatingFileHandler] = (
             logging.NullHandler())
     if not _ARGS.no_debug:
-        if not os.access(
-                os.path.expanduser('~/.local/share/ibus-typing-booster'),
-                os.F_OK):
-            os.system('mkdir -p ~/.local/share/ibus-typing-booster')
-        logfile = os.path.expanduser(
-            '~/.local/share/ibus-typing-booster/debug.log')
-        log_handler = logging.handlers.TimedRotatingFileHandler(
-            logfile,
-            when='midnight',
-            interval=1,
-            backupCount=7,
-            encoding='UTF-8',
-            delay=False,
-            utc=False,
-            atTime=None)
+        directory = os.path.expanduser('~/.local/share/ibus-typing-booster')
+        logfile = os.path.join(directory, 'debug.log')
+        try:
+            os.makedirs(directory, exist_ok=True)
+            log_handler = logging.handlers.TimedRotatingFileHandler(
+                logfile,
+                when='midnight',
+                interval=1,
+                backupCount=7,
+                encoding='UTF-8',
+                delay=False,
+                utc=False,
+                atTime=None)
+        except OSError as error:
+            sys.stderr.write(
+                f'Warning: cannot initialize debug log file {logfile}: {error}\n')
+            log_handler = logging.NullHandler()
     log_formatter = logging.Formatter(
         '%(asctime)s %(filename)s '
         'line %(lineno)d %(funcName)s %(levelname)s: '

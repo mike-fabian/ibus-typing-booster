@@ -62,7 +62,7 @@ from gi.repository import GdkPixbuf # type: ignore
 require_version('Pango', '1.0')
 from gi.repository import Pango # type: ignore
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus  # ty: ignore[unresolved-import]
 # pylint: enable=wrong-import-position
 
 IS_LIBVOIKKO_AVAILABLE = importlib.util.find_spec('libvoikko') is not None
@@ -161,7 +161,7 @@ def arg_parser() -> Any:
 PARSER = arg_parser()
 _ARGS = PARSER.parse_args()
 
-class SetupUI(Gtk.Window): # type: ignore
+class SetupUI(Gtk.Window):  # type: ignore[misc]
     '''
     User interface of the setup tool
     '''
@@ -7568,7 +7568,7 @@ class SetupUI(Gtk.Window): # type: ignore
                 variant_dict.end())
 
 # pylint: disable=too-few-public-methods
-class HelpWindow(Gtk.Window): # type: ignore
+class HelpWindow(Gtk.Window):  # type: ignore[misc]
     '''
     A window to show help
 
@@ -7646,33 +7646,36 @@ def quit_glib_main_loop(
         raise RuntimeError("glib_main_loop not initialized!")
 
 if __name__ == '__main__':
-    if _ARGS.no_debug:
-        log_handler_null = logging.NullHandler()
-    else:
-        if (not os.access(
-                os.path.expanduser('~/.local/share/ibus-typing-booster'),
-                os.F_OK)):
-            os.system('mkdir -p ~/.local/share/ibus-typing-booster')
-        logfile = os.path.expanduser(
-            '~/.local/share/ibus-typing-booster/setup-debug.log')
-        log_handler_time_rotate = logging.handlers.TimedRotatingFileHandler(
-            logfile,
-            when='H',
-            interval=6,
-            backupCount=7,
-            encoding='UTF-8',
-            delay=False,
-            utc=False,
-            atTime=None)
-        log_formatter = logging.Formatter(
-            '%(asctime)s %(filename)s '
-            'line %(lineno)d %(funcName)s %(levelname)s: '
-            '%(message)s')
-        log_handler_time_rotate.setFormatter(log_formatter)
-        LOGGER.setLevel(logging.DEBUG)
-        LOGGER.addHandler(log_handler_time_rotate)
-        LOGGER.info('*** ibus-typing-booster %s setup starting ***',
-                    itb_version.get_version())
+    log_handler: Union[
+        logging.NullHandler, logging.handlers.TimedRotatingFileHandler] = (
+            logging.NullHandler())
+    if not _ARGS.no_debug:
+        directory = os.path.expanduser('~/.local/share/ibus-typing-booster')
+        logfile = os.path.join(directory, 'setup-debug.log')
+        try:
+            os.makedirs(directory, exist_ok=True)
+            log_handler = logging.handlers.TimedRotatingFileHandler(
+                logfile,
+                when='H',
+                interval=6,
+                backupCount=7,
+                encoding='UTF-8',
+                delay=False,
+                utc=False,
+                atTime=None)
+        except OSError as error:
+            sys.stderr.write(
+                f'Warning: cannot initialize debug log file {logfile}: {error}\n')
+            log_handler = logging.NullHandler()
+    log_formatter = logging.Formatter(
+        '%(asctime)s %(filename)s '
+        'line %(lineno)d %(funcName)s %(levelname)s: '
+        '%(message)s')
+    log_handler.setFormatter(log_formatter)
+    LOGGER.setLevel(logging.DEBUG)
+    LOGGER.addHandler(log_handler)
+    LOGGER.info('*** ibus-typing-booster %s setup starting ***',
+                itb_version.get_version())
 
     itb_util_core.set_program_name('ibus-setup-tb')
 

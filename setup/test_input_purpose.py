@@ -57,7 +57,7 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 
 glib_main_loop: Optional[GLib.MainLoop] = None
 
-class InputPurposeTest(Gtk.Window): # type: ignore
+class InputPurposeTest(Gtk.Window):  # type: ignore[misc]
     '''
     User interface of the setup tool
     '''

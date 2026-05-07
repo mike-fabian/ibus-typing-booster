@@ -29,7 +29,6 @@ from typing import Tuple
 from typing import List
 from typing import Iterable
 from typing import Any
-from typing import TYPE_CHECKING
 import os
 import sys
 import unicodedata
@@ -43,24 +42,24 @@ DEBUG_LEVEL = int(0)
 
 enchant: Optional[ModuleType]
 try:
-    import enchant  # type: ignore
+    import enchant as _enchant  # type: ignore[import-untyped]
+    enchant = _enchant
 except ImportError:
     enchant = None
 
 hunspell: Optional[ModuleType]
 try:
-    import hunspell  # type: ignore
+    import hunspell as _hunspell  # type: ignore[import-not-found]  # ty: ignore[unresolved-import]
+    hunspell = _hunspell
 except ImportError:
     hunspell = None
 
-if TYPE_CHECKING:
-    import libvoikko as _libvoikko  # type: ignore[import-not-found, import-untyped, unused-ignore]
+libvoikko: Optional[ModuleType]
 try:
-    import libvoikko as _libvoikko_runtime
+    import libvoikko as _libvoikko  # type: ignore[import-untyped]
+    libvoikko = _libvoikko
 except ImportError:
-    libvoikko: Optional[ModuleType] = None  # pylint: disable=invalid-name
-else:
-    libvoikko = _libvoikko_runtime
+    libvoikko = None
 
 # Maximum words that should be returned.
 # This should a rather big number in order not

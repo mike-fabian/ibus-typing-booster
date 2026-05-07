@@ -30,6 +30,8 @@ from typing import Set
 from typing import Optional
 from typing import Iterable
 from typing import Callable
+from typing import TextIO
+from typing import cast
 import os
 import sys
 import re
@@ -43,7 +45,7 @@ import logging
 import gettext
 import itb_util_core
 
-DOMAINNAME = 'ibus-typing-booster'
+DOMAINNAME: str = 'ibus-typing-booster'
 
 def _(text: str) -> str:
     '''Gettext translation function.'''
@@ -58,40 +60,45 @@ def N_(text: str) -> str: # pylint: disable=invalid-name
 
 bz2: Optional[ModuleType]
 try:
-    import bz2
+    import bz2 as _bz2
+    bz2 = _bz2
 except ImportError:
     bz2 = None
 
 lzma: Optional[ModuleType]
 try:
-    import lzma
+    import lzma as _lzma
+    lzma = _lzma
 except ImportError:
     lzma = None
 
 rapidfuzz: Optional[ModuleType]
 try:
-    import rapidfuzz
+    import rapidfuzz as _rapidfuzz
+    rapidfuzz = _rapidfuzz
 except ImportError:
     rapidfuzz = None
 
 enchant: Optional[ModuleType]
 try:
-    import enchant # type: ignore
+    import enchant as _enchant  # type: ignore[import-untyped]
+    enchant = _enchant
 except ImportError:
     enchant = None
 
 try:
-    import pykakasi as _pykakasi # type: ignore[import-not-found]
+    import pykakasi as _pykakasi # type: ignore[import-not-found]  # ty: ignore[unresolved-import]
 except ImportError:
     pykakasi = None  # pylint: disable=invalid-name
-    KAKASI_INSTANCE: Any = None
+    KAKASI_INSTANCE: Optional[Any] = None
 else:
     pykakasi = _pykakasi
     KAKASI_INSTANCE = _pykakasi.kakasi()
 
 pinyin: Optional[ModuleType]
 try:
-    import pinyin # type: ignore
+    import pinyin as _pinyin  # type: ignore
+    pinyin = _pinyin
 except ImportError:
     pinyin = None
 
@@ -297,7 +304,7 @@ if pykakasi is not None:
         >>> kakasi_convert('かな漢字', target='passport')
         'kanakanji'
         '''
-        if pykakasi is None or target == 'orig':
+        if KAKASI_INSTANCE is None or target == 'orig':
             return text
         result = ''
         for item in KAKASI_INSTANCE.convert(text):
@@ -335,7 +342,7 @@ def _in_range(codepoint: int) -> bool:
 def _find_path_and_open_function(
         dirnames: Iterable[str],
         basenames: Iterable[str],
-        subdir: str = '') -> Tuple[str, Optional[Callable[[Any], Any]]]:
+        subdir: str = '') -> Tuple[str, Optional[Callable[..., TextIO]]]:
     '''Find the first existing file of a list of basenames and dirnames
 
     For each file in “basenames”, tries whether that file or the
@@ -447,7 +454,8 @@ def _match_classic(label: str, match_string: str) -> float:
     label_words = set(label.split())
     label_no_spaces = label.replace(' ', '')
     # Sort longest words first.
-    word_list = sorted(match_string.split(sep=None), key=len, reverse=True)
+    word_list: List[str] = cast(
+        List[str], sorted(match_string.split(), key=len, reverse=True))
     word_set = set(word_list)
     # Exact set match (highest priority)
     # For example 'black cat' counts as an exact match for 'cat black'.
@@ -816,7 +824,7 @@ class EmojiMatcher():
         if not path or open_function is None:
             return
         try:
-            with open_function( # type: ignore
+            with open_function(
                     path, mode='rt', encoding='utf-8') as nameslist_file:
                 code_point_line_pattern = re.compile(r'([0-9A-F]+)\s(\S.*\S)')
                 name_line_pattern = re.compile(r'\s+=\ (?P<names>\S.*\S)')
@@ -851,7 +859,7 @@ class EmojiMatcher():
         if not path or open_function is None:
             return
         try:
-            with open_function( # type: ignore
+            with open_function(
                     path, mode='rt', encoding='utf-8') as unikemet_file:
                 for line in unikemet_file:
                     line = line.partition('#')[0].strip()
@@ -896,7 +904,7 @@ class EmojiMatcher():
         if not path or open_function is None:
             return
         try:
-            with open_function( # type: ignore
+            with open_function(
                     path, mode='rt', encoding='utf-8') as blocks_file:
                 blocks_pattern = re.compile(r'([0-9A-F]+)\.\.([0-9A-F]+);\ (\S.*\S)')
                 for line in blocks_file:
@@ -942,7 +950,7 @@ class EmojiMatcher():
         if not path or open_function is None:
             return
         try:
-            with open_function( # type: ignore
+            with open_function(
                     path, mode='rt', encoding='utf-8') as derived_age_file:
                 for line in derived_age_file:
                     line = line.partition('#')[0].strip()
@@ -978,7 +986,7 @@ class EmojiMatcher():
         if not path or open_function is None:
             return
         try:
-            with open_function( # type: ignore
+            with open_function(
                     path, mode='rt', encoding='utf-8') as name_aliases_file:
                 for line in name_aliases_file:
                     line = line.partition('#')[0].strip()
@@ -1008,7 +1016,7 @@ class EmojiMatcher():
         if not path or open_function is None:
             return
         try:
-            with open_function( # type: ignore
+            with open_function(
                     path, mode='rt', encoding='utf-8') as unicode_data_file:
                 for line in itertools.chain(unicode_data_file,
                                             UNICODE_DATA_EXTRA_LINES):
@@ -1062,7 +1070,7 @@ class EmojiMatcher():
         if not path or open_function is None:
             return
         try:
-            with open_function( # type: ignore
+            with open_function(
                     path, mode='rt', encoding='utf-8') as unicode_emoji_data_file:
                 for line in unicode_emoji_data_file.readlines():
                     emoji_version = ''
@@ -1117,7 +1125,7 @@ class EmojiMatcher():
         if not path or open_function is None:
             return
         try:
-            with open_function( # type: ignore
+            with open_function(
                     path,
                     mode='rt',
                     encoding='utf-8') as unicode_emoji_sequences_file:
@@ -1180,7 +1188,7 @@ class EmojiMatcher():
         if not path or open_function is None:
             return
         try:
-            with open_function( # type: ignore
+            with open_function(
                     path,
                     mode='rt',
                     encoding='utf-8') as unicode_emoji_zwj_sequences_file:
@@ -1240,7 +1248,7 @@ class EmojiMatcher():
         if not path or open_function is None:
             return
         try:
-            with open_function( # type: ignore
+            with open_function(
                     path, mode='rt', encoding='utf-8') as unicode_emoji_test_file:
                 group = ''
                 subgroup = ''
@@ -1340,7 +1348,7 @@ class EmojiMatcher():
             dirnames, basenames)
         if not path or open_function is None:
             return
-        with open_function( # type: ignore
+        with open_function(
                 path, mode='rt', encoding='utf-8') as emoji_one_file:
             emojione = json.load(emoji_one_file)
         for dummy_emojione_key, emojione_value in emojione.items():
@@ -1506,7 +1514,7 @@ class EmojiMatcher():
         add_pinyin = language in ('zh', 'zh_Hant') and pinyin is not None
         add_japanese_phonetics = language == 'ja' and pykakasi is not None
         try:
-            with open_function( # type: ignore
+            with open_function(
                     path, mode='rt', encoding='utf-8') as cldr_annotation_file:
                 pattern = re.compile(
                     r'.*<annotation cp="(?P<emojistring>[^"]+)"'

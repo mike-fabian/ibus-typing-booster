@@ -35,13 +35,15 @@ sys.path.pop(0)
 
 enchant: Optional[ModuleType]
 try:
-    import enchant  # type: ignore
+    import enchant as _enchant  # type: ignore[import-untyped]
+    enchant = _enchant
 except ImportError:
     enchant = None
 
 libvoikko: Optional[ModuleType]
 try:
-    import libvoikko # type: ignore
+    import libvoikko as _libvoikko  # type: ignore[import-untyped]
+    libvoikko = _libvoikko
 except ImportError:
     libvoikko = None
 

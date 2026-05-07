@@ -24,7 +24,6 @@ from typing import Dict
 from typing import List
 from typing import Tuple
 from typing import NamedTuple
-from typing import Iterable
 from typing import Any
 import sys
 import re
@@ -33,7 +32,7 @@ import logging
 from gi import require_version
 # pylint: disable=wrong-import-position
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus  # ty: ignore[unresolved-import]
 # pylint: enable=wrong-import-position
 import itb_util_core
 
@@ -1053,7 +1052,7 @@ class Transliterator:
 
     def transliterate_parts(
             self,
-            msymbol_list: Iterable[str],
+            msymbol_list: List[str],
             ascii_digits: bool = False,
             reset: bool = False) -> TransliterationParts:
         # pylint: disable=line-too-long
@@ -1694,7 +1693,7 @@ class Transliterator:
 
     def transliterate(
             self,
-            msymbol_list: Iterable[str],
+            msymbol_list: List[str],
             ascii_digits: bool = False,
             reset: bool = False) -> str:
         '''Transliterate a list of Msymbol names

@@ -31,7 +31,8 @@ LOGGER = logging.getLogger('ibus-typing-booster')
 
 distro: Optional[ModuleType]
 try:
-    import distro
+    import distro as _distro
+    distro = _distro
 except ImportError:
     distro = None
 

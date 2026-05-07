@@ -31,7 +31,7 @@ from typing import Set
 from typing import Optional
 # pylint: disable=wrong-import-position
 import sys
-from enum import Enum, Flag
+from enum import Enum, IntFlag
 import os
 import functools
 import logging
@@ -40,7 +40,7 @@ import subprocess
 import gettext
 from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus
+from gi.repository import IBus  # ty: ignore[unresolved-import]
 require_version('GLib', '2.0')
 from gi.repository import GLib # type: ignore
 from itb_gtk import Gdk, Gtk, GTK_MAJOR, GTK_VERSION
@@ -53,8 +53,8 @@ try:
     # Enable new improved regex engine instead of backwards compatible
     # v0.  regex.match('ß', 'SS', regex.IGNORECASE) matches only with
     # the improved version!  See also: https://pypi.org/project/regex/
-    import regex # type: ignore
-    regex.DEFAULT_VERSION = regex.VERSION1
+    import regex # type: ignore[import-untyped]
+    regex.DEFAULT_VERSION = regex.VERSION1  # ty: ignore[invalid-assignment]
     re = regex
     USING_REGEX = True
 except ImportError:
@@ -307,7 +307,7 @@ class InputPurpose(Enum):
     PIN = 'PIN'
     TERMINAL = 'TERMINAL'
 
-class InputHints(Flag):
+class InputHints(IntFlag):
     '''Compatibility class to handle InputHints the same way no matter
     what version of ibus is used.
 
@@ -359,12 +359,12 @@ class InputHints(Flag):
     >>> InputHints.SPELLCHECK == Gtk.InputHints.SPELLCHECK
     True
     '''
-    def __new__(cls, attr: str) -> Any:
-        obj = object.__new__(cls)
+    def __new__(cls, attr: str, fallback: int = 0) -> Any:
+        value = fallback
         if hasattr(Gtk, 'InputHints') and hasattr(Gtk.InputHints, attr):
-            obj._value_ = int(getattr(Gtk.InputHints, attr))
-        else:
-            obj._value_ = 0
+            value = int(getattr(Gtk.InputHints, attr))
+        obj = int.__new__(cls, value)
+        obj._value_ = value
         return obj
 
     def __int__(self) -> int:
@@ -405,19 +405,19 @@ class InputHints(Flag):
     def __rand__(self, other: Any) -> Any:
         return self.__and__(other)
 
-    NONE = 'NONE'
-    SPELLCHECK = 'SPELLCHECK'
-    NO_SPELLCHECK = 'NO_SPELLCHECK'
-    WORD_COMPLETION = 'WORD_COMPLETION'
-    LOWERCASE = 'LOWERCASE'
-    UPPERCASE_CHARS = 'UPPERCASE_CHARS'
-    UPPERCASE_WORDS = 'UPPERCASE_WORDS'
-    UPPERCASE_SENTENCES = 'UPPERCASE_SENTENCES'
-    INHIBIT_OSK = 'INHIBIT_OSK'
-    VERTICAL_WRITING = 'VERTICAL_WRITING'
-    EMOJI = 'EMOJI'
-    NO_EMOJI = 'NO_EMOJI'
-    PRIVATE = 'PRIVATE'
+    NONE = ('NONE', 0)  # ty: ignore[invalid-assignment]
+    SPELLCHECK = ('SPELLCHECK', 0)  # ty: ignore[invalid-assignment]
+    NO_SPELLCHECK = ('NO_SPELLCHECK', 0)  # ty: ignore[invalid-assignment]
+    WORD_COMPLETION = ('WORD_COMPLETION', 0)  # ty: ignore[invalid-assignment]
+    LOWERCASE = ('LOWERCASE', 0)  # ty: ignore[invalid-assignment]
+    UPPERCASE_CHARS = ('UPPERCASE_CHARS', 0)  # ty: ignore[invalid-assignment]
+    UPPERCASE_WORDS = ('UPPERCASE_WORDS', 0)  # ty: ignore[invalid-assignment]
+    UPPERCASE_SENTENCES = ('UPPERCASE_SENTENCES', 0)  # ty: ignore[invalid-assignment]
+    INHIBIT_OSK = ('INHIBIT_OSK', 0)  # ty: ignore[invalid-assignment]
+    VERTICAL_WRITING = ('VERTICAL_WRITING', 0)  # ty: ignore[invalid-assignment]
+    EMOJI = ('EMOJI', 0)  # ty: ignore[invalid-assignment]
+    NO_EMOJI = ('NO_EMOJI', 0)  # ty: ignore[invalid-assignment]
+    PRIVATE = ('PRIVATE', 0)  # ty: ignore[invalid-assignment]
 
 class KeyvalsToKeycodes:
     '''Class to convert key values to key codes.

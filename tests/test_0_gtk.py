@@ -28,6 +28,7 @@ from typing import List
 from typing import Dict
 from typing import Any
 from typing import Optional
+from typing import cast
 import argparse
 import os
 import signal
@@ -41,7 +42,7 @@ gi_require_version('Gio', '2.0')
 gi_require_version('IBus', '1.0')
 from gi.repository import GLib # type: ignore
 from gi.repository import Gio # type: ignore
-from gi.repository import IBus
+from gi.repository import IBus  # ty: ignore[unresolved-import]
 # pylint: enable=wrong-import-position
 
 # Get more verbose output in the test log:
@@ -56,19 +57,22 @@ from itb_gtk import Gdk, Gtk
 
 itb_util_core: Optional[ModuleType]
 try:
-    import itb_util_core
+    import itb_util_core as _itb_util_core
+    itb_util_core = _itb_util_core
 except ImportError:
     itb_util_core = None
 
 hunspell_table: Optional[ModuleType]
 try:
-    import hunspell_table
+    import hunspell_table as _hunspell_table
+    hunspell_table = _hunspell_table
 except ImportError:
     hunspell_table = None
 
 tabsqlitedb: Optional[ModuleType]
 try:
-    import tabsqlitedb
+    import tabsqlitedb as _tabsqlitedb
+    tabsqlitedb = _tabsqlitedb
 except ImportError:
     tabsqlitedb = None
 sys.path.pop(0)
@@ -378,7 +382,7 @@ class SimpleGtk3TestCase(unittest.TestCase):
         if case_type == 'string':
             printflush(
                 f'test step: {tag} sequences: "{str(cases["string"])}"')
-            for character in cases['string']:
+            for character in cast(str, cases['string']):
                 if start >= 0 and i < start:
                     i += 1
                     continue
@@ -389,7 +393,7 @@ class SimpleGtk3TestCase(unittest.TestCase):
         if case_type == 'keys':
             if start == -1 and end == -1:
                 printflush(f'test step: {tag} sequences: {str(cases["keys"])}')
-            for key in cases['keys']:
+            for key in cast(List[List[int]], cases['keys']):
                 if start >= 0 and i < start:
                     i += 1
                     continue
