@@ -16,8 +16,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-04-21 23:52+0200\n"
-"PO-Revision-Date: 2026-05-05 13:50+0000\n"
-"Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
+"PO-Revision-Date: 2026-05-06 21:59+0000\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Portuguese <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/pt/>\n"
 "Language: pt\n"
@@ -1536,8 +1537,6 @@ msgid "Choose color for m17n preedit"
 msgstr "Usar cor para pré-visualização da composição"
 
 #: setup/main.py:2067
-#, fuzzy
-#| msgid "Here you can specify which color to use for the compose preview."
 msgid "Here you can specify which color to use for the m17n preedit."
 msgstr ""
 "Aqui pode-se especificar que cor usar para a pré-visualização da composição."
@@ -1834,7 +1833,7 @@ msgstr ""
 #. Model) to be used with ollama or ramalama.
 #: setup/main.py:2498
 msgid "Model:"
-msgstr ""
+msgstr "_Modelo:"
 
 #. Translators: The limit of how many past messages are
 #. sent to the AI for context.
