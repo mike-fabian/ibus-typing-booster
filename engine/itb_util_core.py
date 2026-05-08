@@ -61,7 +61,7 @@ from gi import require_version
 require_version('IBus', '1.0')
 from gi.repository import IBus  # ty: ignore[unresolved-import]
 require_version('GLib', '2.0')
-from gi.repository import GLib # type: ignore
+from gi.repository import GLib  # type: ignore[attr-defined]  # ty: ignore[unresolved-import]
 # pylint: enable=wrong-import-position
 
 import itb_version

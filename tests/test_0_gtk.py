@@ -40,8 +40,8 @@ from gi import require_version as gi_require_version
 gi_require_version('GLib', '2.0')
 gi_require_version('Gio', '2.0')
 gi_require_version('IBus', '1.0')
-from gi.repository import GLib # type: ignore
-from gi.repository import Gio # type: ignore
+from gi.repository import GLib  # type: ignore[attr-defined]  # ty: ignore[unresolved-import]
+from gi.repository import Gio  # type: ignore[attr-defined]  # ty: ignore[unresolved-import]
 from gi.repository import IBus  # ty: ignore[unresolved-import]
 # pylint: enable=wrong-import-position
 
