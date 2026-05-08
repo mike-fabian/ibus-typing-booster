@@ -16,7 +16,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-04-21 23:52+0200\n"
-"PO-Revision-Date: 2026-05-07 21:32+0000\n"
+"PO-Revision-Date: 2026-05-08 16:09+0000\n"
 "Last-Translator: Américo Monteiro <a_monteiro@gmx.com>\n"
 "Language-Team: Portuguese <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/pt/>\n"
@@ -1356,6 +1356,8 @@ msgstr "Atraso na janela de candidatos em milissegundos:"
 msgid ""
 "How long to wait after the last key press before candidates are displayed."
 msgstr ""
+"Quanto tempo esperar após a última tecla pressionada e antes dos candidatos "
+"serem mostrados."
 
 #. Translators: A combobox to choose the style of
 #. underlining for the preedit.
@@ -1742,7 +1744,7 @@ msgstr ""
 
 #: setup/main.py:2384
 msgid "Symbol for \"enabled\" mode"
-msgstr ""
+msgstr "Símbolo para modo \"ativado\""
 
 #. Translators: Tooltip for 'Symbol for "enabled" mode'
 #: setup/main.py:2387 setup/main.py:2394
@@ -1750,10 +1752,12 @@ msgid ""
 "The symbol displayed when Typing Booster is active (transliterating input, "
 "suggesting completions, spellchecking, etc.)."
 msgstr ""
+"O símbolo mostrado quando o Typing Booster está ativo (entrada "
+"transliterada, sugerir conclusões, verificação ortográfica, etc.)."
 
 #: setup/main.py:2413
 msgid "Symbol for \"disabled\" (Direct Input) mode"
-msgstr ""
+msgstr "Símbolo para modo \"desativado\" (Entrada Direta)"
 
 #. Translators: Tooltip for 'Symbol for "disabled" (Direct
 #. Input) mode'
@@ -1762,13 +1766,15 @@ msgid ""
 "The symbol displayed when Typing Booster is disabled (input is passed "
 "through directly without processing)."
 msgstr ""
+"O símbolo mostrado quando o Typing Booster está desativado (a entrada é "
+"passada diretamente sem processamento)."
 
 #. Translators: Checkbox to enable the AI (Artificial
 #. Intelligence) chat feature using ollama or ramalama
 #. servers.
 #: setup/main.py:2462
 msgid "Enable AI chat"
-msgstr ""
+msgstr "Ativar conversa IA"
 
 #. Translators: Tooltip for “Enable AI chat”.
 #: setup/main.py:2465
@@ -1776,18 +1782,21 @@ msgid ""
 "Enable or disable AI chat globally. When disabled, all AI chat related "
 "features and keybindings are turned off."
 msgstr ""
+"Ativar ou desativar conversa IA globalmente. Quando desativado, todas as "
+"funcionalidades e vínculos de teclas relacionadas com conversa IA são "
+"desligadas."
 
 #. Translators: The ollama or ramalama server to use for AI
 #. (Artificial Intelligence).
 #: setup/main.py:2477
 msgid "AI server:"
-msgstr ""
+msgstr "Servidor de IA:"
 
 #. Translators: The connection status to the ollama or
 #. ramalama server used for AI (Artificial Intelligence).
 #: setup/main.py:2483
 msgid "Connection status to the AI server."
-msgstr ""
+msgstr "Estado de ligação ao servidor IA."
 
 #. Translators: “Model:” specifies the LLM (Large Language
 #. Model) to be used with ollama or ramalama.
@@ -1808,7 +1817,7 @@ msgstr "Limite de histórico de mensagens:"
 #. assistant. Respond concisely.”
 #: setup/main.py:2553
 msgid "AI system message:"
-msgstr ""
+msgstr "Mensagem do sistema IA:"
 
 #. Translators: Tooltip explaining the AI system message
 #. field to set the implicit context for AI chats. For
@@ -1817,7 +1826,7 @@ msgstr ""
 #. assistant. Respond concisely.”
 #: setup/main.py:2562
 msgid "System prompt that guides how the AI responds."
-msgstr ""
+msgstr "Aviso de sistema que guia como a IA responde."
 
 #. Translators:
 #: setup/main.py:2599 setup/main.py:3833
@@ -1838,17 +1847,15 @@ msgstr "Ficheiro ainda não definido."
 #. browser tab) gets the focus.
 #: setup/main.py:2661 setup/main.py:5008
 msgid "Add an autosetting"
-msgstr ""
+msgstr "Adicionar uma auto-definição"
 
 #. Translators: This is a button to remove an autosetting.
 #. “Autosettings” are settings which may change automatically
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2672
-#, fuzzy
-#| msgid "Remove an input method"
 msgid "Remove an autosetting"
-msgstr "Remover um método de entrada"
+msgstr "Remover uma auto-definição"
 
 #. Translators: This is a button to move an autosetting up in the
 #. order the autosettings are applied. “Up” means it is applied
@@ -1859,10 +1866,8 @@ msgstr "Remover um método de entrada"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2686
-#, fuzzy
-#| msgid "Move input method up"
 msgid "Move an autosetting up"
-msgstr "Mover método de entrada para cima"
+msgstr "Mover uma auto-definição para cima"
 
 #. Translators: This is a button to move an autosetting down in the
 #. order the autosettings are applied. “Down” means it is applied
@@ -1873,16 +1878,12 @@ msgstr "Mover método de entrada para cima"
 #. to specific valueS depending on which window (or which
 #. browser tab) gets the focus.
 #: setup/main.py:2700
-#, fuzzy
-#| msgid "Move input method down"
 msgid "Move an autosetting down"
-msgstr "Mover método de entrada para baixo"
+msgstr "Mover uma auto-definição para baixo"
 
 #: setup/main.py:2706
-#, fuzzy
-#| msgid "Set all to default"
 msgid "Set all autosettings to default"
-msgstr "Definir tudo para predefinição"
+msgstr "Definir todas as auto-definições para a predefinição"
 
 #: setup/main.py:2971
 msgid "Spell checking"
@@ -1906,7 +1907,7 @@ msgstr "Valor"
 #. the automatic settings
 #: setup/main.py:3198
 msgid "Regular expression"
-msgstr ""
+msgstr "Expressão Regular"
 
 #. Translators: This is the text in the centre of a small
 #. dialog window, trying to confirm whether the user is
@@ -1946,7 +1947,7 @@ msgstr "Adicionar um método de entrada"
 #. for the currently selected input method
 #: setup/main.py:4590
 msgid "Variable"
-msgstr ""
+msgstr "Variável"
 
 #: setup/main.py:5444
 #, python-format
@@ -1980,14 +1981,10 @@ msgstr ""
 #. This cannot be reversed so the user
 #. should be really sure he wants to do that.
 #: setup/main.py:5585
-#, fuzzy
-#| msgid ""
-#| "Do you really want to set the key bindings for all commands to their "
-#| "defaults?"
 msgid "Do you really want to set all autosettings to their defaults?"
 msgstr ""
-"Quer realmente definir os atalhos de teclado de todos os comandos para os "
-"seus valores de defeito?"
+"Deseja realmente definir todas as auto-definições para os seus valores "
+"predefinidos?"
 
 #: setup/main.py:5606
 #, python-format
@@ -2026,6 +2023,8 @@ msgid ""
 "Emoji Picker is an emoji browsing tool which uses the emoji matching code "
 "from Ibus-typing-booster."
 msgstr ""
+"Emoji Picker é uma ferramenta de navegação de emoji que usa código de "
+"correspondência de emoji do Ibus-typing-booster."
 
 #: org.freedesktop.ibus.engine.typing_booster.metainfo.xml.in:6
 msgid "Typing Booster"
