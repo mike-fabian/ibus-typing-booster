@@ -13,8 +13,8 @@ MYPY=(mypy --strict --no-incremental --show-error-codes --pretty)
 
 echo cd "$SCRIPT_DIR/engine"
 cd "$SCRIPT_DIR/engine"
-echo "${MYPY[@]}" *.py
-"${MYPY[@]}" *.py
+echo "${MYPY[@]}" ./*.py
+"${MYPY[@]}" ./*.py
 ENGINE_RETVAL=$?
 if [ ${ENGINE_RETVAL} != 0 ] ; then
     RETVAL=$((${RETVAL} + ${ENGINE_RETVAL}))
