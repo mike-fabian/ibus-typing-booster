@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-04-21 23:52+0200\n"
-"PO-Revision-Date: 2026-05-10 19:50+0000\n"
+"PO-Revision-Date: 2026-05-11 08:07+0000\n"
 "Last-Translator: Bone NI <bounkirdni@gmail.com>\n"
 "Language-Team: Lao <https://translate.fedoraproject.org/projects/ibus-typing-"
 "booster/app/lo/>\n"
@@ -400,7 +400,7 @@ msgstr "ວິທີການພິມແບບເຕີມເຕັມຄຳເ
 #. Translators: put your names here, one name per line.
 #: engine/itb_util_gui.py:909
 msgid "translator-credits"
-msgstr "ຜູ້ແປພາສາ"
+msgstr "Bone NI <bounkirdni@gmail.com>"
 
 #: engine/itb_util_gui.py:917 setup/main.py:2442
 msgid "Online documentation:"
