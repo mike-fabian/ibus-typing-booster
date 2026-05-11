@@ -1,5 +1,5 @@
-# Mike FABIAN <mfabian@redhat.com>, 2016. #zanata, 2020, 2022.
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2020, 2022.
+# Mike FABIAN <mfabian@redhat.com>, 2016. #zanata, 2020, 2022, 2026.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2020, 2022, 2026.
 # Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019, 2020, 2021.
 # naly zzwd <xeanhort007@gmail.com>, 2026.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2026.
@@ -9,9 +9,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-05-11 18:38+0200\n"
-"PO-Revision-Date: 2026-01-16 22:58+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"PO-Revision-Date: 2026-05-11 19:44+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Catalan <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/ca/>\n"
 "Language: ca\n"
@@ -19,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15.2\n"
+"X-Generator: Weblate 5.17.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:296
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -89,14 +88,14 @@ msgstr "Versió del Unicode:"
 
 #: engine/emoji_picker.py:825
 msgid "Emoji Version:"
-msgstr "Versió del Unicode:"
+msgstr "Versió de l’emoji:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
 #: engine/emoji_picker.py:832
 msgid "Emoji properties:"
-msgstr "Versió del Unicode:"
+msgstr "Propietats de l’emoji:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
@@ -109,7 +108,7 @@ msgstr "Categoria Unicode:"
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
 #: engine/emoji_picker.py:845
 msgid "Unicode block:"
-msgstr "Versió del Unicode:"
+msgstr "Bloc Unicode:"
 
 #: engine/emoji_picker.py:864 engine/emoji_picker.py:2055
 msgid "Left click to copy"
@@ -137,7 +136,7 @@ msgstr "S’ha copiat al porta-retalls."
 
 #: engine/emoji_picker.py:1806
 msgid "Clear recently used"
-msgstr "Escrit correctament"
+msgstr "Neteja els utilitzats recentment"
 
 #: engine/emoji_picker.py:1811 setup/main.py:306
 msgid "About"
@@ -787,7 +786,7 @@ msgstr "Escrit correctament o registrat anteriorment"
 
 #: setup/main.py:822
 msgid "Correctly spelled"
-msgstr "Neteja els utilitzats recentment"
+msgstr "Escrit correctament"
 
 #: setup/main.py:823
 msgid "Nothing"
@@ -1099,7 +1098,7 @@ msgstr "Instal·la els diccionaris ací configurats però que no s'han instal·l
 #. missing dictionaries and update existing ones.
 #: setup/main.py:1257
 msgid "Download dictionaries"
-msgstr "Afegeix un diccionari"
+msgstr "Descarrega diccionaris"
 
 #: setup/main.py:1258
 msgid "Download missing dictionaries and update existing ones"
@@ -1521,7 +1520,7 @@ msgstr ""
 #. the m17n preedit.
 #: setup/main.py:2058
 msgid "Choose color for m17n preedit"
-msgstr "Trieu un color per als suggeriments ortogràfics"
+msgstr "Trieu el color per a la preedició m17n"
 
 #: setup/main.py:2060
 msgid "Here you can specify which color to use for the m17n preedit."
@@ -1864,7 +1863,7 @@ msgstr "Eliminar una configuració automàtica"
 #. browser tab) gets the focus.
 #: setup/main.py:2679
 msgid "Move an autosetting up"
-msgstr "Mou el mètode d’entrada cap amunt"
+msgstr "Mou una configuració automàtica cap amunt"
 
 #. Translators: This is a button to move an autosetting down in the
 #. order the autosettings are applied. “Down” means it is applied
@@ -1876,7 +1875,7 @@ msgstr "Mou el mètode d’entrada cap amunt"
 #. browser tab) gets the focus.
 #: setup/main.py:2693
 msgid "Move an autosetting down"
-msgstr "Mou el mètode d’entrada cap avall"
+msgstr "Mou una configuració automàtica cap avall"
 
 #: setup/main.py:2699
 msgid "Set all autosettings to default"

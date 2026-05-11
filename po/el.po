@@ -4,14 +4,15 @@
 # Giannis Antypas <gianni.antypas@gmail.com>, 2024.
 # Jim Spentzos <jimspentzos2000@gmail.com>, 2025.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
+# Mike FABIAN <mfabian@redhat.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-05-11 18:38+0200\n"
-"PO-Revision-Date: 2025-07-02 00:29+0000\n"
-"Last-Translator: Jim Spentzos <jimspentzos2000@gmail.com>\n"
+"PO-Revision-Date: 2026-05-11 19:44+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Greek <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/el/>\n"
 "Language: el\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.17.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:296
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -106,10 +107,8 @@ msgstr "Κατηγορία Unicode:"
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
 #: engine/emoji_picker.py:845
-#, fuzzy
-#| msgid "Unicode Version:"
 msgid "Unicode block:"
-msgstr "Έκδοση Unicode:"
+msgstr "Μπλοκ Unicode:"
 
 #: engine/emoji_picker.py:864 engine/emoji_picker.py:2055
 msgid "Left click to copy"
@@ -659,10 +658,8 @@ msgstr ""
 #. Translators: A combo box to select which emoji style
 #. should be used.
 #: setup/main.py:731
-#, fuzzy
-#| msgid "Emoji"
 msgid "Emoji style"
-msgstr "Emoji"
+msgstr "Στυλ Emoji"
 
 #. Translators: A tooltip for the combobox to select which
 #. emoji style should be used.

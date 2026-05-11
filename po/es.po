@@ -2,7 +2,7 @@
 # Emilio Herrera <ehespinosa57@gmail.com>, 2017. #zanata, 2020, 2022, 2025.
 # Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2017. #zanata
 # Ismael Venegas Castelló <ismael.vc1337@gmail.com>, 2018. #zanata
-# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2022, 2024, 2025.
+# Mike FABIAN <mfabian@redhat.com>, 2018. #zanata, 2019, 2020, 2022, 2024, 2025, 2026.
 # Máximo Castañeda Riloba <mcrcctm@gmail.com>, 2018. #zanata
 # Adolfo Jayme Barrientos <fitoschido@gmail.com>, 2019, 2020, 2021.
 # Anonymous <noreply@weblate.org>, 2019.
@@ -16,8 +16,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-05-11 18:38+0200\n"
-"PO-Revision-Date: 2026-02-20 11:58+0000\n"
-"Last-Translator: \"Fco. Javier F. Serrador\" <fserrador@gmail.com>\n"
+"PO-Revision-Date: 2026-05-11 19:44+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Spanish <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/es/>\n"
 "Language: es\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16\n"
+"X-Generator: Weblate 5.17.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:296
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -39,11 +39,11 @@ msgstr "Herr. exploradora Emoji"
 
 #: engine/emoji_picker.py:431
 msgid "Search for emoji"
-msgstr "Buscar un emoyi"
+msgstr "Buscar un emoji"
 
 #: engine/emoji_picker.py:437
 msgid "Set the font to display emoji"
-msgstr "Establecer el tipo de letra de los emoyis"
+msgstr "Establecer el tipo de letra de los emojis"
 
 #: engine/emoji_picker.py:444
 msgid "Set font size"
@@ -66,8 +66,8 @@ msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
 msgstr ""
-"Define si se utilizarán tipos de letra de reserva para los emoyis, o las "
-"secuencias de emoyis, que no puedan mostrarse con el tipo de letra "
+"Define si se utilizarán tipos de letra de reserva para los emojis, o las "
+"secuencias de emojis, que no puedan mostrarse con el tipo de letra "
 "seleccionado."
 
 #: engine/emoji_picker.py:568
@@ -88,7 +88,7 @@ msgstr "Palabras clave"
 
 #: engine/emoji_picker.py:763
 msgid "Fonts used to render this emoji:"
-msgstr "Tipos de letra utilizados para representar este emoyi:"
+msgstr "Tipos de letra utilizados para representar este emoji:"
 
 #: engine/emoji_picker.py:821
 msgid "Unicode Version:"
@@ -697,11 +697,11 @@ msgid ""
 "patterns (⠥⠩…), and many other symbols. These are technically not emoji but "
 "nevertheless useful symbols."
 msgstr ""
-"Define si se incluirán símbolos y emoyis de Unicode en las predicciones. Los "
-"emoyis son pictogramas tales como ☺♨⛵. Entre los símbolos de Unicode se "
+"Define si se incluirán símbolos y emojis de Unicode en las predicciones. Los "
+"emojis son pictogramas tales como ☺♨⛵. Entre los símbolos de Unicode se "
 "incluyen símbolos matemáticos (∀∑∯…), flechas (←↑↔…), monedas (€₹₺…), "
 "patrones de braille (⠥⠩…) y numerosos caracteres más. Aunque técnicamente no "
-"son emoyis, estos últimos pueden resultarle útiles."
+"son emojis, estos últimos pueden resultarle útiles."
 
 #. Translators: A combo box to select which emoji style
 #. should be used.
@@ -949,7 +949,7 @@ msgstr ""
 #. “English” keymap used.
 #: setup/main.py:999
 msgid "English"
-msgstr "Español"
+msgstr "Inglés"
 
 #. Translators: The characters in this list trigger an
 #. emoji and Unicode symbol lookup even if the option
