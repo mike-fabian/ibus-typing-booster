@@ -941,7 +941,6 @@ class ItbTestCase(unittest.TestCase):
             ['hi-itrans', 'NoIME'], update_gsettings=False)
         self.engine.set_dictionary_names(
             ['hi_IN', 'en_GB'], update_gsettings=False)
-        self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_3, 0, 0)
@@ -951,10 +950,13 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_7, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_8, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_9, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '०')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
-        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० ')
         self.engine.set_ascii_digits(True, update_gsettings=False)
-        self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_3, 0, 0)
@@ -964,8 +966,12 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_7, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_8, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_9, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '0')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० 123456789')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
-        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९0123456789')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० 1234567890 ')
         # Remove all digits from the key bindings:
         self.engine.set_keybindings({
             'commit_candidate_1': [],
@@ -1005,10 +1011,10 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_8, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_9, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'नमस्ते0123456789')
-        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९0123456789')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० 1234567890 ')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
-        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९0123456789नमस्ते0123456789 ')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० 1234567890 नमस्ते0123456789 ')
         self.engine.set_ascii_digits(False, update_gsettings=False)
         self.engine.do_process_key_event(IBus.KEY_n, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
@@ -1028,10 +1034,10 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_8, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_9, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, 'नमस्ते०१२३४५६७८९')
-        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९0123456789नमस्ते0123456789 ')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० 1234567890 नमस्ते0123456789 ')
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
-        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९0123456789नमस्ते0123456789 नमस्ते०१२३४५६७८९ ')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० 1234567890 नमस्ते0123456789 नमस्ते०१२३४५६७८९ ')
 
     def test_complete_with_empty_input(self) -> None:
         '''Test completion when something has just been committed with
@@ -2345,7 +2351,6 @@ class ItbTestCase(unittest.TestCase):
             ['hi-itrans'], update_gsettings=False)
         self.engine.set_dictionary_names(
             ['hi_IN'], update_gsettings=False)
-        self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_3, 0, 0)
@@ -2360,7 +2365,41 @@ class ItbTestCase(unittest.TestCase):
         # Hindi digits and committed immediately:
         self.assertEqual(len(self.engine._candidates), 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
-        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९')
+        # 0 is different because 0 is not used in the key bindings
+        # by default it can go into the preedit:
+        self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
+        self.assertEqual(len(self.engine._candidates), 0)
+        self.assertEqual(self.engine.mock_preedit_text, '०')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० ')
+        # Remove only digit 2 from the key bindings:
+        self.engine.set_keybindings({
+            'commit_candidate_2': [],
+            'commit_candidate_2_plus_space': ['F2'],
+        }, update_gsettings=False)
+        # Typing 1 should still be committed immediately now:
+        self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० १')
+        # But typing a 2 should go into the preedit now if the current
+        # preedit is empty:
+        self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '२')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० १')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० १२ ')
+        # Typing KP_2 should also go into the preedit now if the current
+        # preedit is empty:
+        self.engine.do_process_key_event(IBus.KEY_KP_2, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '२')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० १२ ')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० १२ २ ')
         # Now remove all digits from the key bindings and type
         # the same digits again:
         self.engine.set_keybindings({
@@ -2383,7 +2422,6 @@ class ItbTestCase(unittest.TestCase):
             'commit_candidate_9': [],
             'commit_candidate_9_plus_space': ['F9'],
         }, update_gsettings=False)
-        self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_1, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_2, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_3, 0, 0)
@@ -2393,15 +2431,16 @@ class ItbTestCase(unittest.TestCase):
         self.engine.do_process_key_event(IBus.KEY_7, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_8, 0, 0)
         self.engine.do_process_key_event(IBus.KEY_9, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_0, 0, 0)
         # The newly typed digits should be in the preedit now
         # and the committed text should still be unchanged:
-        self.assertEqual(self.engine.mock_preedit_text, '०१२३४५६७८९')
-        self.assertEqual(self.engine.mock_committed_text, '०१२३४५६७८९')
+        self.assertEqual(self.engine.mock_preedit_text, '१२३४५६७८९०')
+        self.assertEqual(self.engine.mock_committed_text, '१२३४५६७८९० १२ २ ')
         # Commit:
         self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text,
-                         '०१२३४५६७८९०१२३४५६७८९ ')
+                         '१२३४५६७८९० १२ २ १२३४५६७८९० ')
 
     @unittest.skipUnless(
         testutils.get_hunspell_dictionary_length('en_US') >= 10000,

@@ -25,6 +25,7 @@ from types import ModuleType
 from typing import Any
 from typing import Dict
 from typing import List
+from typing import Set
 from typing import Tuple
 from typing import Union
 from typing import Optional
@@ -904,8 +905,7 @@ class TypingBoosterEngine(IBus.Engine):
 
         self._keybindings: Dict[str, List[str]] = {}
         self._hotkeys: Optional[itb_util_core.HotKeys] = None
-        self._normal_digits_used_in_keybindings = False
-        self._keypad_digits_used_in_keybindings = False
+        self._keys_used_in_keybindings: Set[str] = set()
         self.set_keybindings(
             self._settings_dict['keybindings']['user'], update_gsettings=False)
 
@@ -2553,19 +2553,12 @@ class TypingBoosterEngine(IBus.Engine):
         # Update the default settings with the possibly changed settings:
         itb_util_core.dict_update_existing_keys(new_keybindings, keybindings)
         self._keybindings = new_keybindings
-        # Update useage of digits in keybindings:
-        self._normal_digits_used_in_keybindings = False
-        self._keypad_digits_used_in_keybindings = False
-        for command in keybindings:
-            for keybinding in keybindings[command]:
-                if (keybinding
-                    in ('0', '1', '2', '3', '4',
-                        '5', '6', '7', '8', '9')):
-                    self._normal_digits_used_in_keybindings = True
-                if (keybinding
-                    in ('KP_0', 'KP_1', 'KP_2', 'KP_3', 'KP_4',
-                        'KP_5', 'KP_6', 'KP_7', 'KP_8', 'KP_9')):
-                    self._keypad_digits_used_in_keybindings = True
+        # Update set of keys used in keybindings:
+        self._keys_used_in_keybindings = {
+            keybinding
+            for keybindings in self._keybindings.values()
+            for keybinding in keybindings
+        }
         # Update hotkeys:
         self._hotkeys = itb_util_core.HotKeys(self._keybindings)
         # Some property menus have tooltips which show hints for the
@@ -10405,13 +10398,13 @@ class TypingBoosterEngine(IBus.Engine):
                      (IBus.KEY_0, IBus.KEY_1, IBus.KEY_2, IBus.KEY_3,
                       IBus.KEY_4, IBus.KEY_5, IBus.KEY_6, IBus.KEY_7,
                       IBus.KEY_8, IBus.KEY_9)
-                     and self._normal_digits_used_in_keybindings)
+                     and key.msymbol in self._keys_used_in_keybindings)
                     or
                     (key.val in
                      (IBus.KP_0, IBus.KP_1, IBus.KP_2, IBus.KP_3,
                       IBus.KP_4, IBus.KP_5, IBus.KP_6, IBus.KP_7,
                       IBus.KP_8, IBus.KP_9)
-                     and self._keypad_digits_used_in_keybindings)):
+                     and f'KP_{key.msymbol}' in self._keys_used_in_keybindings)):
                     # If digits are used as keys to select candidates
                     # it is not possibly to type them while the preëdit
                     # is non-empty and candidates are displayed.
