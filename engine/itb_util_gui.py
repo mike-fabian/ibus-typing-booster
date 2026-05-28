@@ -405,19 +405,19 @@ class InputHints(IntFlag):
     def __rand__(self, other: Any) -> Any:
         return self.__and__(other)
 
-    NONE = ('NONE', 0)  # ty: ignore[invalid-assignment]
-    SPELLCHECK = ('SPELLCHECK', 0)  # ty: ignore[invalid-assignment]
-    NO_SPELLCHECK = ('NO_SPELLCHECK', 0)  # ty: ignore[invalid-assignment]
-    WORD_COMPLETION = ('WORD_COMPLETION', 0)  # ty: ignore[invalid-assignment]
-    LOWERCASE = ('LOWERCASE', 0)  # ty: ignore[invalid-assignment]
-    UPPERCASE_CHARS = ('UPPERCASE_CHARS', 0)  # ty: ignore[invalid-assignment]
-    UPPERCASE_WORDS = ('UPPERCASE_WORDS', 0)  # ty: ignore[invalid-assignment]
-    UPPERCASE_SENTENCES = ('UPPERCASE_SENTENCES', 0)  # ty: ignore[invalid-assignment]
-    INHIBIT_OSK = ('INHIBIT_OSK', 0)  # ty: ignore[invalid-assignment]
-    VERTICAL_WRITING = ('VERTICAL_WRITING', 0)  # ty: ignore[invalid-assignment]
-    EMOJI = ('EMOJI', 0)  # ty: ignore[invalid-assignment]
-    NO_EMOJI = ('NO_EMOJI', 0)  # ty: ignore[invalid-assignment]
-    PRIVATE = ('PRIVATE', 0)  # ty: ignore[invalid-assignment]
+    NONE = ('NONE', 0)
+    SPELLCHECK = ('SPELLCHECK', 0)
+    NO_SPELLCHECK = ('NO_SPELLCHECK', 0)
+    WORD_COMPLETION = ('WORD_COMPLETION', 0)
+    LOWERCASE = ('LOWERCASE', 0)
+    UPPERCASE_CHARS = ('UPPERCASE_CHARS', 0)
+    UPPERCASE_WORDS = ('UPPERCASE_WORDS', 0)
+    UPPERCASE_SENTENCES = ('UPPERCASE_SENTENCES', 0)
+    INHIBIT_OSK = ('INHIBIT_OSK', 0)
+    VERTICAL_WRITING = ('VERTICAL_WRITING', 0)
+    EMOJI = ('EMOJI', 0)
+    NO_EMOJI = ('NO_EMOJI', 0)
+    PRIVATE = ('PRIVATE', 0)
 
 class KeyvalsToKeycodes:
     '''Class to convert key values to key codes.

@@ -4376,15 +4376,15 @@ class Capabilite(IntFlag):
     def __rand__(self, other: Any) -> Any:
         return self.__and__(other)
 
-    PREEDIT_TEXT = ('PREEDIT_TEXT', 0)  # ty: ignore[invalid-assignment]
-    AUXILIARY_TEXT = ('AUXILIARY_TEXT', 0)  # ty: ignore[invalid-assignment]
-    LOOKUP_TABLE = ('LOOKUP_TABLE', 0)  # ty: ignore[invalid-assignment]
-    FOCUS = ('FOCUS', 0)  # ty: ignore[invalid-assignment]
-    PROPERTY = ('PROPERTY', 0)  # ty: ignore[invalid-assignment]
-    SURROUNDING_TEXT = ('SURROUNDING_TEXT', 0)  # ty: ignore[invalid-assignment]
-    OSK = ('OSK', 0)  # ty: ignore[invalid-assignment]
-    SYNC_PROCESS_KEY = ('SYNC_PROCESS_KEY', 0)  # ty: ignore[invalid-assignment]
-    SYNC_PROCESS_KEY_V2 = ('SYNC_PROCESS_KEY_V2', 0)  # ty: ignore[invalid-assignment]
+    PREEDIT_TEXT = ('PREEDIT_TEXT', 0)
+    AUXILIARY_TEXT = ('AUXILIARY_TEXT', 0)
+    LOOKUP_TABLE = ('LOOKUP_TABLE', 0)
+    FOCUS = ('FOCUS', 0)
+    PROPERTY = ('PROPERTY', 0)
+    SURROUNDING_TEXT = ('SURROUNDING_TEXT', 0)
+    OSK = ('OSK', 0)
+    SYNC_PROCESS_KEY = ('SYNC_PROCESS_KEY', 0)
+    SYNC_PROCESS_KEY_V2 = ('SYNC_PROCESS_KEY_V2', 0)
 
 class ComposeSequences:
     '''Class to handle compose sequences.
