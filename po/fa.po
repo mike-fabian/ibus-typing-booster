@@ -3,14 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Ahmad Haghighi <haghighi.ahmad@gmail.com>, 2019.
 # Mike FABIAN <mfabian@redhat.com>, 2022.
+# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-05-28 17:59+0200\n"
-"PO-Revision-Date: 2022-03-03 12:45+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"PO-Revision-Date: 2026-06-11 09:16+0000\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Persian <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/fa/>\n"
 "Language: fa\n"
@@ -18,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.11\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:296
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -1088,7 +1090,7 @@ msgstr ""
 #. existing shortcuts
 #: setup/main.py:1518
 msgid "Shortcut"
-msgstr ""
+msgstr "میان‌بر"
 
 #. Translators: Column heading of the table listing the
 #. existing shortcuts
