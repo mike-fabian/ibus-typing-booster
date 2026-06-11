@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-05-11 18:38+0200\n"
+"POT-Creation-Date: 2026-05-28 17:59+0200\n"
 "PO-Revision-Date: 2026-05-11 08:07+0000\n"
 "Last-Translator: Bone NI <bounkirdni@gmail.com>\n"
 "Language-Team: Lao <https://translate.fedoraproject.org/projects/ibus-typing-"
@@ -199,52 +199,52 @@ msgstr "ການຄາດເດົາສັນຍະລັກຢູນິໂຄ
 msgid "Off the record mode"
 msgstr "ໂໝດບໍ່ບັນທຶກປະຫວັດ"
 
-#: engine/hunspell_table.py:2645
+#: engine/hunspell_table.py:2638
 msgid "Highest priority dictionary"
 msgstr "ວັດຈະນານຸກົມທີ່ມີລຳດັບຄວາມສຳຄັນສູງສຸດ"
 
-#: engine/hunspell_table.py:2646
+#: engine/hunspell_table.py:2639
 msgid "Choose highest priority dictionary"
 msgstr "ເລືອກວັດຈະນານຸກົມທີ່ມີລຳດັບຄວາມສຳຄັນສູງສຸດ"
 
-#: engine/hunspell_table.py:2675
+#: engine/hunspell_table.py:2668
 msgid "Preedit input method"
 msgstr "ວິທີການພິມແບບແກ້ໄຂກ່ອນສົ່ງ"
 
-#: engine/hunspell_table.py:2676
+#: engine/hunspell_table.py:2669
 msgid "Switch preedit input method"
 msgstr "ປ່ຽນວິທີການພິມແບບແກ້ໄຂກ່ອນສົ່ງ"
 
-#: engine/hunspell_table.py:3047
+#: engine/hunspell_table.py:3040
 msgid "Setup"
 msgstr "ຕິດຕັ້ງ/ຕັ້ງຄ່າ"
 
-#: engine/hunspell_table.py:3050 setup/main.py:173
+#: engine/hunspell_table.py:3043 setup/main.py:173
 msgid "Preferences for ibus-typing-booster"
 msgstr "ການຕັ້ງຄ່າສຳລັບ ibus-typing-booster"
 
-#: engine/hunspell_table.py:7297
+#: engine/hunspell_table.py:7290
 msgid "Failed to import Google speech-to-text."
 msgstr "ບໍ່ສາມາດນຳເຂົ້າ Google speech-to-text ໄດ້."
 
-#: engine/hunspell_table.py:7300
+#: engine/hunspell_table.py:7293
 msgid "Failed to import pyaudio."
 msgstr "ບໍ່ສາມາດນຳເຂົ້າ pyaudio ໄດ້."
 
-#: engine/hunspell_table.py:7305
+#: engine/hunspell_table.py:7298
 msgid "No supported language for speech recognition."
 msgstr "ບໍ່ມີພາສາທີ່ຮອງຮັບສຳລັບການຈົດຈຳສຽງ."
 
-#: engine/hunspell_table.py:7309
+#: engine/hunspell_table.py:7302
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "ບໍ່ພົບໄຟລ໌ “Google application credentials” “%s”."
 
-#: engine/hunspell_table.py:7322
+#: engine/hunspell_table.py:7315
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr "ບໍ່ສາມາດເລີ່ມຕົ້ນ Google speech-to-text ໄດ້. ເບິ່ງລາຍລະອຽດໃນ debug.log."
 
-#: engine/hunspell_table.py:7430
+#: engine/hunspell_table.py:7423
 msgid "Google speech-to-text error. See debug.log."
 msgstr "ເກີດຂໍ້ຜິດພາດ Google speech-to-text. ເບິ່ງລາຍລະອຽດໃນ debug.log."
 

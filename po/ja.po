@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-05-11 18:38+0200\n"
+"POT-Creation-Date: 2026-05-28 17:59+0200\n"
 "PO-Revision-Date: 2026-01-12 22:19+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
@@ -203,54 +203,54 @@ msgstr "Unicode 記号と絵文字の予測"
 msgid "Off the record mode"
 msgstr "オフ・ザ・レコードモード"
 
-#: engine/hunspell_table.py:2645
+#: engine/hunspell_table.py:2638
 msgid "Highest priority dictionary"
 msgstr "最優先辞書"
 
-#: engine/hunspell_table.py:2646
+#: engine/hunspell_table.py:2639
 msgid "Choose highest priority dictionary"
 msgstr "最優先辞書を選択"
 
-#: engine/hunspell_table.py:2675
+#: engine/hunspell_table.py:2668
 msgid "Preedit input method"
 msgstr "プリエディット入力方法"
 
-#: engine/hunspell_table.py:2676
+#: engine/hunspell_table.py:2669
 msgid "Switch preedit input method"
 msgstr "プリエディット入力方法の切り替え"
 
-#: engine/hunspell_table.py:3047
+#: engine/hunspell_table.py:3040
 msgid "Setup"
 msgstr "設定"
 
-#: engine/hunspell_table.py:3050 setup/main.py:173
+#: engine/hunspell_table.py:3043 setup/main.py:173
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster の設定"
 
-#: engine/hunspell_table.py:7297
+#: engine/hunspell_table.py:7290
 msgid "Failed to import Google speech-to-text."
 msgstr "Google音声テキストのインポートに失敗しました。"
 
-#: engine/hunspell_table.py:7300
+#: engine/hunspell_table.py:7293
 msgid "Failed to import pyaudio."
 msgstr "pyaudio のインポートに失敗しました。"
 
-#: engine/hunspell_table.py:7305
+#: engine/hunspell_table.py:7298
 msgid "No supported language for speech recognition."
 msgstr "音声認識に対応する言語がありません。"
 
-#: engine/hunspell_table.py:7309
+#: engine/hunspell_table.py:7302
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "'Google application credentials' ファイル '%s' が見つかりませんでした。"
 
-#: engine/hunspell_table.py:7322
+#: engine/hunspell_table.py:7315
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Google音声テキストの初期化に失敗しました。debug.logを参照してください。"
 
-#: engine/hunspell_table.py:7430
+#: engine/hunspell_table.py:7423
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google音声テキストエラー。debug.logを参照してください。"
 
