@@ -3,14 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # mooo <hazap@hotmail.com>, 2023.
 # Mike FABIAN <mfabian@redhat.com>, 2024.
+# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-05-11 18:38+0200\n"
-"PO-Revision-Date: 2024-02-15 14:20+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"PO-Revision-Date: 2026-06-11 09:00+0000\n"
+"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
+"memory@weblate.org>\n"
 "Language-Team: Lithuanian <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/lt/>\n"
 "Language: lt\n"
@@ -20,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
 "19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
 "1 : 2);\n"
-"X-Generator: Weblate 5.3.1\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:296
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -78,7 +80,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:745
 msgid "Keywords"
-msgstr ""
+msgstr "Raktažodžiai:"
 
 #: engine/emoji_picker.py:763
 msgid "Fonts used to render this emoji:"
