@@ -2,7 +2,7 @@
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
 # mooo <hazap@hotmail.com>, 2023.
-# Mike FABIAN <mfabian@redhat.com>, 2024.
+# Mike FABIAN <mfabian@redhat.com>, 2024, 2026.
 # Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2026.
 msgid ""
 msgstr ""
@@ -11,8 +11,7 @@ msgstr ""
 "issues\n"
 "POT-Creation-Date: 2026-05-11 18:38+0200\n"
 "PO-Revision-Date: 2026-06-11 09:00+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Lithuanian <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/lt/>\n"
 "Language: lt\n"
@@ -80,7 +79,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:745
 msgid "Keywords"
-msgstr "Raktažodžiai:"
+msgstr "Raktažodžiai"
 
 #: engine/emoji_picker.py:763
 msgid "Fonts used to render this emoji:"
