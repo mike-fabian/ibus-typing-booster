@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-05-28 17:59+0200\n"
+"POT-Creation-Date: 2026-06-11 11:43+0200\n"
 "PO-Revision-Date: 2026-05-11 19:44+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Greek <https://translate.fedoraproject.org/projects/ibus-"
@@ -335,27 +335,27 @@ msgstr ""
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr ""
 
-#: engine/itb_util_core.py:4873 engine/itb_util_core.py:5615
+#: engine/itb_util_core.py:4880 engine/itb_util_core.py:5622
 msgid "File not found"
 msgstr "Το αρχείο δεν βρέθηκε"
 
-#: engine/itb_util_core.py:4877 engine/itb_util_core.py:5619
+#: engine/itb_util_core.py:4884 engine/itb_util_core.py:5626
 msgid "Permission error"
 msgstr "Σφάλμα δικαιώματος"
 
-#: engine/itb_util_core.py:4881 engine/itb_util_core.py:5623
+#: engine/itb_util_core.py:4888 engine/itb_util_core.py:5630
 msgid "Unicode decoding error"
 msgstr "Σφάλμα αποκωδικοποίησης Unicode"
 
-#: engine/itb_util_core.py:4885 engine/itb_util_core.py:5627
+#: engine/itb_util_core.py:4892 engine/itb_util_core.py:5634
 msgid "Unknown error"
 msgstr "Άγνωστο σφάλμα"
 
-#: engine/itb_util_core.py:5593
+#: engine/itb_util_core.py:5600
 msgid "Native Keyboard"
 msgstr ""
 
-#: engine/itb_util_core.py:5595
+#: engine/itb_util_core.py:5602
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "

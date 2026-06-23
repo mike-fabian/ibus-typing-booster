@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-05-28 17:59+0200\n"
+"POT-Creation-Date: 2026-06-11 11:43+0200\n"
 "PO-Revision-Date: 2025-04-30 04:50+0000\n"
 "Last-Translator: hsu zangmen <chzang55@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://translate.fedoraproject.org/"
@@ -338,27 +338,27 @@ msgstr "區域"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "其他, 雜項, 各種, 多元化"
 
-#: engine/itb_util_core.py:4873 engine/itb_util_core.py:5615
+#: engine/itb_util_core.py:4880 engine/itb_util_core.py:5622
 msgid "File not found"
 msgstr "未找到檔案"
 
-#: engine/itb_util_core.py:4877 engine/itb_util_core.py:5619
+#: engine/itb_util_core.py:4884 engine/itb_util_core.py:5626
 msgid "Permission error"
 msgstr "權限錯誤"
 
-#: engine/itb_util_core.py:4881 engine/itb_util_core.py:5623
+#: engine/itb_util_core.py:4888 engine/itb_util_core.py:5630
 msgid "Unicode decoding error"
 msgstr "Unicode 解碼錯誤"
 
-#: engine/itb_util_core.py:4885 engine/itb_util_core.py:5627
+#: engine/itb_util_core.py:4892 engine/itb_util_core.py:5634
 msgid "Unknown error"
 msgstr "不明的錯誤"
 
-#: engine/itb_util_core.py:5593
+#: engine/itb_util_core.py:5600
 msgid "Native Keyboard"
 msgstr "原生鍵盤"
 
-#: engine/itb_util_core.py:5595
+#: engine/itb_util_core.py:5602
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
