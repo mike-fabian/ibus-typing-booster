@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-05-28 17:59+0200\n"
-"PO-Revision-Date: 2026-01-14 19:58+0000\n"
+"PO-Revision-Date: 2026-06-16 13:10+0000\n"
 "Last-Translator: 김인수 <simmon@nplob.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/ko/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15.2\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:296
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -66,7 +66,7 @@ msgstr ""
 
 #: engine/emoji_picker.py:568
 msgid "Recently used"
-msgstr "최근 사용"
+msgstr "최근 사용됨"
 
 #: engine/emoji_picker.py:743
 msgid "Categories"
@@ -217,7 +217,7 @@ msgstr "사전편집 입력 방식"
 
 #: engine/hunspell_table.py:2669
 msgid "Switch preedit input method"
-msgstr "사전편집 입력방식으로 전환합니다"
+msgstr "사전편집 입력 방식으로 전환합니다"
 
 #: engine/hunspell_table.py:3040
 msgid "Setup"
