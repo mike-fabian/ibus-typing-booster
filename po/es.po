@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-06-11 11:43+0200\n"
+"POT-Creation-Date: 2026-07-20 19:14+0200\n"
 "PO-Revision-Date: 2026-05-11 19:44+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Spanish <https://translate.fedoraproject.org/projects/ibus-"
@@ -260,56 +260,56 @@ msgstr "Error en speech-to-text de Google. Lea debug.log."
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1257 engine/itb_emoji.py:1258 engine/itb_emoji.py:1259
-#: engine/itb_emoji.py:1465
+#: engine/itb_emoji.py:1255 engine/itb_emoji.py:1256 engine/itb_emoji.py:1257
+#: engine/itb_emoji.py:1463
 msgid "people"
 msgstr "gente"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1260 engine/itb_emoji.py:1461
+#: engine/itb_emoji.py:1258 engine/itb_emoji.py:1459
 msgid "nature"
 msgstr "naturaleza"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1261 engine/itb_emoji.py:1457
+#: engine/itb_emoji.py:1259 engine/itb_emoji.py:1455
 msgid "food"
 msgstr "alimentos"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1262 engine/itb_emoji.py:1471
+#: engine/itb_emoji.py:1260 engine/itb_emoji.py:1469
 msgid "travel"
 msgstr "viaje"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1263 engine/itb_emoji.py:1272 engine/itb_emoji.py:1453
+#: engine/itb_emoji.py:1261 engine/itb_emoji.py:1270 engine/itb_emoji.py:1451
 msgid "activity"
 msgstr "actividades"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1264 engine/itb_emoji.py:1463
+#: engine/itb_emoji.py:1262 engine/itb_emoji.py:1461
 msgid "objects"
 msgstr "objetos"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1265 engine/itb_emoji.py:1469
+#: engine/itb_emoji.py:1263 engine/itb_emoji.py:1467
 msgid "symbols"
 msgstr "símbolos"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1266 engine/itb_emoji.py:1455
+#: engine/itb_emoji.py:1264 engine/itb_emoji.py:1453
 msgid "flags"
 msgstr "banderas"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1267 engine/itb_emoji.py:1268 engine/itb_emoji.py:1459
+#: engine/itb_emoji.py:1265 engine/itb_emoji.py:1266 engine/itb_emoji.py:1457
 msgid "modifier"
 msgstr "modificadores"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1269 engine/itb_emoji.py:1467
+#: engine/itb_emoji.py:1267 engine/itb_emoji.py:1465
 msgid "regional"
 msgstr "regiones"
 
@@ -343,27 +343,27 @@ msgstr "regiones"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Otros, Mezclas, Varios, Diverso"
 
-#: engine/itb_util_core.py:4880 engine/itb_util_core.py:5622
+#: engine/itb_util_core.py:4881 engine/itb_util_core.py:5623
 msgid "File not found"
 msgstr "No se encontró el archivo"
 
-#: engine/itb_util_core.py:4884 engine/itb_util_core.py:5626
+#: engine/itb_util_core.py:4885 engine/itb_util_core.py:5627
 msgid "Permission error"
 msgstr "Error de permisos"
 
-#: engine/itb_util_core.py:4888 engine/itb_util_core.py:5630
+#: engine/itb_util_core.py:4889 engine/itb_util_core.py:5631
 msgid "Unicode decoding error"
 msgstr "Error de decodificación Unicode"
 
-#: engine/itb_util_core.py:4892 engine/itb_util_core.py:5634
+#: engine/itb_util_core.py:4893 engine/itb_util_core.py:5635
 msgid "Unknown error"
 msgstr "Error desconocido"
 
-#: engine/itb_util_core.py:5600
+#: engine/itb_util_core.py:5601
 msgid "Native Keyboard"
 msgstr "Teclado nativo"
 
-#: engine/itb_util_core.py:5602
+#: engine/itb_util_core.py:5603
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "

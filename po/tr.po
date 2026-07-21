@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-06-11 11:43+0200\n"
+"POT-Creation-Date: 2026-07-20 19:14+0200\n"
 "PO-Revision-Date: 2026-01-13 08:00+0000\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <https://translate.fedoraproject.org/projects/ibus-"
@@ -258,56 +258,56 @@ msgstr ""
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1257 engine/itb_emoji.py:1258 engine/itb_emoji.py:1259
-#: engine/itb_emoji.py:1465
+#: engine/itb_emoji.py:1255 engine/itb_emoji.py:1256 engine/itb_emoji.py:1257
+#: engine/itb_emoji.py:1463
 msgid "people"
 msgstr "insanlar"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1260 engine/itb_emoji.py:1461
+#: engine/itb_emoji.py:1258 engine/itb_emoji.py:1459
 msgid "nature"
 msgstr "doğa"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1261 engine/itb_emoji.py:1457
+#: engine/itb_emoji.py:1259 engine/itb_emoji.py:1455
 msgid "food"
 msgstr "yiyecek"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1262 engine/itb_emoji.py:1471
+#: engine/itb_emoji.py:1260 engine/itb_emoji.py:1469
 msgid "travel"
 msgstr "seyahat"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1263 engine/itb_emoji.py:1272 engine/itb_emoji.py:1453
+#: engine/itb_emoji.py:1261 engine/itb_emoji.py:1270 engine/itb_emoji.py:1451
 msgid "activity"
 msgstr "aktivite"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1264 engine/itb_emoji.py:1463
+#: engine/itb_emoji.py:1262 engine/itb_emoji.py:1461
 msgid "objects"
 msgstr "nesneler"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1265 engine/itb_emoji.py:1469
+#: engine/itb_emoji.py:1263 engine/itb_emoji.py:1467
 msgid "symbols"
 msgstr "semboller"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1266 engine/itb_emoji.py:1455
+#: engine/itb_emoji.py:1264 engine/itb_emoji.py:1453
 msgid "flags"
 msgstr "bayraklar"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1267 engine/itb_emoji.py:1268 engine/itb_emoji.py:1459
+#: engine/itb_emoji.py:1265 engine/itb_emoji.py:1266 engine/itb_emoji.py:1457
 msgid "modifier"
 msgstr "değiştirici"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1269 engine/itb_emoji.py:1467
+#: engine/itb_emoji.py:1267 engine/itb_emoji.py:1465
 msgid "regional"
 msgstr "bölgesel"
 
@@ -341,27 +341,27 @@ msgstr "bölgesel"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Diğerleri, Muhtelif, Çeşitli"
 
-#: engine/itb_util_core.py:4880 engine/itb_util_core.py:5622
+#: engine/itb_util_core.py:4881 engine/itb_util_core.py:5623
 msgid "File not found"
 msgstr "Dosya bulunamadı"
 
-#: engine/itb_util_core.py:4884 engine/itb_util_core.py:5626
+#: engine/itb_util_core.py:4885 engine/itb_util_core.py:5627
 msgid "Permission error"
 msgstr "İzin hatası"
 
-#: engine/itb_util_core.py:4888 engine/itb_util_core.py:5630
+#: engine/itb_util_core.py:4889 engine/itb_util_core.py:5631
 msgid "Unicode decoding error"
 msgstr "Unicode çözümleme hatası"
 
-#: engine/itb_util_core.py:4892 engine/itb_util_core.py:5634
+#: engine/itb_util_core.py:4893 engine/itb_util_core.py:5635
 msgid "Unknown error"
 msgstr "Bilinmeyen hata"
 
-#: engine/itb_util_core.py:5600
+#: engine/itb_util_core.py:5601
 msgid "Native Keyboard"
 msgstr "Yerel Klavye"
 
-#: engine/itb_util_core.py:5602
+#: engine/itb_util_core.py:5603
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
