@@ -13,8 +13,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-07-20 19:14+0200\n"
-"PO-Revision-Date: 2026-08-06 07:38+0000\n"
-"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
+"PO-Revision-Date: 2026-08-07 10:17+0000\n"
+"Last-Translator: Andrei Stepanov <adem4ik@gmail.com>\n"
 "Language-Team: Russian <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/ru/>\n"
 "Language: ru\n"
@@ -245,7 +245,7 @@ msgstr "Нет поддерживаемого языка для распозна
 #: engine/hunspell_table.py:7302
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
-msgstr "Файл «Учётные данные приложения Google» «%s» не найден."
+msgstr "Файл «Учётных данных приложения Google» с именем «%s» не найден."
 
 #: engine/hunspell_table.py:7315
 msgid "Failed to init Google speech-to-text. See debug.log."
@@ -1829,11 +1829,11 @@ msgstr "Системная инструкция (System prompt), определ�
 #. Translators:
 #: setup/main.py:2592 setup/main.py:3826
 msgid "Set “Google application credentials” .json file:"
-msgstr "Указать файл .json «Учётные данные приложения Google»:"
+msgstr "Указать файл .json «Учётных данных приложения Google»:"
 
 #: setup/main.py:2594
 msgid "Full path of the “Google application credentials” .json file."
-msgstr "Полный путь к файлу .json «Учётные данные приложения Google»."
+msgstr "Полный путь к файлу .json «Учётных данных приложения Google»."
 
 #: setup/main.py:2600
 msgid "File not yet set."
