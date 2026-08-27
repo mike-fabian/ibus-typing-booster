@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Anish Patil <anish.developer@gmail.com>
 # This file is distributed under the same license as the PACKAGE package.
-# Mike FABIAN <mfabian@redhat.com>, 2019, 2020, 2022.
+# Mike FABIAN <mfabian@redhat.com>, 2019, 2020, 2022, 2026.
 # Anonymous <noreply@weblate.org>, 2019, 2020.
 # Jean-Baptiste Holcroft <jean-baptiste@holcroft.fr>, 2019.
 # hsu zangmen <chzang55@gmail.com>, 2025.
@@ -12,8 +12,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-08-26 16:10+0200\n"
-"PO-Revision-Date: 2025-04-30 04:50+0000\n"
-"Last-Translator: hsu zangmen <chzang55@gmail.com>\n"
+"PO-Revision-Date: 2026-08-27 13:42+0000\n"
+"Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Traditional) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_TW/>\n"
 "Language: zh_TW\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.11\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:294
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -202,7 +202,7 @@ msgstr "Unicode 符號和表情符號預測"
 #: engine/hunspell_table.py:1110 engine/hunspell_table.py:1111
 #: setup/main.py:776
 msgid "Off the record mode"
-msgstr "關閉錄影模式"
+msgstr ""
 
 #: engine/hunspell_table.py:2618
 msgid "Highest priority dictionary"
@@ -477,7 +477,7 @@ msgstr "按鍵綁定"
 #. diffent types of candidates should be marked with labels.
 #: setup/main.py:422
 msgid "Appearance"
-msgstr "配色"
+msgstr "外觀"
 
 #. Translators: This is the label of a tab in the setup tool.
 #. Here the user can set up some options related to AI
@@ -952,11 +952,11 @@ msgid ""
 "can also disable this feature completely by making the list empty (which is "
 "the default)."
 msgstr ""
-"此清單中的字元會導致預編自動提交，並在後面加上空格。 例如，如果\". \"是自動提"
+"此清單中的字元會導致預編自動提交，並在後面加上空格。 例如，如果\".\"是自動提"
 "交字元，就可以節省您在句子結束後手動輸入空格的時間。您可以自由編輯這個清單，"
 "合理的值可能是「.,;:?!)」。例如，如果您使用 Latin-Pre (t-latn-pre)，在該列表"
-"中加入\". 「是個壞主意，因為它會阻止您輸入」.s 「來獲得 」ṡ\"。您也可以將清單"
-"設定為空 (這是預設值)，以完全停用此功能。"
+"中加入\". 「是個壞主意，因為它會阻止您輸入」\".s\" 「來獲得 」\"ṡ\"。您也可以"
+"將清單設定為空 (這是預設值)，以完全停用此功能。"
 
 #. Translators: Show no suggestions when less than this
 #. number of characters have been typed.

@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-08-26 16:10+0200\n"
-"PO-Revision-Date: 2026-06-23 08:55+0000\n"
+"PO-Revision-Date: 2026-08-27 11:27+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
 "projects/ibus-typing-booster/app/zh_CN/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2026.6.1\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:294
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -230,7 +230,7 @@ msgstr "Ibus-typing-booster 首选项"
 
 #: engine/hunspell_table.py:7261
 msgid "Failed to import Google speech-to-text."
-msgstr "尝试导入 Google 语音转文本文件失败。"
+msgstr "尝试导入 Google 语音转文本失败。"
 
 #: engine/hunspell_table.py:7264
 msgid "Failed to import pyaudio."
@@ -391,7 +391,7 @@ msgstr "请按下一个键盘按键（或者按键组合）"
 #. command.
 #: engine/itb_util_gui.py:715 engine/itb_util_gui.py:765
 msgid "The dialog will be closed when the key is released"
-msgstr "当按键被按下，这个对话框将会自动关闭"
+msgstr "当按键被释放时，对话框将关闭"
 
 #: engine/itb_util_gui.py:887
 msgid "A completion input method to speedup typing."

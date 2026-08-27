@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
 "POT-Creation-Date: 2026-08-26 16:10+0200\n"
-"PO-Revision-Date: 2026-05-11 19:44+0000\n"
+"PO-Revision-Date: 2026-08-27 11:27+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Catalan <https://translate.fedoraproject.org/projects/ibus-"
 "typing-booster/app/ca/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.17.1\n"
+"X-Generator: Weblate 2026.8.1\n"
 
 #: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:294
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
@@ -673,7 +673,7 @@ msgstr ""
 #. Translators: Whether ibus-typing-booster should show word predictions.
 #: setup/main.py:686
 msgid "Word predictions"
-msgstr "Afegeix un diccionari"
+msgstr "Prediccions de paraules"
 
 #: setup/main.py:688
 msgid "Whether ibus-typing-booster should show word predictions."
@@ -1001,7 +1001,7 @@ msgstr ""
 #. number of characters have been typed.
 #: setup/main.py:1081
 msgid "Minimum number of chars for completion:"
-msgstr "Nombre màxim de caràcter per a la conclusió:"
+msgstr "Nombre mínim de caràcters per a la compleció:"
 
 #: setup/main.py:1083
 msgid ""
