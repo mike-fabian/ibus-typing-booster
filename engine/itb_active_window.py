@@ -106,7 +106,6 @@ class AtspiMonitor:
         except Exception: # pylint: disable=broad-except
             LOGGER.exception('Exception registering AtspiMonitor events')
 
-
     def start(self) -> None:
         '''Starts the monitoring'''
         if pyatspi is None:
@@ -255,8 +254,8 @@ def get_active_window_xprop() -> tuple[str, str]:
              '_NET_ACTIVE_WINDOW', '0x', ' $0', '_NET_ACTIVE_WINDOW'],
             capture_output=True,
             check=True, encoding='utf-8')
-    except subprocess.CalledProcessError:
-        LOGGER.exception('Exception when calling xprop')
+    except subprocess.CalledProcessError as error:
+        LOGGER.exception('Exception when calling xprop; stderr: %s', error.stderr)
         return (program_name, window_title)
     # result now looks like in this example:
     #
@@ -273,8 +272,8 @@ def get_active_window_xprop() -> tuple[str, str]:
              '-id', window_id, '-f', 'WM_CLASS', '0s', 'WM_CLASS'],
             capture_output=True,
             check=True, encoding='utf-8')
-    except subprocess.CalledProcessError:
-        LOGGER.exception('Exception when calling xprop')
+    except subprocess.CalledProcessError as error:
+        LOGGER.exception('Exception when calling xprop; stderr: %s', error.stderr)
         return (program_name, window_title)
     # result now looks like in this example
     #
@@ -291,8 +290,8 @@ def get_active_window_xprop() -> tuple[str, str]:
              '-id', window_id, '-f', '_NET_WM_NAME', '0t', '_NET_WM_NAME'],
             capture_output=True,
             check=True, encoding='utf-8')
-    except subprocess.CalledProcessError:
-        LOGGER.exception('Exception when calling xprop')
+    except subprocess.CalledProcessError as error:
+        LOGGER.exception('Calling xprop failed; stderr: %s', error.stderr)
         return (program_name, window_title)
     # result now looks like in this example
     #
