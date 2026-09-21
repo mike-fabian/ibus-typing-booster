@@ -47,6 +47,30 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.31.1" date="2026-09-21" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.31.1</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Update current Unicode version in emoji_picker.py to 18.0
+          </li>
+          <li>
+            Update emoji-data.txt, emoji-sequences.txt,
+            emoji-test.txt, emoji-variation-sequences.txt,
+            emoji-zwj-sequences.txt to Unicode 18.0.0 released
+            2026-09-16
+          </li>
+          <li>
+            Update UnicodeData.txt, DerivedAge.txt, Blocks.txt,
+            NameAliases.txt to Unicode 18.0.0
+          </li>
+          <li>
+            Translation update from Weblate (ca 100.0%, el 29.6%, zh_CN 100.0%, zh_TW 87.0%)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.31.0" date="2026-08-26" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.31.0</url>
       <description>
