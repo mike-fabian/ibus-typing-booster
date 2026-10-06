@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
-<!-- Copyright © 1991-2025 Unicode, Inc.
+<!-- Copyright © 1991-2026 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 SPDX-License-Identifier: Unicode-3.0
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
@@ -709,6 +709,24 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="♭" type="tts">मंद्र</annotation>
 		<annotation cp="♯">डायसिस | डायेसे | तार | संगीत | स्वर</annotation>
 		<annotation cp="♯" type="tts">तार</annotation>
+		<annotation cp="🪋">अपोकॅलिप्स | उज्याचो गोटो | खडप | गुरुत्वाकर्शण | जागो | नखेत्र | पडून</annotation>
+		<annotation cp="🪋" type="tts">उल्का हें झाड</annotation>
+		<annotation cp="🪌">काडून उडोवप | घसघशीत | चूक करप | त्रुटी जाली | दुरुस्ती करप | पूर्ववत करचें | मिटवप | रेखांकन करप | लिखाण</annotation>
+		<annotation cp="🪌" type="tts">खोडरब्बर</annotation>
+		<annotation cp="🪍">एकठांय करप | जाळी | जाळें | पकडप</annotation>
+		<annotation cp="🪍" type="tts">हाताळणी आशिल्लें जाळें</annotation>
+		<annotation cp="🫌">आशा | किडीचें | नाजूक | बदलप | रुपांतर जावप | सुंगटाचें झाड | स्थलांतर करप</annotation>
+		<annotation cp="🫌" type="tts">मोनार्क फुलपाखरू</annotation>
+		<annotation cp="🫝">काकडी | किण्वन करप | खाऱ्या उदकांतलें | घेरकिन | त्रास | मसाला | रस घेवप</annotation>
+		<annotation cp="🫝" type="tts">लोणचें</annotation>
+		<annotation cp="🫫">उक्ते करुन घेणें | कुसकुसपी | ताण | मास्किंग करप | मोडणें | रुपांतर जावप | लवचीकपण</annotation>
+		<annotation cp="🫫" type="tts">तोंड फाटींफुडें जावप</annotation>
+		<annotation cp="🫹">उजवे वटेन | तटस्थ | तें | पकड घेवप | बिंदू | हें</annotation>
+		<annotation cp="🫹" type="tts">डावे वटेन आंगठो चिन्न</annotation>
+		<annotation cp="🫺">तटस्थ | तें | पकड घेवप | बरोबर | बिंदू | हें</annotation>
+		<annotation cp="🫺" type="tts">उजवे वटेन आंगठो चिन्न</annotation>
+		<annotation cp="🛙">आशा | उजवाड | दर्या | दर्यावेल्या | नेव्हिगेशन | प्रबोधन | बीकन | मार्गदर्शन करप | संकेत दिवप</annotation>
+		<annotation cp="🛙" type="tts">दीपगृह</annotation>
 		<annotation cp="😀">उकत्या तोंडाचो हांसपी चेरो | चेरो | हांसप | हांसपी चेरो</annotation>
 		<annotation cp="😀" type="tts">उकत्या तोंडाचो हांसपी चेरो</annotation>
 		<annotation cp="😃">उकतें | चेरो | तोंड | मोठ्या दोळ्यांचो हांसपी चेरो | हांसप</annotation>
@@ -3757,39 +3775,39 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🆙" type="tts">UP! बटण</annotation>
 		<annotation cp="🆚">VS बटण | आड</annotation>
 		<annotation cp="🆚" type="tts">VS बटण</annotation>
-		<annotation cp="🈁">“हांगा” | काटाकाना | जपानी | जपानी “हांगा” बटण | ココ</annotation>
+		<annotation cp="🈁">“हांगा” | काटाकाना | जपानी | जपानी “हांगा” बटण</annotation>
 		<annotation cp="🈁" type="tts">जपानी “हांगा” बटण</annotation>
-		<annotation cp="🈂">“सेवा शुल्क” | काटकाना | जपानी | जपानी “सेवा शुल्क” बटण | サ</annotation>
+		<annotation cp="🈂">“सेवा शुल्क” | काटकाना | जपानी | जपानी “सेवा शुल्क” बटण</annotation>
 		<annotation cp="🈂" type="tts">जपानी “सेवा शुल्क” बटण</annotation>
-		<annotation cp="🈷">“म्हयन्याळी रक्कम” | आयडिओग्राफ | जपानी | जपानी “मासीक रक्कम”बटण | जपानी “म्हयन्याळी रक्कम” बटण | 月</annotation>
+		<annotation cp="🈷">“म्हयन्याळी रक्कम” | आयडिओग्राफ | जपानी | जपानी “मासीक रक्कम”बटण | जपानी “म्हयन्याळी रक्कम” बटण</annotation>
 		<annotation cp="🈷" type="tts">जपानी “मासीक रक्कम”बटण</annotation>
-		<annotation cp="🈶">“फुकट न्हय” | आयडिओग्राफ | जपानी | जपानी “फुकट न्हय” बटण | जपानी “शुल्क नासतना न्हय” बटण | 有</annotation>
+		<annotation cp="🈶">“फुकट न्हय” | आयडिओग्राफ | जपानी | जपानी “फुकट न्हय” बटण | जपानी “शुल्क नासतना न्हय” बटण</annotation>
 		<annotation cp="🈶" type="tts">जपानी “शुल्क नासतना न्हय” बटण</annotation>
-		<annotation cp="🈯">“आरक्षीत” | आयडियोग्राफ | जपानी | जपानी “आरक्षीत” बटण | 指</annotation>
+		<annotation cp="🈯">“आरक्षीत” | आयडियोग्राफ | जपानी | जपानी “आरक्षीत” बटण</annotation>
 		<annotation cp="🈯" type="tts">जपानी “आरक्षीत” बटण</annotation>
-		<annotation cp="🉐">“वाणपण” | आयडिओग्राफ | जपानी | जपानी “बारगेन” बटण | जपानी “वाणपण” बटण | 得</annotation>
+		<annotation cp="🉐">“वाणपण” | आयडिओग्राफ | जपानी | जपानी “बारगेन” बटण | जपानी “वाणपण” बटण</annotation>
 		<annotation cp="🉐" type="tts">जपानी “बारगेन” बटण</annotation>
-		<annotation cp="🈹">“सूट” | आयडिओग्राफ | जपानी | जपानी “सवलत” बटण | जपानी “सूट” बटण | 割</annotation>
+		<annotation cp="🈹">“सूट” | आयडिओग्राफ | जपानी | जपानी “सवलत” बटण | जपानी “सूट” बटण</annotation>
 		<annotation cp="🈹" type="tts">जपानी “सवलत” बटण</annotation>
-		<annotation cp="🈚">“फुकट” | आयडिओग्राफ | जपानी | जपानी “फुकट” बटण | जपानी “शुल्क ना “ बटण | 無</annotation>
+		<annotation cp="🈚">“फुकट” | आयडिओग्राफ | जपानी | जपानी “फुकट” बटण | जपानी “शुल्क ना “ बटण</annotation>
 		<annotation cp="🈚" type="tts">जपानी “शुल्क ना “ बटण</annotation>
-		<annotation cp="🈲">“प्रतिबंधीत” | आयडिओग्राफ | जपानी | जपानी “प्रतिबंध” बटण | जपानी “प्रतिबंधीत” बटण | 禁</annotation>
+		<annotation cp="🈲">“प्रतिबंधीत” | आयडिओग्राफ | जपानी | जपानी “प्रतिबंध” बटण | जपानी “प्रतिबंधीत” बटण</annotation>
 		<annotation cp="🈲" type="tts">जपानी “प्रतिबंध” बटण</annotation>
-		<annotation cp="🉑">“स्विकार योग्य” | आयडिओग्राफ | जपानी | जपानी “स्विकार करपायोग्य” बटण | जपानी “स्विकार योग्य” बटण | 可</annotation>
+		<annotation cp="🉑">“स्विकार योग्य” | आयडिओग्राफ | जपानी | जपानी “स्विकार करपायोग्य” बटण | जपानी “स्विकार योग्य” बटण</annotation>
 		<annotation cp="🉑" type="tts">जपानी “स्विकार करपायोग्य” बटण</annotation>
-		<annotation cp="🈸">“अर्ज” | आयडिओग्राफ | जपानी | जपानी “अर्ज” बटण | 申</annotation>
+		<annotation cp="🈸">“अर्ज” | आयडिओग्राफ | जपानी | जपानी “अर्ज” बटण</annotation>
 		<annotation cp="🈸" type="tts">जपानी “अर्ज” बटण</annotation>
-		<annotation cp="🈴">“पासींग ग्रेड” | आयडियोग्राफ | जपानी | जपानी “पासींग ग्रेड” बटण | 合</annotation>
+		<annotation cp="🈴">“पासींग ग्रेड” | आयडियोग्राफ | जपानी | जपानी “पासींग ग्रेड” बटण</annotation>
 		<annotation cp="🈴" type="tts">जपानी “पासींग ग्रेड” बटण</annotation>
-		<annotation cp="🈳">“रिक्त सुवात” | आयडिओग्राफ | जपानी | जपानी “रिक्त सुवात” बटण | जपानी “सुवात” बटण | 空</annotation>
+		<annotation cp="🈳">“रिक्त सुवात” | आयडिओग्राफ | जपानी | जपानी “रिक्त सुवात” बटण | जपानी “सुवात” बटण</annotation>
 		<annotation cp="🈳" type="tts">जपानी “सुवात” बटण</annotation>
-		<annotation cp="㊗">“परबीं” | आयडिओग्राफ | जपानी | जपानी “अभिनंदन” बटण | जपानी “परबीं” बटण | 祝</annotation>
+		<annotation cp="㊗">“परबीं” | आयडिओग्राफ | जपानी | जपानी “अभिनंदन” बटण | जपानी “परबीं” बटण</annotation>
 		<annotation cp="㊗" type="tts">जपानी “अभिनंदन” बटण</annotation>
-		<annotation cp="㊙">“गुपीत” | आयडिओग्राफ | जपानी | जपानी “गुपीत” बटण | 秘</annotation>
+		<annotation cp="㊙">“गुपीत” | आयडिओग्राफ | जपानी | जपानी “गुपीत” बटण</annotation>
 		<annotation cp="㊙" type="tts">जपानी “गुपीत” बटण</annotation>
-		<annotation cp="🈺">“वेवसायाक उक्तो” | आयडिओग्राफ | जपानी | जपानी “वेवसाया खातीर उकतें” बटण | जपानी “वेवसायाक उक्तो” बटण | 営</annotation>
+		<annotation cp="🈺">“वेवसायाक उक्तो” | आयडिओग्राफ | जपानी | जपानी “वेवसाया खातीर उकतें” बटण | जपानी “वेवसायाक उक्तो” बटण</annotation>
 		<annotation cp="🈺" type="tts">जपानी “वेवसाया खातीर उकतें” बटण</annotation>
-		<annotation cp="🈵">“रिक्त सुवात ना” | आयडिओग्राफ | जपानी | जपानी “रिक्त सुवात ना” बटण | जपानी “सुवात ना” बटण | 満</annotation>
+		<annotation cp="🈵">“रिक्त सुवात ना” | आयडिओग्राफ | जपानी | जपानी “रिक्त सुवात ना” बटण | जपानी “सुवात ना” बटण</annotation>
 		<annotation cp="🈵" type="tts">जपानी “सुवात ना” बटण</annotation>
 		<annotation cp="🔴">जियोमॅट्रीक | तांबडें | वर्तुळ</annotation>
 		<annotation cp="🔴" type="tts">तांबडें वर्तुळ</annotation>

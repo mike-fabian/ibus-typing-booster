@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
-<!-- Copyright © 1991-2025 Unicode, Inc.
+<!-- Copyright © 1991-2026 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 SPDX-License-Identifier: Unicode-3.0
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
@@ -603,46 +603,6 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👱🏾" type="tts">person: medium-dark skin tone, blond hair</annotation>
 		<annotation cp="👱🏿">blond | blond hair | blond-haired | dark skin tone | human | person</annotation>
 		<annotation cp="👱🏿" type="tts">person: dark skin tone, blond hair</annotation>
-		<annotation cp="🧑🏻‍🫯‍🧑🏼">combat | duel | grapple | light skin tone | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏻‍🫯‍🧑🏼" type="tts">people wrestling: light skin tone, medium-light skin tone</annotation>
-		<annotation cp="🧑🏻‍🫯‍🧑🏽">combat | duel | grapple | light skin tone | medium skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏻‍🫯‍🧑🏽" type="tts">people wrestling: light skin tone, medium skin tone</annotation>
-		<annotation cp="🧑🏻‍🫯‍🧑🏾">combat | duel | grapple | light skin tone | medium-dark skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏻‍🫯‍🧑🏾" type="tts">people wrestling: light skin tone, medium-dark skin tone</annotation>
-		<annotation cp="🧑🏻‍🫯‍🧑🏿">combat | dark skin tone | duel | grapple | light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏻‍🫯‍🧑🏿" type="tts">people wrestling: light skin tone, dark skin tone</annotation>
-		<annotation cp="🧑🏼‍🫯‍🧑🏻">combat | duel | grapple | light skin tone | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏼‍🫯‍🧑🏻" type="tts">people wrestling: medium-light skin tone, light skin tone</annotation>
-		<annotation cp="🧑🏼‍🫯‍🧑🏽">combat | duel | grapple | medium skin tone | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏼‍🫯‍🧑🏽" type="tts">people wrestling: medium-light skin tone, medium skin tone</annotation>
-		<annotation cp="🧑🏼‍🫯‍🧑🏾">combat | duel | grapple | medium-dark skin tone | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏼‍🫯‍🧑🏾" type="tts">people wrestling: medium-light skin tone, medium-dark skin tone</annotation>
-		<annotation cp="🧑🏼‍🫯‍🧑🏿">combat | dark skin tone | duel | grapple | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏼‍🫯‍🧑🏿" type="tts">people wrestling: medium-light skin tone, dark skin tone</annotation>
-		<annotation cp="🧑🏽‍🫯‍🧑🏻">combat | duel | grapple | light skin tone | medium skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏽‍🫯‍🧑🏻" type="tts">people wrestling: medium skin tone, light skin tone</annotation>
-		<annotation cp="🧑🏽‍🫯‍🧑🏼">combat | duel | grapple | medium skin tone | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏽‍🫯‍🧑🏼" type="tts">people wrestling: medium skin tone, medium-light skin tone</annotation>
-		<annotation cp="🧑🏽‍🫯‍🧑🏾">combat | duel | grapple | medium skin tone | medium-dark skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏽‍🫯‍🧑🏾" type="tts">people wrestling: medium skin tone, medium-dark skin tone</annotation>
-		<annotation cp="🧑🏽‍🫯‍🧑🏿">combat | dark skin tone | duel | grapple | medium skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏽‍🫯‍🧑🏿" type="tts">people wrestling: medium skin tone, dark skin tone</annotation>
-		<annotation cp="🧑🏾‍🫯‍🧑🏻">combat | duel | grapple | light skin tone | medium-dark skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏾‍🫯‍🧑🏻" type="tts">people wrestling: medium-dark skin tone, light skin tone</annotation>
-		<annotation cp="🧑🏾‍🫯‍🧑🏼">combat | duel | grapple | medium-dark skin tone | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏾‍🫯‍🧑🏼" type="tts">people wrestling: medium-dark skin tone, medium-light skin tone</annotation>
-		<annotation cp="🧑🏾‍🫯‍🧑🏽">combat | duel | grapple | medium skin tone | medium-dark skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏾‍🫯‍🧑🏽" type="tts">people wrestling: medium-dark skin tone, medium skin tone</annotation>
-		<annotation cp="🧑🏾‍🫯‍🧑🏿">combat | dark skin tone | duel | grapple | medium-dark skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏾‍🫯‍🧑🏿" type="tts">people wrestling: medium-dark skin tone, dark skin tone</annotation>
-		<annotation cp="🧑🏿‍🫯‍🧑🏻">combat | dark skin tone | duel | grapple | light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏿‍🫯‍🧑🏻" type="tts">people wrestling: dark skin tone, light skin tone</annotation>
-		<annotation cp="🧑🏿‍🫯‍🧑🏼">combat | dark skin tone | duel | grapple | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏿‍🫯‍🧑🏼" type="tts">people wrestling: dark skin tone, medium-light skin tone</annotation>
-		<annotation cp="🧑🏿‍🫯‍🧑🏽">combat | dark skin tone | duel | grapple | medium skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏿‍🫯‍🧑🏽" type="tts">people wrestling: dark skin tone, medium skin tone</annotation>
-		<annotation cp="🧑🏿‍🫯‍🧑🏾">combat | dark skin tone | duel | grapple | medium-dark skin tone | people | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="🧑🏿‍🫯‍🧑🏾" type="tts">people wrestling: dark skin tone, medium-dark skin tone</annotation>
 		<annotation cp="🧑🏻‍❤‍💋‍🧑🏼">anniversary | babe | bae | couple | date | dating | heart | kiss | light skin tone | love | medium-light skin tone | mwah | person | romance | together | xoxo</annotation>
 		<annotation cp="🧑🏻‍❤‍💋‍🧑🏼" type="tts">kiss: person, person, light skin tone, medium-light skin tone</annotation>
 		<annotation cp="🧑🏻‍❤‍💋‍🧑🏽">anniversary | babe | bae | couple | date | dating | heart | kiss | light skin tone | love | medium skin tone | mwah | person | romance | together | xoxo</annotation>
@@ -723,6 +683,46 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="🧑🏿‍❤‍🧑🏽" type="tts">couple with heart: person, person, dark skin tone, medium skin tone</annotation>
 		<annotation cp="🧑🏿‍❤‍🧑🏾">anniversary | babe | bae | couple | dark skin tone | dating | heart | kiss | love | medium-dark skin tone | person | relationship | romance | together | you</annotation>
 		<annotation cp="🧑🏿‍❤‍🧑🏾" type="tts">couple with heart: person, person, dark skin tone, medium-dark skin tone</annotation>
+		<annotation cp="🧑🏻‍🫯‍🧑🏼">combat | duel | grapple | light skin tone | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏻‍🫯‍🧑🏼" type="tts">people wrestling: light skin tone, medium-light skin tone</annotation>
+		<annotation cp="🧑🏻‍🫯‍🧑🏽">combat | duel | grapple | light skin tone | medium skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏻‍🫯‍🧑🏽" type="tts">people wrestling: light skin tone, medium skin tone</annotation>
+		<annotation cp="🧑🏻‍🫯‍🧑🏾">combat | duel | grapple | light skin tone | medium-dark skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏻‍🫯‍🧑🏾" type="tts">people wrestling: light skin tone, medium-dark skin tone</annotation>
+		<annotation cp="🧑🏻‍🫯‍🧑🏿">combat | dark skin tone | duel | grapple | light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏻‍🫯‍🧑🏿" type="tts">people wrestling: light skin tone, dark skin tone</annotation>
+		<annotation cp="🧑🏼‍🫯‍🧑🏻">combat | duel | grapple | light skin tone | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏼‍🫯‍🧑🏻" type="tts">people wrestling: medium-light skin tone, light skin tone</annotation>
+		<annotation cp="🧑🏼‍🫯‍🧑🏽">combat | duel | grapple | medium skin tone | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏼‍🫯‍🧑🏽" type="tts">people wrestling: medium-light skin tone, medium skin tone</annotation>
+		<annotation cp="🧑🏼‍🫯‍🧑🏾">combat | duel | grapple | medium-dark skin tone | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏼‍🫯‍🧑🏾" type="tts">people wrestling: medium-light skin tone, medium-dark skin tone</annotation>
+		<annotation cp="🧑🏼‍🫯‍🧑🏿">combat | dark skin tone | duel | grapple | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏼‍🫯‍🧑🏿" type="tts">people wrestling: medium-light skin tone, dark skin tone</annotation>
+		<annotation cp="🧑🏽‍🫯‍🧑🏻">combat | duel | grapple | light skin tone | medium skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏽‍🫯‍🧑🏻" type="tts">people wrestling: medium skin tone, light skin tone</annotation>
+		<annotation cp="🧑🏽‍🫯‍🧑🏼">combat | duel | grapple | medium skin tone | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏽‍🫯‍🧑🏼" type="tts">people wrestling: medium skin tone, medium-light skin tone</annotation>
+		<annotation cp="🧑🏽‍🫯‍🧑🏾">combat | duel | grapple | medium skin tone | medium-dark skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏽‍🫯‍🧑🏾" type="tts">people wrestling: medium skin tone, medium-dark skin tone</annotation>
+		<annotation cp="🧑🏽‍🫯‍🧑🏿">combat | dark skin tone | duel | grapple | medium skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏽‍🫯‍🧑🏿" type="tts">people wrestling: medium skin tone, dark skin tone</annotation>
+		<annotation cp="🧑🏾‍🫯‍🧑🏻">combat | duel | grapple | light skin tone | medium-dark skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏾‍🫯‍🧑🏻" type="tts">people wrestling: medium-dark skin tone, light skin tone</annotation>
+		<annotation cp="🧑🏾‍🫯‍🧑🏼">combat | duel | grapple | medium-dark skin tone | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏾‍🫯‍🧑🏼" type="tts">people wrestling: medium-dark skin tone, medium-light skin tone</annotation>
+		<annotation cp="🧑🏾‍🫯‍🧑🏽">combat | duel | grapple | medium skin tone | medium-dark skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏾‍🫯‍🧑🏽" type="tts">people wrestling: medium-dark skin tone, medium skin tone</annotation>
+		<annotation cp="🧑🏾‍🫯‍🧑🏿">combat | dark skin tone | duel | grapple | medium-dark skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏾‍🫯‍🧑🏿" type="tts">people wrestling: medium-dark skin tone, dark skin tone</annotation>
+		<annotation cp="🧑🏿‍🫯‍🧑🏻">combat | dark skin tone | duel | grapple | light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏿‍🫯‍🧑🏻" type="tts">people wrestling: dark skin tone, light skin tone</annotation>
+		<annotation cp="🧑🏿‍🫯‍🧑🏼">combat | dark skin tone | duel | grapple | medium-light skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏿‍🫯‍🧑🏼" type="tts">people wrestling: dark skin tone, medium-light skin tone</annotation>
+		<annotation cp="🧑🏿‍🫯‍🧑🏽">combat | dark skin tone | duel | grapple | medium skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏿‍🫯‍🧑🏽" type="tts">people wrestling: dark skin tone, medium skin tone</annotation>
+		<annotation cp="🧑🏿‍🫯‍🧑🏾">combat | dark skin tone | duel | grapple | medium-dark skin tone | people | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="🧑🏿‍🫯‍🧑🏾" type="tts">people wrestling: dark skin tone, medium-dark skin tone</annotation>
 		<annotation cp="🧑‍🦰">adult | person | red hair</annotation>
 		<annotation cp="🧑‍🦰" type="tts">person: red hair</annotation>
 		<annotation cp="🧑🏻‍🦰">adult | light skin tone | person | red hair</annotation>
@@ -811,16 +811,6 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="🧑🏿‍🐰‍🧑🏽" type="tts">people with bunny ears: dark skin tone, medium skin tone</annotation>
 		<annotation cp="🧑🏿‍🐰‍🧑🏾">bestie | bff | bunny | counterpart | dancer | dark skin tone | double | ear | identical | medium-dark skin tone | pair | party | partying | people | soulmate | twin | twinsies</annotation>
 		<annotation cp="🧑🏿‍🐰‍🧑🏾" type="tts">people with bunny ears: dark skin tone, medium-dark skin tone</annotation>
-		<annotation cp="🧑🏻‍🩰">ballet | dancer | light skin tone</annotation>
-		<annotation cp="🧑🏻‍🩰" type="tts">ballet dancer: light skin tone</annotation>
-		<annotation cp="🧑🏼‍🩰">ballet | dancer | medium-light skin tone</annotation>
-		<annotation cp="🧑🏼‍🩰" type="tts">ballet dancer: medium-light skin tone</annotation>
-		<annotation cp="🧑🏽‍🩰">ballet | dancer | medium skin tone</annotation>
-		<annotation cp="🧑🏽‍🩰" type="tts">ballet dancer: medium skin tone</annotation>
-		<annotation cp="🧑🏾‍🩰">ballet | dancer | medium-dark skin tone</annotation>
-		<annotation cp="🧑🏾‍🩰" type="tts">ballet dancer: medium-dark skin tone</annotation>
-		<annotation cp="🧑🏿‍🩰">ballet | dancer | dark skin tone</annotation>
-		<annotation cp="🧑🏿‍🩰" type="tts">ballet dancer: dark skin tone</annotation>
 		<annotation cp="👨🏻">adult | bro | light skin tone | man</annotation>
 		<annotation cp="👨🏻" type="tts">man: light skin tone</annotation>
 		<annotation cp="👨🏼">adult | bro | man | medium-light skin tone</annotation>
@@ -861,46 +851,6 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👱🏾‍♂" type="tts">man: medium-dark skin tone, blond hair</annotation>
 		<annotation cp="👱🏿‍♂">blond | blond-haired | dark skin tone | hair | man</annotation>
 		<annotation cp="👱🏿‍♂" type="tts">man: dark skin tone, blond hair</annotation>
-		<annotation cp="👨🏻‍🫯‍👨🏼">combat | duel | grapple | light skin tone | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏻‍🫯‍👨🏼" type="tts">men wrestling: light skin tone, medium-light skin tone</annotation>
-		<annotation cp="👨🏻‍🫯‍👨🏽">combat | duel | grapple | light skin tone | medium skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏻‍🫯‍👨🏽" type="tts">men wrestling: light skin tone, medium skin tone</annotation>
-		<annotation cp="👨🏻‍🫯‍👨🏾">combat | duel | grapple | light skin tone | medium-dark skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏻‍🫯‍👨🏾" type="tts">men wrestling: light skin tone, medium-dark skin tone</annotation>
-		<annotation cp="👨🏻‍🫯‍👨🏿">combat | dark skin tone | duel | grapple | light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏻‍🫯‍👨🏿" type="tts">men wrestling: light skin tone, dark skin tone</annotation>
-		<annotation cp="👨🏼‍🫯‍👨🏻">combat | duel | grapple | light skin tone | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏼‍🫯‍👨🏻" type="tts">men wrestling: medium-light skin tone, light skin tone</annotation>
-		<annotation cp="👨🏼‍🫯‍👨🏽">combat | duel | grapple | medium skin tone | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏼‍🫯‍👨🏽" type="tts">men wrestling: medium-light skin tone, medium skin tone</annotation>
-		<annotation cp="👨🏼‍🫯‍👨🏾">combat | duel | grapple | medium-dark skin tone | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏼‍🫯‍👨🏾" type="tts">men wrestling: medium-light skin tone, medium-dark skin tone</annotation>
-		<annotation cp="👨🏼‍🫯‍👨🏿">combat | dark skin tone | duel | grapple | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏼‍🫯‍👨🏿" type="tts">men wrestling: medium-light skin tone, dark skin tone</annotation>
-		<annotation cp="👨🏽‍🫯‍👨🏻">combat | duel | grapple | light skin tone | medium skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏽‍🫯‍👨🏻" type="tts">men wrestling: medium skin tone, light skin tone</annotation>
-		<annotation cp="👨🏽‍🫯‍👨🏼">combat | duel | grapple | medium skin tone | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏽‍🫯‍👨🏼" type="tts">men wrestling: medium skin tone, medium-light skin tone</annotation>
-		<annotation cp="👨🏽‍🫯‍👨🏾">combat | duel | grapple | medium skin tone | medium-dark skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏽‍🫯‍👨🏾" type="tts">men wrestling: medium skin tone, medium-dark skin tone</annotation>
-		<annotation cp="👨🏽‍🫯‍👨🏿">combat | dark skin tone | duel | grapple | medium skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏽‍🫯‍👨🏿" type="tts">men wrestling: medium skin tone, dark skin tone</annotation>
-		<annotation cp="👨🏾‍🫯‍👨🏻">combat | duel | grapple | light skin tone | medium-dark skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏾‍🫯‍👨🏻" type="tts">men wrestling: medium-dark skin tone, light skin tone</annotation>
-		<annotation cp="👨🏾‍🫯‍👨🏼">combat | duel | grapple | medium-dark skin tone | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏾‍🫯‍👨🏼" type="tts">men wrestling: medium-dark skin tone, medium-light skin tone</annotation>
-		<annotation cp="👨🏾‍🫯‍👨🏽">combat | duel | grapple | medium skin tone | medium-dark skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏾‍🫯‍👨🏽" type="tts">men wrestling: medium-dark skin tone, medium skin tone</annotation>
-		<annotation cp="👨🏾‍🫯‍👨🏿">combat | dark skin tone | duel | grapple | medium-dark skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏾‍🫯‍👨🏿" type="tts">men wrestling: medium-dark skin tone, dark skin tone</annotation>
-		<annotation cp="👨🏿‍🫯‍👨🏻">combat | dark skin tone | duel | grapple | light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏿‍🫯‍👨🏻" type="tts">men wrestling: dark skin tone, light skin tone</annotation>
-		<annotation cp="👨🏿‍🫯‍👨🏼">combat | dark skin tone | duel | grapple | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏿‍🫯‍👨🏼" type="tts">men wrestling: dark skin tone, medium-light skin tone</annotation>
-		<annotation cp="👨🏿‍🫯‍👨🏽">combat | dark skin tone | duel | grapple | medium skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏿‍🫯‍👨🏽" type="tts">men wrestling: dark skin tone, medium skin tone</annotation>
-		<annotation cp="👨🏿‍🫯‍👨🏾">combat | dark skin tone | duel | grapple | medium-dark skin tone | men | ring | tournament | wrestle | wrestling</annotation>
-		<annotation cp="👨🏿‍🫯‍👨🏾" type="tts">men wrestling: dark skin tone, medium-dark skin tone</annotation>
 		<annotation cp="👨🏻‍❤‍💋‍👨🏻">anniversary | babe | bae | couple | date | dating | heart | kiss | light skin tone | love | man | mwah | person | romance | together | xoxo</annotation>
 		<annotation cp="👨🏻‍❤‍💋‍👨🏻" type="tts">kiss: man, man, light skin tone</annotation>
 		<annotation cp="👨🏻‍❤‍💋‍👨🏼">anniversary | babe | bae | couple | date | dating | heart | kiss | light skin tone | love | man | medium-light skin tone | mwah | person | romance | together | xoxo</annotation>
@@ -1001,6 +951,46 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👨🏿‍❤‍👨🏾" type="tts">couple with heart: man, man, dark skin tone, medium-dark skin tone</annotation>
 		<annotation cp="👨🏿‍❤‍👨🏿">anniversary | babe | bae | couple | dark skin tone | dating | heart | kiss | love | man | person | relationship | romance | together | you</annotation>
 		<annotation cp="👨🏿‍❤‍👨🏿" type="tts">couple with heart: man, man, dark skin tone</annotation>
+		<annotation cp="👨🏻‍🫯‍👨🏼">combat | duel | grapple | light skin tone | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏻‍🫯‍👨🏼" type="tts">men wrestling: light skin tone, medium-light skin tone</annotation>
+		<annotation cp="👨🏻‍🫯‍👨🏽">combat | duel | grapple | light skin tone | medium skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏻‍🫯‍👨🏽" type="tts">men wrestling: light skin tone, medium skin tone</annotation>
+		<annotation cp="👨🏻‍🫯‍👨🏾">combat | duel | grapple | light skin tone | medium-dark skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏻‍🫯‍👨🏾" type="tts">men wrestling: light skin tone, medium-dark skin tone</annotation>
+		<annotation cp="👨🏻‍🫯‍👨🏿">combat | dark skin tone | duel | grapple | light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏻‍🫯‍👨🏿" type="tts">men wrestling: light skin tone, dark skin tone</annotation>
+		<annotation cp="👨🏼‍🫯‍👨🏻">combat | duel | grapple | light skin tone | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏼‍🫯‍👨🏻" type="tts">men wrestling: medium-light skin tone, light skin tone</annotation>
+		<annotation cp="👨🏼‍🫯‍👨🏽">combat | duel | grapple | medium skin tone | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏼‍🫯‍👨🏽" type="tts">men wrestling: medium-light skin tone, medium skin tone</annotation>
+		<annotation cp="👨🏼‍🫯‍👨🏾">combat | duel | grapple | medium-dark skin tone | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏼‍🫯‍👨🏾" type="tts">men wrestling: medium-light skin tone, medium-dark skin tone</annotation>
+		<annotation cp="👨🏼‍🫯‍👨🏿">combat | dark skin tone | duel | grapple | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏼‍🫯‍👨🏿" type="tts">men wrestling: medium-light skin tone, dark skin tone</annotation>
+		<annotation cp="👨🏽‍🫯‍👨🏻">combat | duel | grapple | light skin tone | medium skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏽‍🫯‍👨🏻" type="tts">men wrestling: medium skin tone, light skin tone</annotation>
+		<annotation cp="👨🏽‍🫯‍👨🏼">combat | duel | grapple | medium skin tone | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏽‍🫯‍👨🏼" type="tts">men wrestling: medium skin tone, medium-light skin tone</annotation>
+		<annotation cp="👨🏽‍🫯‍👨🏾">combat | duel | grapple | medium skin tone | medium-dark skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏽‍🫯‍👨🏾" type="tts">men wrestling: medium skin tone, medium-dark skin tone</annotation>
+		<annotation cp="👨🏽‍🫯‍👨🏿">combat | dark skin tone | duel | grapple | medium skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏽‍🫯‍👨🏿" type="tts">men wrestling: medium skin tone, dark skin tone</annotation>
+		<annotation cp="👨🏾‍🫯‍👨🏻">combat | duel | grapple | light skin tone | medium-dark skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏾‍🫯‍👨🏻" type="tts">men wrestling: medium-dark skin tone, light skin tone</annotation>
+		<annotation cp="👨🏾‍🫯‍👨🏼">combat | duel | grapple | medium-dark skin tone | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏾‍🫯‍👨🏼" type="tts">men wrestling: medium-dark skin tone, medium-light skin tone</annotation>
+		<annotation cp="👨🏾‍🫯‍👨🏽">combat | duel | grapple | medium skin tone | medium-dark skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏾‍🫯‍👨🏽" type="tts">men wrestling: medium-dark skin tone, medium skin tone</annotation>
+		<annotation cp="👨🏾‍🫯‍👨🏿">combat | dark skin tone | duel | grapple | medium-dark skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏾‍🫯‍👨🏿" type="tts">men wrestling: medium-dark skin tone, dark skin tone</annotation>
+		<annotation cp="👨🏿‍🫯‍👨🏻">combat | dark skin tone | duel | grapple | light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏿‍🫯‍👨🏻" type="tts">men wrestling: dark skin tone, light skin tone</annotation>
+		<annotation cp="👨🏿‍🫯‍👨🏼">combat | dark skin tone | duel | grapple | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏿‍🫯‍👨🏼" type="tts">men wrestling: dark skin tone, medium-light skin tone</annotation>
+		<annotation cp="👨🏿‍🫯‍👨🏽">combat | dark skin tone | duel | grapple | medium skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏿‍🫯‍👨🏽" type="tts">men wrestling: dark skin tone, medium skin tone</annotation>
+		<annotation cp="👨🏿‍🫯‍👨🏾">combat | dark skin tone | duel | grapple | medium-dark skin tone | men | ring | tournament | wrestle | wrestling</annotation>
+		<annotation cp="👨🏿‍🫯‍👨🏾" type="tts">men wrestling: dark skin tone, medium-dark skin tone</annotation>
 		<annotation cp="👨‍🦰">adult | bro | man | red hair</annotation>
 		<annotation cp="👨‍🦰" type="tts">man: red hair</annotation>
 		<annotation cp="👨🏻‍🦰">adult | bro | light skin tone | man | red hair</annotation>
@@ -1119,46 +1109,6 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👱🏾‍♀" type="tts">woman: medium-dark skin tone, blond hair</annotation>
 		<annotation cp="👱🏿‍♀">blond | blond-haired | blonde | dark skin tone | hair | woman</annotation>
 		<annotation cp="👱🏿‍♀" type="tts">woman: dark skin tone, blond hair</annotation>
-		<annotation cp="👩🏻‍🫯‍👩🏼">combat | duel | grapple | light skin tone | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏻‍🫯‍👩🏼" type="tts">women wrestling: light skin tone, medium-light skin tone</annotation>
-		<annotation cp="👩🏻‍🫯‍👩🏽">combat | duel | grapple | light skin tone | medium skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏻‍🫯‍👩🏽" type="tts">women wrestling: light skin tone, medium skin tone</annotation>
-		<annotation cp="👩🏻‍🫯‍👩🏾">combat | duel | grapple | light skin tone | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏻‍🫯‍👩🏾" type="tts">women wrestling: light skin tone, medium-dark skin tone</annotation>
-		<annotation cp="👩🏻‍🫯‍👩🏿">combat | dark skin tone | duel | grapple | light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏻‍🫯‍👩🏿" type="tts">women wrestling: light skin tone, dark skin tone</annotation>
-		<annotation cp="👩🏼‍🫯‍👩🏻">combat | duel | grapple | light skin tone | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏼‍🫯‍👩🏻" type="tts">women wrestling: medium-light skin tone, light skin tone</annotation>
-		<annotation cp="👩🏼‍🫯‍👩🏽">combat | duel | grapple | medium skin tone | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏼‍🫯‍👩🏽" type="tts">women wrestling: medium-light skin tone, medium skin tone</annotation>
-		<annotation cp="👩🏼‍🫯‍👩🏾">combat | duel | grapple | medium-dark skin tone | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏼‍🫯‍👩🏾" type="tts">women wrestling: medium-light skin tone, medium-dark skin tone</annotation>
-		<annotation cp="👩🏼‍🫯‍👩🏿">combat | dark skin tone | duel | grapple | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏼‍🫯‍👩🏿" type="tts">women wrestling: medium-light skin tone, dark skin tone</annotation>
-		<annotation cp="👩🏽‍🫯‍👩🏻">combat | duel | grapple | light skin tone | medium skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏽‍🫯‍👩🏻" type="tts">women wrestling: medium skin tone, light skin tone</annotation>
-		<annotation cp="👩🏽‍🫯‍👩🏼">combat | duel | grapple | medium skin tone | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏽‍🫯‍👩🏼" type="tts">women wrestling: medium skin tone, medium-light skin tone</annotation>
-		<annotation cp="👩🏽‍🫯‍👩🏾">combat | duel | grapple | medium skin tone | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏽‍🫯‍👩🏾" type="tts">women wrestling: medium skin tone, medium-dark skin tone</annotation>
-		<annotation cp="👩🏽‍🫯‍👩🏿">combat | dark skin tone | duel | grapple | medium skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏽‍🫯‍👩🏿" type="tts">women wrestling: medium skin tone, dark skin tone</annotation>
-		<annotation cp="👩🏾‍🫯‍👩🏻">combat | duel | grapple | light skin tone | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏾‍🫯‍👩🏻" type="tts">women wrestling: medium-dark skin tone, light skin tone</annotation>
-		<annotation cp="👩🏾‍🫯‍👩🏼">combat | duel | grapple | medium-dark skin tone | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏾‍🫯‍👩🏼" type="tts">women wrestling: medium-dark skin tone, medium-light skin tone</annotation>
-		<annotation cp="👩🏾‍🫯‍👩🏽">combat | duel | grapple | medium skin tone | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏾‍🫯‍👩🏽" type="tts">women wrestling: medium-dark skin tone, medium skin tone</annotation>
-		<annotation cp="👩🏾‍🫯‍👩🏿">combat | dark skin tone | duel | grapple | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏾‍🫯‍👩🏿" type="tts">women wrestling: medium-dark skin tone, dark skin tone</annotation>
-		<annotation cp="👩🏿‍🫯‍👩🏻">combat | dark skin tone | duel | grapple | light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏿‍🫯‍👩🏻" type="tts">women wrestling: dark skin tone, light skin tone</annotation>
-		<annotation cp="👩🏿‍🫯‍👩🏼">combat | dark skin tone | duel | grapple | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏿‍🫯‍👩🏼" type="tts">women wrestling: dark skin tone, medium-light skin tone</annotation>
-		<annotation cp="👩🏿‍🫯‍👩🏽">combat | dark skin tone | duel | grapple | medium skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏿‍🫯‍👩🏽" type="tts">women wrestling: dark skin tone, medium skin tone</annotation>
-		<annotation cp="👩🏿‍🫯‍👩🏾">combat | dark skin tone | duel | grapple | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="👩🏿‍🫯‍👩🏾" type="tts">women wrestling: dark skin tone, medium-dark skin tone</annotation>
 		<annotation cp="👩🏻‍❤‍💋‍👨🏻">anniversary | babe | bae | couple | date | dating | heart | kiss | light skin tone | love | man | mwah | person | romance | together | woman | xoxo</annotation>
 		<annotation cp="👩🏻‍❤‍💋‍👨🏻" type="tts">kiss: woman, man, light skin tone</annotation>
 		<annotation cp="👩🏻‍❤‍💋‍👨🏼">anniversary | babe | bae | couple | date | dating | heart | kiss | light skin tone | love | man | medium-light skin tone | mwah | person | romance | together | woman | xoxo</annotation>
@@ -1359,6 +1309,46 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👩🏿‍❤‍👩🏾" type="tts">couple with heart: woman, woman, dark skin tone, medium-dark skin tone</annotation>
 		<annotation cp="👩🏿‍❤‍👩🏿">anniversary | babe | bae | couple | dark skin tone | dating | heart | kiss | love | person | relationship | romance | together | woman | you</annotation>
 		<annotation cp="👩🏿‍❤‍👩🏿" type="tts">couple with heart: woman, woman, dark skin tone</annotation>
+		<annotation cp="👩🏻‍🫯‍👩🏼">combat | duel | grapple | light skin tone | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏻‍🫯‍👩🏼" type="tts">women wrestling: light skin tone, medium-light skin tone</annotation>
+		<annotation cp="👩🏻‍🫯‍👩🏽">combat | duel | grapple | light skin tone | medium skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏻‍🫯‍👩🏽" type="tts">women wrestling: light skin tone, medium skin tone</annotation>
+		<annotation cp="👩🏻‍🫯‍👩🏾">combat | duel | grapple | light skin tone | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏻‍🫯‍👩🏾" type="tts">women wrestling: light skin tone, medium-dark skin tone</annotation>
+		<annotation cp="👩🏻‍🫯‍👩🏿">combat | dark skin tone | duel | grapple | light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏻‍🫯‍👩🏿" type="tts">women wrestling: light skin tone, dark skin tone</annotation>
+		<annotation cp="👩🏼‍🫯‍👩🏻">combat | duel | grapple | light skin tone | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏼‍🫯‍👩🏻" type="tts">women wrestling: medium-light skin tone, light skin tone</annotation>
+		<annotation cp="👩🏼‍🫯‍👩🏽">combat | duel | grapple | medium skin tone | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏼‍🫯‍👩🏽" type="tts">women wrestling: medium-light skin tone, medium skin tone</annotation>
+		<annotation cp="👩🏼‍🫯‍👩🏾">combat | duel | grapple | medium-dark skin tone | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏼‍🫯‍👩🏾" type="tts">women wrestling: medium-light skin tone, medium-dark skin tone</annotation>
+		<annotation cp="👩🏼‍🫯‍👩🏿">combat | dark skin tone | duel | grapple | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏼‍🫯‍👩🏿" type="tts">women wrestling: medium-light skin tone, dark skin tone</annotation>
+		<annotation cp="👩🏽‍🫯‍👩🏻">combat | duel | grapple | light skin tone | medium skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏽‍🫯‍👩🏻" type="tts">women wrestling: medium skin tone, light skin tone</annotation>
+		<annotation cp="👩🏽‍🫯‍👩🏼">combat | duel | grapple | medium skin tone | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏽‍🫯‍👩🏼" type="tts">women wrestling: medium skin tone, medium-light skin tone</annotation>
+		<annotation cp="👩🏽‍🫯‍👩🏾">combat | duel | grapple | medium skin tone | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏽‍🫯‍👩🏾" type="tts">women wrestling: medium skin tone, medium-dark skin tone</annotation>
+		<annotation cp="👩🏽‍🫯‍👩🏿">combat | dark skin tone | duel | grapple | medium skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏽‍🫯‍👩🏿" type="tts">women wrestling: medium skin tone, dark skin tone</annotation>
+		<annotation cp="👩🏾‍🫯‍👩🏻">combat | duel | grapple | light skin tone | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏾‍🫯‍👩🏻" type="tts">women wrestling: medium-dark skin tone, light skin tone</annotation>
+		<annotation cp="👩🏾‍🫯‍👩🏼">combat | duel | grapple | medium-dark skin tone | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏾‍🫯‍👩🏼" type="tts">women wrestling: medium-dark skin tone, medium-light skin tone</annotation>
+		<annotation cp="👩🏾‍🫯‍👩🏽">combat | duel | grapple | medium skin tone | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏾‍🫯‍👩🏽" type="tts">women wrestling: medium-dark skin tone, medium skin tone</annotation>
+		<annotation cp="👩🏾‍🫯‍👩🏿">combat | dark skin tone | duel | grapple | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏾‍🫯‍👩🏿" type="tts">women wrestling: medium-dark skin tone, dark skin tone</annotation>
+		<annotation cp="👩🏿‍🫯‍👩🏻">combat | dark skin tone | duel | grapple | light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏿‍🫯‍👩🏻" type="tts">women wrestling: dark skin tone, light skin tone</annotation>
+		<annotation cp="👩🏿‍🫯‍👩🏼">combat | dark skin tone | duel | grapple | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏿‍🫯‍👩🏼" type="tts">women wrestling: dark skin tone, medium-light skin tone</annotation>
+		<annotation cp="👩🏿‍🫯‍👩🏽">combat | dark skin tone | duel | grapple | medium skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏿‍🫯‍👩🏽" type="tts">women wrestling: dark skin tone, medium skin tone</annotation>
+		<annotation cp="👩🏿‍🫯‍👩🏾">combat | dark skin tone | duel | grapple | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="👩🏿‍🫯‍👩🏾" type="tts">women wrestling: dark skin tone, medium-dark skin tone</annotation>
 		<annotation cp="👩‍🦰">adult | lady | red hair | woman</annotation>
 		<annotation cp="👩‍🦰" type="tts">woman: red hair</annotation>
 		<annotation cp="👩🏻‍🦰">adult | lady | light skin tone | red hair | woman</annotation>
@@ -3333,6 +3323,16 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="🏃🏾‍♂‍➡" type="tts">man running: medium-dark skin tone, facing right</annotation>
 		<annotation cp="🏃🏿‍♂‍➡">dark skin tone | facing | fast | hurry | man | marathon | move | quick | race | racing | right | run | rush | speed</annotation>
 		<annotation cp="🏃🏿‍♂‍➡" type="tts">man running: dark skin tone, facing right</annotation>
+		<annotation cp="🧑🏻‍🩰">ballet | dancer | light skin tone</annotation>
+		<annotation cp="🧑🏻‍🩰" type="tts">ballet dancer: light skin tone</annotation>
+		<annotation cp="🧑🏼‍🩰">ballet | dancer | medium-light skin tone</annotation>
+		<annotation cp="🧑🏼‍🩰" type="tts">ballet dancer: medium-light skin tone</annotation>
+		<annotation cp="🧑🏽‍🩰">ballet | dancer | medium skin tone</annotation>
+		<annotation cp="🧑🏽‍🩰" type="tts">ballet dancer: medium skin tone</annotation>
+		<annotation cp="🧑🏾‍🩰">ballet | dancer | medium-dark skin tone</annotation>
+		<annotation cp="🧑🏾‍🩰" type="tts">ballet dancer: medium-dark skin tone</annotation>
+		<annotation cp="🧑🏿‍🩰">ballet | dancer | dark skin tone</annotation>
+		<annotation cp="🧑🏿‍🩰" type="tts">ballet dancer: dark skin tone</annotation>
 		<annotation cp="💃🏻">dance | dancer | dancing | elegant | festive | flair | flamenco | groove | let’s | light skin tone | salsa | tango | woman</annotation>
 		<annotation cp="💃🏻" type="tts">woman dancing: light skin tone</annotation>
 		<annotation cp="💃🏼">dance | dancer | dancing | elegant | festive | flair | flamenco | groove | let’s | medium-light skin tone | salsa | tango | woman</annotation>
@@ -3373,16 +3373,6 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👯🏾" type="tts">people with bunny ears: medium-dark skin tone</annotation>
 		<annotation cp="👯🏿">bestie | bff | bunny | counterpart | dancer | dark skin tone | double | ear | identical | pair | party | partying | people | soulmate | twin | twinsies</annotation>
 		<annotation cp="👯🏿" type="tts">people with bunny ears: dark skin tone</annotation>
-		<annotation cp="👯🏻‍♀">bestie | bff | bunny | counterpart | dancer | double | ear | identical | light skin tone | pair | party | partying | people | soulmate | twin | twinsies | women</annotation>
-		<annotation cp="👯🏻‍♀" type="tts">women with bunny ears: light skin tone</annotation>
-		<annotation cp="👯🏼‍♀">bestie | bff | bunny | counterpart | dancer | double | ear | identical | medium-light skin tone | pair | party | partying | people | soulmate | twin | twinsies | women</annotation>
-		<annotation cp="👯🏼‍♀" type="tts">women with bunny ears: medium-light skin tone</annotation>
-		<annotation cp="👯🏽‍♀">bestie | bff | bunny | counterpart | dancer | double | ear | identical | medium skin tone | pair | party | partying | people | soulmate | twin | twinsies | women</annotation>
-		<annotation cp="👯🏽‍♀" type="tts">women with bunny ears: medium skin tone</annotation>
-		<annotation cp="👯🏾‍♀">bestie | bff | bunny | counterpart | dancer | double | ear | identical | medium-dark skin tone | pair | party | partying | people | soulmate | twin | twinsies | women</annotation>
-		<annotation cp="👯🏾‍♀" type="tts">women with bunny ears: medium-dark skin tone</annotation>
-		<annotation cp="👯🏿‍♀">bestie | bff | bunny | counterpart | dancer | dark skin tone | double | ear | identical | pair | party | partying | people | soulmate | twin | twinsies | women</annotation>
-		<annotation cp="👯🏿‍♀" type="tts">women with bunny ears: dark skin tone</annotation>
 		<annotation cp="👯🏻‍♂">bestie | bff | bunny | counterpart | dancer | double | ear | identical | light skin tone | men | pair | party | partying | people | soulmate | twin | twinsies</annotation>
 		<annotation cp="👯🏻‍♂" type="tts">men with bunny ears: light skin tone</annotation>
 		<annotation cp="👯🏼‍♂">bestie | bff | bunny | counterpart | dancer | double | ear | identical | medium-light skin tone | men | pair | party | partying | people | soulmate | twin | twinsies</annotation>
@@ -3393,6 +3383,16 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="👯🏾‍♂" type="tts">men with bunny ears: medium-dark skin tone</annotation>
 		<annotation cp="👯🏿‍♂">bestie | bff | bunny | counterpart | dancer | dark skin tone | double | ear | identical | men | pair | party | partying | people | soulmate | twin | twinsies</annotation>
 		<annotation cp="👯🏿‍♂" type="tts">men with bunny ears: dark skin tone</annotation>
+		<annotation cp="👯🏻‍♀">bestie | bff | bunny | counterpart | dancer | double | ear | identical | light skin tone | pair | party | partying | people | soulmate | twin | twinsies | women</annotation>
+		<annotation cp="👯🏻‍♀" type="tts">women with bunny ears: light skin tone</annotation>
+		<annotation cp="👯🏼‍♀">bestie | bff | bunny | counterpart | dancer | double | ear | identical | medium-light skin tone | pair | party | partying | people | soulmate | twin | twinsies | women</annotation>
+		<annotation cp="👯🏼‍♀" type="tts">women with bunny ears: medium-light skin tone</annotation>
+		<annotation cp="👯🏽‍♀">bestie | bff | bunny | counterpart | dancer | double | ear | identical | medium skin tone | pair | party | partying | people | soulmate | twin | twinsies | women</annotation>
+		<annotation cp="👯🏽‍♀" type="tts">women with bunny ears: medium skin tone</annotation>
+		<annotation cp="👯🏾‍♀">bestie | bff | bunny | counterpart | dancer | double | ear | identical | medium-dark skin tone | pair | party | partying | people | soulmate | twin | twinsies | women</annotation>
+		<annotation cp="👯🏾‍♀" type="tts">women with bunny ears: medium-dark skin tone</annotation>
+		<annotation cp="👯🏿‍♀">bestie | bff | bunny | counterpart | dancer | dark skin tone | double | ear | identical | pair | party | partying | people | soulmate | twin | twinsies | women</annotation>
+		<annotation cp="👯🏿‍♀" type="tts">women with bunny ears: dark skin tone</annotation>
 		<annotation cp="🧖🏻">day | light skin tone | luxurious | pamper | person | relax | room | sauna | spa | steam | steambath | unwind</annotation>
 		<annotation cp="🧖🏻" type="tts">person in steamy room: light skin tone</annotation>
 		<annotation cp="🧖🏼">day | luxurious | medium-light skin tone | pamper | person | relax | room | sauna | spa | steam | steambath | unwind</annotation>
@@ -3753,16 +3753,6 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="🤼🏾" type="tts">people wrestling: medium-dark skin tone</annotation>
 		<annotation cp="🤼🏿">combat | dark skin tone | duel | grapple | people | ring | tournament | wrestle | wrestling</annotation>
 		<annotation cp="🤼🏿" type="tts">people wrestling: dark skin tone</annotation>
-		<annotation cp="🤼🏻‍♀">combat | duel | grapple | light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="🤼🏻‍♀" type="tts">women wrestling: light skin tone</annotation>
-		<annotation cp="🤼🏼‍♀">combat | duel | grapple | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="🤼🏼‍♀" type="tts">women wrestling: medium-light skin tone</annotation>
-		<annotation cp="🤼🏽‍♀">combat | duel | grapple | medium skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="🤼🏽‍♀" type="tts">women wrestling: medium skin tone</annotation>
-		<annotation cp="🤼🏾‍♀">combat | duel | grapple | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="🤼🏾‍♀" type="tts">women wrestling: medium-dark skin tone</annotation>
-		<annotation cp="🤼🏿‍♀">combat | dark skin tone | duel | grapple | ring | tournament | women | wrestle | wrestling</annotation>
-		<annotation cp="🤼🏿‍♀" type="tts">women wrestling: dark skin tone</annotation>
 		<annotation cp="🤼🏻‍♂">combat | duel | grapple | light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
 		<annotation cp="🤼🏻‍♂" type="tts">men wrestling: light skin tone</annotation>
 		<annotation cp="🤼🏼‍♂">combat | duel | grapple | medium-light skin tone | men | ring | tournament | wrestle | wrestling</annotation>
@@ -3773,6 +3763,16 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="🤼🏾‍♂" type="tts">men wrestling: medium-dark skin tone</annotation>
 		<annotation cp="🤼🏿‍♂">combat | dark skin tone | duel | grapple | men | ring | tournament | wrestle | wrestling</annotation>
 		<annotation cp="🤼🏿‍♂" type="tts">men wrestling: dark skin tone</annotation>
+		<annotation cp="🤼🏻‍♀">combat | duel | grapple | light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="🤼🏻‍♀" type="tts">women wrestling: light skin tone</annotation>
+		<annotation cp="🤼🏼‍♀">combat | duel | grapple | medium-light skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="🤼🏼‍♀" type="tts">women wrestling: medium-light skin tone</annotation>
+		<annotation cp="🤼🏽‍♀">combat | duel | grapple | medium skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="🤼🏽‍♀" type="tts">women wrestling: medium skin tone</annotation>
+		<annotation cp="🤼🏾‍♀">combat | duel | grapple | medium-dark skin tone | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="🤼🏾‍♀" type="tts">women wrestling: medium-dark skin tone</annotation>
+		<annotation cp="🤼🏿‍♀">combat | dark skin tone | duel | grapple | ring | tournament | women | wrestle | wrestling</annotation>
+		<annotation cp="🤼🏿‍♀" type="tts">women wrestling: dark skin tone</annotation>
 		<annotation cp="🤽🏻">light skin tone | person | playing | polo | sport | swimming | water | waterpolo</annotation>
 		<annotation cp="🤽🏻" type="tts">person playing water polo: light skin tone</annotation>
 		<annotation cp="🤽🏼">medium-light skin tone | person | playing | polo | sport | swimming | water | waterpolo</annotation>
@@ -4404,7 +4404,7 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="🇭🇰">flag</annotation>
 		<annotation cp="🇭🇰" type="tts">flag: Hong Kong SAR China</annotation>
 		<annotation cp="🇭🇲">flag</annotation>
-		<annotation cp="🇭🇲" type="tts">flag: Heard &amp; McDonald Islands</annotation>
+		<annotation cp="🇭🇲" type="tts">flag: Heard Island &amp; McDonald Islands</annotation>
 		<annotation cp="🇭🇳">flag</annotation>
 		<annotation cp="🇭🇳" type="tts">flag: Honduras</annotation>
 		<annotation cp="🇭🇷">flag</annotation>
@@ -4612,7 +4612,7 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="🇸🇬">flag</annotation>
 		<annotation cp="🇸🇬" type="tts">flag: Singapore</annotation>
 		<annotation cp="🇸🇭">flag</annotation>
-		<annotation cp="🇸🇭" type="tts">flag: St. Helena</annotation>
+		<annotation cp="🇸🇭" type="tts">flag: St. Helena, Ascension &amp; Tristan da Cunha</annotation>
 		<annotation cp="🇸🇮">flag</annotation>
 		<annotation cp="🇸🇮" type="tts">flag: Slovenia</annotation>
 		<annotation cp="🇸🇯">flag</annotation>
@@ -4648,7 +4648,7 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="🇹🇩">flag</annotation>
 		<annotation cp="🇹🇩" type="tts">flag: Chad</annotation>
 		<annotation cp="🇹🇫">flag</annotation>
-		<annotation cp="🇹🇫" type="tts">flag: French Southern Territories</annotation>
+		<annotation cp="🇹🇫" type="tts">flag: French Southern and Antarctic Lands</annotation>
 		<annotation cp="🇹🇬">flag</annotation>
 		<annotation cp="🇹🇬" type="tts">flag: Togo</annotation>
 		<annotation cp="🇹🇭">flag</annotation>
@@ -4745,5 +4745,25 @@ Derived short names and annotations, using GenerateDerivedAnnotations.java. See 
 		<annotation cp="₼" type="tts">Azerbaijani Manat</annotation>
 		<annotation cp="₾" type="tts">Georgian Lari</annotation>
 		<annotation cp="₧" type="tts">Spanish Peseta</annotation>
+		<annotation cp="🫹🏻">grip | left | light skin tone | neutral | point | that | this</annotation>
+		<annotation cp="🫹🏻" type="tts">leftwards thumb sign: light skin tone</annotation>
+		<annotation cp="🫹🏼">grip | left | medium-light skin tone | neutral | point | that | this</annotation>
+		<annotation cp="🫹🏼" type="tts">leftwards thumb sign: medium-light skin tone</annotation>
+		<annotation cp="🫹🏽">grip | left | medium skin tone | neutral | point | that | this</annotation>
+		<annotation cp="🫹🏽" type="tts">leftwards thumb sign: medium skin tone</annotation>
+		<annotation cp="🫹🏾">grip | left | medium-dark skin tone | neutral | point | that | this</annotation>
+		<annotation cp="🫹🏾" type="tts">leftwards thumb sign: medium-dark skin tone</annotation>
+		<annotation cp="🫹🏿">dark skin tone | grip | left | neutral | point | that | this</annotation>
+		<annotation cp="🫹🏿" type="tts">leftwards thumb sign: dark skin tone</annotation>
+		<annotation cp="🫺🏻">grip | light skin tone | neutral | point | right | that | this</annotation>
+		<annotation cp="🫺🏻" type="tts">rightwards thumb sign: light skin tone</annotation>
+		<annotation cp="🫺🏼">grip | medium-light skin tone | neutral | point | right | that | this</annotation>
+		<annotation cp="🫺🏼" type="tts">rightwards thumb sign: medium-light skin tone</annotation>
+		<annotation cp="🫺🏽">grip | medium skin tone | neutral | point | right | that | this</annotation>
+		<annotation cp="🫺🏽" type="tts">rightwards thumb sign: medium skin tone</annotation>
+		<annotation cp="🫺🏾">grip | medium-dark skin tone | neutral | point | right | that | this</annotation>
+		<annotation cp="🫺🏾" type="tts">rightwards thumb sign: medium-dark skin tone</annotation>
+		<annotation cp="🫺🏿">dark skin tone | grip | neutral | point | right | that | this</annotation>
+		<annotation cp="🫺🏿" type="tts">rightwards thumb sign: dark skin tone</annotation>
 	</annotations>
 </ldml>

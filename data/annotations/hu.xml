@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
-<!-- Copyright © 1991-2025 Unicode, Inc.
+<!-- Copyright © 1991-2026 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 SPDX-License-Identifier: Unicode-3.0
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
@@ -197,7 +197,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="↝" type="tts">jobbra mutató hullámos nyíl</annotation>
 		<annotation cp="↞">balra mutató duplafejű nyíl</annotation>
 		<annotation cp="↞" type="tts">balra mutató duplafejű nyíl</annotation>
-		<annotation cp="↟">felfelé mutató duplafejű nyíl</annotation>
+		<annotation cp="↟">duplafejű | felfelé | nyíl</annotation>
 		<annotation cp="↟" type="tts">felfelé mutató duplafejű nyíl</annotation>
 		<annotation cp="↠">jobbra mutató duplafejű nyíl</annotation>
 		<annotation cp="↠" type="tts">jobbra mutató duplafejű nyíl</annotation>
@@ -711,6 +711,24 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="♭" type="tts">bé</annotation>
 		<annotation cp="♯">diesis | hangjegy | kereszt | zene</annotation>
 		<annotation cp="♯" type="tts">kereszt</annotation>
+		<annotation cp="🪋">csillag | gravitáció | kőzet | tűzgömb | világűr | világvége | zuhanás</annotation>
+		<annotation cp="🪋" type="tts">meteor</annotation>
+		<annotation cp="🪌">dörzsölés | eltávolítás | hiba | írás | javítás | radírozás | rajz | tévedés | törlés | visszavonás</annotation>
+		<annotation cp="🪌" type="tts">radír</annotation>
+		<annotation cp="🪍">befogás | csapda | gyűjtés | háló</annotation>
+		<annotation cp="🪍" type="tts">nyeles háló</annotation>
+		<annotation cp="🫌">átalakulás | átváltozás | hernyó | remény | rovar | törékeny | változás | vándorlás</annotation>
+		<annotation cp="🫌" type="tts">királylepke</annotation>
+		<annotation cp="🫝">csemegeuborka | erjesztés | ízesítő | savanyúság | sós lé | ubi | uborka</annotation>
+		<annotation cp="🫝" type="tts">csemegeuborka</annotation>
+		<annotation cp="🫫">átalakulás | ellenállás | felfedés | feszültség | maszk | szétomlás | törés</annotation>
+		<annotation cp="🫫" type="tts">repedezett arc</annotation>
+		<annotation cp="🫹">az | bal | ez | fogás | mutat | semleges</annotation>
+		<annotation cp="🫹" type="tts">balra mutató hüvelykujj</annotation>
+		<annotation cp="🫺">az | ez | fogás | jobb | mutat | semleges</annotation>
+		<annotation cp="🫺" type="tts">jobbra mutató hüvelykujj</annotation>
+		<annotation cp="🛙">fény | jelzés | jelzőfény | megvilágosodás | navigáció | remény | tenger | tengeri | útmutatás</annotation>
+		<annotation cp="🛙" type="tts">világítótorony</annotation>
 		<annotation cp="😀">arc | boldog | fogak | nevetés | nevető arc | szmájli | vidám</annotation>
 		<annotation cp="😀" type="tts">nevető arc</annotation>
 		<annotation cp="😃">arc | boldog | fogak | mosoly | nagyra nyílt szemmel mosolygó arc | nevet | nevetés | nyitott száj | nyitott szájjal mosolygó arc | szmájli | vidámság</annotation>
@@ -1053,7 +1071,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="💭" type="tts">gondolatbuborék</annotation>
 		<annotation cp="💤">álmos | alszik | alvás | éjszaka | fáradt | jó éjszakát | képregény | zzz</annotation>
 		<annotation cp="💤" type="tts">alvás</annotation>
-		<annotation cp="👋">hello | integet | integetés | integető kéz | kéz | szia | test | viszlát</annotation>
+		<annotation cp="👋">hello | integet | integetés | integető kéz | kéz | szia | viszlát</annotation>
 		<annotation cp="👋" type="tts">integető kéz</annotation>
 		<annotation cp="🤚">felemelt | kéz | kézfej</annotation>
 		<annotation cp="🤚" type="tts">kézfej</annotation>
@@ -1131,7 +1149,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="🤲" type="tts">felfelé fordított tenyerek</annotation>
 		<annotation cp="🤝">alku | alkut köt | kéz | kezet ráz | kézfogás | megállapodás | megegyezés | találkozás | üdvözlés</annotation>
 		<annotation cp="🤝" type="tts">kézfogás</annotation>
-		<annotation cp="🙏">ima | imádkozik | kér | kérés | kérlek | kéz | könyörög | köszi | köszönet | köszönöm | összetett kéz | test</annotation>
+		<annotation cp="🙏">ima | imádkozik | kér | kérés | kérlek | kéz | könyörög | köszi | köszönet | köszönöm | összetett kéz</annotation>
 		<annotation cp="🙏" type="tts">összetett kéz</annotation>
 		<annotation cp="✍">írás | író kéz | kéz | test</annotation>
 		<annotation cp="✍" type="tts">író kéz</annotation>
@@ -2289,7 +2307,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="🍽" type="tts">kés és villa tányérral</annotation>
 		<annotation cp="🍴">ebéd | ebédszünet | éhes | evőeszköz | kaja | kés | kés és villa | tálalás | vacsora | villa</annotation>
 		<annotation cp="🍴" type="tts">kés és villa</annotation>
-		<annotation cp="🥄">evés, eszik | evőeszköz | kanál</annotation>
+		<annotation cp="🥄">eszik | evés | evőeszköz | kanál</annotation>
 		<annotation cp="🥄" type="tts">kanál</annotation>
 		<annotation cp="🔪">eszköz | fegyver | felszerelés | főzés | kés | konyha | konyhakés | séf | szakács</annotation>
 		<annotation cp="🔪" type="tts">konyhakés</annotation>
@@ -3075,7 +3093,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="📠" type="tts">faxkészülék</annotation>
 		<annotation cp="🔋">akkumulátor | elem</annotation>
 		<annotation cp="🔋" type="tts">elem</annotation>
-		<annotation cp="🪫">alacsony energiaszint | alacsony töltöttség | elektronikus | lemerült akkumulátor</annotation>
+		<annotation cp="🪫">akkumulátor | alacsony | elektronikus | energiaszint | lemerült | töltöttség</annotation>
 		<annotation cp="🪫" type="tts">alacsony töltöttség</annotation>
 		<annotation cp="🔌">dugó | elektromos dugó | elektronika | hálózati csatlakozó | villamosság</annotation>
 		<annotation cp="🔌" type="tts">elektromos dugó</annotation>
@@ -3087,7 +3105,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="🖨" type="tts">nyomtató</annotation>
 		<annotation cp="⌨">billentyűzet | számítógép</annotation>
 		<annotation cp="⌨" type="tts">billentyűzet</annotation>
-		<annotation cp="🖱">3 gombos | egér | három | számítógép | számítógépes egér</annotation>
+		<annotation cp="🖱">egér | számítógép</annotation>
 		<annotation cp="🖱" type="tts">számítógépes egér</annotation>
 		<annotation cp="🖲">hanyattegér, egér | számítógép | trackball</annotation>
 		<annotation cp="🖲" type="tts">trackball</annotation>
@@ -3759,39 +3777,39 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="🆙" type="tts">UP! gomb</annotation>
 		<annotation cp="🆚">bekeretezett „vs” rövidítés | ellen | ellenfél | kontra | szemben | versus | vs | VS gomb</annotation>
 		<annotation cp="🆚" type="tts">VS gomb</annotation>
-		<annotation cp="🈁">„itt” | bekeretezett „itt” katakana | japán | japán „itt” gomb | katakana | ココ</annotation>
+		<annotation cp="🈁">„itt” | bekeretezett „itt” katakana | japán | japán „itt” gomb | katakana</annotation>
 		<annotation cp="🈁" type="tts">japán „itt” gomb</annotation>
-		<annotation cp="🈂">„szervizdíj” | „szervízköltség” | bekeretezett „szervízköltség” katakana | japán | japán „szervizdíj” gomb | katakana | サ</annotation>
+		<annotation cp="🈂">„szervizdíj” | „szervízköltség” | bekeretezett „szervízköltség” katakana | japán | japán „szervizdíj” gomb | katakana</annotation>
 		<annotation cp="🈂" type="tts">japán „szervizdíj” gomb</annotation>
-		<annotation cp="🈷">„havi összeg” | bekeretezett „havi összeg” képírásjel | gomb | havi összeg | japán | japán „havi összeg” gomb | képírásjel | 月</annotation>
+		<annotation cp="🈷">„havi összeg” | bekeretezett „havi összeg” képírásjel | gomb | havi összeg | japán | japán „havi összeg” gomb | képírásjel</annotation>
 		<annotation cp="🈷" type="tts">japán „havi összeg” gomb</annotation>
-		<annotation cp="🈶">„nem ingyenes” | bekeretezett „nem díjmentes” képírásjel | fizetős | gomb | japán | japán „nem ingyenes” gomb | képírásjel | nem díjmentes | 有</annotation>
+		<annotation cp="🈶">„nem ingyenes” | bekeretezett „nem díjmentes” képírásjel | fizetős | gomb | japán | japán „nem ingyenes” gomb | képírásjel | nem díjmentes</annotation>
 		<annotation cp="🈶" type="tts">japán „nem ingyenes” gomb</annotation>
-		<annotation cp="🈯">„foglalt” | bekeretezett „foglalt” képírásjel | foglalt | japán | japán „foglalt” gomb | képírásjel | 指</annotation>
+		<annotation cp="🈯">„foglalt” | bekeretezett „foglalt” képírásjel | foglalt | japán | japán „foglalt” gomb | képírásjel</annotation>
 		<annotation cp="🈯" type="tts">japán „foglalt” gomb</annotation>
-		<annotation cp="🉐">„alkalmi vétel” | alku | bekarikázott „alku” képírásjel | japán | japán „alkalmi vétel” gomb | képírásjel | 得</annotation>
+		<annotation cp="🉐">„alkalmi vétel” | alku | bekarikázott „alku” képírásjel | japán | japán „alkalmi vétel” gomb | képírásjel</annotation>
 		<annotation cp="🉐" type="tts">japán „alkalmi vétel” gomb</annotation>
-		<annotation cp="🈹">„engedmény” | bekeretezett „engedmény” képírásjel | japán | japán „engedmény” gomb | képírásjel | 割</annotation>
+		<annotation cp="🈹">„engedmény” | bekeretezett „engedmény” képírásjel | japán | japán „engedmény” gomb | képírásjel</annotation>
 		<annotation cp="🈹" type="tts">japán „engedmény” gomb</annotation>
-		<annotation cp="🈚">“díjmentes” | „ingyenes” | bekeretezett “díjmentes” képírásjel | japán | japán „ingyenes” gomb | képírásjel | 無</annotation>
+		<annotation cp="🈚">“díjmentes” | „ingyenes” | bekeretezett “díjmentes” képírásjel | japán | japán „ingyenes” gomb | képírásjel</annotation>
 		<annotation cp="🈚" type="tts">japán „ingyenes” gomb</annotation>
-		<annotation cp="🈲">„tiltott” | bekeretezett „tiltás” képírásjel | japán | japán „tiltott” gomb | képírásjel | tilos | 禁</annotation>
+		<annotation cp="🈲">„tiltott” | bekeretezett „tiltás” képírásjel | japán | japán „tiltott” gomb | képírásjel | tilos</annotation>
 		<annotation cp="🈲" type="tts">japán „tiltott” gomb</annotation>
-		<annotation cp="🉑">„elfogadás” | „elfogadható” | bekarikázott „elfogadás” képírásjel | japán | japán „elfogadás” gomb | képírásjel | 可</annotation>
+		<annotation cp="🉑">„elfogadás” | „elfogadható” | bekarikázott „elfogadás” képírásjel | japán | japán „elfogadás” gomb | képírásjel</annotation>
 		<annotation cp="🉑" type="tts">japán „elfogadás” gomb</annotation>
-		<annotation cp="🈸">„alkalmazás” | bekeretezett „alkalmazás” képírásjel | gomb | japán | képírásjel | 申</annotation>
+		<annotation cp="🈸">„alkalmazás” | bekeretezett „alkalmazás” képírásjel | gomb | japán | képírásjel</annotation>
 		<annotation cp="🈸" type="tts">japán „alkalmazás” gomb</annotation>
-		<annotation cp="🈴">„minimális pontszám” | bekeretezett „megfelelt” képírásjel | japán | japán „minimális pontszám” gomb | képírásjel | 合</annotation>
+		<annotation cp="🈴">„minimális pontszám” | bekeretezett „megfelelt” képírásjel | japán | japán „minimális pontszám” gomb | képírásjel</annotation>
 		<annotation cp="🈴" type="tts">japán „minimális pontszám” gomb</annotation>
-		<annotation cp="🈳">„megüresedés” | bekeretezett „üres” képírásjel | japán | japán „megüresedés” gomb | képírásjel | 空</annotation>
+		<annotation cp="🈳">„megüresedés” | bekeretezett „üres” képírásjel | japán | japán „megüresedés” gomb | képírásjel</annotation>
 		<annotation cp="🈳" type="tts">japán „megüresedés” gomb</annotation>
-		<annotation cp="㊗">„gratuláció” | bekarikázott „gratuláció” képírásjel | gratuláció | gratulálok | japán | japán „gratuláció” gomb | képírásjel | 祝</annotation>
+		<annotation cp="㊗">„gratuláció” | bekarikázott „gratuláció” képírásjel | gratuláció | gratulálok | japán | japán „gratuláció” gomb | képírásjel</annotation>
 		<annotation cp="㊗" type="tts">japán „gratuláció” gomb</annotation>
-		<annotation cp="㊙">„titok” | bekarikázott „titok” képírásjel | japán | japán „titok” gomb | képírásjel | titok | 秘</annotation>
+		<annotation cp="㊙">„titok” | bekarikázott „titok” képírásjel | japán | japán „titok” gomb | képírásjel | titok</annotation>
 		<annotation cp="㊙" type="tts">japán „titok” gomb</annotation>
-		<annotation cp="🈺">„működik” | bekeretezett „működik” képírásjel | gomb | japán | képírásjel | nyitva | 営</annotation>
+		<annotation cp="🈺">„működik” | bekeretezett „működik” képírásjel | gomb | japán | képírásjel | nyitva</annotation>
 		<annotation cp="🈺" type="tts">japán „működik” gomb</annotation>
-		<annotation cp="🈵">„megtelt” | bekeretezett „teli” képírásjel | japán | japán „megtelt” gomb | képírásjel | 満</annotation>
+		<annotation cp="🈵">„megtelt” | bekeretezett „teli” képírásjel | japán | japán „megtelt” gomb | képírásjel</annotation>
 		<annotation cp="🈵" type="tts">japán „megtelt” gomb</annotation>
 		<annotation cp="🔴">alakzat | kör | piros</annotation>
 		<annotation cp="🔴" type="tts">piros kör</annotation>

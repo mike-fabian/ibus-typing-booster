@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
-<!-- Copyright © 1991-2025 Unicode, Inc.
+<!-- Copyright © 1991-2026 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 SPDX-License-Identifier: Unicode-3.0
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
@@ -573,11 +573,11 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="▧" type="tts">квадрат со исполнување од горе лево кон долу десно</annotation>
 		<annotation cp="▨">квадрат со исполнување од горе десно кон долу лево</annotation>
 		<annotation cp="▨" type="tts">квадрат со исполнување од горе десно кон долу лево</annotation>
-		<annotation cp="▩">квадрат со дијагонално исцртано исполнување</annotation>
+		<annotation cp="▩">дијагонално | квадрат | полнење | шрафирано</annotation>
 		<annotation cp="▩" type="tts">квадрат со дијагонално исцртано исполнување</annotation>
-		<annotation cp="▬">полн правоаголник</annotation>
+		<annotation cp="▬">полн | правоаголник</annotation>
 		<annotation cp="▬" type="tts">полн правоаголник</annotation>
-		<annotation cp="▭">празен правоаголник</annotation>
+		<annotation cp="▭">правоаголник | празен</annotation>
 		<annotation cp="▭" type="tts">празен правоаголник</annotation>
 		<annotation cp="▮">полн вертикален правоаголник</annotation>
 		<annotation cp="▮" type="tts">полн вертикален правоаголник</annotation>
@@ -711,6 +711,24 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="♭" type="tts">снижувалка</annotation>
 		<annotation cp="♯">музика | нота | повишувалка</annotation>
 		<annotation cp="♯" type="tts">повишувалка</annotation>
+		<annotation cp="🪋">апокалипса | вселена | гравитација | ѕвезда | карпа | огнена топка | паѓа</annotation>
+		<annotation cp="🪋" type="tts">метеор</annotation>
+		<annotation cp="🪌">врати | грешка | избриши | корекција | отстрани | пишување | триење | цртање</annotation>
+		<annotation cp="🪌" type="tts">гума за бришење</annotation>
+		<annotation cp="🪍">мрежа | собира | стапица | фаќа</annotation>
+		<annotation cp="🪍" type="tts">мрежа со рачка</annotation>
+		<annotation cp="🫌">гасеница | инсект | менува | метаморфоза | миграција | надеж | нежна | преобразба</annotation>
+		<annotation cp="🫌" type="tts">пеперутка монарх</annotation>
+		<annotation cp="🫝">густирање | додаток на јадење | зачин | корнишон | краставица | проблем | саламура | ферментација</annotation>
+		<annotation cp="🫝" type="tts">кисела краставичка</annotation>
+		<annotation cp="🫫">напнатост | отпорност | разоткривање | се маскира | се распаѓа | се рони | трансформација</annotation>
+		<annotation cp="🫫" type="tts">испукано лице</annotation>
+		<annotation cp="🫹">лево | неутрално | ова | она | покажува | стисок</annotation>
+		<annotation cp="🫹" type="tts">знак за палец налево</annotation>
+		<annotation cp="🫺">десно | неутрално | ова | она | покажува | стисок</annotation>
+		<annotation cp="🫺" type="tts">знак за палец надесно</annotation>
+		<annotation cp="🛙">водство | море | навигација | надеж | поморски | просветлување | светилник | светло | сигнал</annotation>
+		<annotation cp="🛙" type="tts">светилник</annotation>
 		<annotation cp="😀">весело | заби | лице | насмевка | расположено | среќно | фин | широка насмевка | широко насмеано лице</annotation>
 		<annotation cp="😀" type="tts">широко насмеано лице</annotation>
 		<annotation cp="😃">заби | лице | насмеано лице со големи очи | насмеано лице со отворена уста | насмевка | отворена | среќно | супер | уста | феноменално</annotation>
@@ -1698,7 +1716,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="🧑‍🧑‍🧒">возрасно лице | дете | семејство</annotation>
 		<annotation cp="🧑‍🧑‍🧒" type="tts">семејство: возрасен, возрасно лице, дете</annotation>
 		<annotation cp="🧑‍🧑‍🧒‍🧒">возрасно лице | дете | семејство</annotation>
-		<annotation cp="🧑‍🧑‍🧒‍🧒" type="tts">семејство: возрасен, возрасно лице, дете, дете</annotation>
+		<annotation cp="🧑‍🧑‍🧒‍🧒" type="tts">семејство: возрасен, возрасен, дете, дете</annotation>
 		<annotation cp="🧑‍🧒">возрасно лице | дете | семејство</annotation>
 		<annotation cp="🧑‍🧒" type="tts">семејство: возрасно лице, дете</annotation>
 		<annotation cp="🧑‍🧒‍🧒">возрасно лице | дете | семејство</annotation>
@@ -3641,7 +3659,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="♂" type="tts">знак за машко</annotation>
 		<annotation cp="⚧">трансродов | трансродов симбол</annotation>
 		<annotation cp="⚧" type="tts">трансродов симбол</annotation>
-		<annotation cp="✖">× | x | знак | знак за множење | множење | множи | откажи | х</annotation>
+		<annotation cp="✖">× | знак | множење | множи | откажи | х</annotation>
 		<annotation cp="✖" type="tts">множење</annotation>
 		<annotation cp="➕">+ | задебелен знак за плус | задебелен плус | знак | знак за плус | математика | плус</annotation>
 		<annotation cp="➕" type="tts">плус</annotation>
@@ -3761,37 +3779,37 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="🆚" type="tts">копче ВС</annotation>
 		<annotation cp="🈁">„тука“ | јапонски | катакана | копче „тука“ на јапонски</annotation>
 		<annotation cp="🈁" type="tts">копче „тука“ на јапонски</annotation>
-		<annotation cp="🈂">„услугата се наплаќа“ | јапонски | катакана | копче „услугата се наплаќа“ на јапонски | サ</annotation>
+		<annotation cp="🈂">„услугата се наплаќа“ | јапонски | катакана | копче | услуга</annotation>
 		<annotation cp="🈂" type="tts">копче „услугата се наплаќа“ на јапонски</annotation>
-		<annotation cp="🈷">„месечна сума“ | идеограф | јапонски | копче „месечна сума“ на јапонски | месечна сума | 月</annotation>
+		<annotation cp="🈷">идеограф | јапонски | копче | месечна | сума</annotation>
 		<annotation cp="🈷" type="tts">копче „месечна сума“ на јапонски</annotation>
-		<annotation cp="🈶">„не е бесплатно“ | идеограф | јапонски | копче „не е бесплатно“ на јапонски | 有</annotation>
+		<annotation cp="🈶">бесплатно | идеограф | јапонски | копче | наплата | не е</annotation>
 		<annotation cp="🈶" type="tts">копче „не е бесплатно“ на јапонски</annotation>
-		<annotation cp="🈯">„резервирано“ | идеограф | јапонски | копче „резервирано“ на јапонски | 指</annotation>
+		<annotation cp="🈯">идеограф | јапонски | копче | резервирано</annotation>
 		<annotation cp="🈯" type="tts">копче „резервирано“ на јапонски</annotation>
-		<annotation cp="🉐">„зделка“ | идеограф | јапонски | копче „зделка“ на јапонски | 得</annotation>
+		<annotation cp="🉐">„зделка“ | идеограф | јапонски | копче „зделка“ на јапонски</annotation>
 		<annotation cp="🉐" type="tts">копче „зделка“ на јапонски</annotation>
-		<annotation cp="🈹">„попуст“ | идеограф | јапонски | копче „попуст“ на јапонски | 割</annotation>
+		<annotation cp="🈹">„попуст“ | идеограф | јапонски | копче „попуст“ на јапонски</annotation>
 		<annotation cp="🈹" type="tts">копче „попуст“ на јапонски</annotation>
-		<annotation cp="🈚">„бесплатно“ | идеограф | јапонски | копче „бесплатно“ на јапонски | 無</annotation>
+		<annotation cp="🈚">„бесплатно“ | идеограф | јапонски | копче „бесплатно“ на јапонски</annotation>
 		<annotation cp="🈚" type="tts">копче „бесплатно“ на јапонски</annotation>
-		<annotation cp="🈲">„забрането“ | идеограф | јапонски | копче „забрането“ на јапонски | 禁</annotation>
+		<annotation cp="🈲">„забрането“ | идеограф | јапонски | копче „забрането“ на јапонски</annotation>
 		<annotation cp="🈲" type="tts">копче „забрането“ на јапонски</annotation>
-		<annotation cp="🉑">„прифатливо“ | идеограф | јапонски | копче „прифатливо“ на јапонски | 可</annotation>
+		<annotation cp="🉑">„прифатливо“ | идеограф | јапонски | копче „прифатливо“ на јапонски</annotation>
 		<annotation cp="🉑" type="tts">копче „прифатливо“ на јапонски</annotation>
-		<annotation cp="🈸">„апликација“ | идеограф | јапонски | копче „апликација“ на јапонски | 申</annotation>
+		<annotation cp="🈸">„апликација“ | идеограф | јапонски | копче „апликација“ на јапонски</annotation>
 		<annotation cp="🈸" type="tts">копче „апликација“ на јапонски</annotation>
-		<annotation cp="🈴">идеограф | јапонски | копче „преодна оценка“ на јапонски | преодна оценка | 合</annotation>
+		<annotation cp="🈴">идеограф | јапонски | копче „преодна оценка“ на јапонски | преодна оценка</annotation>
 		<annotation cp="🈴" type="tts">копче „преодна оценка“ на јапонски</annotation>
-		<annotation cp="🈳">„слободно“ | идеограф | јапонски | копче „слободно“ на јапонски | 空</annotation>
+		<annotation cp="🈳">„слободно“ | идеограф | јапонски | копче „слободно“ на јапонски</annotation>
 		<annotation cp="🈳" type="tts">копче „слободно“ на јапонски</annotation>
-		<annotation cp="㊗">„честитки“ | идеограф | јапонски | копче „честитки“ на јапонски | честитање | честитки | 祝</annotation>
+		<annotation cp="㊗">идеограф | јапонски | копче | честитки</annotation>
 		<annotation cp="㊗" type="tts">копче „честитки“ на јапонски</annotation>
-		<annotation cp="㊙">„тајно“ | идеограф | јапонски | копче „тајно“ на јапонски | тајна | 秘</annotation>
+		<annotation cp="㊙">„тајно“ | идеограф | јапонски | копче „тајно“ на јапонски | тајна</annotation>
 		<annotation cp="㊙" type="tts">копче „тајно“ на јапонски</annotation>
-		<annotation cp="🈺">„отворено“ | идеограф | јапонски | копче „отворено“ на јапонски | 営</annotation>
+		<annotation cp="🈺">„отворено“ | идеограф | јапонски | копче „отворено“ на јапонски</annotation>
 		<annotation cp="🈺" type="tts">копче „отворено“ на јапонски</annotation>
-		<annotation cp="🈵">„зафатено“ | зафатено | идеограф | јапонски | копче „зафатено“ на јапонски | 満</annotation>
+		<annotation cp="🈵">зафатено | идеограф | јапонски | копче</annotation>
 		<annotation cp="🈵" type="tts">копче „зафатено“ на јапонски</annotation>
 		<annotation cp="🔴">геометрија | круг | црвен</annotation>
 		<annotation cp="🔴" type="tts">црвен круг</annotation>

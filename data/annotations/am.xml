@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
-<!-- Copyright © 1991-2025 Unicode, Inc.
+<!-- Copyright © 1991-2026 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 SPDX-License-Identifier: Unicode-3.0
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
@@ -711,6 +711,24 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="♭" type="tts">ፍላት</annotation>
 		<annotation cp="♯">ሻርፕ</annotation>
 		<annotation cp="♯" type="tts">ሻርፕ</annotation>
+		<annotation cp="🪋">መውደቅ | ስበት | አፖካሊፕስ | ኮከብ | የእሳት ኳስ | ድንጋይ | ጠፈር</annotation>
+		<annotation cp="🪋" type="tts">ተወርዋሪ</annotation>
+		<annotation cp="🪌">መጻፍ | ሥዕል | ሰርዝ | ስህተት | ቀልብስ | አስወግድ | እርማት</annotation>
+		<annotation cp="🪌" type="tts">ማጥፊያ</annotation>
+		<annotation cp="🪍">መረብ | መሰብሰብ | መያዝ | ወጥመድ</annotation>
+		<annotation cp="🪍" type="tts">እጀታ ያለው መረብ</annotation>
+		<annotation cp="🫌">ለውጥ | ሜታሞርፎሲስ | ተሰባሪ | ተስፋ | ትራንስፎርሜሽን | ነፍሳት | አባጨጓሬ | ፍልሰት</annotation>
+		<annotation cp="🫌" type="tts">ንጉሳዊ ቢራቢሮ</annotation>
+		<annotation cp="🫝">መደሰት | ቅመም | ብሩኒ | ችግር | ኪያር | ገርኪን | ፈርጥ</annotation>
+		<annotation cp="🫝" type="tts">ኪያር</annotation>
+		<annotation cp="🫫">ለውጥ | መስበር | መግለጥ | መፍረስ | ውጥረት | የመቋቋም ችሎታ | ጭንብል</annotation>
+		<annotation cp="🫫" type="tts">የተሰነጠቀ ፊት</annotation>
+		<annotation cp="🫹">መያዣ | ነጥብ | ያ | ይህ | ገለልተኛ | ግራ</annotation>
+		<annotation cp="🫹" type="tts">የግራ አውራ ጣት ምልክት</annotation>
+		<annotation cp="🫺">መያዣ | ቀኝ | ነጥብ | ያ | ይህ | ገለልተኛ</annotation>
+		<annotation cp="🫺" type="tts">የቀኝ አውራ ጣት ምልክት</annotation>
+		<annotation cp="🛙">መመሪያ | ምልክት | ባህር | ብርሃን | ተስፋ | አቅጣጫ | የባህር ጉዞ | የአሳማ ስጋ</annotation>
+		<annotation cp="🛙" type="tts">የመብራት ቤት</annotation>
 		<annotation cp="😀">ሳቅ | ደስተኛ | ደስታ | ፈገግ ያለ ፊት | ፈገግታ | ፊት</annotation>
 		<annotation cp="😀" type="tts">ፈገግ ያለ ፊት</annotation>
 		<annotation cp="😃">ሣቅ | ሳቅ | አሪፍ | አፉ የተከፈተ ሣቂታ ፊት | አፍ | ክፍት | ፈገግታ | ፊት</annotation>
@@ -3437,7 +3455,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="🪧" type="tts">ማስታወቂያ</annotation>
 		<annotation cp="🪪">መለያ | መታወቂያ | መታወቂያ ካርድ | ማስረጃ | ምስክርነቶች | ሰነድ | የማንነት መለያ | ደህንነት | ፈቃድ</annotation>
 		<annotation cp="🪪" type="tts">መታወቂያ ካርድ</annotation>
-		<annotation cp="🏧">ራስ-ሰር | ባንክ | ኤቲኤም | የኤቲኤም ምልክት | የገንዘብ መክፈያ ማሽን | ገንዘብ ከፋይ</annotation>
+		<annotation cp="🏧">ራስ-ሰር | ባንክ | ኤቲኤም | የኤቲኤም ምልክት | ገንዘብ | ገንዘብ ከፋይ</annotation>
 		<annotation cp="🏧" type="tts">የኤቲኤም ምልክት</annotation>
 		<annotation cp="🚮">ቆሻሻ | ቆሻሻ መጣያ | ቆሻሻሣጥን | በቆሻሻ መጣያ ጣሉ ምልክት | የቆሻሻ ቅርጫት</annotation>
 		<annotation cp="🚮" type="tts">በቆሻሻ መጣያ ጣሉ ምልክት</annotation>
@@ -3783,7 +3801,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="🈸" type="tts">የተግብር ካሬ አይዶግራፍ</annotation>
 		<annotation cp="🈴">ሐሳብ መግለጫ | ማለፊያ ነጥብ | ማለፊያ ነጥብ አዝራር | አንድነት ካሬ አይዶግራፍ | አዝራር | የቻይና | ጃፓን</annotation>
 		<annotation cp="🈴" type="tts">አንድነት ካሬ አይዶግራፍ</annotation>
-		<annotation cp="🈳">“ክፍት ቦታ” | ባዶ ካሬ አይዶግራፍ | አይዲዮግራፍ | የቻይና | የጃፓን “ክፍት ቦታ” አዝራር | የጃፓን ፊደል የያዘ ካሬ | ጃፓንኛ | 空</annotation>
+		<annotation cp="🈳">“ክፍት ቦታ” | ባዶ ካሬ አይዶግራፍ | አይዲዮግራፍ | የቻይና | የጃፓን “ክፍት ቦታ” አዝራር | የጃፓን ፊደል የያዘ ካሬ | ጃፓንኛ</annotation>
 		<annotation cp="🈳" type="tts">ባዶ ካሬ አይዶግራፍ</annotation>
 		<annotation cp="㊗">አይዶግራፍ | እንኳን ደስ አለህ | እንኳን ደስ አለሽ | እንኳን ደስ አለዎ | ክብ የደስታ መግለጫ አይዶግራፍ | የቻይና | የደስታ መግለጫ | የደስታ መግለጫዎች | የጃፓን</annotation>
 		<annotation cp="㊗" type="tts">ክብ የደስታ መግለጫ አይዶግራፍ</annotation>
@@ -3791,7 +3809,7 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="㊙" type="tts">ክብ የምስጢር አይዶግራፍ</annotation>
 		<annotation cp="🈺">ለሥራ ክፍት ነው | ምልክት | የስርዓተ ክወና ካሬ አይዶግራፍ | የቻይና | የጃፓን | ጃፓንኛ</annotation>
 		<annotation cp="🈺" type="tts">የስርዓተ ክወና ካሬ አይዶግራፍ</annotation>
-		<annotation cp="🈵">ሙሉ ካሬ አይዶግራፍ | አይዲዮግራፍ | ክፍት ቦታ የለም | የቻይና | የጃፓን “ክፍት ቦታ የለም” አዝራር | የጃፓን ፊደል የያዘ ካሬ | ጃፓንኛ | 満</annotation>
+		<annotation cp="🈵">ሙሉ ካሬ አይዶግራፍ | አይዲዮግራፍ | ክፍት ቦታ የለም | የቻይና | የጃፓን “ክፍት ቦታ የለም” አዝራር | የጃፓን ፊደል የያዘ ካሬ | ጃፓንኛ</annotation>
 		<annotation cp="🈵" type="tts">ሙሉ ካሬ አይዶግራፍ</annotation>
 		<annotation cp="🔴">ቀይ | ቀይ መብራት | አደጋ | ክልክል | ክብ | ኳስ | የተከለከለ | ጂኦሜትሪያዊ</annotation>
 		<annotation cp="🔴" type="tts">ቀይ ክብ</annotation>

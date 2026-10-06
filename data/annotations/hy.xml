@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
-<!-- Copyright © 1991-2025 Unicode, Inc.
+<!-- Copyright © 1991-2026 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 SPDX-License-Identifier: Unicode-3.0
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
@@ -711,6 +711,24 @@ Warnings: All cp values have U+FE0F characters removed. See /annotationsDerived/
 		<annotation cp="♭" type="tts">կիսվար</annotation>
 		<annotation cp="♯">դիեզ | երաժշտություն | կիսվեր | ձայնանիշ</annotation>
 		<annotation cp="♯" type="tts">կիսվեր</annotation>
+		<annotation cp="🪋">երկինք | երկնաքար | ընկնող | ձգողականություն | մետեոր | տիեզերք</annotation>
+		<annotation cp="🪋" type="tts">ասուպ</annotation>
+		<annotation cp="🪌">գրել | մաքրել | ուղղել | ուղղում | ջնջել | ռետին | սխալ | սրբել</annotation>
+		<annotation cp="🪌" type="tts">ջնջոց</annotation>
+		<annotation cp="🪍">բռնել | ծուղակ | միջատ | ցանց</annotation>
+		<annotation cp="🪍" type="tts">միջատացանց</annotation>
+		<annotation cp="🫌">թրթուր | կերպարանափոխություն | միգրացիա | միջատ | տրանսֆորմացիա | փխրուն</annotation>
+		<annotation cp="🫌" type="tts">մոնարխ թիթեռ</annotation>
+		<annotation cp="🫝">աղաջուր | թթու | խրթխրթան | մարինացված | պահածո | քացախ</annotation>
+		<annotation cp="🫝" type="tts">թթու վարունգ</annotation>
+		<annotation cp="🫫">դիմադրել | դիմակ | զսպել | լարված | նյարդային</annotation>
+		<annotation cp="🫫" type="tts">ճաքող դեմք</annotation>
+		<annotation cp="🫹">դա | ձախ | մատնանշել | չեզոք | սա</annotation>
+		<annotation cp="🫹" type="tts">բութ մատը ձախ նշան</annotation>
+		<annotation cp="🫺">աջ | դա | մատնանշել | չեզոք | սա</annotation>
+		<annotation cp="🫺" type="tts">բութ մատը աջ նշան</annotation>
+		<annotation cp="🛙">ազդանշան | լույս | լուսավորում | ծով | ծովագնացություն | հույս | նավագնացություն | նավարկություն | ուղղություն</annotation>
+		<annotation cp="🛙" type="tts">փարոս</annotation>
 		<annotation cp="😀">դեմք | ծիծաղող դեմք | քմծիծաղել</annotation>
 		<annotation cp="😀" type="tts">ծիծաղող դեմք</annotation>
 		<annotation cp="😃">բաց | բերան | դեմք | ժպտալ | ժպտացող դեմք բաց բերանով</annotation>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "../../common/dtd/ldml.dtd">
-<!-- Copyright © 1991-2025 Unicode, Inc.
+<!-- Copyright © 1991-2026 Unicode, Inc.
 For terms of use, see http://www.unicode.org/copyright.html
 SPDX-License-Identifier: Unicode-3.0
 CLDR data files are interpreted according to the LDML specification (http://unicode.org/reports/tr35/)
@@ -709,6 +709,24 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="♭" type="tts">pẹ̀lẹbẹ</annotation>
 		<annotation cp="♯">dísì | dísísì | ìwé | mú | orin</annotation>
 		<annotation cp="♯" type="tts">mú</annotation>
+		<annotation cp="🪋">àpáta | àyè | ìparun ayé | ìràwọ̀ | ó ń já wálẹ̀ | òbíríkítí iná | òòfà</annotation>
+		<annotation cp="🪋" type="tts">ìràwọ̀ tó ń jábọ́</annotation>
+		<annotation cp="🪌">àṣìṣe | àtúnṣe | àwòrán | dá a padà | kíkọ | nù | pa | pa a rẹ́ | yọ ọ́ kúrò</annotation>
+		<annotation cp="🪌" type="tts">ìpàwérẹ́</annotation>
+		<annotation cp="🪍">àwọ̀n | gbà | mú | páńpẹ́</annotation>
+		<annotation cp="🪍" type="tts">àwọ̀n pẹ̀lú èkù</annotation>
+		<annotation cp="🫌">àyípadà | ẹlẹgẹ́ | ìdin labalábá | ìparadà | ìrètí | ìṣílọ | ìyípadà | kòkòrò</annotation>
+		<annotation cp="🫌" type="tts">labalábá ọba</annotation>
+		<annotation cp="🫝">èròjà afóúnjẹládùn | èso apálá | èso apálá wẹ́wẹ́ | gbádùn | kan | omi iyọ̀ | wàhálà</annotation>
+		<annotation cp="🫝" type="tts">èso apálá</annotation>
+		<annotation cp="🫫">àìfararọ | bíbojú | fi hàn | fífọ́ | ìfaradà | ìyípadà | rírún</annotation>
+		<annotation cp="🫫" type="tts">ojú tó ń sán</annotation>
+		<annotation cp="🫹">àyè | èyí | gbá mú | ìyẹn | kò ní ipa | òsì</annotation>
+		<annotation cp="🫹" type="tts">àmì àtàǹpàkò sí apá òsì</annotation>
+		<annotation cp="🫺">ààyè | èyí | gbá mú | ìyẹn | kò nípa | ọ̀tún</annotation>
+		<annotation cp="🫺" type="tts">àmì àtàǹpàkò sí apá ọ̀tún</annotation>
+		<annotation cp="🛙">àmì | ìlàlóye | ìmọ́lẹ̀ | ìrètí | ìtọ́ni | ìtukọ̀ | òkun | ti òkun</annotation>
+		<annotation cp="🛙" type="tts">ilé atọ́nà ọkọ̀ òkun</annotation>
 		<annotation cp="😀">fẹyín | ojú | Ojú tó rẹ́rìn</annotation>
 		<annotation cp="😀" type="tts">Ojú tó rẹ́rìn</annotation>
 		<annotation cp="😃">ẹnu | ojú | Ojú tó rẹ́rìn Pẹ̀lú Ẹnu Lílà sílẹ̀ | rẹ́rìń músẹ́ | ṣí</annotation>
@@ -3757,39 +3775,39 @@ CLDR data files are interpreted according to the LDML specification (http://unic
 		<annotation cp="🆙" type="tts">Oke! Bọ̀tìnì</annotation>
 		<annotation cp="🆚">Bọtini VS | figagbága pẹ̀lú | fp</annotation>
 		<annotation cp="🆚" type="tts">Bọtini VS</annotation>
-		<annotation cp="🈁">&quot;níbí&quot; | Bọtini Japanisi &quot;nibi&quot; | Japanese | katakana | ココ</annotation>
+		<annotation cp="🈁">&quot;níbí&quot; | Bọtini Japanisi &quot;nibi&quot; | Japanese | katakana</annotation>
 		<annotation cp="🈁" type="tts">Bọtini Japanisi &quot;nibi&quot;</annotation>
-		<annotation cp="🈂">&quot;ìdíyelé fún owó ọ̀yà&quot; | Bọ́tìnì Japanísì &quot;ìdíyelé fún owó ọ̀yà&quot; | Japanese | katakana | サ</annotation>
+		<annotation cp="🈂">&quot;ìdíyelé fún owó ọ̀yà&quot; | Bọ́tìnì Japanísì &quot;ìdíyelé fún owó ọ̀yà&quot; | Japanese | katakana</annotation>
 		<annotation cp="🈂" type="tts">Bọ́tìnì Japanísì &quot;ìdíyelé fún owó ọ̀yà&quot;</annotation>
-		<annotation cp="🈷">&quot;owó ìdíyelé oṣoòṣù&quot; | àmì ajẹmáwòrán | Bó̩tìnì Japanisi &quot;owó ìdíyelé oṣoòṣù&quot; | Japanese | 月</annotation>
+		<annotation cp="🈷">&quot;owó ìdíyelé oṣoòṣù&quot; | àmì ajẹmáwòrán | Bó̩tìnì Japanisi &quot;owó ìdíyelé oṣoòṣù&quot; | Japanese</annotation>
 		<annotation cp="🈷" type="tts">Bó̩tìnì Japanisi &quot;owó ìdíyelé oṣoòṣù&quot;</annotation>
-		<annotation cp="🈶">&quot;kòṣọ̀fé̩&quot; | àmì ajẹmáwòrán | Bọtini Japanisi &quot;kosi lọfẹ&quot; | Japanese | 有</annotation>
+		<annotation cp="🈶">&quot;kòṣọ̀fé̩&quot; | àmì ajẹmáwòrán | Bọtini Japanisi &quot;kosi lọfẹ&quot; | Japanese</annotation>
 		<annotation cp="🈶" type="tts">Bọtini Japanisi &quot;kosi lọfẹ&quot;</annotation>
-		<annotation cp="🈯">&quot;ìpamó̩&quot; | àmì ajẹmáwòrán | Bọtini Japanisi &quot;nipamọ&quot; | Japanese | 指</annotation>
+		<annotation cp="🈯">&quot;ìpamó̩&quot; | àmì ajẹmáwòrán | Bọtini Japanisi &quot;nipamọ&quot; | Japanese</annotation>
 		<annotation cp="🈯" type="tts">Bọtini Japanisi &quot;nipamọ&quot;</annotation>
-		<annotation cp="🉐">&quot;ìdúnàdúrà&quot; | àmì ajẹmáwòrán | Bọtini Japanisi &quot;idunadura&quot; | Japanese | 得</annotation>
+		<annotation cp="🉐">&quot;ìdúnàdúrà&quot; | àmì ajẹmáwòrán | Bọtini Japanisi &quot;idunadura&quot; | Japanese</annotation>
 		<annotation cp="🉐" type="tts">Bọtini Japanisi &quot;idunadura&quot;</annotation>
-		<annotation cp="🈹">&quot;ẹ̀dínwó&quot; | àmì ajẹmáwòrán | Bọtini Japanisi &quot;ẹdinwo&quot; | Japanese | 割</annotation>
+		<annotation cp="🈹">&quot;ẹ̀dínwó&quot; | àmì ajẹmáwòrán | Bọtini Japanisi &quot;ẹdinwo&quot; | Japanese</annotation>
 		<annotation cp="🈹" type="tts">Bọtini Japanisi &quot;ẹdinwo&quot;</annotation>
-		<annotation cp="🈚">&quot;lọ́fẹ̀é̩&quot; | àmì ajẹmáwòrán | Bọtini Japanisi &quot;lọ́fẹ̀é̩&quot; | Japanese | 無</annotation>
+		<annotation cp="🈚">&quot;lọ́fẹ̀é̩&quot; | àmì ajẹmáwòrán | Bọtini Japanisi &quot;lọ́fẹ̀é̩&quot; | Japanese</annotation>
 		<annotation cp="🈚" type="tts">Bọtini Japanisi &quot;lọ́fẹ̀é̩&quot;</annotation>
-		<annotation cp="🈲">&quot;àìfàyègbà&quot; | àmì ajẹmáwòrán | Bọtini Japanisi &quot;ṣediwọ&quot; | Japanese | 禁</annotation>
+		<annotation cp="🈲">&quot;àìfàyègbà&quot; | àmì ajẹmáwòrán | Bọtini Japanisi &quot;ṣediwọ&quot; | Japanese</annotation>
 		<annotation cp="🈲" type="tts">Bọtini Japanisi &quot;ṣediwọ&quot;</annotation>
-		<annotation cp="🉑">&quot;ìté̩wó̩gbà&quot; | àmì ajẹmáwòrán | Bọtini &quot;itẹwọgba&quot; Japanisi | Japanese | 可</annotation>
+		<annotation cp="🉑">&quot;ìté̩wó̩gbà&quot; | àmì ajẹmáwòrán | Bọtini &quot;itẹwọgba&quot; Japanisi | Japanese</annotation>
 		<annotation cp="🉑" type="tts">Bọtini &quot;itẹwọgba&quot; Japanisi</annotation>
-		<annotation cp="🈸">&quot;ohun èlò&quot; | àmì ajẹmáwòrán | Bọtini &quot;ohun elo&quot; Japanisi | Japanese | 申</annotation>
+		<annotation cp="🈸">&quot;ohun èlò&quot; | àmì ajẹmáwòrán | Bọtini &quot;ohun elo&quot; Japanisi | Japanese</annotation>
 		<annotation cp="🈸" type="tts">Bọtini &quot;ohun elo&quot; Japanisi</annotation>
-		<annotation cp="🈴">&quot;gbendéke ìkẹ́kọ̀ó̩ yege&quot; | àmì ajẹmáwòrán | Bọtini &quot;gbendeke iyege&quot; Japanisi | Japanese | 合</annotation>
+		<annotation cp="🈴">&quot;gbendéke ìkẹ́kọ̀ó̩ yege&quot; | àmì ajẹmáwòrán | Bọtini &quot;gbendeke iyege&quot; Japanisi | Japanese</annotation>
 		<annotation cp="🈴" type="tts">Bọtini &quot;gbendeke iyege&quot; Japanisi</annotation>
-		<annotation cp="🈳">&quot;ààyè&quot; | àmì ajẹmáwòrán | Bọtini &quot;aaye&quot; Japanisi | Japanese | 空</annotation>
+		<annotation cp="🈳">&quot;ààyè&quot; | àmì ajẹmáwòrán | Bọtini &quot;aaye&quot; Japanisi | Japanese</annotation>
 		<annotation cp="🈳" type="tts">Bọtini &quot;aaye&quot; Japanisi</annotation>
-		<annotation cp="㊗">&quot;kú oríre&quot; | àmì ajẹmáwòrán | Bó̩tìnì &quot;kú oríre&quot; Japanisi | Japanese | 祝</annotation>
+		<annotation cp="㊗">&quot;kú oríre&quot; | àmì ajẹmáwòrán | Bó̩tìnì &quot;kú oríre&quot; Japanisi | Japanese</annotation>
 		<annotation cp="㊗" type="tts">Bó̩tìnì &quot;kú oríre&quot; Japanisi</annotation>
-		<annotation cp="㊙">&quot;àṣírí&quot; | àmì ajẹmáwòrán | Bó̩tìnì &quot;àṣírí&quot;Japanisi | Japanese | 秘</annotation>
+		<annotation cp="㊙">&quot;àṣírí&quot; | àmì ajẹmáwòrán | Bó̩tìnì &quot;àṣírí&quot;Japanisi | Japanese</annotation>
 		<annotation cp="㊙" type="tts">Bó̩tìnì &quot;àṣírí&quot;Japanisi</annotation>
-		<annotation cp="🈺">&quot;ṣí fún okòwò&quot; | àmì ajẹmáwòrán | Bọtini &quot;ṣi fun okowo&quot; Japanisi | Japanese | 営</annotation>
+		<annotation cp="🈺">&quot;ṣí fún okòwò&quot; | àmì ajẹmáwòrán | Bọtini &quot;ṣi fun okowo&quot; Japanisi | Japanese</annotation>
 		<annotation cp="🈺" type="tts">Bọtini &quot;ṣi fun okowo&quot; Japanisi</annotation>
-		<annotation cp="🈵">&quot;kosi aaye&quot; | àmì ajẹmáwòrán | Bọtini &quot;kosi aaye&quot; Japanisi | Japanese | 満</annotation>
+		<annotation cp="🈵">&quot;kosi aaye&quot; | àmì ajẹmáwòrán | Bọtini &quot;kosi aaye&quot; Japanisi | Japanese</annotation>
 		<annotation cp="🈵" type="tts">Bọtini &quot;kosi aaye&quot; Japanisi</annotation>
 		<annotation cp="🔴">jiomẹ́tíríkì | pupa | Rogodo | Rogodo Aláwọ̀ pupa</annotation>
 		<annotation cp="🔴" type="tts">Rogodo Aláwọ̀ pupa</annotation>
