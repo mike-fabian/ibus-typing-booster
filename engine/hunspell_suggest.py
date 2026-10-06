@@ -370,15 +370,11 @@ class Hunspell:
                 str(os.getenv('IBUS_TYPING_BOOSTER_DEBUG_LEVEL')))
         except (TypeError, ValueError):
             DEBUG_LEVEL = 0
-        if DEBUG_LEVEL > 1:
-            if dictionary_names:
-                LOGGER.debug(
-                    'Hunspell.__init__(dictionary_names=%s)\n',
-                    dictionary_names)
-            else:
-                LOGGER.debug('Hunspell.__init__(dictionary_names=())\n')
         self._suggest_cache: dict[str, list[tuple[str, int]]] = {}
         self._dictionary_names: list[str] = list(dictionary_names)
+        if DEBUG_LEVEL > 1:
+            LOGGER.debug('Hunspell.__init__(dictionary_names=%s)\n',
+                         self._dictionary_names)
         self._dictionaries: list[Dictionary] = []
         self.init_dictionaries()
 
@@ -519,11 +515,10 @@ class Hunspell:
         Checks whether there is at least one dictionary where all words
         in the input list spellcheck as True.
 
-        :param words: A list or tuple of words to spellcheck
-        :return: - '' if at least one input word is empty
-                 - name of a dictionary where all
-                   words in the input list spellcheck as True, if
-                   there is no such dictionary, return ''.
+        :param words: An iterable of words to spellcheck
+        :return: - [] if at least one input word is empty
+                 - names of dictionaries where all words in the input list
+                   spellcheck as True, or [] if there is no such dictionary.
 
         Examples:
 
@@ -567,11 +562,9 @@ class Hunspell:
         >>> h.spellcheck_single_dictionary(('I', 'have', ''))
         []
         '''
-        if not words:
+        words = list(words)
+        if not all(words):
             return []
-        for word in words:
-            if not word:
-                return []
         dictionary_names = []
         for dictionary in self._dictionaries:
             spellcheck_total = True

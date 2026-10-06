@@ -9017,7 +9017,7 @@ class TypingBoosterEngine(IBus.Engine):
             commands: Iterable[str] = ()) -> tuple[bool, bool]:
         '''Handle hotkey commands
 
-        :return: A tuple of too boolean values (match, return_value)
+        :return: A tuple of two boolean values (match, return_value)
                  “match” is true if the hotkey matched, false if not
                  “return_value” is the value which should be returned
                  from do_process_key_event().
@@ -9036,6 +9036,7 @@ class TypingBoosterEngine(IBus.Engine):
             LOGGER.debug('self._hotkeys=%s\n', str(self._hotkeys))
         if self._hotkeys is None:
             return (False, False)
+        commands = list(commands)
         if not commands:
             # If no specific command list to match is given, try to
             # match against all commands. Sorting shouldn’t really

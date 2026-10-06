@@ -756,7 +756,8 @@ class EmojiMatcher:
             values_key: str,
             values: Any) -> None:
         '''Adds data to the emoji_dict if not already there'''
-        if not emoji_dict_key or not values_key or not values:
+        emoji_string, language = emoji_dict_key
+        if not emoji_string or not language or not values_key or not values:
             return
         normalized_key = (
             self.variation_selector_normalize(
