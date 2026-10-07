@@ -1026,6 +1026,9 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(
             '☺', trans.transliterate(['C-u', '2', '6', '3', 'A', ' ']).strip())
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 1),
+        'Skipping because m17n-db is too old')
     def test_unicode_hi_itrans(self) -> None:
         '''Unicode input should work not only when the t-unicode input method
         is selected but for all m17n input methods'''
@@ -1045,6 +1048,10 @@ class M17nTranslitTestCase(unittest.TestCase):
             'नमस्ते ☺',
             trans.transliterate(
                 list('namaste ') + ['C-u', '2', '6', '3', 'a', ' ']).strip())
+        self.assertEqual(
+            'नमस्ते ☺नमस्ते',
+            trans.transliterate(
+                list('namaste ') + ['C-u', '2', '6', '3', 'a', ' '] + list('namaste')).strip())
 
     def test_hi_inscript2(self) -> None:
         trans = self.get_transliterator_or_skip('hi-inscript2')
