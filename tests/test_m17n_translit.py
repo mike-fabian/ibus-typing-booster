@@ -52,6 +52,10 @@ sys.path.pop(0)
 # pylint: disable=missing-function-docstring
 # pylint: disable=invalid-name
 
+M17N_LIB_INFO = itb_util_core.M17nLibInfo()
+M17N_LIB_VERSION = (M17N_LIB_INFO.get_major_version(),
+                    M17N_LIB_INFO.get_minor_version(),
+                    M17N_LIB_INFO.get_micro_version())
 M17N_DB_INFO = itb_util_core.M17nDbInfo()
 M17N_DB_VERSION = (M17N_DB_INFO.get_major_version(),
                    M17N_DB_INFO.get_minor_version(),
@@ -1052,6 +1056,16 @@ class M17nTranslitTestCase(unittest.TestCase):
             'नमस्ते ☺नमस्ते',
             trans.transliterate(
                 list('namaste ') + ['C-u', '2', '6', '3', 'a', ' '] + list('namaste')).strip())
+
+    @unittest.skipUnless(
+        M17N_LIB_VERSION >= (1, 8, 7),
+        'Skipping because m17n-lib is older than 1.8.7')
+    def test_si_wijesekara_reinit_fallback(self) -> None:
+        '''This should not crash, with m17n-lib <= 1.8.6 this crashes.'''
+        trans = self.get_transliterator_or_skip('si-wijesekara')
+        trans.transliterate(
+            list('/--------|----------------.-----------------------.')
+            + ['BackSpace'])
 
     def test_hi_inscript2(self) -> None:
         trans = self.get_transliterator_or_skip('hi-inscript2')

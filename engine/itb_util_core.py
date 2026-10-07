@@ -5418,6 +5418,60 @@ class ComposeSequences:
                           x
                       ))
 
+class M17nLibInfo:
+    '''Class to find information about the available m17n-lib version.'''
+
+    def __init__(self) -> None:
+        self._version: str = ''
+        self._major_version: int = 0
+        self._minor_version: int = 0
+        self._micro_version: int = 0
+        self._get_version()
+
+    def _get_version(self) -> None:
+        '''Gets the version of m17n-lib using pkg-config.'''
+        pkg_config = shutil.which('pkg-config')
+        if not pkg_config:
+            return
+        try:
+            result = subprocess.run(
+                [pkg_config, '--modversion', 'm17n-core'],
+                capture_output=True,
+                encoding='utf-8',
+                check=True)
+            self._version = result.stdout.strip()
+        except (FileNotFoundError, subprocess.CalledProcessError):
+            LOGGER.debug('Could not determine the m17n-lib version')
+            return
+        try:
+            major, minor, micro = self._version.split('.')
+            self._major_version = int(major)
+            self._minor_version = int(minor)
+            self._micro_version = int(micro)
+        except ValueError:
+            LOGGER.warning(
+                'Unexpected m17n-lib version string: %s', self._version)
+            self._version = ''
+            self._major_version = 0
+            self._minor_version = 0
+            self._micro_version = 0
+
+    def get_version(self) -> str:
+        '''Returns the version of m17n-lib'''
+        return self._version
+
+    def get_major_version(self) -> int:
+        '''Returns the major version of m17n-lib as an integer'''
+        return self._major_version
+
+    def get_minor_version(self) -> int:
+        '''Returns the minor version of m17n-lib as an integer'''
+        return self._minor_version
+
+    def get_micro_version(self) -> int:
+        '''Returns the micro version of m17n-lib as an integer'''
+        return self._micro_version
+
 class M17nDbInfo:
     '''Class to find and store information about the available input
     methods from m17n-db.
