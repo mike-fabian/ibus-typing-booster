@@ -26,7 +26,7 @@ import re
 import sqlite3
 import time
 import unicodedata
-from collections.abc import Iterator
+from collections.abc import Generator
 from contextlib import contextmanager
 from typing import Any, Optional, TextIO
 
@@ -101,7 +101,7 @@ class TabSqliteDb:
     def transaction(
             self,
             suppress_errors: bool = False,
-            checkpoint: bool = True) -> Iterator[None]:
+            checkpoint: bool = True) -> Generator[None, None, None]:
         '''Context manager for atomic database transactions
 
         :param suppress_errors: If True, non-critical
@@ -164,7 +164,7 @@ class TabSqliteDb:
     @contextmanager
     def sqlite3_connect_database(
             cls, db_file: str,
-            suppress_errors: bool = False) -> Iterator[sqlite3.Connection]:
+            suppress_errors: bool = False) -> Generator[sqlite3.Connection, None, None]:
         '''For short-lived connections (automatic close)'''
         database_connection = None
         try:
