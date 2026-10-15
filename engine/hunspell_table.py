@@ -1547,10 +1547,11 @@ class TypingBoosterEngine(IBus.Engine):
                         'instantiating Transliterator(%(ime)s)',
                         {'ime': ime})
                 self._transliterators[ime] = m17n_translit.Transliterator(ime)
-            except ValueError:
+            except (RuntimeError, ValueError):
                 LOGGER.exception(
-                    'Error initializing Transliterator %s '
-                    'Maybe /usr/share/m17n/%s.mim is not installed?',
+                    'Error initializing Transliterator(%s). '
+                    'Check m17n initialization and whether '
+                    '/usr/share/m17n/%s.mim is installed.',
                     ime, ime)
                 # Use dummy transliterator “NoIME” as a fallback:
                 self._transliterators[ime] = m17n_translit.Transliterator(

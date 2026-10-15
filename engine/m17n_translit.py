@@ -24,7 +24,7 @@ import ctypes
 import logging
 import re
 import sys
-from typing import Any, NamedTuple
+from typing import Any, NamedTuple, Optional
 
 from gi import require_version
 
@@ -93,6 +93,9 @@ class libm17n__MInputContext(ctypes.Structure):
 
 # pylint: disable=invalid-name
 libm17n__lib = None
+libm17n__init_error: Optional[int] = None
+M17N_SHELL_INITIALIZED = 2
+libm17n__status: Optional[int] = None
 libm17n__msymbol = None
 libm17n__mplist = None
 libm17n__mconv_buffer_converter = None
@@ -152,6 +155,16 @@ def init() -> None:
     global libm17n__lib
     libm17n__lib = ctypes.CDLL('libm17n.so.0', mode = ctypes.RTLD_GLOBAL)
     libm17n__lib.m17n_init()
+    global libm17n__init_error
+    libm17n__init_error = ctypes.c_int.in_dll(libm17n__lib, 'merror_code').value
+    libm17n__lib.m17n_status.argtypes = []
+    libm17n__lib.m17n_status.restype = ctypes.c_int
+    global libm17n__status
+    libm17n__status = libm17n__lib.m17n_status()
+    if libm17n__init_error is None or libm17n__init_error != 0:
+        return
+    if libm17n__status is None or libm17n__status < M17N_SHELL_INITIALIZED:
+        return
     global libm17n__mplist
     libm17n__mplist = libm17n__lib.mplist
     libm17n__mplist.argtypes = []
@@ -986,6 +999,11 @@ class Transliterator:
         if ime == 'NoIME':
             self._dummy = True
             return
+        if libm17n__init_error is None or libm17n__init_error != 0:
+            raise RuntimeError(f'm17n_init() failed: merror_code={libm17n__init_error}')
+        if libm17n__status is None or libm17n__status < M17N_SHELL_INITIALIZED:
+            raise RuntimeError(f'm17n_init() did not initialize the SHELL API: '
+                               f'm17n_status={libm17n__status}')
         self._language = ime.split('-')[0]
         self._name = '-'.join(ime.split('-')[1:])
         self._msymbol_single_char_with_prefix_pattern = re.compile(
