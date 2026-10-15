@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 15 Okt 2026 Release 2.31.2
+* Check whether m17n-lib was correctly initialized (See also https://security-tracker.debian.org/tracker/CVE-2026-107170)
+* Update emoji annotations from CLDR to include Unicode 18.0.0 emoji
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 21 Sep 2026 Release 2.31.1
 * Update current Unicode version in emoji_picker.py to 18.0
 * Update emoji-data.txt, emoji-sequences.txt, emoji-test.txt, emoji-variation-sequences.txt, emoji-zwj-sequences.txt to Unicode 18.0.0 released 2026-09-16
