@@ -1,4 +1,8 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 19 Okt 2026 Release 2.31.3
+* Fix for Use IBus keymap: (missing comma in one element tuple ('ISO_Level3_Shift',)) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/929)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 15 Okt 2026 Release 2.31.2
 * Check whether m17n-lib was correctly initialized (See also https://security-tracker.debian.org/tracker/CVE-2026-107170)
 * Update emoji annotations from CLDR to include Unicode 18.0.0 emoji
