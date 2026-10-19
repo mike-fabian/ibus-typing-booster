@@ -10208,7 +10208,7 @@ class TypingBoosterEngine(IBus.Engine):
                 self._translated_key_state &= ~IBus.ModifierType.SUPER_MASK
             else:
                 self._translated_key_state |= IBus.ModifierType.SUPER_MASK
-        if new_key.name in ('ISO_Level3_Shift'):
+        if new_key.name in ('ISO_Level3_Shift',):
             if new_key.release:
                 self._translated_key_state &= ~IBus.ModifierType.MOD5_MASK
             else:
