@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-08-26 16:10+0200\n"
+"POT-Creation-Date: 2026-10-16 10:25+0200\n"
 "PO-Revision-Date: 2026-01-30 18:58+0000\n"
 "Last-Translator: Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>\n"
 "Language-Team: Romanian <https://translate.fedoraproject.org/projects/ibus-"
@@ -20,7 +20,7 @@ msgstr ""
 "20)) ? 1 : 2;\n"
 "X-Generator: Weblate 5.15.2\n"
 
-#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:294
+#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:295
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
 msgstr "Selector de pictograme „emoji”"
@@ -30,15 +30,15 @@ msgstr "Selector de pictograme „emoji”"
 msgid "Emoji browsing tool"
 msgstr "Instrument de explorare pictograme „emoji”"
 
-#: engine/emoji_picker.py:429
+#: engine/emoji_picker.py:430
 msgid "Search for emoji"
 msgstr "Căutare pictogramă „emoji”"
 
-#: engine/emoji_picker.py:435
+#: engine/emoji_picker.py:436
 msgid "Set the font to display emoji"
 msgstr "Alegeți fontul pentru afișarea pictogramelor „emoji”"
 
-#: engine/emoji_picker.py:442
+#: engine/emoji_picker.py:443
 msgid "Set font size"
 msgstr "Alegeți mărimea fontului"
 
@@ -50,11 +50,11 @@ msgstr "Alegeți mărimea fontului"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:464
+#: engine/emoji_picker.py:465
 msgid "Fallback"
 msgstr "Font alternativ"
 
-#: engine/emoji_picker.py:466
+#: engine/emoji_picker.py:467
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -63,102 +63,102 @@ msgstr ""
 "sau pentru părți ale secvențelor de „emoji” care nu pot fi afișate folosind "
 "fontul selectat."
 
-#: engine/emoji_picker.py:566
+#: engine/emoji_picker.py:567
 msgid "Recently used"
 msgstr "Utilizate recent"
 
-#: engine/emoji_picker.py:741
+#: engine/emoji_picker.py:742
 msgid "Categories"
 msgstr "Categorii"
 
-#: engine/emoji_picker.py:742
+#: engine/emoji_picker.py:743
 msgid "Unicode categories"
 msgstr "Categorii Unicode"
 
-#: engine/emoji_picker.py:743
+#: engine/emoji_picker.py:744
 msgid "Keywords"
 msgstr "Cuvinte-cheie"
 
-#: engine/emoji_picker.py:761
+#: engine/emoji_picker.py:762
 msgid "Fonts used to render this emoji:"
 msgstr "Fonturi folosite pentru a reda această pictogramă „emoji”:"
 
-#: engine/emoji_picker.py:819
+#: engine/emoji_picker.py:820
 msgid "Unicode Version:"
 msgstr "Versiunea Unicode:"
 
-#: engine/emoji_picker.py:823
+#: engine/emoji_picker.py:824
 msgid "Emoji Version:"
 msgstr "Versiunea pictogramelor „emoji”:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
-#: engine/emoji_picker.py:830
+#: engine/emoji_picker.py:831
 msgid "Emoji properties:"
 msgstr "Proprietăți pictograme „emoji”:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
-#: engine/emoji_picker.py:836
+#: engine/emoji_picker.py:837
 msgid "Unicode category:"
 msgstr "Categorie Unicode:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
-#: engine/emoji_picker.py:843
+#: engine/emoji_picker.py:844
 msgid "Unicode block:"
 msgstr "Blocul Unicode:"
 
-#: engine/emoji_picker.py:862 engine/emoji_picker.py:2045
+#: engine/emoji_picker.py:863 engine/emoji_picker.py:2046
 msgid "Left click to copy"
 msgstr "Apăsați butonul stâng al mouse-ului pentru a copia"
 
-#: engine/emoji_picker.py:865
+#: engine/emoji_picker.py:866
 msgid "Long press or middle click for skin tones"
 msgstr ""
 "Apăsare lungă a butonului stâng sau apăsați butonul din mijloc al mouse-ului "
 "pentru tonuri de piele"
 
-#: engine/emoji_picker.py:866
+#: engine/emoji_picker.py:867
 msgid "Right click for info"
 msgstr "Apăsați butonul drept al mouse-ului pentru informații"
 
-#: engine/emoji_picker.py:1407
+#: engine/emoji_picker.py:1408
 msgid "Search Results"
 msgstr "Rezultatele căutării"
 
-#: engine/emoji_picker.py:1414
+#: engine/emoji_picker.py:1415
 msgid "Search produced empty result."
 msgstr "Căutarea nu a dat niciun rezultat."
 
-#: engine/emoji_picker.py:1743 engine/emoji_picker.py:1898
+#: engine/emoji_picker.py:1744 engine/emoji_picker.py:1899
 msgid "Copied to clipboard!"
 msgstr "Copiat în clipboard!"
 
-#: engine/emoji_picker.py:1796
+#: engine/emoji_picker.py:1797
 msgid "Clear recently used"
 msgstr "Șterge elementele utilizate recent"
 
-#: engine/emoji_picker.py:1801 setup/main.py:301
+#: engine/emoji_picker.py:1802 setup/main.py:301
 msgid "About"
 msgstr "Despre"
 
-#: engine/emoji_picker.py:1804
+#: engine/emoji_picker.py:1805
 msgid "Quit"
 msgstr "Ieșire"
 
-#: engine/emoji_picker.py:2138
+#: engine/emoji_picker.py:2139
 msgid "Lookup on emojipedia"
 msgstr "Căutare în emojipedia"
 
-#: engine/emoji_picker.py:2236 engine/emoji_picker.py:2237
-#: engine/emoji_picker.py:2238 setup/main.py:1742
+#: engine/emoji_picker.py:2237 engine/emoji_picker.py:2238
+#: engine/emoji_picker.py:2239 setup/main.py:1742
 msgid "System default"
 msgstr "Valoarea implicită a sistemului"
 
-#: engine/emoji_picker.py:2370
+#: engine/emoji_picker.py:2371
 msgid "Set Font"
 msgstr "Alegeți fontul"
 
@@ -204,56 +204,56 @@ msgstr "Predicții de simboluri Unicode și emoji"
 msgid "Off the record mode"
 msgstr "Modul fără înregistrare (confidențial)"
 
-#: engine/hunspell_table.py:2618
+#: engine/hunspell_table.py:2619
 msgid "Highest priority dictionary"
 msgstr "Dicționar cu prioritate maximă"
 
-#: engine/hunspell_table.py:2619
+#: engine/hunspell_table.py:2620
 msgid "Choose highest priority dictionary"
 msgstr "Alegeți dicționarul cu prioritate maximă"
 
-#: engine/hunspell_table.py:2648
+#: engine/hunspell_table.py:2649
 msgid "Preedit input method"
 msgstr "Metoda de introducere a textului"
 
-#: engine/hunspell_table.py:2649
+#: engine/hunspell_table.py:2650
 msgid "Switch preedit input method"
 msgstr "Schimbă metoda de introducere a textului"
 
-#: engine/hunspell_table.py:3020
+#: engine/hunspell_table.py:3021
 msgid "Setup"
 msgstr "Configurare"
 
-#: engine/hunspell_table.py:3023 setup/main.py:168
+#: engine/hunspell_table.py:3024 setup/main.py:168
 msgid "Preferences for ibus-typing-booster"
 msgstr "Preferințe pentru ibus-typing-booster"
 
-#: engine/hunspell_table.py:7261
+#: engine/hunspell_table.py:7262
 msgid "Failed to import Google speech-to-text."
 msgstr "Importul funcției Google de transformare a vorbirii în text a eșuat."
 
-#: engine/hunspell_table.py:7264
+#: engine/hunspell_table.py:7265
 msgid "Failed to import pyaudio."
 msgstr "Importarea pyaudio a eșuat."
 
-#: engine/hunspell_table.py:7269
+#: engine/hunspell_table.py:7270
 msgid "No supported language for speech recognition."
 msgstr "Nu există limbă acceptată pentru recunoașterea vocală."
 
-#: engine/hunspell_table.py:7273
+#: engine/hunspell_table.py:7274
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "Fișierul „%s” cu datele de autentificare pentru aplicația Google nu a fost "
 "găsit."
 
-#: engine/hunspell_table.py:7284
+#: engine/hunspell_table.py:7285
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Inițializarea funcției Google de transformare a vorbirii în text a eșuat. "
 "Consultați fișierul „debug.log”."
 
-#: engine/hunspell_table.py:7391
+#: engine/hunspell_table.py:7392
 msgid "Google speech-to-text error. See debug.log."
 msgstr ""
 "Eroare a funcției Google de transformare a vorbirii în text a eșuat. "
@@ -261,56 +261,56 @@ msgstr ""
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1221 engine/itb_emoji.py:1222 engine/itb_emoji.py:1223
-#: engine/itb_emoji.py:1427
+#: engine/itb_emoji.py:1222 engine/itb_emoji.py:1223 engine/itb_emoji.py:1224
+#: engine/itb_emoji.py:1428
 msgid "people"
 msgstr "persoane"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1224 engine/itb_emoji.py:1423
+#: engine/itb_emoji.py:1225 engine/itb_emoji.py:1424
 msgid "nature"
 msgstr "natură"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1225 engine/itb_emoji.py:1419
+#: engine/itb_emoji.py:1226 engine/itb_emoji.py:1420
 msgid "food"
 msgstr "alimente"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1226 engine/itb_emoji.py:1433
+#: engine/itb_emoji.py:1227 engine/itb_emoji.py:1434
 msgid "travel"
 msgstr "călătorie"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1227 engine/itb_emoji.py:1236 engine/itb_emoji.py:1415
+#: engine/itb_emoji.py:1228 engine/itb_emoji.py:1237 engine/itb_emoji.py:1416
 msgid "activity"
 msgstr "activități"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1228 engine/itb_emoji.py:1425
+#: engine/itb_emoji.py:1229 engine/itb_emoji.py:1426
 msgid "objects"
 msgstr "obiecte"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1229 engine/itb_emoji.py:1431
+#: engine/itb_emoji.py:1230 engine/itb_emoji.py:1432
 msgid "symbols"
 msgstr "simboluri"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1230 engine/itb_emoji.py:1417
+#: engine/itb_emoji.py:1231 engine/itb_emoji.py:1418
 msgid "flags"
 msgstr "steguri"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1231 engine/itb_emoji.py:1232 engine/itb_emoji.py:1421
+#: engine/itb_emoji.py:1232 engine/itb_emoji.py:1233 engine/itb_emoji.py:1422
 msgid "modifier"
 msgstr "modificatori"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1233 engine/itb_emoji.py:1429
+#: engine/itb_emoji.py:1234 engine/itb_emoji.py:1430
 msgid "regional"
 msgstr "regiuni"
 
@@ -344,27 +344,27 @@ msgstr "regiuni"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Altele, Diverse, Diferite, Variate"
 
-#: engine/itb_util_core.py:4812 engine/itb_util_core.py:5537
+#: engine/itb_util_core.py:4812 engine/itb_util_core.py:5591
 msgid "File not found"
 msgstr "Fișierul nu a fost găsit"
 
-#: engine/itb_util_core.py:4815 engine/itb_util_core.py:5540
+#: engine/itb_util_core.py:4815 engine/itb_util_core.py:5594
 msgid "Permission error"
 msgstr "Eroare de permisiuni"
 
-#: engine/itb_util_core.py:4818 engine/itb_util_core.py:5543
+#: engine/itb_util_core.py:4818 engine/itb_util_core.py:5597
 msgid "Unicode decoding error"
 msgstr "Eroare de decodificare Unicode"
 
-#: engine/itb_util_core.py:4821 engine/itb_util_core.py:5546
+#: engine/itb_util_core.py:4821 engine/itb_util_core.py:5600
 msgid "Unknown error"
 msgstr "Eroare necunoscută"
 
-#: engine/itb_util_core.py:5515
+#: engine/itb_util_core.py:5569
 msgid "Native Keyboard"
 msgstr "Tastatură nativă"
 
-#: engine/itb_util_core.py:5517
+#: engine/itb_util_core.py:5571
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
