@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-08-26 16:10+0200\n"
+"POT-Creation-Date: 2026-10-16 10:25+0200\n"
 "PO-Revision-Date: 2026-01-12 22:19+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Japanese <https://translate.fedoraproject.org/projects/ibus-"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.15.1\n"
 
-#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:294
+#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:295
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
 msgstr "絵文字の選択"
@@ -31,15 +31,15 @@ msgstr "絵文字の選択"
 msgid "Emoji browsing tool"
 msgstr "絵文字検索ツール"
 
-#: engine/emoji_picker.py:429
+#: engine/emoji_picker.py:430
 msgid "Search for emoji"
 msgstr "絵文字の検索"
 
-#: engine/emoji_picker.py:435
+#: engine/emoji_picker.py:436
 msgid "Set the font to display emoji"
 msgstr "絵文字の表示フォントを設定"
 
-#: engine/emoji_picker.py:442
+#: engine/emoji_picker.py:443
 msgid "Set font size"
 msgstr "フォントのサイズ"
 
@@ -51,11 +51,11 @@ msgstr "フォントのサイズ"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:464
+#: engine/emoji_picker.py:465
 msgid "Fallback"
 msgstr "フォールバック"
 
-#: engine/emoji_picker.py:466
+#: engine/emoji_picker.py:467
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -63,100 +63,100 @@ msgstr ""
 "選択されたフォントでは表示できない絵文字や絵文字の一部に対して、フォントの"
 "フォールバックを使用するかどうか。"
 
-#: engine/emoji_picker.py:566
+#: engine/emoji_picker.py:567
 msgid "Recently used"
 msgstr "最近の使用"
 
-#: engine/emoji_picker.py:741
+#: engine/emoji_picker.py:742
 msgid "Categories"
 msgstr "カテゴリー"
 
-#: engine/emoji_picker.py:742
+#: engine/emoji_picker.py:743
 msgid "Unicode categories"
 msgstr "Unicode のカテゴリー"
 
-#: engine/emoji_picker.py:743
+#: engine/emoji_picker.py:744
 msgid "Keywords"
 msgstr "キーワード"
 
-#: engine/emoji_picker.py:761
+#: engine/emoji_picker.py:762
 msgid "Fonts used to render this emoji:"
 msgstr "この絵文字を表示するために使用されるフォント："
 
-#: engine/emoji_picker.py:819
+#: engine/emoji_picker.py:820
 msgid "Unicode Version:"
 msgstr "ユニコードバージョン:"
 
-#: engine/emoji_picker.py:823
+#: engine/emoji_picker.py:824
 msgid "Emoji Version:"
 msgstr "絵文字バージョン:"
 
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
-#: engine/emoji_picker.py:830
+#: engine/emoji_picker.py:831
 msgid "Emoji properties:"
 msgstr "絵文字のプロパティ:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
-#: engine/emoji_picker.py:836
+#: engine/emoji_picker.py:837
 msgid "Unicode category:"
 msgstr "ユニコードカテゴリー:"
 
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
-#: engine/emoji_picker.py:843
+#: engine/emoji_picker.py:844
 msgid "Unicode block:"
 msgstr "ユニコードブロック:"
 
-#: engine/emoji_picker.py:862 engine/emoji_picker.py:2045
+#: engine/emoji_picker.py:863 engine/emoji_picker.py:2046
 msgid "Left click to copy"
 msgstr "左クリックでコピー"
 
-#: engine/emoji_picker.py:865
+#: engine/emoji_picker.py:866
 msgid "Long press or middle click for skin tones"
 msgstr "長押しまたは中クリックで肌の色を選択"
 
-#: engine/emoji_picker.py:866
+#: engine/emoji_picker.py:867
 msgid "Right click for info"
 msgstr "右クリックで情報"
 
-#: engine/emoji_picker.py:1407
+#: engine/emoji_picker.py:1408
 msgid "Search Results"
 msgstr "検索結果"
 
-#: engine/emoji_picker.py:1414
+#: engine/emoji_picker.py:1415
 msgid "Search produced empty result."
 msgstr "検索は空の結果を出しました。"
 
-#: engine/emoji_picker.py:1743 engine/emoji_picker.py:1898
+#: engine/emoji_picker.py:1744 engine/emoji_picker.py:1899
 msgid "Copied to clipboard!"
 msgstr "文字をクリップボードにコピーしました！"
 
-#: engine/emoji_picker.py:1796
+#: engine/emoji_picker.py:1797
 msgid "Clear recently used"
 msgstr "最近の使用を消去"
 
-#: engine/emoji_picker.py:1801 setup/main.py:301
+#: engine/emoji_picker.py:1802 setup/main.py:301
 msgid "About"
 msgstr "このアプリケーションについて"
 
-#: engine/emoji_picker.py:1804
+#: engine/emoji_picker.py:1805
 msgid "Quit"
 msgstr "終了"
 
-#: engine/emoji_picker.py:2138
+#: engine/emoji_picker.py:2139
 msgid "Lookup on emojipedia"
 msgstr "Emojipedia で検索"
 
-#: engine/emoji_picker.py:2236 engine/emoji_picker.py:2237
-#: engine/emoji_picker.py:2238 setup/main.py:1742
+#: engine/emoji_picker.py:2237 engine/emoji_picker.py:2238
+#: engine/emoji_picker.py:2239 setup/main.py:1742
 msgid "System default"
 msgstr "システムのデフォルト"
 
-#: engine/emoji_picker.py:2370
+#: engine/emoji_picker.py:2371
 msgid "Set Font"
 msgstr "フォントの選択"
 
@@ -203,109 +203,109 @@ msgstr "Unicode 記号と絵文字の予測"
 msgid "Off the record mode"
 msgstr "オフ・ザ・レコードモード"
 
-#: engine/hunspell_table.py:2618
+#: engine/hunspell_table.py:2619
 msgid "Highest priority dictionary"
 msgstr "最優先辞書"
 
-#: engine/hunspell_table.py:2619
+#: engine/hunspell_table.py:2620
 msgid "Choose highest priority dictionary"
 msgstr "最優先辞書を選択"
 
-#: engine/hunspell_table.py:2648
+#: engine/hunspell_table.py:2649
 msgid "Preedit input method"
 msgstr "プリエディット入力方法"
 
-#: engine/hunspell_table.py:2649
+#: engine/hunspell_table.py:2650
 msgid "Switch preedit input method"
 msgstr "プリエディット入力方法の切り替え"
 
-#: engine/hunspell_table.py:3020
+#: engine/hunspell_table.py:3021
 msgid "Setup"
 msgstr "設定"
 
-#: engine/hunspell_table.py:3023 setup/main.py:168
+#: engine/hunspell_table.py:3024 setup/main.py:168
 msgid "Preferences for ibus-typing-booster"
 msgstr "ibus-typing-booster の設定"
 
-#: engine/hunspell_table.py:7261
+#: engine/hunspell_table.py:7262
 msgid "Failed to import Google speech-to-text."
 msgstr "Google音声テキストのインポートに失敗しました。"
 
-#: engine/hunspell_table.py:7264
+#: engine/hunspell_table.py:7265
 msgid "Failed to import pyaudio."
 msgstr "pyaudio のインポートに失敗しました。"
 
-#: engine/hunspell_table.py:7269
+#: engine/hunspell_table.py:7270
 msgid "No supported language for speech recognition."
 msgstr "音声認識に対応する言語がありません。"
 
-#: engine/hunspell_table.py:7273
+#: engine/hunspell_table.py:7274
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr ""
 "'Google application credentials' ファイル '%s' が見つかりませんでした。"
 
-#: engine/hunspell_table.py:7284
+#: engine/hunspell_table.py:7285
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Google音声テキストの初期化に失敗しました。debug.logを参照してください。"
 
-#: engine/hunspell_table.py:7391
+#: engine/hunspell_table.py:7392
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Google音声テキストエラー。debug.logを参照してください。"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1221 engine/itb_emoji.py:1222 engine/itb_emoji.py:1223
-#: engine/itb_emoji.py:1427
+#: engine/itb_emoji.py:1222 engine/itb_emoji.py:1223 engine/itb_emoji.py:1224
+#: engine/itb_emoji.py:1428
 msgid "people"
 msgstr "人間"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1224 engine/itb_emoji.py:1423
+#: engine/itb_emoji.py:1225 engine/itb_emoji.py:1424
 msgid "nature"
 msgstr "自然"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1225 engine/itb_emoji.py:1419
+#: engine/itb_emoji.py:1226 engine/itb_emoji.py:1420
 msgid "food"
 msgstr "飲食"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1226 engine/itb_emoji.py:1433
+#: engine/itb_emoji.py:1227 engine/itb_emoji.py:1434
 msgid "travel"
 msgstr "旅行"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1227 engine/itb_emoji.py:1236 engine/itb_emoji.py:1415
+#: engine/itb_emoji.py:1228 engine/itb_emoji.py:1237 engine/itb_emoji.py:1416
 msgid "activity"
 msgstr "活動"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1228 engine/itb_emoji.py:1425
+#: engine/itb_emoji.py:1229 engine/itb_emoji.py:1426
 msgid "objects"
 msgstr "物"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1229 engine/itb_emoji.py:1431
+#: engine/itb_emoji.py:1230 engine/itb_emoji.py:1432
 msgid "symbols"
 msgstr "符号"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1230 engine/itb_emoji.py:1417
+#: engine/itb_emoji.py:1231 engine/itb_emoji.py:1418
 msgid "flags"
 msgstr "旗"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1231 engine/itb_emoji.py:1232 engine/itb_emoji.py:1421
+#: engine/itb_emoji.py:1232 engine/itb_emoji.py:1233 engine/itb_emoji.py:1422
 msgid "modifier"
 msgstr "修飾"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1233 engine/itb_emoji.py:1429
+#: engine/itb_emoji.py:1234 engine/itb_emoji.py:1430
 msgid "regional"
 msgstr "地方指示子"
 
@@ -339,27 +339,27 @@ msgstr "地方指示子"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "その他、雑多、様々、多様"
 
-#: engine/itb_util_core.py:4812 engine/itb_util_core.py:5537
+#: engine/itb_util_core.py:4812 engine/itb_util_core.py:5591
 msgid "File not found"
 msgstr "ファイルが見つかりません"
 
-#: engine/itb_util_core.py:4815 engine/itb_util_core.py:5540
+#: engine/itb_util_core.py:4815 engine/itb_util_core.py:5594
 msgid "Permission error"
 msgstr "パーミッションエラーです"
 
-#: engine/itb_util_core.py:4818 engine/itb_util_core.py:5543
+#: engine/itb_util_core.py:4818 engine/itb_util_core.py:5597
 msgid "Unicode decoding error"
 msgstr "Unicode 解読エラー"
 
-#: engine/itb_util_core.py:4821 engine/itb_util_core.py:5546
+#: engine/itb_util_core.py:4821 engine/itb_util_core.py:5600
 msgid "Unknown error"
 msgstr "不明なエラー"
 
-#: engine/itb_util_core.py:5515
+#: engine/itb_util_core.py:5569
 msgid "Native Keyboard"
 msgstr "ネイティブキーボード"
 
-#: engine/itb_util_core.py:5517
+#: engine/itb_util_core.py:5571
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/mike-fabian/ibus-typing-booster/"
 "issues\n"
-"POT-Creation-Date: 2026-08-26 16:10+0200\n"
+"POT-Creation-Date: 2026-10-16 10:25+0200\n"
 "PO-Revision-Date: 2025-04-02 07:48+0000\n"
 "Last-Translator: Mike FABIAN <mfabian@redhat.com>\n"
 "Language-Team: Swahili <https://translate.fedoraproject.org/projects/ibus-"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.10.4\n"
 
-#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:294
+#: engine/emoji-picker.desktop.in.in:2 engine/emoji_picker.py:295
 #: org.freedesktop.ibus.engine.typing_booster.emoji_picker.metainfo.xml.in:6
 msgid "Emoji Picker"
 msgstr "Kichaguzi Cha Emoji"
@@ -33,15 +33,15 @@ msgstr "Kichaguzi Cha Emoji"
 msgid "Emoji browsing tool"
 msgstr "Toleo La Unikodi:"
 
-#: engine/emoji_picker.py:429
+#: engine/emoji_picker.py:430
 msgid "Search for emoji"
 msgstr "Tafuta emoji"
 
-#: engine/emoji_picker.py:435
+#: engine/emoji_picker.py:436
 msgid "Set the font to display emoji"
 msgstr "Weka fonti ya kuonyesha emoji"
 
-#: engine/emoji_picker.py:442
+#: engine/emoji_picker.py:443
 msgid "Set font size"
 msgstr "Weka ukubwa wa fonti"
 
@@ -53,11 +53,11 @@ msgstr "Weka ukubwa wa fonti"
 #. If font fallback is on, other fonts will be tried for emoji
 #. or parts of emoji sequences which cannot be displayed in the
 #. selected font.
-#: engine/emoji_picker.py:464
+#: engine/emoji_picker.py:465
 msgid "Fallback"
 msgstr "Tumia fonti ya akiba"
 
-#: engine/emoji_picker.py:466
+#: engine/emoji_picker.py:467
 msgid ""
 "Whether to use font fallback for emoji or parts of emoji sequences which "
 "cannot be displayed using the selected font."
@@ -65,31 +65,31 @@ msgstr ""
 "Tumia fonti ya akiba kwa emoji au sehumu za emoji zisizoweza kuonyeshwa na "
 "fonti lilyochaguliwa."
 
-#: engine/emoji_picker.py:566
+#: engine/emoji_picker.py:567
 msgid "Recently used"
 msgstr "Imetumiwa hivi karibuni"
 
-#: engine/emoji_picker.py:741
+#: engine/emoji_picker.py:742
 msgid "Categories"
 msgstr "Kategoria"
 
-#: engine/emoji_picker.py:742
+#: engine/emoji_picker.py:743
 msgid "Unicode categories"
 msgstr "Kategoria za unikodi"
 
-#: engine/emoji_picker.py:743
+#: engine/emoji_picker.py:744
 msgid "Keywords"
 msgstr "Vidokezo"
 
-#: engine/emoji_picker.py:761
+#: engine/emoji_picker.py:762
 msgid "Fonts used to render this emoji:"
 msgstr "Fonti iliyotumika kuonyesha emoji hii:"
 
-#: engine/emoji_picker.py:819
+#: engine/emoji_picker.py:820
 msgid "Unicode Version:"
 msgstr "Toleo La Unikodi:"
 
-#: engine/emoji_picker.py:823
+#: engine/emoji_picker.py:824
 #, fuzzy
 #| msgid "Unicode Version:"
 msgid "Emoji Version:"
@@ -98,7 +98,7 @@ msgstr "Toleo La Unikodi:"
 #. Translators: Emoji properties from unicode.org like
 #. “Emoji”, “Emoji_Presentation”, “Extended_Pictographic”,
 #. “RGI_Emoji_ZWJ_Sequence”, ...
-#: engine/emoji_picker.py:830
+#: engine/emoji_picker.py:831
 #, fuzzy
 #| msgid "Unicode Version:"
 msgid "Emoji properties:"
@@ -106,7 +106,7 @@ msgstr "Toleo La Unikodi:"
 
 #. Translators: The Unicode category is something like
 #. “So Symbol Other”, “Sm Symbol Math”, ...
-#: engine/emoji_picker.py:836
+#: engine/emoji_picker.py:837
 #, fuzzy
 #| msgid "Unicode categories"
 msgid "Unicode category:"
@@ -115,58 +115,58 @@ msgstr "Kategoria za unikodi"
 #. Translators: The Unicode block is something like
 #. “Basic Latin”, “Cyrillic”, “Mathematical Operators”, ...
 #. (see: https://en.wikipedia.org/wiki/Unicode_block)
-#: engine/emoji_picker.py:843
+#: engine/emoji_picker.py:844
 #, fuzzy
 #| msgid "Unicode Version:"
 msgid "Unicode block:"
 msgstr "Toleo La Unikodi:"
 
-#: engine/emoji_picker.py:862 engine/emoji_picker.py:2045
+#: engine/emoji_picker.py:863 engine/emoji_picker.py:2046
 msgid "Left click to copy"
 msgstr "Bofya kushoto kunakili"
 
-#: engine/emoji_picker.py:865
+#: engine/emoji_picker.py:866
 msgid "Long press or middle click for skin tones"
 msgstr "Bofya kwa muda au kitufe cha katikati kubadili rangi ya ngozi"
 
-#: engine/emoji_picker.py:866
+#: engine/emoji_picker.py:867
 msgid "Right click for info"
 msgstr "Bofya kulia kwa habari zaidi"
 
-#: engine/emoji_picker.py:1407
+#: engine/emoji_picker.py:1408
 msgid "Search Results"
 msgstr "Matokeo"
 
-#: engine/emoji_picker.py:1414
+#: engine/emoji_picker.py:1415
 msgid "Search produced empty result."
 msgstr "Matokeo hayajapatikana."
 
-#: engine/emoji_picker.py:1743 engine/emoji_picker.py:1898
+#: engine/emoji_picker.py:1744 engine/emoji_picker.py:1899
 msgid "Copied to clipboard!"
 msgstr "Imenakiliwa kwa ubao nakili!"
 
-#: engine/emoji_picker.py:1796
+#: engine/emoji_picker.py:1797
 msgid "Clear recently used"
 msgstr "Futa zilizotumika hivi karibuni"
 
-#: engine/emoji_picker.py:1801 setup/main.py:301
+#: engine/emoji_picker.py:1802 setup/main.py:301
 msgid "About"
 msgstr "Kuhusu"
 
-#: engine/emoji_picker.py:1804
+#: engine/emoji_picker.py:1805
 msgid "Quit"
 msgstr "Funga"
 
-#: engine/emoji_picker.py:2138
+#: engine/emoji_picker.py:2139
 msgid "Lookup on emojipedia"
 msgstr "Tafuta kwa emojipedia"
 
-#: engine/emoji_picker.py:2236 engine/emoji_picker.py:2237
-#: engine/emoji_picker.py:2238 setup/main.py:1742
+#: engine/emoji_picker.py:2237 engine/emoji_picker.py:2238
+#: engine/emoji_picker.py:2239 setup/main.py:1742
 msgid "System default"
 msgstr "Chaguo-msingi la mfumo"
 
-#: engine/emoji_picker.py:2370
+#: engine/emoji_picker.py:2371
 msgid "Set Font"
 msgstr "Chagua Fonti"
 
@@ -212,110 +212,110 @@ msgstr "Alama za unikodi na emoji zilizotabiriwa"
 msgid "Off the record mode"
 msgstr "Tumia kamusi pekee kuongeza mbio ya kuchapa"
 
-#: engine/hunspell_table.py:2618
+#: engine/hunspell_table.py:2619
 msgid "Highest priority dictionary"
 msgstr "Kamusi yenye kipaumbele"
 
-#: engine/hunspell_table.py:2619
+#: engine/hunspell_table.py:2620
 msgid "Choose highest priority dictionary"
 msgstr "Chagua kamusi yenye kipaumbele"
 
-#: engine/hunspell_table.py:2648
+#: engine/hunspell_table.py:2649
 msgid "Preedit input method"
 msgstr "Jinsi ya kuhariri mbeleni hali ya kuingiza"
 
-#: engine/hunspell_table.py:2649
+#: engine/hunspell_table.py:2650
 msgid "Switch preedit input method"
 msgstr "Badili jinsi ya kuhariri mbeleni hali-tumizi ya ingizo"
 
-#: engine/hunspell_table.py:3020
+#: engine/hunspell_table.py:3021
 msgid "Setup"
 msgstr "Mipangilio"
 
-#: engine/hunspell_table.py:3023 setup/main.py:168
+#: engine/hunspell_table.py:3024 setup/main.py:168
 msgid "Preferences for ibus-typing-booster"
 msgstr "Pendekezo ya msaidizi-wa-kuchapa-mbio-wa-ibus"
 
-#: engine/hunspell_table.py:7261
+#: engine/hunspell_table.py:7262
 msgid "Failed to import Google speech-to-text."
 msgstr ""
 "Haiwezekana kuwezesha programmu ya Google ya utamboaji otomatiki wa usemi."
 
-#: engine/hunspell_table.py:7264
+#: engine/hunspell_table.py:7265
 msgid "Failed to import pyaudio."
 msgstr "Haiwezekana kutumia programmu pyaudio."
 
-#: engine/hunspell_table.py:7269
+#: engine/hunspell_table.py:7270
 msgid "No supported language for speech recognition."
 msgstr "Hakuna lugha ina utamboaji wa usemi."
 
-#: engine/hunspell_table.py:7273
+#: engine/hunspell_table.py:7274
 #, python-format
 msgid "“Google application credentials” file “%s” not found."
 msgstr "Faili “%s” ya “programmu ya Google ya utambolisho“ haionekana."
 
-#: engine/hunspell_table.py:7284
+#: engine/hunspell_table.py:7285
 msgid "Failed to init Google speech-to-text. See debug.log."
 msgstr ""
 "Haiwezekana kuanza programmu ya Google ya utamboaji wa usemi. Angalia faili "
 "ya batli ya eua."
 
-#: engine/hunspell_table.py:7391
+#: engine/hunspell_table.py:7392
 msgid "Google speech-to-text error. See debug.log."
 msgstr "Kosa ya Google utambaoji wa usemi. Angalia faili ya batli ya eua."
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1221 engine/itb_emoji.py:1222 engine/itb_emoji.py:1223
-#: engine/itb_emoji.py:1427
+#: engine/itb_emoji.py:1222 engine/itb_emoji.py:1223 engine/itb_emoji.py:1224
+#: engine/itb_emoji.py:1428
 msgid "people"
 msgstr "watu"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1224 engine/itb_emoji.py:1423
+#: engine/itb_emoji.py:1225 engine/itb_emoji.py:1424
 msgid "nature"
 msgstr "porini"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1225 engine/itb_emoji.py:1419
+#: engine/itb_emoji.py:1226 engine/itb_emoji.py:1420
 msgid "food"
 msgstr "chakula"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1226 engine/itb_emoji.py:1433
+#: engine/itb_emoji.py:1227 engine/itb_emoji.py:1434
 msgid "travel"
 msgstr "safiri"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1227 engine/itb_emoji.py:1236 engine/itb_emoji.py:1415
+#: engine/itb_emoji.py:1228 engine/itb_emoji.py:1237 engine/itb_emoji.py:1416
 msgid "activity"
 msgstr "shughuli"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1228 engine/itb_emoji.py:1425
+#: engine/itb_emoji.py:1229 engine/itb_emoji.py:1426
 msgid "objects"
 msgstr "vitu"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1229 engine/itb_emoji.py:1431
+#: engine/itb_emoji.py:1230 engine/itb_emoji.py:1432
 msgid "symbols"
 msgstr "alama"
 
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1230 engine/itb_emoji.py:1417
+#: engine/itb_emoji.py:1231 engine/itb_emoji.py:1418
 msgid "flags"
 msgstr "bendera"
 
 #. not in emoji-test.txt
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1231 engine/itb_emoji.py:1232 engine/itb_emoji.py:1421
+#: engine/itb_emoji.py:1232 engine/itb_emoji.py:1233 engine/itb_emoji.py:1422
 msgid "modifier"
 msgstr "mageuzi"
 
 #. New in Unicode 12.0
 #. Translators: This is a name for a category of emoji
-#: engine/itb_emoji.py:1233 engine/itb_emoji.py:1429
+#: engine/itb_emoji.py:1234 engine/itb_emoji.py:1430
 msgid "regional"
 msgstr "mkoani"
 
@@ -349,27 +349,27 @@ msgstr "mkoani"
 msgid "Others, Miscellaneous, Various, Diverse"
 msgstr "Mengineo, mbalimbali, ya ziada"
 
-#: engine/itb_util_core.py:4812 engine/itb_util_core.py:5537
+#: engine/itb_util_core.py:4812 engine/itb_util_core.py:5591
 msgid "File not found"
 msgstr "Faili haionekana"
 
-#: engine/itb_util_core.py:4815 engine/itb_util_core.py:5540
+#: engine/itb_util_core.py:4815 engine/itb_util_core.py:5594
 msgid "Permission error"
 msgstr "Kosa ya kibali"
 
-#: engine/itb_util_core.py:4818 engine/itb_util_core.py:5543
+#: engine/itb_util_core.py:4818 engine/itb_util_core.py:5597
 msgid "Unicode decoding error"
 msgstr "Kosa ya kufumbua msimbosare"
 
-#: engine/itb_util_core.py:4821 engine/itb_util_core.py:5546
+#: engine/itb_util_core.py:4821 engine/itb_util_core.py:5600
 msgid "Unknown error"
 msgstr "Kosa haifahamika"
 
-#: engine/itb_util_core.py:5515
+#: engine/itb_util_core.py:5569
 msgid "Native Keyboard"
 msgstr "Kibodi Awali"
 
-#: engine/itb_util_core.py:5517
+#: engine/itb_util_core.py:5571
 msgid ""
 "Direct keyboard input. This is not really an input method, it uses directly "
 "whatever comes from the current keyboard layout without any further changes. "
