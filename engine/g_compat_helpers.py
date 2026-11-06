@@ -427,7 +427,7 @@ def connect_fast_click(
     '''
     Connect a 'fast click' handler that preserves Gtk3/Gtk4 signal signatures.
 
-    Unified implementation, the ovrload above are for precise type checking.
+    Unified implementation, the overload above are for precise type checking.
 
     Gtk 3:
         Connects to 'clicked', which emits (button)
