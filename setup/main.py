@@ -5395,13 +5395,9 @@ class SetupUI(Gtk.Window):  # type: ignore[misc]
         '''
         Create and show the popover to edit the key bindings for a command
         '''
-        self._keybindings_edit_popover = Gtk.Popover()
+        self._keybindings_edit_popover = create_popover(
+            pointing_to=self._keybindings_edit_button, position=Gtk.PositionType.RIGHT)
         popover = self._keybindings_edit_popover
-        if popover is None:
-            LOGGER.debug('self._keybindings_edit_popover is None')
-            return
-        if GTK_VERSION >= (4, 0, 0):
-            popover.set_parent(self) # must be the toplevel
         popover.set_can_focus(True)
         margin = 12
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=margin)
@@ -5452,21 +5448,7 @@ class SetupUI(Gtk.Window):  # type: ignore[misc]
         desired_width = int(window_width * 0.5)
         desired_height = int(window_height * 0.5)
         popover.set_size_request(desired_width, desired_height)
-        if GTK_VERSION >= (4, 0, 0):
-            ok, grect = self._keybindings_edit_button.compute_bounds(self)
-            if ok:
-                gdk_rect = Gdk.Rectangle()
-                gdk_rect.x = int(grect.origin.x)
-                gdk_rect.y = int(grect.origin.y)
-                gdk_rect.width = int(grect.size.width)
-                gdk_rect.height = int(grect.size.height)
-                popover.set_pointing_to(gdk_rect)
-        else:
-            popover.set_relative_to(self._keybindings_edit_button)
-        show_all(popover)
-        popover.set_position(Gtk.PositionType.RIGHT)
-        if GTK_VERSION >= (3, 22, 0):
-            popover.popup()
+        self._popup_manager.popup(popover, kind=PopupKind.KEYBINDINGS_EDIT)
 
     def _on_keybindings_edit_button_clicked(self, *_args: Any) -> None:
         '''

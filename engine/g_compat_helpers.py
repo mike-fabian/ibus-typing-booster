@@ -595,6 +595,7 @@ class PopupKind(Enum):
     ADD_INPUT_METHOD = auto()
     INPUT_METHOD_OPTIONS = auto()
     ADD_AUTOSETTING = auto()
+    KEYBINDINGS_EDIT = auto()
 
 class PopupManager:
     '''
