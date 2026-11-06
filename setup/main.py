@@ -3285,9 +3285,6 @@ class SetupUI(Gtk.Window):  # type: ignore[misc]
 
         def really_restore() -> None:
             LOGGER.info('Restoring all defaults.')
-            # do nothing for the momment, I am still testing
-            # whether the Gtk4 port works, I don't want to set
-            # everything to default accidentally while testing ...
             self._restore_all_defaults_button.set_sensitive(True)
             # pylint: disable=unreachable
             for key, value in self._settings_dict.items():
@@ -5499,12 +5496,9 @@ class SetupUI(Gtk.Window):  # type: ignore[misc]
 
         def really_restore() -> None:
             LOGGER.info('Setting all keybindings to default')
-            self._keybindings_all_default_button.set_sensitive(True)
-            # pylint: disable=unreachable
             default_keybindings = self._settings_dict['keybindings']['default']
             self.set_keybindings(default_keybindings)
             self._keybindings_all_default_button.set_sensitive(True)
-            # pylint: enable=unreachable
 
         def cancelled() -> None:
             LOGGER.info('Set all keybindings to default cancelled.')
@@ -5536,12 +5530,9 @@ class SetupUI(Gtk.Window):  # type: ignore[misc]
 
         def really_restore() -> None:
             LOGGER.info('Setting all autosettings to default')
-            self._autosettings_all_default_button.set_sensitive(True)
-            # pylint: disable=unreachable
             default_autosettings = self._settings_dict['autosettings']['default']
             self.set_autosettings(default_autosettings)
             self._autosettings_all_default_button.set_sensitive(True)
-            # pylint: enable=unreachable
 
         def cancelled() -> None:
             LOGGER.info('Set all autosettings to default cancelled.')
