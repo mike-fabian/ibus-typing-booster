@@ -61,6 +61,25 @@ M17N_DB_VERSION = (M17N_DB_INFO.get_major_version(),
                    M17N_DB_INFO.get_minor_version(),
                    M17N_DB_INFO.get_micro_version())
 
+# m17n-db 1.8.17 made the modern tone mark placement (hoà, thuý) the
+# default for Vietnamese.
+if M17N_DB_VERSION >= (1, 8, 17):
+    VI_TONE_MARK_ON_LAST = (
+        'tone-mark-on-last',
+        ('Flag to control tone mark position in equivocal cases.\n'
+         'If this variable is 1 (the default), put tone mark on the last vowel\n'
+         'in such equivocal cases as "oa", "oe", "uy" (e.g. "hoà").\n'
+         'If the value is 0, put tone mark on the first vowel (e.g. "hòa").'),
+        '1')
+else:
+    VI_TONE_MARK_ON_LAST = (
+        'tone-mark-on-last',
+        ('Flag to control tone mark position in equivocal cases.\n'
+         'If this variable is 0 (the default), put tone mark on the first vowel\n'
+         'in such equivocal cases as "oa", "oe", "uy".\n'
+         'Otherwise, put tone mark on the last vowel.'),
+        '0')
+
 class M17nTranslitTestCase(unittest.TestCase):
     _tempdir: Optional[tempfile.TemporaryDirectory] = None # type: ignore[type-arg]
     # Python 3.12+: _tempdir: Optional[tempfile.TemporaryDirectory[str]] = None
@@ -1709,12 +1728,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         trans = self.get_transliterator_or_skip('vi-tcvn')
         self.assertEqual(
             trans.get_variables(),
-            [('tone-mark-on-last',
-              ('Flag to control tone mark position in equivocal cases.\n'
-               'If this variable is 0 (the default), put tone mark on the first vowel\n'
-               'in such equivocal cases as "oa", "oe", "uy".\n'
-               'Otherwise, put tone mark on the last vowel.'),
-              '0'),
+            [VI_TONE_MARK_ON_LAST,
              ('backspace-is-undo',
               ('Flag to control the action of Backspace key (delete or undo).\n'
                'If this variable is 0 (the default), Backspace key deletes the previous\n'
@@ -1727,12 +1741,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         trans = self.get_transliterator_or_skip('vi-telex')
         self.assertEqual(
             trans.get_variables(),
-            [('tone-mark-on-last',
-              ('Flag to control tone mark position in equivocal cases.\n'
-               'If this variable is 0 (the default), put tone mark on the first vowel\n'
-               'in such equivocal cases as "oa", "oe", "uy".\n'
-               'Otherwise, put tone mark on the last vowel.'),
-              '0'),
+            [VI_TONE_MARK_ON_LAST,
              ('backspace-is-undo',
               ('Flag to control the action of Backspace key (delete or undo).\n'
                'If this variable is 0 (the default), Backspace key deletes the previous\n'
@@ -1745,12 +1754,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         trans = self.get_transliterator_or_skip('vi-viqr')
         self.assertEqual(
             trans.get_variables(),
-            [('tone-mark-on-last',
-              ('Flag to control tone mark position in equivocal cases.\n'
-               'If this variable is 0 (the default), put tone mark on the first vowel\n'
-               'in such equivocal cases as "oa", "oe", "uy".\n'
-               'Otherwise, put tone mark on the last vowel.'),
-              '0'),
+            [VI_TONE_MARK_ON_LAST,
              ('backspace-is-undo',
               ('Flag to control the action of Backspace key (delete or undo).\n'
                'If this variable is 0 (the default), Backspace key deletes the previous\n'
@@ -1763,12 +1767,7 @@ class M17nTranslitTestCase(unittest.TestCase):
         trans = self.get_transliterator_or_skip('vi-vni')
         self.assertEqual(
             trans.get_variables(),
-            [('tone-mark-on-last',
-              ('Flag to control tone mark position in equivocal cases.\n'
-               'If this variable is 0 (the default), put tone mark on the first vowel\n'
-               'in such equivocal cases as "oa", "oe", "uy".\n'
-               'Otherwise, put tone mark on the last vowel.'),
-              '0'),
+            [VI_TONE_MARK_ON_LAST,
              ('backspace-is-undo',
               ('Flag to control the action of Backspace key (delete or undo).\n'
                'If this variable is 0 (the default), Backspace key deletes the previous\n'
@@ -1776,6 +1775,20 @@ class M17nTranslitTestCase(unittest.TestCase):
                'If the value is 1, Backspace key undoes the previous key\n'
                '(e.g. "q u a i s BS" => "quai").'),
               '0')])
+
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 17),
+        'Skipping because m17n-db is too old')
+    def test_vi_modern_tone_mark(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-telex')
+        self.assertEqual(trans.transliterate(list('hoaf')), 'hoà')
+        self.assertEqual(trans.transliterate(list('thuys')), 'thuý')
+        self.assertEqual(trans.transliterate(list('khoer')), 'khoẻ')
+        # A final consonant keeps the tone on the last vowel as before.
+        self.assertEqual(trans.transliterate(list('toans')), 'toán')
+        trans = self.get_transliterator_or_skip('vi-vni')
+        self.assertEqual(trans.transliterate(list('hoa2')), 'hoà')
+        self.assertEqual(trans.transliterate(list('thuy1')), 'thuý')
 
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 2),
