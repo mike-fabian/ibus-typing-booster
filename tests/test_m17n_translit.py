@@ -1791,6 +1791,31 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('thuy1')), 'thuý')
 
     @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 17),
+        'Skipping because m17n-db is too old')
+    def test_vi_marks_typed_last(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-telex')
+        self.assertEqual(trans.transliterate(list('vietej')), 'việt')
+        self.assertEqual(trans.transliterate(list('khongo')), 'không')
+        self.assertEqual(trans.transliterate(list('xoanw')), 'xoăn')
+        # One w marks both letters of "ươ", wherever it is typed.
+        self.assertEqual(trans.transliterate(list('nguoiwf')), 'người')
+        self.assertEqual(trans.transliterate(list('nguwoif')), 'người')
+        self.assertEqual(trans.transliterate(list('nguowif')), 'người')
+        self.assertEqual(trans.transliterate(list('dduowcj')), 'được')
+        self.assertEqual(trans.transliterate(list('muaw')), 'mưa')
+        self.assertEqual(trans.transliterate(list('huuwx')), 'hữu')
+        # Words that are complete without the change stay as they are.
+        self.assertEqual(trans.transliterate(list('thuowr')), 'thuở')
+        self.assertEqual(trans.transliterate(list('quawn')), 'quăn')
+        self.assertEqual(trans.transliterate(list('ngoeor')), 'ngoẻo')
+        trans = self.get_transliterator_or_skip('vi-vni')
+        self.assertEqual(trans.transliterate(list('viet65')), 'việt')
+        self.assertEqual(trans.transliterate(list('nguoi72')), 'người')
+        self.assertEqual(trans.transliterate(list('huu74')), 'hữu')
+        self.assertEqual(trans.transliterate(list('bin6')), 'bin6')
+
+    @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 2),
         'Skipping because m17n-db is too old')
     def test_get_variables_zh_cangjie(self) -> None:
