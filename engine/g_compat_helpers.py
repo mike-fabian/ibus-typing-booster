@@ -148,7 +148,12 @@ def clear_children(widget: Gtk.Widget) -> None:
         if child is not None:
             widget.set_child(None)
         return
-    # Gtk4: multi-child containers without get_children() use first/next sibling
+    # Gtk4: Use container-specific remove() where available
+    if hasattr(widget, 'get_first_child') and hasattr(widget, 'remove'):
+        while (child := widget.get_first_child()) is not None:
+            widget.remove(child)
+        return
+    # Gtk4: multi-child containers without remove:
     if hasattr(widget, 'get_first_child') and hasattr(widget, 'get_next_sibling'):
         child = widget.get_first_child()
         while child is not None:
@@ -1182,7 +1187,7 @@ class CompatButton(Gtk.Button): # type: ignore[misc]
 
 def choose_file_open(
         *,
-        parent: Gtk.Widget,
+        parent: Gtk.Window,
         title: Optional[str] = None,
         initial_folder: Optional[str] = None,
 ) -> Optional[str]:
@@ -1214,7 +1219,31 @@ def choose_file_open(
         dialog.destroy()
         return filename
 
-    # Gtk4: Use new async Gtk.FileDialog
+    if not hasattr(Gtk, 'FileDialog'):  # Gtk 4.0 .. 4.9
+        native = Gtk.FileChooserNative.new(
+            title, parent, Gtk.FileChooserAction.OPEN, _('_OK'), _('_Cancel'))
+        if initial_folder:
+            try:
+                native.set_current_folder(Gio.File.new_for_path(initial_folder))
+            except GLib.Error:
+                pass
+        loop_native = GLib.MainLoop()
+        chosen: Optional[str] = None
+
+        def on_native_response(dlg: Any, response: int) -> None:
+            nonlocal chosen
+            if response == Gtk.ResponseType.ACCEPT:
+                gfile_native = dlg.get_file()
+                chosen = gfile_native.get_path() if gfile_native else None
+            loop_native.quit()
+
+        native.connect('response', on_native_response)
+        native.set_modal(True)
+        native.show()
+        loop_native.run()
+        return chosen
+
+    # Gtk >= 4.10: Use new async Gtk.FileDialog
     file_dialog = Gtk.FileDialog() # pylint: disable=c-extension-no-member
     file_dialog.set_title(title)
     if initial_folder:

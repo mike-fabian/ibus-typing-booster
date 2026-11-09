@@ -25,7 +25,10 @@ This allows switching between Gtk3 and Gtk4 simply by setting:
 
     ITB_GTK_VERSION=3   → use Gtk 3.x
     ITB_GTK_VERSION=4   → use Gtk 4.x
-    (unset)             → default = Gtk 3.x
+    (unset)            → On detected RHEL 9, AlmaLinux 9, Rocky Linux 9,
+                         and Ubuntu 22.04 or older, the code selects Gtk 3.
+                         On other systems, it selects Gtk 4 if available,
+                         and Gtk 3 otherwise.
 
 This prevents accidental mixing of Gtk versions and ensures the
 entire process uses a consistent GI setup.

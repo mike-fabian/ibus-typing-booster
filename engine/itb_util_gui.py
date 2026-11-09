@@ -735,6 +735,8 @@ class ItbKeyInputDialog:
         _event: 'Gdk.EventKey', # pylint: disable=c-extension-no-member
     ) -> bool:
         '''Called when a key is released'''
+        if self.e is None:
+            return True
         self.dialog.response(Gtk.ResponseType.OK)
         return True
 
@@ -755,7 +757,7 @@ class ItbKeyInputDialog:
         # key combination to be used as a key binding for a
         # command.
         text = _('Please press a key (or a key combination)')
-        title_label.set_markup(f'<big><b>{GLib.markup_escape_text(text)}s</b></big>')
+        title_label.set_markup(f'<big><b>{GLib.markup_escape_text(text)}</b></big>')
         title_label.set_xalign(0)
         box.append(title_label)
         sec_label = Gtk.Label(label=_(
@@ -825,6 +827,8 @@ class ItbKeyInputDialog:
             _state: int,
     ) -> bool:
         '''Called when a key is released'''
+        if self.e is None:
+            return True
         self._response = Gtk.ResponseType.OK
         try:
             self.dialog.hide()
