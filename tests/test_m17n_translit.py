@@ -1816,6 +1816,36 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('bin6')), 'bin6')
 
     @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 18),
+        'Skipping because m17n-db is too old')
+    def test_vi_english_words(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-telex')
+        # Words that cannot be Vietnamese come out as typed.
+        for word in ('server', 'google', 'web', 'casino', 'internet',
+                     'show', 'class', 'using', 'wifi', 'Show'):
+            self.assertEqual(trans.transliterate(list(word)), word)
+        # "e" may still become "ê", so the word settles on the next key.
+        self.assertEqual(trans.transliterate(list('cafe ')), 'cafe ')
+        # Backspace reads the remaining keys again.
+        self.assertEqual(
+            trans.transliterate(list('serv') + ['BackSpace'] + list('e ')),
+            'sể ')
+        # Vietnamese words that look close to these stay Vietnamese.
+        self.assertEqual(trans.transliterate(list('DDawsk Lawsk')), 'Đắk Lắk')
+        self.assertEqual(trans.transliterate(list('Kroong Busk')), 'Krông Búk')
+        self.assertEqual(trans.transliterate(list('Sree Poosk')), 'Srê Pốk')
+        self.assertEqual(trans.transliterate(list('Hmoong')), 'Hmông')
+        self.assertEqual(trans.transliterate(list('quits')), 'quít')
+        self.assertEqual(trans.transliterate(list('giun')), 'giun')
+        self.assertEqual(trans.transliterate(list('giofn')), 'giòn')
+        self.assertEqual(trans.transliterate(list('booong')), 'boong')
+        self.assertEqual(trans.transliterate(list('gwir')), 'gửi')
+        self.assertEqual(trans.transliterate(list('khuyur')), 'khuỷu')
+        self.assertEqual(trans.transliterate(list('wa')), 'ưa')
+        # A tone key typed twice still gives the plain letter.
+        self.assertEqual(trans.transliterate(list('tess')), 'tes')
+
+    @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 2),
         'Skipping because m17n-db is too old')
     def test_get_variables_zh_cangjie(self) -> None:
