@@ -41,6 +41,26 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.31.4" date="2026-11-11" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.31.4</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Small fixes for the Gtk4 port found by coderabbitai
+          </li>
+          <li>
+            Use create_popover and PopupManager in _create_and_show_keybindings_edit_popover()
+          </li>
+          <li>
+            Test Vietnamese m17n marks typed after the syllable in m17n-db 1.8.17 (by nguyenphivn &lt;vietphi.dang@gmail.com&gt;)
+          </li>
+          <li>
+            Adapt Vietnamese m17n tests to modern tone mark placement in m17n-db 1.8.17 (by nguyenphivn &lt;vietphi.dang@gmail.com&gt;)
+          </li>
+        </ul>
+      </description>
+    </release>
     <release version="2.31.3" date="2026-10-19" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.31.3</url>
       <description>

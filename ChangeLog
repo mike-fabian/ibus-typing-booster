@@ -1,4 +1,11 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 11 Nov 2026 Release 2.31.4
+* Small fixes for the Gtk4 port found by coderabbitai
+* Use create_popover and PopupManager in _create_and_show_keybindings_edit_popover()
+* Test Vietnamese m17n marks typed after the syllable in m17n-db 1.8.17 (by nguyenphivn <vietphi.dang@gmail.com>)
+* Adapt Vietnamese m17n tests to modern tone mark placement in m17n-db 1.8.17 (by nguyenphivn <vietphi.dang@gmail.com>)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 19 Okt 2026 Release 2.31.3
 * Fix for Use IBus keymap: (missing comma in one element tuple ('ISO_Level3_Shift',)) (Resolves: https://github.com/mike-fabian/ibus-typing-booster/issues/929)
 
