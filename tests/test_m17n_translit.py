@@ -1822,7 +1822,8 @@ class M17nTranslitTestCase(unittest.TestCase):
         trans = self.get_transliterator_or_skip('vi-telex')
         # Words that cannot be Vietnamese come out as typed.
         for word in ('server', 'google', 'web', 'casino', 'internet',
-                     'show', 'class', 'using', 'wifi', 'Show'):
+                     'show', 'class', 'using', 'wifi', 'Show', 'way',
+                     'swap', 'tweet', 'power'):
             self.assertEqual(trans.transliterate(list(word)), word)
         # "e" may still become "ê", so the word settles on the next key.
         self.assertEqual(trans.transliterate(list('cafe ')), 'cafe ')
@@ -1842,6 +1843,8 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('gwir')), 'gửi')
         self.assertEqual(trans.transliterate(list('khuyur')), 'khuỷu')
         self.assertEqual(trans.transliterate(list('wa')), 'ưa')
+        self.assertEqual(trans.transliterate(list('wngs')), 'ứng')
+        self.assertEqual(trans.transliterate(list('wowcs')), 'ước')
         # A tone key typed twice still gives the plain letter.
         self.assertEqual(trans.transliterate(list('tess')), 'tes')
 
