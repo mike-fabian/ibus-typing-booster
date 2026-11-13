@@ -1818,6 +1818,20 @@ class M17nTranslitTestCase(unittest.TestCase):
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 18),
         'Skipping because m17n-db is too old')
+    def test_vi_late_d(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-telex')
+        # A d typed after the vowels makes the initial d into đ, and a
+        # second one makes it d again.
+        self.assertEqual(trans.transliterate(list('did')), 'đi')
+        self.assertEqual(trans.transliterate(list('dangd')), 'đang')
+        self.assertEqual(trans.transliterate(list('dangfd')), 'đàng')
+        self.assertEqual(trans.transliterate(list('Did')), 'Đi')
+        self.assertEqual(trans.transliterate(list('didd')), 'did')
+        self.assertEqual(trans.transliterate(list('ndid')), 'ndid')
+
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 18),
+        'Skipping because m17n-db is too old')
     def test_vi_english_words(self) -> None:
         trans = self.get_transliterator_or_skip('vi-telex')
         # Words that cannot be Vietnamese come out as typed.
