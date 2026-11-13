@@ -47,7 +47,7 @@ except ImportError:
 
 hunspell: Optional[ModuleType]
 try:
-    import hunspell as _hunspell  # type: ignore[import-not-found]  # ty: ignore[unresolved-import]
+    import hunspell as _hunspell  # type: ignore[import-not-found]  # ty: ignore[import-not-found]
     hunspell = _hunspell
 except ImportError:
     hunspell = None

@@ -38,7 +38,7 @@ from unittest import mock
 # pylint: disable=wrong-import-position
 from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus  # ty: ignore[unresolved-import]
+from gi.repository import IBus  # ty: ignore[import-not-found]
 require_version('GLib', '2.0')
 from gi.repository import GLib # type: ignore
 # pylint: enable=wrong-import-position
@@ -91,6 +91,11 @@ IS_ENCHANT_AVAILABLE = importlib.util.find_spec('enchant') is not None
 # pylint: disable=protected-access
 # pylint: disable=line-too-long
 # pylint: disable=invalid-name
+
+M17N_DB_INFO = itb_util_core.M17nDbInfo()
+M17N_DB_VERSION = (M17N_DB_INFO.get_major_version(),
+                   M17N_DB_INFO.get_minor_version(),
+                   M17N_DB_INFO.get_micro_version())
 
 @unittest.skipIf(Gdk.Display.open('') is None, 'Display cannot be opened.')
 class ItbTestCase(unittest.TestCase):
@@ -2932,6 +2937,23 @@ class ItbTestCase(unittest.TestCase):
         self.assertEqual(self.engine.mock_preedit_text, '')
         self.assertEqual(self.engine.mock_committed_text,
                          'Không có gì quí hơn độc lập tự do ')
+
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 18),
+        'Skipping because m17n-db is too old')
+    def test_vi_telex_cafe(self) -> None:
+        '''https://github.com/mike-fabian/m17n-db/issues/15#issuecomment-6821599541'''
+        self.engine.set_current_imes(['vi-telex'], update_gsettings=False)
+        self.engine.set_dictionary_names(['en_US'], update_gsettings=False)
+        self.engine.do_process_key_event(IBus.KEY_c, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_a, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_f, 0, 0)
+        self.engine.do_process_key_event(IBus.KEY_e, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, 'càe')
+        self.assertEqual(self.engine.mock_committed_text, '')
+        self.engine.do_process_key_event(IBus.KEY_space, 0, 0)
+        self.assertEqual(self.engine.mock_preedit_text, '')
+        self.assertEqual(self.engine.mock_committed_text, 'cafe ')
 
     def test_compose_early_commit(self) -> None:
         ''' https://github.com/mike-fabian/ibus-typing-booster/issues/662 '''

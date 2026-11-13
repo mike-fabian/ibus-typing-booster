@@ -33,7 +33,7 @@ from typing import Any, Optional, Union
 # pylint: disable=wrong-import-position
 from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus  # ty: ignore[unresolved-import]
+from gi.repository import IBus  # ty: ignore[import-not-found]
 require_version('Gio', '2.0')
 from gi.repository import Gio  # type: ignore
 require_version('GLib', '2.0')
