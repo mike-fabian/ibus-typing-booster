@@ -41,6 +41,25 @@
   <url type="translate">https://translate.fedoraproject.org/projects/ibus-typing-booster/</url>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="2.31.5" date="2026-11-13" urgency="medium">
+      <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.31.5</url>
+      <description>
+        <p>Bug fixes and enhancements</p>
+        <ul>
+          <li>
+            Fix hidden candidate problem for vi-telex (See: github-mike-fabian-m17n-db-issues#15#issuecomment-6821599541)
+          </li>
+          <li>
+            New test cases for Vietnamese (by nguyenphivn &lt;vietphi.dang@gmail.com&gt;)
+          </li>
+        </ul>
+      </description>
+      <issues>
+        <issue url="https://github.com/mike-fabian/m17n-db/issues/15#issuecomment-6821599541">
+          github-mike-fabian-m17n-db-issues#15#issuecomment-6821599541
+        </issue>
+      </issues>
+    </release>
     <release version="2.31.4" date="2026-11-11" urgency="medium">
       <url>https://github.com/mike-fabian/ibus-typing-booster/releases/tag/2.31.4</url>
       <description>

@@ -1,4 +1,9 @@
 * Author: Mike FABIAN <mfabian@redhat.com>
+* 13 Nov 2026 Release 2.31.5
+* Fix hidden candidate problem for vi-telex (See: https://github.com/mike-fabian/m17n-db/issues/15#issuecomment-6821599541)
+* New test cases for Vietnamese (nguyenphivn <vietphi.dang@gmail.com>)
+
+* Author: Mike FABIAN <mfabian@redhat.com>
 * 11 Nov 2026 Release 2.31.4
 * Small fixes for the Gtk4 port found by coderabbitai
 * Use create_popover and PopupManager in _create_and_show_keybindings_edit_popover()
