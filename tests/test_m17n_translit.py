@@ -1864,9 +1864,13 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('cowo ')), 'cô ')
         self.assertEqual(trans.transliterate(list('suoongw')), 'sương')
         self.assertEqual(trans.transliterate(list('huoow')), 'huơ')
+        # ư does not go with ô, so o after "ươ" gives "uô".
+        self.assertEqual(trans.transliterate(list('suoongwo')), 'suông')
+        self.assertEqual(trans.transliterate(list('SUOONGWO')), 'SUÔNG')
         trans = self.get_transliterator_or_skip('vi-vni')
         self.assertEqual(trans.transliterate(list('ca6m8')), 'căm')
         self.assertEqual(trans.transliterate(list('co76')), 'cô')
+        self.assertEqual(trans.transliterate(list('suo7ng6')), 'suông')
 
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 2),
