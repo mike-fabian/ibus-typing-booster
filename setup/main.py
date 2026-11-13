@@ -57,7 +57,7 @@ from gi.repository import GdkPixbuf # type: ignore
 require_version('Pango', '1.0')
 from gi.repository import Pango # type: ignore
 require_version('IBus', '1.0')
-from gi.repository import IBus  # ty: ignore[unresolved-import]
+from gi.repository import IBus  # ty: ignore[import-not-found]
 # pylint: enable=wrong-import-position
 
 IS_LIBVOIKKO_AVAILABLE = importlib.util.find_spec('libvoikko') is not None

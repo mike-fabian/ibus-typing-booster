@@ -138,7 +138,7 @@ else:
 
 # Import the actual modules
 # pylint: disable=wrong-import-position, unused-import
-from gi.repository import Gtk, Gdk  # type: ignore[attr-defined]  # ty: ignore[unresolved-import]  # pylint: disable=line-too-long  # Intentional re-export
+from gi.repository import Gtk, Gdk  # type: ignore[attr-defined]  # ty: ignore[import-not-found]  # pylint: disable=line-too-long  # Intentional re-export
 # pylint: enable=wrong-import-position, unused-import
 
 # Convenience constants for compatibility code

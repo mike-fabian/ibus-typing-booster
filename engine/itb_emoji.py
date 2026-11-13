@@ -80,7 +80,7 @@ except ImportError:
     enchant = None
 
 try:
-    import pykakasi as _pykakasi  # type: ignore[import-not-found]  # ty: ignore[unresolved-import]
+    import pykakasi as _pykakasi  # type: ignore[import-not-found]  # ty: ignore[import-not-found]
 except ImportError:
     pykakasi = None  # pylint: disable=invalid-name
     KAKASI_INSTANCE: Optional[Any] = None
