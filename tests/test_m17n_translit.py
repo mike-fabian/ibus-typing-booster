@@ -1835,6 +1835,9 @@ class M17nTranslitTestCase(unittest.TestCase):
                 list('thichs') + ['BackSpace', 'BackSpace'] + list('f')),
             'thì')
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 18),
+        'Skipping because m17n-db is too old')
     def test_vi_english_vowels(self) -> None:
         trans = self.get_transliterator_or_skip('vi-telex')
         # Vowels no syllable can have, "ng" after a single i and a w that
@@ -1855,6 +1858,9 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('tieengs')), 'tiếng')
         self.assertEqual(trans.transliterate(list('thinhs')), 'thính')
 
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 18),
+        'Skipping because m17n-db is too old')
     def test_vi_vni_words_with_digits(self) -> None:
         trans = self.get_transliterator_or_skip('vi-vni')
         # Digits are mark keys, but not in a word that cannot be
@@ -1878,12 +1884,23 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(
             trans.transliterate(list('ac') + ['BackSpace'] + list('2')),
             'à')
+
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 18),
+        'Skipping because m17n-db is too old')
+    def test_vi_restore_after_backspace(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-telex')
+        # The key that shows the word is not Vietnamese is kept even
+        # when Backspace was typed before it.
         self.assertEqual(
             trans.transliterate(list('tang') + ['BackSpace'] + list('k ')),
             'tank ')
         self.assertEqual(
             trans.transliterate(list('web2') + ['BackSpace'] + [' ']),
             'web ')
+        self.assertEqual(
+            trans.transliterate(list('thin') + ['BackSpace'] + list('ng ')),
+            'thing ')
 
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 18),
