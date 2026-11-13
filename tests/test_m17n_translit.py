@@ -1830,6 +1830,12 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('anh3')), 'ảnh')
         self.assertEqual(trans.transliterate(list('D9a8k1')), 'Đắk')
         self.assertEqual(trans.transliterate(list('nguoi72')), 'người')
+        self.assertEqual(
+            trans.transliterate(list('tang') + ['BackSpace'] + list('k ')),
+            'tank ')
+        self.assertEqual(
+            trans.transliterate(list('web2') + ['BackSpace'] + [' ']),
+            'web ')
 
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 18),
