@@ -1818,6 +1818,20 @@ class M17nTranslitTestCase(unittest.TestCase):
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 18),
         'Skipping because m17n-db is too old')
+    def test_vi_restore_after_backspace(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-telex')
+        # The key that shows the word is not Vietnamese is kept even
+        # when Backspace was typed before it.
+        self.assertEqual(
+            trans.transliterate(list('tang') + ['BackSpace'] + list('k ')),
+            'tank ')
+        self.assertEqual(
+            trans.transliterate(list('thin') + ['BackSpace'] + list('ng ')),
+            'thing ')
+
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 18),
+        'Skipping because m17n-db is too old')
     def test_vi_english_words(self) -> None:
         trans = self.get_transliterator_or_skip('vi-telex')
         # Words that cannot be Vietnamese come out as typed.
