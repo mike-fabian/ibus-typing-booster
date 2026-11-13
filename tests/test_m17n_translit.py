@@ -1818,6 +1818,22 @@ class M17nTranslitTestCase(unittest.TestCase):
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 18),
         'Skipping because m17n-db is too old')
+    def test_vi_vni_words_with_digits(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-vni')
+        # Digits are mark keys, but not in a word that cannot be
+        # Vietnamese or that starts with a digit.
+        for word in ('covid19', 'web2', 'iphone15', '12a1', 'tet3'):
+            self.assertEqual(trans.transliterate(list(word)), word)
+        self.assertEqual(trans.transliterate(list('vie65t')), 'việt')
+        self.assertEqual(trans.transliterate(list('d9e5p')), 'đẹp')
+        self.assertEqual(trans.transliterate(list('sa1ch')), 'sách')
+        self.assertEqual(trans.transliterate(list('anh3')), 'ảnh')
+        self.assertEqual(trans.transliterate(list('D9a8k1')), 'Đắk')
+        self.assertEqual(trans.transliterate(list('nguoi72')), 'người')
+
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 18),
+        'Skipping because m17n-db is too old')
     def test_vi_english_words(self) -> None:
         trans = self.get_transliterator_or_skip('vi-telex')
         # Words that cannot be Vietnamese come out as typed.
