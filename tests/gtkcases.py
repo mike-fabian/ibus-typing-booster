@@ -18,7 +18,7 @@ Test cases for the graphical Gtk tests.
 from gi import require_version
 # pylint: disable=wrong-import-position
 require_version('IBus', '1.0')
-from gi.repository import IBus  # ty: ignore[unresolved-import]
+from gi.repository import IBus  # ty: ignore[import-not-found]
 # pylint: enable=wrong-import-position
 
 TEST_CASES = {

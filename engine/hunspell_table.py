@@ -49,7 +49,7 @@ from typing import (
 # pylint: disable=wrong-import-position
 from gi import require_version
 require_version('IBus', '1.0')
-from gi.repository import IBus  # ty: ignore[unresolved-import]
+from gi.repository import IBus  # ty: ignore[import-not-found]
 require_version('Gio', '2.0')
 from gi.repository import Gio  # type: ignore
 require_version('GLib', '2.0')
@@ -99,7 +99,7 @@ except (ImportError, LookupError, ValueError):
 if TYPE_CHECKING:
     from google.cloud import speech as _speech  # type: ignore  # noqa: F401
 try:
-    from google.cloud import speech as _speech_runtime  # ty: ignore[unresolved-import]
+    from google.cloud import speech as _speech_runtime  # ty: ignore[import-not-found]
 except ImportError:
     speech: Optional[ModuleType] = None  # pylint: disable=invalid-name
 else:
@@ -108,7 +108,7 @@ else:
 if TYPE_CHECKING:
     import bidi.algorithm as _bidi_algorithm  # type: ignore  # noqa: F401
 try:
-    import bidi.algorithm as _bidi_algorithm_runtime  # ty: ignore[unresolved-import]
+    import bidi.algorithm as _bidi_algorithm_runtime  # ty: ignore[import-not-found]
 except ImportError:
     bidi_algorithm: Optional[ModuleType] = None  # pylint: disable=invalid-name
 else:

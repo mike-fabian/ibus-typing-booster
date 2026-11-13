@@ -31,7 +31,7 @@ from gi import require_version
 # pylint: disable=wrong-import-position
 require_version('IBus', '1.0')
 # pylint: enable=wrong-import-position
-from gi.repository import IBus  # ty: ignore[unresolved-import]
+from gi.repository import IBus  # ty: ignore[import-not-found]
 
 LOGGER = logging.getLogger('ibus-typing-booster')
 
