@@ -9515,6 +9515,8 @@ class TypingBoosterEngine(IBus.Engine):
                 LOGGER.debug('Manually selected m17n commit, try recursion')
             return self._handle_m17n_candidates(key)
         if (self._m17n_trans_parts.candidates
+            and (self._m17n_trans_parts.candidate_show
+                 or self._current_imes[0] == 'ja-anthy')
             and key.val in self._commit_trigger_keys
             and not (self._current_imes[0] in ('t-lsymbol',)
                      and self._typed_string[
