@@ -1849,6 +1849,26 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('tess')), 'tes')
 
     @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 18),
+        'Skipping because m17n-db is too old')
+    def test_vi_swap_vowel_marks(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-telex')
+        # A late mark key replaces the other mark on the same vowel.
+        self.assertEqual(trans.transliterate(list('caamw')), 'căm')
+        self.assertEqual(trans.transliterate(list('caaw')), 'că')
+        self.assertEqual(trans.transliterate(list('cawam')), 'câm')
+        self.assertEqual(trans.transliterate(list('caamsw')), 'cắm')
+        self.assertEqual(trans.transliterate(list('CAAMW')), 'CĂM')
+        self.assertEqual(trans.transliterate(list('coomw')), 'cơm')
+        # "o" may still start "oo", so the word settles on the next key.
+        self.assertEqual(trans.transliterate(list('cowo ')), 'cô ')
+        self.assertEqual(trans.transliterate(list('suoongw')), 'sương')
+        self.assertEqual(trans.transliterate(list('huoow')), 'huơ')
+        trans = self.get_transliterator_or_skip('vi-vni')
+        self.assertEqual(trans.transliterate(list('ca6m8')), 'căm')
+        self.assertEqual(trans.transliterate(list('co76')), 'cô')
+
+    @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 2),
         'Skipping because m17n-db is too old')
     def test_get_variables_zh_cangjie(self) -> None:
