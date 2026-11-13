@@ -1818,6 +1818,29 @@ class M17nTranslitTestCase(unittest.TestCase):
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 18),
         'Skipping because m17n-db is too old')
+    def test_vi_english_vowels(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-telex')
+        # Vowels no syllable can have, "ng" after a single i and a w that
+        # marks nothing: the word comes out as typed.  A last vowel may
+        # still be doubled, so the word settles on the space.
+        for word in ('euro', 'layer', 'raise', 'stereo', 'choose', 'meow',
+                     'things', 'kings', 'news', 'views'):
+            self.assertEqual(trans.transliterate(list(word + ' ')),
+                             word + ' ')
+        # Vowel sequences that Vietnamese has still work.
+        self.assertEqual(trans.transliterate(list('nguoiwf')), 'người')
+        self.assertEqual(trans.transliterate(list('ruowuj')), 'rượu')
+        self.assertEqual(trans.transliterate(list('khuyur')), 'khuỷu')
+        self.assertEqual(trans.transliterate(list('yeeus')), 'yếu')
+        self.assertEqual(trans.transliterate(list('khuaays')), 'khuấy')
+        self.assertEqual(trans.transliterate(list('ngoeof')), 'ngoèo')
+        self.assertEqual(trans.transliterate(list('giuwax')), 'giữa')
+        self.assertEqual(trans.transliterate(list('tieengs')), 'tiếng')
+        self.assertEqual(trans.transliterate(list('thinhs')), 'thính')
+
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 18),
+        'Skipping because m17n-db is too old')
     def test_vi_english_words(self) -> None:
         trans = self.get_transliterator_or_skip('vi-telex')
         # Words that cannot be Vietnamese come out as typed.
