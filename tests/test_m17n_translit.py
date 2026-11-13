@@ -1818,6 +1818,21 @@ class M17nTranslitTestCase(unittest.TestCase):
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 18),
         'Skipping because m17n-db is too old')
+    def test_vi_tone_on_final_stop(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-telex')
+        # A final c, ch, p or t takes only the acute and the dot below,
+        # so a word with another tone there comes out as typed.
+        for word in ('text', 'part', 'soft', 'next', 'exp', 'Port'):
+            self.assertEqual(trans.transliterate(list(word)), word)
+        self.assertEqual(trans.transliterate(list('vieets')), 'viết')
+        self.assertEqual(trans.transliterate(list('hocj')), 'học')
+        self.assertEqual(trans.transliterate(list('ddejp')), 'đẹp')
+        self.assertEqual(trans.transliterate(list('sachs')), 'sách')
+        self.assertEqual(trans.transliterate(list('banhf')), 'bành')
+
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 18),
+        'Skipping because m17n-db is too old')
     def test_vi_english_words(self) -> None:
         trans = self.get_transliterator_or_skip('vi-telex')
         # Words that cannot be Vietnamese come out as typed.
