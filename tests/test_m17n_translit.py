@@ -1830,6 +1830,17 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('anh3')), 'ảnh')
         self.assertEqual(trans.transliterate(list('D9a8k1')), 'Đắk')
         self.assertEqual(trans.transliterate(list('nguoi72')), 'người')
+        # A final k follows only a, ă, ô or u, also after a late mark.
+        self.assertEqual(trans.transliterate(list('pok61')), 'pốk')
+        self.assertEqual(trans.transliterate(list('ak61')), 'ak61')
+        # The only final pairs are ng, nh and ch.
+        self.assertEqual(trans.transliterate(list('acg1')), 'acg1')
+        self.assertEqual(
+            trans.transliterate(list('ang1') + ['BackSpace'] + list('g2')),
+            'àng')
+        self.assertEqual(
+            trans.transliterate(list('ac') + ['BackSpace'] + list('2')),
+            'à')
         self.assertEqual(
             trans.transliterate(list('tang') + ['BackSpace'] + list('k ')),
             'tank ')
