@@ -1829,6 +1829,11 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('ddejp')), 'đẹp')
         self.assertEqual(trans.transliterate(list('sachs')), 'sách')
         self.assertEqual(trans.transliterate(list('banhf')), 'bành')
+        # Deleting a final ch one letter at a time frees the vowel again.
+        self.assertEqual(
+            trans.transliterate(
+                list('thichs') + ['BackSpace', 'BackSpace'] + list('f')),
+            'thì')
 
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 18),
