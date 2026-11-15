@@ -1828,6 +1828,14 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(
             trans.transliterate(list('thin') + ['BackSpace'] + list('ng ')),
             'thing ')
+        # A key that already changed a letter before it is not kept:
+        # the a typed last does not leave the first a as â.
+        self.assertEqual(
+            trans.transliterate(list('ai') + ['BackSpace'] + list('ia ')),
+            'aia ')
+        self.assertEqual(
+            trans.transliterate(list('meo') + ['BackSpace'] + list('ow ')),
+            'meow ')
 
     @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 18),
