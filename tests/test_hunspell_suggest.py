@@ -82,9 +82,6 @@ class HunspellSuggestTestCase(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
-    def test_dummy(self) -> None:
-        self.assertEqual(True, True)
-
     @unittest.skipIf(
         itb_util_core.distro_id() in ('debian', 'ubuntu'),
         'Skipping due to different Czech dictionary in Debian/Ubuntu.')

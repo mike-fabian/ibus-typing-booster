@@ -80,9 +80,6 @@ class ComposeSequencesTestCase(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
-    def test_dummy(self) -> None:
-        self.assertEqual(True, True)
-
     def test_adding_and_deleting_compose_sequences(self) -> None:
         # pylint: disable=protected-access
         self._compose_sequences._add_compose_sequence(

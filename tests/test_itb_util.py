@@ -64,9 +64,6 @@ class ItbUtilTestCase(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
-    def test_dummy(self) -> None:
-        self.assertEqual(True, True)
-
     @unittest.skipUnless(
         distro is not None
         and distro.id() == 'fedora'

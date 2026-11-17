@@ -42,9 +42,6 @@ class M17nDbInfoTestCase(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
-    def test_dummy(self) -> None:
-        self.assertEqual(True, True)
-
     def test_NoIME_first(self) -> None:
         # 'NoIME' should be first in the list of input methods to make
         # it appear on top when adding input methods in the setup

@@ -11452,7 +11452,7 @@ class TypingBoosterEngine(IBus.Engine):
             return True
         return False
 
-    def do_cursor_up(self, *_args: Any, **_kwargs: Any) -> bool:
+    def do_cursor_up(self, *_args: Any, **_kwargs: Any) -> bool:  # pylint: disable=arguments-differ
         '''Called when the mouse wheel is rolled up in the candidate area of
         the lookup table
 

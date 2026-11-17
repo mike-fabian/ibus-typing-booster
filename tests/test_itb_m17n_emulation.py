@@ -425,14 +425,10 @@ class ItbM17nEmuTestCase(unittest.TestCase):
             self.skipTest(error)
         return trans
 
-    def test_dummy(self) -> None:
-        self.init_engine()
-        self.assertEqual(True, True)
-
     @unittest.expectedFailure
     def test_expected_failure(self) -> None:
         self.init_engine()
-        self.assertEqual(False, True)
+        self.assertEqual(False, True) # pylint: disable=redundant-unittest-assert
 
     @unittest.skipUnless(
         itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],

@@ -67,9 +67,6 @@ class EmojiCandidatesTestCase(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
-    def test_dummy(self) -> None:
-        self.assertEqual(True, True)
-
     def test_candidates_empty_query(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['fr_FR'])

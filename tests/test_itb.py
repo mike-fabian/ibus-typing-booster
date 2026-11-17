@@ -393,12 +393,9 @@ class ItbTestCase(unittest.TestCase):
             self.skipTest(error)
         return trans
 
-    def test_dummy(self) -> None:
-        self.assertEqual(True, True)
-
     @unittest.expectedFailure
     def test_expected_failure(self) -> None:
-        self.assertEqual(False, True)
+        self.assertEqual(False, True)  # pylint: disable=redundant-unittest-assert
 
     def test_get_label(self) -> None:
         self.assertEqual(self.engine.get_lookup_table().get_label(9), '9.')

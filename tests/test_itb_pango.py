@@ -76,9 +76,6 @@ class ItbPangoTestCase(unittest.TestCase):
         if font_family_name not in itb_pango.get_available_font_names():
             self.skipTest(f'{font_family_name} is not available.')
 
-    def test_dummy(self) -> None:
-        self.assertEqual(True, True)
-
     @unittest.skipUnless(
         distro is not None
         and distro.id() == 'fedora'

@@ -135,9 +135,6 @@ class M17nTranslitTestCase(unittest.TestCase):
             self.skipTest(error)
         return trans
 
-    def test_dummy(self) -> None:
-        self.assertEqual(True, True)
-
     def test_non_existing_ime(self) -> None:
         # If initializing the transliterator fails, for example
         # because a non-existing input method was given as the

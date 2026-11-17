@@ -62,9 +62,6 @@ class EmojiUnicodeVersionTestCase(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
-    def test_dummy(self) -> None:
-        self.assertEqual(True, True)
-
     def test_unicode_version_emoji_data_file(self) -> None:
         mq = itb_emoji.EmojiMatcher(
             languages = ['en_US'])

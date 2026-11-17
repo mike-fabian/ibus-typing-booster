@@ -184,9 +184,6 @@ class TabSqliteDbTestCase(unittest.TestCase):
         stats['percent'] = total_percent_saved
         return stats
 
-    def test_dummy(self) -> None:
-        self.assertEqual(True, True)
-
     @unittest.skipUnless(
         itb_util_core.get_hunspell_dictionary_wordlist('en_US')[0],
         'Skipping because no en_US hunspell dictionary could be found.')

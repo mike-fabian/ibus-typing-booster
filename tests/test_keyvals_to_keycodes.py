@@ -50,9 +50,6 @@ class KeyvalsToKeycodesTestCase(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
-    def test_dummy(self) -> None:
-        self.assertEqual(True, True)
-
     def test_left(self) -> None:
         # This test would fail if the Left key is remapped to a
         # different hardware key, but probably nobody remaps Left
