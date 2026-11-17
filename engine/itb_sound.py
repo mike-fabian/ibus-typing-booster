@@ -52,7 +52,7 @@ else:
     pyaudio = _pyaudio_runtime
 
 if TYPE_CHECKING:
-    import simpleaudio as _simpleaudio  # ty: ignore[import-not-found] type: ignore[import-not-found, import-untyped, unused-ignore]  # pylint: disable=line-too-long
+    import simpleaudio as _simpleaudio  # type: ignore[import-not-found, import-untyped, unused-ignore] # ty: ignore[import-not-found] # pylint: disable=line-too-long
 try:
     import simpleaudio as _simpleaudio_runtime  # ty: ignore[import-not-found]
 except ImportError:
