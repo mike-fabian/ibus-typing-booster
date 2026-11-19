@@ -1922,6 +1922,33 @@ class M17nTranslitTestCase(unittest.TestCase):
         self.assertEqual(trans.transliterate(list('ndid')), 'ndid')
 
     @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 19),
+        'Skipping because m17n-db is too old')
+    def test_vi_initial_pair_words(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-telex')
+        # The initial of the previous word or a letter before a quote
+        # does not make an English pair with the next initial.
+        self.assertEqual(trans.transliterate(list('sex cos ')), 'sẽ có ')
+        self.assertEqual(trans.transliterate(list('cos lex ')), 'có lẽ ')
+        self.assertEqual(trans.transliterate(list("s'cos ")), "s'có ")
+        self.assertEqual(trans.transliterate(list('show ')), 'show ')
+
+    @unittest.skipUnless(
+        M17N_DB_VERSION >= (1, 8, 19),
+        'Skipping because m17n-db is too old')
+    def test_vi_initial_pair_after_backspace(self) -> None:
+        trans = self.get_transliterator_or_skip('vi-telex')
+        # Backspace that removes only vowels keeps the initial, so the
+        # pair it makes with the next consonant is still checked.
+        self.assertEqual(
+            trans.transliterate(list('sa') + ['BackSpace'] + list('how ')),
+            'show ')
+        self.assertEqual(
+            trans.transliterate(
+                list('saai') + ['BackSpace', 'BackSpace'] + list('how ')),
+            'show ')
+
+    @unittest.skipUnless(
         M17N_DB_VERSION >= (1, 8, 18),
         'Skipping because m17n-db is too old')
     def test_vi_english_words(self) -> None:
